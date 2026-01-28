@@ -154,9 +154,11 @@ function calculateStats() {
     const retard = CONFIG.promises.filter(p => p.isLate).length;
     const avecMaj = CONFIG.promises.filter(p => p.mises_a_jour?.length > 0).length;
     
-    // Taux de réalisation EXACT de l'original (pondéré)
-    const tauxRealisation = total > 0 ? (((realise * 100 + encours * 50) / (total * 100)) * 100).toFixed(1) : 0;
-    const progression = tauxRealisation;
+    // ===== CALCUL EXACT DE LA VERSION ORIGINALE (PONDÉRATION SPÉCIFIQUE) =====
+    // Pondération: Réalisés (100%) + En cours (50%) + Non lancés (10%)
+    const tauxRealisation = total > 0 
+        ? (((realise * 100) + (encours * 50) + (nonLance * 10)) / (total * 100) * 100).toFixed(1) 
+        : 0;
     
     // Note moyenne
     const totalNotes = CONFIG.promises.reduce((sum, p) => sum + (p.rating || 0), 0);
@@ -205,7 +207,6 @@ function calculateStats() {
         nonLancePercentage: total > 0 ? ((nonLance / total) * 100).toFixed(1) : 0,
         retardPercentage: total > 0 ? ((retard / total) * 100).toFixed(1) : 0,
         tauxRealisation,
-        progression,
         avgRating,
         ratingCount: promessesAvecNote,
         avecMaj,
@@ -216,7 +217,6 @@ function calculateStats() {
         domaineCount
     };
 }
-
 // ==========================================
 // RENDU
 // ==========================================
@@ -227,48 +227,62 @@ function renderAll() {
 }
 
 function renderStats(stats) {
-    // Mise à jour des KPI avec les bons IDs (correspondant à index.html)
+    // ===== MISE À JOUR DES KPI AVEC LES BONS IDs (MATCH HTML EXACT) =====
     const updateElement = (id, value) => {
         const el = document.getElementById(id);
         if (el) el.textContent = value;
         else console.warn(`⚠️ Element #${id} non trouvé`);
     };
     
-    // KPI 1-5: Base
-    updateElement('total-promises', stats.total);
-    updateElement('realized', stats.realise);
-    updateElement('inProgress', stats.encours);
-    updateElement('notStarted', stats.nonLance);
-    updateElement('delayed', stats.retard);
+    // KPI 1: Total
+    updateElement('total', stats.total);
+    updateElement('total-percentage', '100%');
     
-    // KPI 6-10: Avancés
-    updateElement('globalProgress', `${stats.tauxRealisation}%`);
-    updateElement('progression', `${stats.progression}%`);
-    updateElement('avgRating', stats.avgRating);
-    updateElement('ratingCount', `${stats.ratingCount} votes`);
-    updateElement('withUpdates', stats.avecMaj);
-    updateElement('avgDelay', stats.avgDelay);
+    // KPI 2: Réalisés
+    updateElement('realise', stats.realise);
+    updateElement('realise-percentage', `${stats.realisePercentage}%`);
     
-    // Mise à jour des pourcentages dans les cartes
-    const percentages = document.querySelectorAll('.stat-percentage');
-    if (percentages[1]) percentages[1].textContent = `${stats.realisePercentage}%`;
-    if (percentages[2]) percentages[2].textContent = `${stats.encoursPercentage}%`;
-    if (percentages[3]) percentages[3].textContent = `${stats.nonLancePercentage}%`;
-    if (percentages[4]) percentages[4].textContent = `${stats.retardPercentage}%`;
-    if (percentages[8]) percentages[8].textContent = `${stats.avecMajPercentage}%`;
+    // KPI 3: En Cours
+    updateElement('encours', stats.encours);
+    updateElement('encours-percentage', `${stats.encoursPercentage}%`);
     
-    // Texte de progression
+    // KPI 4: Non Lancés
+    updateElement('non-lance', stats.nonLance);
+    updateElement('non-lance-percentage', `${stats.nonLancePercentage}%`);
+    
+    // KPI 5: En Retard
+    updateElement('retard', stats.retard);
+    updateElement('retard-percentage', `${stats.retardPercentage}%`);
+    
+    // KPI 6: Taux de Réalisation + Texte progression
+    updateElement('taux-realisation', `${stats.tauxRealisation}%`);
+    
     let progressText = '';
     if (stats.tauxRealisation >= 80) progressText = 'Excellent';
     else if (stats.tauxRealisation >= 60) progressText = 'Bon';
     else if (stats.tauxRealisation >= 40) progressText = 'Moyen';
     else if (stats.tauxRealisation >= 20) progressText = 'Faible';
     else progressText = 'Début';
+    updateElement('progress-text', progressText);
     
-    const progressEl = document.getElementById('progress-text');
-    if (progressEl) progressEl.textContent = progressText;
+    // KPI 7: Note Moyenne
+    updateElement('moyenne-notes', stats.avgRating);
+    updateElement('votes-total', `${stats.ratingCount} votes`);
+    
+    // KPI 8: Avec Mises à Jour
+    updateElement('avec-maj', stats.avecMaj);
+    updateElement('avec-maj-percentage', `${stats.avecMajPercentage}%`);
+    
+    // KPI 9: Délai Moyen
+    updateElement('delai-moyen', stats.avgDelay);
+    updateElement('jours-restants', stats.promessesEnCours > 0 
+        ? `${stats.promessesEnCours} engagements` 
+        : 'Aucun');
+    
+    // KPI 10: Domaine Principal
+    updateElement('domaine-principal', stats.domainePrincipal || '-');
+    updateElement('domaine-count', `${stats.domaineCount || 0} engagements`);
 }
-
 function renderPromises(promises) {
     const container = document.getElementById('promisesContainer');
     if (!container) return;

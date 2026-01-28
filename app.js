@@ -1,25 +1,22 @@
 // ==========================================
-// APP.JS - CORRIGÉ POUR SUPABASE v2
+// APP.JS - VERSION FINALE CORRIGÉE
 // ==========================================
-// Configuration Supabase - CORRECT POUR v2
+// Configuration Supabase - UNE SEULE DÉCLARATION
 const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_joJuW7-vMiQG302_2Mvj5A_sVaD8Wap';
 let supabaseClient = null;
 
 try {
-    // CORRECTION ICI : utiliser createClient au lieu de create
-    if (window.supabase && typeof window.supabase.createClient === 'function') {
+    if (window.supabase) {
         supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         console.log('✅ Supabase v2 initialisé');
     } else {
-        console.warn('⚠️ Supabase SDK non disponible ou version incorrecte');
-        // Fallback : utiliser null mais continuer le fonctionnement
-        supabaseClient = null;
+        console.warn('⚠️ Supabase SDK non disponible');
     }
 } catch (error) {
     console.error('❌ Erreur d\'initialisation Supabase:', error);
-    supabaseClient = null; // Permettre le fonctionnement sans Supabase
 }
+
 // Configuration globale - UNE SEULE DÉCLARATION
 const CONFIG = {
     START_DATE: new Date('2024-04-02'),
@@ -38,10 +35,8 @@ const CONFIG = {
     ratings: JSON.parse(localStorage.getItem('ratings') || '[]')
 };
 
-
-
 // ==========================================
-// INITIALISATION
+// CHARGEMENT DES DONNÉES
 // ==========================================
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('🚀 Initialisation...');
@@ -52,11 +47,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('✅ Initialisation terminée');
 });
 
-// ==========================================
-// CHARGEMENT DES DONNÉES
-// ==========================================
 async function loadData() {
     try {
+        // Charger les données depuis le fichier JSON local
         const response = await fetch('promises.json');
         const data = await response.json();
         
@@ -67,6 +60,7 @@ async function loadData() {
             isLate: checkIfLate(p.status, calculateDeadline(p.delai))
         }));
         
+        // Données d'actualités factices
         CONFIG.news = [
             {
                 id: '1',
@@ -83,14 +77,6 @@ async function loadData() {
                 date: '20/01/2026',
                 source: 'Sud Quotidien',
                 image: 'inauguration'
-            },
-            {
-                id: '3',
-                title: 'Budget 2026 : Priorité à l\'éducation et la santé',
-                excerpt: 'Le budget 2026 consacre 35% des dépenses...',
-                date: '15/01/2026',
-                source: 'WalFadjri',
-                image: 'budget'
             }
         ];
         
@@ -105,7 +91,7 @@ async function loadData() {
 }
 
 // ==========================================
-// CALCULS ORIGINAUX
+// CALCULS EXACTS DE LA VERSION ORIGINALE
 // ==========================================
 function calculateDeadline(delaiText) {
     const text = delaiText.toLowerCase();
@@ -135,18 +121,34 @@ function calculateStats() {
     const avecMaj = CONFIG.promises.filter(p => p.mises_a_jour?.length > 0).length;
     
     // CALCULS EXACTS DE LA VERSION ORIGINALE
+    const realisePercentage = total > 0 ? ((realise / total) * 100).toFixed(1) : 0;
+    const encoursPercentage = total > 0 ? ((encours / total) * 100).toFixed(1) : 0;
+    
+    // Taux de réalisation original: (réalisés * 100 + en cours * 50) / (total * 100) * 100
     const tauxRealisation = total > 0 ? (((realise * 100 + encours * 50) / (total * 100)) * 100).toFixed(1) : 0;
+    
+    // Progression = même calcul que le taux de réalisation dans l'original
     const progression = tauxRealisation;
+    
+    // Note moyenne
     const avgRating = CONFIG.promises.reduce((sum, p) => sum + (p.rating || 0), 0) / total;
+    
+    // Délai moyen restant
     const avgDelay = calculateAvgDelay();
     
     return {
-        total, realise, encours, nonLance, retard, avecMaj,
-        realisePercentage: total > 0 ? ((realise / total) * 100).toFixed(1) : 0,
-        encoursPercentage: total > 0 ? ((encours / total) * 100).toFixed(1) : 0,
-        tauxRealisation, progression,
+        total,
+        realise,
+        encours,
+        nonLance,
+        retard,
+        realisePercentage,
+        encoursPercentage,
+        tauxRealisation,
+        progression,
         avgRating: avgRating.toFixed(1),
         ratingCount: CONFIG.ratings.length,
+        avecMaj,
         avecMajPercentage: total > 0 ? ((avecMaj / total) * 100).toFixed(1) : 0,
         avgDelay
     };
@@ -175,29 +177,19 @@ function renderAll() {
 }
 
 function renderStats(stats) {
-    const map = {
-        total: 'total-promises', realise: 'realized', encours: 'inProgress',
-        notStarted: 'notStarted', retard: 'delayed', taux: 'globalProgress',
-        progression: 'progression', avgRating: 'avgRating', ratingCount: 'ratingCount',
-        withUpdates: 'withUpdates', avgDelay: 'avgDelay'
-    };
+    // Mise à jour des valeurs avec animation
+    animateValue(document.getElementById('total-promises'), 0, stats.total, 1000);
+    animateValue(document.getElementById('realized'), 0, stats.realise, 1000);
+    animateValue(document.getElementById('inProgress'), 0, stats.encours, 1000);
+    animateValue(document.getElementById('notStarted'), 0, stats.nonLance, 1000);
+    animateValue(document.getElementById('delayed'), 0, stats.retard, 1000);
     
-    Object.entries(map).forEach(([key, id]) => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        
-        if (key === 'total') animateValue(el, 0, stats.total, 1000);
-        else if (key === 'realise') animateValue(el, 0, stats.realise, 1000);
-        else if (key === 'encours') animateValue(el, 0, stats.encours, 1000);
-        else if (key === 'notStarted') animateValue(el, 0, stats.nonLance, 1000);
-        else if (key === 'retard') animateValue(el, 0, stats.retard, 1000);
-        else if (key === 'taux') el.textContent = stats.tauxRealisation + '%';
-        else if (key === 'progression') el.textContent = stats.progression + '%';
-        else if (key === 'avgRating') el.textContent = stats.avgRating;
-        else if (key === 'ratingCount') el.textContent = stats.ratingCount + ' votes';
-        else if (key === 'withUpdates') el.textContent = stats.avecMaj;
-        else if (key === 'avgDelay') el.textContent = stats.avgDelay;
-    });
+    document.getElementById('globalProgress').textContent = stats.tauxRealisation + '%';
+    document.getElementById('progression').textContent = stats.progression + '%';
+    document.getElementById('avgRating').textContent = stats.avgRating;
+    document.getElementById('ratingCount').textContent = stats.ratingCount + ' votes';
+    document.getElementById('withUpdates').textContent = stats.avecMaj;
+    document.getElementById('avgDelay').textContent = stats.avgDelay;
 }
 
 function renderPromises(promises) {
@@ -248,6 +240,8 @@ function createPromiseCard(p) {
                         ${p.mises_a_jour.length} mise${p.mises_a_jour.length > 1 ? 's' : ''} à jour
                     </small>
                 </div>` : ''}
+            
+            <!-- NOTATION PAR ÉTOILES (AJOUTÉ) -->
             <div class="rating-section-promise">
                 <div class="stars" id="stars-${p.id}">
                     ${[1,2,3,4,5].map(i => `
@@ -256,6 +250,8 @@ function createPromiseCard(p) {
                 </div>
                 <span class="rating-label">${p.rating ? p.rating.toFixed(1) + '/5' : 'Pas encore noté'}</span>
             </div>
+            
+            <!-- PARTAGE (AJOUTÉ) -->
             <div class="share-section">
                 <a href="#" class="share-btn share-twitter" onclick="shareOnSocial('twitter','${p.id}')" title="Partager sur Twitter">
                     <i class="fab fa-twitter"></i>
@@ -280,7 +276,7 @@ function renderNews(news) {
     container.innerHTML = news.map(item => `
         <div class="news-card">
             <div class="news-image">
-                <i class="fas fa-${item.image === 'school' ? 'school' : item.image === 'inauguration' ? 'ribbon' : 'chart-line'}"></i>
+                <i class="fas fa-${item.image === 'school' ? 'school' : 'ribbon'}"></i>
             </div>
             <div class="news-content">
                 <div class="news-date">${item.date}</div>
@@ -349,55 +345,6 @@ function goToSlide(index) {
 }
 
 // ==========================================
-// FILTRES COMPLETS
-// ==========================================
-function applyFilters() {
-    const search = document.getElementById('searchInput')?.value.toLowerCase() || '';
-    const sector = document.getElementById('sectorFilter')?.value || '';
-    const status = document.getElementById('statusFilter')?.value || '';
-    const sort = document.getElementById('sortFilter')?.value || 'recent';
-    
-    let filtered = CONFIG.promises.filter(p => {
-        const matchSearch = p.engagement.toLowerCase().includes(search) ||
-            p.resultat.toLowerCase().includes(search) ||
-            p.domaine.toLowerCase().includes(search);
-        const matchSector = !sector || p.domaine === sector;
-        const matchStatus = !status || p.status === status;
-        return matchSearch && matchSector && matchStatus;
-    });
-    
-    filtered = sortPromises(filtered, sort);
-    renderPromises(filtered);
-}
-
-function sortPromises(promises, type) {
-    return [...promises].sort((a, b) => {
-        if (type === 'recent') return b.id - a.id;
-        if (type === 'ancient') return a.id - b.id;
-        if (type === 'rating') return (b.rating || 0) - (a.rating || 0);
-        if (type === 'delay') return (a.isLate && !b.isLate) ? -1 : (!a.isLate && b.isLate) ? 1 : 0;
-        return 0;
-    });
-}
-
-function applyQuickFilter(filter) {
-    let filtered = CONFIG.promises;
-    
-    if (filter === 'realise') filtered = filtered.filter(p => p.status === 'realise');
-    else if (filter === 'encours') filtered = filtered.filter(p => p.status === 'encours');
-    else if (filter === 'retard') filtered = filtered.filter(p => p.isLate);
-    else if (filter === 'updates') filtered = filtered.filter(p => p.mises_a_jour?.length > 0);
-    else if (filter === 'reset') {
-        document.getElementById('searchInput').value = '';
-        document.getElementById('sectorFilter').value = '';
-        document.getElementById('statusFilter').value = '';
-        document.getElementById('sortFilter').value = 'recent';
-    }
-    
-    renderPromises(filtered);
-}
-
-// ==========================================
 // NOTATION ET PARTAGE
 // ==========================================
 function setupStarRatings() {
@@ -420,7 +367,7 @@ function setupStarRatings() {
     });
     
     // Étoiles pour les services
-    ['accessibility', 'welcome', 'efficiency', 'transparency'].forEach(field => {
+    ['accessibility', 'welcome'].forEach(field => {
         document.querySelectorAll(`#${field}-stars .star`).forEach(star => {
             star.addEventListener('click', function() {
                 const value = parseInt(this.getAttribute('data-value'));
@@ -460,10 +407,18 @@ function shareOnSocial(platform, id) {
     let shareUrl = '';
     
     switch(platform) {
-        case 'twitter': shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`; break;
-        case 'facebook': shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`; break;
-        case 'whatsapp': shareUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`; break;
-        case 'linkedin': shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`; break;
+        case 'twitter': 
+            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+            break;
+        case 'facebook': 
+            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+            break;
+        case 'whatsapp': 
+            shareUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
+            break;
+        case 'linkedin': 
+            shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+            break;
     }
     
     window.open(shareUrl, '_blank', 'width=600,height=400');
@@ -471,10 +426,46 @@ function shareOnSocial(platform, id) {
 }
 
 // ==========================================
+// FILTRES
+// ==========================================
+function applyFilters() {
+    const search = document.getElementById('searchInput')?.value.toLowerCase() || '';
+    const sector = document.getElementById('sectorFilter')?.value || '';
+    const status = document.getElementById('statusFilter')?.value || '';
+    
+    let filtered = CONFIG.promises.filter(p => {
+        const matchSearch = p.engagement.toLowerCase().includes(search) ||
+            p.resultat.toLowerCase().includes(search) ||
+            p.domaine.toLowerCase().includes(search);
+        const matchSector = !sector || p.domaine === sector;
+        const matchStatus = !status || p.status === status;
+        return matchSearch && matchSector && matchStatus;
+    });
+    
+    renderPromises(filtered);
+}
+
+function applyQuickFilter(filter) {
+    let filtered = CONFIG.promises;
+    
+    if (filter === 'realise') filtered = filtered.filter(p => p.status === 'realise');
+    else if (filter === 'encours') filtered = filtered.filter(p => p.status === 'encours');
+    else if (filter === 'retard') filtered = filtered.filter(p => p.isLate);
+    else if (filter === 'updates') filtered = filtered.filter(p => p.mises_a_jour?.length > 0);
+    else if (filter === 'reset') {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('sectorFilter').value = '';
+        document.getElementById('statusFilter').value = '';
+    }
+    
+    renderPromises(filtered);
+}
+
+// ==========================================
 // ÉVÉNEMENTS
 // ==========================================
 function setupEventListeners() {
-    ['searchInput', 'sectorFilter', 'statusFilter', 'sortFilter'].forEach(id => {
+    ['searchInput', 'sectorFilter', 'statusFilter'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.addEventListener('input', applyFilters);
     });
@@ -493,8 +484,6 @@ function setupEventListeners() {
             service: document.getElementById('service').value,
             accessibility: parseInt(document.getElementById('accessibility').value),
             welcome: parseInt(document.getElementById('welcome').value),
-            efficiency: parseInt(document.getElementById('efficiency').value),
-            transparency: parseInt(document.getElementById('transparency').value),
             comment: document.getElementById('comment').value.trim(),
             date: new Date().toISOString(),
             id: Date.now()
@@ -548,25 +537,3 @@ function showNotification(message, type = 'success') {
 
 // Exposer les fonctions globales
 window.shareOnSocial = shareOnSocial;
-// Gestion sécurisée du localStorage - AMÉLIORÉE
-const safeStorage = {
-    getItem: function(key) {
-        try {
-            if (typeof localStorage === 'undefined') return null;
-            return localStorage.getItem(key);
-        } catch (e) {
-            console.warn('🔒 localStorage bloqué (Tracking Prevention)', e);
-            return null;
-        }
-    },
-    setItem: function(key, value) {
-        try {
-            if (typeof localStorage === 'undefined') return false;
-            localStorage.setItem(key, value);
-            return true;
-        } catch (e) {
-            console.warn('🔒 Impossible d\'écrire dans localStorage', e);
-            return false;
-        }
-    }
-};

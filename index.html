@@ -54,101 +54,70 @@
             </div>
         </header>
 
-        <!-- ===== DASHBOARD (10 KPI) ===== -->
-      <section id="stats">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-bullseye"></i>
-          </div>
-          <div class="stat-value" id="total">0</div>
-          <div class="stat-label">Engagements</div>
-          <div class="stat-percentage" id="total-percentage">100%</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-check-circle"></i>
-          </div>
-          <div class="stat-value" id="realise">0</div>
-          <div class="stat-label">✅ Réalisés</div>
-          <div class="stat-percentage" id="realise-percentage">0%</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-sync-alt"></i>
-          </div>
-          <div class="stat-value" id="encours">0</div>
-          <div class="stat-label">🔄 En Cours</div>
-          <div class="stat-percentage" id="encours-percentage">0%</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-hourglass-start"></i>
-          </div>
-          <div class="stat-value" id="non-lance">0</div>
-          <div class="stat-label">⏳ Non Lancés</div>
-          <div class="stat-percentage" id="non-lance-percentage">0%</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-exclamation-triangle"></i>
-          </div>
-          <div class="stat-value" id="retard">0</div>
-          <div class="stat-label">⚠️ En Retard</div>
-          <div class="stat-percentage" id="retard-percentage">0%</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-chart-line"></i>
-          </div>
-          <div class="stat-value" id="taux-realisation">0%</div>
-          <div class="stat-label">📈 Taux de Réalisation</div>
-          <div class="stat-subvalue" id="progress-text">Progression</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-star"></i>
-          </div>
-          <div class="stat-value" id="moyenne-notes">0.0</div>
-          <div class="stat-label">⭐ Note Moyenne</div>
-          <div class="stat-subvalue" id="votes-total">0 votes</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-history"></i>
-          </div>
-          <div class="stat-value" id="avec-maj">0</div>
-          <div class="stat-label">📋 Avec Mises à Jour</div>
-          <div class="stat-percentage" id="avec-maj-percentage">0%</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-clock"></i>
-          </div>
-          <div class="stat-value" id="delai-moyen">0j</div>
-          <div class="stat-label">⏱️ Délai Moyen Restant</div>
-          <div class="stat-subvalue" id="jours-restants">En cours</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-layer-group"></i>
-          </div>
-          <div class="stat-value" id="domaine-principal">-</div>
-          <div class="stat-label">🏛️ Domaine Principal</div>
-          <div class="stat-subvalue" id="domaine-count">0 engagements</div>
-        </div>
-      </div>
-    </section>
-
+     <section id="stats">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-bullseye"></i></div>
+      <div class="stat-value" id="total-promises">0</div>
+      <div class="stat-label">Engagements</div>
+      <div class="stat-percentage">100%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+      <div class="stat-value" id="realized">0</div>
+      <div class="stat-label">✅ Réalisés</div>
+      <div class="stat-percentage" style="color: var(--success);">0%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-sync-alt"></i></div>
+      <div class="stat-value" id="inProgress">0</div>
+      <div class="stat-label">🔄 En Cours</div>
+      <div class="stat-percentage" style="color: #4a90e2;">0%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-hourglass-start"></i></div>
+      <div class="stat-value" id="notStarted">0</div>
+      <div class="stat-label">⏳ Non Lancés</div>
+      <div class="stat-percentage" style="color: #6c757d;">0%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+      <div class="stat-value" id="delayed">0</div>
+      <div class="stat-label">⚠️ En Retard</div>
+      <div class="stat-percentage" style="color: var(--danger);">0%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+      <div class="stat-value" id="globalProgress">0%</div>
+      <div class="stat-label">📈 Taux de Réalisation</div>
+      <div class="stat-percentage" style="color: var(--primary);">+0.0%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-tachometer-alt"></i></div>
+      <div class="stat-value" id="progression">0%</div>
+      <div class="stat-label">🚀 Progression</div>
+      <div class="stat-percentage" style="color: var(--warning);">+0.0%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-star"></i></div>
+      <div class="stat-value" id="avgRating">0.0</div>
+      <div class="stat-label">⭐ Note Moyenne</div>
+      <div class="stat-subvalue" id="ratingCount">0 votes</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-history"></i></div>
+      <div class="stat-value" id="withUpdates">0</div>
+      <div class="stat-label">📋 Avec Mises à Jour</div>
+      <div class="stat-percentage" style="color: #8a4baf;">0%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="fas fa-stopwatch"></i></div>
+      <div class="stat-value" id="avgDelay">0j</div>
+      <div class="stat-label">⏱️ Délai Moyen Restant</div>
+      <div class="stat-subvalue">En cours</div>
+    </div>
+  </div>
+</section>
         <!-- ===== ENGAGEMENTS (AVEC EXPORT + NOTATION + PARTAGE) ===== -->
         <section id="promises">
             <div class="section-header">

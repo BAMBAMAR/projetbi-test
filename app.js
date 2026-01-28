@@ -253,25 +253,9 @@ function calculateDeadline(delaiText) {
 }
 
 function checkIfLate(status, deadline) {
-    // DEBUG : Ajoutez cette ligne temporairement pour vérifier
-    console.log('Check retard:', {
-        status,
-        deadline: deadline.toISOString(),
-        currentDate: CONFIG.CURRENT_DATE.toISOString(),
-        isLate: status !== 'realise' && CONFIG.CURRENT_DATE > deadline
-    });
-    
-    // CORRECTION : Vérifier que deadline est bien une Date valide
-    if (!deadline || !(deadline instanceof Date)) {
-        console.warn('⚠️ Deadline invalide:', deadline);
-        return false;
-    }
-    
-    // Un engagement est "en retard" SEULEMENT si :
-    // 1. Il n'est PAS réalisé
-    // 2. ET sa date limite est PASSÉE
-    return status !== 'realise' && CONFIG.CURRENT_DATE > deadline;
+  return status !== 'realise' && CONFIG.CURRENT_DATE > deadline;
 }
+
 
 function calculateStats() {
     const total = CONFIG.promises.length;

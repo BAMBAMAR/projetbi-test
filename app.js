@@ -38,15 +38,7 @@ const CONFIG = {
     ratings: JSON.parse(localStorage.getItem('ratings') || '[]')
 };
 
-// Gestion sécurisée du localStorage
-/*const safeStorage = {
-    getItem: function(key) {
-        try { return localStorage.getItem(key); } catch (e) { return null; }
-    },
-    setItem: function(key, value) {
-        try { localStorage.setItem(key, value); return true; } catch (e) { return false; }
-    }
-};*/
+
 
 // ==========================================
 // INITIALISATION

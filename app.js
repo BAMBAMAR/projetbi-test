@@ -1,5 +1,5 @@
 // ==========================================
-// APP.JS - VERSION FINALE CORRIGÉE ET COMPLÈTE
+// APP.JS - VERSION FINALE AVEC CALCULS KPI EXACTS
 // ==========================================
 // Configuration Supabase v2 - UNE SEULE DÉCLARATION
 const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
@@ -7,7 +7,6 @@ const SUPABASE_KEY = 'sb_publishable_joJuW7-vMiQG302_2Mvj5A_sVaD8Wap';
 let supabaseClient = null;
 
 try {
-    // CORRECTION CRITIQUE : Utiliser createClient() pour Supabase v2
     if (typeof window !== 'undefined' && window.supabase && typeof window.supabase.createClient === 'function') {
         supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         console.log('✅ Supabase v2 initialisé');
@@ -69,7 +68,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadData();
     setupEventListeners();
     setupCarousel();
-    setupServiceRatings(); // Services = une seule fois
+    setupServiceRatings();
     console.log('✅ Initialisation terminée');
 });
 
@@ -126,7 +125,7 @@ async function loadData() {
 }
 
 // ==========================================
-// CALCULS EXACTS DE LA VERSION ORIGINALE
+// CALCULS EXACTS DE LA VERSION ORIGINALE (CORRIGÉS)
 // ==========================================
 function calculateDeadline(delaiText) {
     const text = delaiText.toLowerCase();
@@ -147,97 +146,107 @@ function checkIfLate(status, deadline) {
     return status !== 'realise' && CONFIG.CURRENT_DATE > deadline;
 }
 
-function calculateStats() {
-    const total = CONFIG.promises.length;
-    const realise = CONFIG.promises.filter(p => p.status === 'realise').length;
-    const encours = CONFIG.promises.filter(p => p.status === 'encours').length;
-    const nonLance = CONFIG.promises.filter(p => p.status === 'non-lance').length;
-    const retard = CONFIG.promises.filter(p => p.isLate).length;
-    const avecMaj = CONFIG.promises.filter(p => p.mises_a_jour?.length > 0).length;
+// ===== FONCTION PRINCIPALE DE CALCUL DES STATS (EXACTE COMME DEMANDÉ) =====
+function calculateAllStats() {
+    const promises = CONFIG.promises;
+    const total = promises.length;
     
-    // CALCULS EXACTS DE LA VERSION ORIGINALE
+    // KPI de base
+    const realise = promises.filter(p => p.status === 'realise').length;
+    const encours = promises.filter(p => p.status === 'encours').length;
+    const nonLance = promises.filter(p => p.status === 'non-lance').length;
+    const retard = promises.filter(p => p.isLate).length;
+    
+    // Pourcentages
     const realisePercentage = total > 0 ? ((realise / total) * 100).toFixed(1) : 0;
     const encoursPercentage = total > 0 ? ((encours / total) * 100).toFixed(1) : 0;
+    const nonLancePercentage = total > 0 ? ((nonLance / total) * 100).toFixed(1) : 0;
+    const retardPercentage = total > 0 ? ((retard / total) * 100).toFixed(1) : 0;
     
-    // Taux de réalisation original: (réalisés * 100 + en cours * 50) / (total * 100) * 100
-    const tauxRealisation = total > 0 ? (((realise * 100 + encours * 50) / (total * 100)) * 100).toFixed(1) : 0;
+    // KPI 6: Taux de réalisation (pondéré) - EXACT COMME L'ORIGINAL
+    let tauxRealisation = 0;
+    if (total > 0) {
+        const poidsRealise = realise * 100;
+        const poidsEncours = encours * 50;
+        const poidsNonLance = nonLance * 10;
+        tauxRealisation = ((poidsRealise + poidsEncours + poidsNonLance) / (total * 100) * 100).toFixed(1);
+    }
     
-    // Progression = même calcul que le taux de réalisation dans l'original
+    // KPI 7: Progression (même que le taux de réalisation dans l'original)
     const progression = tauxRealisation;
     
-    // Note moyenne
-    const avgRating = CONFIG.promises.reduce((sum, p) => sum + (p.rating || 0), 0) / total;
+    // KPI 8: Moyenne des notes (basée sur le champ rating de chaque promesse)
+    let totalNotes = 0;
+    let promessesAvecNote = 0;
+    promises.forEach(p => {
+        if (p.rating) {
+            totalNotes += p.rating;
+            promessesAvecNote++;
+        }
+    });
+    const moyenneNotes = promessesAvecNote > 0 ? (totalNotes / promessesAvecNote).toFixed(1) : 0;
+    const totalVotes = promessesAvecNote;
     
-    // Délai moyen restant
-    const avgDelay = calculateAvgDelay();
+    // KPI 9: Engagements avec mises à jour
+    const avecMaj = promises.filter(p => p.mises_a_jour && p.mises_a_jour.length > 0).length;
+    const avecMajPercentage = total > 0 ? ((avecMaj / total) * 100).toFixed(1) : 0;
     
-    return {
-        total,
-        realise,
-        encours,
-        nonLance,
-        retard,
-        realisePercentage,
-        encoursPercentage,
-        tauxRealisation,
-        progression,
-        avgRating: avgRating.toFixed(1),
-        ratingCount: CONFIG.ratings.length,
-        avecMaj,
-        avecMajPercentage: total > 0 ? ((avecMaj / total) * 100).toFixed(1) : 0,
-        avgDelay
-    };
-}
-
-function calculateAvgDelay() {
-    const encours = CONFIG.promises.filter(p => p.status === 'encours');
-    if (encours.length === 0) return '0j';
+    // KPI 10: Délai moyen restant
+    let delaiMoyenJours = 0;
+    let delaiMoyenText = '0j';
+    const promessesEnCours = promises.filter(p => p.status !== 'realise' && !p.isLate);
+    if (promessesEnCours.length > 0) {
+        const maintenant = CONFIG.CURRENT_DATE.getTime();
+        const totalJours = promessesEnCours.reduce((sum, p) => {
+            const diffJours = Math.max(0, Math.ceil((p.deadline - maintenant) / (1000 * 60 * 60 * 24)));
+            return sum + diffJours;
+        }, 0);
+        delaiMoyenJours = Math.round(totalJours / promessesEnCours.length);
+        delaiMoyenText = delaiMoyenJours > 365 ? `${Math.round(delaiMoyenJours/365)}a` : 
+                        delaiMoyenJours > 30 ? `${Math.round(delaiMoyenJours/30)}m` : 
+                        `${delaiMoyenJours}j`;
+    }
     
-    const totalDays = encours.reduce((sum, p) => {
-        const diff = p.deadline - CONFIG.CURRENT_DATE;
-        const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-        return sum + Math.max(0, days);
-    }, 0);
+    // Mise à jour des KPI avec animation
+    animateValue(document.getElementById('total-promises'), 0, total, 1000);
+    animateValue(document.getElementById('realized'), 0, realise, 1000);
+    animateValue(document.getElementById('inProgress'), 0, encours, 1000);
+    animateValue(document.getElementById('notStarted'), 0, nonLance, 1000);
+    animateValue(document.getElementById('delayed'), 0, retard, 1000);
     
-    return Math.round(totalDays / encours.length) + 'j';
+    // Mise à jour sans animation pour les autres
+    document.getElementById('globalProgress').textContent = `${tauxRealisation}%`;
+    document.getElementById('progression').textContent = `${progression}%`;
+    document.getElementById('avgRating').textContent = moyenneNotes;
+    document.getElementById('ratingCount').textContent = `${totalVotes} votes`;
+    document.getElementById('withUpdates').textContent = avecMaj;
+    document.getElementById('avgDelay').textContent = delaiMoyenText;
+    
+    // Mettre à jour les pourcentages dans les cartes
+    const statPercentages = document.querySelectorAll('.stat-percentage');
+    if (statPercentages.length >= 10) {
+        statPercentages[0].textContent = '100%'; // Total
+        statPercentages[1].textContent = `${realisePercentage}%`; // Réalisés
+        statPercentages[1].style.color = 'var(--success)';
+        statPercentages[2].textContent = `${encoursPercentage}%`; // En cours
+        statPercentages[2].style.color = '#4a90e2';
+        statPercentages[3].textContent = `${nonLancePercentage}%`; // Non lancés
+        statPercentages[3].style.color = '#6c757d';
+        statPercentages[4].textContent = `${retardPercentage}%`; // En retard
+        statPercentages[4].style.color = 'var(--danger)';
+        statPercentages[5].style.color = 'var(--primary)'; // Taux de réalisation
+        statPercentages[6].style.color = 'var(--warning)'; // Progression
+        statPercentages[8].textContent = `${avecMajPercentage}%`; // Avec mises à jour
+        statPercentages[8].style.color = '#8a4baf';
+    }
 }
 
 // ==========================================
 // RENDU
 // ==========================================
 function renderAll() {
-    const stats = calculateStats();
-    renderStats(stats);
+    calculateAllStats(); // Utilise les calculs EXACTS de l'original
     renderPromises(CONFIG.promises);
-}
-
-function renderStats(stats) {
-    const elements = {
-        total: document.getElementById('total-promises'),
-        realise: document.getElementById('realized'),
-        encours: document.getElementById('inProgress'),
-        notStarted: document.getElementById('notStarted'),
-        retard: document.getElementById('delayed'),
-        taux: document.getElementById('globalProgress'),
-        progression: document.getElementById('progression'),
-        avgRating: document.getElementById('avgRating'),
-        ratingCount: document.getElementById('ratingCount'),
-        withUpdates: document.getElementById('withUpdates'),
-        avgDelay: document.getElementById('avgDelay')
-    };
-    
-    if (elements.total) animateValue(elements.total, 0, stats.total, 1000);
-    if (elements.realise) animateValue(elements.realise, 0, stats.realise, 1000);
-    if (elements.encours) animateValue(elements.encours, 0, stats.encours, 1000);
-    if (elements.notStarted) animateValue(elements.notStarted, 0, stats.nonLance, 1000);
-    if (elements.retard) animateValue(elements.retard, 0, stats.retard, 1000);
-    
-    if (elements.taux) elements.taux.textContent = stats.tauxRealisation + '%';
-    if (elements.progression) elements.progression.textContent = stats.progression + '%';
-    if (elements.avgRating) elements.avgRating.textContent = stats.avgRating;
-    if (elements.ratingCount) elements.ratingCount.textContent = stats.ratingCount + ' votes';
-    if (elements.withUpdates) elements.withUpdates.textContent = stats.avecMaj;
-    if (elements.avgDelay) elements.avgDelay.textContent = stats.avgDelay;
 }
 
 function renderPromises(promises) {
@@ -255,7 +264,7 @@ function renderPromises(promises) {
     }
     
     container.innerHTML = promises.map(p => createPromiseCard(p)).join('');
-    setupPromiseRatings(); // Appel CRITIQUE après le rendu
+    setupPromiseRatings();
 }
 
 function createPromiseCard(p) {
@@ -376,7 +385,7 @@ function setupCarousel() {
 
 function goToSlide(index) {
     const total = CONFIG.press.length;
-    index = ((index % total) + total) % total; // Gérer le bouclage
+    index = ((index % total) + total) % total;
     
     document.querySelectorAll('.carousel-item').forEach((item, i) => {
         item.className = 'carousel-item';
@@ -393,11 +402,9 @@ function goToSlide(index) {
 }
 
 // ==========================================
-// NOTATION : FONCTIONS SÉPARÉES POUR ÉVITER LES DOUBLONS
+// NOTATION : FONCTIONS SÉPARÉES
 // ==========================================
-// Étoiles pour les promesses (appelée APRÈS chaque rendu)
 function setupPromiseRatings() {
-    // Supprimer les anciens écouteurs pour éviter les doublons
     document.querySelectorAll('.stars[data-setup="true"]').forEach(container => {
         container.querySelectorAll('i').forEach(star => {
             star.removeEventListener('click', star.clickHandler);
@@ -405,32 +412,28 @@ function setupPromiseRatings() {
         container.removeAttribute('data-setup');
     });
     
-    // Ajouter de nouveaux écouteurs
     document.querySelectorAll('.stars').forEach(container => {
         container.querySelectorAll('i').forEach(star => {
             const handler = async function() {
                 const value = parseInt(this.getAttribute('data-value'));
                 const id = this.getAttribute('data-promise-id');
                 
-                // Mise à jour visuelle
                 document.querySelectorAll(`#stars-${id} i`).forEach(s => {
                     s.classList.toggle('filled', parseInt(s.getAttribute('data-value')) <= value);
                 });
                 
-                // Sauvegarde
                 await savePromiseRating(id, value);
                 showNotification(`⭐ Note enregistrée : ${value}/5`, 'success');
-                renderAll();
+                calculateAllStats(); // Recalculer les stats après notation
             };
             
             star.addEventListener('click', handler);
-            star.clickHandler = handler; // Stocker pour suppression future
+            star.clickHandler = handler;
         });
         container.setAttribute('data-setup', 'true');
     });
 }
 
-// Étoiles pour les services (appelée UNE SEULE FOIS à l'initialisation)
 function setupServiceRatings() {
     ['accessibility', 'welcome', 'efficiency', 'transparency'].forEach(field => {
         const container = document.getElementById(`${field}-stars`);
@@ -450,7 +453,6 @@ function setupServiceRatings() {
     });
 }
 
-// Sauvegarde de la notation d'une promesse
 async function savePromiseRating(id, rating) {
     try {
         if (supabaseClient) {
@@ -585,7 +587,7 @@ function setupEventListeners() {
         document.querySelectorAll('.stars-container .star').forEach(s => s.classList.remove('filled'));
         
         showNotification('⭐ Merci pour votre notation !', 'success');
-        renderAll();
+        calculateAllStats(); // Recalculer les stats
     });
 }
 

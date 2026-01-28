@@ -1,5 +1,5 @@
 // ==========================================
-// APP.JS - VERSION FINALE CORRIGÉE ET FONCTIONNELLE
+// APP.JS - VERSION FINALE CORRIGÉE (SANS DOUBLONS)
 // ==========================================
 // Configuration Supabase v2 - UNE SEULE DÉCLARATION
 const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
@@ -12,11 +12,9 @@ try {
         console.log('✅ Supabase v2 initialisé');
     } else {
         console.warn('⚠️ Supabase SDK non disponible ou version incorrecte');
-        supabaseClient = null;
     }
 } catch (error) {
     console.error('❌ Erreur d\'initialisation Supabase:', error);
-    supabaseClient = null;
 }
 
 // Configuration globale - UNE SEULE DÉCLARATION
@@ -34,7 +32,8 @@ const CONFIG = {
     ],
     currentIndex: 0,
     subscribers: JSON.parse(localStorage.getItem('subscribers') || '[]'),
-    ratings: JSON.parse(localStorage.getItem('ratings') || '[]')
+    ratings: JSON.parse(localStorage.getItem('ratings') || '[]'),
+    promiseRatings: {} // Stockage des notes Supabase par promesse
 };
 
 // Gestion sécurisée du localStorage
@@ -73,10 +72,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 // ==========================================
-// CHARGEMENT DES DONNÉES
+// CHARGEMENT DES DONNÉES + NOTES SUPABASE
 // ==========================================
 async function loadData() {
     try {
+        // Charger les promesses
         const response = await fetch('promises.json');
         const data = await response.json();
         
@@ -84,9 +84,14 @@ async function loadData() {
         CONFIG.promises = data.promises.map(p => ({
             ...p,
             deadline: calculateDeadline(p.delai),
-            isLate: checkIfLate(p.status, calculateDeadline(p.delai))
+            isLate: checkIfLate(p.status, calculateDeadline(p.delai)),
+            rating: 0 // Initialiser à 0, sera remplacé par les données Supabase
         }));
         
+        // Charger les notes depuis Supabase SI DISPONIBLE
+        await fetchPromiseRatingsFromSupabase();
+        
+        // Données d'actualités factices
         CONFIG.news = [
             {
                 id: '1',
@@ -124,6 +129,56 @@ async function loadData() {
     }
 }
 
+// ===== RÉCUPÉRER LES NOTES DEPUIS SUPABASE =====
+async function fetchPromiseRatingsFromSupabase() {
+    try {
+        if (!supabaseClient) {
+            console.warn('⚠️ Supabase non disponible, utilisation des notes locales');
+            return;
+        }
+        
+        // Récupérer toutes les notes depuis la table promise_ratings
+        const { data: ratings, error } = await supabaseClient
+            .from('promise_ratings')
+            .select('promise_id, rating')
+            .order('timestamp', { ascending: false });
+        
+        if (error) throw error;
+        
+        // Calculer la moyenne par promesse
+        const ratingsByPromise = {};
+        ratings.forEach(r => {
+            if (!ratingsByPromise[r.promise_id]) {
+                ratingsByPromise[r.promise_id] = { total: 0, count: 0 };
+            }
+            ratingsByPromise[r.promise_id].total += r.rating;
+            ratingsByPromise[r.promise_id].count += 1;
+        });
+        
+        // Mettre à jour CONFIG.promiseRatings
+        Object.keys(ratingsByPromise).forEach(promiseId => {
+            const avg = ratingsByPromise[promiseId].total / ratingsByPromise[promiseId].count;
+            CONFIG.promiseRatings[promiseId] = {
+                avg: parseFloat(avg.toFixed(1)),
+                count: ratingsByPromise[promiseId].count
+            };
+        });
+        
+        // Mettre à jour les notes dans les promesses
+        CONFIG.promises.forEach(p => {
+            if (CONFIG.promiseRatings[p.id]) {
+                p.rating = CONFIG.promiseRatings[p.id].avg;
+            }
+        });
+        
+        console.log('✅ Notes Supabase chargées:', Object.keys(CONFIG.promiseRatings).length, 'promesses notées');
+        
+    } catch (error) {
+        console.warn('⚠️ Impossible de charger les notes Supabase:', error.message);
+        // Continuer avec les notes locales si disponibles
+    }
+}
+
 // ==========================================
 // CALCULS EXACTS DE LA VERSION ORIGINALE
 // ==========================================
@@ -143,6 +198,9 @@ function calculateDeadline(delaiText) {
 }
 
 function checkIfLate(status, deadline) {
+    // CORRECTION CRITIQUE : Un engagement est "en retard" SI :
+    // 1. Il n'est PAS réalisé ET
+    // 2. La date limite est PASSÉE
     return status !== 'realise' && CONFIG.CURRENT_DATE > deadline;
 }
 
@@ -154,18 +212,42 @@ function calculateStats() {
     const retard = CONFIG.promises.filter(p => p.isLate).length;
     const avecMaj = CONFIG.promises.filter(p => p.mises_a_jour?.length > 0).length;
     
-    // ===== CALCUL EXACT DE LA VERSION ORIGINALE (PONDÉRATION SPÉCIFIQUE) =====
+    // ===== CALCUL EXACT DE LA VERSION ORIGINALE =====
     // Pondération: Réalisés (100%) + En cours (50%) + Non lancés (10%)
     const tauxRealisation = total > 0 
         ? (((realise * 100) + (encours * 50) + (nonLance * 10)) / (total * 100) * 100).toFixed(1) 
         : 0;
     
-    // Note moyenne
-    const totalNotes = CONFIG.promises.reduce((sum, p) => sum + (p.rating || 0), 0);
-    const promessesAvecNote = CONFIG.promises.filter(p => p.rating).length;
-    const avgRating = promessesAvecNote > 0 ? (totalNotes / promessesAvecNote).toFixed(1) : '0.0';
+    // Progression = même calcul que le taux de réalisation
+    const progression = tauxRealisation;
     
-    // Délai moyen restant
+    // ===== NOTE MOYENNE DEPUIS SUPABASE =====
+    let totalNotes = 0;
+    let totalVotes = 0;
+    let promessesNotees = 0;
+    
+    // Utiliser les données Supabase si disponibles
+    if (Object.keys(CONFIG.promiseRatings).length > 0) {
+        Object.values(CONFIG.promiseRatings).forEach(r => {
+            totalNotes += r.avg * r.count;
+            totalVotes += r.count;
+        });
+        promessesNotees = Object.keys(CONFIG.promiseRatings).length;
+    } 
+    // Sinon utiliser les notes locales
+    else {
+        CONFIG.promises.forEach(p => {
+            if (p.rating && p.rating > 0) {
+                totalNotes += p.rating;
+                totalVotes += 1;
+                promessesNotees += 1;
+            }
+        });
+    }
+    
+    const avgRating = totalVotes > 0 ? (totalNotes / totalVotes).toFixed(1) : '0.0';
+    
+    // Délai moyen restant (seulement pour les "en cours" PAS en retard)
     const promessesEnCours = CONFIG.promises.filter(p => p.status === 'encours' && !p.isLate);
     let avgDelay = '0j';
     if (promessesEnCours.length > 0) {
@@ -207,8 +289,9 @@ function calculateStats() {
         nonLancePercentage: total > 0 ? ((nonLance / total) * 100).toFixed(1) : 0,
         retardPercentage: total > 0 ? ((retard / total) * 100).toFixed(1) : 0,
         tauxRealisation,
+        progression,
         avgRating,
-        ratingCount: promessesAvecNote,
+        ratingCount: totalVotes,
         avecMaj,
         avecMajPercentage: total > 0 ? ((avecMaj / total) * 100).toFixed(1) : 0,
         avgDelay,
@@ -217,8 +300,9 @@ function calculateStats() {
         domaineCount
     };
 }
+
 // ==========================================
-// RENDU
+// RENDU - AVEC BONS IDs POUR VOTRE HTML
 // ==========================================
 function renderAll() {
     const stats = calculateStats();
@@ -265,7 +349,7 @@ function renderStats(stats) {
     else progressText = 'Début';
     updateElement('progress-text', progressText);
     
-    // KPI 7: Note Moyenne
+    // KPI 7: Note Moyenne (depuis Supabase)
     updateElement('moyenne-notes', stats.avgRating);
     updateElement('votes-total', `${stats.ratingCount} votes`);
     
@@ -283,6 +367,7 @@ function renderStats(stats) {
     updateElement('domaine-principal', stats.domainePrincipal || '-');
     updateElement('domaine-count', `${stats.domaineCount || 0} engagements`);
 }
+
 function renderPromises(promises) {
     const container = document.getElementById('promisesContainer');
     if (!container) return;
@@ -382,7 +467,7 @@ function renderNews(news) {
 }
 
 // ==========================================
-// CAROUSEL REVUE DE PRESSE (EBOOK STYLE)
+// CAROUSEL REVUE DE PRESSE (EBOOK STYLE - SUPERPOSITION UNIQUE)
 // ==========================================
 function renderPressCarousel() {
     const carousel = document.getElementById('pressCarousel');
@@ -459,10 +544,10 @@ function setupPromiseRatings() {
                     s.classList.toggle('filled', parseInt(s.getAttribute('data-value')) <= value);
                 });
                 
-                // Sauvegarde
+                // Sauvegarde dans Supabase
                 await savePromiseRating(id, value);
                 showNotification(`⭐ Note enregistrée : ${value}/5`, 'success');
-                renderAll();
+                renderAll(); // Recalculer les stats avec la nouvelle note
             };
             
             star.addEventListener('click', handler);
@@ -493,15 +578,30 @@ function setupServiceRatings() {
 
 async function savePromiseRating(id, rating) {
     try {
+        // Sauvegarder dans Supabase si disponible
         if (supabaseClient) {
             await supabaseClient.from('promise_ratings').insert([{
                 promise_id: id,
                 rating: rating,
                 timestamp: new Date().toISOString()
             }]);
+            
+            // Mettre à jour le cache local
+            if (!CONFIG.promiseRatings[id]) {
+                CONFIG.promiseRatings[id] = { avg: rating, count: 1 };
+            } else {
+                // Recalculer la moyenne
+                const oldAvg = CONFIG.promiseRatings[id].avg;
+                const oldCount = CONFIG.promiseRatings[id].count;
+                const newAvg = ((oldAvg * oldCount) + rating) / (oldCount + 1);
+                CONFIG.promiseRatings[id] = { avg: parseFloat(newAvg.toFixed(1)), count: oldCount + 1 };
+            }
         }
+        
+        // Mettre à jour la promesse locale
         const p = CONFIG.promises.find(p => p.id === id);
         if (p) p.rating = rating;
+        
         return true;
     } catch (e) {
         console.error('Erreur notation:', e);

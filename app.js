@@ -1,5 +1,5 @@
 // ==========================================
-// APP.JS - VERSION FINALE CORRIGÉE (SANS DOUBLONS)
+// APP.JS - VERSION FINALE CORRIGÉE ET FONCTIONNELLE
 // ==========================================
 // Configuration Supabase v2 - UNE SEULE DÉCLARATION
 const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
@@ -12,9 +12,11 @@ try {
         console.log('✅ Supabase v2 initialisé');
     } else {
         console.warn('⚠️ Supabase SDK non disponible ou version incorrecte');
+        supabaseClient = null;
     }
 } catch (error) {
     console.error('❌ Erreur d\'initialisation Supabase:', error);
+    supabaseClient = null;
 }
 
 // Configuration globale - UNE SEULE DÉCLARATION
@@ -33,7 +35,7 @@ const CONFIG = {
     currentIndex: 0,
     subscribers: JSON.parse(localStorage.getItem('subscribers') || '[]'),
     ratings: JSON.parse(localStorage.getItem('ratings') || '[]'),
-    promiseRatings: {} // Stockage des notes Supabase par promesse
+    promiseRatings: {} // Stockage des notes Supabase par promesse: { promise_id: { avg: X, count: Y } }
 };
 
 // Gestion sécurisée du localStorage
@@ -198,7 +200,7 @@ function calculateDeadline(delaiText) {
 }
 
 function checkIfLate(status, deadline) {
-    // CORRECTION CRITIQUE : Un engagement est "en retard" SI :
+    // CORRECTION CRITIQUE : Un engagement est "en retard" SEULEMENT si :
     // 1. Il n'est PAS réalisé ET
     // 2. La date limite est PASSÉE
     return status !== 'realise' && CONFIG.CURRENT_DATE > deadline;
@@ -262,22 +264,6 @@ function calculateStats() {
                    `${joursMoyen}j`;
     }
     
-    // Domaine principal
-    let domainePrincipal = '-';
-    let domaineCount = 0;
-    if (total > 0) {
-        const domaines = {};
-        CONFIG.promises.forEach(p => {
-            domaines[p.domaine] = (domaines[p.domaine] || 0) + 1;
-        });
-        const entries = Object.entries(domaines);
-        if (entries.length > 0) {
-            const [domaine, count] = entries.reduce((a, b) => a[1] > b[1] ? a : b);
-            domainePrincipal = domaine.length > 15 ? `${domaine.substring(0, 12)}...` : domaine;
-            domaineCount = count;
-        }
-    }
-    
     return {
         total,
         realise,
@@ -295,9 +281,7 @@ function calculateStats() {
         avecMaj,
         avecMajPercentage: total > 0 ? ((avecMaj / total) * 100).toFixed(1) : 0,
         avgDelay,
-        promessesEnCours: promessesEnCours.length,
-        domainePrincipal,
-        domaineCount
+        promessesEnCours: promessesEnCours.length
     };
 }
 
@@ -319,53 +303,46 @@ function renderStats(stats) {
     };
     
     // KPI 1: Total
-    updateElement('total', stats.total);
-    updateElement('total-percentage', '100%');
+    updateElement('total-promises', stats.total);
     
     // KPI 2: Réalisés
-    updateElement('realise', stats.realise);
-    updateElement('realise-percentage', `${stats.realisePercentage}%`);
+    updateElement('realized', stats.realise);
     
     // KPI 3: En Cours
-    updateElement('encours', stats.encours);
-    updateElement('encours-percentage', `${stats.encoursPercentage}%`);
+    updateElement('inProgress', stats.encours);
     
     // KPI 4: Non Lancés
-    updateElement('non-lance', stats.nonLance);
-    updateElement('non-lance-percentage', `${stats.nonLancePercentage}%`);
+    updateElement('notStarted', stats.nonLance);
     
     // KPI 5: En Retard
-    updateElement('retard', stats.retard);
-    updateElement('retard-percentage', `${stats.retardPercentage}%`);
+    updateElement('delayed', stats.retard);
     
-    // KPI 6: Taux de Réalisation + Texte progression
-    updateElement('taux-realisation', `${stats.tauxRealisation}%`);
+    // KPI 6: Taux de Réalisation
+    updateElement('globalProgress', `${stats.tauxRealisation}%`);
     
-    let progressText = '';
-    if (stats.tauxRealisation >= 80) progressText = 'Excellent';
-    else if (stats.tauxRealisation >= 60) progressText = 'Bon';
-    else if (stats.tauxRealisation >= 40) progressText = 'Moyen';
-    else if (stats.tauxRealisation >= 20) progressText = 'Faible';
-    else progressText = 'Début';
-    updateElement('progress-text', progressText);
+    // KPI 7: Progression
+    updateElement('progression', `${stats.progression}%`);
     
-    // KPI 7: Note Moyenne (depuis Supabase)
-    updateElement('moyenne-notes', stats.avgRating);
-    updateElement('votes-total', `${stats.ratingCount} votes`);
+    // KPI 8: Note Moyenne (depuis Supabase)
+    updateElement('avgRating', stats.avgRating);
+    updateElement('ratingCount', `${stats.ratingCount} votes`);
     
-    // KPI 8: Avec Mises à Jour
-    updateElement('avec-maj', stats.avecMaj);
-    updateElement('avec-maj-percentage', `${stats.avecMajPercentage}%`);
+    // KPI 9: Avec Mises à Jour
+    updateElement('withUpdates', stats.avecMaj);
     
-    // KPI 9: Délai Moyen
-    updateElement('delai-moyen', stats.avgDelay);
-    updateElement('jours-restants', stats.promessesEnCours > 0 
-        ? `${stats.promessesEnCours} engagements` 
-        : 'Aucun');
+    // KPI 10: Délai Moyen
+    updateElement('avgDelay', stats.avgDelay);
     
-    // KPI 10: Domaine Principal
-    updateElement('domaine-principal', stats.domainePrincipal || '-');
-    updateElement('domaine-count', `${stats.domaineCount || 0} engagements`);
+    // Mettre à jour les pourcentages dans les cartes
+    const percentages = document.querySelectorAll('.stat-percentage');
+    if (percentages[0]) percentages[0].textContent = '100%'; // Total
+    if (percentages[1]) percentages[1].textContent = `${stats.realisePercentage}%`;
+    if (percentages[2]) percentages[2].textContent = `${stats.encoursPercentage}%`;
+    if (percentages[3]) percentages[3].textContent = `${stats.nonLancePercentage}%`;
+    if (percentages[4]) percentages[4].textContent = `${stats.retardPercentage}%`;
+    if (percentages[5]) percentages[5].style.color = 'var(--primary)'; // Taux de réalisation
+    if (percentages[6]) percentages[6].style.color = 'var(--warning)'; // Progression
+    if (percentages[8]) percentages[8].textContent = `${stats.avecMajPercentage}%`;
 }
 
 function renderPromises(promises) {
@@ -467,7 +444,7 @@ function renderNews(news) {
 }
 
 // ==========================================
-// CAROUSEL REVUE DE PRESSE (EBOOK STYLE - SUPERPOSITION UNIQUE)
+// CAROUSEL REVUE DE PRESSE (EBOOK STYLE)
 // ==========================================
 function renderPressCarousel() {
     const carousel = document.getElementById('pressCarousel');
@@ -544,8 +521,8 @@ function setupPromiseRatings() {
                     s.classList.toggle('filled', parseInt(s.getAttribute('data-value')) <= value);
                 });
                 
-                // Sauvegarde dans Supabase
-                await savePromiseRating(id, value);
+                // Envoi du vote à Supabase
+                await ratePromise(id, value);
                 showNotification(`⭐ Note enregistrée : ${value}/5`, 'success');
                 renderAll(); // Recalculer les stats avec la nouvelle note
             };
@@ -576,36 +553,68 @@ function setupServiceRatings() {
     });
 }
 
-async function savePromiseRating(id, rating) {
+// ===== ENVOYER UN VOTE INDIVIDUEL À SUPABASE =====
+async function ratePromise(promiseId, rating) {
     try {
-        // Sauvegarder dans Supabase si disponible
+        // 1. Envoi à Supabase (table 'promise_ratings')
         if (supabaseClient) {
-            await supabaseClient.from('promise_ratings').insert([{
-                promise_id: id,
-                rating: rating,
-                timestamp: new Date().toISOString()
-            }]);
+            const { error } = await supabaseClient
+                .from('promise_ratings')
+                .insert([{ 
+                    promise_id: promiseId, 
+                    rating: rating,
+                    user_ip: await getUserIP() // Optionnel mais utile
+                }]);
             
-            // Mettre à jour le cache local
-            if (!CONFIG.promiseRatings[id]) {
-                CONFIG.promiseRatings[id] = { avg: rating, count: 1 };
-            } else {
-                // Recalculer la moyenne
-                const oldAvg = CONFIG.promiseRatings[id].avg;
-                const oldCount = CONFIG.promiseRatings[id].count;
-                const newAvg = ((oldAvg * oldCount) + rating) / (oldCount + 1);
-                CONFIG.promiseRatings[id] = { avg: parseFloat(newAvg.toFixed(1)), count: oldCount + 1 };
-            }
+            if (error) throw error;
+            console.log(`✅ Vote ${rating}/5 enregistré pour promesse ${promiseId}`);
         }
         
-        // Mettre à jour la promesse locale
-        const p = CONFIG.promises.find(p => p.id === id);
-        if (p) p.rating = rating;
+        // 2. Mettre à jour le cache local
+        if (!CONFIG.promiseRatings[promiseId]) {
+            CONFIG.promiseRatings[promiseId] = { avg: rating, count: 1 };
+        } else {
+            // Recalculer la moyenne
+            const oldAvg = CONFIG.promiseRatings[promiseId].avg;
+            const oldCount = CONFIG.promiseRatings[promiseId].count;
+            const newAvg = ((oldAvg * oldCount) + rating) / (oldCount + 1);
+            CONFIG.promiseRatings[promiseId] = { 
+                avg: parseFloat(newAvg.toFixed(1)), 
+                count: oldCount + 1 
+            };
+        }
+        
+        // 3. Mettre à jour la promesse locale
+        const p = CONFIG.promises.find(p => p.id === promiseId);
+        if (p) p.rating = CONFIG.promiseRatings[promiseId].avg;
+        
+        // 4. Rafraîchir les votes publics depuis Supabase
+        await fetchPromiseRatingsFromSupabase();
         
         return true;
-    } catch (e) {
-        console.error('Erreur notation:', e);
+    } catch (error) {
+        console.error('❌ Erreur lors de l\'enregistrement du vote:', error);
+        
+        // Fallback 100% local
+        const p = CONFIG.promises.find(p => p.id === promiseId);
+        if (p) {
+            if (!p.votes) p.votes = [];
+            p.votes.push(rating);
+            p.rating = (p.votes.reduce((a, b) => a + b, 0) / p.votes.length).toFixed(1);
+        }
+        
         return false;
+    }
+}
+
+// ===== OBTENIR L'IP DE L'UTILISATEUR (optionnel) =====
+async function getUserIP() {
+    try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        return data.ip;
+    } catch (e) {
+        return 'unknown';
     }
 }
 

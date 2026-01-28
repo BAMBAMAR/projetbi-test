@@ -1298,3 +1298,68 @@ body {
         height: 350px;
     }
 }
+/* ===== PROGRESSION BAR ===== */
+.progress-container {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(42, 109, 93, 0.03);
+    border-radius: 8px;
+    border: 1px solid rgba(42, 109, 93, 0.1);
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    transition: width 0.5s ease;
+    border-radius: 4px;
+}
+
+.progress-text {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--primary);
+    font-weight: 600;
+    text-align: center;
+}
+
+/* ===== DÉLAI INFO ===== */
+.delay-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(42, 157, 143, 0.1);
+    color: var(--success);
+    border: 1px solid rgba(42, 157, 143, 0.3);
+}
+
+.delay-badge.delay-danger {
+    background: rgba(231, 111, 81, 0.15);
+    color: var(--danger);
+    border-color: rgba(231, 111, 81, 0.3);
+}
+
+.delay-badge i {
+    font-size: 0.9rem;
+}

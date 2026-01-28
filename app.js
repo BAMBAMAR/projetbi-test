@@ -1,20 +1,23 @@
 // ==========================================
-// APP.JS - VERSION FINALE CORRIGÉE
+// APP.JS - VERSION FINALE CORRIGÉE ET COMPLÈTE
 // ==========================================
-// Configuration Supabase - UNE SEULE DÉCLARATION
+// Configuration Supabase v2 - UNE SEULE DÉCLARATION
 const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_joJuW7-vMiQG302_2Mvj5A_sVaD8Wap';
 let supabaseClient = null;
 
 try {
-    if (window.supabase) {
+    // CORRECTION CRITIQUE : Utiliser createClient() pour Supabase v2
+    if (typeof window !== 'undefined' && window.supabase && typeof window.supabase.createClient === 'function') {
         supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         console.log('✅ Supabase v2 initialisé');
     } else {
-        console.warn('⚠️ Supabase SDK non disponible');
+        console.warn('⚠️ Supabase SDK non disponible ou version incorrecte');
+        supabaseClient = null;
     }
 } catch (error) {
     console.error('❌ Erreur d\'initialisation Supabase:', error);
+    supabaseClient = null;
 }
 
 // Configuration globale - UNE SEULE DÉCLARATION
@@ -35,21 +38,46 @@ const CONFIG = {
     ratings: JSON.parse(localStorage.getItem('ratings') || '[]')
 };
 
+// Gestion sécurisée du localStorage
+const safeStorage = {
+    getItem: function(key) {
+        try {
+            if (typeof localStorage === 'undefined') return null;
+            return localStorage.getItem(key);
+        } catch (e) {
+            console.warn('🔒 localStorage bloqué (Tracking Prevention)', e);
+            return null;
+        }
+    },
+    setItem: function(key, value) {
+        try {
+            if (typeof localStorage === 'undefined') return false;
+            localStorage.setItem(key, value);
+            return true;
+        } catch (e) {
+            console.warn('🔒 Impossible d\'écrire dans localStorage', e);
+            return false;
+        }
+    }
+};
+
 // ==========================================
-// CHARGEMENT DES DONNÉES
+// INITIALISATION
 // ==========================================
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('🚀 Initialisation...');
     await loadData();
     setupEventListeners();
     setupCarousel();
-    setupStarRatings();
+    setupServiceRatings(); // Services = une seule fois
     console.log('✅ Initialisation terminée');
 });
 
+// ==========================================
+// CHARGEMENT DES DONNÉES
+// ==========================================
 async function loadData() {
     try {
-        // Charger les données depuis le fichier JSON local
         const response = await fetch('promises.json');
         const data = await response.json();
         
@@ -60,12 +88,11 @@ async function loadData() {
             isLate: checkIfLate(p.status, calculateDeadline(p.delai))
         }));
         
-        // Données d'actualités factices
         CONFIG.news = [
             {
                 id: '1',
                 title: 'Lancement officiel du programme de construction scolaire',
-                excerpt: 'Le ministre de l\'Éducation nationale a procédé au lancement officiel...',
+                excerpt: 'Le ministre de l\'Éducation nationale a procédé au lancement officiel du programme de construction de 100 nouvelles écoles...',
                 date: '25/01/2026',
                 source: 'Le Soleil',
                 image: 'school'
@@ -73,10 +100,18 @@ async function loadData() {
             {
                 id: '2',
                 title: 'Première école inaugurée à Thiès',
-                excerpt: 'La première école du programme présidentiel a été inaugurée...',
+                excerpt: 'La première école du programme présidentiel a été inaugurée hier à Thiès en présence des autorités locales...',
                 date: '20/01/2026',
                 source: 'Sud Quotidien',
                 image: 'inauguration'
+            },
+            {
+                id: '3',
+                title: 'Budget 2026 : Priorité à l\'éducation et la santé',
+                excerpt: 'Le budget 2026 consacre 35% des dépenses aux secteurs de l\'éducation et de la santé, confirmant les engagements...',
+                date: '15/01/2026',
+                source: 'WalFadjri',
+                image: 'budget'
             }
         ];
         
@@ -177,19 +212,32 @@ function renderAll() {
 }
 
 function renderStats(stats) {
-    // Mise à jour des valeurs avec animation
-    animateValue(document.getElementById('total-promises'), 0, stats.total, 1000);
-    animateValue(document.getElementById('realized'), 0, stats.realise, 1000);
-    animateValue(document.getElementById('inProgress'), 0, stats.encours, 1000);
-    animateValue(document.getElementById('notStarted'), 0, stats.nonLance, 1000);
-    animateValue(document.getElementById('delayed'), 0, stats.retard, 1000);
+    const elements = {
+        total: document.getElementById('total-promises'),
+        realise: document.getElementById('realized'),
+        encours: document.getElementById('inProgress'),
+        notStarted: document.getElementById('notStarted'),
+        retard: document.getElementById('delayed'),
+        taux: document.getElementById('globalProgress'),
+        progression: document.getElementById('progression'),
+        avgRating: document.getElementById('avgRating'),
+        ratingCount: document.getElementById('ratingCount'),
+        withUpdates: document.getElementById('withUpdates'),
+        avgDelay: document.getElementById('avgDelay')
+    };
     
-    document.getElementById('globalProgress').textContent = stats.tauxRealisation + '%';
-    document.getElementById('progression').textContent = stats.progression + '%';
-    document.getElementById('avgRating').textContent = stats.avgRating;
-    document.getElementById('ratingCount').textContent = stats.ratingCount + ' votes';
-    document.getElementById('withUpdates').textContent = stats.avecMaj;
-    document.getElementById('avgDelay').textContent = stats.avgDelay;
+    if (elements.total) animateValue(elements.total, 0, stats.total, 1000);
+    if (elements.realise) animateValue(elements.realise, 0, stats.realise, 1000);
+    if (elements.encours) animateValue(elements.encours, 0, stats.encours, 1000);
+    if (elements.notStarted) animateValue(elements.notStarted, 0, stats.nonLance, 1000);
+    if (elements.retard) animateValue(elements.retard, 0, stats.retard, 1000);
+    
+    if (elements.taux) elements.taux.textContent = stats.tauxRealisation + '%';
+    if (elements.progression) elements.progression.textContent = stats.progression + '%';
+    if (elements.avgRating) elements.avgRating.textContent = stats.avgRating;
+    if (elements.ratingCount) elements.ratingCount.textContent = stats.ratingCount + ' votes';
+    if (elements.withUpdates) elements.withUpdates.textContent = stats.avecMaj;
+    if (elements.avgDelay) elements.avgDelay.textContent = stats.avgDelay;
 }
 
 function renderPromises(promises) {
@@ -207,7 +255,7 @@ function renderPromises(promises) {
     }
     
     container.innerHTML = promises.map(p => createPromiseCard(p)).join('');
-    setupPromiseRatings();
+    setupPromiseRatings(); // Appel CRITIQUE après le rendu
 }
 
 function createPromiseCard(p) {
@@ -241,7 +289,7 @@ function createPromiseCard(p) {
                     </small>
                 </div>` : ''}
             
-            <!-- NOTATION PAR ÉTOILES (AJOUTÉ) -->
+            <!-- NOTATION PAR ÉTOILES -->
             <div class="rating-section-promise">
                 <div class="stars" id="stars-${p.id}">
                     ${[1,2,3,4,5].map(i => `
@@ -251,7 +299,7 @@ function createPromiseCard(p) {
                 <span class="rating-label">${p.rating ? p.rating.toFixed(1) + '/5' : 'Pas encore noté'}</span>
             </div>
             
-            <!-- PARTAGE (AJOUTÉ) -->
+            <!-- PARTAGE -->
             <div class="share-section">
                 <a href="#" class="share-btn share-twitter" onclick="shareOnSocial('twitter','${p.id}')" title="Partager sur Twitter">
                     <i class="fab fa-twitter"></i>
@@ -276,7 +324,7 @@ function renderNews(news) {
     container.innerHTML = news.map(item => `
         <div class="news-card">
             <div class="news-image">
-                <i class="fas fa-${item.image === 'school' ? 'school' : 'ribbon'}"></i>
+                <i class="fas fa-${item.image === 'school' ? 'school' : item.image === 'inauguration' ? 'ribbon' : 'chart-line'}"></i>
             </div>
             <div class="news-content">
                 <div class="news-date">${item.date}</div>
@@ -345,41 +393,64 @@ function goToSlide(index) {
 }
 
 // ==========================================
-// NOTATION ET PARTAGE
+// NOTATION : FONCTIONS SÉPARÉES POUR ÉVITER LES DOUBLONS
 // ==========================================
-function setupStarRatings() {
-    // Étoiles pour les promesses
-    document.querySelectorAll('.stars i').forEach(star => {
-        star.addEventListener('click', async function() {
-            const value = parseInt(this.getAttribute('data-value'));
-            const id = this.getAttribute('data-promise-id');
-            
-            // Mise à jour visuelle
-            document.querySelectorAll(`#stars-${id} i`).forEach(s => {
-                s.classList.toggle('filled', parseInt(s.getAttribute('data-value')) <= value);
-            });
-            
-            // Sauvegarde
-            await savePromiseRating(id, value);
-            showNotification(`⭐ Note enregistrée : ${value}/5`, 'success');
-            renderAll();
+// Étoiles pour les promesses (appelée APRÈS chaque rendu)
+function setupPromiseRatings() {
+    // Supprimer les anciens écouteurs pour éviter les doublons
+    document.querySelectorAll('.stars[data-setup="true"]').forEach(container => {
+        container.querySelectorAll('i').forEach(star => {
+            star.removeEventListener('click', star.clickHandler);
         });
+        container.removeAttribute('data-setup');
     });
     
-    // Étoiles pour les services
-    ['accessibility', 'welcome'].forEach(field => {
-        document.querySelectorAll(`#${field}-stars .star`).forEach(star => {
+    // Ajouter de nouveaux écouteurs
+    document.querySelectorAll('.stars').forEach(container => {
+        container.querySelectorAll('i').forEach(star => {
+            const handler = async function() {
+                const value = parseInt(this.getAttribute('data-value'));
+                const id = this.getAttribute('data-promise-id');
+                
+                // Mise à jour visuelle
+                document.querySelectorAll(`#stars-${id} i`).forEach(s => {
+                    s.classList.toggle('filled', parseInt(s.getAttribute('data-value')) <= value);
+                });
+                
+                // Sauvegarde
+                await savePromiseRating(id, value);
+                showNotification(`⭐ Note enregistrée : ${value}/5`, 'success');
+                renderAll();
+            };
+            
+            star.addEventListener('click', handler);
+            star.clickHandler = handler; // Stocker pour suppression future
+        });
+        container.setAttribute('data-setup', 'true');
+    });
+}
+
+// Étoiles pour les services (appelée UNE SEULE FOIS à l'initialisation)
+function setupServiceRatings() {
+    ['accessibility', 'welcome', 'efficiency', 'transparency'].forEach(field => {
+        const container = document.getElementById(`${field}-stars`);
+        if (!container || container.dataset.setup === 'true') return;
+        
+        container.querySelectorAll('.star').forEach(star => {
             star.addEventListener('click', function() {
                 const value = parseInt(this.getAttribute('data-value'));
                 document.getElementById(field).value = value;
-                document.querySelectorAll(`#${field}-stars .star`).forEach(s => {
+                container.querySelectorAll('.star').forEach(s => {
                     s.classList.toggle('filled', parseInt(s.getAttribute('data-value')) <= value);
                 });
             });
         });
+        
+        container.dataset.setup = 'true';
     });
 }
 
+// Sauvegarde de la notation d'une promesse
 async function savePromiseRating(id, rating) {
     try {
         if (supabaseClient) {
@@ -398,6 +469,9 @@ async function savePromiseRating(id, rating) {
     }
 }
 
+// ==========================================
+// PARTAGE SUR RÉSEAUX SOCIAUX
+// ==========================================
 function shareOnSocial(platform, id) {
     const p = CONFIG.promises.find(p => p.id === id);
     if (!p) return;
@@ -426,12 +500,13 @@ function shareOnSocial(platform, id) {
 }
 
 // ==========================================
-// FILTRES
+// FILTRES COMPLETS
 // ==========================================
 function applyFilters() {
     const search = document.getElementById('searchInput')?.value.toLowerCase() || '';
     const sector = document.getElementById('sectorFilter')?.value || '';
     const status = document.getElementById('statusFilter')?.value || '';
+    const sort = document.getElementById('sortFilter')?.value || 'recent';
     
     let filtered = CONFIG.promises.filter(p => {
         const matchSearch = p.engagement.toLowerCase().includes(search) ||
@@ -442,7 +517,18 @@ function applyFilters() {
         return matchSearch && matchSector && matchStatus;
     });
     
+    filtered = sortPromises(filtered, sort);
     renderPromises(filtered);
+}
+
+function sortPromises(promises, type) {
+    return [...promises].sort((a, b) => {
+        if (type === 'recent') return b.id - a.id;
+        if (type === 'ancient') return a.id - b.id;
+        if (type === 'rating') return (b.rating || 0) - (a.rating || 0);
+        if (type === 'delay') return (a.isLate && !b.isLate) ? -1 : (!a.isLate && b.isLate) ? 1 : 0;
+        return 0;
+    });
 }
 
 function applyQuickFilter(filter) {
@@ -456,6 +542,7 @@ function applyQuickFilter(filter) {
         document.getElementById('searchInput').value = '';
         document.getElementById('sectorFilter').value = '';
         document.getElementById('statusFilter').value = '';
+        document.getElementById('sortFilter').value = 'recent';
     }
     
     renderPromises(filtered);
@@ -465,7 +552,7 @@ function applyQuickFilter(filter) {
 // ÉVÉNEMENTS
 // ==========================================
 function setupEventListeners() {
-    ['searchInput', 'sectorFilter', 'statusFilter'].forEach(id => {
+    ['searchInput', 'sectorFilter', 'statusFilter', 'sortFilter'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.addEventListener('input', applyFilters);
     });
@@ -484,13 +571,15 @@ function setupEventListeners() {
             service: document.getElementById('service').value,
             accessibility: parseInt(document.getElementById('accessibility').value),
             welcome: parseInt(document.getElementById('welcome').value),
+            efficiency: parseInt(document.getElementById('efficiency').value),
+            transparency: parseInt(document.getElementById('transparency').value),
             comment: document.getElementById('comment').value.trim(),
             date: new Date().toISOString(),
             id: Date.now()
         };
         
         CONFIG.ratings.push(rating);
-        localStorage.setItem('ratings', JSON.stringify(CONFIG.ratings));
+        safeStorage.setItem('ratings', JSON.stringify(CONFIG.ratings));
         
         document.getElementById('rating-form').reset();
         document.querySelectorAll('.stars-container .star').forEach(s => s.classList.remove('filled'));

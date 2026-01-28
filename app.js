@@ -185,7 +185,7 @@ async function fetchPromiseRatingsFromSupabase() {
         const { data: ratings, error } = await supabaseClient
             .from('votes')
             .select('promise_id, rating')
-            .order('', { ascending: false });
+            .order('created_at', { ascending: false });
         
         if (error) throw error;
         

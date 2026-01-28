@@ -1,26 +1,25 @@
 // ==========================================
-// APP.JS - VERSION FINALE CORRIGÉE (SANS DOUBLONS)
+// APP.JS - CORRIGÉ POUR SUPABASE v2
 // ==========================================
-
-// Configuration Supabase - UNE SEULE DÉCLARATION
+// Configuration Supabase - CORRECT POUR v2
 const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_joJuW7-vMiQG302_2Mvj5A_sVaD8Wap';
 let supabaseClient = null;
 
 try {
-    if (window.supabase) {
-        supabaseClient = window.supabase.create({
-            url: SUPABASE_URL,
-            key: SUPABASE_KEY
-        });
-        console.log('✅ Supabase initialisé');
+    // CORRECTION ICI : utiliser createClient au lieu de create
+    if (window.supabase && typeof window.supabase.createClient === 'function') {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        console.log('✅ Supabase v2 initialisé');
     } else {
-        console.warn('⚠️ Supabase SDK non disponible');
+        console.warn('⚠️ Supabase SDK non disponible ou version incorrecte');
+        // Fallback : utiliser null mais continuer le fonctionnement
+        supabaseClient = null;
     }
 } catch (error) {
     console.error('❌ Erreur d\'initialisation Supabase:', error);
+    supabaseClient = null; // Permettre le fonctionnement sans Supabase
 }
-
 // Configuration globale - UNE SEULE DÉCLARATION
 const CONFIG = {
     START_DATE: new Date('2024-04-02'),

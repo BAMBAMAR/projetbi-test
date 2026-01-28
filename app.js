@@ -39,14 +39,14 @@ const CONFIG = {
 };
 
 // Gestion sécurisée du localStorage
-const safeStorage = {
+/*const safeStorage = {
     getItem: function(key) {
         try { return localStorage.getItem(key); } catch (e) { return null; }
     },
     setItem: function(key, value) {
         try { localStorage.setItem(key, value); return true; } catch (e) { return false; }
     }
-};
+};*/
 
 // ==========================================
 // INITIALISATION

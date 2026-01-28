@@ -556,3 +556,25 @@ function showNotification(message, type = 'success') {
 
 // Exposer les fonctions globales
 window.shareOnSocial = shareOnSocial;
+// Gestion sécurisée du localStorage - AMÉLIORÉE
+const safeStorage = {
+    getItem: function(key) {
+        try {
+            if (typeof localStorage === 'undefined') return null;
+            return localStorage.getItem(key);
+        } catch (e) {
+            console.warn('🔒 localStorage bloqué (Tracking Prevention)', e);
+            return null;
+        }
+    },
+    setItem: function(key, value) {
+        try {
+            if (typeof localStorage === 'undefined') return false;
+            localStorage.setItem(key, value);
+            return true;
+        } catch (e) {
+            console.warn('🔒 Impossible d\'écrire dans localStorage', e);
+            return false;
+        }
+    }
+};

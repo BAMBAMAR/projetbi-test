@@ -1,0 +1,191 @@
+{
+  "start_date": "2024-04-02",
+  "last_update": "2026-01-28",
+  "promises": [
+    {
+      "id": "1",
+      "domaine": "Éducation",
+      "engagement": "Construire 100 nouvelles écoles dans les zones rurales",
+      "resultat": "Amélioration de l'accès à l'éducation pour 50 000 enfants",
+      "delai": "2 ans",
+      "status": "encours",
+      "rating": 4.5,
+      "mises_a_jour": [
+        {
+          "date": "15/06/2024",
+          "texte": "Appel d'offres lancé pour 40 écoles"
+        },
+        {
+          "date": "10/09/2024",
+          "texte": "Construction débutée pour 15 écoles"
+        },
+        {
+          "date": "05/01/2025",
+          "texte": "5 écoles inaugurées à Thiès et Saint-Louis"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "domaine": "Santé",
+      "engagement": "Équiper tous les hôpitaux régionaux en matériel médical moderne",
+      "resultat": "Réduction de 30% des évacuations sanitaires vers Dakar",
+      "delai": "3 ans",
+      "status": "encours",
+      "rating": 3.8,
+      "mises_a_jour": [
+        {
+          "date": "20/05/2024",
+          "texte": "Diagnostic des besoins terminé"
+        },
+        {
+          "date": "12/08/2024",
+          "texte": "Première phase d'équipement lancée"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "domaine": "Économie",
+      "engagement": "Créer 50 000 emplois pour les jeunes",
+      "resultat": "Taux de chômage des jeunes réduit de 15%",
+      "delai": "5 ans",
+      "status": "realise",
+      "rating": 4.8,
+      "mises_a_jour": [
+        {
+          "date": "01/08/2024",
+          "texte": "Programme de formation lancé"
+        },
+        {
+          "date": "15/11/2024",
+          "texte": "25 000 emplois créés"
+        },
+        {
+          "date": "10/01/2025",
+          "texte": "Objectif atteint : 52 000 emplois créés"
+        },
+        {
+          "date": "05/03/2025",
+          "texte": "Évaluation positive du programme"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "domaine": "Infrastructure",
+      "engagement": "Construire l'autoroute Dakar-Diamniadio-AIBD",
+      "resultat": "Réduction du temps de trajet de 60%",
+      "delai": "3 ans",
+      "status": "encours",
+      "rating": 4.2,
+      "mises_a_jour": [
+        {
+          "date": "10/07/2024",
+          "texte": "Travaux de terrassement en cours"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "domaine": "Agriculture",
+      "engagement": "Moderniser l'irrigation dans la vallée du fleuve Sénégal",
+      "resultat": "Augmentation de 40% de la production agricole",
+      "delai": "2 ans",
+      "status": "non-lance",
+      "rating": 3.5,
+      "mises_a_jour": []
+    },
+    {
+      "id": "6",
+      "domaine": "Énergie",
+      "engagement": "Atteindre 30% d'énergie renouvelable",
+      "resultat": "Réduction de la dépendance aux énergies fossiles",
+      "delai": "5 ans",
+      "status": "encours",
+      "rating": 4.0,
+      "mises_a_jour": [
+        {
+          "date": "05/07/2024",
+          "texte": "Parc solaire de 50MW inauguré"
+        },
+        {
+          "date": "20/10/2024",
+          "texte": "Nouvel appel d'offres pour 100MW éolien"
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "domaine": "Eau",
+      "engagement": "Fournir l'eau potable à 100% des ménages",
+      "resultat": "Accès universel à l'eau potable",
+      "delai": "5 ans",
+      "status": "encours",
+      "rating": 3.9,
+      "mises_a_jour": [
+        {
+          "date": "15/08/2024",
+          "texte": "Extension des réseaux en cours"
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "domaine": "Justice",
+      "engagement": "Réformer le système judiciaire",
+      "resultat": "Réduction des délais de traitement des affaires de 50%",
+      "delai": "3 ans",
+      "status": "realise",
+      "rating": 4.3,
+      "mises_a_jour": [
+        {
+          "date": "12/10/2024",
+          "texte": "Loi de réforme adoptée"
+        },
+        {
+          "date": "20/12/2024",
+          "texte": "Nouvelles procédures mises en place"
+        },
+        {
+          "date": "15/02/2025",
+          "texte": "Formation des magistrats terminée"
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "domaine": "Transport",
+      "engagement": "Moderniser le réseau ferroviaire",
+      "resultat": "Amélioration de la connectivité entre les régions",
+      "delai": "4 ans",
+      "status": "encours",
+      "rating": 3.7,
+      "mises_a_jour": [
+        {
+          "date": "01/09/2024",
+          "texte": "Diagnostic du réseau terminé"
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "domaine": "Numérique",
+      "engagement": "Déployer la fibre optique dans tout le pays",
+      "resultat": "Couverture internet haut débit à 95%",
+      "delai": "3 ans",
+      "status": "encours",
+      "rating": 4.1,
+      "mises_a_jour": [
+        {
+          "date": "10/06/2024",
+          "texte": "Première phase de déploiement lancée"
+        },
+        {
+          "date": "05/11/2024",
+          "texte": "50% des zones urbaines couvertes"
+        }
+      ]
+    }
+  ]
+}

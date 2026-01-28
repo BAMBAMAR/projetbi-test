@@ -172,18 +172,18 @@ async function fetchPromiseRatingsFromSupabase() {
         
         // Vérifier si la table existe avant de tenter la requête
         const { data: tables, error: tableError } = await supabaseClient
-            .from('promise_ratings')
+            .from('votes')
             .select('promise_id, rating', { count: 'exact', head: true })
             .limit(1);
         
         if (tableError && tableError.message.includes('relation')) {
-            console.warn('⚠️ Table promise_ratings introuvable - création nécessaire dans Supabase');
+            console.warn('⚠️ Table votes introuvable - création nécessaire dans Supabase');
             return;
         }
         
         // Récupérer toutes les notes
         const { data: ratings, error } = await supabaseClient
-            .from('promise_ratings')
+            .from('votes')
             .select('promise_id, rating')
             .order('timestamp', { ascending: false });
         
@@ -219,7 +219,7 @@ async function fetchPromiseRatingsFromSupabase() {
         
     } catch (error) {
         if (error.message.includes('404') || error.message.includes('relation')) {
-            console.warn('⚠️ Table promise_ratings non trouvée - veuillez la créer dans Supabase');
+            console.warn('⚠️ Table votes non trouvée - veuillez la créer dans Supabase');
         } else {
             console.warn('⚠️ Impossible de charger les notes Supabase:', error.message);
         }
@@ -605,12 +605,12 @@ async function ratePromise(promiseId, rating) {
         if (supabaseClient) {
             // Vérifier si la table existe
             const { error: checkError } = await supabaseClient
-                .from('promise_ratings')
+                .from('votes')
                 .select('*', { count: 'exact', head: true })
                 .limit(1);
             
             if (checkError && checkError.message.includes('relation')) {
-                console.warn('⚠️ Table promise_ratings introuvable - création nécessaire');
+                console.warn('⚠️ Table votes introuvable - création nécessaire');
                 // Fallback: stockage local uniquement
                 const p = CONFIG.promises.find(p => p.id === promiseId);
                 if (p) {
@@ -623,7 +623,7 @@ async function ratePromise(promiseId, rating) {
             
             // Envoi à Supabase
             const { error } = await supabaseClient
-                .from('promise_ratings')
+                .from('votes')
                 .insert([{ 
                     promise_id: promiseId, 
                     rating: rating,

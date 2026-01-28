@@ -19,7 +19,7 @@ try {
 // Configuration globale - UNE SEULE DÉCLARATION
 const CONFIG = {
     START_DATE: new Date('2024-04-02'),
-    CURRENT_DATE: new Date('2026-01-28'), // ✅ DATE DE RÉFÉRENCE FIXÉE AU 28/01/2026
+    CURRENT_DATE: new Date('2026-01-28'), // ✅ DATE FIXÉE AU 28/01/2026
     promises: [],
     news: [],
     press: [
@@ -53,11 +53,11 @@ async function loadData() {
         const response = await fetch('promises.json');
         const data = await response.json();
         
-        // ✅ UTILISER last_update COMME DATE DE RÉFÉRENCE (pas la date réelle)
+        // ✅ UTILISER last_update COMME DATE DE RÉFÉRENCE
         CONFIG.START_DATE = new Date(data.start_date);
         CONFIG.CURRENT_DATE = data.last_update 
             ? new Date(data.last_update) 
-            : new Date('2026-01-28'); // Date par défaut si absente
+            : new Date('2026-01-28'); // Date par défaut
         
         console.log('📅 Dates configurées:');
         console.log('   - Début du projet:', CONFIG.START_DATE.toISOString().split('T')[0]);
@@ -67,7 +67,7 @@ async function loadData() {
             ...p,
             deadline: calculateDeadline(p.delai),
             isLate: checkIfLate(p.status, calculateDeadline(p.delai)),
-            rating: p.rating || 0 // Initialiser la note
+            rating: p.rating || 0
         }));
         
         CONFIG.news = [
@@ -87,7 +87,7 @@ async function loadData() {
 }
 
 // ==========================================
-// CALCULS EXACTS DE LA VERSION ORIGINALE (VÉRIFIÉS)
+// CALCULS EXACTS DE LA VERSION ORIGINALE
 // ==========================================
 function calculateDeadline(delaiText) {
     const text = delaiText.toLowerCase().trim();
@@ -99,15 +99,13 @@ function calculateDeadline(delaiText) {
     else if (text.includes('2 ans')) result.setFullYear(result.getFullYear() + 2);
     else if (text.includes('3 ans')) result.setFullYear(result.getFullYear() + 3);
     else if (text.includes('5 ans') || text.includes('quinquennat')) result.setFullYear(result.getFullYear() + 5);
-    else result.setFullYear(result.getFullYear() + 5); // Défaut
+    else result.setFullYear(result.getFullYear() + 5);
     
     return result;
 }
 
 function checkIfLate(status, deadline) {
-    // ✅ CORRECTION CRITIQUE : Un engagement est "en retard" SEULEMENT si :
-    // 1. Il n'est PAS réalisé
-    // 2. ET sa date limite est PASSÉE par rapport à la date de référence (last_update)
+    if (!deadline || !(deadline instanceof Date)) return false;
     return status !== 'realise' && CONFIG.CURRENT_DATE > deadline;
 }
 
@@ -120,15 +118,11 @@ function calculateStats() {
     const avecMaj = CONFIG.promises.filter(p => p.mises_a_jour?.length > 0).length;
     
     // ✅ CALCUL EXACT DE LA VERSION ORIGINALE (pondéré)
-    // Pondération: Réalisés (100%) + En cours (50%) + Non lancés (10%)
     const tauxRealisation = total > 0 
         ? (((realise * 100) + (encours * 50) + (nonLance * 10)) / (total * 100) * 100).toFixed(1) 
         : 0;
     
-    // Progression = même calcul que le taux de réalisation
-    const progression = tauxRealisation;
-    
-    // Note moyenne (depuis les données promises)
+    // Note moyenne
     const totalNotes = CONFIG.promises.reduce((sum, p) => sum + (p.rating || 0), 0);
     const promessesAvecNote = CONFIG.promises.filter(p => p.rating && p.rating > 0).length;
     const avgRating = promessesAvecNote > 0 ? (totalNotes / promessesAvecNote).toFixed(1) : '0.0';
@@ -148,6 +142,30 @@ function calculateStats() {
                    `${joursMoyen}j`;
     }
     
+    // Domaine principal
+    let domainePrincipal = '-';
+    let domaineCount = 0;
+    if (total > 0) {
+        const domaines = {};
+        CONFIG.promises.forEach(p => {
+            domaines[p.domaine] = (domaines[p.domaine] || 0) + 1;
+        });
+        const entries = Object.entries(domaines);
+        if (entries.length > 0) {
+            const [domaine, count] = entries.reduce((a, b) => a[1] > b[1] ? a : b);
+            domainePrincipal = domaine.length > 15 ? `${domaine.substring(0, 12)}...` : domaine;
+            domaineCount = count;
+        }
+    }
+    
+    // Texte de progression
+    let progressText = '';
+    if (tauxRealisation >= 80) progressText = 'Excellent';
+    else if (tauxRealisation >= 60) progressText = 'Bon';
+    else if (tauxRealisation >= 40) progressText = 'Moyen';
+    else if (tauxRealisation >= 20) progressText = 'Faible';
+    else progressText = 'Début';
+    
     return {
         total,
         realise,
@@ -159,13 +177,15 @@ function calculateStats() {
         nonLancePercentage: total > 0 ? ((nonLance / total) * 100).toFixed(1) : 0,
         retardPercentage: total > 0 ? ((retard / total) * 100).toFixed(1) : 0,
         tauxRealisation,
-        progression,
         avgRating,
         ratingCount: promessesAvecNote,
         avecMaj,
         avecMajPercentage: total > 0 ? ((avecMaj / total) * 100).toFixed(1) : 0,
         avgDelay,
-        promessesEnCours: promessesEnCours.length
+        promessesEnCours: promessesEnCours.length,
+        domainePrincipal,
+        domaineCount,
+        progressText
     };
 }
 
@@ -186,43 +206,47 @@ function renderStats(stats) {
         else console.warn(`⚠️ Element #${id} non trouvé dans le HTML`);
     };
     
-    // KPI 1-5: Base
-    updateElement('total-promises', stats.total);
-    updateElement('realized', stats.realise);
-    updateElement('inProgress', stats.encours);
-    updateElement('notStarted', stats.nonLance);
-    updateElement('delayed', stats.retard);
+    // KPI 1: Total
+    updateElement('total', stats.total);
+    updateElement('total-percentage', '100%');
     
-    // KPI 6-10: Avancés
-    updateElement('globalProgress', `${stats.tauxRealisation}%`);
-    updateElement('progression', `${stats.progression}%`);
-    updateElement('avgRating', stats.avgRating);
-    updateElement('ratingCount', `${stats.ratingCount} votes`);
-    updateElement('withUpdates', stats.avecMaj);
-    updateElement('avgDelay', stats.avgDelay);
+    // KPI 2: Réalisés
+    updateElement('realise', stats.realise);
+    updateElement('realise-percentage', `${stats.realisePercentage}%`);
     
-    // Mettre à jour les pourcentages dans les cartes
-    const percentages = document.querySelectorAll('.stat-percentage');
-    if (percentages[0]) percentages[0].textContent = '100%'; // Total
-    if (percentages[1]) percentages[1].textContent = `${stats.realisePercentage}%`;
-    if (percentages[2]) percentages[2].textContent = `${stats.encoursPercentage}%`;
-    if (percentages[3]) percentages[3].textContent = `${stats.nonLancePercentage}%`;
-    if (percentages[4]) percentages[4].textContent = `${stats.retardPercentage}%`;
-    if (percentages[5]) percentages[5].style.color = 'var(--primary)'; // Taux de réalisation
-    if (percentages[6]) percentages[6].style.color = 'var(--warning)'; // Progression
-    if (percentages[8]) percentages[8].textContent = `${stats.avecMajPercentage}%`; // Avec mises à jour
+    // KPI 3: En Cours
+    updateElement('encours', stats.encours);
+    updateElement('encours-percentage', `${stats.encoursPercentage}%`);
     
-    // Texte de progression
-    let progressText = '';
-    if (stats.tauxRealisation >= 80) progressText = 'Excellent';
-    else if (stats.tauxRealisation >= 60) progressText = 'Bon';
-    else if (stats.tauxRealisation >= 40) progressText = 'Moyen';
-    else if (stats.tauxRealisation >= 20) progressText = 'Faible';
-    else progressText = 'Début';
+    // KPI 4: Non Lancés
+    updateElement('non-lance', stats.nonLance);
+    updateElement('non-lance-percentage', `${stats.nonLancePercentage}%`);
     
-    // Optionnel : afficher le texte de progression si l'élément existe
-    const progressEl = document.getElementById('progress-text');
-    if (progressEl) progressEl.textContent = progressText;
+    // KPI 5: En Retard
+    updateElement('retard', stats.retard);
+    updateElement('retard-percentage', `${stats.retardPercentage}%`);
+    
+    // KPI 6: Taux de Réalisation + Texte progression
+    updateElement('taux-realisation', `${stats.tauxRealisation}%`);
+    updateElement('progress-text', stats.progressText);
+    
+    // KPI 7: Note Moyenne
+    updateElement('moyenne-notes', stats.avgRating);
+    updateElement('votes-total', `${stats.ratingCount} votes`);
+    
+    // KPI 8: Avec Mises à Jour
+    updateElement('avec-maj', stats.avecMaj);
+    updateElement('avec-maj-percentage', `${stats.avecMajPercentage}%`);
+    
+    // KPI 9: Délai Moyen
+    updateElement('delai-moyen', stats.avgDelay);
+    updateElement('jours-restants', stats.promessesEnCours > 0 
+        ? `${stats.promessesEnCours} engagements` 
+        : 'Aucun');
+    
+    // KPI 10: Domaine Principal
+    updateElement('domaine-principal', stats.domainePrincipal || '-');
+    updateElement('domaine-count', `${stats.domaineCount || 0} engagements`);
 }
 
 // ... [RESTE DU CODE IDENTIQUE À VOTRE app actuel.js MAIS SANS ERREURS DE SYNTAXE] ...

@@ -462,20 +462,78 @@ function createPromiseCard(p) {
     const delayText = p.isLate ? '⚠️ En retard' : '⏱️ Dans les délais';
     const hasUpdates = p.mises_a_jour?.length > 0;
     
+    // CALCUL DU POURCENTAGE DE PROGRESSION
+    let progress = 0;
+    let progressText = '';
+    
+    if (p.status === 'realise') {
+        progress = 100;
+        progressText = 'Terminé';
+    } else if (p.status === 'encours') {
+        progress = 50;
+        progressText = 'En cours';
+    } else {
+        progress = 10;
+        progressText = 'Non lancé';
+    }
+    
+    // CALCUL DU DÉLAI RESTANT
+    let delayInfo = '';
+    if (p.status !== 'realise' && p.deadline) {
+        const diffTime = p.deadline - CONFIG.CURRENT_DATE;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffDays < 0) {
+            const daysLate = Math.abs(diffDays);
+            delayInfo = `⚠️ ${daysLate} jour${daysLate > 1 ? 's' : ''} de retard`;
+        } else if (diffDays === 0) {
+            delayInfo = '⚠️ Aujourd\'hui';
+        } else if (diffDays === 1) {
+            delayInfo = '⏱️ Demain';
+        } else if (diffDays <= 7) {
+            delayInfo = `⏱️ ${diffDays} jours restants`;
+        } else if (diffDays <= 30) {
+            const weeks = Math.ceil(diffDays / 7);
+            delayInfo = `⏱️ ${weeks} semaines restantes`;
+        } else {
+            const months = Math.ceil(diffDays / 30);
+            delayInfo = `⏱️ ${months} mois restants`;
+        }
+    } else if (p.status === 'realise') {
+        delayInfo = '✅ Terminé le ' + new Date(p.deadline).toLocaleDateString('fr-FR');
+    }
+    
     return `
         <div class="promise-card" data-id="${p.id}">
             <span class="domain-badge">${p.domaine}</span>
             <h3 class="promise-title">${p.engagement}</h3>
+            
             <div class="result-box">
                 <i class="fas fa-bullseye"></i>
                 <strong>Résultat attendu :</strong> ${p.resultat}
             </div>
+            
+            <!-- PROGRESSION -->
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>Progression</span>
+                    <span>${progress}%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: ${progress}%"></div>
+                </div>
+                <small class="progress-text">${progressText}</small>
+            </div>
+            
+            <!-- DÉLAI (AJOUTÉ) -->
             <div class="promise-meta">
                 <div class="status-badge ${statusClass}">${statusText}</div>
                 <div class="delay-badge ${delayClass}">
-                    <i class="fas fa-clock"></i> ${delayText}
+                    <i class="fas fa-clock"></i>
+                    ${delayInfo || p.delai}
                 </div>
             </div>
+            
             ${hasUpdates ? `
                 <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
                     <small style="color:var(--text-secondary)">
@@ -494,20 +552,20 @@ function createPromiseCard(p) {
                 <span class="rating-label">${p.rating ? p.rating.toFixed(1) + '/5' : 'Pas encore noté'}</span>
             </div>
             
-            <!-- PARTAGE (AVEC ÉCOUTEURS DÉLÉGUÉS) -->
+            <!-- PARTAGE -->
             <div class="share-section">
-                <button class="share-btn share-twitter" data-platform="twitter" data-id="${p.id}" title="Partager sur Twitter">
+                <a href="#" class="share-btn share-twitter" onclick="shareOnSocial('twitter','${p.id}')" title="Partager sur Twitter">
                     <i class="fab fa-twitter"></i>
-                </button>
-                <button class="share-btn share-facebook" data-platform="facebook" data-id="${p.id}" title="Partager sur Facebook">
+                </a>
+                <a href="#" class="share-btn share-facebook" onclick="shareOnSocial('facebook','${p.id}')" title="Partager sur Facebook">
                     <i class="fab fa-facebook-f"></i>
-                </button>
-                <button class="share-btn share-whatsapp" data-platform="whatsapp" data-id="${p.id}" title="Partager sur WhatsApp">
+                </a>
+                <a href="#" class="share-btn share-whatsapp" onclick="shareOnSocial('whatsapp','${p.id}')" title="Partager sur WhatsApp">
                     <i class="fab fa-whatsapp"></i>
-                </button>
-                <button class="share-btn share-linkedin" data-platform="linkedin" data-id="${p.id}" title="Partager sur LinkedIn">
+                </a>
+                <a href="#" class="share-btn share-linkedin" onclick="shareOnSocial('linkedin','${p.id}')" title="Partager sur LinkedIn">
                     <i class="fab fa-linkedin-in"></i>
-                </button>
+                </a>
             </div>
         </div>`;
 }
@@ -833,4 +891,43 @@ function showNotification(message, type = 'success') {
         toast.style.animation = 'slideOut 0.3s ease';
         setTimeout(() => toast.remove(), 300);
     }, 3000);
+}
+async function loadData() {
+    try {
+        const response = await fetch('promises.json');
+        const data = await response.json();
+        
+        CONFIG.START_DATE = new Date(data.start_date);
+        CONFIG.promises = data.promises.map(p => {
+            const deadline = calculateDeadline(p.delai);
+            const isLate = checkIfLate(p.status, deadline);
+            
+            // DEBUG
+            if (isLate) {
+                console.log('✅ Engagement en retard:', {
+                    id: p.id,
+                    engagement: p.engagement.substring(0, 30),
+                    status: p.status,
+                    deadline: deadline.toISOString(),
+                    currentDate: CONFIG.CURRENT_DATE.toISOString()
+                });
+            }
+            
+            return {
+                ...p,
+                deadline: deadline,
+                isLate: isLate
+            };
+        });
+        
+        // DEBUG : Compter les retards
+        const retards = CONFIG.promises.filter(p => p.isLate);
+        console.log('📊 Total retards:', retards.length, '/', CONFIG.promises.length);
+        
+        // ... reste du code ...
+        
+    } catch (error) {
+        console.error('❌ Erreur chargement:', error);
+        showNotification('Erreur de chargement des données', 'error');
+    }
 }

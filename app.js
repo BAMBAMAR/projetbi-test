@@ -230,21 +230,61 @@ async function fetchPromiseRatingsFromSupabase() {
 // CALCULS EXACTS DE LA VERSION ORIGINALE
 // ==========================================
 function calculateDeadline(delaiText) {
-    const text = delaiText.toLowerCase();
+    const text = delaiText.toLowerCase().trim();  // ✅ Ajout de .trim()
     const result = new Date(CONFIG.START_DATE);
     
-    if (text.includes('3 mois')) result.setMonth(result.getMonth() + 3);
-    else if (text.includes('6 mois')) result.setMonth(result.getMonth() + 6);
-    else if (text.includes('1 an') || text.includes('12 mois')) result.setFullYear(result.getFullYear() + 1);
-    else if (text.includes('2 ans')) result.setFullYear(result.getFullYear() + 2);
-    else if (text.includes('3 ans')) result.setFullYear(result.getFullYear() + 3);
-    else if (text.includes('5 ans') || text.includes('quinquennat')) result.setFullYear(result.getFullYear() + 5);
-    else result.setFullYear(result.getFullYear() + 5);
+    console.log('Calcul deadline:', { delaiText, text });  // DEBUG
+    
+    if (text.includes('3 mois')) {
+        result.setMonth(result.getMonth() + 3);
+        console.log('→ +3 mois:', result.toISOString());
+    }
+    else if (text.includes('6 mois')) {
+        result.setMonth(result.getMonth() + 6);
+        console.log('→ +6 mois:', result.toISOString());
+    }
+    else if (text.includes('1 an') || text.includes('12 mois')) {
+        result.setFullYear(result.getFullYear() + 1);
+        console.log('→ +1 an:', result.toISOString());
+    }
+    else if (text.includes('2 ans')) {
+        result.setFullYear(result.getFullYear() + 2);
+        console.log('→ +2 ans:', result.toISOString());
+    }
+    else if (text.includes('3 ans')) {
+        result.setFullYear(result.getFullYear() + 3);
+        console.log('→ +3 ans:', result.toISOString());
+    }
+    else if (text.includes('5 ans') || text.includes('quinquennat')) {
+        result.setFullYear(result.getFullYear() + 5);
+        console.log('→ +5 ans:', result.toISOString());
+    }
+    else {
+        result.setFullYear(result.getFullYear() + 5);
+        console.log('→ +5 ans (défaut):', result.toISOString());
+    }
     
     return result;
 }
 
 function checkIfLate(status, deadline) {
+    // DEBUG : Ajoutez cette ligne temporairement pour vérifier
+    console.log('Check retard:', {
+        status,
+        deadline: deadline.toISOString(),
+        currentDate: CONFIG.CURRENT_DATE.toISOString(),
+        isLate: status !== 'realise' && CONFIG.CURRENT_DATE > deadline
+    });
+    
+    // CORRECTION : Vérifier que deadline est bien une Date valide
+    if (!deadline || !(deadline instanceof Date)) {
+        console.warn('⚠️ Deadline invalide:', deadline);
+        return false;
+    }
+    
+    // Un engagement est "en retard" SEULEMENT si :
+    // 1. Il n'est PAS réalisé
+    // 2. ET sa date limite est PASSÉE
     return status !== 'realise' && CONFIG.CURRENT_DATE > deadline;
 }
 

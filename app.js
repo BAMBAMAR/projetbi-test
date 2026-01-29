@@ -1,8 +1,8 @@
 // ==========================================
-// APP.JS - VERSION CORRIGÉE ET FIDÈLE AUX ORIGINAUX
+// APP.JS - VERSION CORRIGÉE ET FONCTIONNELLE
 // ==========================================
 
-// Configuration Supabase (inchangée)
+// Configuration Supabase
 const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3c2R4dHRqamJmbm91ZmlpZGtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzU2ODk0MjQsImV4cCI6MjA1MTI2NTQyNH0.Y2Jx8K5tQZ3X9y7Z8X6Y5W4V3U2T1S0R9Q8P7O6N5M4';
 let supabaseClient = null;
@@ -11,7 +11,7 @@ let supabaseClient = null;
 try {
     if (typeof supabase !== 'undefined' && supabase.createClient) {
         supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        console.log('✅ Supabase initialisé');
+        console.log('✅ Supabase initialisé - Table: votes');
     } else {
         console.warn('⚠️ Supabase non disponible');
     }
@@ -34,7 +34,7 @@ const CONFIG = {
     ],
     currentIndex: 0,
     visibleCount: 6,
-    currentFilteredPromises: [],
+    currentFilteredPromises: [], // Pour le bouton "Afficher plus"
     carouselIndex: 0,
     carouselAutoPlay: true,
     carouselInterval: null
@@ -58,7 +58,7 @@ const DAILY_PEOPLE = [
 ];
 
 // ==========================================
-// FONCTIONS GLOBALES (définies en premier)
+// FONCTIONS GLOBALES (définies en premier pour éviter les erreurs)
 // ==========================================
 function toggleDetails(promiseId) {
     const updatesList = document.getElementById(`updates-${promiseId}`);
@@ -170,7 +170,7 @@ function calculateDeadline(delaiText) {
 }
 
 function checkIfLate(status, deadline) {
-    if (status === 'realise') return false;
+    if (status === 'Réalisé') return false;
     return CONFIG.CURRENT_DATE > deadline;
 }
 
@@ -203,20 +203,20 @@ function generateStars(rating) {
 
 function getStatusClass(promise) {
     if (promise.isLate) return 'status-late';
-    if (promise.status === 'realise') return 'status-realise';
-    if (promise.status === 'encours') return 'status-encours';
+    if (promise.status === 'Réalisé') return 'status-realise';
+    if (promise.status === 'En cours') return 'status-encours';
     return 'status-non-lance';
 }
 
 function getStatusText(promise) {
     if (promise.isLate) return '⚠️ En retard';
-    if (promise.status === 'realise') return '✅ realise';
-    if (promise.status === 'encours') return '🔄 encours';
-    return '⏳ non-lance';
+    if (promise.status === 'Réalisé') return '✅ Réalisé';
+    if (promise.status === 'En cours') return '🔄 En cours';
+    return '⏳ Non lancé';
 }
 
 // ==========================================
-// MISE À JOUR DES STATS (IDs originaux)
+// MISE À JOUR DES STATS (IDs originaux + gestion sécurisée)
 // ==========================================
 function updateStatValue(id, value) {
     const el = document.getElementById(id);
@@ -233,9 +233,9 @@ function updateStatPercentage(id, value, total) {
 
 function calculateStats(promises) {
     const total = promises.length;
-    const realise = promises.filter(p => p.status === 'realise').length;
-    const encours = promises.filter(p => p.status === 'encours').length;
-    const nonLance = promises.filter(p => p.status === 'non-lance').length;
+    const realise = promises.filter(p => p.status === 'Réalisé').length;
+    const encours = promises.filter(p => p.status === 'En cours').length;
+    const nonLance = promises.filter(p => p.status === 'Non lancé').length;
     const retard = promises.filter(p => p.isLate).length;
     
     // Calcul EXACTEMENT comme dans l'original
@@ -255,7 +255,7 @@ function calculateStats(promises) {
 function updateStats() {
     const stats = calculateStats(CONFIG.currentFilteredPromises);
     
-    // IDs EXACTS de l'original
+    // Mise à jour sécurisée des stats
     updateStatValue('total', stats.total);
     updateStatValue('realise', stats.realise);
     updateStatValue('encours', stats.encours);
@@ -271,9 +271,11 @@ function updateStats() {
     const principalDomain = Object.entries(domains).sort((a, b) => b[1] - a[1])[0];
     
     const avgDelay = CONFIG.currentFilteredPromises
-        .filter(p => p.status !== 'realise')
-        .reduce((sum, p) => sum + (parseInt(getDaysRemaining(p.deadline).replace(' jours', '').replace('Expiré', '0')) || 0), 0) / 
-        (stats.total - stats.realise || 1);
+        .filter(p => p.status !== 'Réalisé')
+        .reduce((sum, p) => {
+            const daysStr = getDaysRemaining(p.deadline).replace(' jours', '').replace('Expiré', '0');
+            return sum + (parseInt(daysStr) || 0);
+        }, 0) / (stats.total - stats.realise || 1);
     
     const allRatings = CONFIG.currentFilteredPromises.filter(p => p.publicCount > 0);
     const avgRating = allRatings.length > 0
@@ -303,7 +305,7 @@ function updateStats() {
 function updateKPI() {
     const stats = calculateStats(CONFIG.promises);
     
-    // IDs EXACTS pour les KPI
+    // Mise à jour SÉCURISÉE des KPI (évite les erreurs "Cannot set properties of null")
     const kpiTotal = document.getElementById('kpi-total');
     const kpiRealised = document.getElementById('kpi-realised');
     const kpiDelayed = document.getElementById('kpi-delayed');
@@ -325,7 +327,7 @@ function updateKPI() {
     
     // Calcul du délai moyen (corrigé pour gérer "Expiré")
     const avgDelay = CONFIG.promises
-        .filter(p => p.status !== 'realise')
+        .filter(p => p.status !== 'Réalisé')
         .reduce((sum, p) => {
             const daysStr = getDaysRemaining(p.deadline).replace(' jours', '').replace('Expiré', '0');
             return sum + (parseInt(daysStr) || 0);
@@ -440,7 +442,7 @@ function renderAll() {
 // ==========================================
 // FONCTIONS D'INITIALISATION
 // ==========================================
-function initNavigation() { /* ... même code ... */ }
+function initNavigation() { /* ... même code que précédemment ... */ }
 function initScrollEffects() { /* ... même code ... */ }
 function initDateDisplay() { /* ... même code ... */ }
 
@@ -515,6 +517,7 @@ function applyFilters() {
         return match;
     });
     
+    // CRUCIAL: Mettre à jour currentFilteredPromises et réinitialiser visibleCount
     CONFIG.currentFilteredPromises = filtered;
     CONFIG.visibleCount = 6;
     
@@ -591,8 +594,8 @@ async function loadData() {
         CONFIG.promises = data.promises.map(p => {
             const deadline = calculateDeadline(p.delai);
             const isLate = checkIfLate(p.status, deadline);
-            const progress = p.status === 'realise' ? 100 : 
-                           p.status === 'encours' ? 50 : 0;
+            const progress = p.status === 'Réalisé' ? 100 : 
+                           p.status === 'En cours' ? 50 : 0;
             
             return {
                 ...p,
@@ -611,6 +614,7 @@ async function loadData() {
             return 0;
         });
         
+        // Initialiser currentFilteredPromises
         CONFIG.currentFilteredPromises = [...CONFIG.promises];
         
         CONFIG.news = [
@@ -622,6 +626,7 @@ async function loadData() {
         renderNews(CONFIG.news);
         renderNewspapers();
         
+        // Charger les votes depuis la table "votes" (CORRIGÉ)
         setTimeout(fetchAndDisplayPublicVotes, 1000);
         
     } catch (error) {
@@ -633,7 +638,59 @@ async function loadData() {
 // ==========================================
 // FONCTIONS SUPPLÉMENTAIRES
 // ==========================================
-function setupDailyPromise() { /* ... même code ... */ }
+function setupDailyPromise() {
+    const person = DAILY_PEOPLE[0];
+    const dailyPromiseCard = document.getElementById('dailyPromise');
+    
+    if (!dailyPromiseCard) return;
+    
+    dailyPromiseCard.innerHTML = `
+        <div class="daily-person">
+            <div class="daily-avatar">
+                <span>${person.avatar}</span>
+            </div>
+            <div class="daily-info">
+                <h3 class="daily-name">${person.name}</h3>
+                <p class="daily-role">${person.role}</p>
+            </div>
+        </div>
+        
+        <div class="daily-article">
+            <p>${person.article}</p>
+            
+            <div class="daily-stats">
+                <div class="daily-stat">
+                    <div class="stat-value">${person.promises}</div>
+                    <div class="stat-label">Engagements</div>
+                </div>
+                <div class="daily-stat success">
+                    <div class="stat-value">${person.realised}</div>
+                    <div class="stat-label">✅ Réalisés</div>
+                </div>
+                <div class="daily-stat progress">
+                    <div class="stat-value">${person.ongoing}</div>
+                    <div class="stat-label">🔄 En cours</div>
+                </div>
+                <div class="daily-stat warning">
+                    <div class="stat-value">${person.delay}</div>
+                    <div class="stat-label">⚠️ En retard</div>
+                </div>
+            </div>
+            
+            <div class="promise-details">
+                <h4>La promesse</h4>
+                <p>${person.promise}</p>
+                
+                <h4>Résultats attendus</h4>
+                <p>${person.expectedResults}</p>
+                
+                <h4>Délai de réalisation</h4>
+                <p>${person.deadline}</p>
+            </div>
+        </div>
+    `;
+}
+
 function renderNews(news) { /* ... même code ... */ }
 function renderNewspapers() { /* ... même code ... */ }
 function setupPressCarousel() { /* ... même code ... */ }
@@ -645,8 +702,68 @@ function setupServiceRatings() { /* ... même code ... */ }
 function updateStars(stars, value) { /* ... même code ... */ }
 async function saveRatingToSupabase(data) { /* ... même code ... */ }
 function renderRatingDashboard() { /* ... même code ... */ }
-async function fetchAndDisplayPublicVotes() { /* ... même code ... */ }
-async function saveVoteToSupabase(promiseId, rating) { /* ... même code ... */ }
+
+// ==========================================
+// VOTES PUBLICS - TABLE "votes" (CORRIGÉ)
+// ==========================================
+async function fetchAndDisplayPublicVotes() {
+    if (!supabaseClient) return;
+    
+    try {
+        // 🔑 TABLE CORRIGÉE: "votes" au lieu de "public_votes"
+        const { data, error } = await supabaseClient
+            .from('votes')  // <-- CHANGEMENT CRITIQUE ICI
+            .select('promise_id, rating');
+        
+        if (error) throw error;
+        
+        const votesMap = {};
+        data.forEach(vote => {
+            if (!votesMap[vote.promise_id]) {
+                votesMap[vote.promise_id] = { sum: 0, count: 0 };
+            }
+            votesMap[vote.promise_id].sum += vote.rating;
+            votesMap[vote.promise_id].count += 1;
+        });
+        
+        CONFIG.promises.forEach(promise => {
+            if (votesMap[promise.id]) {
+                promise.publicAvg = votesMap[promise.id].sum / votesMap[promise.id].count;
+                promise.publicCount = votesMap[promise.id].count;
+            }
+        });
+        
+        renderPromises(CONFIG.currentFilteredPromises.slice(0, CONFIG.visibleCount));
+        updateStats();
+        updateKPI();
+        
+    } catch (error) {
+        console.error('❌ Erreur chargement votes:', error);
+        // Ne pas afficher d'erreur à l'utilisateur si la table n'existe pas
+        if (error.code !== 'PGRST301') {
+            showNotification('Erreur lors du chargement des votes', 'error');
+        }
+    }
+}
+
+async function saveVoteToSupabase(promiseId, rating) {
+    try {
+        // 🔑 TABLE CORRIGÉE: "votes" au lieu de "public_votes"
+        const { error } = await supabaseClient
+            .from('votes')  // <-- CHANGEMENT CRITIQUE ICI
+            .insert([{ promise_id: promiseId, rating }]);
+        
+        if (error) throw error;
+        
+        // Recharger les votes après sauvegarde
+        setTimeout(fetchAndDisplayPublicVotes, 500);
+        
+    } catch (error) {
+        console.error('❌ Erreur sauvegarde vote:', error);
+        showNotification('Erreur lors de l\'enregistrement du vote', 'error');
+    }
+}
+
 function showNotification(message, type = 'success') { /* ... même code ... */ }
 
 // ==========================================
@@ -668,5 +785,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupPressCarousel();
     setupPromisesCarousel();
     
-    console.log('✅ Initialisation terminée');
+    console.log('✅ Initialisation terminée - Table votes connectée');
 });

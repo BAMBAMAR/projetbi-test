@@ -1446,3 +1446,261 @@ window.exportData = exportData;
 window.goToSlide = goToSlide;
 window.zoomImage = zoomImage;
 window.resetZoom = resetZoom;
+// Initialisation du bouton de réinitialisation de recherche
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('filter-search');
+    const searchClearBtn = document.getElementById('searchClearBtn');
+    
+    if (searchClearBtn && searchInput) {
+        searchClearBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            searchClearBtn.style.opacity = '0';
+            applyFilters();
+        });
+        
+        searchInput.addEventListener('input', () => {
+            searchClearBtn.style.opacity = searchInput.value ? '0.7' : '0';
+        });
+    }
+    
+    // Gestion du dropdown export au clic (alternative au hover pour mobile)
+    const exportBtn = document.getElementById('exportBtn');
+    const exportDropdown = document.getElementById('exportDropdown');
+    
+    if (exportBtn && exportDropdown) {
+        exportBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            exportDropdown.style.display = exportDropdown.style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        // Fermer le dropdown quand on clique en dehors
+        document.addEventListener('click', (e) => {
+            if (!exportBtn.contains(e.target) && !exportDropdown.contains(e.target)) {
+                exportDropdown.style.display = 'none';
+            }
+        });
+    }
+});
+
+// Fonction d'export améliorée avec gestion des erreurs
+function exportData(format) {
+    try {
+        if (format === 'csv') {
+            exportCSV();
+        } else if (format === 'excel') {
+            exportExcel();
+        } else if (format === 'pdf') {
+            exportPDF();
+        } else if (format === 'json') {
+            exportJSON();
+        } else {
+            throw new Error('Format non supporté');
+        }
+        
+        // Fermer le dropdown après export
+        const dropdown = document.getElementById('exportDropdown');
+        if (dropdown) dropdown.style.display = 'none';
+        
+    } catch (error) {
+        console.error('Erreur export:', error);
+        showNotification(`Erreur lors de l'export ${format.toUpperCase()}: ${error.message}`, 'error');
+    }
+}
+
+// Implémentations complètes des exports
+function exportCSV() {
+    const headers = ['ID', 'Domaine', 'Engagement', 'Statut', 'Délai', 'Résultat attendu', 'En retard', 'Progression (%)'];
+    const rows = CONFIG.promises.map(p => [
+        p.id,
+        p.domaine,
+        `"${p.engagement.replace(/"/g, '""')}"`,
+        p.isLate ? '⚠️ En retard' : p.status,
+        p.delai,
+        `"${p.resultat.replace(/"/g, '""')}"`,
+        p.isLate ? 'Oui' : 'Non',
+        p.progress
+    ]);
+    
+    const csvContent = [
+        headers.join(';'),
+        ...rows.map(row => row.join(';'))
+    ].join('\n');
+    
+    const bom = '\uFEFF';
+    const blob = new Blob([bom + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `engagements_senegal_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    showNotification('✅ Export CSV terminé avec succès !', 'success');
+}
+
+function exportExcel() {
+    // Utilisation de SheetJS (à inclure dans l'HTML: <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>)
+    if (typeof XLSX === 'undefined') {
+        showNotification('⚠️ Librairie Excel non disponible. Utilisez l\'export CSV à la place.', 'info');
+        exportCSV(); // Fallback vers CSV
+        return;
+    }
+    
+    const ws_data = [
+        ['ID', 'Domaine', 'Engagement', 'Statut', 'Délai', 'Résultat attendu', 'En retard', 'Progression (%)'],
+        ...CONFIG.promises.map(p => [
+            p.id,
+            p.domaine,
+            p.engagement,
+            p.isLate ? '⚠️ En retard' : p.status,
+            p.delai,
+            p.resultat,
+            p.isLate ? 'Oui' : 'Non',
+            p.progress
+        ])
+    ];
+    
+    const ws = XLSX.utils.aoa_to_sheet(ws_data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Engagements");
+    
+    // Style le header
+    const range = XLSX.utils.decode_range(ws['!ref']);
+    for (let C = range.s.c; C <= range.e.c; ++C) {
+        const addr = XLSX.utils.encode_cell({c:C, r:0});
+        if (!ws[addr]) continue;
+        ws[addr].s = {
+            font: { bold: true, color: { rgb: "FFFFFF" } },
+            fill: { fgColor: { rgb: "00695F" } },
+            alignment: { horizontal: "center" }
+        };
+    }
+    
+    XLSX.writeFile(wb, `engagements_senegal_${new Date().toISOString().split('T')[0]}.xlsx`);
+    showNotification('✅ Export Excel terminé avec succès !', 'success');
+}
+
+function exportPDF() {
+    // Utilisation de jsPDF (à inclure dans l'HTML: <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>)
+    showNotification('🖨️ Génération du PDF en cours...', 'info');
+    
+    // Créer un élément temporaire pour le contenu
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = `
+        <h2 style="color: #00695F; text-align: center; margin-bottom: 20px;">
+            Rapport des Engagements - Projet Sénégal<br>
+            <small style="font-size: 14px; color: #555;">${new Date().toLocaleDateString('fr-FR')}</small>
+        </h2>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+                <tr style="background-color: #00695F; color: white;">
+                    <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Domaine</th>
+                    <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Engagement</th>
+                    <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Statut</th>
+                    <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Progression</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${CONFIG.promises.map(p => `
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding: 8px; border: 1px solid #ddd;">${p.domaine}</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">${p.engagement.substring(0, 60)}${p.engagement.length > 60 ? '...' : ''}</td>
+                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center; color: ${p.isLate ? '#c62828' : p.status === 'Réalisé' ? '#2e7d32' : '#0277bd'};">
+                            ${p.isLate ? '⚠️' : p.status === 'Réalisé' ? '✅' : p.status === 'En cours' ? '🔄' : '⏳'}
+                        </td>
+                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
+                            <div style="background: #e0e0e0; height: 8px; border-radius: 4px; overflow: hidden; width: 100px; display: inline-block;">
+                                <div style="background: #00695F; height: 100%; width: ${p.progress}%"></div>
+                            </div>
+                            <span style="display: block; margin-top: 4px;">${p.progress}%</span>
+                        </td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #00695F; text-align: center; color: #555;">
+            <p>Généré par la Plateforme Citoyenne de Suivi des Engagements</p>
+            <p>https://projetbi.org - ${new Date().toLocaleDateString('fr-FR')}</p>
+        </div>
+    `;
+    
+    document.body.appendChild(tempDiv);
+    
+    // Utiliser html2canvas + jsPDF si disponibles, sinon utiliser window.print()
+    if (typeof html2pdf !== 'undefined') {
+        html2pdf().from(tempDiv).set({
+            margin: 10,
+            filename: `rapport_engagements_${new Date().toISOString().split('T')[0]}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).save().then(() => {
+            document.body.removeChild(tempDiv);
+            showNotification('✅ Rapport PDF généré avec succès !', 'success');
+        });
+    } else {
+        // Fallback simple
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Rapport Engagements - Projet Sénégal</title>
+                <style>
+                    body { font-family: 'Manrope', Arial, sans-serif; padding: 20px; }
+                    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                    th, td { padding: 8px; border: 1px solid #ddd; text-align: left; }
+                    th { background-color: #00695F; color: white; }
+                    tr:nth-child(even) { background-color: #f9f9f9; }
+                </style>
+            </head>
+            <body>
+                ${tempDiv.innerHTML}
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
+        printWindow.onload = () => {
+            printWindow.print();
+            document.body.removeChild(tempDiv);
+            showNotification('🖨️ Ouvrez la boîte de dialogue d\'impression pour sauvegarder en PDF', 'info');
+        };
+    }
+}
+
+function exportJSON() {
+    const data = {
+        metadata: {
+            generated_at: new Date().toISOString(),
+            total_promises: CONFIG.promises.length,
+            source: 'Plateforme Citoyenne Projet Sénégal',
+            website: 'https://projetbi.org'
+        },
+        promises: CONFIG.promises.map(p => ({
+            id: p.id,
+            domaine: p.domaine,
+            engagement: p.engagement,
+            status: p.status,
+            is_late: p.isLate,
+            delai: p.delai,
+            resultat_attendu: p.resultat,
+            progression: p.progress,
+            deadline: p.deadline.toISOString(),
+            mises_a_jour: p.mises_a_jour || []
+        }))
+    };
+    
+    const dataStr = JSON.stringify(data, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    
+    const exportFileDefaultName = `engagements_senegal_${new Date().toISOString().split('T')[0]}.json`;
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+    
+    showNotification('✅ Export JSON terminé avec succès !', 'success');
+}

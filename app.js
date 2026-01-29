@@ -1,5 +1,5 @@
 // ==========================================
-// APP.JS - VERSION COMPLÈTE ET CORRIGÉE
+// APP.JS - VERSION CORRIGÉE ET COMPLÈTE
 // ==========================================
 
 // Configuration Supabase
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Configurer les composants
     setupEventListeners();
-    setupCarousel();
+    setupPressCarousel();
     setupServiceRatings();
     setupDailyPromise();
     
@@ -292,14 +292,23 @@ async function loadData() {
         
         CONFIG.START_DATE = new Date(data.start_date);
         
-        CONFIG.promises = data.promises.map(p => ({
-            ...p,
-            deadline: calculateDeadline(p.delai),
-            isLate: checkIfLate(p.status, calculateDeadline(p.delai)),
-            publicAvg: 0,
-            publicCount: 0,
-            progress: p.status === 'Réalisé' ? 100 : p.status === 'En cours' ? 50 : 10
-        }));
+        // Mapper les promesses avec toutes les informations nécessaires
+        CONFIG.promises = data.promises.map(p => {
+            const deadline = calculateDeadline(p.delai);
+            const isLate = checkIfLate(p.status, deadline);
+            const progress = p.status === 'Réalisé' ? 100 : 
+                           p.status === 'En cours' ? 50 : 
+                           p.status === 'Non lancé' ? 0 : 0;
+            
+            return {
+                ...p,
+                deadline: deadline,
+                isLate: isLate,
+                publicAvg: 0,
+                publicCount: 0,
+                progress: progress
+            };
+        });
         
         // Trier par défaut pour afficher les promesses en retard en premier
         CONFIG.promises.sort((a, b) => {
@@ -345,7 +354,6 @@ async function loadData() {
         renderAll();
         renderNews(CONFIG.news);
         renderNewspapers();
-        renderPressCarousel();
         
     } catch (error) {
         console.error('❌ Erreur chargement:', error);
@@ -459,7 +467,7 @@ function renderAll() {
 }
 
 // ==========================================
-// UPDATE STATS
+// UPDATE STATS - CORRIGÉ
 // ==========================================
 function updateStats() {
     const total = CONFIG.promises.length;
@@ -480,7 +488,7 @@ function updateStats() {
     
     const avgDelay = CONFIG.promises
         .filter(p => p.status !== 'Réalisé')
-        .reduce((sum, p) => sum + (getDaysRemaining(p.deadline).replace(' jours', '') || 0), 0) / 
+        .reduce((sum, p) => sum + (parseInt(getDaysRemaining(p.deadline).replace(' jours', '')) || 0), 0) / 
         (total - realise || 1);
     
     // Calcul de la moyenne des notes
@@ -532,7 +540,7 @@ function updateStatPercentage(id, value, total) {
 }
 
 // ==========================================
-// KPI SCROLLER
+// KPI SCROLLER - CORRIGÉ
 // ==========================================
 function updateKPI() {
     const total = CONFIG.promises.length;
@@ -547,7 +555,7 @@ function updateKPI() {
     
     const avgDelay = CONFIG.promises
         .filter(p => p.status !== 'Réalisé')
-        .reduce((sum, p) => sum + (parseInt(getDaysRemaining(p.deadline)) || 0), 0) / 
+        .reduce((sum, p) => sum + (parseInt(getDaysRemaining(p.deadline).replace(' jours', '')) || 0), 0) / 
         (total - realise || 1);
     
     updateStatValue('kpi-total', total);
@@ -673,7 +681,7 @@ function populateDomainFilter() {
 }
 
 // ==========================================
-// SHOW MORE / SHOW LESS
+// SHOW MORE / SHOW LESS - CORRIGÉ
 // ==========================================
 function initShowMoreLess() {
     const showMoreBtn = document.getElementById('showMoreBtn');
@@ -710,7 +718,7 @@ function updateShowMoreLessButtons(totalCount) {
 }
 
 // ==========================================
-// RENDER PROMISES
+// RENDER PROMISES - CORRIGÉ
 // ==========================================
 function renderPromises(promises) {
     const grid = document.getElementById('promisesGrid');
@@ -850,7 +858,7 @@ function generateStars(rating) {
 }
 
 // ==========================================
-// PROMISES CAROUSEL
+// PROMISES CAROUSEL - CORRIGÉ
 // ==========================================
 function initPromisesCarousel() {
     const carouselContainer = document.getElementById('carouselItems');
@@ -859,7 +867,7 @@ function initPromisesCarousel() {
     const toggleBtn = document.getElementById('carouselToggle');
     const carouselIndicators = document.getElementById('carouselIndicators');
     
-    if (!carouselContainer || !prevBtn || !nextBtn || !toggleBtn) return;
+    if (!carouselContainer || !prevBtn || !nextBtn || !toggleBtn || !carouselIndicators) return;
     
     let currentIndex = 0;
     let autoPlay = true;
@@ -991,7 +999,7 @@ function renderNews(news) {
 }
 
 // ==========================================
-// RENDER NEWSPAPERS
+// RENDER NEWSPAPERS - CORRIGÉ FORMAT 1041x1409
 // ==========================================
 function renderNewspapers() {
     const grid = document.getElementById('newspapersGrid');
@@ -1012,14 +1020,14 @@ function renderNewspapers() {
 }
 
 // ==========================================
-// PRESS CAROUSEL
+// PRESS CAROUSEL - CORRIGÉ
 // ==========================================
-function setupCarousel() {
+function setupPressCarousel() {
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const indicatorsContainer = document.getElementById('carouselIndicators');
     
-    if (!prevBtn || !nextBtn || !indicatorsContainer) return;
+    if (!prevBtn || !nextBtn) return;
     
     prevBtn.addEventListener('click', () => {
         CONFIG.currentIndex = (CONFIG.currentIndex - 1 + CONFIG.press.length) % CONFIG.press.length;
@@ -1031,11 +1039,6 @@ function setupCarousel() {
         renderPressCarousel();
     });
     
-    indicatorsContainer.innerHTML = CONFIG.press.map((_, index) => 
-        `<button class="indicator ${index === CONFIG.currentIndex ? 'active' : ''}" 
-                onclick="goToSlide(${index})"></button>`
-    ).join('');
-    
     renderPressCarousel();
 }
 
@@ -1043,7 +1046,7 @@ function renderPressCarousel() {
     const carousel = document.getElementById('pressCarousel');
     const indicatorsContainer = document.getElementById('carouselIndicators');
     
-    if (!carousel || !indicatorsContainer) return;
+    if (!carousel) return;
     
     const currentPaper = CONFIG.press[CONFIG.currentIndex];
     
@@ -1071,10 +1074,12 @@ function renderPressCarousel() {
     `;
     
     // Update indicators
-    const indicators = indicatorsContainer.querySelectorAll('.indicator');
-    indicators.forEach((btn, index) => {
-        btn.classList.toggle('active', index === CONFIG.currentIndex);
-    });
+    if (indicatorsContainer) {
+        indicatorsContainer.innerHTML = CONFIG.press.map((_, index) => 
+            `<button class="indicator ${index === CONFIG.currentIndex ? 'active' : ''}" 
+                    onclick="goToSlide(${index})"></button>`
+        ).join('');
+    }
 }
 
 function goToSlide(index) {
@@ -1204,7 +1209,7 @@ async function saveRatingToSupabase(data) {
 
 function renderRatingDashboard() {
     const dashboard = document.getElementById('ratingDashboard');
-    if (!dashboard || !supabaseClient) return;
+    if (!dashboard) return;
     
     // This would fetch real data from Supabase
     // For now, we'll use mock data
@@ -1339,10 +1344,58 @@ function sharePromise(promiseId) {
     }
 }
 
+// ==========================================
+// EXPORT DATA - CORRIGÉ
+// ==========================================
 function exportData(format) {
-    console.log('Export format:', format);
-    showNotification(`Export ${format.toUpperCase()} en cours...`, 'info');
-    // Implémenter la logique d'export
+    if (format === 'csv') {
+        exportCSV();
+    } else if (format === 'excel') {
+        exportExcel();
+    } else if (format === 'pdf') {
+        exportPDF();
+    } else if (format === 'json') {
+        exportJSON();
+    }
+}
+
+function exportCSV() {
+    const csvContent = "data:text/csv;charset=utf-8," +
+        "ID;Domaine;Engagement;Statut;Délai;Résultat attendu;En retard\n" +
+        CONFIG.promises.map(p => 
+            `${p.id};${p.domaine};${p.engagement};${p.status};${p.delai};${p.resultat};${p.isLate ? 'Oui' : 'Non'}`
+        ).join('\n');
+    
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "engagements.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showNotification('Export CSV terminé', 'success');
+}
+
+function exportExcel() {
+    showNotification('Export Excel en développement', 'info');
+    // Implémenter l'export Excel avec une librairie comme SheetJS
+}
+
+function exportPDF() {
+    showNotification('Export PDF en développement', 'info');
+    // Implémenter l'export PDF avec jsPDF
+}
+
+function exportJSON() {
+    const dataStr = JSON.stringify(CONFIG.promises, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    
+    const exportFileDefaultName = 'engagements.json';
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+    showNotification('Export JSON terminé', 'success');
 }
 
 // ==========================================

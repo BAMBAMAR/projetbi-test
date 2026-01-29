@@ -1266,7 +1266,7 @@ async function saveVoteToSupabase(promiseId, rating) {
     try {
         if (supabaseClient) {
             const { error } = await supabaseClient
-                .from('public_votes')
+                .from('votes')
                 .insert([{ promise_id: promiseId, rating }]);
             
             if (error) throw error;

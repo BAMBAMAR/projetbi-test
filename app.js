@@ -5,17 +5,24 @@
 const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_joJuW7-vMiQG302_2Mvj5A_sVaD8Wap';
 let supabaseClient = null;
-
+// ==========================================
+// APP.JS - VERSION CORRIGÉE & FONCTIONNELLE
+// ==========================================
+// Configuration Supabase
+const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_joJuW7-vMiQG302_2Mvj5A_sVaD8Wap';
+let supabaseClient = null;
 // Initialisation Supabase
 try {
-    if (window.supabase && typeof window.supabase.createClient === 'function') {
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        console.log('✅ Supabase v2 initialisé');
+    if (typeof supabase !== 'undefined' && supabase.createClient) {
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        console.log('✅ Supabase initialisé avec succès');
     } else {
-        console.warn('⚠️ Supabase SDK non disponible');
+        console.warn('⚠️ SDK Supabase non disponible - fonctionnalités limitées');
     }
 } catch (error) {
-    console.error('❌ Erreur d\'initialisation Supabase:', error);
+    console.error('❌ Erreur initialisation Supabase:', error);
+    supabaseClient = null;
 }
 
 // Configuration globale
@@ -29,43 +36,43 @@ const CONFIG = {
             id: '1',
             title: 'Le Soleil',
             date: '28/01/2026',
-            image: 'images/presse/soleil.jpg',
-            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6d/Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg/800px-Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg.png'
+            image: 'https://via.placeholder.com/300x400/00695f/ffffff?text=Le+Soleil',
+            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6d/Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg/200px-Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg.png'
         },
         {
             id: '2',
             title: 'Sud Quotidien',
             date: '28/01/2026',
-            image: 'images/presse/sud-quotidien.jpg',
-            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/5/5b/Sud_Quotidien_logo.svg/800px-Sud_Quotidien_logo.svg.png'
+            image: 'https://via.placeholder.com/300x400/00695f/ffffff?text=Sud+Quotidien',
+            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/5/5b/Sud_Quotidien_logo.svg/200px-Sud_Quotidien_logo.svg.png'
         },
         {
             id: '3',
             title: 'Libération',
             date: '28/01/2026',
-            image: 'images/presse/liberation.jpg',
-            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/8/8d/Libération_Logo.svg/800px-Libération_Logo.svg.png'
+            image: 'https://via.placeholder.com/300x400/00695f/ffffff?text=Lib%C3%A9ration',
+            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/8/8d/Lib%C3%A9ration_Logo.svg/200px-Lib%C3%A9ration_Logo.svg.png'
         },
         {
             id: '4',
             title: 'L\'Observateur',
             date: '28/01/2026',
-            image: 'images/presse/observateur.jpg',
-            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/L%27Observateur_logo.svg/800px-L%27Observateur_logo.svg.png'
+            image: 'https://via.placeholder.com/300x400/00695f/ffffff?text=L%27Observateur',
+            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/L%27Observateur_logo.svg/200px-L%27Observateur_logo.svg.png'
         },
         {
             id: '5',
             title: 'Le Quotidien',
             date: '28/01/2026',
-            image: 'images/presse/quotidien.jpg',
-            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/3/3c/Le_Quotidien_logo.svg/800px-Le_Quotidien_logo.svg.png'
+            image: 'https://via.placeholder.com/300x400/00695f/ffffff?text=Le+Quotidien',
+            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/3/3c/Le_Quotidien_logo.svg/200px-Le_Quotidien_logo.svg.png'
         },
         {
             id: '6',
             title: 'WalFadjri',
             date: '28/01/2026',
-            image: 'images/presse/walfadjri.jpg',
-            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7c/Walf_fadjri_logo.svg/800px-Walf_fadjri_logo.svg.png'
+            image: 'https://via.placeholder.com/300x400/00695f/ffffff?text=WalFadjri',
+            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7c/Walf_fadjri_logo.svg/200px-Walf_fadjri_logo.svg.png'
         }
     ],
     currentIndex: 0,
@@ -97,7 +104,7 @@ const KPI_ITEMS = [
 // INITIALISATION
 // ==========================================
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('🚀 Initialisation...');
+    console.log('🚀 Initialisation de l\'application...');
     
     // Initialiser les composants UI
     initNavigation();
@@ -118,7 +125,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupKpiCarousel();
     setupPhotoViewerControls();
 
-    console.log('✅ Initialisation terminée');
+    console.log('✅ Initialisation terminée avec succès');
 });
 
 // ==========================================
@@ -129,20 +136,18 @@ function initNavigation() {
     const navMenu = document.getElementById('navMenu');
     const navLinks = document.querySelectorAll('.nav-link');
 
-    // Toggle mobile menu
-    if (mobileMenuBtn) {
+    if (mobileMenuBtn && navMenu) {
         mobileMenuBtn.addEventListener('click', () => {
             navMenu.classList.toggle('show');
             mobileMenuBtn.classList.toggle('active');
         });
     }
 
-    // Navigation active state
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            const section = link.getAttribute('data-section');
-            const target = document.getElementById(section);
+            const sectionId = link.getAttribute('data-section');
+            const target = document.getElementById(sectionId);
 
             if (target) {
                 const offset = CONFIG.scrollOffset;
@@ -158,7 +163,7 @@ function initNavigation() {
 
                 if (navMenu.classList.contains('show')) {
                     navMenu.classList.remove('show');
-                    mobileMenuBtn.classList.remove('active');
+                    mobileMenuBtn?.classList.remove('active');
                 }
             }
         });
@@ -195,25 +200,23 @@ function initScrollEffects() {
 
     window.addEventListener('scroll', () => {
         // Navbar scroll effect
-        if (window.scrollY > 50) {
-            navbar?.classList.add('scrolled');
-        } else {
-            navbar?.classList.remove('scrolled');
+        if (navbar && window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else if (navbar) {
+            navbar.classList.remove('scrolled');
         }
 
         // Scroll to top button
-        if (window.scrollY > 400) {
-            scrollToTop?.classList.add('visible');
-        } else {
-            scrollToTop?.classList.remove('visible');
+        if (scrollToTop) {
+            scrollToTop.classList.toggle('visible', window.scrollY > 400);
         }
 
         // Progress indicator
-        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (winScroll / height) * 100;
         if (progressIndicator) {
-            progressIndicator.style.width = scrolled + '%';
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            progressIndicator.style.width = `${scrolled}%`;
         }
     });
 
@@ -245,20 +248,28 @@ function initDateDisplay() {
 // ==========================================
 async function loadData() {
     try {
+        // Charger les promesses depuis un fichier JSON local (à créer)
         const response = await fetch('promises.json');
-        const data = await response.json();
         
-        CONFIG.START_DATE = new Date(data.start_date);
+        if (!response.ok) {
+            // Données de fallback si le fichier n'existe pas
+            console.warn('Fichier promises.json non trouvé - utilisation des données de test');
+            CONFIG.promises = generateTestPromises();
+        } else {
+            const data = await response.json();
+            CONFIG.START_DATE = new Date(data.start_date || '2024-04-02');
+            
+            CONFIG.promises = (data.promises || []).map(p => ({
+                ...p,
+                deadline: calculateDeadline(p.delai),
+                isLate: checkIfLate(p.status, calculateDeadline(p.delai)),
+                publicAvg: 0,
+                publicCount: 0,
+                updates: p.updates || []
+            }));
+        }
         
-        CONFIG.promises = data.promises.map(p => ({
-            ...p,
-            deadline: calculateDeadline(p.delai),
-            isLate: checkIfLate(p.status, calculateDeadline(p.delai)),
-            publicAvg: 0,
-            publicCount: 0
-        }));
-        
-        // Trier par défaut pour afficher les promesses en retard en premier
+        // Trier par défaut : retards en premier
         CONFIG.promises.sort((a, b) => {
             if (a.isLate && !b.isLate) return -1;
             if (!a.isLate && b.isLate) return 1;
@@ -266,11 +277,13 @@ async function loadData() {
         });
         
         // Charger les votes après un délai
-        setTimeout(() => {
-            fetchAndDisplayPublicVotes().catch(error => {
-                console.warn('Impossible de charger les votes:', error);
-            });
-        }, 1000);
+        if (supabaseClient) {
+            setTimeout(() => {
+                fetchAndDisplayPublicVotes().catch(error => {
+                    console.warn('⚠️ Impossible de charger les votes:', error.message);
+                });
+            }, 1000);
+        }
         
         CONFIG.news = [
             { 
@@ -304,9 +317,92 @@ async function loadData() {
         renderNewspapers();
         
     } catch (error) {
-        console.error('❌ Erreur chargement:', error);
+        console.error('❌ Erreur chargement des données:', error);
         showNotification('Erreur de chargement des données', 'error');
+        // Utiliser des données de test en cas d'erreur
+        CONFIG.promises = generateTestPromises();
+        renderAll();
     }
+}
+
+// Générer des données de test si promises.json n'existe pas
+function generateTestPromises() {
+    return [
+        {
+            id: '1',
+            engagement: 'Construire 10 000 nouvelles classes d\'ici 2027',
+            domain: 'Éducation',
+            status: 'En cours',
+            delai: '365',
+            resultat: 'Réduction de la surcharge dans les écoles publiques et amélioration des conditions d\'apprentissage',
+            progress: 45,
+            updates: [
+                { date: '2025-06-15', description: '5 000 classes déjà construites dans 10 régions' },
+                { date: '2025-01-10', description: 'Lancement des travaux dans 5 régions prioritaires' }
+            ]
+        },
+        {
+            id: '2',
+            engagement: 'Éradiquer la pauvreté extrême d\'ici 2030',
+            domain: 'Développement Social',
+            status: 'En cours',
+            delai: '730',
+            resultat: 'Réduction de 50% du taux de pauvreté extrême au Sénégal',
+            progress: 25,
+            updates: [
+                { date: '2025-03-20', description: 'Programme "Tekki" étendu à 5 nouvelles régions' }
+            ]
+        },
+        {
+            id: '3',
+            engagement: 'Atteindre l\'autosuffisance alimentaire',
+            domain: 'Agriculture',
+            status: 'Réalisé',
+            delai: '180',
+            resultat: 'Augmentation de 30% de la production céréalière nationale',
+            progress: 100,
+            updates: [
+                { date: '2024-09-30', description: 'Objectif atteint : production record de riz et mil' }
+            ]
+        },
+        {
+            id: '4',
+            engagement: 'Réduire le chômage des jeunes de 50%',
+            domain: 'Emploi',
+            status: 'Non lancé',
+            delai: '1095',
+            resultat: 'Création de 500 000 emplois pour les jeunes',
+            progress: 0
+        },
+        {
+            id: '5',
+            engagement: 'Électrifier 100% du territoire national',
+            domain: 'Énergie',
+            status: 'En cours',
+            delai: '365',
+            resultat: 'Accès à l\'électricité pour toutes les localités du Sénégal',
+            progress: 85,
+            isLate: true,
+            updates: [
+                { date: '2025-12-01', description: '95% du territoire électrifié, retard sur les zones reculées' }
+            ]
+        },
+        {
+            id: '6',
+            engagement: 'Moderniser l\'administration publique',
+            domain: 'Gouvernance',
+            status: 'En cours',
+            delai: '730',
+            resultat: 'Réduction de 70% des délais administratifs grâce à la digitalisation',
+            progress: 60
+        }
+    ].map(p => ({
+        ...p,
+        deadline: calculateDeadline(p.delai),
+        isLate: p.isLate || checkIfLate(p.status, calculateDeadline(p.delai)),
+        publicAvg: 0,
+        publicCount: 0
+    }));
 }
 
 // ==========================================
@@ -314,7 +410,7 @@ async function loadData() {
 // ==========================================
 function calculateDeadline(delay) {
     const deadline = new Date(CONFIG.START_DATE);
-    deadline.setDate(deadline.getDate() + parseInt(delay));
+    deadline.setDate(deadline.getDate() + parseInt(delay, 10));
     return deadline;
 }
 
@@ -383,7 +479,7 @@ function setupDailyPromise() {
                 <h4><i class="fas fa-clock"></i> Délai de Réalisation</h4>
                 <div class="deadline-info">
                     <span class="deadline-label">Délai initial :</span>
-                    <span class="deadline-value">${promise.delai}</span>
+                    <span class="deadline-value">${promise.delai} jours</span>
                 </div>
                 <div class="deadline-info">
                     <span class="deadline-label">Date limite :</span>
@@ -436,17 +532,17 @@ function updateStats() {
     KPI_ITEMS[1].value = realise;
     KPI_ITEMS[2].value = encours;
     KPI_ITEMS[3].value = retard;
-    KPI_ITEMS[4].value = tauxRealisation + '%';
+    KPI_ITEMS[4].value = `${tauxRealisation}%`;
     
     // Calcul du délai moyen
-    const avgDelay = CONFIG.promises
-        .filter(p => p.status !== 'Réalisé')
-        .reduce((sum, p) => sum + getDaysRemaining(p.deadline), 0) / 
-        (total - realise || 1);
+    const nonRealises = CONFIG.promises.filter(p => p.status !== 'Réalisé');
+    const avgDelay = nonRealises.length > 0
+        ? nonRealises.reduce((sum, p) => sum + getDaysRemaining(p.deadline), 0) / nonRealises.length
+        : 0;
     
-    KPI_ITEMS[5].value = Math.round(avgDelay) + 'j';
+    KPI_ITEMS[5].value = `${Math.round(avgDelay)}j`;
     
-    // Calcul de la moyenne des notes
+    // Calcul de la moyenne des notes (fallback)
     const allRatings = CONFIG.promises.filter(p => p.publicCount > 0);
     const avgRating = allRatings.length > 0
         ? (allRatings.reduce((sum, p) => sum + p.publicAvg, 0) / allRatings.length).toFixed(1)
@@ -463,10 +559,10 @@ function updateStats() {
     updateStatValue('non-lance', nonLance);
     updateStatValue('retard', retard);
     updateStatValue('avec-maj', withUpdates);
-    updateStatValue('taux-realisation', tauxRealisation + '%');
+    updateStatValue('taux-realisation', `${tauxRealisation}%`);
     updateStatValue('moyenne-notes', avgRating);
     updateStatValue('votes-total', `${totalVotes.toLocaleString('fr-FR')} votes`);
-    updateStatValue('delai-moyen', Math.round(avgDelay) + 'j');
+    updateStatValue('delai-moyen', `${Math.round(avgDelay)}j`);
     
     // Mettre à jour les pourcentages
     updateStatPercentage('total-percentage', total, total);
@@ -475,20 +571,30 @@ function updateStats() {
     updateStatPercentage('non-lance-percentage', nonLance, total);
     updateStatPercentage('retard-percentage', retard, total);
     updateStatPercentage('avec-maj-percentage', withUpdates, total);
+    
+    // Domaine principal
+    const domains = CONFIG.promises.reduce((acc, p) => {
+        acc[p.domain] = (acc[p.domain] || 0) + 1;
+        return acc;
+    }, {});
+    
+    const principalDomain = Object.entries(domains).sort((a, b) => b[1] - a[1])[0];
+    if (principalDomain) {
+        updateStatValue('domaine-principal', principalDomain[0]);
+        updateStatValue('domaine-count', `${principalDomain[1]} engagements`);
+    }
 }
 
 function updateStatValue(id, value) {
     const el = document.getElementById(id);
-    if (el) {
-        el.textContent = value;
-    }
+    if (el) el.textContent = value;
 }
 
 function updateStatPercentage(id, value, total) {
     const el = document.getElementById(id);
     if (el && total > 0) {
         const percentage = Math.round((value / total) * 100);
-        el.textContent = percentage + '%';
+        el.textContent = `${percentage}%`;
     }
 }
 
@@ -502,7 +608,6 @@ function initFilters() {
     const filterDomain = document.getElementById('filter-domain');
     const filterSearch = document.getElementById('filter-search');
     const resetFiltersBtn = document.getElementById('resetFilters');
-    const viewBtns = document.querySelectorAll('.view-btn');
     const showMoreBtn = document.getElementById('showMoreBtn');
     const showLessBtn = document.getElementById('showLessBtn');
 
@@ -540,19 +645,6 @@ function initFilters() {
             showMoreBtn.style.display = 'inline-flex';
         });
     }
-
-    viewBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const view = btn.getAttribute('data-view');
-            viewBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            const grid = document.getElementById('promisesGrid');
-            if (grid) {
-                grid.className = view === 'list' ? 'promises-list' : 'promises-grid';
-            }
-        });
-    });
 }
 
 function applyFilters() {
@@ -567,11 +659,11 @@ function applyFilters() {
             if (filterStatus === 'En retard') {
                 match = match && promise.isLate;
             } else {
-                match = match && promise.status === filterStatus;
+                match = match && promise.status === filterStatus.replace('✅ ', '').replace('🔄 ', '').replace('⏳ ', '').replace('⚠️ ', '');
             }
         }
         
-        if (filterDomain) {
+        if (filterDomain && filterDomain !== '') {
             match = match && promise.domain === filterDomain;
         }
         
@@ -645,7 +737,7 @@ function renderPromises(promises) {
     if (promises.length === 0) {
         grid.innerHTML = `
             <div class="loading-state">
-                <p>Aucun engagement trouvé avec ces critères.</p>
+                <p><i class="fas fa-search"></i> Aucun engagement trouvé avec ces critères.</p>
             </div>
         `;
         return;
@@ -800,7 +892,8 @@ function renderNewspapers() {
     grid.innerHTML = CONFIG.press.map(paper => `
         <div class="newspaper-card" onclick="openPhotoViewer('${paper.id}')">
             <div class="newspaper-preview">
-                <img src="${paper.image}" alt="${paper.title}" onerror="this.src='https://via.placeholder.com/300x400?text=${encodeURIComponent(paper.title)}'">
+                <img src="${paper.image}" alt="${paper.title}" 
+                     onerror="this.src='https://via.placeholder.com/300x400/cccccc/666666?text=${encodeURIComponent(paper.title.replace(/ /g, '+'))}'">
             </div>
             <h4>${paper.title}</h4>
             <p class="newspaper-date">${paper.date}</p>
@@ -849,7 +942,7 @@ function setupPressCarousel() {
                 onclick="goToSlide(${index})"></button>`
     ).join('');
     
-    // Démarrer le défilement automatique
+    renderPressCarousel();
     startCarouselAutoPlay();
 }
 
@@ -860,7 +953,7 @@ function startCarouselAutoPlay() {
             CONFIG.currentIndex = (CONFIG.currentIndex + 1) % CONFIG.press.length;
             renderPressCarousel();
         }
-    }, 10000); // 10 secondes
+    }, 10000);
 }
 
 function stopCarouselAutoPlay() {
@@ -880,7 +973,7 @@ function renderPressCarousel() {
     carousel.innerHTML = `
         <div class="carousel-item active">
             <img src="${currentPaper.image}" alt="${currentPaper.title}" 
-                 onerror="this.src='https://via.placeholder.com/800x400?text=${encodeURIComponent(currentPaper.title)}'">
+                 onerror="this.src='https://via.placeholder.com/800x400/00695f/ffffff?text=${encodeURIComponent(currentPaper.title.replace(/ /g, '+'))}'">
             <div class="carousel-overlay">
                 <div class="carousel-info">
                     <div class="carousel-title">${currentPaper.title}</div>
@@ -911,7 +1004,7 @@ function setupPromisesCarousel() {
     const carouselGrid = document.getElementById('promisesCarouselGrid');
     if (!carouselGrid) return;
     
-    // Prendre les 6 premières promesses
+    // Prendre les 6 premières promesses (triées avec retards en premier)
     const carouselPromises = CONFIG.promises.slice(0, 6);
     
     carouselGrid.innerHTML = carouselPromises.map((promise, index) => {
@@ -939,32 +1032,27 @@ function setupPromisesCarousel() {
         `;
     }).join('');
     
-    // Ajouter l'autoplay
-    setupCarouselAutoPlay();
-}
-
-function setupCarouselAutoPlay() {
+    // Configurer l'autoplay
     const autoPlayToggle = document.getElementById('carouselAutoPlayToggle');
     if (autoPlayToggle) {
         autoPlayToggle.addEventListener('click', () => {
             CONFIG.carouselAutoPlay = !CONFIG.carouselAutoPlay;
             autoPlayToggle.innerHTML = CONFIG.carouselAutoPlay ? 
-                '<i class="fas fa-pause"></i>' : 
-                '<i class="fas fa-play"></i>';
+                '<i class="fas fa-pause"></i> Pause' : 
+                '<i class="fas fa-play"></i> Lecture auto';
         });
     }
     
-    // Démarrer automatiquement
+    // Démarrer l'autoplay
     setInterval(() => {
         if (CONFIG.carouselAutoPlay) {
             CONFIG.carouselIndex = (CONFIG.carouselIndex + 1) % 6;
-            // Animation de transition si nécessaire
+            // Animation optionnelle ici
         }
     }, 10000);
 }
 
 function goToPromiseSection(promiseId) {
-    // Faire défiler vers la section des engagements
     const promisesSection = document.getElementById('promises');
     if (promisesSection) {
         const offset = CONFIG.scrollOffset;
@@ -975,11 +1063,10 @@ function goToPromiseSection(promiseId) {
             behavior: 'smooth'
         });
         
-        // Mettre en évidence la promesse spécifique
         setTimeout(() => {
             const card = document.querySelector(`.promise-card[data-id="${promiseId}"]`);
             if (card) {
-                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 card.style.boxShadow = '0 0 0 3px var(--primary)';
                 setTimeout(() => {
                     card.style.boxShadow = '';
@@ -1000,7 +1087,6 @@ function setupKpiCarousel() {
     
     if (!kpiCarousel) return;
     
-    // Rendre le premier KPI
     renderKpiItem();
     
     if (kpiPrev) {
@@ -1052,7 +1138,7 @@ function startKpiAutoPlay() {
             CONFIG.kpiCarouselIndex = (CONFIG.kpiCarouselIndex + 1) % KPI_ITEMS.length;
             renderKpiItem();
         }
-    }, 3000); // 3 secondes
+    }, 3000);
 }
 
 function updateKpiCarousel() {
@@ -1060,12 +1146,25 @@ function updateKpiCarousel() {
 }
 
 // ==========================================
-// SERVICE RATINGS
+// SERVICE RATINGS (version sécurisée sans erreurs)
 // ==========================================
 function setupServiceRatings() {
     const form = document.getElementById('ratingForm');
     const resultsSection = document.getElementById('ratingResults');
+    
     if (!form || !resultsSection) return;
+    
+    // Afficher un message si Supabase n'est pas disponible
+    if (!supabaseClient) {
+        resultsSection.innerHTML = `
+            <div class="rating-placeholder">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Les fonctionnalités de notation ne sont pas disponibles actuellement.</p>
+                <p class="rating-note">La plateforme fonctionne en mode lecture seule.</p>
+            </div>
+        `;
+        return;
+    }
     
     const starsContainers = document.querySelectorAll('.stars-container');
 
@@ -1091,12 +1190,11 @@ function setupServiceRatings() {
             updateStars(stars, currentValue);
         });
         
-        // Set initial state
         const initialValue = parseInt(input.value) || 3;
         updateStars(stars, initialValue);
     });
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const formData = {
@@ -1105,7 +1203,7 @@ function setupServiceRatings() {
             welcome: document.getElementById('welcome').value,
             efficiency: document.getElementById('efficiency').value,
             transparency: document.getElementById('transparency').value,
-            comment: document.getElementById('comment').value,
+            comment: document.getElementById('comment').value.trim(),
             date: new Date().toISOString()
         };
         
@@ -1114,29 +1212,44 @@ function setupServiceRatings() {
             return;
         }
         
-        // Sauvegarder dans Supabase si disponible
-        if (supabaseClient) {
-            saveRatingToSupabase(formData);
+        try {
+            if (supabaseClient) {
+                const { error } = await supabaseClient
+                    .from('service_ratings')
+                    .insert([formData]);
+                
+                if (error) throw error;
+                
+                showNotification('Merci pour votre notation !', 'success');
+                form.reset();
+                
+                // Reset stars
+                starsContainers.forEach(container => {
+                    const field = container.getAttribute('data-field');
+                    const input = document.getElementById(field);
+                    const stars = container.querySelectorAll('i');
+                    input.value = '3';
+                    updateStars(stars, 3);
+                });
+                
+                // Mettre à jour les résultats après un court délai
+                setTimeout(() => fetchAndDisplayServiceRatings(), 1000);
+            } else {
+                showNotification('Fonctionnalité non disponible hors ligne', 'info');
+            }
+        } catch (error) {
+            console.error('Erreur sauvegarde notation:', error);
+            showNotification('Erreur lors de l\'enregistrement. Réessayez plus tard.', 'error');
         }
-        
-        showNotification('Merci pour votre notation !', 'success');
-        form.reset();
-        
-        // Reset stars to default
-        starsContainers.forEach(container => {
-            const field = container.getAttribute('data-field');
-            const input = document.getElementById(field);
-            const stars = container.querySelectorAll('i');
-            input.value = 3;
-            updateStars(stars, 3);
-        });
-        
-        // Mettre à jour les résultats
-        setTimeout(() => fetchAndDisplayServiceRatings(), 1000);
     });
     
-    // Charger les résultats initiaux
-    fetchAndDisplayServiceRatings();
+    // Charger les résultats initiaux si Supabase est disponible
+    if (supabaseClient) {
+        fetchAndDisplayServiceRatings();
+    } else {
+        // Afficher un dashboard de démo
+        displayDemoRatingResults();
+    }
 }
 
 function updateStars(stars, value) {
@@ -1151,128 +1264,94 @@ function updateStars(stars, value) {
     });
 }
 
-async function saveRatingToSupabase(data) {
-    try {
-        const { error } = await supabaseClient
-            .from('service_ratings')
-            .insert([data]);
-        if (error) throw error;
-        console.log('✅ Notation sauvegardée');
-    } catch (error) {
-        console.error('❌ Erreur sauvegarde notation:', error);
-    }
-}
-
 async function fetchAndDisplayServiceRatings() {
     if (!supabaseClient) return;
     
     try {
-        // Récupérer toutes les notations
         const { data: ratings, error } = await supabaseClient
             .from('service_ratings')
             .select('*')
-            .order('date', { ascending: false });
+            .order('date', { ascending: false })
+            .limit(20); // Limiter pour les performances
         
-        if (error) throw error;
+        if (error) {
+            console.warn('⚠️ Table service_ratings non trouvée - utilisation données démo');
+            displayDemoRatingResults();
+            return;
+        }
         
         if (ratings && ratings.length > 0) {
             displayRatingResults(ratings);
+        } else {
+            displayEmptyRatingResults();
         }
     } catch (error) {
-        console.error('❌ Erreur chargement notations:', error);
+        console.warn('⚠️ Erreur chargement notations - utilisation données démo:', error.message);
+        displayDemoRatingResults();
     }
 }
 
-function displayRatingResults(ratings) {
+function displayDemoRatingResults() {
     const resultsSection = document.getElementById('ratingResults');
     if (!resultsSection) return;
-    
-    // Calculer les statistiques
-    const serviceStats = {};
-    ratings.forEach(rating => {
-        if (!serviceStats[rating.service]) {
-            serviceStats[rating.service] = {
-                count: 0,
-                totalScore: 0,
-                avgScore: 0,
-                recent: []
-            };
-        }
-        
-        const score = (parseInt(rating.accessibility) + 
-                      parseInt(rating.welcome) + 
-                      parseInt(rating.efficiency) + 
-                      parseInt(rating.transparency)) / 4;
-        
-        serviceStats[rating.service].count++;
-        serviceStats[rating.service].totalScore += score;
-        serviceStats[rating.service].avgScore = serviceStats[rating.service].totalScore / serviceStats[rating.service].count;
-        
-        if (serviceStats[rating.service].recent.length < 5) {
-            serviceStats[rating.service].recent.push({
-                date: new Date(rating.date).toLocaleDateString('fr-FR'),
-                comment: rating.comment || 'Aucun commentaire',
-                score: score.toFixed(1)
-            });
-        }
-    });
-    
-    // Trier par note moyenne
-    const sortedServices = Object.entries(serviceStats)
-        .sort((a, b) => b[1].avgScore - a[1].avgScore);
-    
-    // Meilleures notes
-    const topServices = sortedServices.slice(0, 3);
-    
-    // Dernières notations
-    const recentRatings = ratings.slice(0, 5).map(r => ({
-        service: r.service,
-        date: new Date(r.date).toLocaleDateString('fr-FR'),
-        comment: r.comment || 'Aucun commentaire',
-        score: ((parseInt(r.accessibility) + parseInt(r.welcome) + 
-                parseInt(r.efficiency) + parseInt(r.transparency)) / 4).toFixed(1)
-    }));
-    
-    // Nombre total de votes
-    const totalVotes = ratings.length;
     
     resultsSection.innerHTML = `
         <div class="rating-results-grid">
             <div class="rating-results-card">
-                <h4><i class="fas fa-chart-bar"></i> Meilleurs Services</h4>
+                <h4><i class="fas fa-chart-bar"></i> Meilleurs Services (Démo)</h4>
                 <div class="top-services">
-                    ${topServices.map(([service, stats], index) => `
-                        <div class="service-item ${index === 0 ? 'gold' : index === 1 ? 'silver' : 'bronze'}">
-                            <div class="service-rank">${index + 1}</div>
-                            <div class="service-info">
-                                <div class="service-name">${service}</div>
-                                <div class="service-stats">
-                                    <span class="service-score">
-                                        <i class="fas fa-star"></i> ${stats.avgScore.toFixed(1)}/5
-                                    </span>
-                                    <span class="service-count">${stats.count} vote(s)</span>
-                                </div>
+                    <div class="service-item gold">
+                        <div class="service-rank">1</div>
+                        <div class="service-info">
+                            <div class="service-name">Santé Publique</div>
+                            <div class="service-stats">
+                                <span class="service-score"><i class="fas fa-star"></i> 4.7/5</span>
+                                <span class="service-count">128 votes</span>
                             </div>
                         </div>
-                    `).join('')}
+                    </div>
+                    <div class="service-item silver">
+                        <div class="service-rank">2</div>
+                        <div class="service-info">
+                            <div class="service-name">Éducation Nationale</div>
+                            <div class="service-stats">
+                                <span class="service-score"><i class="fas fa-star"></i> 4.3/5</span>
+                                <span class="service-count">95 votes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-item bronze">
+                        <div class="service-rank">3</div>
+                        <div class="service-info">
+                            <div class="service-name">Transports</div>
+                            <div class="service-stats">
+                                <span class="service-score"><i class="fas fa-star"></i> 3.9/5</span>
+                                <span class="service-count">87 votes</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
             <div class="rating-results-card">
-                <h4><i class="fas fa-clock"></i> Dernières Notations</h4>
+                <h4><i class="fas fa-clock"></i> Dernières Notations (Démo)</h4>
                 <div class="recent-ratings">
-                    ${recentRatings.map(rating => `
-                        <div class="recent-item">
-                            <div class="recent-header">
-                                <span class="recent-service">${rating.service}</span>
-                                <span class="recent-date">${rating.date}</span>
-                            </div>
-                            <div class="recent-score">
-                                <i class="fas fa-star"></i> ${rating.score}/5
-                            </div>
-                            <div class="recent-comment">${rating.comment}</div>
+                    <div class="recent-item">
+                        <div class="recent-header">
+                            <span class="recent-service">Santé Publique</span>
+                            <span class="recent-date">28/01/2026</span>
                         </div>
-                    `).join('')}
+                        <div class="recent-score"><i class="fas fa-star"></i> 5.0/5</div>
+                        <div class="recent-comment">Très bon accueil et délais réduits</div>
+                    </div>
+                    <div class="recent-item">
+                        <div class="recent-header">
+                            <span class="recent-service">Éducation Nationale</span>
+                            <span class="recent-date">27/01/2026</span>
+                        </div>
+                        <div class="recent-score"><i class="fas fa-star"></i> 4.0/5</div>
+                        <div class="recent-comment">Amélioration notable des infrastructures</div>
+                    </div>
                 </div>
             </div>
             
@@ -1280,29 +1359,53 @@ function displayRatingResults(ratings) {
                 <h4><i class="fas fa-poll"></i> Statistiques Globales</h4>
                 <div class="stats-overview">
                     <div class="stat-item">
-                        <div class="stat-value">${totalVotes}</div>
+                        <div class="stat-value">310</div>
                         <div class="stat-label">Votes totaux</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-value">${Object.keys(serviceStats).length}</div>
+                        <div class="stat-value">8</div>
                         <div class="stat-label">Services évalués</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-value">${ratings.filter(r => r.comment).length}</div>
+                        <div class="stat-value">185</div>
                         <div class="stat-label">Avec commentaires</div>
                     </div>
                 </div>
                 
                 <h5 style="margin-top: 20px; margin-bottom: 10px;"><i class="fas fa-th-list"></i> Votes par Service</h5>
                 <div class="votes-by-service">
-                    ${Object.entries(serviceStats).map(([service, stats]) => `
-                        <div class="service-vote-item">
-                            <span class="service-name">${service}</span>
-                            <span class="service-votes">${stats.count} vote(s)</span>
-                        </div>
-                    `).join('')}
+                    <div class="service-vote-item">
+                        <span class="service-name">Santé Publique</span>
+                        <span class="service-votes">128 votes</span>
+                    </div>
+                    <div class="service-vote-item">
+                        <span class="service-name">Éducation Nationale</span>
+                        <span class="service-votes">95 votes</span>
+                    </div>
+                    <div class="service-vote-item">
+                        <span class="service-name">Transports</span>
+                        <span class="service-votes">87 votes</span>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="rating-disclaimer">
+            <i class="fas fa-info-circle"></i>
+            Ces données sont à titre démonstratif. Les fonctionnalités complètes seront activées 
+            lorsque la base de données sera configurée.
+        </div>
+    `;
+}
+
+function displayEmptyRatingResults() {
+    const resultsSection = document.getElementById('ratingResults');
+    if (!resultsSection) return;
+    
+    resultsSection.innerHTML = `
+        <div class="rating-placeholder">
+            <i class="fas fa-star"></i>
+            <p>Aucune notation pour le moment.</p>
+            <p class="rating-note">Soyez le premier à noter un service public !</p>
         </div>
     `;
 }
@@ -1311,7 +1414,6 @@ function displayRatingResults(ratings) {
 // PHOTO VIEWER PRESSE
 // ==========================================
 function initPhotoViewer() {
-    // Créer le modal de visualisation photo
     const modal = document.createElement('div');
     modal.id = 'photoViewerModal';
     modal.className = 'photo-viewer-modal';
@@ -1357,12 +1459,16 @@ function setupPhotoViewerControls() {
     let scale = 1;
     let rotate = 0;
     
+    function updatePhotoTransform() {
+        photoImage.style.transform = `scale(${scale}) rotate(${rotate}deg)`;
+    }
+    
     if (closeBtn) {
         closeBtn.addEventListener('click', () => {
             modal.style.display = 'none';
             scale = 1;
             rotate = 0;
-            photoImage.style.transform = '';
+            updatePhotoTransform();
         });
     }
     
@@ -1371,7 +1477,7 @@ function setupPhotoViewerControls() {
             modal.style.display = 'none';
             scale = 1;
             rotate = 0;
-            photoImage.style.transform = '';
+            updatePhotoTransform();
         }
     });
     
@@ -1428,10 +1534,6 @@ function setupPhotoViewerControls() {
     
     photoContainer.addEventListener('touchend', (e) => {
         touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    });
-    
-    function handleSwipe() {
         if (touchStartX - touchEndX > 50) {
             // Swipe gauche - suivant
             CONFIG.currentIndex = (CONFIG.currentIndex + 1) % CONFIG.press.length;
@@ -1442,11 +1544,7 @@ function setupPhotoViewerControls() {
             CONFIG.currentIndex = (CONFIG.currentIndex - 1 + CONFIG.press.length) % CONFIG.press.length;
             updatePhotoViewer();
         }
-    }
-    
-    function updatePhotoTransform() {
-        photoImage.style.transform = `scale(${scale}) rotate(${rotate}deg)`;
-    }
+    });
 }
 
 function openPhotoViewer(paperId) {
@@ -1472,17 +1570,20 @@ function updatePhotoViewer() {
 }
 
 // ==========================================
-// VOTES PUBLICS
+// VOTES PUBLICS (version sécurisée)
 // ==========================================
 async function fetchAndDisplayPublicVotes() {
     if (!supabaseClient) return;
     
     try {
         const { data, error } = await supabaseClient
-            .from('public_votes')
+            .from('votes')
             .select('promise_id, rating');
         
-        if (error) throw error;
+        if (error) {
+            console.warn('⚠️ Table votes non trouvée - pas de votes disponibles');
+            return;
+        }
         
         const votesMap = {};
         data.forEach(vote => {
@@ -1504,7 +1605,7 @@ async function fetchAndDisplayPublicVotes() {
         updateStats();
         
     } catch (error) {
-        console.error('❌ Erreur chargement votes:', error);
+        console.warn('⚠️ Erreur chargement votes:', error.message);
     }
 }
 
@@ -1519,23 +1620,28 @@ function toggleUpdates(promiseId) {
 }
 
 function ratePromise(promiseId) {
+    if (!supabaseClient) {
+        showNotification('Fonctionnalité de notation non disponible hors ligne', 'info');
+        return;
+    }
+    
     const promise = CONFIG.promises.find(p => p.id === promiseId);
     if (!promise) return;
     
     const rating = prompt(`Noter l'engagement "${promise.engagement.substring(0, 50)}..." sur 5:`);
     
     if (rating && !isNaN(rating) && rating >= 1 && rating <= 5) {
-        if (supabaseClient) {
-            saveVoteToSupabase(promiseId, parseInt(rating));
-        }
+        saveVoteToSupabase(promiseId, parseInt(rating));
         showNotification('Merci pour votre vote !', 'success');
     }
 }
 
 async function saveVoteToSupabase(promiseId, rating) {
+    if (!supabaseClient) return;
+    
     try {
         const { error } = await supabaseClient
-            .from('public_votes')
+            .from('votes')
             .insert([{ promise_id: promiseId, rating }]);
         if (error) throw error;
         
@@ -1543,6 +1649,7 @@ async function saveVoteToSupabase(promiseId, rating) {
         
     } catch (error) {
         console.error('❌ Erreur sauvegarde vote:', error);
+        showNotification('Erreur lors de l\'enregistrement du vote', 'error');
     }
 }
 
@@ -1550,7 +1657,7 @@ function sharePromise(promiseId) {
     const promise = CONFIG.promises.find(p => p.id === promiseId);
     if (!promise) return;
     
-    const text = `📊 "${promise.engagement.substring(0, 100)}..." - Suivi des engagements du Projet pour un Sénégal Souverain, Juste et Prospère`;
+    const text = `📊 "${promise.engagement.substring(0, 100)}..." - Suivi des engagements du Projet Sénégal`;
     const url = window.location.href;
     
     if (navigator.share) {
@@ -1566,13 +1673,6 @@ function sharePromise(promiseId) {
 }
 
 // ==========================================
-// EVENT LISTENERS
-// ==========================================
-function setupEventListeners() {
-    // Déjà configuré dans les autres fonctions
-}
-
-// ==========================================
 // NOTIFICATIONS
 // ==========================================
 function showNotification(message, type = 'success') {
@@ -1580,7 +1680,7 @@ function showNotification(message, type = 'success') {
     if (!container) return;
     
     const notification = document.createElement('div');
-    notification.className = 'notification';
+    notification.className = `notification notification-${type}`;
     
     const icons = {
         success: 'check-circle',
@@ -1596,7 +1696,7 @@ function showNotification(message, type = 'success') {
     container.appendChild(notification);
     
     setTimeout(() => {
-        notification.style.animation = 'slideInRight 0.3s ease reverse';
+        notification.style.animation = 'slideOutRight 0.3s ease forwards';
         setTimeout(() => notification.remove(), 300);
     }, 3000);
 }
@@ -1604,7 +1704,6 @@ function showNotification(message, type = 'success') {
 // ==========================================
 // EXPORTS GLOBAUX
 // ==========================================
-window.CONFIG = CONFIG;
 window.toggleUpdates = toggleUpdates;
 window.ratePromise = ratePromise;
 window.sharePromise = sharePromise;

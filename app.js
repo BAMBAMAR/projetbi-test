@@ -170,7 +170,7 @@ function calculateDeadline(delaiText) {
 }
 
 function checkIfLate(status, deadline) {
-    if (status === 'Réalisé') return false;
+    if (status === 'realise') return false;
     return CONFIG.CURRENT_DATE > deadline;
 }
 
@@ -203,14 +203,14 @@ function generateStars(rating) {
 
 function getStatusClass(promise) {
     if (promise.isLate) return 'status-late';
-    if (promise.status === 'Réalisé') return 'status-realise';
+    if (promise.status === 'realise') return 'status-realise';
     if (promise.status === 'En cours') return 'status-encours';
     return 'status-non-lance';
 }
 
 function getStatusText(promise) {
     if (promise.isLate) return '⚠️ En retard';
-    if (promise.status === 'Réalisé') return '✅ Réalisé';
+    if (promise.status === 'realise') return '✅ realise';
     if (promise.status === 'En cours') return '🔄 En cours';
     return '⏳ Non lancé';
 }
@@ -233,7 +233,7 @@ function updateStatPercentage(id, value, total) {
 
 function calculateStats(promises) {
     const total = promises.length;
-    const realise = promises.filter(p => p.status === 'Réalisé').length;
+    const realise = promises.filter(p => p.status === 'realise').length;
     const encours = promises.filter(p => p.status === 'En cours').length;
     const nonLance = promises.filter(p => p.status === 'Non lancé').length;
     const retard = promises.filter(p => p.isLate).length;
@@ -271,7 +271,7 @@ function updateStats() {
     const principalDomain = Object.entries(domains).sort((a, b) => b[1] - a[1])[0];
     
     const avgDelay = CONFIG.currentFilteredPromises
-        .filter(p => p.status !== 'Réalisé')
+        .filter(p => p.status !== 'realise')
         .reduce((sum, p) => sum + (parseInt(getDaysRemaining(p.deadline).replace(' jours', '').replace('Expiré', '0')) || 0), 0) / 
         (stats.total - stats.realise || 1);
     
@@ -325,7 +325,7 @@ function updateKPI() {
     
     // Calcul du délai moyen (corrigé pour gérer "Expiré")
     const avgDelay = CONFIG.promises
-        .filter(p => p.status !== 'Réalisé')
+        .filter(p => p.status !== 'realise')
         .reduce((sum, p) => {
             const daysStr = getDaysRemaining(p.deadline).replace(' jours', '').replace('Expiré', '0');
             return sum + (parseInt(daysStr) || 0);
@@ -591,7 +591,7 @@ async function loadData() {
         CONFIG.promises = data.promises.map(p => {
             const deadline = calculateDeadline(p.delai);
             const isLate = checkIfLate(p.status, deadline);
-            const progress = p.status === 'Réalisé' ? 100 : 
+            const progress = p.status === 'realise' ? 100 : 
                            p.status === 'En cours' ? 50 : 0;
             
             return {

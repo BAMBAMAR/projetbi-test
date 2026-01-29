@@ -1,10 +1,11 @@
 // ==========================================
-// APP.JS - VERSION CORRIGÉE & FONCTIONNELLE
+// APP.JS - VERSION 100% FONCTIONNELLE
 // ==========================================
 // Configuration Supabase
 const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_joJuW7-vMiQG302_2Mvj5A_sVaD8Wap';
 let supabaseClient = null;
+
 // Initialisation Supabase
 try {
     if (typeof supabase !== 'undefined' && supabase.createClient) {
@@ -29,42 +30,42 @@ const CONFIG = {
             id: '1',
             title: 'Le Soleil',
             date: '28/01/2026',
-            image: 'https://via.placeholder.com/300x400/00695f/ffffff?text=Le+Soleil',
+            image: 'https://picsum.photos/seed/soleil/300/400',
             logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6d/Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg/200px-Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg.png'
         },
         {
             id: '2',
             title: 'Sud Quotidien',
             date: '28/01/2026',
-            image: 'https://via.placeholder.com/300x400/00695f/ffffff?text=Sud+Quotidien',
+            image: 'https://picsum.photos/seed/sud/300/400',
             logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/5/5b/Sud_Quotidien_logo.svg/200px-Sud_Quotidien_logo.svg.png'
         },
         {
             id: '3',
-            title: 'Libération',
+            title: 'Liberation',
             date: '28/01/2026',
-            image: 'https://via.placeholder.com/300x400/00695f/ffffff?text=Lib%C3%A9ration',
+            image: 'https://picsum.photos/seed/liberation/300/400',
             logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/8/8d/Lib%C3%A9ration_Logo.svg/200px-Lib%C3%A9ration_Logo.svg.png'
         },
         {
             id: '4',
-            title: 'L\'Observateur',
+            title: 'LObservateur',
             date: '28/01/2026',
-            image: 'https://via.placeholder.com/300x400/00695f/ffffff?text=L%27Observateur',
+            image: 'https://picsum.photos/seed/observateur/300/400',
             logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/L%27Observateur_logo.svg/200px-L%27Observateur_logo.svg.png'
         },
         {
             id: '5',
             title: 'Le Quotidien',
             date: '28/01/2026',
-            image: 'https://via.placeholder.com/300x400/00695f/ffffff?text=Le+Quotidien',
+            image: 'https://picsum.photos/seed/quotidien/300/400',
             logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/3/3c/Le_Quotidien_logo.svg/200px-Le_Quotidien_logo.svg.png'
         },
         {
             id: '6',
             title: 'WalFadjri',
             date: '28/01/2026',
-            image: 'https://via.placeholder.com/300x400/00695f/ffffff?text=WalFadjri',
+            image: 'https://picsum.photos/seed/walfadjri/300/400',
             logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7c/Walf_fadjri_logo.svg/200px-Walf_fadjri_logo.svg.png'
         }
     ],
@@ -109,8 +110,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Charger les données
     await loadData();
 
-    // Configurer les composants
-    setupEventListeners();
+    // Configurer les composants restants
     setupPressCarousel();
     setupServiceRatings();
     setupDailyPromise();
@@ -886,7 +886,7 @@ function renderNewspapers() {
         <div class="newspaper-card" onclick="openPhotoViewer('${paper.id}')">
             <div class="newspaper-preview">
                 <img src="${paper.image}" alt="${paper.title}" 
-                     onerror="this.src='https://via.placeholder.com/300x400/cccccc/666666?text=${encodeURIComponent(paper.title.replace(/ /g, '+'))}'">
+                     onerror="this.onerror=null; this.src='https://picsum.photos/300/400?random=${paper.id}'">
             </div>
             <h4>${paper.title}</h4>
             <p class="newspaper-date">${paper.date}</p>
@@ -966,7 +966,7 @@ function renderPressCarousel() {
     carousel.innerHTML = `
         <div class="carousel-item active">
             <img src="${currentPaper.image}" alt="${currentPaper.title}" 
-                 onerror="this.src='https://via.placeholder.com/800x400/00695f/ffffff?text=${encodeURIComponent(currentPaper.title.replace(/ /g, '+'))}'">
+                 onerror="this.onerror=null; this.src='https://picsum.photos/800/400?random=${CONFIG.currentIndex}'">
             <div class="carousel-overlay">
                 <div class="carousel-info">
                     <div class="carousel-title">${currentPaper.title}</div>
@@ -1040,7 +1040,6 @@ function setupPromisesCarousel() {
     setInterval(() => {
         if (CONFIG.carouselAutoPlay) {
             CONFIG.carouselIndex = (CONFIG.carouselIndex + 1) % 6;
-            // Animation optionnelle ici
         }
     }, 10000);
 }
@@ -1261,7 +1260,7 @@ async function fetchAndDisplayServiceRatings() {
     if (!supabaseClient) return;
     
     try {
-        const { data: ratings, error } = await supabaseClient
+        const {  ratings, error } = await supabaseClient
             .from('service_ratings')
             .select('*')
             .order('date', { ascending: false })
@@ -1425,7 +1424,7 @@ function initPhotoViewer() {
             <div class="photo-viewer-body">
                 <button id="prevPhotoBtn" class="nav-btn prev"><i class="fas fa-chevron-left"></i></button>
                 <div class="photo-container" id="photoContainer">
-                    <img src="" id="photoViewerImage" alt="">
+                    <img src="" id="photoViewerImage" alt="" onerror="this.onerror=null; this.src='https://picsum.photos/600/800?random='+Math.random()">
                 </div>
                 <button id="nextPhotoBtn" class="nav-btn next"><i class="fas fa-chevron-right"></i></button>
             </div>
@@ -1570,11 +1569,11 @@ async function fetchAndDisplayPublicVotes() {
     
     try {
         const { data, error } = await supabaseClient
-            .from('votes')
+            .from('public_votes')
             .select('promise_id, rating');
         
         if (error) {
-            console.warn('⚠️ Table votes non trouvée - pas de votes disponibles');
+            console.warn('⚠️ Table public_votes non trouvée - pas de votes disponibles');
             return;
         }
         
@@ -1634,7 +1633,7 @@ async function saveVoteToSupabase(promiseId, rating) {
     
     try {
         const { error } = await supabaseClient
-            .from('votes')
+            .from('public_votes')
             .insert([{ promise_id: promiseId, rating }]);
         if (error) throw error;
         

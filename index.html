@@ -15,12 +15,6 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Crimson+Pro:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    
     <!-- Styles -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -105,12 +99,12 @@
                     </div>
                     <div class="kpi-item">
                         <i class="fas fa-check-circle"></i>
-                        <span id="realise">0</span>
+                        <span id="kpi-realised">0</span>
                         <span>Réalisés</span>
                     </div>
                     <div class="kpi-item">
                         <i class="fas fa-clock"></i>
-                        <span id="delayed">0</span>
+                        <span id="kpi-delayed">0</span>
                         <span>En retard</span>
                     </div>
                     <div class="kpi-item">
@@ -356,47 +350,10 @@
                             <i class="fas fa-redo"></i>
                             <span>Réinitialiser</span>
                         </button>
-                        <div class="export-container">
-                            <button class="btn-export" id="exportBtn">
-                                <i class="fas fa-download"></i>
-                                <span>Exporter</span>
-                                <i class="fas fa-chevron-down export-icon"></i>
-                            </button>
-                            <div class="export-dropdown" id="exportDropdown">
-                                <div class="export-header">
-                                    <i class="fas fa-file-export"></i>
-                                    <span>Formats d'export</span>
-                                </div>
-                                <button class="export-option" onclick="exportData('csv')">
-                                    <i class="fas fa-file-csv"></i>
-                                    <div class="export-option-text">
-                                        <span>CSV</span>
-                                        <small>Compatible Excel</small>
-                                    </div>
-                                </button>
-                                <button class="export-option" onclick="exportData('excel')">
-                                    <i class="fas fa-file-excel"></i>
-                                    <div class="export-option-text">
-                                        <span>Excel (.xlsx)</span>
-                                        <small>Format natif</small>
-                                    </div>
-                                </button>
-                                <button class="export-option" onclick="exportData('pdf')">
-                                    <i class="fas fa-file-pdf"></i>
-                                    <div class="export-option-text">
-                                        <span>Rapport PDF</span>
-                                        <small>Document imprimable</small>
-                                    </div>
-                                </button>
-                                <button class="export-option" onclick="exportData('json')">
-                                    <i class="fas fa-file-code"></i>
-                                    <div class="export-option-text">
-                                        <span>JSON</span>
-                                        <small>Données structurées</small>
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
+                        <button class="btn-export" onclick="exportData('csv')">
+                            <i class="fas fa-download"></i>
+                            <span>Exporter</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -744,6 +701,7 @@
     <div id="notification-container"></div>
 
     <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="app.js"></script>
 </body>
 </html>

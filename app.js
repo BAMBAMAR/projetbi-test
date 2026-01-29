@@ -200,8 +200,8 @@ async function loadData() {
         CONFIG.promises = data.promises.map(p => {
             const deadline = calculateDeadline(p.delai);
             const isLate = checkIfLate(p.status, deadline);
-            const progress = p.status === 'Réalisé' ? 100 : 
-                           p.status === 'En cours' ? 50 : 0;
+            const progress = p.status === 'realise' ? 100 : 
+                           p.status === 'encours' ? 50 : 0;
             
             return {
                 ...p,
@@ -262,7 +262,7 @@ function calculateDeadline(delaiText) {
 }
 
 function checkIfLate(status, deadline) {
-    if (status === 'Réalisé') return false;
+    if (status === 'realise') return false;
     return CONFIG.CURRENT_DATE > deadline;
 }
 
@@ -302,11 +302,11 @@ function setupDailyPromise() {
                 </div>
                 <div class="daily-stat success">
                     <div class="stat-value">${person.realised}</div>
-                    <div class="stat-label">✅ Réalisés</div>
+                    <div class="stat-label">✅ realises</div>
                 </div>
                 <div class="daily-stat progress">
                     <div class="stat-value">${person.ongoing}</div>
-                    <div class="stat-label">🔄 En cours</div>
+                    <div class="stat-label">🔄 encours</div>
                 </div>
                 <div class="daily-stat warning">
                     <div class="stat-value">${person.delay}</div>
@@ -359,7 +359,7 @@ function updateStats() {
     const principalDomain = Object.entries(domains).sort((a, b) => b[1] - a[1])[0];
     
     const avgDelay = CONFIG.promises
-        .filter(p => p.status !== 'Réalisé')
+        .filter(p => p.status !== 'realise')
         .reduce((sum, p) => sum + (parseInt(getDaysRemaining(p.deadline).replace(' jours', '')) || 0), 0) / 
         (total - realise || 1);
     
@@ -414,7 +414,7 @@ function updateStatPercentage(id, value, total) {
 // ==========================================
 function updateKPI() {
     const total = CONFIG.promises.length;
-    const realise = CONFIG.promises.filter(p => p.status === 'Réalisé').length;
+    const realise = CONFIG.promises.filter(p => p.status === 'realise').length;
     const retard = CONFIG.promises.filter(p => p.isLate).length;
     const tauxRealisation = total > 0 ? ((realise / total) * 100).toFixed(1) : 0;
     
@@ -424,7 +424,7 @@ function updateKPI() {
         : '0.0';
     
     const avgDelay = CONFIG.promises
-        .filter(p => p.status !== 'Réalisé')
+        .filter(p => p.status !== 'realise')
         .reduce((sum, p) => sum + (parseInt(getDaysRemaining(p.deadline).replace(' jours', '')) || 0), 0) / 
         (total - realise || 1);
     
@@ -684,15 +684,15 @@ function createPromiseCard(promise, statusClass, statusText, progress) {
 
 function getStatusClass(promise) {
     if (promise.isLate) return 'status-late';
-    if (promise.status === 'Réalisé') return 'status-realise';
-    if (promise.status === 'En cours') return 'status-encours';
+    if (promise.status === 'realise') return 'status-realise';
+    if (promise.status === 'encours') return 'status-encours';
     return 'status-non-lance';
 }
 
 function getStatusText(promise) {
     if (promise.isLate) return '⚠️ En retard';
-    if (promise.status === 'Réalisé') return '✅ Réalisé';
-    if (promise.status === 'En cours') return '🔄 En cours';
+    if (promise.status === 'realise') return '✅ realise';
+    if (promise.status === 'encours') return '🔄 encours';
     return '⏳ Non lancé';
 }
 

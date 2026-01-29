@@ -1,966 +1,1395 @@
 // ==========================================
-// CONFIGURATION GLOBALE AVEC FONCTIONNALITÉS AVANCÉES
+// APP.JS - VERSION COMPLÈTE ET CORRIGÉE
 // ==========================================
+
+// Configuration Supabase
+const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3c2R4dHRqamJmbm91ZmlpZGtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzU2ODk0MjQsImV4cCI6MjA1MTI2NTQyNH0.Y2Jx8K5tQZ3X9y7Z8X6Y5W4V3U2T1S0R9Q8P7O6N5M4';
+let supabaseClient = null;
+
+// Initialisation Supabase
+try {
+    if (window.supabase && typeof window.supabase.createClient === 'function') {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        console.log('✅ Supabase initialisé');
+    } else {
+        console.warn('⚠️ Supabase SDK non disponible');
+    }
+} catch (error) {
+    console.error('❌ Erreur d\'initialisation Supabase:', error);
+}
+
+// Configuration globale
 const CONFIG = {
-  // ... configuration existante ...
-  visibleCount: 6,
-  currentVisible: 6,
-  carouselIndex: 0,
-  carouselAutoPlay: true,
-  pressViewerIndex: 0,
-  zoomLevel: 1,
-  ratings: [],
-  kpiInterval: null,
-  promisesCarouselInterval: null
+    START_DATE: new Date('2024-04-02'),
+    CURRENT_DATE: new Date(),
+    promises: [],
+    news: [],
+    press: [
+        {
+            id: '1',
+            title: 'Le Soleil',
+            date: '28/01/2026',
+            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6d/Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg/800px-Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg.png'
+        },
+        {
+            id: '2',
+            title: 'Sud Quotidien',
+            date: '28/01/2026',
+            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/5/5b/Sud_Quotidien_logo.svg/800px-Sud_Quotidien_logo.svg.png'
+        },
+        {
+            id: '3',
+            title: 'Libération',
+            date: '28/01/2026',
+            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/L%27Observateur_logo.svg/800px-L%27Observateur_logo.svg.png'
+        },
+        {
+            id: '4',
+            title: 'L\'Observateur',
+            date: '28/01/2026',
+            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/L%27Observateur_logo.svg/800px-L%27Observateur_logo.svg.png'
+        },
+        {
+            id: '5',
+            title: 'Le Quotidien',
+            date: '28/01/2026',
+            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/3/3c/Le_Quotidien_logo.svg/800px-Le_Quotidien_logo.svg.png'
+        }
+    ],
+    currentIndex: 0,
+    ratings: [],
+    carouselInterval: null,
+    visibleCount: 6,
+    currentVisible: 6,
+    carouselIndex: 0,
+    carouselAutoPlay: true,
+    animationDuration: 300,
+    scrollOffset: 80
 };
 
+// Personnes pour "Promesse du Jour"
+const DAILY_PEOPLE = [
+    {
+        name: "M. Aliou SALL",
+        role: "Ministre de l'Économie",
+        avatar: "AS",
+        article: "Spécialiste des politiques économiques, M. Aliou SALL porte 15 engagements majeurs pour la relance économique. Son plan d'action comprend la réforme du système fiscal, la promotion des investissements privés et le développement des infrastructures numériques.",
+        promises: 15,
+        realised: 8,
+        ongoing: 5,
+        delay: 2,
+        promise: "Moderniser l'administration fiscale et douanière pour améliorer la collecte des recettes",
+        expectedResults: "Augmentation de 20% des recettes fiscales et réduction des délais de traitement des dossiers de 50%",
+        deadline: "12 mois pour les mesures clés, 36 mois pour l'achèvement complet"
+    },
+    {
+        name: "Mme Aminata DIALLO",
+        role: "Ministre de la Santé",
+        avatar: "AD",
+        article: "Pionnière de la réforme du système de santé, Mme Diallo supervise 12 engagements visant à améliorer l'accès aux soins de qualité. Ses priorités incluent la construction de nouveaux centres de santé, la formation du personnel médical et la numérisation des dossiers patients.",
+        promises: 12,
+        realised: 6,
+        ongoing: 4,
+        delay: 2,
+        promise: "Construire 50 nouveaux centres de santé et recruter 1000 agents de santé",
+        expectedResults: "Réduction de 30% des délais d'attente et amélioration de l'accès aux soins pour 2 millions de personnes",
+        deadline: "24 mois pour la construction, 12 mois pour le recrutement"
+    },
+    {
+        name: "Dr Ibrahima CISSE",
+        role: "Ministre de l'Éducation",
+        avatar: "IC",
+        article: "Expert en éducation, Dr Cisse est responsable de 18 engagements pour la modernisation du système éducatif. Ses projets phares incluent la construction d'écoles numériques, la formation des enseignants et la révision des programmes scolaires.",
+        promises: 18,
+        realised: 10,
+        ongoing: 6,
+        delay: 2,
+        promise: "Construire 100 écoles numériques et former 5000 enseignants aux nouvelles technologies",
+        expectedResults: "Amélioration des résultats scolaires de 25% et réduction de la fracture numérique dans l'éducation",
+        deadline: "36 mois pour la construction, 24 mois pour la formation"
+    },
+    {
+        name: "M. Ousmane NDIAYE",
+        role: "Ministre des Infrastructures",
+        avatar: "ON",
+        article: "Ingénieur de formation, M. Ndiaye gère 22 engagements pour le développement des infrastructures nationales. Son portefeuille comprend des projets routiers, la construction de ponts et le développement des réseaux d'eau et d'électricité.",
+        promises: 22,
+        realised: 12,
+        ongoing: 8,
+        delay: 2,
+        promise: "Construire 500 km de routes et 10 ponts stratégiques",
+        expectedResults: "Réduction de 40% du temps de transport et amélioration de la connectivité entre les régions",
+        deadline: "60 mois pour l'ensemble du programme"
+    },
+    {
+        name: "Mme Fatou KANE",
+        role: "Ministre de l'Environnement",
+        avatar: "FK",
+        article: "Militante écologiste, Mme Kane défend 14 engagements pour la protection de l'environnement. Ses initiatives incluent la lutte contre la déforestation, la promotion des énergies renouvelables et la gestion des déchets.",
+        promises: 14,
+        realised: 7,
+        ongoing: 5,
+        delay: 2,
+        promise: "Planter 10 millions d'arbres et développer 500 MW d'énergie solaire",
+        expectedResults: "Réduction de 15% de l'érosion et couverture de 20% des besoins énergétiques par le solaire",
+        deadline: "60 mois pour le reboisement, 36 mois pour l'énergie solaire"
+    }
+];
+
 // ==========================================
-// INITIALISATION AMÉLIORÉE
+// INITIALISATION
 // ==========================================
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('🚀 Initialisation de la plateforme moderne...');
-  await loadData();
-  setupEventListeners();
-  setupCarousel();
-  setupServiceRatings();
-  setupDailyPromise();
-  setupPromisesCarousel();
-  setupKpiCarousel();
-  setupPressViewer();
-  setupRatingDashboard();
-  setupVisibilityControls();
-  console.log('✅ Plateforme initialisée avec toutes les fonctionnalités');
+    console.log('🚀 Initialisation...');
+    
+    // Initialiser les composants UI
+    initNavigation();
+    initScrollEffects();
+    initFilters();
+    initDateDisplay();
+    initShowMoreLess();
+    initPromisesCarousel();
+    
+    // Charger les données
+    await loadData();
+    
+    // Configurer les composants
+    setupEventListeners();
+    setupCarousel();
+    setupServiceRatings();
+    setupDailyPromise();
+    
+    console.log('✅ Initialisation terminée');
 });
 
 // ==========================================
-// CAROUSEL DES KPI
+// NAVIGATION
 // ==========================================
-function setupKpiCarousel() {
-  const carousel = document.getElementById('kpiCarousel');
-  const prevBtn = document.getElementById('kpiPrev');
-  const nextBtn = document.getElementById('kpiNext');
-  const dotsContainer = document.getElementById('kpiDots');
-  
-  if (!carousel) return;
-  
-  // KPI à afficher dans le carousel
-  const kpis = [
-    { id: 'total', label: 'Total Engagements', value: '0', trend: null },
-    { id: 'realise', label: 'Réalisés', value: '0', trend: 'positive' },
-    { id: 'retard', label: 'En Retard', value: '0', trend: 'negative' },
-    { id: 'encours', label: 'En Cours', value: '0', trend: null },
-    { id: 'taux-realisation', label: 'Taux Réalisation', value: '0%', trend: 'positive' },
-    { id: 'delai-moyen', label: 'Délai Moyen Restant', value: '0j', trend: null },
-    { id: 'moyenne-notes', label: 'Note Moyenne', value: '0.0', trend: null },
-    { id: 'avec-maj', label: 'Avec Mises à Jour', value: '0', trend: 'positive' }
-  ];
-  
-  // Rendu des KPI
-  carousel.innerHTML = kpis.map(kpi => `
-    <div class="kpi-slide" data-kpi="${kpi.id}">
-      <div class="kpi-value">${kpi.value}</div>
-      <div class="kpi-label">${kpi.label}</div>
-      ${kpi.trend ? `
-        <div class="kpi-trend ${kpi.trend}">
-          <i class="fas fa-arrow-${kpi.trend === 'positive' ? 'up' : 'down'}"></i>
-          <span>${kpi.trend === 'positive' ? 'En hausse' : 'En baisse'}</span>
-        </div>
-      ` : ''}
-    </div>
-  `).join('');
-  
-  // Création des points de navigation
-  const slideCount = kpis.length;
-  dotsContainer.innerHTML = '';
-  for (let i = 0; i < slideCount; i++) {
-    const dot = document.createElement('div');
-    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-    dot.addEventListener('click', () => scrollToKpiSlide(i));
-    dotsContainer.appendChild(dot);
-  }
-  
-  // Navigation
-  prevBtn.addEventListener('click', () => scrollKpi(-1));
-  nextBtn.addEventListener('click', () => scrollKpi(1));
-  
-  // Défilement automatique
-  startKpiAutoScroll();
-}
-
-function scrollKpi(direction) {
-  const carousel = document.getElementById('kpiCarousel');
-  const dots = document.querySelectorAll('#kpiDots .carousel-dot');
-  const slideWidth = document.querySelector('.kpi-slide').offsetWidth + 16; // 16px pour le gap
-  
-  CONFIG.kpiIndex = (CONFIG.kpiIndex || 0) + direction;
-  const slides = Math.floor(carousel.offsetWidth / slideWidth);
-  const maxIndex = Math.ceil(carousel.scrollWidth / slideWidth) - slides;
-  
-  if (CONFIG.kpiIndex < 0) CONFIG.kpiIndex = maxIndex;
-  if (CONFIG.kpiIndex > maxIndex) CONFIG.kpiIndex = 0;
-  
-  carousel.scrollTo({
-    left: CONFIG.kpiIndex * slideWidth,
-    behavior: 'smooth'
-  });
-  
-  // Mettre à jour les points actifs
-  dots.forEach((dot, index) => {
-    dot.classList.toggle('active', index === CONFIG.kpiIndex % dots.length);
-  });
-}
-
-function scrollToKpiSlide(index) {
-  const carousel = document.getElementById('kpiCarousel');
-  const slideWidth = document.querySelector('.kpi-slide').offsetWidth + 16;
-  
-  CONFIG.kpiIndex = index;
-  carousel.scrollTo({
-    left: index * slideWidth,
-    behavior: 'smooth'
-  });
-  
-  // Mettre à jour les points actifs
-  document.querySelectorAll('#kpiDots .carousel-dot').forEach((dot, i) => {
-    dot.classList.toggle('active', i === index);
-  });
-}
-
-function startKpiAutoScroll() {
-  stopKpiAutoScroll();
-  CONFIG.kpiInterval = setInterval(() => scrollKpi(1), 5000);
-}
-
-function stopKpiAutoScroll() {
-  if (CONFIG.kpiInterval) {
-    clearInterval(CONFIG.kpiInterval);
-    CONFIG.kpiInterval = null;
-  }
-}
-
-// ==========================================
-// PROMESSES EN CAROUSEL (6 premières en retard)
-// ==========================================
-function setupPromisesCarousel() {
-  const carousel = document.getElementById('promisesCarousel');
-  const dotsContainer = document.getElementById('promisesCarouselDots');
-  const toggleBtn = document.getElementById('autoPlayToggle');
-  const toggleSwitch = toggleBtn.querySelector('.toggle-switch');
-  
-  if (!carousel || CONFIG.promises.length === 0) return;
-  
-  // Trier pour avoir les retards en premier, limité à 6
-  const delayedPromises = CONFIG.promises
-    .filter(p => p.isLate)
-    .slice(0, 6);
-  
-  // Si moins de 6 retards, compléter avec d'autres promesses
-  const carouselPromises = delayedPromises.length >= 6 
-    ? delayedPromises 
-    : [...delayedPromises, ...CONFIG.promises
-        .filter(p => !p.isLate)
-        .slice(0, 6 - delayedPromises.length)];
-  
-  // Rendu du carousel
-  carousel.innerHTML = carouselPromises.map(promise => `
-    <div class="promise-slide">
-      ${createPromiseCard(promise, true)}
-    </div>
-  `).join('');
-  
-  // Points de navigation
-  dotsContainer.innerHTML = '';
-  for (let i = 0; i < carouselPromises.length; i++) {
-    const dot = document.createElement('div');
-    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-    dot.addEventListener('click', () => scrollToPromiseSlide(i));
-    dotsContainer.appendChild(dot);
-  }
-  
-  // Toggle auto-play
-  toggleBtn.addEventListener('click', () => {
-    toggleSwitch.classList.toggle('active');
-    CONFIG.carouselAutoPlay = !CONFIG.carouselAutoPlay;
-    if (CONFIG.carouselAutoPlay) {
-      startPromisesCarouselAutoPlay();
-    } else {
-      stopPromisesCarouselAutoPlay();
+function initNavigation() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navMenu = document.getElementById('navMenu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    // Toggle mobile menu
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+            mobileMenuBtn.classList.toggle('active');
+        });
     }
-  });
-  
-  // Défilement automatique
-  startPromisesCarouselAutoPlay();
-}
-
-function scrollToPromiseSlide(index) {
-  const carousel = document.getElementById('promisesCarousel');
-  const slideWidth = document.querySelector('.promise-slide').offsetWidth + 16;
-  
-  carousel.scrollTo({
-    left: index * slideWidth,
-    behavior: 'smooth'
-  });
-  
-  // Mettre à jour les points actifs
-  document.querySelectorAll('#promisesCarouselDots .carousel-dot').forEach((dot, i) => {
-    dot.classList.toggle('active', i === index);
-  });
-}
-
-function startPromisesCarouselAutoPlay() {
-  stopPromisesCarouselAutoPlay();
-  CONFIG.promisesCarouselInterval = setInterval(() => {
-    const carousel = document.getElementById('promisesCarousel');
-    const dots = document.querySelectorAll('#promisesCarouselDots .carousel-dot');
-    const slideWidth = document.querySelector('.promise-slide').offsetWidth + 16;
     
-    CONFIG.carouselIndex = (CONFIG.carouselIndex + 1) % dots.length;
-    
-    carousel.scrollTo({
-      left: CONFIG.carouselIndex * slideWidth,
-      behavior: 'smooth'
+    // Navigation active state
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const section = link.getAttribute('data-section');
+            const target = document.getElementById(section);
+            
+            if (target) {
+                const offset = CONFIG.scrollOffset;
+                const targetPosition = target.offsetTop - offset;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+                
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                if (navMenu.classList.contains('show')) {
+                    navMenu.classList.remove('show');
+                    mobileMenuBtn.classList.remove('active');
+                }
+            }
+        });
     });
     
-    dots.forEach((dot, index) => {
-      dot.classList.toggle('active', index === CONFIG.carouselIndex);
+    // Scroll spy
+    window.addEventListener('scroll', () => {
+        let current = '';
+        const sections = document.querySelectorAll('section[id]');
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (window.pageYOffset >= (sectionTop - CONFIG.scrollOffset - 50)) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-section') === current) {
+                link.classList.add('active');
+            }
+        });
     });
-  }, 10000); // 10 secondes
-}
-
-function stopPromisesCarouselAutoPlay() {
-  if (CONFIG.promisesCarouselInterval) {
-    clearInterval(CONFIG.promisesCarouselInterval);
-    CONFIG.promisesCarouselInterval = null;
-  }
 }
 
 // ==========================================
-// GESTION DE LA VISIBILITÉ DES PROMESSES
+// SCROLL EFFECTS
 // ==========================================
-function setupVisibilityControls() {
-  const showMoreBtn = document.getElementById('showMoreBtn');
-  const showLessBtn = document.getElementById('showLessBtn');
-  const visibleCountEl = document.getElementById('visible-count');
-  const totalCountEl = document.getElementById('total-count');
-  
-  if (!showMoreBtn || !showLessBtn) return;
-  
-  // Initialiser les compteurs
-  totalCountEl.textContent = CONFIG.promises.length;
-  updateVisibleCount();
-  
-  // Événements
-  showMoreBtn.addEventListener('click', () => {
-    CONFIG.currentVisible = Math.min(CONFIG.currentVisible + CONFIG.visibleCount, CONFIG.promises.length);
-    applyVisibility();
-    updateVisibleCount();
+function initScrollEffects() {
+    const navbar = document.getElementById('navbar');
+    const scrollToTop = document.getElementById('scrollToTop');
+    const progressIndicator = document.getElementById('progressIndicator');
     
-    if (CONFIG.currentVisible >= CONFIG.promises.length) {
-      showMoreBtn.style.display = 'none';
-      showLessBtn.style.display = 'inline-flex';
+    window.addEventListener('scroll', () => {
+        // Navbar scroll effect
+        if (window.scrollY > 50) {
+            navbar?.classList.add('scrolled');
+        } else {
+            navbar?.classList.remove('scrolled');
+        }
+        
+        // Scroll to top button
+        if (window.scrollY > 400) {
+            scrollToTop?.classList.add('visible');
+        } else {
+            scrollToTop?.classList.remove('visible');
+        }
+        
+        // Progress indicator
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        if (progressIndicator) {
+            progressIndicator.style.width = scrolled + '%';
+        }
+    });
+    
+    // Scroll to top functionality
+    if (scrollToTop) {
+        scrollToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
     }
-  });
-  
-  showLessBtn.addEventListener('click', () => {
-    CONFIG.currentVisible = CONFIG.visibleCount;
-    applyVisibility();
-    updateVisibleCount();
-    
-    showMoreBtn.style.display = 'inline-flex';
-    showLessBtn.style.display = 'none';
-  });
-  
-  // Initialiser l'affichage
-  applyVisibility();
 }
 
-function applyVisibility() {
-  const cards = document.querySelectorAll('#promisesContainer .promise-card');
-  cards.forEach((card, index) => {
-    if (index < CONFIG.currentVisible) {
-      card.classList.remove('hidden');
+// ==========================================
+// DATE DISPLAY
+// ==========================================
+function initDateDisplay() {
+    const currentDateEl = document.getElementById('current-date');
+    if (currentDateEl) {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const today = new Date();
+        currentDateEl.textContent = today.toLocaleDateString('fr-FR', options);
+    }
+}
+
+// ==========================================
+// CHARGEMENT DES DONNÉES
+// ==========================================
+async function loadData() {
+    try {
+        const response = await fetch('promises.json');
+        const data = await response.json();
+        
+        CONFIG.START_DATE = new Date(data.start_date);
+        
+        CONFIG.promises = data.promises.map(p => ({
+            ...p,
+            deadline: calculateDeadline(p.delai),
+            isLate: checkIfLate(p.status, calculateDeadline(p.delai)),
+            publicAvg: 0,
+            publicCount: 0,
+            progress: p.status === 'Réalisé' ? 100 : p.status === 'En cours' ? 50 : 10
+        }));
+        
+        // Trier par défaut pour afficher les promesses en retard en premier
+        CONFIG.promises.sort((a, b) => {
+            if (a.isLate && !b.isLate) return -1;
+            if (!a.isLate && b.isLate) return 1;
+            return 0;
+        });
+        
+        // Charger les votes après un délai
+        setTimeout(() => {
+            fetchAndDisplayPublicVotes().catch(error => {
+                console.warn('Impossible de charger les votes:', error);
+            });
+        }, 1000);
+        
+        CONFIG.news = [
+            { 
+                id: '1', 
+                title: 'Lancement officiel de la plateforme', 
+                excerpt: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle.', 
+                date: '25/01/2026', 
+                source: 'Le Soleil', 
+                image: 'school' 
+            },
+            { 
+                id: '2', 
+                title: 'Première école numérique inaugurée', 
+                excerpt: 'Le gouvernement a inauguré la première école entièrement numérique à Dakar.', 
+                date: '20/01/2026', 
+                source: 'Sud Quotidien', 
+                image: 'inauguration' 
+            },
+            { 
+                id: '3', 
+                title: 'Budget 2026 axé sur la relance économique', 
+                excerpt: 'Le budget de l\'État pour 2026 prévoit d\'importants investissements dans les infrastructures.', 
+                date: '15/01/2026', 
+                source: 'WalFadjri', 
+                image: 'budget' 
+            }
+        ];
+        
+        renderAll();
+        renderNews(CONFIG.news);
+        renderNewspapers();
+        renderPressCarousel();
+        
+    } catch (error) {
+        console.error('❌ Erreur chargement:', error);
+        showNotification('Erreur de chargement des données', 'error');
+    }
+}
+
+// ==========================================
+// CALCULS
+// ==========================================
+function calculateDeadline(delaiText) {
+    const text = delaiText.toLowerCase();
+    const result = new Date(CONFIG.START_DATE);
+    
+    if (text.includes('immédiat') || text.includes('3 mois')) {
+        result.setMonth(result.getMonth() + 3);
+    } else if (text.includes('6 mois')) {
+        result.setMonth(result.getMonth() + 6);
+    } else if (text.includes('1 an') || text.includes('12 mois')) {
+        result.setFullYear(result.getFullYear() + 1);
+    } else if (text.includes('2 ans')) {
+        result.setFullYear(result.getFullYear() + 2);
+    } else if (text.includes('3 ans')) {
+        result.setFullYear(result.getFullYear() + 3);
+    } else if (text.includes('5 ans') || text.includes('quinquennat')) {
+        result.setFullYear(result.getFullYear() + 5);
     } else {
-      card.classList.add('hidden');
+        result.setFullYear(result.getFullYear() + 5);
     }
-  });
+    
+    return result;
 }
 
-function updateVisibleCount() {
-  const visibleCountEl = document.getElementById('visible-count');
-  if (visibleCountEl) {
-    visibleCountEl.textContent = Math.min(CONFIG.currentVisible, CONFIG.promises.length);
-  }
+function checkIfLate(status, deadline) {
+    if (status === 'Réalisé') return false;
+    return CONFIG.CURRENT_DATE > deadline;
+}
+
+function getDaysRemaining(deadline) {
+    const diff = deadline - CONFIG.CURRENT_DATE;
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    return days > 0 ? `${days} jours` : 'Expiré';
 }
 
 // ==========================================
-// PROMESSE DU JOUR FORMAT ARTICLE
+// PROMESSE DU JOUR
 // ==========================================
 function setupDailyPromise() {
-  const today = new Date();
-  const dayIndex = today.getDate() % CONFIG.promises.length;
-  const promise = CONFIG.promises[dayIndex];
-  
-  if (!promise) return;
-  
-  // Trouver une personne pour l'article
-  const personIndex = dayIndex % DAILY_PEOPLE.length;
-  const person = DAILY_PEOPLE[personIndex];
-  
-  const articleHTML = `
-    <div class="daily-article">
-      <div class="article-header">
-        <div class="article-date">
-          <i class="fas fa-calendar-alt"></i>
-          ${today.toLocaleDateString('fr-FR', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-          })}
-        </div>
-        <h2 class="article-title">${promise.engagement}</h2>
-        <p class="article-subtitle">Analyse et perspectives par ${person.name}</p>
-      </div>
-      
-      <div class="article-content">
-        <div class="article-section">
-          <h3><i class="fas fa-user-tie"></i> Expert du jour</h3>
-          <div class="expert-info">
-            <div class="expert-avatar">${person.avatar}</div>
-            <div class="expert-details">
-              <h4>${person.name}</h4>
-              <p>${person.role}</p>
+    const today = new Date().getDate();
+    const personIndex = today % DAILY_PEOPLE.length;
+    const person = DAILY_PEOPLE[personIndex];
+    const dailyPromiseCard = document.getElementById('dailyPromise');
+    
+    if (!dailyPromiseCard) return;
+    
+    dailyPromiseCard.innerHTML = `
+        <div class="daily-person">
+            <div class="daily-avatar">
+                <span>${person.avatar}</span>
             </div>
-          </div>
-          <p>${person.article}</p>
+            <div class="daily-info">
+                <h3 class="daily-name">${person.name}</h3>
+                <p class="daily-role">${person.role}</p>
+            </div>
         </div>
         
-        <div class="article-section">
-          <h3><i class="fas fa-bullseye"></i> Engagement analysé</h3>
-          <p><strong>${promise.engagement}</strong></p>
-        </div>
-        
-        <div class="article-section">
-          <h3><i class="fas fa-chart-line"></i> Résultats attendus</h3>
-          <p>${promise.resultat}</p>
-        </div>
-        
-        <div class="article-highlights">
-          <div class="highlight-item">
-            <div class="highlight-icon">
-              <i class="fas fa-clock"></i>
+        <div class="daily-article">
+            <p>${person.article}</p>
+            
+            <div class="daily-stats">
+                <div class="daily-stat">
+                    <div class="stat-value">${person.promises}</div>
+                    <div class="stat-label">Engagements</div>
+                </div>
+                <div class="daily-stat success">
+                    <div class="stat-value">${person.realised}</div>
+                    <div class="stat-label">✅ Réalisés</div>
+                </div>
+                <div class="daily-stat progress">
+                    <div class="stat-value">${person.ongoing}</div>
+                    <div class="stat-label">🔄 En cours</div>
+                </div>
+                <div class="daily-stat warning">
+                    <div class="stat-value">${person.delay}</div>
+                    <div class="stat-label">⚠️ En retard</div>
+                </div>
             </div>
-            <div class="highlight-content">
-              <h4>Délai de réalisation</h4>
-              <p>${promise.delai}</p>
+            
+            <div class="promise-details">
+                <h4>La promesse</h4>
+                <p>${person.promise}</p>
+                
+                <h4>Résultats attendus</h4>
+                <p>${person.expectedResults}</p>
+                
+                <h4>Délai de réalisation</h4>
+                <p>${person.deadline}</p>
             </div>
-          </div>
-          
-          <div class="highlight-item">
-            <div class="highlight-icon">
-              <i class="fas fa-layer-group"></i>
-            </div>
-            <div class="highlight-content">
-              <h4>Domaine</h4>
-              <p>${promise.domaine}</p>
-            </div>
-          </div>
-          
-          <div class="highlight-item">
-            <div class="highlight-icon">
-              <i class="fas fa-flag"></i>
-            </div>
-            <div class="highlight-content">
-              <h4>État actuel</h4>
-              <p>${promise.status === 'realise' ? '✅ Réalisé' : 
-                   promise.status === 'encours' ? '🔄 En cours' : 
-                   '⏳ Non lancé'}</p>
-            </div>
-          </div>
         </div>
-        
-        <div class="article-section">
-          <h3><i class="fas fa-calendar-check"></i> Calendrier des mesures clés</h3>
-          <p>${generateTimeline(promise)}</p>
-        </div>
-      </div>
-      
-      <div class="article-footer">
-        <div class="article-source">
-          Source: Programme du Projet Sénégal Souverain, Juste et Prospère
-        </div>
-        <div class="article-share">
-          <button class="share-btn share-twitter" onclick="shareArticle()">
-            <i class="fab fa-twitter"></i>
-          </button>
-          <button class="share-btn share-facebook" onclick="shareArticle()">
-            <i class="fab fa-facebook-f"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-  `;
-  
-  document.getElementById('dailyPromise').innerHTML = articleHTML;
-}
-
-function generateTimeline(promise) {
-  const deadline = calculateDeadline(promise.delai);
-  const now = new Date();
-  const months = Math.ceil((deadline - now) / (1000 * 60 * 60 * 24 * 30));
-  
-  if (months <= 3) {
-    return "• Mesures immédiates (0-3 mois)<br>• Évaluation à mi-parcours (1-2 mois)<br>• Suivi régulier hebdomadaire";
-  } else if (months <= 12) {
-    return "• Phase préparatoire (1-3 mois)<br>• Mise en œuvre (4-9 mois)<br>• Évaluation finale (10-12 mois)";
-  } else {
-    return "• Phase de planification (1-6 mois)<br>• Déploiement progressif (7-18 mois)<br>• Consolidation et évaluation (19-24 mois)";
-  }
+    `;
 }
 
 // ==========================================
-// TABLEAU DE BORD DES NOTATIONS
+// RENDER ALL
 // ==========================================
-async function setupRatingDashboard() {
-  // Charger les notations depuis Supabase
-  await loadServiceRatings();
-  
-  // Mettre à jour les statistiques
-  updateRatingStats();
-  
-  // Afficher le top des services
-  displayTopServices();
-  
-  // Créer le graphique
-  createRatingsChart();
+function renderAll() {
+    updateStats();
+    renderPromises(CONFIG.promises.slice(0, CONFIG.visibleCount));
+    populateDomainFilter();
+    updateKPI();
 }
 
-async function loadServiceRatings() {
-  if (!supabaseClient) return;
-  
-  try {
-    const { data, error } = await supabaseClient
-      .from('service_ratings')
-      .select('*')
-      .order('created_at', { ascending: false });
+// ==========================================
+// UPDATE STATS
+// ==========================================
+function updateStats() {
+    const total = CONFIG.promises.length;
+    const realise = CONFIG.promises.filter(p => p.status === 'Réalisé').length;
+    const encours = CONFIG.promises.filter(p => p.status === 'En cours').length;
+    const nonLance = CONFIG.promises.filter(p => p.status === 'Non lancé').length;
+    const retard = CONFIG.promises.filter(p => p.isLate).length;
+    const withUpdates = CONFIG.promises.filter(p => p.mises_a_jour && p.mises_a_jour.length > 0).length;
     
-    if (error) throw error;
+    const tauxRealisation = total > 0 ? Math.round((realise / total) * 100) : 0;
     
-    CONFIG.ratings = data || [];
-  } catch (error) {
-    console.error('Erreur chargement notations:', error);
-    // Charger depuis localStorage en fallback
-    const saved = localStorage.getItem('serviceRatings');
-    if (saved) {
-      CONFIG.ratings = JSON.parse(saved);
-    }
-  }
-}
-
-function updateRatingStats() {
-  const totalRatings = CONFIG.ratings.length;
-  const servicesRated = [...new Set(CONFIG.ratings.map(r => r.service))].length;
-  
-  // Calculer la moyenne générale
-  let totalScore = 0;
-  CONFIG.ratings.forEach(rating => {
-    totalScore += (parseInt(rating.accessibility) + parseInt(rating.welcome) + 
-                   parseInt(rating.efficiency) + parseInt(rating.transparency)) / 4;
-  });
-  
-  const avgRating = totalRatings > 0 ? (totalScore / totalRatings).toFixed(1) : '0.0';
-  
-  // Dernière notation
-  const lastRating = CONFIG.ratings.length > 0 
-    ? new Date(CONFIG.ratings[0].created_at || new Date()).toLocaleDateString('fr-FR')
-    : '-';
-  
-  // Mettre à jour l'interface
-  document.getElementById('totalRatings').textContent = totalRatings;
-  document.getElementById('avgRating').textContent = avgRating;
-  document.getElementById('servicesRated').textContent = servicesRated;
-  document.getElementById('lastRating').textContent = lastRating;
-}
-
-function displayTopServices() {
-  const services = {};
-  
-  // Calculer les moyennes par service
-  CONFIG.ratings.forEach(rating => {
-    if (!services[rating.service]) {
-      services[rating.service] = { total: 0, count: 0, ratings: [] };
+    // Calculs additionnels
+    const domains = {};
+    CONFIG.promises.forEach(p => {
+        domains[p.domaine] = (domains[p.domaine] || 0) + 1;
+    });
+    const principalDomain = Object.entries(domains).sort((a, b) => b[1] - a[1])[0];
+    
+    const avgDelay = CONFIG.promises
+        .filter(p => p.status !== 'Réalisé')
+        .reduce((sum, p) => sum + (getDaysRemaining(p.deadline).replace(' jours', '') || 0), 0) / 
+        (total - realise || 1);
+    
+    // Calcul de la moyenne des notes
+    const allRatings = CONFIG.promises.filter(p => p.publicCount > 0);
+    const avgRating = allRatings.length > 0
+        ? (allRatings.reduce((sum, p) => sum + p.publicAvg, 0) / allRatings.length).toFixed(1)
+        : '0.0';
+    const totalVotes = allRatings.reduce((sum, p) => sum + p.publicCount, 0);
+    
+    // Mettre à jour le DOM
+    updateStatValue('total', total);
+    updateStatValue('realise', realise);
+    updateStatValue('encours', encours);
+    updateStatValue('non-lance', nonLance);
+    updateStatValue('retard', retard);
+    updateStatValue('avec-maj', withUpdates);
+    updateStatValue('taux-realisation', tauxRealisation + '%');
+    updateStatValue('moyenne-notes', avgRating);
+    updateStatValue('votes-total', `${totalVotes.toLocaleString('fr-FR')} votes`);
+    updateStatValue('delai-moyen', Math.round(avgDelay) + 'j');
+    
+    if (principalDomain) {
+        updateStatValue('domaine-principal', principalDomain[0]);
+        updateStatValue('domaine-count', `${principalDomain[1]} engagements`);
     }
     
-    const avg = (parseInt(rating.accessibility) + parseInt(rating.welcome) + 
-                 parseInt(rating.efficiency) + parseInt(rating.transparency)) / 4;
+    // Mettre à jour les pourcentages
+    updateStatPercentage('total-percentage', total, total);
+    updateStatPercentage('realise-percentage', realise, total);
+    updateStatPercentage('encours-percentage', encours, total);
+    updateStatPercentage('non-lance-percentage', nonLance, total);
+    updateStatPercentage('retard-percentage', retard, total);
+    updateStatPercentage('avec-maj-percentage', withUpdates, total);
+}
+
+function updateStatValue(id, value) {
+    const el = document.getElementById(id);
+    if (el) {
+        el.textContent = value;
+    }
+}
+
+function updateStatPercentage(id, value, total) {
+    const el = document.getElementById(id);
+    if (el && total > 0) {
+        const percentage = Math.round((value / total) * 100);
+        el.textContent = percentage + '%';
+    }
+}
+
+// ==========================================
+// KPI SCROLLER
+// ==========================================
+function updateKPI() {
+    const total = CONFIG.promises.length;
+    const realise = CONFIG.promises.filter(p => p.status === 'Réalisé').length;
+    const retard = CONFIG.promises.filter(p => p.isLate).length;
+    const tauxRealisation = total > 0 ? ((realise / total) * 100).toFixed(1) : 0;
     
-    services[rating.service].total += avg;
-    services[rating.service].count++;
-    services[rating.service].ratings.push(avg);
-  });
-  
-  // Convertir en tableau et trier
-  const servicesArray = Object.entries(services).map(([name, data]) => ({
-    name: name,
-    average: (data.total / data.count).toFixed(1),
-    count: data.count,
-    ratings: data.ratings
-  })).sort((a, b) => b.average - a.average).slice(0, 5);
-  
-  // Afficher
-  const container = document.getElementById('topServicesList');
-  container.innerHTML = servicesArray.map((service, index) => `
-    <div class="rating-item">
-      <div class="rating-rank">#${index + 1}</div>
-      <div class="rating-service">
-        <h4>${getServiceName(service.name)}</h4>
-      </div>
-      <div class="rating-score">
-        <div class="rating-stars-small">
-          ${generateStars(service.average, true)}
-        </div>
-        <span class="rating-average">${service.average}/5</span>
-        <span class="rating-count">(${service.count} votes)</span>
-      </div>
-    </div>
-  `).join('');
+    const allRatings = CONFIG.promises.filter(p => p.publicCount > 0);
+    const avgRating = allRatings.length > 0
+        ? (allRatings.reduce((sum, p) => sum + p.publicAvg, 0) / allRatings.length).toFixed(1)
+        : '0.0';
+    
+    const avgDelay = CONFIG.promises
+        .filter(p => p.status !== 'Réalisé')
+        .reduce((sum, p) => sum + (parseInt(getDaysRemaining(p.deadline)) || 0), 0) / 
+        (total - realise || 1);
+    
+    updateStatValue('kpi-total', total);
+    updateStatValue('kpi-realised', realise);
+    updateStatValue('kpi-delayed', retard);
+    updateStatValue('kpi-rate', tauxRealisation + '%');
+    updateStatValue('kpi-rating', avgRating);
+    updateStatValue('kpi-delay', Math.round(avgDelay) + 'j');
 }
 
-function getServiceName(key) {
-  const names = {
-    'administration': 'Administration Générale',
-    'sante': 'Santé Publique',
-    'education': 'Éducation Nationale',
-    'justice': 'Justice',
-    'interieur': 'Intérieur & Sécurité',
-    'finance': 'Finances & Impôts',
-    'transport': 'Transports',
-    'autre': 'Autre'
-  };
-  return names[key] || key;
-}
-
-function createRatingsChart() {
-  const ctx = document.getElementById('ratingsChart');
-  if (!ctx || CONFIG.ratings.length === 0) return;
-  
-  // Compter les notes par étoile
-  const starsCount = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-  
-  CONFIG.ratings.forEach(rating => {
-    const avg = (parseInt(rating.accessibility) + parseInt(rating.welcome) + 
-                 parseInt(rating.efficiency) + parseInt(rating.transparency)) / 4;
-    const rounded = Math.round(avg);
-    starsCount[rounded] = (starsCount[rounded] || 0) + 1;
-  });
-  
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['⭐', '⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'],
-      datasets: [{
-        label: 'Nombre de notes',
-        data: [starsCount[1], starsCount[2], starsCount[3], starsCount[4], starsCount[5]],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.7)',
-          'rgba(255, 159, 64, 0.7)',
-          'rgba(255, 205, 86, 0.7)',
-          'rgba(75, 192, 192, 0.7)',
-          'rgba(54, 162, 235, 0.7)'
-        ],
-        borderColor: [
-          'rgb(255, 99, 132)',
-          'rgb(255, 159, 64)',
-          'rgb(255, 205, 86)',
-          'rgb(75, 192, 192)',
-          'rgb(54, 162, 235)'
-        ],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: false
-        },
-        tooltip: {
-          callbacks: {
-            label: function(context) {
-              return `Nombre: ${context.raw}`;
+// ==========================================
+// FILTRES
+// ==========================================
+function initFilters() {
+    const filterToggleBtn = document.getElementById('filterToggleBtn');
+    const filtersSection = document.getElementById('filtersSection');
+    const filterStatus = document.getElementById('filter-status');
+    const filterDomain = document.getElementById('filter-domain');
+    const filterSearch = document.getElementById('filter-search');
+    const resetFiltersBtn = document.getElementById('resetFilters');
+    const viewBtns = document.querySelectorAll('.view-btn');
+    
+    if (filterToggleBtn && filtersSection) {
+        filterToggleBtn.addEventListener('click', () => {
+            filtersSection.classList.toggle('active');
+        });
+    }
+    
+    [filterStatus, filterDomain, filterSearch].forEach(filter => {
+        if (filter) {
+            filter.addEventListener('change', applyFilters);
+            filter.addEventListener('input', applyFilters);
+        }
+    });
+    
+    if (resetFiltersBtn) {
+        resetFiltersBtn.addEventListener('click', resetFilters);
+    }
+    
+    viewBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const view = btn.getAttribute('data-view');
+            viewBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const grid = document.getElementById('promisesGrid');
+            if (grid) {
+                grid.className = view === 'list' ? 'promises-list' : 'promises-grid';
             }
-          }
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            stepSize: 1
-          }
-        }
-      }
-    }
-  });
+        });
+    });
 }
 
-// ==========================================
-// VISIONNEUSE DE PRESSE
-// ==========================================
-function setupPressViewer() {
-  const viewer = document.getElementById('pressViewer');
-  const closeBtn = document.getElementById('closeViewer');
-  const prevBtn = document.getElementById('viewerPrev');
-  const nextBtn = document.getElementById('viewerNext');
-  const zoomInBtn = document.getElementById('zoomInBtn');
-  const zoomOutBtn = document.getElementById('zoomOutBtn');
-  const resetZoomBtn = document.getElementById('resetZoom');
-  const zoomInToolbar = document.getElementById('zoomIn');
-  const zoomOutToolbar = document.getElementById('zoomOut');
-  const counter = document.getElementById('pressCounter');
-  
-  let currentSlide = 0;
-  const totalSlides = 5;
-  let isDragging = false;
-  let startX, startY, scrollLeft, scrollTop;
-  
-  // Ouvrir la visionneuse
-  document.querySelectorAll('.newspaper-card, .press-carousel .carousel-item').forEach((item, index) => {
-    item.addEventListener('click', () => {
-      currentSlide = index % totalSlides;
-      openViewer();
-    });
-  });
-  
-  // Fermer
-  closeBtn.addEventListener('click', closeViewer);
-  viewer.addEventListener('click', (e) => {
-    if (e.target === viewer) closeViewer();
-  });
-  
-  // Navigation
-  prevBtn.addEventListener('click', () => navigateViewer(-1));
-  nextBtn.addEventListener('click', () => navigateViewer(1));
-  
-  // Zoom
-  zoomInBtn.addEventListener('click', () => zoomViewer(0.2));
-  zoomOutBtn.addEventListener('click', () => zoomViewer(-0.2));
-  zoomInToolbar.addEventListener('click', () => zoomViewer(0.2));
-  zoomOutToolbar.addEventListener('click', () => zoomViewer(-0.2));
-  resetZoomBtn.addEventListener('click', resetZoomViewer);
-  
-  // Navigation clavier
-  document.addEventListener('keydown', (e) => {
-    if (!viewer.classList.contains('active')) return;
+function applyFilters() {
+    const filterStatus = document.getElementById('filter-status')?.value || '';
+    const filterDomain = document.getElementById('filter-domain')?.value || '';
+    const filterSearch = document.getElementById('filter-search')?.value.toLowerCase() || '';
     
-    switch(e.key) {
-      case 'Escape':
-        closeViewer();
-        break;
-      case 'ArrowLeft':
-        navigateViewer(-1);
-        break;
-      case 'ArrowRight':
-        navigateViewer(1);
-        break;
-      case '+':
-      case '=':
-        zoomViewer(0.2);
-        break;
-      case '-':
-        zoomViewer(-0.2);
-        break;
-      case '0':
-        resetZoomViewer();
-        break;
-    }
-  });
-  
-  // Navigation tactile
-  function setupTouchNavigation() {
-    const images = viewer.querySelectorAll('.press-viewer-image');
-    
-    images.forEach(img => {
-      // Zoom tactile (double tap/pinch)
-      let lastTap = 0;
-      img.addEventListener('touchend', (e) => {
-        const currentTime = new Date().getTime();
-        const tapLength = currentTime - lastTap;
+    const filtered = CONFIG.promises.filter(promise => {
+        let match = true;
         
-        if (tapLength < 300 && tapLength > 0) {
-          // Double tap
-          img.dataset.zoom = img.dataset.zoom === '2' ? '1' : '2';
-          updateZoom(img);
-          e.preventDefault();
+        if (filterStatus) {
+            if (filterStatus === 'En retard') {
+                match = match && promise.isLate;
+            } else {
+                match = match && promise.status === filterStatus.replace('✅ ', '').replace('🔄 ', '').replace('⏳ ', '');
+            }
         }
-        lastTap = currentTime;
-      });
-      
-      // Drag pour déplacer l'image zoomée
-      img.addEventListener('touchstart', (e) => {
-        if (parseFloat(img.dataset.zoom) > 1) {
-          isDragging = true;
-          startX = e.touches[0].pageX - img.offsetLeft;
-          startY = e.touches[0].pageY - img.offsetTop;
-          scrollLeft = img.scrollLeft;
-          scrollTop = img.scrollTop;
+        
+        if (filterDomain) {
+            match = match && promise.domaine === filterDomain;
         }
-      });
-      
-      img.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        const x = e.touches[0].pageX - img.offsetLeft;
-        const y = e.touches[0].pageY - img.offsetTop;
-        const walkX = (x - startX) * 2;
-        const walkY = (y - startY) * 2;
-        img.scrollLeft = scrollLeft - walkX;
-        img.scrollTop = scrollTop - walkY;
-      });
-      
-      img.addEventListener('touchend', () => {
-        isDragging = false;
-      });
-    });
-  }
-  
-  // Drag souris
-  function setupMouseDrag() {
-    const images = viewer.querySelectorAll('.press-viewer-image');
-    
-    images.forEach(img => {
-      img.addEventListener('mousedown', (e) => {
-        if (parseFloat(img.dataset.zoom) > 1) {
-          isDragging = true;
-          startX = e.pageX - img.offsetLeft;
-          startY = e.pageY - img.offsetTop;
-          scrollLeft = img.scrollLeft;
-          scrollTop = img.scrollTop;
+        
+        if (filterSearch) {
+            match = match && (
+                promise.engagement.toLowerCase().includes(filterSearch) ||
+                promise.domaine.toLowerCase().includes(filterSearch) ||
+                promise.resultat.toLowerCase().includes(filterSearch)
+            );
         }
-      });
-      
-      document.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        const x = e.pageX - img.offsetLeft;
-        const y = e.pageY - img.offsetTop;
-        const walkX = (x - startX) * 2;
-        const walkY = (y - startY) * 2;
-        img.scrollLeft = scrollLeft - walkX;
-        img.scrollTop = scrollTop - walkY;
-      });
-      
-      document.addEventListener('mouseup', () => {
-        isDragging = false;
-      });
-    });
-  }
-  
-  // Fonctions d'aide
-  function openViewer() {
-    viewer.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    updateViewer();
-    setupTouchNavigation();
-    setupMouseDrag();
-  }
-  
-  function closeViewer() {
-    viewer.classList.remove('active');
-    document.body.style.overflow = '';
-    resetZoomViewer();
-  }
-  
-  function navigateViewer(direction) {
-    currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
-    updateViewer();
-  }
-  
-  function updateViewer() {
-    // Mettre à jour les slides
-    document.querySelectorAll('.press-viewer-slide').forEach((slide, index) => {
-      slide.classList.toggle('active', index === currentSlide);
+        
+        return match;
     });
     
-    // Mettre à jour le compteur
-    counter.textContent = `${currentSlide + 1} / ${totalSlides}`;
-    
-    // Mettre à jour les miniatures
-    updateThumbnails();
-    
-    // Réinitialiser le zoom
-    resetZoomViewer();
-  }
-  
-  function updateThumbnails() {
-    const thumbnails = viewer.querySelectorAll('.press-thumbnail');
-    thumbnails.forEach((thumb, index) => {
-      thumb.classList.toggle('active', index === currentSlide);
-    });
-  }
-  
-  function zoomViewer(amount) {
-    const img = viewer.querySelector('.press-viewer-slide.active .press-viewer-image');
-    if (!img) return;
-    
-    let zoom = parseFloat(img.dataset.zoom) || 1;
-    zoom = Math.max(0.5, Math.min(3, zoom + amount));
-    img.dataset.zoom = zoom;
-    
-    updateZoom(img);
-  }
-  
-  function updateZoom(img) {
-    const zoom = parseFloat(img.dataset.zoom);
-    img.style.transform = `scale(${zoom})`;
-    img.style.cursor = zoom > 1 ? 'grab' : 'default';
-  }
-  
-  function resetZoomViewer() {
-    const img = viewer.querySelector('.press-viewer-slide.active .press-viewer-image');
-    if (!img) return;
-    
-    img.dataset.zoom = 1;
-    img.style.transform = 'scale(1)';
-    img.style.cursor = 'default';
-    img.scrollLeft = 0;
-    img.scrollTop = 0;
-  }
-  
-  // Créer les miniatures
-  createThumbnails();
+    // Reset visible count when filtering
+    CONFIG.visibleCount = 6;
+    renderPromises(filtered.slice(0, CONFIG.visibleCount));
+    updateResultsCount(filtered.length);
+    updateShowMoreLessButtons(filtered.length);
 }
 
-function createThumbnails() {
-  const thumbnailsContainer = document.getElementById('viewerThumbnails');
-  const newspapers = [
-    'Le Soleil',
-    'Sud Quotidien', 
-    'WalFadjri',
-    'L\'Observateur',
-    'Le Quotidien'
-  ];
-  
-  thumbnailsContainer.innerHTML = newspapers.map((paper, index) => `
-    <img src="press/thumbnails/${paper.toLowerCase().replace(/\s+/g, '-')}.jpg" 
-         alt="${paper}"
-         class="press-thumbnail ${index === 0 ? 'active' : ''}"
-         data-index="${index}"
-         onclick="document.dispatchEvent(new CustomEvent('viewerNavigate', { detail: ${index} }))">
-  `).join('');
-  
-  // Écouter les événements de navigation depuis les miniatures
-  document.addEventListener('viewerNavigate', (e) => {
-    const viewer = document.getElementById('pressViewer');
-    if (viewer.classList.contains('active')) {
-      currentSlide = e.detail;
-      updateViewer();
+function resetFilters() {
+    const filterStatus = document.getElementById('filter-status');
+    const filterDomain = document.getElementById('filter-domain');
+    const filterSearch = document.getElementById('filter-search');
+    
+    if (filterStatus) filterStatus.value = '';
+    if (filterDomain) filterDomain.value = '';
+    if (filterSearch) filterSearch.value = '';
+    
+    CONFIG.visibleCount = 6;
+    renderPromises(CONFIG.promises.slice(0, CONFIG.visibleCount));
+    updateResultsCount(CONFIG.promises.length);
+    updateShowMoreLessButtons(CONFIG.promises.length);
+}
+
+function updateResultsCount(count) {
+    const resultsCount = document.getElementById('results-count');
+    if (resultsCount) {
+        resultsCount.textContent = `${count} engagement(s) trouvé(s)`;
     }
-  });
 }
 
-// ==========================================
-// NOTATION DES SERVICES (connectée à Supabase)
-// ==========================================
-async function submitServiceRating(ratingData) {
-  if (!supabaseClient) {
-    // Fallback: stocker localement
-    ratingData.id = Date.now().toString();
-    ratingData.created_at = new Date().toISOString();
-    CONFIG.ratings.unshift(ratingData);
-    localStorage.setItem('serviceRatings', JSON.stringify(CONFIG.ratings));
-    return { success: true, local: true };
-  }
-  
-  try {
-    const { data, error } = await supabaseClient
-      .from('service_ratings')
-      .insert([ratingData])
-      .select();
+function populateDomainFilter() {
+    const filterDomain = document.getElementById('filter-domain');
+    if (!filterDomain) return;
     
-    if (error) throw error;
+    const domains = [...new Set(CONFIG.promises.map(p => p.domaine))];
+    domains.sort();
     
-    // Ajouter aux données locales
-    CONFIG.ratings.unshift(data[0]);
-    localStorage.setItem('serviceRatings', JSON.stringify(CONFIG.ratings));
+    filterDomain.innerHTML = '<option value="">Tous les domaines</option>' +
+        domains.map(domain => `<option value="${domain}">${domain}</option>`).join('');
+}
+
+// ==========================================
+// SHOW MORE / SHOW LESS
+// ==========================================
+function initShowMoreLess() {
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showLessBtn = document.getElementById('showLessBtn');
     
-    return { success: true, data: data[0] };
-  } catch (error) {
-    console.error('Erreur envoi notation:', error);
-    // Fallback local
-    ratingData.id = Date.now().toString();
-    ratingData.created_at = new Date().toISOString();
-    CONFIG.ratings.unshift(ratingData);
-    localStorage.setItem('serviceRatings', JSON.stringify(CONFIG.ratings));
-    return { success: true, local: true, error: error.message };
-  }
-}
-
-// ==========================================
-// MISE À JOUR DES CARTES PROMESSES
-// ==========================================
-function createPromiseCard(promise, isCarousel = false) {
-  // ... Utiliser la structure de carte complète de votre code original
-  // S'assurer d'inclure toutes les informations:
-  // - Badge du domaine
-  // - Titre de la promesse
-  // - Résultat attendu
-  // - Délai
-  // - Statut avec badge coloré
-  // - Bouton pour afficher/masquer les mises à jour
-  // - Section de notation (étoiles)
-  // - Boutons de partage
-  // - Indicateur de retard si applicable
-}
-
-// ==========================================
-// MISE À JOUR DU HEADER AVEC PDF
-// ==========================================
-function updateHeaderWithPDF() {
-  const headerActions = document.querySelector('.header-actions');
-  if (headerActions) {
-    // Ajouter le lien PDF à côté de la date de référence
-    const pdfLink = document.createElement('a');
-    pdfLink.href = 'Livre-Programme-Bassirou-Diomaye-Faye.pdf';
-    pdfLink.className = 'pdf-link';
-    pdfLink.target = '_blank';
-    pdfLink.innerHTML = '<i class="fas fa-file-pdf"></i> Programme Complet (PDF)';
+    if (showMoreBtn) {
+        showMoreBtn.addEventListener('click', () => {
+            CONFIG.visibleCount = CONFIG.promises.length;
+            applyFilters();
+        });
+    }
     
-    headerActions.appendChild(pdfLink);
-  }
+    if (showLessBtn) {
+        showLessBtn.addEventListener('click', () => {
+            CONFIG.visibleCount = 6;
+            applyFilters();
+        });
+    }
+}
+
+function updateShowMoreLessButtons(totalCount) {
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showLessBtn = document.getElementById('showLessBtn');
+    
+    if (showMoreBtn && showLessBtn) {
+        if (CONFIG.visibleCount >= totalCount || totalCount <= 6) {
+            showMoreBtn.style.display = 'none';
+            showLessBtn.style.display = CONFIG.visibleCount > 6 ? 'inline-flex' : 'none';
+        } else {
+            showMoreBtn.style.display = 'inline-flex';
+            showLessBtn.style.display = 'none';
+        }
+    }
 }
 
 // ==========================================
-// FONCTIONS UTILITAIRES
+// RENDER PROMISES
 // ==========================================
-function generateStars(rating, small = false) {
-  const stars = Math.round(rating);
-  const fullStars = '★'.repeat(stars);
-  const emptyStars = '☆'.repeat(5 - stars);
-  return small ? 
-    `<i class="fas fa-star"></i>`.repeat(stars) + `<i class="far fa-star"></i>`.repeat(5 - stars) :
-    fullStars + emptyStars;
+function renderPromises(promises) {
+    const grid = document.getElementById('promisesGrid');
+    if (!grid) return;
+    
+    if (promises.length === 0) {
+        grid.innerHTML = `
+            <div class="loading-state">
+                <i class="fas fa-search fa-3x"></i>
+                <p>Aucun engagement trouvé avec ces critères.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    grid.innerHTML = promises.map(promise => {
+        const statusClass = getStatusClass(promise);
+        const statusText = getStatusText(promise);
+        const daysRemaining = getDaysRemaining(promise.deadline);
+        const progress = promise.progress || 0;
+        
+        return createPromiseCard(promise, statusClass, statusText, daysRemaining, progress);
+    }).join('');
 }
 
-// Appeler cette fonction après le chargement
-updateHeaderWithPDF();
+function createPromiseCard(promise, statusClass, statusText, daysRemaining, progress) {
+    return `
+        <div class="promise-card ${statusClass}" data-id="${promise.id}">
+            <div class="promise-header">
+                <div class="promise-status">${statusText}</div>
+                <div class="promise-domain">${promise.domaine}</div>
+            </div>
+            
+            <h3 class="promise-title">${promise.engagement}</h3>
+            
+            <div class="result-box">
+                <i class="fas fa-bullseye"></i>
+                <strong>Résultat attendu:</strong> ${promise.resultat}
+            </div>
+            
+            <div class="promise-meta">
+                <div class="status-badge ${statusClass}">${statusText}</div>
+                <div class="delay-badge">
+                    <i class="fas fa-clock"></i>
+                    ${promise.delai}
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>Progression</span>
+                    <span>${progress}%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: ${progress}%"></div>
+                </div>
+            </div>
+            
+            ${promise.mises_a_jour && promise.mises_a_jour.length > 0 ? `
+                <button class="details-btn" onclick="toggleDetails('${promise.id}')">
+                    <i class="fas fa-history"></i>
+                    Voir les mises à jour (${promise.mises_a_jour.length})
+                </button>
+                <div class="updates-list" id="updates-${promise.id}" style="display: none;">
+                    ${promise.mises_a_jour.map(update => `
+                        <div class="update-item">
+                            <div class="update-date">${formatDate(new Date(update.date))}</div>
+                            <div class="update-text">${update.description}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            ` : ''}
+            
+            <div class="promise-actions">
+                <button class="btn-share" onclick="sharePromise('${promise.id}')">
+                    <i class="fas fa-share-alt"></i> Partager
+                </button>
+                <button class="btn-rate" onclick="ratePromise('${promise.id}')">
+                    <i class="fas fa-star"></i> Noter
+                </button>
+            </div>
+            
+            ${promise.publicCount > 0 ? `
+                <div class="promise-rating">
+                    <span class="rating-value">${promise.publicAvg.toFixed(1)}</span>
+                    <div class="rating-stars">
+                        ${generateStars(promise.publicAvg)}
+                    </div>
+                    <span class="rating-count">(${promise.publicCount} votes)</span>
+                </div>
+            ` : ''}
+        </div>
+    `;
+}
 
-// Exporter les fonctions nécessaires
-window.shareArticle = function() {
-  const url = window.location.href.split('#')[0] + '#daily';
-  const text = `📰 Promesse du jour: "${CONFIG.promises[new Date().getDate() % CONFIG.promises.length]?.engagement.substring(0, 100)}..."`;
-  
-  if (navigator.share) {
-    navigator.share({
-      title: 'Promesse du Jour - Le Projet Sénégal',
-      text: text,
-      url: url
+function getStatusClass(promise) {
+    if (promise.isLate) return 'status-late';
+    if (promise.status === 'Réalisé') return 'status-realise';
+    if (promise.status === 'En cours') return 'status-encours';
+    return 'status-non-lance';
+}
+
+function getStatusText(promise) {
+    if (promise.isLate) return '⚠️ En retard';
+    if (promise.status === 'Réalisé') return '✅ Réalisé';
+    if (promise.status === 'En cours') return '🔄 En cours';
+    return '⏳ Non lancé';
+}
+
+function formatDate(date) {
+    return new Date(date).toLocaleDateString('fr-FR', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
     });
-  } else {
-    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
-  }
-};
+}
 
-// Mettre à jour la configuration globale
+function generateStars(rating) {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+    let stars = '';
+    
+    for (let i = 0; i < fullStars; i++) {
+        stars += '<i class="fas fa-star"></i>';
+    }
+    
+    if (hasHalfStar) {
+        stars += '<i class="fas fa-star-half-alt"></i>';
+    }
+    
+    for (let i = 0; i < emptyStars; i++) {
+        stars += '<i class="far fa-star"></i>';
+    }
+    
+    return stars;
+}
+
+// ==========================================
+// PROMISES CAROUSEL
+// ==========================================
+function initPromisesCarousel() {
+    const carouselContainer = document.getElementById('carouselItems');
+    const prevBtn = document.getElementById('carouselPrev');
+    const nextBtn = document.getElementById('carouselNext');
+    const toggleBtn = document.getElementById('carouselToggle');
+    const carouselIndicators = document.getElementById('carouselIndicators');
+    
+    if (!carouselContainer || !prevBtn || !nextBtn || !toggleBtn) return;
+    
+    let currentIndex = 0;
+    let autoPlay = true;
+    let carouselInterval;
+    
+    // Create indicators
+    const totalItems = Math.ceil(CONFIG.promises.length / 6);
+    carouselIndicators.innerHTML = '';
+    for (let i = 0; i < totalItems; i++) {
+        const indicator = document.createElement('button');
+        indicator.className = `indicator ${i === currentIndex ? 'active' : ''}`;
+        indicator.addEventListener('click', () => goToSlide(i));
+        carouselIndicators.appendChild(indicator);
+    }
+    
+    // Toggle auto-play
+    toggleBtn.addEventListener('click', () => {
+        autoPlay = !autoPlay;
+        toggleBtn.innerHTML = autoPlay ? 
+            '<i class="fas fa-pause"></i> Désactiver défilement' : 
+            '<i class="fas fa-play"></i> Activer défilement';
+        
+        if (autoPlay) {
+            startCarousel();
+        } else {
+            stopCarousel();
+        }
+    });
+    
+    // Navigation
+    prevBtn.addEventListener('click', goToPrevSlide);
+    nextBtn.addEventListener('click', goToNextSlide);
+    
+    function goToNextSlide() {
+        currentIndex = (currentIndex + 1) % totalItems;
+        updateCarousel();
+    }
+    
+    function goToPrevSlide() {
+        currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+        updateCarousel();
+    }
+    
+    function goToSlide(index) {
+        currentIndex = index;
+        updateCarousel();
+    }
+    
+    function updateCarousel() {
+        // Update indicators
+        const indicators = carouselIndicators.querySelectorAll('.indicator');
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === currentIndex);
+        });
+        
+        // Render the appropriate promises
+        const start = currentIndex * 6;
+        const end = Math.min(start + 6, CONFIG.promises.length);
+        const carouselPromises = CONFIG.promises.slice(start, end);
+        
+        // Render carousel items
+        carouselContainer.innerHTML = carouselPromises.map(promise => {
+            const statusClass = getStatusClass(promise);
+            const statusText = getStatusText(promise);
+            return `
+                <div class="carousel-promise-card ${statusClass}">
+                    <div class="carousel-promise-header">
+                        <span class="carousel-promise-status">${statusText}</span>
+                        <span class="carousel-promise-domain">${promise.domaine}</span>
+                    </div>
+                    <h4 class="carousel-promise-title">${promise.engagement.substring(0, 80)}...</h4>
+                    <div class="carousel-promise-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${promise.progress}%"></div>
+                        </div>
+                        <span class="progress-label">${promise.progress}%</span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        
+        // Restart auto-play if enabled
+        if (autoPlay) {
+            startCarousel();
+        }
+    }
+    
+    function startCarousel() {
+        stopCarousel();
+        carouselInterval = setInterval(() => {
+            goToNextSlide();
+        }, 10000);
+    }
+    
+    function stopCarousel() {
+        if (carouselInterval) {
+            clearInterval(carouselInterval);
+            carouselInterval = null;
+        }
+    }
+    
+    // Start the carousel
+    startCarousel();
+    updateCarousel();
+}
+
+// ==========================================
+// RENDER NEWS
+// ==========================================
+function renderNews(news) {
+    const grid = document.getElementById('newsGrid');
+    if (!grid) return;
+    
+    grid.innerHTML = news.map(item => `
+        <article class="news-card">
+            <div class="news-image">
+                <i class="fas fa-${item.image === 'school' ? 'school' : item.image === 'budget' ? 'coins' : 'flag'} fa-3x"></i>
+            </div>
+            <div class="news-content">
+                <h3>${item.title}</h3>
+                <p>${item.excerpt}</p>
+                <div class="news-footer">
+                    <span><i class="fas fa-calendar"></i> ${item.date}</span>
+                    <span><i class="fas fa-newspaper"></i> ${item.source}</span>
+                </div>
+            </div>
+        </article>
+    `).join('');
+}
+
+// ==========================================
+// RENDER NEWSPAPERS
+// ==========================================
+function renderNewspapers() {
+    const grid = document.getElementById('newspapersGrid');
+    if (!grid) return;
+    
+    grid.innerHTML = CONFIG.press.map(paper => `
+        <div class="newspaper-card">
+            <div class="newspaper-logo">
+                <img src="${paper.logo}" alt="${paper.title}" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-newspaper fa-3x\'></i>'">
+            </div>
+            <h4>${paper.title}</h4>
+            <p class="newspaper-date">${paper.date}</p>
+            <a href="https://projetbi.org/presse" target="_blank" class="newspaper-link">
+                Lire <i class="fas fa-external-link-alt"></i>
+            </a>
+        </div>
+    `).join('');
+}
+
+// ==========================================
+// PRESS CAROUSEL
+// ==========================================
+function setupCarousel() {
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const indicatorsContainer = document.getElementById('carouselIndicators');
+    
+    if (!prevBtn || !nextBtn || !indicatorsContainer) return;
+    
+    prevBtn.addEventListener('click', () => {
+        CONFIG.currentIndex = (CONFIG.currentIndex - 1 + CONFIG.press.length) % CONFIG.press.length;
+        renderPressCarousel();
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        CONFIG.currentIndex = (CONFIG.currentIndex + 1) % CONFIG.press.length;
+        renderPressCarousel();
+    });
+    
+    indicatorsContainer.innerHTML = CONFIG.press.map((_, index) => 
+        `<button class="indicator ${index === CONFIG.currentIndex ? 'active' : ''}" 
+                onclick="goToSlide(${index})"></button>`
+    ).join('');
+    
+    renderPressCarousel();
+}
+
+function renderPressCarousel() {
+    const carousel = document.getElementById('pressCarousel');
+    const indicatorsContainer = document.getElementById('carouselIndicators');
+    
+    if (!carousel || !indicatorsContainer) return;
+    
+    const currentPaper = CONFIG.press[CONFIG.currentIndex];
+    
+    carousel.innerHTML = `
+        <div class="carousel-item active">
+            <div class="carousel-image-container">
+                <img src="${currentPaper.logo}" alt="${currentPaper.title}" class="carousel-image">
+                <div class="carousel-zoom-controls">
+                    <button class="zoom-btn zoom-in" onclick="zoomImage(this, 1.2)">
+                        <i class="fas fa-search-plus"></i>
+                    </button>
+                    <button class="zoom-btn zoom-out" onclick="zoomImage(this, 0.8)">
+                        <i class="fas fa-search-minus"></i>
+                    </button>
+                    <button class="zoom-btn reset-zoom" onclick="resetZoom(this)">
+                        <i class="fas fa-undo"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="carousel-info">
+                <h3 class="carousel-title">${currentPaper.title}</h3>
+                <p class="carousel-date">${currentPaper.date}</p>
+            </div>
+        </div>
+    `;
+    
+    // Update indicators
+    const indicators = indicatorsContainer.querySelectorAll('.indicator');
+    indicators.forEach((btn, index) => {
+        btn.classList.toggle('active', index === CONFIG.currentIndex);
+    });
+}
+
+function goToSlide(index) {
+    CONFIG.currentIndex = index;
+    renderPressCarousel();
+}
+
+function zoomImage(btn, factor) {
+    const container = btn.closest('.carousel-image-container');
+    const img = container.querySelector('.carousel-image');
+    let currentScale = parseFloat(img.style.transform?.match(/scale\(([^)]+)\)/)?.[1] || 1);
+    let newScale = Math.max(0.5, Math.min(currentScale * factor, 3));
+    img.style.transform = `scale(${newScale})`;
+}
+
+function resetZoom(btn) {
+    const container = btn.closest('.carousel-image-container');
+    const img = container.querySelector('.carousel-image');
+    img.style.transform = 'scale(1)';
+}
+
+// ==========================================
+// SERVICE RATINGS
+// ==========================================
+function setupServiceRatings() {
+    const form = document.getElementById('ratingForm');
+    if (!form) return;
+    
+    const starsContainers = document.querySelectorAll('.stars-container');
+    
+    starsContainers.forEach(container => {
+        const field = container.getAttribute('data-field');
+        const input = document.getElementById(field);
+        const stars = container.querySelectorAll('i');
+        
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                const value = index + 1;
+                input.value = value;
+                updateStars(stars, value);
+            });
+            
+            star.addEventListener('mouseenter', () => {
+                updateStars(stars, index + 1);
+            });
+        });
+        
+        container.addEventListener('mouseleave', () => {
+            const currentValue = parseInt(input.value) || 3;
+            updateStars(stars, currentValue);
+        });
+        
+        // Set initial state
+        const initialValue = parseInt(input.value) || 3;
+        updateStars(stars, initialValue);
+    });
+    
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = {
+            service: document.getElementById('service').value,
+            accessibility: parseInt(document.getElementById('accessibility').value),
+            welcome: parseInt(document.getElementById('welcome').value),
+            efficiency: parseInt(document.getElementById('efficiency').value),
+            transparency: parseInt(document.getElementById('transparency').value),
+            comment: document.getElementById('comment').value,
+            date: new Date().toISOString()
+        };
+        
+        if (!formData.service) {
+            showNotification('Veuillez sélectionner un service', 'error');
+            return;
+        }
+        
+        // Sauvegarder dans Supabase si disponible
+        if (supabaseClient) {
+            await saveRatingToSupabase(formData);
+        }
+        
+        showNotification('Merci pour votre notation !', 'success');
+        form.reset();
+        
+        // Reset stars to default
+        starsContainers.forEach(container => {
+            const field = container.getAttribute('data-field');
+            const input = document.getElementById(field);
+            const stars = container.querySelectorAll('i');
+            input.value = 3;
+            updateStars(stars, 3);
+        });
+        
+        // Update dashboard
+        setTimeout(() => {
+            renderRatingDashboard();
+        }, 500);
+    });
+    
+    // Initial render of dashboard
+    renderRatingDashboard();
+}
+
+function updateStars(stars, value) {
+    stars.forEach((star, index) => {
+        if (index < value) {
+            star.classList.remove('far');
+            star.classList.add('fas', 'active');
+        } else {
+            star.classList.remove('fas', 'active');
+            star.classList.add('far');
+        }
+    });
+}
+
+async function saveRatingToSupabase(data) {
+    try {
+        const { error } = await supabaseClient
+            .from('service_ratings')
+            .insert([data]);
+        
+        if (error) throw error;
+        console.log('✅ Notation sauvegardée');
+    } catch (error) {
+        console.error('❌ Erreur sauvegarde notation:', error);
+    }
+}
+
+function renderRatingDashboard() {
+    const dashboard = document.getElementById('ratingDashboard');
+    if (!dashboard || !supabaseClient) return;
+    
+    // This would fetch real data from Supabase
+    // For now, we'll use mock data
+    dashboard.innerHTML = `
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h3>Total des votes</h3>
+                <div class="dashboard-value">0</div>
+                <div class="dashboard-description">Votes enregistrés</div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h3>Service le mieux noté</h3>
+                <div class="dashboard-value">N/A</div>
+                <div class="dashboard-description">Moyenne: 0.0/5</div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h3>Dernier vote</h3>
+                <div class="dashboard-value">N/A</div>
+                <div class="dashboard-description">-</div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h3>Votes par service</h3>
+                <div class="votes-chart">
+                    <div class="chart-item">
+                        <span class="chart-label">Tous les services</span>
+                        <div class="chart-bar">
+                            <div class="chart-fill" style="width: 0%"></div>
+                            <span class="chart-value">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// ==========================================
+// VOTES PUBLICS
+// ==========================================
+async function fetchAndDisplayPublicVotes() {
+    if (!supabaseClient) return;
+    
+    try {
+        const { data, error } = await supabaseClient
+            .from('public_votes')
+            .select('promise_id, rating');
+        
+        if (error) throw error;
+        
+        const votesMap = {};
+        data.forEach(vote => {
+            if (!votesMap[vote.promise_id]) {
+                votesMap[vote.promise_id] = { sum: 0, count: 0 };
+            }
+            votesMap[vote.promise_id].sum += vote.rating;
+            votesMap[vote.promise_id].count += 1;
+        });
+        
+        CONFIG.promises.forEach(promise => {
+            if (votesMap[promise.id]) {
+                promise.publicAvg = votesMap[promise.id].sum / votesMap[promise.id].count;
+                promise.publicCount = votesMap[promise.id].count;
+            }
+        });
+        
+        renderPromises(CONFIG.promises.slice(0, CONFIG.visibleCount));
+        updateStats();
+        
+    } catch (error) {
+        console.error('❌ Erreur chargement votes:', error);
+    }
+}
+
+// ==========================================
+// ACTIONS
+// ==========================================
+function toggleDetails(promiseId) {
+    const updatesList = document.getElementById(`updates-${promiseId}`);
+    if (updatesList) {
+        updatesList.style.display = updatesList.style.display === 'none' ? 'block' : 'none';
+    }
+}
+
+function ratePromise(promiseId) {
+    const promise = CONFIG.promises.find(p => p.id === promiseId);
+    if (!promise) return;
+    
+    const rating = prompt(`Noter l'engagement "${promise.engagement.substring(0, 50)}..." sur 5:`);
+    
+    if (rating && !isNaN(rating) && rating >= 1 && rating <= 5) {
+        if (supabaseClient) {
+            saveVoteToSupabase(promiseId, parseInt(rating));
+        }
+        showNotification('Merci pour votre vote !', 'success');
+    }
+}
+
+async function saveVoteToSupabase(promiseId, rating) {
+    try {
+        const { error } = await supabaseClient
+            .from('public_votes')
+            .insert([{ promise_id: promiseId, rating }]);
+        
+        if (error) throw error;
+        
+        setTimeout(() => fetchAndDisplayPublicVotes(), 500);
+        
+    } catch (error) {
+        console.error('❌ Erreur sauvegarde vote:', error);
+    }
+}
+
+function sharePromise(promiseId) {
+    const promise = CONFIG.promises.find(p => p.id === promiseId);
+    if (!promise) return;
+    
+    const text = `📊 "${promise.engagement.substring(0, 100)}..." - Suivi des engagements du Projet pour un Sénégal Souverain, Juste et Prospère`;
+    const url = window.location.href;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: 'Engagement du Projet Sénégal',
+            text: text,
+            url: url
+        }).catch(err => console.log('Erreur partage:', err));
+    } else {
+        const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+        window.open(shareUrl, '_blank');
+    }
+}
+
+function exportData(format) {
+    console.log('Export format:', format);
+    showNotification(`Export ${format.toUpperCase()} en cours...`, 'info');
+    // Implémenter la logique d'export
+}
+
+// ==========================================
+// EVENT LISTENERS
+// ==========================================
+function setupEventListeners() {
+    // Déjà configuré dans les autres fonctions
+}
+
+// ==========================================
+// NOTIFICATIONS
+// ==========================================
+function showNotification(message, type = 'success') {
+    const container = document.getElementById('notification-container');
+    if (!container) return;
+    
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    
+    const icons = {
+        success: 'check-circle',
+        error: 'exclamation-circle',
+        info: 'info-circle'
+    };
+    
+    notification.innerHTML = `
+        <i class="fas fa-${icons[type] || icons.success}"></i>
+        <span>${message}</span>
+    `;
+    
+    container.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// ==========================================
+// EXPORTS GLOBAUX
+// ==========================================
 window.CONFIG = CONFIG;
+window.toggleDetails = toggleDetails;
+window.ratePromise = ratePromise;
+window.sharePromise = sharePromise;
+window.resetFilters = resetFilters;
+window.exportData = exportData;
+window.goToSlide = goToSlide;
+window.zoomImage = zoomImage;
+window.resetZoom = resetZoom;

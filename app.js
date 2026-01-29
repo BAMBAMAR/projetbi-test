@@ -1209,7 +1209,7 @@ async function fetchAndDisplayPublicVotes() {
     
     try {
         const { data, error } = await supabaseClient
-            .from('public_votes')
+            .from('votes')
             .select('promise_id, rating');
         
         if (error) throw error;

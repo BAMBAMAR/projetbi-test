@@ -1,5 +1,5 @@
 // ==========================================
-// APP.JS - VERSION CORRIGÉE ET COMPLÈTE
+// APP.JS - VERSION PROPRE ET CORRIGÉE
 // ==========================================
 
 // Configuration Supabase
@@ -9,14 +9,12 @@ let supabaseClient = null;
 
 // Initialisation Supabase
 try {
-    if (window.supabase && typeof window.supabase.createClient === 'function') {
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    if (typeof supabase !== 'undefined') {
+        supabaseClient = supabase.create(SUPABASE_URL, SUPABASE_KEY);
         console.log('✅ Supabase initialisé');
-    } else {
-        console.warn('⚠️ Supabase SDK non disponible');
     }
 } catch (error) {
-    console.error('❌ Erreur d\'initialisation Supabase:', error);
+    console.warn('⚠️ Supabase non disponible:', error);
 }
 
 // Configuration globale
@@ -26,46 +24,17 @@ const CONFIG = {
     promises: [],
     news: [],
     press: [
-        {
-            id: '1',
-            title: 'Le Soleil',
-            date: '28/01/2026',
-            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6d/Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg/800px-Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg.png'
-        },
-        {
-            id: '2',
-            title: 'Sud Quotidien',
-            date: '28/01/2026',
-            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/5/5b/Sud_Quotidien_logo.svg/800px-Sud_Quotidien_logo.svg.png'
-        },
-        {
-            id: '3',
-            title: 'Libération',
-            date: '28/01/2026',
-            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/L%27Observateur_logo.svg/800px-L%27Observateur_logo.svg.png'
-        },
-        {
-            id: '4',
-            title: 'L\'Observateur',
-            date: '28/01/2026',
-            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/L%27Observateur_logo.svg/800px-L%27Observateur_logo.svg.png'
-        },
-        {
-            id: '5',
-            title: 'Le Quotidien',
-            date: '28/01/2026',
-            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/3/3c/Le_Quotidien_logo.svg/800px-Le_Quotidien_logo.svg.png'
-        }
+        { id: '1', title: 'Le Soleil', date: '28/01/2026', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6d/Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg/800px-Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg.png' },
+        { id: '2', title: 'Sud Quotidien', date: '28/01/2026', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/5/5b/Sud_Quotidien_logo.svg/800px-Sud_Quotidien_logo.svg.png' },
+        { id: '3', title: 'Libération', date: '28/01/2026', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/L%27Observateur_logo.svg/800px-L%27Observateur_logo.svg.png' },
+        { id: '4', title: "L'Observateur", date: '28/01/2026', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/L%27Observateur_logo.svg/800px-L%27Observateur_logo.svg.png' },
+        { id: '5', title: 'Le Quotidien', date: '28/01/2026', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/3/3c/Le_Quotidien_logo.svg/800px-Le_Quotidien_logo.svg.png' }
     ],
     currentIndex: 0,
-    ratings: [],
-    carouselInterval: null,
     visibleCount: 6,
-    currentVisible: 6,
     carouselIndex: 0,
     carouselAutoPlay: true,
-    animationDuration: 300,
-    scrollOffset: 80
+    carouselInterval: null
 };
 
 // Personnes pour "Promesse du Jour"
@@ -74,66 +43,14 @@ const DAILY_PEOPLE = [
         name: "M. Aliou SALL",
         role: "Ministre de l'Économie",
         avatar: "AS",
-        article: "Spécialiste des politiques économiques, M. Aliou SALL porte 15 engagements majeurs pour la relance économique. Son plan d'action comprend la réforme du système fiscal, la promotion des investissements privés et le développement des infrastructures numériques.",
+        article: "Spécialiste des politiques économiques, M. Aliou SALL porte 15 engagements majeurs pour la relance économique.",
         promises: 15,
         realised: 8,
         ongoing: 5,
         delay: 2,
-        promise: "Moderniser l'administration fiscale et douanière pour améliorer la collecte des recettes",
-        expectedResults: "Augmentation de 20% des recettes fiscales et réduction des délais de traitement des dossiers de 50%",
-        deadline: "12 mois pour les mesures clés, 36 mois pour l'achèvement complet"
-    },
-    {
-        name: "Mme Aminata DIALLO",
-        role: "Ministre de la Santé",
-        avatar: "AD",
-        article: "Pionnière de la réforme du système de santé, Mme Diallo supervise 12 engagements visant à améliorer l'accès aux soins de qualité. Ses priorités incluent la construction de nouveaux centres de santé, la formation du personnel médical et la numérisation des dossiers patients.",
-        promises: 12,
-        realised: 6,
-        ongoing: 4,
-        delay: 2,
-        promise: "Construire 50 nouveaux centres de santé et recruter 1000 agents de santé",
-        expectedResults: "Réduction de 30% des délais d'attente et amélioration de l'accès aux soins pour 2 millions de personnes",
-        deadline: "24 mois pour la construction, 12 mois pour le recrutement"
-    },
-    {
-        name: "Dr Ibrahima CISSE",
-        role: "Ministre de l'Éducation",
-        avatar: "IC",
-        article: "Expert en éducation, Dr Cisse est responsable de 18 engagements pour la modernisation du système éducatif. Ses projets phares incluent la construction d'écoles numériques, la formation des enseignants et la révision des programmes scolaires.",
-        promises: 18,
-        realised: 10,
-        ongoing: 6,
-        delay: 2,
-        promise: "Construire 100 écoles numériques et former 5000 enseignants aux nouvelles technologies",
-        expectedResults: "Amélioration des résultats scolaires de 25% et réduction de la fracture numérique dans l'éducation",
-        deadline: "36 mois pour la construction, 24 mois pour la formation"
-    },
-    {
-        name: "M. Ousmane NDIAYE",
-        role: "Ministre des Infrastructures",
-        avatar: "ON",
-        article: "Ingénieur de formation, M. Ndiaye gère 22 engagements pour le développement des infrastructures nationales. Son portefeuille comprend des projets routiers, la construction de ponts et le développement des réseaux d'eau et d'électricité.",
-        promises: 22,
-        realised: 12,
-        ongoing: 8,
-        delay: 2,
-        promise: "Construire 500 km de routes et 10 ponts stratégiques",
-        expectedResults: "Réduction de 40% du temps de transport et amélioration de la connectivité entre les régions",
-        deadline: "60 mois pour l'ensemble du programme"
-    },
-    {
-        name: "Mme Fatou KANE",
-        role: "Ministre de l'Environnement",
-        avatar: "FK",
-        article: "Militante écologiste, Mme Kane défend 14 engagements pour la protection de l'environnement. Ses initiatives incluent la lutte contre la déforestation, la promotion des énergies renouvelables et la gestion des déchets.",
-        promises: 14,
-        realised: 7,
-        ongoing: 5,
-        delay: 2,
-        promise: "Planter 10 millions d'arbres et développer 500 MW d'énergie solaire",
-        expectedResults: "Réduction de 15% de l'érosion et couverture de 20% des besoins énergétiques par le solaire",
-        deadline: "60 mois pour le reboisement, 36 mois pour l'énergie solaire"
+        promise: "Moderniser l'administration fiscale et douanière",
+        expectedResults: "Augmentation de 20% des recettes fiscales",
+        deadline: "12 mois pour les mesures clés"
     }
 ];
 
@@ -143,22 +60,19 @@ const DAILY_PEOPLE = [
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('🚀 Initialisation...');
     
-    // Initialiser les composants UI
     initNavigation();
     initScrollEffects();
     initFilters();
     initDateDisplay();
     initShowMoreLess();
     initPromisesCarousel();
+    initExportDropdown();
     
-    // Charger les données
     await loadData();
     
-    // Configurer les composants
-    setupEventListeners();
-    setupPressCarousel();
-    setupServiceRatings();
     setupDailyPromise();
+    setupServiceRatings();
+    setupPressCarousel();
     
     console.log('✅ Initialisation terminée');
 });
@@ -171,7 +85,6 @@ function initNavigation() {
     const navMenu = document.getElementById('navMenu');
     const navLinks = document.querySelectorAll('.nav-link');
     
-    // Toggle mobile menu
     if (mobileMenuBtn) {
         mobileMenuBtn.addEventListener('click', () => {
             navMenu.classList.toggle('show');
@@ -179,7 +92,6 @@ function initNavigation() {
         });
     }
     
-    // Navigation active state
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
@@ -187,7 +99,7 @@ function initNavigation() {
             const target = document.getElementById(section);
             
             if (target) {
-                const offset = CONFIG.scrollOffset;
+                const offset = 80;
                 const targetPosition = target.offsetTop - offset;
                 
                 window.scrollTo({
@@ -213,7 +125,7 @@ function initNavigation() {
         
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
-            if (window.pageYOffset >= (sectionTop - CONFIG.scrollOffset - 50)) {
+            if (window.pageYOffset >= (sectionTop - 80 - 50)) {
                 current = section.getAttribute('id');
             }
         });
@@ -236,21 +148,18 @@ function initScrollEffects() {
     const progressIndicator = document.getElementById('progressIndicator');
     
     window.addEventListener('scroll', () => {
-        // Navbar scroll effect
         if (window.scrollY > 50) {
             navbar?.classList.add('scrolled');
         } else {
             navbar?.classList.remove('scrolled');
         }
         
-        // Scroll to top button
         if (window.scrollY > 400) {
             scrollToTop?.classList.add('visible');
         } else {
             scrollToTop?.classList.remove('visible');
         }
         
-        // Progress indicator
         const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
         const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
         const scrolled = (winScroll / height) * 100;
@@ -259,13 +168,9 @@ function initScrollEffects() {
         }
     });
     
-    // Scroll to top functionality
     if (scrollToTop) {
         scrollToTop.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
 }
@@ -292,13 +197,11 @@ async function loadData() {
         
         CONFIG.START_DATE = new Date(data.start_date);
         
-        // Mapper les promesses avec toutes les informations nécessaires
         CONFIG.promises = data.promises.map(p => {
             const deadline = calculateDeadline(p.delai);
             const isLate = checkIfLate(p.status, deadline);
             const progress = p.status === 'Réalisé' ? 100 : 
-                           p.status === 'En cours' ? 50 : 
-                           p.status === 'Non lancé' ? 0 : 0;
+                           p.status === 'En cours' ? 50 : 0;
             
             return {
                 ...p,
@@ -310,50 +213,23 @@ async function loadData() {
             };
         });
         
-        // Trier par défaut pour afficher les promesses en retard en premier
+        // Trier: retard en premier
         CONFIG.promises.sort((a, b) => {
             if (a.isLate && !b.isLate) return -1;
             if (!a.isLate && b.isLate) return 1;
             return 0;
         });
         
-        // Charger les votes après un délai
-        setTimeout(() => {
-            fetchAndDisplayPublicVotes().catch(error => {
-                console.warn('Impossible de charger les votes:', error);
-            });
-        }, 1000);
-        
         CONFIG.news = [
-            { 
-                id: '1', 
-                title: 'Lancement officiel de la plateforme', 
-                excerpt: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle.', 
-                date: '25/01/2026', 
-                source: 'Le Soleil', 
-                image: 'school' 
-            },
-            { 
-                id: '2', 
-                title: 'Première école numérique inaugurée', 
-                excerpt: 'Le gouvernement a inauguré la première école entièrement numérique à Dakar.', 
-                date: '20/01/2026', 
-                source: 'Sud Quotidien', 
-                image: 'inauguration' 
-            },
-            { 
-                id: '3', 
-                title: 'Budget 2026 axé sur la relance économique', 
-                excerpt: 'Le budget de l\'État pour 2026 prévoit d\'importants investissements dans les infrastructures.', 
-                date: '15/01/2026', 
-                source: 'WalFadjri', 
-                image: 'budget' 
-            }
+            { id: '1', title: 'Lancement officiel', excerpt: 'La plateforme citoyenne est désormais opérationnelle.', date: '25/01/2026', source: 'Le Soleil', image: 'school' },
+            { id: '2', title: 'Première école numérique', excerpt: 'Le gouvernement a inauguré la première école numérique.', date: '20/01/2026', source: 'Sud Quotidien', image: 'inauguration' }
         ];
         
         renderAll();
         renderNews(CONFIG.news);
         renderNewspapers();
+        
+        setTimeout(fetchAndDisplayPublicVotes, 1000);
         
     } catch (error) {
         console.error('❌ Erreur chargement:', error);
@@ -368,7 +244,7 @@ function calculateDeadline(delaiText) {
     const text = delaiText.toLowerCase();
     const result = new Date(CONFIG.START_DATE);
     
-    if (text.includes('immédiat') || text.includes('3 mois')) {
+    if (text.includes('3 mois')) {
         result.setMonth(result.getMonth() + 3);
     } else if (text.includes('6 mois')) {
         result.setMonth(result.getMonth() + 6);
@@ -379,8 +255,6 @@ function calculateDeadline(delaiText) {
     } else if (text.includes('3 ans')) {
         result.setFullYear(result.getFullYear() + 3);
     } else if (text.includes('5 ans') || text.includes('quinquennat')) {
-        result.setFullYear(result.getFullYear() + 5);
-    } else {
         result.setFullYear(result.getFullYear() + 5);
     }
     
@@ -402,9 +276,7 @@ function getDaysRemaining(deadline) {
 // PROMESSE DU JOUR
 // ==========================================
 function setupDailyPromise() {
-    const today = new Date().getDate();
-    const personIndex = today % DAILY_PEOPLE.length;
-    const person = DAILY_PEOPLE[personIndex];
+    const person = DAILY_PEOPLE[0];
     const dailyPromiseCard = document.getElementById('dailyPromise');
     
     if (!dailyPromiseCard) return;
@@ -507,7 +379,7 @@ function updateStats() {
     updateStatValue('avec-maj', withUpdates);
     updateStatValue('taux-realisation', tauxRealisation + '%');
     updateStatValue('moyenne-notes', avgRating);
-    updateStatValue('votes-total', `${totalVotes.toLocaleString('fr-FR')} votes`);
+    updateStatValue('votes-total', `${totalVotes} votes`);
     updateStatValue('delai-moyen', Math.round(avgDelay) + 'j');
     
     if (principalDomain) {
@@ -526,9 +398,7 @@ function updateStats() {
 
 function updateStatValue(id, value) {
     const el = document.getElementById(id);
-    if (el) {
-        el.textContent = value;
-    }
+    if (el) el.textContent = value;
 }
 
 function updateStatPercentage(id, value, total) {
@@ -618,7 +488,7 @@ function applyFilters() {
         let match = true;
         
         if (filterStatus) {
-            if (filterStatus === 'En retard') {
+            if (filterStatus === '⚠️ En retard') {
                 match = match && promise.isLate;
             } else {
                 match = match && promise.status === filterStatus.replace('✅ ', '').replace('🔄 ', '').replace('⏳ ', '');
@@ -640,7 +510,6 @@ function applyFilters() {
         return match;
     });
     
-    // Reset visible count when filtering
     CONFIG.visibleCount = 6;
     renderPromises(filtered.slice(0, CONFIG.visibleCount));
     updateResultsCount(filtered.length);
@@ -737,14 +606,13 @@ function renderPromises(promises) {
     grid.innerHTML = promises.map(promise => {
         const statusClass = getStatusClass(promise);
         const statusText = getStatusText(promise);
-        const daysRemaining = getDaysRemaining(promise.deadline);
         const progress = promise.progress || 0;
         
-        return createPromiseCard(promise, statusClass, statusText, daysRemaining, progress);
+        return createPromiseCard(promise, statusClass, statusText, progress);
     }).join('');
 }
 
-function createPromiseCard(promise, statusClass, statusText, daysRemaining, progress) {
+function createPromiseCard(promise, statusClass, statusText, progress) {
     return `
         <div class="promise-card ${statusClass}" data-id="${promise.id}">
             <div class="promise-header">
@@ -842,17 +710,9 @@ function generateStars(rating) {
     const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
     let stars = '';
     
-    for (let i = 0; i < fullStars; i++) {
-        stars += '<i class="fas fa-star"></i>';
-    }
-    
-    if (hasHalfStar) {
-        stars += '<i class="fas fa-star-half-alt"></i>';
-    }
-    
-    for (let i = 0; i < emptyStars; i++) {
-        stars += '<i class="far fa-star"></i>';
-    }
+    for (let i = 0; i < fullStars; i++) stars += '<i class="fas fa-star"></i>';
+    if (hasHalfStar) stars += '<i class="fas fa-star-half-alt"></i>';
+    for (let i = 0; i < emptyStars; i++) stars += '<i class="far fa-star"></i>';
     
     return stars;
 }
@@ -873,8 +733,8 @@ function initPromisesCarousel() {
     let autoPlay = true;
     let carouselInterval;
     
-    // Create indicators
     const totalItems = Math.ceil(CONFIG.promises.length / 6);
+    
     carouselIndicators.innerHTML = '';
     for (let i = 0; i < totalItems; i++) {
         const indicator = document.createElement('button');
@@ -883,21 +743,16 @@ function initPromisesCarousel() {
         carouselIndicators.appendChild(indicator);
     }
     
-    // Toggle auto-play
     toggleBtn.addEventListener('click', () => {
         autoPlay = !autoPlay;
         toggleBtn.innerHTML = autoPlay ? 
             '<i class="fas fa-pause"></i> Désactiver défilement' : 
             '<i class="fas fa-play"></i> Activer défilement';
         
-        if (autoPlay) {
-            startCarousel();
-        } else {
-            stopCarousel();
-        }
+        if (autoPlay) startCarousel();
+        else stopCarousel();
     });
     
-    // Navigation
     prevBtn.addEventListener('click', goToPrevSlide);
     nextBtn.addEventListener('click', goToNextSlide);
     
@@ -917,18 +772,15 @@ function initPromisesCarousel() {
     }
     
     function updateCarousel() {
-        // Update indicators
         const indicators = carouselIndicators.querySelectorAll('.indicator');
         indicators.forEach((indicator, index) => {
             indicator.classList.toggle('active', index === currentIndex);
         });
         
-        // Render the appropriate promises
         const start = currentIndex * 6;
         const end = Math.min(start + 6, CONFIG.promises.length);
         const carouselPromises = CONFIG.promises.slice(start, end);
         
-        // Render carousel items
         carouselContainer.innerHTML = carouselPromises.map(promise => {
             const statusClass = getStatusClass(promise);
             const statusText = getStatusText(promise);
@@ -949,17 +801,12 @@ function initPromisesCarousel() {
             `;
         }).join('');
         
-        // Restart auto-play if enabled
-        if (autoPlay) {
-            startCarousel();
-        }
+        if (autoPlay) startCarousel();
     }
     
     function startCarousel() {
         stopCarousel();
-        carouselInterval = setInterval(() => {
-            goToNextSlide();
-        }, 10000);
+        carouselInterval = setInterval(goToNextSlide, 10000);
     }
     
     function stopCarousel() {
@@ -969,7 +816,6 @@ function initPromisesCarousel() {
         }
     }
     
-    // Start the carousel
     startCarousel();
     updateCarousel();
 }
@@ -984,7 +830,7 @@ function renderNews(news) {
     grid.innerHTML = news.map(item => `
         <article class="news-card">
             <div class="news-image">
-                <i class="fas fa-${item.image === 'school' ? 'school' : item.image === 'budget' ? 'coins' : 'flag'} fa-3x"></i>
+                <i class="fas fa-${item.image === 'school' ? 'school' : 'flag'} fa-3x"></i>
             </div>
             <div class="news-content">
                 <h3>${item.title}</h3>
@@ -999,7 +845,7 @@ function renderNews(news) {
 }
 
 // ==========================================
-// RENDER NEWSPAPERS - CORRIGÉ FORMAT 1041x1409
+// RENDER NEWSPAPERS - CORRIGÉ FORMAT
 // ==========================================
 function renderNewspapers() {
     const grid = document.getElementById('newspapersGrid');
@@ -1025,7 +871,7 @@ function renderNewspapers() {
 function setupPressCarousel() {
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-    const indicatorsContainer = document.getElementById('carouselIndicators');
+    const indicatorsContainer = document.getElementById('pressIndicators');
     
     if (!prevBtn || !nextBtn) return;
     
@@ -1044,7 +890,7 @@ function setupPressCarousel() {
 
 function renderPressCarousel() {
     const carousel = document.getElementById('pressCarousel');
-    const indicatorsContainer = document.getElementById('carouselIndicators');
+    const indicatorsContainer = document.getElementById('pressIndicators');
     
     if (!carousel) return;
     
@@ -1073,7 +919,6 @@ function renderPressCarousel() {
         </div>
     `;
     
-    // Update indicators
     if (indicatorsContainer) {
         indicatorsContainer.innerHTML = CONFIG.press.map((_, index) => 
             `<button class="indicator ${index === CONFIG.currentIndex ? 'active' : ''}" 
@@ -1099,6 +944,123 @@ function resetZoom(btn) {
     const container = btn.closest('.carousel-image-container');
     const img = container.querySelector('.carousel-image');
     img.style.transform = 'scale(1)';
+}
+
+// ==========================================
+// EXPORT DROPDOWN
+// ==========================================
+function initExportDropdown() {
+    const exportBtn = document.getElementById('exportBtn');
+    const exportDropdown = document.getElementById('exportDropdown');
+    
+    if (exportBtn && exportDropdown) {
+        exportBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            exportDropdown.style.display = exportDropdown.style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (!exportBtn.contains(e.target) && !exportDropdown.contains(e.target)) {
+                exportDropdown.style.display = 'none';
+            }
+        });
+    }
+}
+
+// ==========================================
+// EXPORT DATA - CORRIGÉ
+// ==========================================
+function exportData(format) {
+    try {
+        if (format === 'csv') {
+            exportCSV();
+        } else if (format === 'excel') {
+            exportExcel();
+        } else if (format === 'pdf') {
+            exportPDF();
+        } else if (format === 'json') {
+            exportJSON();
+        }
+        
+        const dropdown = document.getElementById('exportDropdown');
+        if (dropdown) dropdown.style.display = 'none';
+        
+    } catch (error) {
+        console.error('Erreur export:', error);
+        showNotification(`Erreur lors de l'export ${format.toUpperCase()}: ${error.message}`, 'error');
+    }
+}
+
+function exportCSV() {
+    const headers = ['ID', 'Domaine', 'Engagement', 'Statut', 'Délai', 'Résultat attendu', 'En retard', 'Progression (%)'];
+    const rows = CONFIG.promises.map(p => [
+        p.id,
+        p.domaine,
+        `"${p.engagement.replace(/"/g, '""')}"`,
+        p.isLate ? '⚠️ En retard' : p.status,
+        p.delai,
+        `"${p.resultat.replace(/"/g, '""')}"`,
+        p.isLate ? 'Oui' : 'Non',
+        p.progress
+    ]);
+    
+    const csvContent = [
+        headers.join(';'),
+        ...rows.map(row => row.join(';'))
+    ].join('\n');
+    
+    const bom = '\uFEFF';
+    const blob = new Blob([bom + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `engagements_senegal_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    showNotification('✅ Export CSV terminé !', 'success');
+}
+
+function exportExcel() {
+    showNotification('⚠️ Export Excel non disponible. Utilisez CSV.', 'info');
+    exportCSV();
+}
+
+function exportPDF() {
+    showNotification('⚠️ Export PDF non disponible. Utilisez CSV.', 'info');
+    exportCSV();
+}
+
+function exportJSON() {
+    const data = {
+        meta: {
+            generated_at: new Date().toISOString(),
+            total_promises: CONFIG.promises.length
+        },
+        promises: CONFIG.promises.map(p => ({
+            id: p.id,
+            domaine: p.domaine,
+            engagement: p.engagement,
+            status: p.status,
+            is_late: p.isLate,
+            delai: p.delai,
+            resultat_attendu: p.resultat,
+            progression: p.progress
+        }))
+    };
+    
+    const dataStr = JSON.stringify(data, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', `engagements_${new Date().toISOString().split('T')[0]}.json`);
+    linkElement.click();
+    
+    showNotification('✅ Export JSON terminé !', 'success');
 }
 
 // ==========================================
@@ -1132,7 +1094,6 @@ function setupServiceRatings() {
             updateStars(stars, currentValue);
         });
         
-        // Set initial state
         const initialValue = parseInt(input.value) || 3;
         updateStars(stars, initialValue);
     });
@@ -1155,7 +1116,6 @@ function setupServiceRatings() {
             return;
         }
         
-        // Sauvegarder dans Supabase si disponible
         if (supabaseClient) {
             await saveRatingToSupabase(formData);
         }
@@ -1163,7 +1123,6 @@ function setupServiceRatings() {
         showNotification('Merci pour votre notation !', 'success');
         form.reset();
         
-        // Reset stars to default
         starsContainers.forEach(container => {
             const field = container.getAttribute('data-field');
             const input = document.getElementById(field);
@@ -1172,13 +1131,9 @@ function setupServiceRatings() {
             updateStars(stars, 3);
         });
         
-        // Update dashboard
-        setTimeout(() => {
-            renderRatingDashboard();
-        }, 500);
+        setTimeout(renderRatingDashboard, 500);
     });
     
-    // Initial render of dashboard
     renderRatingDashboard();
 }
 
@@ -1196,12 +1151,14 @@ function updateStars(stars, value) {
 
 async function saveRatingToSupabase(data) {
     try {
-        const { error } = await supabaseClient
-            .from('service_ratings')
-            .insert([data]);
-        
-        if (error) throw error;
-        console.log('✅ Notation sauvegardée');
+        if (supabaseClient) {
+            const { error } = await supabaseClient
+                .from('service_ratings')
+                .insert([data]);
+            
+            if (error) throw error;
+            console.log('✅ Notation sauvegardée');
+        }
     } catch (error) {
         console.error('❌ Erreur sauvegarde notation:', error);
     }
@@ -1211,8 +1168,6 @@ function renderRatingDashboard() {
     const dashboard = document.getElementById('ratingDashboard');
     if (!dashboard) return;
     
-    // This would fetch real data from Supabase
-    // For now, we'll use mock data
     dashboard.innerHTML = `
         <div class="dashboard-grid">
             <div class="dashboard-card">
@@ -1220,19 +1175,16 @@ function renderRatingDashboard() {
                 <div class="dashboard-value">0</div>
                 <div class="dashboard-description">Votes enregistrés</div>
             </div>
-            
             <div class="dashboard-card">
                 <h3>Service le mieux noté</h3>
-                <div class="dashboard-value">N/A</div>
+                <div class="dashboard-value">-</div>
                 <div class="dashboard-description">Moyenne: 0.0/5</div>
             </div>
-            
             <div class="dashboard-card">
                 <h3>Dernier vote</h3>
-                <div class="dashboard-value">N/A</div>
+                <div class="dashboard-value">-</div>
                 <div class="dashboard-description">-</div>
             </div>
-            
             <div class="dashboard-card">
                 <h3>Votes par service</h3>
                 <div class="votes-chart">
@@ -1300,7 +1252,7 @@ function ratePromise(promiseId) {
     const promise = CONFIG.promises.find(p => p.id === promiseId);
     if (!promise) return;
     
-    const rating = prompt(`Noter l'engagement "${promise.engagement.substring(0, 50)}..." sur 5:`);
+    const rating = prompt(`Noter "${promise.engagement.substring(0, 50)}..." sur 5:`);
     
     if (rating && !isNaN(rating) && rating >= 1 && rating <= 5) {
         if (supabaseClient) {
@@ -1312,14 +1264,15 @@ function ratePromise(promiseId) {
 
 async function saveVoteToSupabase(promiseId, rating) {
     try {
-        const { error } = await supabaseClient
-            .from('public_votes')
-            .insert([{ promise_id: promiseId, rating }]);
-        
-        if (error) throw error;
-        
-        setTimeout(() => fetchAndDisplayPublicVotes(), 500);
-        
+        if (supabaseClient) {
+            const { error } = await supabaseClient
+                .from('public_votes')
+                .insert([{ promise_id: promiseId, rating }]);
+            
+            if (error) throw error;
+            
+            setTimeout(fetchAndDisplayPublicVotes, 500);
+        }
     } catch (error) {
         console.error('❌ Erreur sauvegarde vote:', error);
     }
@@ -1329,80 +1282,15 @@ function sharePromise(promiseId) {
     const promise = CONFIG.promises.find(p => p.id === promiseId);
     if (!promise) return;
     
-    const text = `📊 "${promise.engagement.substring(0, 100)}..." - Suivi des engagements du Projet pour un Sénégal Souverain, Juste et Prospère`;
+    const text = `📊 "${promise.engagement.substring(0, 100)}..." - Suivi des engagements du Projet Sénégal`;
     const url = window.location.href;
     
     if (navigator.share) {
-        navigator.share({
-            title: 'Engagement du Projet Sénégal',
-            text: text,
-            url: url
-        }).catch(err => console.log('Erreur partage:', err));
+        navigator.share({ title: 'Engagement du Projet Sénégal', text: text, url: url });
     } else {
         const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
         window.open(shareUrl, '_blank');
     }
-}
-
-// ==========================================
-// EXPORT DATA - CORRIGÉ
-// ==========================================
-function exportData(format) {
-    if (format === 'csv') {
-        exportCSV();
-    } else if (format === 'excel') {
-        exportExcel();
-    } else if (format === 'pdf') {
-        exportPDF();
-    } else if (format === 'json') {
-        exportJSON();
-    }
-}
-
-function exportCSV() {
-    const csvContent = "data:text/csv;charset=utf-8," +
-        "ID;Domaine;Engagement;Statut;Délai;Résultat attendu;En retard\n" +
-        CONFIG.promises.map(p => 
-            `${p.id};${p.domaine};${p.engagement};${p.status};${p.delai};${p.resultat};${p.isLate ? 'Oui' : 'Non'}`
-        ).join('\n');
-    
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "engagements.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    showNotification('Export CSV terminé', 'success');
-}
-
-function exportExcel() {
-    showNotification('Export Excel en développement', 'info');
-    // Implémenter l'export Excel avec une librairie comme SheetJS
-}
-
-function exportPDF() {
-    showNotification('Export PDF en développement', 'info');
-    // Implémenter l'export PDF avec jsPDF
-}
-
-function exportJSON() {
-    const dataStr = JSON.stringify(CONFIG.promises, null, 2);
-    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-    
-    const exportFileDefaultName = 'engagements.json';
-    const linkElement = document.createElement('a');
-    linkElement.setAttribute('href', dataUri);
-    linkElement.setAttribute('download', exportFileDefaultName);
-    linkElement.click();
-    showNotification('Export JSON terminé', 'success');
-}
-
-// ==========================================
-// EVENT LISTENERS
-// ==========================================
-function setupEventListeners() {
-    // Déjà configuré dans les autres fonctions
 }
 
 // ==========================================
@@ -1437,7 +1325,6 @@ function showNotification(message, type = 'success') {
 // ==========================================
 // EXPORTS GLOBAUX
 // ==========================================
-window.CONFIG = CONFIG;
 window.toggleDetails = toggleDetails;
 window.ratePromise = ratePromise;
 window.sharePromise = sharePromise;
@@ -1446,261 +1333,3 @@ window.exportData = exportData;
 window.goToSlide = goToSlide;
 window.zoomImage = zoomImage;
 window.resetZoom = resetZoom;
-// Initialisation du bouton de réinitialisation de recherche
-document.addEventListener('DOMContentLoaded', () => {
-    const searchInput = document.getElementById('filter-search');
-    const searchClearBtn = document.getElementById('searchClearBtn');
-    
-    if (searchClearBtn && searchInput) {
-        searchClearBtn.addEventListener('click', () => {
-            searchInput.value = '';
-            searchClearBtn.style.opacity = '0';
-            applyFilters();
-        });
-        
-        searchInput.addEventListener('input', () => {
-            searchClearBtn.style.opacity = searchInput.value ? '0.7' : '0';
-        });
-    }
-    
-    // Gestion du dropdown export au clic (alternative au hover pour mobile)
-    const exportBtn = document.getElementById('exportBtn');
-    const exportDropdown = document.getElementById('exportDropdown');
-    
-    if (exportBtn && exportDropdown) {
-        exportBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            exportDropdown.style.display = exportDropdown.style.display === 'flex' ? 'none' : 'flex';
-        });
-        
-        // Fermer le dropdown quand on clique en dehors
-        document.addEventListener('click', (e) => {
-            if (!exportBtn.contains(e.target) && !exportDropdown.contains(e.target)) {
-                exportDropdown.style.display = 'none';
-            }
-        });
-    }
-});
-
-// Fonction d'export améliorée avec gestion des erreurs
-function exportData(format) {
-    try {
-        if (format === 'csv') {
-            exportCSV();
-        } else if (format === 'excel') {
-            exportExcel();
-        } else if (format === 'pdf') {
-            exportPDF();
-        } else if (format === 'json') {
-            exportJSON();
-        } else {
-            throw new Error('Format non supporté');
-        }
-        
-        // Fermer le dropdown après export
-        const dropdown = document.getElementById('exportDropdown');
-        if (dropdown) dropdown.style.display = 'none';
-        
-    } catch (error) {
-        console.error('Erreur export:', error);
-        showNotification(`Erreur lors de l'export ${format.toUpperCase()}: ${error.message}`, 'error');
-    }
-}
-
-// Implémentations complètes des exports
-function exportCSV() {
-    const headers = ['ID', 'Domaine', 'Engagement', 'Statut', 'Délai', 'Résultat attendu', 'En retard', 'Progression (%)'];
-    const rows = CONFIG.promises.map(p => [
-        p.id,
-        p.domaine,
-        `"${p.engagement.replace(/"/g, '""')}"`,
-        p.isLate ? '⚠️ En retard' : p.status,
-        p.delai,
-        `"${p.resultat.replace(/"/g, '""')}"`,
-        p.isLate ? 'Oui' : 'Non',
-        p.progress
-    ]);
-    
-    const csvContent = [
-        headers.join(';'),
-        ...rows.map(row => row.join(';'))
-    ].join('\n');
-    
-    const bom = '\uFEFF';
-    const blob = new Blob([bom + csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    
-    const link = document.createElement('a');
-    link.setAttribute('href', url);
-    link.setAttribute('download', `engagements_senegal_${new Date().toISOString().split('T')[0]}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    
-    showNotification('✅ Export CSV terminé avec succès !', 'success');
-}
-
-function exportExcel() {
-    // Utilisation de SheetJS (à inclure dans l'HTML: <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>)
-    if (typeof XLSX === 'undefined') {
-        showNotification('⚠️ Librairie Excel non disponible. Utilisez l\'export CSV à la place.', 'info');
-        exportCSV(); // Fallback vers CSV
-        return;
-    }
-    
-    const ws_data = [
-        ['ID', 'Domaine', 'Engagement', 'Statut', 'Délai', 'Résultat attendu', 'En retard', 'Progression (%)'],
-        ...CONFIG.promises.map(p => [
-            p.id,
-            p.domaine,
-            p.engagement,
-            p.isLate ? '⚠️ En retard' : p.status,
-            p.delai,
-            p.resultat,
-            p.isLate ? 'Oui' : 'Non',
-            p.progress
-        ])
-    ];
-    
-    const ws = XLSX.utils.aoa_to_sheet(ws_data);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Engagements");
-    
-    // Style le header
-    const range = XLSX.utils.decode_range(ws['!ref']);
-    for (let C = range.s.c; C <= range.e.c; ++C) {
-        const addr = XLSX.utils.encode_cell({c:C, r:0});
-        if (!ws[addr]) continue;
-        ws[addr].s = {
-            font: { bold: true, color: { rgb: "FFFFFF" } },
-            fill: { fgColor: { rgb: "00695F" } },
-            alignment: { horizontal: "center" }
-        };
-    }
-    
-    XLSX.writeFile(wb, `engagements_senegal_${new Date().toISOString().split('T')[0]}.xlsx`);
-    showNotification('✅ Export Excel terminé avec succès !', 'success');
-}
-
-function exportPDF() {
-    // Utilisation de jsPDF (à inclure dans l'HTML: <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>)
-    showNotification('🖨️ Génération du PDF en cours...', 'info');
-    
-    // Créer un élément temporaire pour le contenu
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = `
-        <h2 style="color: #00695F; text-align: center; margin-bottom: 20px;">
-            Rapport des Engagements - Projet Sénégal<br>
-            <small style="font-size: 14px; color: #555;">${new Date().toLocaleDateString('fr-FR')}</small>
-        </h2>
-        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-            <thead>
-                <tr style="background-color: #00695F; color: white;">
-                    <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Domaine</th>
-                    <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Engagement</th>
-                    <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Statut</th>
-                    <th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Progression</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${CONFIG.promises.map(p => `
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <td style="padding: 8px; border: 1px solid #ddd;">${p.domaine}</td>
-                        <td style="padding: 8px; border: 1px solid #ddd;">${p.engagement.substring(0, 60)}${p.engagement.length > 60 ? '...' : ''}</td>
-                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center; color: ${p.isLate ? '#c62828' : p.status === 'Réalisé' ? '#2e7d32' : '#0277bd'};">
-                            ${p.isLate ? '⚠️' : p.status === 'Réalisé' ? '✅' : p.status === 'En cours' ? '🔄' : '⏳'}
-                        </td>
-                        <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">
-                            <div style="background: #e0e0e0; height: 8px; border-radius: 4px; overflow: hidden; width: 100px; display: inline-block;">
-                                <div style="background: #00695F; height: 100%; width: ${p.progress}%"></div>
-                            </div>
-                            <span style="display: block; margin-top: 4px;">${p.progress}%</span>
-                        </td>
-                    </tr>
-                `).join('')}
-            </tbody>
-        </table>
-        <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #00695F; text-align: center; color: #555;">
-            <p>Généré par la Plateforme Citoyenne de Suivi des Engagements</p>
-            <p>https://projetbi.org - ${new Date().toLocaleDateString('fr-FR')}</p>
-        </div>
-    `;
-    
-    document.body.appendChild(tempDiv);
-    
-    // Utiliser html2canvas + jsPDF si disponibles, sinon utiliser window.print()
-    if (typeof html2pdf !== 'undefined') {
-        html2pdf().from(tempDiv).set({
-            margin: 10,
-            filename: `rapport_engagements_${new Date().toISOString().split('T')[0]}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        }).save().then(() => {
-            document.body.removeChild(tempDiv);
-            showNotification('✅ Rapport PDF généré avec succès !', 'success');
-        });
-    } else {
-        // Fallback simple
-        const printWindow = window.open('', '_blank');
-        printWindow.document.write(`
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>Rapport Engagements - Projet Sénégal</title>
-                <style>
-                    body { font-family: 'Manrope', Arial, sans-serif; padding: 20px; }
-                    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-                    th, td { padding: 8px; border: 1px solid #ddd; text-align: left; }
-                    th { background-color: #00695F; color: white; }
-                    tr:nth-child(even) { background-color: #f9f9f9; }
-                </style>
-            </head>
-            <body>
-                ${tempDiv.innerHTML}
-            </body>
-            </html>
-        `);
-        printWindow.document.close();
-        printWindow.onload = () => {
-            printWindow.print();
-            document.body.removeChild(tempDiv);
-            showNotification('🖨️ Ouvrez la boîte de dialogue d\'impression pour sauvegarder en PDF', 'info');
-        };
-    }
-}
-
-function exportJSON() {
-    const data = {
-        metadata: {
-            generated_at: new Date().toISOString(),
-            total_promises: CONFIG.promises.length,
-            source: 'Plateforme Citoyenne Projet Sénégal',
-            website: 'https://projetbi.org'
-        },
-        promises: CONFIG.promises.map(p => ({
-            id: p.id,
-            domaine: p.domaine,
-            engagement: p.engagement,
-            status: p.status,
-            is_late: p.isLate,
-            delai: p.delai,
-            resultat_attendu: p.resultat,
-            progression: p.progress,
-            deadline: p.deadline.toISOString(),
-            mises_a_jour: p.mises_a_jour || []
-        }))
-    };
-    
-    const dataStr = JSON.stringify(data, null, 2);
-    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-    
-    const exportFileDefaultName = `engagements_senegal_${new Date().toISOString().split('T')[0]}.json`;
-    const linkElement = document.createElement('a');
-    linkElement.setAttribute('href', dataUri);
-    linkElement.setAttribute('download', exportFileDefaultName);
-    linkElement.click();
-    
-    showNotification('✅ Export JSON terminé avec succès !', 'success');
-}

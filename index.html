@@ -89,7 +89,7 @@
                 </a>
             </div>
             
-            <!-- KPI Scroller -->
+            <!-- KPI Scroller - IDs EXACTS -->
             <div class="kpi-scroller">
                 <div class="kpi-carousel">
                     <div class="kpi-item">
@@ -127,110 +127,143 @@
         </div>
     </header>
 
-  <!-- Stats Section - IDs VÉRIFIÉS -->
-<section class="stats-section" id="stats">
-    <div class="container">
-        <div class="stats-grid">
-            <div class="stat-card stat-total">
-                <div class="stat-body">
-                    <div class="stat-value" id="total">0</div>
-                    <div class="stat-percentage" id="total-percentage">100%</div>
+    <!-- Stats Section - IDs EXACTS COMME DANS L'ORIGINAL -->
+    <section class="stats-section" id="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card stat-total">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="total">0</div>
+                        <div class="stat-label">Total Engagements</div>
+                        <div class="stat-percentage" id="total-percentage">100%</div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="stat-card stat-success">
-                <div class="stat-body">
-                    <div class="stat-value" id="realise">0</div>
-                    <div class="stat-percentage" id="realise-percentage">0%</div>
+                
+                <div class="stat-card stat-success">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="realise">0</div>
+                        <div class="stat-label">✅ Réalisés</div>
+                        <div class="stat-percentage" id="realise-percentage">0%</div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="stat-card stat-progress">
-                <div class="stat-body">
-                    <div class="stat-value" id="encours">0</div>
-                    <div class="stat-percentage" id="encours-percentage">0%</div>
+                
+                <div class="stat-card stat-progress">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="encours">0</div>
+                        <div class="stat-label">🔄 En Cours</div>
+                        <div class="stat-percentage" id="encours-percentage">0%</div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="stat-card stat-pending">
-                <div class="stat-body">
-                    <div class="stat-value" id="non-lance">0</div>
-                    <div class="stat-percentage" id="non-lance-percentage">0%</div>
+                
+                <div class="stat-card stat-pending">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-hourglass-start"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="non-lance">0</div>
+                        <div class="stat-label">⏳ Non Lancés</div>
+                        <div class="stat-percentage" id="non-lance-percentage">0%</div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="stat-card stat-warning">
-                <div class="stat-body">
-                    <div class="stat-value" id="retard">0</div>
-                    <div class="stat-percentage" id="retard-percentage">0%</div>
+                
+                <div class="stat-card stat-warning">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="retard">0</div>
+                        <div class="stat-label">⚠️ En Retard</div>
+                        <div class="stat-percentage" id="retard-percentage">0%</div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="stat-card stat-rate">
-                <div class="stat-body">
-                    <div class="stat-value" id="taux-realisation">0%</div>
+                
+                <div class="stat-card stat-rate">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="taux-realisation">0%</div>
+                        <div class="stat-label">📈 Taux Réalisation</div>
+                        <div class="stat-subvalue">Progression</div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="stat-card stat-rating">
-                <div class="stat-body">
-                    <div class="stat-value" id="moyenne-notes">0.0</div>
-                    <div class="stat-subvalue" id="votes-total">0 votes</div>
+                
+                <div class="stat-card stat-rating">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="moyenne-notes">0.0</div>
+                        <div class="stat-label">⭐ Note Moyenne</div>
+                        <div class="stat-subvalue" id="votes-total">0 votes</div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="stat-card stat-update">
-                <div class="stat-body">
-                    <div class="stat-value" id="avec-maj">0</div>
-                    <div class="stat-percentage" id="avec-maj-percentage">0%</div>
+                
+                <div class="stat-card stat-update">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="avec-maj">0</div>
+                        <div class="stat-label">📋 Avec MAJ</div>
+                        <div class="stat-percentage" id="avec-maj-percentage">0%</div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="stat-card stat-time">
-                <div class="stat-body">
-                    <div class="stat-value" id="delai-moyen">0j</div>
+                
+                <div class="stat-card stat-time">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-stopwatch"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="delai-moyen">0j</div>
+                        <div class="stat-label">⏱️ Délai Moyen</div>
+                        <div class="stat-subvalue">Restant</div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="stat-card stat-domain">
-                <div class="stat-body">
-                    <div class="stat-value" id="domaine-principal">-</div>
-                    <div class="stat-subvalue" id="domaine-count">0 engagements</div>
+                
+                <div class="stat-card stat-domain">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="domaine-principal">-</div>
+                        <div class="stat-label">🏛️ Domaine Principal</div>
+                        <div class="stat-subvalue" id="domaine-count">0 engagements</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- KPI Header - IDs VÉRIFIÉS -->
-<div class="kpi-scroller">
-    <div class="kpi-carousel">
-        <div class="kpi-item">
-            <span id="kpi-total">0</span>
-            <span>Engagements</span>
-        </div>
-        <div class="kpi-item">
-            <span id="kpi-realised">0</span>
-            <span>Réalisés</span>
-        </div>
-        <div class="kpi-item">
-            <span id="kpi-delayed">0</span>
-            <span>En retard</span>
-        </div>
-        <div class="kpi-item">
-            <span id="kpi-rate">0.0%</span>
-            <span>Taux de réalisation</span>
-        </div>
-        <div class="kpi-item">
-            <span id="kpi-rating">0.0</span>
-            <span>Note moyenne</span>
-        </div>
-        <div class="kpi-item">
-            <span id="kpi-delay">0j</span>
-            <span>Délai moyen restant</span>
-        </div>
-    </div>
-</div>
     <!-- Daily Promise Section -->
     <section class="daily-promise-section" id="daily">
         <div class="container">
@@ -331,7 +364,7 @@
                     <span id="results-count">0 engagement(s) trouvé(s)</span>
                 </div>
                 
-                <!-- Promises Grid -->
+                <!-- Promises Grid - ID EXACT -->
                 <div class="promises-grid" id="promisesGrid">
                     <div class="loading-state">
                         <div class="spinner"></div>
@@ -339,7 +372,7 @@
                     </div>
                 </div>
                 
-                <!-- Show More/Less Buttons -->
+                <!-- Show More/Less Buttons - IDs EXACTS -->
                 <div class="show-more-container">
                     <button class="btn-show-more" id="showMoreBtn">
                         <i class="fas fa-plus"></i>

@@ -24,6 +24,9 @@
                 <a href="#promises" class="nav-link" data-section="promises">
                     <i class="fas fa-tasks"></i> Engagements
                 </a>
+                <a href="#daily" class="nav-link" data-section="daily">
+                    <i class="fas fa-calendar-day"></i> Promesse du Jour
+                </a>
                 <a href="#news" class="nav-link" data-section="news">
                     <i class="fas fa-newspaper"></i> Actualités
                 </a>
@@ -148,6 +151,53 @@
             </div>
         </section>
 
+        <!-- ===== PROMESSE DU JOUR ===== -->
+        <section class="daily-promise-section" id="daily">
+            <div class="daily-header">
+                <h2 class="section-title">
+                    <i class="fas fa-calendar-day"></i> Promesse du Jour
+                </h2>
+                <div class="daily-date">
+                    <i class="fas fa-calendar"></i>
+                    <span id="current-date">29 Janvier 2026</span>
+                </div>
+            </div>
+            
+            <div class="daily-person">
+                <div class="person-avatar" id="person-avatar">PS</div>
+                <div class="person-info">
+                    <h3 id="person-name">Personnalité du Jour</h3>
+                    <p class="person-role" id="person-role">Ministre / Responsable</p>
+                </div>
+            </div>
+            
+            <div class="daily-content">
+                <h4><i class="fas fa-file-alt"></i> Analyse Détailée</h4>
+                <div class="daily-article" id="daily-article">
+                    Chargement de l'analyse du jour...
+                </div>
+                
+                <div class="daily-stats">
+                    <div class="daily-stat">
+                        <div class="daily-stat-value" id="daily-promises">0</div>
+                        <div class="daily-stat-label">Engagements Portés</div>
+                    </div>
+                    <div class="daily-stat">
+                        <div class="daily-stat-value" id="daily-realised">0</div>
+                        <div class="daily-stat-label">Réalisés</div>
+                    </div>
+                    <div class="daily-stat">
+                        <div class="daily-stat-value" id="daily-ongoing">0</div>
+                        <div class="daily-stat-label">En Cours</div>
+                    </div>
+                    <div class="daily-stat">
+                        <div class="daily-stat-value" id="daily-delay">0</div>
+                        <div class="daily-stat-label">En Retard</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- ===== ENGAGEMENTS ===== -->
         <section id="promises">
             <div class="section-header">
@@ -155,6 +205,9 @@
                     <i class="fas fa-list-check"></i> Liste des Engagements
                 </h2>
                 <div class="section-actions">
+                    <div class="promises-count">
+                        <span id="visible-count">0</span> / <span id="total-count">0</span> engagements
+                    </div>
                     <button class="export-btn" id="exportBtn">
                         <i class="fas fa-download"></i>
                         <span>Exporter</span>
@@ -176,8 +229,52 @@
                 </div>
             </div>
 
+            <!-- CAROUSEL AUTOMATIQUE -->
+            <div class="promises-carousel-section">
+                <h3 class="section-title">
+                    <i class="fas fa-play-circle"></i> Carrousel des Engagements
+                </h3>
+                <div class="promises-carousel">
+                    <div class="carousel-track-container">
+                        <div class="promises-carousel-track" id="promisesCarouselTrack">
+                            <!-- Les promesses seront injectées ici par JavaScript -->
+                        </div>
+                    </div>
+                    <div class="carousel-controls">
+                        <div id="carouselDots" class="carousel-dots"></div>
+                        <div class="carousel-auto-toggle">
+                            <input type="checkbox" id="autoCarousel" checked>
+                            <label for="autoCarousel">Défilement auto (10s)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- FILTRES -->
             <section class="filters-section" id="filters">
+                <div class="promises-controls">
+                    <div class="promises-filter-buttons">
+                        <button class="quick-filter-btn active delay-filter" data-filter="retard">
+                            <i class="fas fa-exclamation-triangle"></i> En retard
+                        </button>
+                        <button class="quick-filter-btn" data-filter="all">
+                            <i class="fas fa-list"></i> Tous
+                        </button>
+                        <button class="quick-filter-btn" data-filter="realise">
+                            <i class="fas fa-check-circle"></i> Réalisés
+                        </button>
+                        <button class="quick-filter-btn" data-filter="encours">
+                            <i class="fas fa-sync-alt"></i> En cours
+                        </button>
+                        <button class="quick-filter-btn" data-filter="updates">
+                            <i class="fas fa-history"></i> Avec mises à jour
+                        </button>
+                        <button class="quick-filter-btn" data-filter="reset">
+                            <i class="fas fa-redo"></i> Réinitialiser
+                        </button>
+                    </div>
+                </div>
+
                 <div class="filters-container">
                     <div class="filter-group">
                         <label for="searchInput"><i class="fas fa-search"></i> Rechercher</label>
@@ -220,26 +317,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="quick-filters">
-                    <button class="quick-filter-btn active" data-filter="all">
-                        <i class="fas fa-list"></i> Tous
-                    </button>
-                    <button class="quick-filter-btn" data-filter="realise">
-                        <i class="fas fa-check-circle"></i> Réalisés
-                    </button>
-                    <button class="quick-filter-btn" data-filter="encours">
-                        <i class="fas fa-sync-alt"></i> En cours
-                    </button>
-                    <button class="quick-filter-btn" data-filter="retard">
-                        <i class="fas fa-exclamation-triangle"></i> En retard
-                    </button>
-                    <button class="quick-filter-btn" data-filter="updates">
-                        <i class="fas fa-history"></i> Avec mises à jour
-                    </button>
-                    <button class="quick-filter-btn" data-filter="reset">
-                        <i class="fas fa-redo"></i> Réinitialiser
-                    </button>
-                </div>
             </section>
 
             <!-- GRILLE DES ENGAGEMENTS -->
@@ -249,6 +326,18 @@
                     <p>Chargement des engagements...</p>
                 </div>
             </div>
+
+            <!-- BOUTONS AFFICHER PLUS/MOINS -->
+            <div class="promises-toggle-container" id="promisesToggleContainer" style="display: none;">
+                <button class="show-more-btn" id="showMoreBtn">
+                    <i class="fas fa-chevron-down"></i>
+                    <span>Afficher plus d'engagements</span>
+                </button>
+                <button class="show-less-btn" id="showLessBtn" style="display: none;">
+                    <i class="fas fa-chevron-up"></i>
+                    <span>Réduire la liste</span>
+                </button>
+            </div>
         </section>
 
         <!-- ===== ACTUALITÉS ===== -->
@@ -256,6 +345,10 @@
             <h2 class="section-title">
                 <i class="fas fa-newspaper"></i> Dernières Actualités
             </h2>
+            <a href="https://github.com/yourusername/projet-senegal/actualites" target="_blank" class="github-update-badge">
+                <i class="fab fa-github"></i>
+                <span>Mettre à jour sur GitHub</span>
+            </a>
             <div class="news-grid" id="news-grid">
                 <div class="loading">
                     <div class="spinner"></div>
@@ -269,6 +362,17 @@
             <h2 class="section-title">
                 <i class="fas fa-book"></i> Revue de Presse - Album des Quotidiens
             </h2>
+            <a href="https://github.com/yourusername/projet-senegal/presse" target="_blank" class="press-github-badge">
+                <i class="fab fa-github"></i>
+                <span>Mettre à jour sur GitHub</span>
+            </a>
+            
+            <!-- Grille des journaux -->
+            <div class="newspapers-grid" id="newspapersGrid">
+                <!-- Les journaux seront injectés ici par JavaScript -->
+            </div>
+
+            <!-- Carousel des couvertures -->
             <div class="press-carousel-container">
                 <div class="press-carousel" id="pressCarousel"></div>
                 <button class="carousel-btn prev-btn" id="prevBtn">

@@ -1,11 +1,4 @@
 // ==========================================
-// APP.JS - VERSION OPTIMISÉE & MODERNISÉE
-// ==========================================
-// Configuration Supabase
-const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_joJuW7-vMiQG302_2Mvj5A_sVaD8Wap';
-let supabaseClient = null;
-// ==========================================
 // APP.JS - VERSION CORRIGÉE & FONCTIONNELLE
 // ==========================================
 // Configuration Supabase

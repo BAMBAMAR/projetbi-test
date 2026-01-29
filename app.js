@@ -1,5 +1,5 @@
 // ==========================================
-// APP.JS - VERSION PROPRE ET CORRIGÉE
+// APP.JS - VERSION COMPLÈTE ET CORRIGÉE
 // ==========================================
 
 // Configuration Supabase
@@ -9,12 +9,14 @@ let supabaseClient = null;
 
 // Initialisation Supabase
 try {
-    if (typeof supabase !== 'undefined') {
-        supabaseClient = supabase.create(SUPABASE_URL, SUPABASE_KEY);
+    if (typeof supabase !== 'undefined' && supabase.createClient) {
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         console.log('✅ Supabase initialisé');
+    } else {
+        console.warn('⚠️ Supabase non disponible');
     }
 } catch (error) {
-    console.warn('⚠️ Supabase non disponible:', error);
+    console.error('❌ Erreur Supabase:', error);
 }
 
 // Configuration globale
@@ -66,7 +68,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     initDateDisplay();
     initShowMoreLess();
     initPromisesCarousel();
-    initExportDropdown();
     
     await loadData();
     
@@ -200,8 +201,8 @@ async function loadData() {
         CONFIG.promises = data.promises.map(p => {
             const deadline = calculateDeadline(p.delai);
             const isLate = checkIfLate(p.status, deadline);
-            const progress = p.status === 'realise' ? 100 : 
-                           p.status === 'encours' ? 50 : 0;
+            const progress = p.status === 'Réalisé' ? 100 : 
+                           p.status === 'En cours' ? 50 : 0;
             
             return {
                 ...p,
@@ -262,7 +263,7 @@ function calculateDeadline(delaiText) {
 }
 
 function checkIfLate(status, deadline) {
-    if (status === 'realise') return false;
+    if (status === 'Réalisé') return false;
     return CONFIG.CURRENT_DATE > deadline;
 }
 
@@ -302,11 +303,11 @@ function setupDailyPromise() {
                 </div>
                 <div class="daily-stat success">
                     <div class="stat-value">${person.realised}</div>
-                    <div class="stat-label">✅ realises</div>
+                    <div class="stat-label">✅ Réalisés</div>
                 </div>
                 <div class="daily-stat progress">
                     <div class="stat-value">${person.ongoing}</div>
-                    <div class="stat-label">🔄 encours</div>
+                    <div class="stat-label">🔄 En cours</div>
                 </div>
                 <div class="daily-stat warning">
                     <div class="stat-value">${person.delay}</div>
@@ -343,9 +344,9 @@ function renderAll() {
 // ==========================================
 function updateStats() {
     const total = CONFIG.promises.length;
-    const realise = CONFIG.promises.filter(p => p.status === 'realise').length;
-    const encours = CONFIG.promises.filter(p => p.status === 'encours').length;
-    const nonLance = CONFIG.promises.filter(p => p.status === 'non-lance').length;
+    const realise = CONFIG.promises.filter(p => p.status === 'Réalisé').length;
+    const encours = CONFIG.promises.filter(p => p.status === 'En cours').length;
+    const nonLance = CONFIG.promises.filter(p => p.status === 'Non lancé').length;
     const retard = CONFIG.promises.filter(p => p.isLate).length;
     const withUpdates = CONFIG.promises.filter(p => p.mises_a_jour && p.mises_a_jour.length > 0).length;
     
@@ -359,7 +360,7 @@ function updateStats() {
     const principalDomain = Object.entries(domains).sort((a, b) => b[1] - a[1])[0];
     
     const avgDelay = CONFIG.promises
-        .filter(p => p.status !== 'realise')
+        .filter(p => p.status !== 'Réalisé')
         .reduce((sum, p) => sum + (parseInt(getDaysRemaining(p.deadline).replace(' jours', '')) || 0), 0) / 
         (total - realise || 1);
     
@@ -414,7 +415,7 @@ function updateStatPercentage(id, value, total) {
 // ==========================================
 function updateKPI() {
     const total = CONFIG.promises.length;
-    const realise = CONFIG.promises.filter(p => p.status === 'realise').length;
+    const realise = CONFIG.promises.filter(p => p.status === 'Réalisé').length;
     const retard = CONFIG.promises.filter(p => p.isLate).length;
     const tauxRealisation = total > 0 ? ((realise / total) * 100).toFixed(1) : 0;
     
@@ -424,16 +425,17 @@ function updateKPI() {
         : '0.0';
     
     const avgDelay = CONFIG.promises
-        .filter(p => p.status !== 'realise')
+        .filter(p => p.status !== 'Réalisé')
         .reduce((sum, p) => sum + (parseInt(getDaysRemaining(p.deadline).replace(' jours', '')) || 0), 0) / 
         (total - realise || 1);
     
-    updateStatValue('kpi-total', total);
-    updateStatValue('kpi-realised', realise);
-    updateStatValue('kpi-delayed', retard);
-    updateStatValue('kpi-rate', tauxRealisation + '%');
-    updateStatValue('kpi-rating', avgRating);
-    updateStatValue('kpi-delay', Math.round(avgDelay) + 'j');
+    // Mise à jour des KPI - IDs vérifiés
+    document.getElementById('kpi-total').textContent = total;
+    document.getElementById('kpi-realised').textContent = realise;
+    document.getElementById('kpi-delayed').textContent = retard;
+    document.getElementById('kpi-rate').textContent = tauxRealisation + '%';
+    document.getElementById('kpi-rating').textContent = avgRating;
+    document.getElementById('kpi-delay').textContent = Math.round(avgDelay) + 'j';
 }
 
 // ==========================================
@@ -684,15 +686,15 @@ function createPromiseCard(promise, statusClass, statusText, progress) {
 
 function getStatusClass(promise) {
     if (promise.isLate) return 'status-late';
-    if (promise.status === 'realise') return 'status-realise';
-    if (promise.status === 'encours') return 'status-encours';
+    if (promise.status === 'Réalisé') return 'status-realise';
+    if (promise.status === 'En cours') return 'status-encours';
     return 'status-non-lance';
 }
 
 function getStatusText(promise) {
     if (promise.isLate) return '⚠️ En retard';
-    if (promise.status === 'realise') return '✅ realise';
-    if (promise.status === 'encours') return '🔄 encours';
+    if (promise.status === 'Réalisé') return '✅ Réalisé';
+    if (promise.status === 'En cours') return '🔄 En cours';
     return '⏳ Non lancé';
 }
 
@@ -947,27 +949,6 @@ function resetZoom(btn) {
 }
 
 // ==========================================
-// EXPORT DROPDOWN
-// ==========================================
-function initExportDropdown() {
-    const exportBtn = document.getElementById('exportBtn');
-    const exportDropdown = document.getElementById('exportDropdown');
-    
-    if (exportBtn && exportDropdown) {
-        exportBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            exportDropdown.style.display = exportDropdown.style.display === 'flex' ? 'none' : 'flex';
-        });
-        
-        document.addEventListener('click', (e) => {
-            if (!exportBtn.contains(e.target) && !exportDropdown.contains(e.target)) {
-                exportDropdown.style.display = 'none';
-            }
-        });
-    }
-}
-
-// ==========================================
 // EXPORT DATA - CORRIGÉ
 // ==========================================
 function exportData(format) {
@@ -981,9 +962,6 @@ function exportData(format) {
         } else if (format === 'json') {
             exportJSON();
         }
-        
-        const dropdown = document.getElementById('exportDropdown');
-        if (dropdown) dropdown.style.display = 'none';
         
     } catch (error) {
         console.error('Erreur export:', error);
@@ -1209,7 +1187,7 @@ async function fetchAndDisplayPublicVotes() {
     
     try {
         const { data, error } = await supabaseClient
-            .from('votes')
+            .from('public_votes')
             .select('promise_id, rating');
         
         if (error) throw error;
@@ -1266,7 +1244,7 @@ async function saveVoteToSupabase(promiseId, rating) {
     try {
         if (supabaseClient) {
             const { error } = await supabaseClient
-                .from('votes')
+                .from('public_votes')
                 .insert([{ promise_id: promiseId, rating }]);
             
             if (error) throw error;

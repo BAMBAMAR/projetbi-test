@@ -204,15 +204,15 @@ function generateStars(rating) {
 function getStatusClass(promise) {
     if (promise.isLate) return 'status-late';
     if (promise.status === 'realise') return 'status-realise';
-    if (promise.status === 'En cours') return 'status-encours';
+    if (promise.status === 'encours') return 'status-encours';
     return 'status-non-lance';
 }
 
 function getStatusText(promise) {
     if (promise.isLate) return '⚠️ En retard';
     if (promise.status === 'realise') return '✅ realise';
-    if (promise.status === 'En cours') return '🔄 En cours';
-    return '⏳ Non lancé';
+    if (promise.status === 'encours') return '🔄 encours';
+    return '⏳ non-lance';
 }
 
 // ==========================================
@@ -234,8 +234,8 @@ function updateStatPercentage(id, value, total) {
 function calculateStats(promises) {
     const total = promises.length;
     const realise = promises.filter(p => p.status === 'realise').length;
-    const encours = promises.filter(p => p.status === 'En cours').length;
-    const nonLance = promises.filter(p => p.status === 'Non lancé').length;
+    const encours = promises.filter(p => p.status === 'encours').length;
+    const nonLance = promises.filter(p => p.status === 'non-lance').length;
     const retard = promises.filter(p => p.isLate).length;
     
     // Calcul EXACTEMENT comme dans l'original
@@ -592,7 +592,7 @@ async function loadData() {
             const deadline = calculateDeadline(p.delai);
             const isLate = checkIfLate(p.status, deadline);
             const progress = p.status === 'realise' ? 100 : 
-                           p.status === 'En cours' ? 50 : 0;
+                           p.status === 'encours' ? 50 : 0;
             
             return {
                 ...p,

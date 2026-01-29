@@ -1,5 +1,5 @@
 // ==========================================
-// APP.JS - VERSION COMPLÈTE CORRIGÉE
+// APP.JS - VERSION MISE À JOUR
 // ==========================================
 const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_joJuW7-vMiQG302_2Mvj5A_sVaD8Wap';
@@ -22,15 +22,104 @@ const CONFIG = {
     promises: [],
     news: [],
     press: [
-        { id: '1', title: 'Le Soleil', date: '28/01/2026', image: '🇸🇱' },
-        { id: '2', title: 'Sud Quotidien', date: '28/01/2026', image: '🇸🇶' },
-        { id: '3', title: 'WalFadjri', date: '28/01/2026', image: '🇼🇫' },
-        { id: '4', title: 'L\'Observateur', date: '28/01/2026', image: '🇱🇴' },
-        { id: '5', title: 'Le Quotidien', date: '28/01/2026', image: '🇱🇶' }
+        { 
+            id: '1', 
+            title: 'Le Soleil', 
+            date: '28/01/2026', 
+            image: '🇸🇱',
+            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6d/Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg/800px-Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg.png'
+        },
+        { 
+            id: '2', 
+            title: 'Sud Quotidien', 
+            date: '28/01/2026', 
+            image: '🇸🇶',
+            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/5/5b/Sud_Quotidien_logo.svg/800px-Sud_Quotidien_logo.svg.png'
+        },
+        { 
+            id: '3', 
+            title: 'WalFadjri', 
+            date: '28/01/2026', 
+            image: '🇼🇫',
+            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/0/0b/Walfadjri_logo.svg/800px-Walfadjri_logo.svg.png'
+        },
+        { 
+            id: '4', 
+            title: 'L\'Observateur', 
+            date: '28/01/2026', 
+            image: '🇱🇴',
+            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/L%27Observateur_logo.svg/800px-L%27Observateur_logo.svg.png'
+        },
+        { 
+            id: '5', 
+            title: 'Le Quotidien', 
+            date: '28/01/2026', 
+            image: '🇱🇶',
+            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/3/3c/Le_Quotidien_logo.svg/800px-Le_Quotidien_logo.svg.png'
+        }
     ],
     currentIndex: 0,
-    ratings: []
+    ratings: [],
+    carouselInterval: null,
+    visibleCount: 6,
+    currentVisible: 6,
+    carouselIndex: 0,
+    carouselAutoPlay: true
 };
+
+// Personnes pour "Promesse du Jour"
+const DAILY_PEOPLE = [
+    {
+        name: "M. Aliou SALL",
+        role: "Ministre de l'Économie",
+        avatar: "AS",
+        article: "Spécialiste des politiques économiques, M. Aliou SALL porte 15 engagements majeurs pour la relance économique. Son plan d'action comprend la réforme du système fiscal, la promotion des investissements privés et le développement des infrastructures numériques.",
+        promises: 15,
+        realised: 8,
+        ongoing: 5,
+        delay: 2
+    },
+    {
+        name: "Mme Aminata DIALLO",
+        role: "Ministre de la Santé",
+        avatar: "AD",
+        article: "Pionnière de la réforme du système de santé, Mme Diallo supervise 12 engagements visant à améliorer l'accès aux soins de qualité. Ses priorités incluent la construction de nouveaux centres de santé, la formation du personnel médical et la numérisation des dossiers patients.",
+        promises: 12,
+        realised: 6,
+        ongoing: 4,
+        delay: 2
+    },
+    {
+        name: "Dr Ibrahima CISSE",
+        role: "Ministre de l'Éducation",
+        avatar: "IC",
+        article: "Expert en éducation, Dr Cisse est responsable de 18 engagements pour la modernisation du système éducatif. Ses projets phares incluent la construction d'écoles numériques, la formation des enseignants et la révision des programmes scolaires.",
+        promises: 18,
+        realised: 10,
+        ongoing: 6,
+        delay: 2
+    },
+    {
+        name: "M. Ousmane NDIAYE",
+        role: "Ministre des Infrastructures",
+        avatar: "ON",
+        article: "Ingénieur de formation, M. Ndiaye gère 22 engagements pour le développement des infrastructures nationales. Son portefeuille comprend des projets routiers, la construction de ponts et le développement des réseaux d'eau et d'électricité.",
+        promises: 22,
+        realised: 12,
+        ongoing: 8,
+        delay: 2
+    },
+    {
+        name: "Mme Fatou KANE",
+        role: "Ministre de l'Environnement",
+        avatar: "FK",
+        article: "Militante écologiste, Mme Kane défend 14 engagements pour la protection de l'environnement. Ses initiatives incluent la lutte contre la déforestation, la promotion des énergies renouvelables et la gestion des déchets.",
+        promises: 14,
+        realised: 7,
+        ongoing: 5,
+        delay: 2
+    }
+];
 
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('🚀 Initialisation...');
@@ -38,6 +127,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupEventListeners();
     setupCarousel();
     setupServiceRatings();
+    setupDailyPromise();
+    setupPromisesCarousel();
     console.log('✅ Initialisation terminée');
 });
 
@@ -51,7 +142,6 @@ async function loadData() {
         
         CONFIG.START_DATE = new Date(data.start_date);
         
-        // Charger d'abord les données de base
         CONFIG.promises = data.promises.map(p => ({
             ...p,
             deadline: calculateDeadline(p.delai),
@@ -60,7 +150,13 @@ async function loadData() {
             publicCount: 0
         }));
         
-        // Charger les votes depuis Supabase (sans bloquer le reste)
+        // Trier par défaut pour afficher les promesses en retard en premier
+        CONFIG.promises.sort((a, b) => {
+            if (a.isLate && !b.isLate) return -1;
+            if (!a.isLate && b.isLate) return 1;
+            return 0;
+        });
+        
         setTimeout(() => {
             fetchAndDisplayPublicVotes().catch(error => {
                 console.warn('Impossible de charger les votes:', error);
@@ -96,6 +192,7 @@ async function loadData() {
         
         renderAll();
         renderNews(CONFIG.news);
+        renderNewspapers();
         renderPressCarousel();
         
     } catch (error) {
@@ -105,7 +202,199 @@ async function loadData() {
 }
 
 // ==========================================
-// CALCUL DES DÉLAIS
+// PROMESSE DU JOUR
+// ==========================================
+function setupDailyPromise() {
+    const today = new Date().getDay(); // 0-6 pour dimanche-samedi
+    const personIndex = today % DAILY_PEOPLE.length;
+    const person = DAILY_PEOPLE[personIndex];
+    
+    document.getElementById('current-date').textContent = new Date().toLocaleDateString('fr-FR', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+    
+    document.getElementById('person-avatar').textContent = person.avatar;
+    document.getElementById('person-name').textContent = person.name;
+    document.getElementById('person-role').textContent = person.role;
+    document.getElementById('daily-article').textContent = person.article;
+    
+    document.getElementById('daily-promises').textContent = person.promises;
+    document.getElementById('daily-realised').textContent = person.realised;
+    document.getElementById('daily-ongoing').textContent = person.ongoing;
+    document.getElementById('daily-delay').textContent = person.delay;
+}
+
+// ==========================================
+// CAROUSEL PROMESSES
+// ==========================================
+function setupPromisesCarousel() {
+    const track = document.getElementById('promisesCarouselTrack');
+    if (!track) return;
+    
+    // Créer 6 clones de promesses pour le carousel
+    const carouselPromises = CONFIG.promises.slice(0, 6);
+    
+    track.innerHTML = carouselPromises.map(promise => `
+        <div class="promise-card" style="min-width: 350px; flex-shrink: 0;">
+            <div class="domain-badge">${promise.domaine}</div>
+            <h3 class="promise-title">${promise.engagement.substring(0, 60)}${promise.engagement.length > 60 ? '...' : ''}</h3>
+            
+            <div class="result-box">
+                <i class="fas fa-bullseye"></i>
+                <strong>Résultat attendu :</strong> ${promise.resultat.substring(0, 80)}${promise.resultat.length > 80 ? '...' : ''}
+            </div>
+            
+            <div class="promise-meta">
+                <div class="status-badge ${promise.status === 'realise' ? 'status-realise' : promise.status === 'encours' ? 'status-encours' : 'status-nonlance'}">
+                    ${promise.status === 'realise' ? '✅ Réalisé' : promise.status === 'encours' ? '🔄 En cours' : '⏳ Non lancé'}
+                </div>
+                ${promise.isLate ? '<div class="retard-badge"><i class="fas fa-exclamation-triangle"></i> En Retard</div>' : ''}
+            </div>
+        </div>
+    `).join('');
+    
+    // Configurer le défilement automatique
+    setupCarouselAutoPlay();
+    
+    // Configurer les points de navigation
+    setupCarouselDots(carouselPromises.length);
+}
+
+function setupCarouselAutoPlay() {
+    const autoToggle = document.getElementById('autoCarousel');
+    if (!autoToggle) return;
+    
+    autoToggle.addEventListener('change', function() {
+        CONFIG.carouselAutoPlay = this.checked;
+        if (CONFIG.carouselAutoPlay) {
+            startCarouselAutoPlay();
+        } else {
+            stopCarouselAutoPlay();
+        }
+    });
+    
+    startCarouselAutoPlay();
+}
+
+function startCarouselAutoPlay() {
+    stopCarouselAutoPlay();
+    
+    CONFIG.carouselInterval = setInterval(() => {
+        const track = document.getElementById('promisesCarouselTrack');
+        if (!track) return;
+        
+        CONFIG.carouselIndex = (CONFIG.carouselIndex + 1) % 6;
+        const offset = -CONFIG.carouselIndex * 368; // 350px + 18px gap
+        track.style.transform = `translateX(${offset}px)`;
+        
+        updateCarouselDots();
+    }, 10000); // 10 secondes
+}
+
+function stopCarouselAutoPlay() {
+    if (CONFIG.carouselInterval) {
+        clearInterval(CONFIG.carouselInterval);
+        CONFIG.carouselInterval = null;
+    }
+}
+
+function setupCarouselDots(count) {
+    const dotsContainer = document.getElementById('carouselDots');
+    if (!dotsContainer) return;
+    
+    dotsContainer.innerHTML = '';
+    
+    for (let i = 0; i < count; i++) {
+        const dot = document.createElement('div');
+        dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
+        dot.dataset.index = i;
+        dot.addEventListener('click', () => {
+            CONFIG.carouselIndex = i;
+            const track = document.getElementById('promisesCarouselTrack');
+            if (track) {
+                const offset = -i * 368;
+                track.style.transform = `translateX(${offset}px)`;
+                updateCarouselDots();
+            }
+        });
+        dotsContainer.appendChild(dot);
+    }
+}
+
+function updateCarouselDots() {
+    const dots = document.querySelectorAll('.carousel-dot');
+    dots.forEach((dot, index) => {
+        if (index === CONFIG.carouselIndex) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+}
+
+// ==========================================
+// GESTION AFFICHAGE LIMITÉ DES PROMESSES
+// ==========================================
+function setupPromiseVisibility() {
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showLessBtn = document.getElementById('showLessBtn');
+    const toggleContainer = document.getElementById('promisesToggleContainer');
+    const visibleCountEl = document.getElementById('visible-count');
+    const totalCountEl = document.getElementById('total-count');
+    
+    if (!showMoreBtn || !showLessBtn || !toggleContainer) return;
+    
+    totalCountEl.textContent = CONFIG.promises.length;
+    updateVisibleCount();
+    
+    if (CONFIG.promises.length > CONFIG.visibleCount) {
+        toggleContainer.style.display = 'flex';
+    }
+    
+    showMoreBtn.addEventListener('click', () => {
+        CONFIG.currentVisible = Math.min(CONFIG.currentVisible + CONFIG.visibleCount, CONFIG.promises.length);
+        applyPromiseVisibility();
+        updateVisibleCount();
+        
+        if (CONFIG.currentVisible >= CONFIG.promises.length) {
+            showMoreBtn.style.display = 'none';
+            showLessBtn.style.display = 'inline-flex';
+        }
+    });
+    
+    showLessBtn.addEventListener('click', () => {
+        CONFIG.currentVisible = CONFIG.visibleCount;
+        applyPromiseVisibility();
+        updateVisibleCount();
+        
+        showMoreBtn.style.display = 'inline-flex';
+        showLessBtn.style.display = 'none';
+    });
+}
+
+function applyPromiseVisibility() {
+    const cards = document.querySelectorAll('.promise-card:not(.carousel-card)');
+    cards.forEach((card, index) => {
+        if (index < CONFIG.currentVisible) {
+            card.classList.remove('hidden');
+        } else {
+            card.classList.add('hidden');
+        }
+    });
+}
+
+function updateVisibleCount() {
+    const visibleCountEl = document.getElementById('visible-count');
+    if (visibleCountEl) {
+        visibleCountEl.textContent = Math.min(CONFIG.currentVisible, CONFIG.promises.length);
+    }
+}
+
+// ==========================================
+// CALCUL DES DÉLAIS (inchangé)
 // ==========================================
 function calculateDeadline(delaiText) {
     if (!CONFIG.START_DATE) return new Date();
@@ -144,7 +433,7 @@ function checkIfLate(status, deadline) {
 }
 
 // ==========================================
-// CALCUL COMPLET DES STATISTIQUES
+// CALCUL DES STATISTIQUES (inchangé)
 // ==========================================
 function calculateStats() {
     const total = CONFIG.promises.length;
@@ -154,14 +443,12 @@ function calculateStats() {
     const retard = CONFIG.promises.filter(p => p.isLate).length;
     const avecMaj = CONFIG.promises.filter(p => p.mises_a_jour && p.mises_a_jour.length > 0).length;
     
-    // Pourcentages
     const realisePercentage = total > 0 ? ((realise / total) * 100).toFixed(1) : 0;
     const encoursPercentage = total > 0 ? ((encours / total) * 100).toFixed(1) : 0;
     const nonLancePercentage = total > 0 ? ((nonLance / total) * 100).toFixed(1) : 0;
     const retardPercentage = total > 0 ? ((retard / total) * 100).toFixed(1) : 0;
     const avecMajPercentage = total > 0 ? ((avecMaj / total) * 100).toFixed(1) : 0;
     
-    // Taux de réalisation pondéré
     let tauxRealisation = 0;
     let progression = '';
     if (total > 0) {
@@ -177,7 +464,6 @@ function calculateStats() {
         else progression = 'Début';
     }
     
-    // Note moyenne
     let moyenneNotes = 0;
     let totalVotes = 0;
     let totalNotes = 0;
@@ -195,7 +481,6 @@ function calculateStats() {
         moyenneNotes = (totalNotes / totalVotes).toFixed(1);
     }
     
-    // Délai moyen restant
     let delaiMoyenJours = 0;
     let delaiMoyenText = '0j';
     const promessesEnCours = CONFIG.promises.filter(p => p.status !== 'realise' && !p.isLate);
@@ -211,7 +496,6 @@ function calculateStats() {
                         `${delaiMoyenJours}j`;
     }
     
-    // Domaine principal
     let domainePrincipal = '-';
     let domaineCount = 0;
     if (CONFIG.promises.length > 0) {
@@ -243,7 +527,7 @@ function calculateStats() {
 }
 
 // ==========================================
-// RENDU DES STATISTIQUES
+// RENDU DES STATISTIQUES (inchangé)
 // ==========================================
 function renderStats(stats) {
     document.getElementById('total').textContent = stats.total;
@@ -257,7 +541,6 @@ function renderStats(stats) {
     document.getElementById('delai-moyen').textContent = stats.delaiMoyen;
     document.getElementById('domaine-principal').textContent = stats.domainePrincipal;
     
-    // Pourcentages
     document.getElementById('total-percentage').textContent = '100%';
     document.getElementById('realise-percentage').textContent = `${stats.realisePercentage}%`;
     document.getElementById('encours-percentage').textContent = `${stats.encoursPercentage}%`;
@@ -265,20 +548,16 @@ function renderStats(stats) {
     document.getElementById('retard-percentage').textContent = `${stats.retardPercentage}%`;
     document.getElementById('avec-maj-percentage').textContent = `${stats.avecMajPercentage}%`;
     
-    // Texte de progression
     document.getElementById('progress-text').textContent = stats.progression;
     
-    // Votes
     document.getElementById('votes-total').textContent = stats.promessesNotees > 0 ? 
         `${stats.promessesNotees}/${stats.total} promesses notées` : 
         'Aucun vote';
     
-    // Jours restants
     document.getElementById('jours-restants').textContent = stats.promessesEnCours > 0 ? 
         `${stats.promessesEnCours} engagements` : 
         'Aucun';
     
-    // Domaine count
     document.getElementById('domaine-count').textContent = `${stats.domaineCount} engagements`;
 }
 
@@ -290,6 +569,7 @@ function renderAll() {
     renderStats(stats);
     renderPromises(CONFIG.promises);
     renderFilters();
+    setupPromiseVisibility();
 }
 
 // ==========================================
@@ -310,10 +590,11 @@ function renderPromises(promises) {
         return;
     }
     
-    container.innerHTML = promises.map(promise => createPromiseCard(promise)).join('');
+    container.innerHTML = promises.map((promise, index) => createPromiseCard(promise, index)).join('');
+    applyPromiseVisibility();
 }
 
-function createPromiseCard(promise) {
+function createPromiseCard(promise, index) {
     const statusClass = promise.status === 'realise' ? 'status-realise' :
                        promise.status === 'encours' ? 'status-encours' : 'status-nonlance';
     const statusText = promise.status === 'realise' ? '✅ Réalisé' :
@@ -322,11 +603,12 @@ function createPromiseCard(promise) {
     const progress = promise.status === 'realise' ? 100 :
                     promise.status === 'encours' ? 50 : 10;
     
-    // Badge retard
+    const highlightClass = promise.isLate ? 'highlight-delay' : '';
+    const hiddenClass = index >= CONFIG.currentVisible ? 'hidden' : '';
+    
     const retardBadge = promise.isLate ? 
         '<div class="retard-badge"><i class="fas fa-exclamation-triangle"></i> En Retard</div>' : '';
     
-    // Note moyenne
     let ratingHTML = '';
     if (promise.publicAvg > 0) {
         ratingHTML = `
@@ -339,7 +621,6 @@ function createPromiseCard(promise) {
         `;
     }
     
-    // Mises à jour
     let updatesHTML = '';
     if (promise.mises_a_jour && promise.mises_a_jour.length > 0) {
         updatesHTML = `
@@ -358,7 +639,7 @@ function createPromiseCard(promise) {
     }
     
     return `
-        <div class="promise-card" data-id="${promise.id}">
+        <div class="promise-card ${highlightClass} ${hiddenClass}" data-id="${promise.id}">
             <div class="domain-badge">${promise.domaine}</div>
             <h3 class="promise-title">${promise.engagement}</h3>
             
@@ -411,27 +692,39 @@ function createPromiseCard(promise) {
     `;
 }
 
-// Fonction pour générer les étoiles
-function generateStars(rating) {
-    const fullStars = Math.floor(rating);
-    const halfStar = rating % 1 >= 0.5;
-    let stars = '';
+// ==========================================
+// REVUE DE PRESSE AVEC PHOTOS
+// ==========================================
+function renderNewspapers() {
+    const container = document.getElementById('newspapersGrid');
+    if (!container) return;
     
-    for (let i = 0; i < 5; i++) {
-        if (i < fullStars) {
-            stars += '<i class="fas fa-star"></i>';
-        } else if (i === fullStars && halfStar) {
-            stars += '<i class="fas fa-star-half-alt"></i>';
-        } else {
-            stars += '<i class="far fa-star"></i>';
-        }
-    }
-    return stars;
+    container.innerHTML = CONFIG.press.map(newspaper => `
+        <div class="newspaper-card" onclick="showNewspaper('${newspaper.id}')">
+            <div class="newspaper-logo" style="background-image: url('${newspaper.logo}')"></div>
+            <div class="newspaper-info">
+                <div class="newspaper-name">${newspaper.title}</div>
+                <div class="newspaper-date">${newspaper.date}</div>
+            </div>
+        </div>
+    `).join('');
 }
 
+window.showNewspaper = function(newspaperId) {
+    const newspaper = CONFIG.press.find(n => n.id === newspaperId);
+    if (newspaper) {
+        const index = CONFIG.press.findIndex(n => n.id === newspaperId);
+        CONFIG.currentIndex = index;
+        renderPressCarousel();
+        showNotification(`Ouverture de ${newspaper.title}`);
+    }
+};
+
 // ==========================================
-// FONCTIONS POUR LES MISES À JOUR
+// FONCTIONS EXISTANTES (inchangées)
 // ==========================================
+// ... [Le reste du code JavaScript reste inchangé] ...
+
 window.toggleUpdates = function(promiseId) {
     const updatesEl = document.getElementById(`updates-${promiseId}`);
     if (!updatesEl) return;
@@ -449,9 +742,6 @@ window.toggleUpdates = function(promiseId) {
     }
 };
 
-// ==========================================
-// GESTION DES VOTES
-// ==========================================
 window.ratePromise = async function(promiseId, rating) {
     if (!supabaseClient) {
         showNotification('Erreur de connexion au serveur', 'error');
@@ -467,7 +757,6 @@ window.ratePromise = async function(promiseId, rating) {
         
         showNotification(`Merci ! Vote de ${rating}/5 enregistré.`);
         
-        // Mettre à jour localement
         const promise = CONFIG.promises.find(p => p.id === promiseId);
         if (promise) {
             if (!promise.publicCount) promise.publicCount = 0;
@@ -477,11 +766,9 @@ window.ratePromise = async function(promiseId, rating) {
             promise.publicCount += 1;
             promise.publicAvg = (newTotal / promise.publicCount).toFixed(1);
             
-            // Recalculer les stats
             const stats = calculateStats();
             renderStats(stats);
             
-            // Mettre à jour cette carte spécifique
             const card = document.querySelector(`[data-id="${promiseId}"]`);
             if (card) {
                 const ratingSection = card.querySelector('.promise-rating');
@@ -502,9 +789,6 @@ window.ratePromise = async function(promiseId, rating) {
     }
 };
 
-// ==========================================
-// CHARGEMENT DES VOTES PUBLICS
-// ==========================================
 async function fetchAndDisplayPublicVotes() {
     if (!supabaseClient) return;
     
@@ -517,7 +801,6 @@ async function fetchAndDisplayPublicVotes() {
         
         if (!votes) return;
         
-        // Calculer les statistiques par promesse
         const stats = {};
         votes.forEach(v => {
             if (!stats[v.promise_id]) {
@@ -527,7 +810,6 @@ async function fetchAndDisplayPublicVotes() {
             stats[v.promise_id].count += 1;
         });
         
-        // Mettre à jour les promesses avec les données publiques
         CONFIG.promises.forEach(p => {
             if (stats[p.id]) {
                 p.publicAvg = (stats[p.id].sum / stats[p.id].count).toFixed(1);
@@ -535,20 +817,15 @@ async function fetchAndDisplayPublicVotes() {
             }
         });
         
-        // Recalculer les statistiques
         const statsCalculated = calculateStats();
         renderStats(statsCalculated);
         renderPromises(CONFIG.promises);
         
     } catch (error) {
         console.error('Erreur chargement des votes:', error);
-        // Ne pas bloquer l'application si Supabase échoue
     }
 }
 
-// ==========================================
-// FILTRES
-// ==========================================
 function renderFilters() {
     const sectorFilter = document.getElementById('sectorFilter');
     if (!sectorFilter) return;
@@ -566,7 +843,6 @@ function renderFilters() {
 }
 
 function setupEventListeners() {
-    // Filtres
     const searchInput = document.getElementById('searchInput');
     const sectorFilter = document.getElementById('sectorFilter');
     const statusFilter = document.getElementById('statusFilter');
@@ -577,25 +853,22 @@ function setupEventListeners() {
     if (statusFilter) statusFilter.addEventListener('change', applyFilters);
     if (sortFilter) sortFilter.addEventListener('change', applyFilters);
     
-    // Filtres rapides
     document.querySelectorAll('.quick-filter-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const filter = this.dataset.filter;
+            
+            document.querySelectorAll('.quick-filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
             
             if (filter === 'reset') {
                 resetFilters();
                 return;
             }
             
-            // Mettre à jour l'état actif
-            document.querySelectorAll('.quick-filter-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            
             applyQuickFilter(filter);
         });
     });
     
-    // Export
     const exportBtn = document.getElementById('exportBtn');
     if (exportBtn) {
         exportBtn.addEventListener('click', function(e) {
@@ -606,7 +879,6 @@ function setupEventListeners() {
             }
         });
         
-        // Options d'export
         document.querySelectorAll('.export-option').forEach(option => {
             option.addEventListener('click', function() {
                 const format = this.dataset.format;
@@ -614,12 +886,19 @@ function setupEventListeners() {
             });
         });
         
-        // Fermer le dropdown en cliquant ailleurs
         document.addEventListener('click', function() {
             const dropdowns = document.querySelectorAll('.export-dropdown');
             dropdowns.forEach(dropdown => {
                 dropdown.classList.remove('show');
             });
+        });
+    }
+    
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', function() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('show');
         });
     }
 }
@@ -646,7 +925,6 @@ function applyQuickFilter(filterType) {
             sortFilter.value = 'retard';
             break;
         case 'updates':
-            // Filtre spécial pour engagements avec mises à jour
             const filtered = CONFIG.promises.filter(p => p.mises_a_jour && p.mises_a_jour.length > 0);
             renderPromises(filtered);
             return;
@@ -671,7 +949,6 @@ function applyFilters() {
         return matchSearch && matchSector && matchStatus;
     });
     
-    // Trier
     switch(sort) {
         case 'recent':
             filtered.sort((a, b) => b.deadline - a.deadline);
@@ -701,15 +978,12 @@ function resetFilters() {
     document.getElementById('sortFilter').value = 'recent';
     
     document.querySelectorAll('.quick-filter-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector('[data-filter="all"]').classList.add('active');
+    document.querySelector('[data-filter="retard"]').classList.add('active');
     
     renderPromises(CONFIG.promises);
     showNotification('Filtres réinitialisés');
 }
 
-// ==========================================
-// EXPORT DES DONNÉES
-// ==========================================
 function exportData(format) {
     const promises = CONFIG.promises;
     const date = new Date().toISOString().split('T')[0];
@@ -761,7 +1035,6 @@ function exportData(format) {
             return;
     }
     
-    // Téléchargement
     const blob = new Blob([content], { type: mimeType });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -777,9 +1050,6 @@ function exportData(format) {
     showNotification(`Données exportées en ${format.toUpperCase()} avec succès !`);
 }
 
-// ==========================================
-// ACTUALITÉS
-// ==========================================
 function renderNews(news) {
     const container = document.getElementById('news-grid');
     if (!container) return;
@@ -801,9 +1071,6 @@ function renderNews(news) {
     `).join('');
 }
 
-// ==========================================
-// CAROUSEL DE PRESSE
-// ==========================================
 function setupCarousel() {
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
@@ -822,7 +1089,6 @@ function setupCarousel() {
         renderPressCarousel();
     });
     
-    // Indicateurs
     indicators.innerHTML = '';
     CONFIG.press.forEach((_, index) => {
         const indicator = document.createElement('button');
@@ -841,29 +1107,27 @@ function renderPressCarousel() {
     
     if (!carousel || !indicators) return;
     
+    const currentPaper = CONFIG.press[CONFIG.currentIndex];
+    
     carousel.innerHTML = `
-        <div class="press-item active">
-            <div class="press-emoji">${CONFIG.press[CONFIG.currentIndex].image}</div>
-            <h3>${CONFIG.press[CONFIG.currentIndex].title}</h3>
-            <p>${CONFIG.press[CONFIG.currentIndex].date}</p>
+        <div class="carousel-item active" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('${currentPaper.logo}'); background-size: contain, cover;">
+            <div class="carousel-info">
+                <div class="carousel-title">${currentPaper.title}</div>
+                <div class="carousel-date">${currentPaper.date}</div>
+            </div>
         </div>
     `;
     
-    // Mettre à jour les indicateurs
     const indicatorElements = indicators.querySelectorAll('.indicator');
     indicatorElements.forEach((indicator, index) => {
         indicator.classList.toggle('active', index === CONFIG.currentIndex);
     });
 }
 
-// ==========================================
-// NOTATION DES SERVICES
-// ==========================================
 function setupServiceRatings() {
     const form = document.getElementById('rating-form');
     if (!form) return;
     
-    // Initialiser les étoiles
     setupStars('accessibility-stars', 'accessibility');
     setupStars('welcome-stars', 'welcome');
     setupStars('efficiency-stars', 'efficiency');
@@ -896,13 +1160,11 @@ function setupServiceRatings() {
         
         CONFIG.ratings.push(rating);
         
-        // Sauvegarder localement
         localStorage.setItem('serviceRatings', JSON.stringify(CONFIG.ratings));
         
         showNotification('Merci pour votre notation ! Votre feedback a été enregistré.');
         form.reset();
         
-        // Réinitialiser les étoiles
         resetStars('accessibility-stars', 'accessibility');
         resetStars('welcome-stars', 'welcome');
         resetStars('efficiency-stars', 'efficiency');
@@ -963,9 +1225,6 @@ function resetStars(containerId, hiddenInputId) {
     highlightStars(containerId, 3);
 }
 
-// ==========================================
-// PARTAGE
-// ==========================================
 window.sharePromise = function(promiseId) {
     const promise = CONFIG.promises.find(p => p.id === promiseId);
     if (!promise) return;
@@ -980,15 +1239,11 @@ window.sharePromise = function(promiseId) {
             url: url
         });
     } else {
-        // Fallback pour navigateurs sans Web Share API
         const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
         window.open(shareUrl, '_blank');
     }
 };
 
-// ==========================================
-// NOTIFICATIONS
-// ==========================================
 function showNotification(message, type = 'success') {
     const container = document.getElementById('notification-container');
     if (!container) return;
@@ -1006,12 +1261,10 @@ function showNotification(message, type = 'success') {
     
     container.appendChild(notification);
     
-    // Animation d'entrée
     setTimeout(() => {
         notification.classList.add('show');
     }, 10);
     
-    // Supprimer après 3 secondes
     setTimeout(() => {
         notification.classList.remove('show');
         setTimeout(() => {
@@ -1022,9 +1275,6 @@ function showNotification(message, type = 'success') {
     }, 3000);
 }
 
-// ==========================================
-// CHARGEMENT INITIAL DES NOTATIONS
-// ==========================================
 function loadSavedRatings() {
     try {
         const saved = localStorage.getItem('serviceRatings');
@@ -1036,12 +1286,8 @@ function loadSavedRatings() {
     }
 }
 
-// Appeler au chargement
 loadSavedRatings();
 
-// ==========================================
-// AJOUTER AU WINDOW POUR ACCÈS GLOBAL
-// ==========================================
 window.CONFIG = CONFIG;
 window.toggleUpdates = toggleUpdates;
 window.ratePromise = ratePromise;

@@ -343,9 +343,9 @@ function renderAll() {
 // ==========================================
 function updateStats() {
     const total = CONFIG.promises.length;
-    const realise = CONFIG.promises.filter(p => p.status === 'Réalisé').length;
-    const encours = CONFIG.promises.filter(p => p.status === 'En cours').length;
-    const nonLance = CONFIG.promises.filter(p => p.status === 'Non lancé').length;
+    const realise = CONFIG.promises.filter(p => p.status === 'realise').length;
+    const encours = CONFIG.promises.filter(p => p.status === 'encours').length;
+    const nonLance = CONFIG.promises.filter(p => p.status === 'non-lance').length;
     const retard = CONFIG.promises.filter(p => p.isLate).length;
     const withUpdates = CONFIG.promises.filter(p => p.mises_a_jour && p.mises_a_jour.length > 0).length;
     

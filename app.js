@@ -42,9 +42,9 @@ const CONFIG = {
         },
         { 
             id: '3', 
-            title: 'WalFadjri', 
+            title: 'Liberation', 
             date: '28/01/2026', 
-            image: '🇼🇫',
+            image: 'lieration.jpg',
             logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/0/0b/Walfadjri_logo.svg/800px-Walfadjri_logo.svg.png'
         },
         { 

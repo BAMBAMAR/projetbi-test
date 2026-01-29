@@ -44,8 +44,8 @@ const CONFIG = {
             id: '3', 
             title: 'Liberation', 
             date: '28/01/2026', 
-            image: 'lieration.jpg',
-            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/0/0b/Walfadjri_logo.svg/800px-Walfadjri_logo.svg.png'
+            image: 'liberation.jpg',
+            logo:'liberation.jpg'
         },
         { 
             id: '4', 

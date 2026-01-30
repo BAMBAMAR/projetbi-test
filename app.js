@@ -1612,11 +1612,11 @@ async function fetchAndDisplayPublicVotes() {
     
     try {
         const { data, error } = await supabaseClient
-            .from('public_votes')
+            .from('votes')
             .select('promise_id, rating');
         
         if (error) {
-            console.warn('⚠️ Table public_votes non trouvée - pas de votes disponibles');
+            console.warn('⚠️ Table votes non trouvée - pas de votes disponibles');
             return;
         }
         
@@ -1676,7 +1676,7 @@ async function saveVoteToSupabase(promiseId, rating) {
     
     try {
         const { error } = await supabaseClient
-            .from('public_votes')
+            .from('votes')
             .insert([{ promise_id: promiseId, rating }]);
         if (error) throw error;
         

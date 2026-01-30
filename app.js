@@ -1,10 +1,11 @@
 
-// ==========================================
-// APP.JS - VERSION CORRIGÉE & FONCTIONNELLE
+// APP.JS - VERSION OPTIMISÉE ET CORRIGÉE
 // ==========================================
 // Configuration Supabase
 const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_joJuW7-vMiQG302_2Mvj5A_sVaD8Wap';let supabaseClient = null;
+const SUPABASE_KEY = 'sb_publishable_joJuW7-vMiQG302_2Mvj5A_sVaD8Wap';
+let supabaseClient = null;
+
 // Initialisation Supabase
 try {
     if (typeof supabase !== 'undefined' && supabase.createClient) {
@@ -41,14 +42,14 @@ const CONFIG = {
         },
         {
             id: '3',
-            title: 'Liberation',
+            title: 'Libération',
             date: '28/01/2026',
             image: 'https://picsum.photos/seed/liberation/300/400',
             logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/8/8d/Lib%C3%A9ration_Logo.svg/200px-Lib%C3%A9ration_Logo.svg.png'
         },
         {
             id: '4',
-            title: 'LObservateur',
+            title: 'L\'Observateur',
             date: '28/01/2026',
             image: 'https://picsum.photos/seed/observateur/300/400',
             logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/L%27Observateur_logo.svg/200px-L%27Observateur_logo.svg.png'
@@ -93,19 +94,71 @@ const KPI_ITEMS = [
     { label: '📋 Avec MAJ', value: '0', icon: '📋' }
 ];
 
+// Personnes pour "Promesse du Jour"
+const DAILY_PEOPLE = [
+    {
+        name: "M. Aliou SALL",
+        role: "Ministre de l'Économie",
+        avatar: "AS",
+        article: "Spécialiste des politiques économiques, M. Aliou SALL porte 15 engagements majeurs pour la relance économique. Son plan d'action comprend la réforme du système fiscal, la promotion des investissements privés et le développement des infrastructures numériques.",
+        promises: 15,
+        realised: 8,
+        ongoing: 5,
+        delay: 2
+    },
+    {
+        name: "Mme Aminata DIALLO",
+        role: "Ministre de la Santé",
+        avatar: "AD",
+        article: "Pionnière de la réforme du système de santé, Mme Diallo supervise 12 engagements visant à améliorer l'accès aux soins de qualité. Ses priorités incluent la construction de nouveaux centres de santé, la formation du personnel médical et la numérisation des dossiers patients.",
+        promises: 12,
+        realised: 6,
+        ongoing: 4,
+        delay: 2
+    },
+    {
+        name: "Dr Ibrahima CISSE",
+        role: "Ministre de l'Éducation",
+        avatar: "IC",
+        article: "Expert en éducation, Dr Cisse est responsable de 18 engagements pour la modernisation du système éducatif. Ses projets phares incluent la construction d'écoles numériques, la formation des enseignants et la révision des programmes scolaires.",
+        promises: 18,
+        realised: 10,
+        ongoing: 6,
+        delay: 2
+    },
+    {
+        name: "M. Ousmane NDIAYE",
+        role: "Ministre des Infrastructures",
+        avatar: "ON",
+        article: "Ingénieur de formation, M. Ndiaye gère 22 engagements pour le développement des infrastructures nationales. Son portefeuille comprend des projets routiers, la construction de ponts et le développement des réseaux d'eau et d'électricité.",
+        promises: 22,
+        realised: 12,
+        ongoing: 8,
+        delay: 2
+    },
+    {
+        name: "Mme Fatou KANE",
+        role: "Ministre de l'Environnement",
+        avatar: "FK",
+        article: "Militante écologiste, Mme Kane défend 14 engagements pour la protection de l'environnement. Ses initiatives incluent la lutte contre la déforestation, la promotion des énergies renouvelables et la gestion des déchets.",
+        promises: 14,
+        realised: 7,
+        ongoing: 5,
+        delay: 2
+    }
+];
+
 // ==========================================
 // FONCTION DE CONVERSION DES DÉLAIS TEXTE EN JOURS
 // ==========================================
 function parseDelayToDays(delayText) {
     if (!delayText || delayText.trim() === '') return 0;
     
-    // Cas particuliers
     const lower = delayText.toLowerCase();
-    if (lower.includes('immédiat') || lower.includes('immediat') || lower.includes('dès') || lower.includes('des')) {
+    if (lower.includes('immédiat') || lower.includes('immediat') || lower.includes('dès')) {
         return 0;
     }
     
-    // Extraire les nombres et unités
     let totalDays = 0;
     
     // Années
@@ -126,14 +179,12 @@ function parseDelayToDays(delayText) {
         totalDays += parseInt(daysMatch[1], 10);
     }
     
-    // Si aucun match, essayer de parser directement un nombre
     if (totalDays === 0) {
         const num = parseInt(delayText, 10);
         if (!isNaN(num)) {
             totalDays = num;
         } else {
-            // Valeur par défaut pour les délais non reconnus
-            totalDays = 365; // 1 an par défaut
+            totalDays = 365;
         }
     }
     
@@ -144,7 +195,7 @@ function parseDelayToDays(delayText) {
 // INITIALISATION
 // ==========================================
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('🚀 Initialisation de l\'application...');
+    console.log('🚀 Initialisation...');
     
     // Initialiser les composants UI
     initNavigation();
@@ -156,7 +207,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Charger les données
     await loadData();
 
-    // Configurer les composants restants
+    // Configurer les composants
     setupPressCarousel();
     setupServiceRatings();
     setupDailyPromise();
@@ -164,7 +215,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupKpiCarousel();
     setupPhotoViewerControls();
 
-    console.log('✅ Initialisation terminée avec succès');
+    console.log('✅ Initialisation terminée');
 });
 
 // ==========================================
@@ -185,8 +236,8 @@ function initNavigation() {
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            const sectionId = link.getAttribute('data-section');
-            const target = document.getElementById(sectionId);
+            const section = link.getAttribute('data-section');
+            const target = document.getElementById(section);
 
             if (target) {
                 const offset = CONFIG.scrollOffset;
@@ -238,19 +289,16 @@ function initScrollEffects() {
     const progressIndicator = document.getElementById('progressIndicator');
 
     window.addEventListener('scroll', () => {
-        // Navbar scroll effect
         if (navbar && window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else if (navbar) {
             navbar.classList.remove('scrolled');
         }
 
-        // Scroll to top button
         if (scrollToTop) {
             scrollToTop.classList.toggle('visible', window.scrollY > 400);
         }
 
-        // Progress indicator
         if (progressIndicator) {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -259,7 +307,6 @@ function initScrollEffects() {
         }
     });
 
-    // Scroll to top functionality
     if (scrollToTop) {
         scrollToTop.addEventListener('click', () => {
             window.scrollTo({
@@ -287,7 +334,6 @@ function initDateDisplay() {
 // ==========================================
 async function loadData() {
     try {
-        // Charger les promesses depuis un fichier JSON local
         const response = await fetch('promises.json');
         
         if (!response.ok) {
@@ -297,25 +343,16 @@ async function loadData() {
             const data = await response.json();
             CONFIG.START_DATE = new Date(data.start_date || '2024-04-02');
             
-            // Transformer les données pour correspondre au format attendu
             CONFIG.promises = (data.promises || []).map(p => {
-                // Normaliser le statut
                 let status = p.status || p.statut || 'Non lancé';
                 if (status.includes('réalisé') || status.includes('realise')) status = 'Réalisé';
                 else if (status.includes('retard')) status = 'En retard';
                 else if (status.includes('cours') || status.includes('encours')) status = 'En cours';
                 else if (status.includes('lancé') || status.includes('lance')) status = 'Non lancé';
                 
-                // Extraire le domaine/catégorie
                 const domain = p.domaine || p.categorie || p.domain || 'Autre';
-                
-                // Calculer le délai en jours
                 const delayDays = parseDelayToDays(p.delai || p.delai_texte || '365');
-                
-                // Créer la deadline
                 const deadline = calculateDeadlineFromDays(delayDays);
-                
-                // Déterminer si en retard
                 const isLate = checkIfLate(status, deadline);
                 
                 return {
@@ -323,8 +360,8 @@ async function loadData() {
                     engagement: p.engagement || p.titre || p.description || 'Engagement non spécifié',
                     domain: domain,
                     status: status,
-                    delai: delayDays.toString(), // Stocker en jours pour les calculs
-                    delai_texte: p.delai || p.delai_texte || `${delayDays} jours`, // Version textuelle pour l'affichage
+                    delai: delayDays.toString(),
+                    delai_texte: p.delai || p.delai_texte || `${delayDays} jours`,
                     resultat: p.resultat || p.objectif || p['résultats attendus'] || 'Résultats non spécifiés',
                     progress: p.progress || p.avancement || 0,
                     updates: p.updates || p.mises_a_jour || [],
@@ -336,14 +373,12 @@ async function loadData() {
             });
         }
         
-        // Trier : retards en premier, puis par date limite
         CONFIG.promises.sort((a, b) => {
             if (a.isLate && !b.isLate) return -1;
             if (!a.isLate && b.isLate) return 1;
             return a.deadline - b.deadline;
         });
         
-        // Charger les votes après un délai
         if (supabaseClient) {
             setTimeout(() => {
                 fetchAndDisplayPublicVotes().catch(error => {
@@ -384,7 +419,7 @@ async function loadData() {
         renderNewspapers();
         
     } catch (error) {
-        console.error('❌ Erreur chargement des données:', error);
+        console.error('❌ Erreur chargement:', error);
         showNotification('Erreur de chargement des données', 'error');
         CONFIG.promises = generateTestPromises();
         renderAll();
@@ -426,58 +461,6 @@ function generateTestPromises() {
             resultat: 'Soins pour tous',
             progress: 0,
             updates: []
-        },
-        {
-            id: '4',
-            engagement: 'Recrutement massif enseignants',
-            domain: 'Éducation',
-            status: 'En cours',
-            delai: '365',
-            delai_texte: '1 an',
-            resultat: 'Résorption déficit',
-            progress: 45,
-            updates: [
-                { date: '2025-06-15', description: '5 000 enseignants recrutés dans les zones rurales' }
-            ]
-        },
-        {
-            id: '5',
-            engagement: 'Budget agricole à 10%',
-            domain: 'Agriculture',
-            status: 'En cours',
-            delai: '365',
-            delai_texte: '1 an',
-            resultat: 'Accords Maputo',
-            progress: 60,
-            updates: [
-                { date: '2025-03-20', description: 'Budget 2025 fixé à 9.8%, progression vers 10%' }
-            ]
-        },
-        {
-            id: '6',
-            engagement: 'Accès universel électricité',
-            domain: 'Énergie',
-            status: 'En cours',
-            delai: '1825',
-            delai_texte: '5 ans',
-            resultat: '100% couverture',
-            progress: 30,
-            updates: [
-                { date: '2025-01-10', description: '85% du territoire déjà électrifié' }
-            ]
-        },
-        {
-            id: '7',
-            engagement: 'Audit accords de pêche étrangers',
-            domain: 'Pêche',
-            status: 'Réalisé',
-            delai: '180',
-            delai_texte: '6 mois',
-            resultat: 'Souveraineté halieutique',
-            progress: 100,
-            updates: [
-                { date: '2024-09-30', description: 'Audit terminé, nouveaux accords signés' }
-            ]
         }
     ].map(p => {
         const deadline = calculateDeadlineFromDays(parseInt(p.delai));
@@ -492,7 +475,7 @@ function generateTestPromises() {
 }
 
 // ==========================================
-// CALCULS CORRIGÉS
+// CALCULS
 // ==========================================
 function calculateDeadlineFromDays(days) {
     const deadline = new Date(CONFIG.START_DATE);
@@ -501,92 +484,54 @@ function calculateDeadlineFromDays(days) {
 }
 
 function checkIfLate(status, deadline) {
-    if (status === 'Réalisé' || status === '✅ Réalisé') return false;
+    if (status === 'Réalisé') return false;
     return CONFIG.CURRENT_DATE > deadline;
 }
 
 function getDaysRemaining(deadline) {
     const diff = deadline - CONFIG.CURRENT_DATE;
-    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-    return days;
+    return Math.ceil(diff / (1000 * 60 * 60 * 24));
 }
 
 // ==========================================
-// PROMESSE DU JOUR CORRIGÉE
+// PROMESSE DU JOUR
 // ==========================================
 function setupDailyPromise() {
-    const promisesWithDetails = CONFIG.promises.filter(p => 
-        p.engagement && p.resultat && p.delai
-    );
-    
-    if (promisesWithDetails.length === 0) return;
-    
-    const today = new Date().getDate();
-    const promiseIndex = today % promisesWithDetails.length;
-    const promise = promisesWithDetails[promiseIndex];
-    
+    const today = new Date().getDay();
+    const personIndex = today % DAILY_PEOPLE.length;
+    const person = DAILY_PEOPLE[personIndex];
     const dailyPromiseCard = document.getElementById('dailyPromise');
     if (!dailyPromiseCard) return;
 
-    const daysRemaining = getDaysRemaining(promise.deadline);
-    const statusClass = promise.isLate ? 'status-late' : 
-                       promise.status === 'Réalisé' ? 'status-realise' :
-                       promise.status === 'En cours' ? 'status-encours' : 'status-non-lance';
-    
-    const statusIcon = promise.isLate ? '⚠️' :
-                      promise.status === 'Réalisé' ? '✅' :
-                      promise.status === 'En cours' ? '🔄' : '⏳';
-
     dailyPromiseCard.innerHTML = `
-        <div class="daily-header">
-            <h3 class="daily-title">Promesse du Jour</h3>
-            <div class="daily-date-badge">
-                <i class="fas fa-calendar"></i>
-                ${new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })}
+        <div class="daily-person">
+            <div class="daily-avatar">
+                <span>${person.avatar}</span>
+            </div>
+            <div class="daily-info">
+                <h3 class="daily-name">${person.name}</h3>
+                <p class="daily-role">${person.role}</p>
             </div>
         </div>
-        
-        <div class="daily-content">
-            <div class="daily-promise-section">
-                <h4><i class="fas fa-bullseye"></i> L'Engagement</h4>
-                <p class="daily-promise-text">${promise.engagement}</p>
+        <div class="daily-article">
+            <p>${person.article}</p>
+        </div>
+        <div class="daily-stats">
+            <div class="daily-stat">
+                <div class="stat-value">${person.promises}</div>
+                <div class="stat-label">Engagements</div>
             </div>
-            
-            <div class="daily-domain-badge ${statusClass}">
-                <span>${statusIcon} ${promise.isLate ? 'En retard' : promise.status}</span>
-                <span class="domain-tag">${promise.domain || 'Non spécifié'}</span>
+            <div class="daily-stat success">
+                <div class="stat-value">${person.realised}</div>
+                <div class="stat-label">✅ Réalisés</div>
             </div>
-            
-            <div class="daily-results-section">
-                <h4><i class="fas fa-trophy"></i> Résultats Attendus</h4>
-                <p class="daily-results-text">${promise.resultat || 'Aucun résultat spécifié'}</p>
+            <div class="daily-stat progress">
+                <div class="stat-value">${person.ongoing}</div>
+                <div class="stat-label">🔄 En cours</div>
             </div>
-            
-            <div class="daily-deadline-section">
-                <h4><i class="fas fa-clock"></i> Délai de Réalisation</h4>
-                <div class="deadline-info">
-                    <span class="deadline-label">Délai initial :</span>
-                    <span class="deadline-value">${promise.delai_texte || promise.delai + ' jours'}</span>
-                </div>
-                <div class="deadline-info">
-                    <span class="deadline-label">Date limite :</span>
-                    <span class="deadline-value">${formatDate(promise.deadline)}</span>
-                </div>
-                <div class="deadline-info">
-                    <span class="deadline-label">Temps restant :</span>
-                    <span class="deadline-value ${daysRemaining < 0 ? 'late' : ''}">
-                        ${daysRemaining > 0 ? `${daysRemaining} jours` : daysRemaining < 0 ? `${Math.abs(daysRemaining)} jours de retard` : 'Aujourd\'hui'}
-                    </span>
-                </div>
-            </div>
-            
-            <div class="daily-actions">
-                <button class="btn-primary" onclick="sharePromise('${promise.id}')">
-                    <i class="fas fa-share-alt"></i> Partager cette promesse
-                </button>
-                <button class="btn-secondary" onclick="ratePromise('${promise.id}')">
-                    <i class="fas fa-star"></i> Noter
-                </button>
+            <div class="daily-stat warning">
+                <div class="stat-value">${person.delay}</div>
+                <div class="stat-label">⚠️ En retard</div>
             </div>
         </div>
     `;
@@ -603,33 +548,30 @@ function renderAll() {
 }
 
 // ==========================================
-// UPDATE STATS CORRIGÉES
+// UPDATE STATS
 // ==========================================
 function updateStats() {
     const total = CONFIG.promises.length;
-    const realise = CONFIG.promises.filter(p => p.status === 'Réalisé' || p.status === '✅ Réalisé').length;
-    const encours = CONFIG.promises.filter(p => p.status === 'En cours' || p.status === '🔄 En cours').length;
-    const nonLance = CONFIG.promises.filter(p => p.status === 'Non lancé' || p.status === '⏳ Non lancé').length;
+    const realise = CONFIG.promises.filter(p => p.status === 'Réalisé').length;
+    const encours = CONFIG.promises.filter(p => p.status === 'En cours').length;
+    const nonLance = CONFIG.promises.filter(p => p.status === 'Non lancé').length;
     const retard = CONFIG.promises.filter(p => p.isLate).length;
     const withUpdates = CONFIG.promises.filter(p => p.updates && p.updates.length > 0).length;
     const tauxRealisation = total > 0 ? Math.round((realise / total) * 100) : 0;
     
-    // Mettre à jour les KPIs
     KPI_ITEMS[0].value = total;
     KPI_ITEMS[1].value = realise;
     KPI_ITEMS[2].value = encours;
     KPI_ITEMS[3].value = retard;
     KPI_ITEMS[4].value = `${tauxRealisation}%`;
     
-    // Calcul du délai moyen (éviter NaN)
-    const nonRealises = CONFIG.promises.filter(p => p.status !== 'Réalisé' && p.status !== '✅ Réalisé');
+    const nonRealises = CONFIG.promises.filter(p => p.status !== 'Réalisé');
     const avgDelay = nonRealises.length > 0
         ? nonRealises.reduce((sum, p) => sum + Math.abs(getDaysRemaining(p.deadline)), 0) / nonRealises.length
         : 0;
     
     KPI_ITEMS[5].value = `${Math.round(avgDelay)}j`;
     
-    // Calcul de la moyenne des notes
     const allRatings = CONFIG.promises.filter(p => p.publicCount > 0);
     const avgRating = allRatings.length > 0
         ? (allRatings.reduce((sum, p) => sum + p.publicAvg, 0) / allRatings.length).toFixed(1)
@@ -639,7 +581,6 @@ function updateStats() {
     KPI_ITEMS[6].value = avgRating;
     KPI_ITEMS[7].value = withUpdates;
     
-    // Mettre à jour le DOM
     updateStatValue('total', total);
     updateStatValue('realise', realise);
     updateStatValue('encours', encours);
@@ -651,7 +592,6 @@ function updateStats() {
     updateStatValue('votes-total', `${totalVotes.toLocaleString('fr-FR')} votes`);
     updateStatValue('delai-moyen', `${Math.round(avgDelay)}j`);
     
-    // Mettre à jour les pourcentages
     updateStatPercentage('total-percentage', total, total);
     updateStatPercentage('realise-percentage', realise, total);
     updateStatPercentage('encours-percentage', encours, total);
@@ -659,7 +599,6 @@ function updateStats() {
     updateStatPercentage('retard-percentage', retard, total);
     updateStatPercentage('avec-maj-percentage', withUpdates, total);
     
-    // Domaine principal
     const domains = CONFIG.promises.reduce((acc, p) => {
         const domain = p.domain || 'Autre';
         acc[domain] = (acc[domain] || 0) + 1;
@@ -752,7 +691,6 @@ function applyFilters() {
             if (filterStatus === 'En retard') {
                 match = match && promise.isLate;
             } else {
-                // Normaliser les statuts pour la comparaison
                 const statusMap = {
                     '✅ Réalisé': 'Réalisé',
                     '🔄 En cours': 'En cours',
@@ -778,12 +716,10 @@ function applyFilters() {
         return match;
     });
 
-    // Réinitialiser la visibilité
     CONFIG.currentVisible = Math.min(CONFIG.visibleCount, filtered.length);
     renderPromises(filtered.slice(0, CONFIG.currentVisible));
     updateResultsCount(filtered.length);
     
-    // Gérer les boutons show more/less
     const showMoreBtn = document.getElementById('showMoreBtn');
     const showLessBtn = document.getElementById('showLessBtn');
     if (filtered.length > CONFIG.visibleCount) {
@@ -829,7 +765,7 @@ function populateDomainFilter() {
 }
 
 // ==========================================
-// RENDER PROMISES CORRIGÉ
+// RENDER PROMISES
 // ==========================================
 function renderPromises(promises) {
     const grid = document.getElementById('promisesGrid');
@@ -896,13 +832,11 @@ function renderPromises(promises) {
                 ` : ''}
                
                 <div class="promise-actions">
-                    <button class="btn-rate" onclick="ratePromise('${promise.id}')">
+                    <button class="btn-icon btn-rate" onclick="ratePromise('${promise.id}')" title="Noter">
                         <i class="fas fa-star"></i>
-                        Noter
                     </button>
-                    <button class="btn-share" onclick="sharePromise('${promise.id}')">
+                    <button class="btn-icon btn-share" onclick="sharePromise('${promise.id}')" title="Partager">
                         <i class="fas fa-share-alt"></i>
-                        Partager
                     </button>
                 </div>
                
@@ -922,24 +856,33 @@ function renderPromises(promises) {
 
 function getStatusClass(promise) {
     if (promise.isLate) return 'status-late';
-    if (promise.status.includes('Réalisé') || promise.status.includes('✅')) return 'status-realise';
-    if (promise.status.includes('cours') || promise.status.includes('🔄')) return 'status-encours';
+    if (promise.status.includes('Réalisé')) return 'status-realise';
+    if (promise.status.includes('cours')) return 'status-encours';
     return 'status-non-lance';
 }
 
 function getStatusIcon(promise) {
     if (promise.isLate) return '⚠️';
-    if (promise.status.includes('Réalisé') || promise.status.includes('✅')) return '✅';
-    if (promise.status.includes('cours') || promise.status.includes('🔄')) return '🔄';
+    if (promise.status.includes('Réalisé')) return '✅';
+    if (promise.status.includes('cours')) return '🔄';
     return '⏳';
 }
 
-function formatDate(date) {
-    if (!date || isNaN(new Date(date).getTime())) {
+function formatDate(dateInput) {
+    let date;
+    if (!dateInput) return 'Date inconnue';
+    
+    if (dateInput instanceof Date) {
+        date = dateInput;
+    } else if (typeof dateInput === 'string' || typeof dateInput === 'number') {
+        date = new Date(dateInput);
+    } else {
         return 'Date inconnue';
     }
     
-    return new Date(date).toLocaleDateString('fr-FR', {
+    if (isNaN(date.getTime())) return 'Date inconnue';
+    
+    return date.toLocaleDateString('fr-FR', {
         day: 'numeric',
         month: 'short',
         year: 'numeric'
@@ -1109,7 +1052,6 @@ function setupPromisesCarousel() {
     const carouselGrid = document.getElementById('promisesCarouselGrid');
     if (!carouselGrid) return;
     
-    // Prendre les 6 premières promesses (triées avec retards en premier)
     const carouselPromises = CONFIG.promises.slice(0, 6);
     
     carouselGrid.innerHTML = carouselPromises.map((promise, index) => {
@@ -1137,7 +1079,6 @@ function setupPromisesCarousel() {
         `;
     }).join('');
     
-    // Configurer l'autoplay
     const autoPlayToggle = document.getElementById('carouselAutoPlayToggle');
     if (autoPlayToggle) {
         autoPlayToggle.addEventListener('click', () => {
@@ -1148,7 +1089,6 @@ function setupPromisesCarousel() {
         });
     }
     
-    // Démarrer l'autoplay
     setInterval(() => {
         if (CONFIG.carouselAutoPlay) {
             CONFIG.carouselIndex = (CONFIG.carouselIndex + 1) % 6;
@@ -1216,7 +1156,6 @@ function setupKpiCarousel() {
         });
     }
     
-    // Démarrer l'autoplay
     startKpiAutoPlay();
 }
 
@@ -1258,7 +1197,6 @@ function setupServiceRatings() {
     
     if (!form || !resultsSection) return;
     
-    // Afficher un message si Supabase n'est pas disponible
     if (!supabaseClient) {
         resultsSection.innerHTML = `
             <div class="rating-placeholder">
@@ -1327,7 +1265,6 @@ function setupServiceRatings() {
                 showNotification('Merci pour votre notation !', 'success');
                 form.reset();
                 
-                // Reset stars
                 starsContainers.forEach(container => {
                     const field = container.getAttribute('data-field');
                     const input = document.getElementById(field);
@@ -1625,7 +1562,6 @@ function setupPhotoViewerControls() {
         });
     }
     
-    // Touch events pour swipe
     let touchStartX = 0;
     let touchEndX = 0;
     
@@ -1676,11 +1612,11 @@ async function fetchAndDisplayPublicVotes() {
     
     try {
         const { data, error } = await supabaseClient
-            .from('votes')
+            .from('public_votes')
             .select('promise_id, rating');
         
         if (error) {
-            console.warn('⚠️ Table votes non trouvée - pas de votes disponibles');
+            console.warn('⚠️ Table public_votes non trouvée - pas de votes disponibles');
             return;
         }
         
@@ -1740,7 +1676,7 @@ async function saveVoteToSupabase(promiseId, rating) {
     
     try {
         const { error } = await supabaseClient
-            .from('votes')
+            .from('public_votes')
             .insert([{ promise_id: promiseId, rating }]);
         if (error) throw error;
         

@@ -48,7 +48,9 @@ const CONFIG = {
     zooming: false,
     dragStartX: 0,
     dragStartY: 0,
-    isDragging: false
+    isDragging: false,
+    currentRatingPromiseId: null,
+    currentRatingValue: 0
 };
 
 // KPIs pour le carousel
@@ -465,7 +467,7 @@ function setupDailyPromise() {
                 <button class="btn-article-primary" onclick="sharePromise('${promise.id}')">
                     <i class="fas fa-share-alt"></i> Partager cette promesse
                 </button>
-                <button class="btn-article-secondary" onclick="ratePromise('${promise.id}')">
+                <button class="btn-article-secondary" onclick="showRatingModal('${promise.id}')">
                     <i class="fas fa-star"></i> Noter
                 </button>
             </div>
@@ -767,7 +769,7 @@ function renderPromises(promises) {
                             <i class="fab fa-whatsapp"></i>
                         </button>
                     </div>
-                    <button class="btn-stars" onclick="ratePromise('${promise.id}')" title="Noter">
+                    <button class="btn-stars" onclick="showRatingModal('${promise.id}')" title="Noter cette promesse">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -850,6 +852,175 @@ function generateStars(rating) {
 }
 
 // ==========================================
+// MODAL DE NOTATION
+// ==========================================
+function showRatingModal(promiseId) {
+    if (!supabaseClient) {
+        showNotification('Fonctionnalité de notation non disponible hors ligne', 'info');
+        return;
+    }
+    
+    const promise = CONFIG.promises.find(p => p.id === promiseId);
+    if (!promise) return;
+    
+    CONFIG.currentRatingPromiseId = promiseId;
+    CONFIG.currentRatingValue = 0;
+    
+    // Créer le modal de notation
+    const modal = document.createElement('div');
+    modal.className = 'rating-modal';
+    modal.id = 'ratingModal';
+    modal.innerHTML = `
+        <div class="rating-modal-content">
+            <div class="rating-modal-header">
+                <h3>
+                    <i class="fas fa-star"></i>
+                    Noter cet engagement
+                </h3>
+                <button class="close-modal" onclick="closeRatingModal()">&times;</button>
+            </div>
+            <div class="rating-modal-body">
+                <p class="promise-preview">"${promise.engagement.substring(0, 100)}${promise.engagement.length > 100 ? '...' : ''}"</p>
+                
+                <div class="stars-rating-container">
+                    <div class="stars-large" id="ratingStars">
+                        <i class="far fa-star" data-value="1"></i>
+                        <i class="far fa-star" data-value="2"></i>
+                        <i class="far fa-star" data-value="3"></i>
+                        <i class="far fa-star" data-value="4"></i>
+                        <i class="far fa-star" data-value="5"></i>
+                    </div>
+                    <div class="rating-label" id="ratingLabel">
+                        Sélectionnez une note (1-5 étoiles)
+                    </div>
+                </div>
+                
+                <div class="rating-feedback">
+                    <label for="ratingComment">
+                        <i class="fas fa-comment"></i>
+                        Commentaire (optionnel)
+                    </label>
+                    <textarea 
+                        id="ratingComment" 
+                        placeholder="Partagez votre avis sur cet engagement..."
+                        rows="3"></textarea>
+                </div>
+            </div>
+            <div class="rating-modal-footer">
+                <button class="btn-cancel" onclick="closeRatingModal()">
+                    Annuler
+                </button>
+                <button class="btn-submit-rating" onclick="submitRating()" disabled>
+                    <i class="fas fa-paper-plane"></i>
+                    Soumettre ma note
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Initialiser les étoiles
+    const stars = modal.querySelectorAll('#ratingStars i');
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const value = parseInt(star.getAttribute('data-value'));
+            CONFIG.currentRatingValue = value;
+            updateStars(stars, value);
+            modal.querySelector('.btn-submit-rating').disabled = false;
+            
+            const labels = [
+                'Mauvais',
+                'Passable',
+                'Bon',
+                'Très bon',
+                'Excellent'
+            ];
+            modal.querySelector('#ratingLabel').textContent = labels[value - 1];
+        });
+        
+        star.addEventListener('mouseenter', () => {
+            const value = parseInt(star.getAttribute('data-value'));
+            updateStars(stars, value, true);
+        });
+    });
+    
+    modal.querySelector('#ratingStars').addEventListener('mouseleave', () => {
+        updateStars(stars, CONFIG.currentRatingValue);
+    });
+    
+    modal.style.display = 'flex';
+}
+
+function closeRatingModal() {
+    const modal = document.getElementById('ratingModal');
+    if (modal) {
+        modal.style.animation = 'fadeOut 0.3s ease forwards';
+        setTimeout(() => {
+            modal.remove();
+        }, 300);
+    }
+}
+
+function updateStars(stars, value, isHover = false) {
+    stars.forEach((star, index) => {
+        if (index < value) {
+            star.classList.remove('far');
+            star.classList.add('fas', 'active');
+        } else {
+            star.classList.remove('fas', 'active');
+            star.classList.add('far');
+        }
+        
+        if (isHover) {
+            star.style.transform = 'scale(1.1)';
+        } else {
+            star.style.transform = 'scale(1)';
+        }
+    });
+}
+
+function submitRating() {
+    if (!CONFIG.currentRatingPromiseId || CONFIG.currentRatingValue === 0) {
+        showNotification('Veuillez sélectionner une note', 'error');
+        return;
+    }
+    
+    const comment = document.getElementById('ratingComment')?.value.trim() || '';
+    
+    saveVoteToSupabase(CONFIG.currentRatingPromiseId, CONFIG.currentRatingValue, comment);
+    closeRatingModal();
+}
+
+async function saveVoteToSupabase(promiseId, rating, comment = '') {
+    if (!supabaseClient) return;
+    
+    try {
+        const voteData = { 
+            promise_id: promiseId, 
+            rating: rating,
+            comment: comment,
+            created_at: new Date().toISOString()
+        };
+        
+        const { error } = await supabaseClient
+            .from('votes')
+            .insert([voteData]);
+        
+        if (error) throw error;
+        
+        showNotification('Merci pour votre vote !', 'success');
+        
+        // Recharger les votes après un délai
+        setTimeout(() => fetchAndDisplayPublicVotes(), 500);
+        
+    } catch (error) {
+        console.error('❌ Erreur sauvegarde vote:', error);
+        showNotification('Erreur lors de l\'enregistrement du vote', 'error');
+    }
+}
+
+// ==========================================
 // RENDER NEWS
 // ==========================================
 function renderNews(news) {
@@ -905,11 +1076,13 @@ function setupPressCarousel() {
 
     prevBtn.addEventListener('click', () => {
         CONFIG.currentIndex = (CONFIG.currentIndex - 1 + CONFIG.press.length) % CONFIG.press.length;
+        CONFIG.zoomScale = 1; // Reset zoom when changing slide
         renderPressCarousel();
     });
 
     nextBtn.addEventListener('click', () => {
         CONFIG.currentIndex = (CONFIG.currentIndex + 1) % CONFIG.press.length;
+        CONFIG.zoomScale = 1; // Reset zoom when changing slide
         renderPressCarousel();
     });
 
@@ -938,6 +1111,7 @@ function startCarouselAutoPlay() {
     CONFIG.carouselInterval = setInterval(() => {
         if (CONFIG.carouselAutoPlay) {
             CONFIG.currentIndex = (CONFIG.currentIndex + 1) % CONFIG.press.length;
+            CONFIG.zoomScale = 1; // Reset zoom when changing slide
             renderPressCarousel();
         }
     }, 10000);
@@ -959,10 +1133,12 @@ function renderPressCarousel() {
 
     carousel.innerHTML = `
         <div class="carousel-item active">
-            <img src="${currentPaper.image}" alt="${currentPaper.title}" 
-                 onerror="this.onerror=null; this.src='https://picsum.photos/800/400?random=${CONFIG.currentIndex}'"
-                 id="pressImage"
-                 style="transform: scale(${CONFIG.zoomScale})">
+            <div class="carousel-image-container">
+                <img src="${currentPaper.image}" alt="${currentPaper.title}" 
+                     onerror="this.onerror=null; this.src='https://picsum.photos/800/400?random=${CONFIG.currentIndex}'"
+                     id="pressImage"
+                     style="transform: scale(${CONFIG.zoomScale})">
+            </div>
             <div class="carousel-overlay">
                 <div class="carousel-info">
                     <div class="carousel-title">${currentPaper.title}</div>
@@ -995,35 +1171,45 @@ function renderPressCarousel() {
     
     // Setup drag and drop
     const pressImage = document.getElementById('pressImage');
-    if (pressImage) {
+    const imageContainer = carousel.querySelector('.carousel-image-container');
+    
+    if (pressImage && imageContainer) {
         let isDragging = false;
-        let startX, startY, scrollLeft, scrollTop;
+        let startX, startY, translateX = 0, translateY = 0;
         
-        pressImage.addEventListener('mousedown', (e) => {
+        imageContainer.addEventListener('mousedown', (e) => {
             if (CONFIG.zoomScale > 1) {
                 isDragging = true;
-                startX = e.pageX - pressImage.offsetLeft;
-                startY = e.pageY - pressImage.offsetTop;
-                scrollLeft = pressImage.scrollLeft;
-                scrollTop = pressImage.scrollTop;
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
                 pressImage.style.cursor = 'grabbing';
             }
         });
         
         document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
+            if (!isDragging || CONFIG.zoomScale <= 1) return;
             e.preventDefault();
-            const x = e.pageX - pressImage.offsetLeft;
-            const y = e.pageY - pressImage.offsetTop;
-            const walkX = (x - startX) * 2;
-            const walkY = (y - startY) * 2;
-            pressImage.scrollLeft = scrollLeft - walkX;
-            pressImage.scrollTop = scrollTop - walkY;
+            
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            
+            // Limiter le déplacement pour éviter de sortir de l'image
+            const maxX = (pressImage.clientWidth * CONFIG.zoomScale - imageContainer.clientWidth) / 2;
+            const maxY = (pressImage.clientHeight * CONFIG.zoomScale - imageContainer.clientHeight) / 2;
+            
+            translateX = Math.max(-maxX, Math.min(maxX, translateX));
+            translateY = Math.max(-maxY, Math.min(maxY, translateY));
+            
+            pressImage.style.transform = `scale(${CONFIG.zoomScale}) translate(${translateX}px, ${translateY}px)`;
         });
         
         document.addEventListener('mouseup', () => {
             isDragging = false;
-            pressImage.style.cursor = CONFIG.zoomScale > 1 ? 'grab' : 'default';
+            if (CONFIG.zoomScale > 1) {
+                pressImage.style.cursor = 'grab';
+            } else {
+                pressImage.style.cursor = 'default';
+            }
         });
         
         pressImage.addEventListener('mouseenter', () => {
@@ -1033,8 +1219,17 @@ function renderPressCarousel() {
         });
         
         pressImage.addEventListener('mouseleave', () => {
-            pressImage.style.cursor = 'default';
+            if (!isDragging) {
+                pressImage.style.cursor = 'default';
+            }
         });
+        
+        // Reset position when zoom changes
+        if (CONFIG.zoomScale === 1) {
+            translateX = 0;
+            translateY = 0;
+            pressImage.style.transform = 'scale(1)';
+        }
     }
 }
 
@@ -1056,6 +1251,11 @@ function togglePressZoom(action) {
     
     pressImage.style.transform = `scale(${CONFIG.zoomScale})`;
     document.querySelector('.carousel-zoom-info').textContent = `${Math.round(CONFIG.zoomScale * 100)}%`;
+    
+    // Reset drag position when zoom changes
+    if (action === 'reset') {
+        pressImage.style.transform = 'scale(1)';
+    }
 }
 
 function goToSlide(index) {
@@ -1366,18 +1566,6 @@ function setupServiceRatings() {
     else displayDemoRatingResults();
 }
 
-function updateStars(stars, value) {
-    stars.forEach((star, index) => {
-        if (index < value) {
-            star.classList.remove('far');
-            star.classList.add('fas', 'active');
-        } else {
-            star.classList.remove('fas', 'active');
-            star.classList.add('far');
-        }
-    });
-}
-
 async function fetchAndDisplayServiceRatings() {
     if (!supabaseClient) return;
     
@@ -1569,10 +1757,10 @@ function setupPhotoViewerControls() {
     let scale = 1;
     let rotate = 0;
     let isDragging = false;
-    let startX, startY, scrollLeft, scrollTop;
+    let startX, startY, translateX = 0, translateY = 0;
     
     function updatePhotoTransform() {
-        photoImage.style.transform = `scale(${scale}) rotate(${rotate}deg)`;
+        photoImage.style.transform = `scale(${scale}) rotate(${rotate}deg) translate(${translateX}px, ${translateY}px)`;
         if (scale > 1) {
             photoImage.style.cursor = 'grab';
         } else {
@@ -1584,23 +1772,27 @@ function setupPhotoViewerControls() {
     photoImage.addEventListener('mousedown', (e) => {
         if (scale > 1) {
             isDragging = true;
-            startX = e.pageX - photoContainer.offsetLeft;
-            startY = e.pageY - photoContainer.offsetTop;
-            scrollLeft = photoContainer.scrollLeft;
-            scrollTop = photoContainer.scrollTop;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
             photoImage.style.cursor = 'grabbing';
         }
     });
     
     document.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
+        if (!isDragging || scale <= 1) return;
         e.preventDefault();
-        const x = e.pageX - photoContainer.offsetLeft;
-        const y = e.pageY - photoContainer.offsetTop;
-        const walkX = (x - startX) * 2;
-        const walkY = (y - startY) * 2;
-        photoContainer.scrollLeft = scrollLeft - walkX;
-        photoContainer.scrollTop = scrollTop - walkY;
+        
+        translateX = e.clientX - startX;
+        translateY = e.clientY - startY;
+        
+        // Limiter le déplacement
+        const maxX = (photoImage.clientWidth * scale - photoContainer.clientWidth) / 2;
+        const maxY = (photoImage.clientHeight * scale - photoContainer.clientHeight) / 2;
+        
+        translateX = Math.max(-maxX, Math.min(maxX, translateX));
+        translateY = Math.max(-maxY, Math.min(maxY, translateY));
+        
+        updatePhotoTransform();
     });
     
     document.addEventListener('mouseup', () => {
@@ -1615,9 +1807,9 @@ function setupPhotoViewerControls() {
             modal.style.display = 'none';
             scale = 1;
             rotate = 0;
+            translateX = 0;
+            translateY = 0;
             updatePhotoTransform();
-            photoContainer.scrollLeft = 0;
-            photoContainer.scrollTop = 0;
         });
     }
     
@@ -1626,9 +1818,9 @@ function setupPhotoViewerControls() {
             modal.style.display = 'none';
             scale = 1;
             rotate = 0;
+            translateX = 0;
+            translateY = 0;
             updatePhotoTransform();
-            photoContainer.scrollLeft = 0;
-            photoContainer.scrollTop = 0;
         }
     });
     
@@ -1664,9 +1856,9 @@ function setupPhotoViewerControls() {
         zoomResetBtn.addEventListener('click', () => {
             scale = 1;
             rotate = 0;
+            translateX = 0;
+            translateY = 0;
             updatePhotoTransform();
-            photoContainer.scrollLeft = 0;
-            photoContainer.scrollTop = 0;
         });
     }
     
@@ -1769,39 +1961,8 @@ function toggleUpdates(promiseId) {
     }
 }
 
-function ratePromise(promiseId) {
-    if (!supabaseClient) {
-        showNotification('Fonctionnalité de notation non disponible hors ligne', 'info');
-        return;
-    }
-    
-    const promise = CONFIG.promises.find(p => p.id === promiseId);
-    if (!promise) return;
-    
-    const rating = prompt(`Noter l'engagement "${promise.engagement.substring(0, 50)}..." sur 5:`);
-    
-    if (rating && !isNaN(rating) && rating >= 1 && rating <= 5) {
-        saveVoteToSupabase(promiseId, parseInt(rating));
-        showNotification('Merci pour votre vote !', 'success');
-    }
-}
-
-async function saveVoteToSupabase(promiseId, rating) {
-    if (!supabaseClient) return;
-    
-    try {
-        const { error } = await supabaseClient
-            .from('votes')
-            .insert([{ promise_id: promiseId, rating }]);
-        if (error) throw error;
-        
-        setTimeout(() => fetchAndDisplayPublicVotes(), 500);
-        
-    } catch (error) {
-        console.error('❌ Erreur sauvegarde vote:', error);
-        showNotification('Erreur lors de l\'enregistrement du vote', 'error');
-    }
-}
+// Fonction ratePromise remplacée par showRatingModal
+// function ratePromise(promiseId) { ... }
 
 function sharePromise(promiseId) {
     const promise = CONFIG.promises.find(p => p.id === promiseId);
@@ -1874,7 +2035,9 @@ function showNotification(message, type = 'success') {
 // EXPORTS GLOBAUX
 // ==========================================
 window.toggleUpdates = toggleUpdates;
-window.ratePromise = ratePromise;
+window.showRatingModal = showRatingModal;
+window.closeRatingModal = closeRatingModal;
+window.submitRating = submitRating;
 window.sharePromise = sharePromise;
 window.resetFilters = resetFilters;
 window.goToSlide = goToSlide;

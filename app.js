@@ -1,4 +1,4 @@
-
+// ==========================================
 // APP.JS - VERSION OPTIMISÉE ET CORRIGÉE
 // ==========================================
 // Configuration Supabase
@@ -26,48 +26,12 @@ const CONFIG = {
     promises: [],
     news: [],
     press: [
-        {
-            id: '1',
-            title: 'Le Soleil',
-            date: '28/01/2026',
-            image: 'https://picsum.photos/seed/soleil/300/400',
-            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6d/Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg/200px-Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg.png'
-        },
-        {
-            id: '2',
-            title: 'Sud Quotidien',
-            date: '28/01/2026',
-            image: 'https://picsum.photos/seed/sud/300/400',
-            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/5/5b/Sud_Quotidien_logo.svg/200px-Sud_Quotidien_logo.svg.png'
-        },
-        {
-            id: '3',
-            title: 'Libération',
-            date: '28/01/2026',
-            image: 'https://picsum.photos/seed/liberation/300/400',
-            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/8/8d/Lib%C3%A9ration_Logo.svg/200px-Lib%C3%A9ration_Logo.svg.png'
-        },
-        {
-            id: '4',
-            title: 'L\'Observateur',
-            date: '28/01/2026',
-            image: 'https://picsum.photos/seed/observateur/300/400',
-            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/L%27Observateur_logo.svg/200px-L%27Observateur_logo.svg.png'
-        },
-        {
-            id: '5',
-            title: 'Le Quotidien',
-            date: '28/01/2026',
-            image: 'https://picsum.photos/seed/quotidien/300/400',
-            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/3/3c/Le_Quotidien_logo.svg/200px-Le_Quotidien_logo.svg.png'
-        },
-        {
-            id: '6',
-            title: 'WalFadjri',
-            date: '28/01/2026',
-            image: 'https://picsum.photos/seed/walfadjri/300/400',
-            logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7c/Walf_fadjri_logo.svg/200px-Walf_fadjri_logo.svg.png'
-        }
+        { id: '1', title: 'Le Soleil', date: '28/01/2026', image: 'https://picsum.photos/seed/soleil/300/400', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6d/Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg/200px-Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg.png' },
+        { id: '2', title: 'Sud Quotidien', date: '28/01/2026', image: 'https://picsum.photos/seed/sud/300/400', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/5/5b/Sud_Quotidien_logo.svg/200px-Sud_Quotidien_logo.svg.png' },
+        { id: '3', title: 'Libération', date: '28/01/2026', image: 'https://picsum.photos/seed/liberation/300/400', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/8/8d/Lib%C3%A9ration_Logo.svg/200px-Lib%C3%A9ration_Logo.svg.png' },
+        { id: '4', title: 'L\'Observateur', date: '28/01/2026', image: 'https://picsum.photos/seed/observateur/300/400', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/L%27Observateur_logo.svg/200px-L%27Observateur_logo.svg.png' },
+        { id: '5', title: 'Le Quotidien', date: '28/01/2026', image: 'https://picsum.photos/seed/quotidien/300/400', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/3/3c/Le_Quotidien_logo.svg/200px-Le_Quotidien_logo.svg.png' },
+        { id: '6', title: 'WalFadjri', date: '28/01/2026', image: 'https://picsum.photos/seed/walfadjri/300/400', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7c/Walf_fadjri_logo.svg/200px-Walf_fadjri_logo.svg.png' }
     ],
     currentIndex: 0,
     ratings: [],
@@ -96,56 +60,11 @@ const KPI_ITEMS = [
 
 // Personnes pour "Promesse du Jour"
 const DAILY_PEOPLE = [
-    {
-        name: "M. Aliou SALL",
-        role: "Ministre de l'Économie",
-        avatar: "AS",
-        article: "Spécialiste des politiques économiques, M. Aliou SALL porte 15 engagements majeurs pour la relance économique. Son plan d'action comprend la réforme du système fiscal, la promotion des investissements privés et le développement des infrastructures numériques.",
-        promises: 15,
-        realised: 8,
-        ongoing: 5,
-        delay: 2
-    },
-    {
-        name: "Mme Aminata DIALLO",
-        role: "Ministre de la Santé",
-        avatar: "AD",
-        article: "Pionnière de la réforme du système de santé, Mme Diallo supervise 12 engagements visant à améliorer l'accès aux soins de qualité. Ses priorités incluent la construction de nouveaux centres de santé, la formation du personnel médical et la numérisation des dossiers patients.",
-        promises: 12,
-        realised: 6,
-        ongoing: 4,
-        delay: 2
-    },
-    {
-        name: "Dr Ibrahima CISSE",
-        role: "Ministre de l'Éducation",
-        avatar: "IC",
-        article: "Expert en éducation, Dr Cisse est responsable de 18 engagements pour la modernisation du système éducatif. Ses projets phares incluent la construction d'écoles numériques, la formation des enseignants et la révision des programmes scolaires.",
-        promises: 18,
-        realised: 10,
-        ongoing: 6,
-        delay: 2
-    },
-    {
-        name: "M. Ousmane NDIAYE",
-        role: "Ministre des Infrastructures",
-        avatar: "ON",
-        article: "Ingénieur de formation, M. Ndiaye gère 22 engagements pour le développement des infrastructures nationales. Son portefeuille comprend des projets routiers, la construction de ponts et le développement des réseaux d'eau et d'électricité.",
-        promises: 22,
-        realised: 12,
-        ongoing: 8,
-        delay: 2
-    },
-    {
-        name: "Mme Fatou KANE",
-        role: "Ministre de l'Environnement",
-        avatar: "FK",
-        article: "Militante écologiste, Mme Kane défend 14 engagements pour la protection de l'environnement. Ses initiatives incluent la lutte contre la déforestation, la promotion des énergies renouvelables et la gestion des déchets.",
-        promises: 14,
-        realised: 7,
-        ongoing: 5,
-        delay: 2
-    }
+    { name: "M. Aliou SALL", role: "Ministre de l'Économie", avatar: "AS", article: "Spécialiste des politiques économiques, M. Aliou SALL porte 15 engagements majeurs pour la relance économique. Son plan d'action comprend la réforme du système fiscal, la promotion des investissements privés et le développement des infrastructures numériques.", promises: 15, realised: 8, ongoing: 5, delay: 2 },
+    { name: "Mme Aminata DIALLO", role: "Ministre de la Santé", avatar: "AD", article: "Pionnière de la réforme du système de santé, Mme Diallo supervise 12 engagements visant à améliorer l'accès aux soins de qualité. Ses priorités incluent la construction de nouveaux centres de santé, la formation du personnel médical et la numérisation des dossiers patients.", promises: 12, realised: 6, ongoing: 4, delay: 2 },
+    { name: "Dr Ibrahima CISSE", role: "Ministre de l'Éducation", avatar: "IC", article: "Expert en éducation, Dr Cisse est responsable de 18 engagements pour la modernisation du système éducatif. Ses projets phares incluent la construction d'écoles numériques, la formation des enseignants et la révision des programmes scolaires.", promises: 18, realised: 10, ongoing: 6, delay: 2 },
+    { name: "M. Ousmane NDIAYE", role: "Ministre des Infrastructures", avatar: "ON", article: "Ingénieur de formation, M. Ndiaye gère 22 engagements pour le développement des infrastructures nationales. Son portefeuille comprend des projets routiers, la construction de ponts et le développement des réseaux d'eau et d'électricité.", promises: 22, realised: 12, ongoing: 8, delay: 2 },
+    { name: "Mme Fatou KANE", role: "Ministre de l'Environnement", avatar: "FK", article: "Militante écologiste, Mme Kane défend 14 engagements pour la protection de l'environnement. Ses initiatives incluent la lutte contre la déforestation, la promotion des énergies renouvelables et la gestion des déchets.", promises: 14, realised: 7, ongoing: 5, delay: 2 }
 ];
 
 // ==========================================
@@ -163,29 +82,19 @@ function parseDelayToDays(delayText) {
     
     // Années
     const yearsMatch = delayText.match(/(\d+)\s*an[s]?/i);
-    if (yearsMatch) {
-        totalDays += parseInt(yearsMatch[1], 10) * 365;
-    }
+    if (yearsMatch) totalDays += parseInt(yearsMatch[1], 10) * 365;
     
     // Mois
     const monthsMatch = delayText.match(/(\d+)\s*mois/i);
-    if (monthsMatch) {
-        totalDays += parseInt(monthsMatch[1], 10) * 30;
-    }
+    if (monthsMatch) totalDays += parseInt(monthsMatch[1], 10) * 30;
     
     // Jours
     const daysMatch = delayText.match(/(\d+)\s*jour[s]?/i);
-    if (daysMatch) {
-        totalDays += parseInt(daysMatch[1], 10);
-    }
+    if (daysMatch) totalDays += parseInt(daysMatch[1], 10);
     
     if (totalDays === 0) {
         const num = parseInt(delayText, 10);
-        if (!isNaN(num)) {
-            totalDays = num;
-        } else {
-            totalDays = 365;
-        }
+        totalDays = !isNaN(num) ? num : 365;
     }
     
     return totalDays;
@@ -289,15 +198,10 @@ function initScrollEffects() {
     const progressIndicator = document.getElementById('progressIndicator');
 
     window.addEventListener('scroll', () => {
-        if (navbar && window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else if (navbar) {
-            navbar.classList.remove('scrolled');
-        }
+        if (navbar && window.scrollY > 50) navbar.classList.add('scrolled');
+        else if (navbar) navbar.classList.remove('scrolled');
 
-        if (scrollToTop) {
-            scrollToTop.classList.toggle('visible', window.scrollY > 400);
-        }
+        if (scrollToTop) scrollToTop.classList.toggle('visible', window.scrollY > 400);
 
         if (progressIndicator) {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
@@ -309,10 +213,7 @@ function initScrollEffects() {
 
     if (scrollToTop) {
         scrollToTop.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
 }
@@ -388,30 +289,9 @@ async function loadData() {
         }
         
         CONFIG.news = [
-            { 
-                id: '1', 
-                title: 'Lancement officiel de la plateforme', 
-                excerpt: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle.', 
-                date: '25/01/2026', 
-                source: 'Le Soleil', 
-                image: 'school' 
-            },
-            { 
-                id: '2', 
-                title: 'Première école numérique inaugurée', 
-                excerpt: 'Le gouvernement a inauguré la première école entièrement numérique à Dakar.', 
-                date: '20/01/2026', 
-                source: 'Sud Quotidien', 
-                image: 'inauguration' 
-            },
-            { 
-                id: '3', 
-                title: 'Budget 2026 axé sur la relance économique', 
-                excerpt: 'Le budget de l\'État pour 2026 prévoit d\'importants investissements dans les infrastructures.', 
-                date: '15/01/2026', 
-                source: 'WalFadjri', 
-                image: 'budget' 
-            }
+            { id: '1', title: 'Lancement officiel de la plateforme', excerpt: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle.', date: '25/01/2026', source: 'Le Soleil', image: 'school' },
+            { id: '2', title: 'Première école numérique inaugurée', excerpt: 'Le gouvernement a inauguré la première école entièrement numérique à Dakar.', date: '20/01/2026', source: 'Sud Quotidien', image: 'inauguration' },
+            { id: '3', title: 'Budget 2026 axé sur la relance économique', excerpt: 'Le budget de l\'État pour 2026 prévoit d\'importants investissements dans les infrastructures.', date: '15/01/2026', source: 'WalFadjri', image: 'budget' }
         ];
         
         renderAll();
@@ -438,7 +318,10 @@ function generateTestPromises() {
             delai_texte: '2 ans',
             resultat: 'Exécutif resserré et équilibre des pouvoirs',
             progress: 0,
-            updates: []
+            updates: [
+                { date: '2025-06-15', description: 'Analyse constitutionnelle en cours' },
+                { date: '2025-03-10', description: 'Consultations avec les partis politiques' }
+            ]
         },
         {
             id: '2',
@@ -449,7 +332,9 @@ function generateTestPromises() {
             delai_texte: '2 ans',
             resultat: 'Organe au sommet de l\'organisation judiciaire',
             progress: 0,
-            updates: []
+            updates: [
+                { date: '2025-05-20', description: 'Projet de loi en préparation' }
+            ]
         },
         {
             id: '3',
@@ -494,44 +379,103 @@ function getDaysRemaining(deadline) {
 }
 
 // ==========================================
-// PROMESSE DU JOUR
+// PROMESSE DU JOUR - FORMAT JOURNAL
 // ==========================================
 function setupDailyPromise() {
-    const today = new Date().getDay();
-    const personIndex = today % DAILY_PEOPLE.length;
-    const person = DAILY_PEOPLE[personIndex];
+    const promisesWithDetails = CONFIG.promises.filter(p => p.engagement && p.resultat && p.delai);
+    
+    if (promisesWithDetails.length === 0) return;
+    
+    const today = new Date().getDate();
+    const promiseIndex = today % promisesWithDetails.length;
+    const promise = promisesWithDetails[promiseIndex];
+    
     const dailyPromiseCard = document.getElementById('dailyPromise');
     if (!dailyPromiseCard) return;
 
+    const daysRemaining = getDaysRemaining(promise.deadline);
+    const statusClass = promise.isLate ? 'status-late' : 
+                       promise.status === 'Réalisé' ? 'status-realise' :
+                       promise.status === 'En cours' ? 'status-encours' : 'status-non-lance';
+    
+    const statusIcon = promise.isLate ? '⚠️' :
+                      promise.status === 'Réalisé' ? '✅' :
+                      promise.status === 'En cours' ? '🔄' : '⏳';
+
     dailyPromiseCard.innerHTML = `
-        <div class="daily-person">
-            <div class="daily-avatar">
-                <span>${person.avatar}</span>
+        <div class="daily-newspaper-header">
+            <div class="newspaper-badge">
+                <i class="fas fa-newspaper"></i>
+                PROMESSE DU JOUR
             </div>
-            <div class="daily-info">
-                <h3 class="daily-name">${person.name}</h3>
-                <p class="daily-role">${person.role}</p>
+            <div class="newspaper-date">
+                <i class="fas fa-calendar"></i>
+                ${new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
             </div>
         </div>
-        <div class="daily-article">
-            <p>${person.article}</p>
-        </div>
-        <div class="daily-stats">
-            <div class="daily-stat">
-                <div class="stat-value">${person.promises}</div>
-                <div class="stat-label">Engagements</div>
+        
+        <div class="daily-newspaper-article">
+            <h2 class="article-title">${promise.engagement}</h2>
+            
+            <div class="article-meta">
+                <span class="article-domain"><i class="fas fa-building"></i> ${promise.domain || 'Non spécifié'}</span>
+                <span class="article-status ${statusClass}">
+                    ${statusIcon} ${promise.isLate ? 'En retard' : promise.status}
+                </span>
             </div>
-            <div class="daily-stat success">
-                <div class="stat-value">${person.realised}</div>
-                <div class="stat-label">✅ Réalisés</div>
+            
+            <div class="article-content">
+                <p class="article-lead">
+                    <strong><i class="fas fa-quote-left"></i></strong>
+                    ${promise.engagement}
+                    <strong><i class="fas fa-quote-right"></i></strong>
+                </p>
+                
+                <div class="article-section">
+                    <h3><i class="fas fa-bullseye"></i> Résultats attendus</h3>
+                    <p>${promise.resultat || 'Aucun résultat spécifié'}</p>
+                </div>
+                
+                <div class="article-section">
+                    <h3><i class="fas fa-clock"></i> Délai de réalisation des mesures clés</h3>
+                    <div class="deadline-grid">
+                        <div class="deadline-item">
+                            <span class="deadline-label">Délai initial :</span>
+                            <span class="deadline-value">${promise.delai_texte || promise.delai + ' jours'}</span>
+                        </div>
+                        <div class="deadline-item">
+                            <span class="deadline-label">Date limite :</span>
+                            <span class="deadline-value">${formatDate(promise.deadline)}</span>
+                        </div>
+                        <div class="deadline-item">
+                            <span class="deadline-label">Temps restant :</span>
+                            <span class="deadline-value ${daysRemaining < 0 ? 'late' : ''}">
+                                ${daysRemaining > 0 ? `${daysRemaining} jours` : daysRemaining < 0 ? `${Math.abs(daysRemaining)} jours de retard` : 'Aujourd\'hui'}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                ${promise.updates && promise.updates.length > 0 ? `
+                    <div class="article-section updates-section">
+                        <h3><i class="fas fa-history"></i> Dernières mises à jour</h3>
+                        ${promise.updates.slice(0, 3).map(update => `
+                            <div class="update-item-small">
+                                <div class="update-date-small">${formatDateProper(update.date || update.created_at)}</div>
+                                <div class="update-text-small">${update.description || update.texte || 'Mise à jour'}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
             </div>
-            <div class="daily-stat progress">
-                <div class="stat-value">${person.ongoing}</div>
-                <div class="stat-label">🔄 En cours</div>
-            </div>
-            <div class="daily-stat warning">
-                <div class="stat-value">${person.delay}</div>
-                <div class="stat-label">⚠️ En retard</div>
+            
+            <div class="article-footer">
+                <button class="btn-article-primary" onclick="sharePromise('${promise.id}')">
+                    <i class="fas fa-share-alt"></i> Partager cette promesse
+                </button>
+                <button class="btn-article-secondary" onclick="ratePromise('${promise.id}')">
+                    <i class="fas fa-star"></i> Noter
+                </button>
             </div>
         </div>
     `;
@@ -691,11 +635,7 @@ function applyFilters() {
             if (filterStatus === 'En retard') {
                 match = match && promise.isLate;
             } else {
-                const statusMap = {
-                    '✅ Réalisé': 'Réalisé',
-                    '🔄 En cours': 'En cours',
-                    '⏳ Non lancé': 'Non lancé'
-                };
+                const statusMap = { '✅ Réalisé': 'Réalisé', '🔄 En cours': 'En cours', '⏳ Non lancé': 'Non lancé' };
                 const normalizedStatus = statusMap[filterStatus] || filterStatus.replace('✅ ', '').replace('🔄 ', '').replace('⏳ ', '').replace('⚠️ ', '');
                 match = match && promise.status.includes(normalizedStatus);
             }
@@ -765,7 +705,7 @@ function populateDomainFilter() {
 }
 
 // ==========================================
-// RENDER PROMISES
+// RENDER PROMISES - AVEC ICÔNES PARTAGE/NOTATION
 // ==========================================
 function renderPromises(promises) {
     const grid = document.getElementById('promisesGrid');
@@ -823,8 +763,8 @@ function renderPromises(promises) {
                         <div class="updates-list" id="updates-${promise.id}" style="display: none;">
                             ${promise.updates.map(update => `
                                 <div class="update-item">
-                                    <div class="update-date">${formatDate(new Date(update.date || update.created_at || Date.now()))}</div>
-                                    <div class="update-text">${update.description || update.texte || 'Mise à jour'}</div>
+                                    <div class="update-date">${formatDateProper(update.date || update.created_at)}</div>
+                                    <div class="update-text">${update.description || update.texte || 'Mise à jour des engagements'}</div>
                                 </div>
                             `).join('')}
                         </div>
@@ -832,11 +772,23 @@ function renderPromises(promises) {
                 ` : ''}
                
                 <div class="promise-actions">
-                    <button class="btn-icon btn-rate" onclick="ratePromise('${promise.id}')" title="Noter">
+                    <div class="social-share">
+                        <button class="social-btn" onclick="shareToPlatform('${promise.id}', 'facebook')" title="Partager sur Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+                        <button class="social-btn" onclick="shareToPlatform('${promise.id}', 'twitter')" title="Partager sur Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </button>
+                        <button class="social-btn" onclick="shareToPlatform('${promise.id}', 'whatsapp')" title="Partager sur WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </button>
+                    </div>
+                    <button class="btn-stars" onclick="ratePromise('${promise.id}')" title="Noter">
                         <i class="fas fa-star"></i>
-                    </button>
-                    <button class="btn-icon btn-share" onclick="sharePromise('${promise.id}')" title="Partager">
-                        <i class="fas fa-share-alt"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
                     </button>
                 </div>
                
@@ -889,20 +841,27 @@ function formatDate(dateInput) {
     });
 }
 
+function formatDateProper(dateInput) {
+    if (!dateInput) return 'Pas de date';
+    
+    const date = new Date(dateInput);
+    if (isNaN(date.getTime())) return 'Date non disponible';
+    
+    return date.toLocaleDateString('fr-FR', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
+}
+
 function generateStars(rating) {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
     const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
     let stars = '';
-    for (let i = 0; i < fullStars; i++) {
-        stars += '<i class="fas fa-star"></i>';
-    }
-    if (hasHalfStar) {
-        stars += '<i class="fas fa-star-half-alt"></i>';
-    }
-    for (let i = 0; i < emptyStars; i++) {
-        stars += '<i class="far fa-star"></i>';
-    }
+    for (let i = 0; i < fullStars; i++) stars += '<i class="fas fa-star"></i>';
+    if (hasHalfStar) stars += '<i class="fas fa-star-half-alt"></i>';
+    for (let i = 0; i < emptyStars; i++) stars += '<i class="far fa-star"></i>';
     return stars;
 }
 
@@ -950,7 +909,7 @@ function renderNewspapers() {
 }
 
 // ==========================================
-// CAROUSEL PRESSE
+// CAROUSEL PRESSE - VERSION JOURNAL
 // ==========================================
 function setupPressCarousel() {
     const prevBtn = document.getElementById('prevBtn');
@@ -977,17 +936,13 @@ function setupPressCarousel() {
                 '<i class="fas fa-pause"></i> Pause' : 
                 '<i class="fas fa-play"></i> Lecture auto';
             
-            if (CONFIG.carouselAutoPlay) {
-                startCarouselAutoPlay();
-            } else {
-                stopCarouselAutoPlay();
-            }
+            if (CONFIG.carouselAutoPlay) startCarouselAutoPlay();
+            else stopCarouselAutoPlay();
         });
     }
 
     indicators.innerHTML = CONFIG.press.map((_, index) => 
-        `<button class="indicator ${index === CONFIG.currentIndex ? 'active' : ''}" 
-                onclick="goToSlide(${index})"></button>`
+        `<button class="indicator ${index === CONFIG.currentIndex ? 'active' : ''}" onclick="goToSlide(${index})"></button>`
     ).join('');
     
     renderPressCarousel();
@@ -1031,12 +986,54 @@ function renderPressCarousel() {
                     </a>
                 </div>
             </div>
+            
+            <div class="carousel-controls-panel">
+                <button class="carousel-control-btn" id="zoomOutBtn" title="Zoom -">
+                    <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="carousel-control-btn" id="zoomResetBtn" title="Réinitialiser">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <button class="carousel-control-btn" id="zoomInBtn" title="Zoom +">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+                <div class="carousel-zoom-info">100%</div>
+            </div>
         </div>
     `;
 
     const indicatorBtns = indicators.querySelectorAll('.indicator');
     indicatorBtns.forEach((btn, index) => {
         btn.classList.toggle('active', index === CONFIG.currentIndex);
+    });
+    
+    // Rebind zoom controls
+    document.getElementById('zoomInBtn')?.addEventListener('click', () => {
+        const img = carousel.querySelector('img');
+        if (img) {
+            const currentScale = parseFloat(img.style.transform.replace(/[^0-9.]/g, '') || '1');
+            const newScale = Math.min(currentScale + 0.2, 3);
+            img.style.transform = `scale(${newScale})`;
+            document.querySelector('.carousel-zoom-info').textContent = `${Math.round(newScale * 100)}%`;
+        }
+    });
+
+    document.getElementById('zoomOutBtn')?.addEventListener('click', () => {
+        const img = carousel.querySelector('img');
+        if (img) {
+            const currentScale = parseFloat(img.style.transform.replace(/[^0-9.]/g, '') || '1');
+            const newScale = Math.max(currentScale - 0.2, 0.5);
+            img.style.transform = `scale(${newScale})`;
+            document.querySelector('.carousel-zoom-info').textContent = `${Math.round(newScale * 100)}%`;
+        }
+    });
+
+    document.getElementById('zoomResetBtn')?.addEventListener('click', () => {
+        const img = carousel.querySelector('img');
+        if (img) {
+            img.style.transform = 'scale(1)';
+            document.querySelector('.carousel-zoom-info').textContent = '100%';
+        }
     });
 }
 
@@ -1112,9 +1109,7 @@ function goToPromiseSection(promiseId) {
             if (card) {
                 card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 card.style.boxShadow = '0 0 0 3px var(--primary)';
-                setTimeout(() => {
-                    card.style.boxShadow = '';
-                }, 3000);
+                setTimeout(() => { card.style.boxShadow = ''; }, 3000);
             }
         }, 500);
     }
@@ -1256,10 +1251,7 @@ function setupServiceRatings() {
         
         try {
             if (supabaseClient) {
-                const { error } = await supabaseClient
-                    .from('service_ratings')
-                    .insert([formData]);
-                
+                const { error } = await supabaseClient.from('service_ratings').insert([formData]);
                 if (error) throw error;
                 
                 showNotification('Merci pour votre notation !', 'success');
@@ -1283,11 +1275,8 @@ function setupServiceRatings() {
         }
     });
     
-    if (supabaseClient) {
-        fetchAndDisplayServiceRatings();
-    } else {
-        displayDemoRatingResults();
-    }
+    if (supabaseClient) fetchAndDisplayServiceRatings();
+    else displayDemoRatingResults();
 }
 
 function updateStars(stars, value) {
@@ -1306,7 +1295,7 @@ async function fetchAndDisplayServiceRatings() {
     if (!supabaseClient) return;
     
     try {
-        const {  ratings, error } = await supabaseClient
+        const { data, error } = await supabaseClient
             .from('service_ratings')
             .select('*')
             .order('date', { ascending: false })
@@ -1318,11 +1307,8 @@ async function fetchAndDisplayServiceRatings() {
             return;
         }
         
-        if (ratings && ratings.length > 0) {
-            displayRatingResults(ratings);
-        } else {
-            displayEmptyRatingResults();
-        }
+        if (data && data.length > 0) displayRatingResults(data);
+        else displayEmptyRatingResults();
     } catch (error) {
         console.warn('⚠️ Erreur chargement notations:', error.message);
         displayDemoRatingResults();
@@ -1337,34 +1323,34 @@ function displayDemoRatingResults() {
         <div class="rating-results-grid">
             <div class="rating-results-card">
                 <h4><i class="fas fa-chart-bar"></i> Meilleurs Services (Démo)</h4>
-                <div class="top-services">
-                    <div class="service-item gold">
-                        <div class="service-rank">1</div>
-                        <div class="service-info">
-                            <div class="service-name">Santé Publique</div>
-                            <div class="service-stats">
-                                <span class="service-score"><i class="fas fa-star"></i> 4.7/5</span>
-                                <span class="service-count">128 votes</span>
+                <div class="top-services-grid">
+                    <div class="service-item-card gold">
+                        <div class="service-rank-badge gold">1</div>
+                        <div class="service-info-card">
+                            <div class="service-name-card">Santé Publique</div>
+                            <div class="service-stats-card">
+                                <span class="service-score-card"><i class="fas fa-star"></i> 4.7/5</span>
+                                <span class="service-count-card">128 votes</span>
                             </div>
                         </div>
                     </div>
-                    <div class="service-item silver">
-                        <div class="service-rank">2</div>
-                        <div class="service-info">
-                            <div class="service-name">Éducation Nationale</div>
-                            <div class="service-stats">
-                                <span class="service-score"><i class="fas fa-star"></i> 4.3/5</span>
-                                <span class="service-count">95 votes</span>
+                    <div class="service-item-card silver">
+                        <div class="service-rank-badge silver">2</div>
+                        <div class="service-info-card">
+                            <div class="service-name-card">Éducation Nationale</div>
+                            <div class="service-stats-card">
+                                <span class="service-score-card"><i class="fas fa-star"></i> 4.3/5</span>
+                                <span class="service-count-card">95 votes</span>
                             </div>
                         </div>
                     </div>
-                    <div class="service-item bronze">
-                        <div class="service-rank">3</div>
-                        <div class="service-info">
-                            <div class="service-name">Transports</div>
-                            <div class="service-stats">
-                                <span class="service-score"><i class="fas fa-star"></i> 3.9/5</span>
-                                <span class="service-count">87 votes</span>
+                    <div class="service-item-card bronze">
+                        <div class="service-rank-badge bronze">3</div>
+                        <div class="service-info-card">
+                            <div class="service-name-card">Transports</div>
+                            <div class="service-stats-card">
+                                <span class="service-score-card"><i class="fas fa-star"></i> 3.9/5</span>
+                                <span class="service-count-card">87 votes</span>
                             </div>
                         </div>
                     </div>
@@ -1395,42 +1381,41 @@ function displayDemoRatingResults() {
             
             <div class="rating-results-card">
                 <h4><i class="fas fa-poll"></i> Statistiques Globales</h4>
-                <div class="stats-overview">
-                    <div class="stat-item">
-                        <div class="stat-value">310</div>
-                        <div class="stat-label">Votes totaux</div>
+                <div class="stats-overview-grid">
+                    <div class="stat-item-card">
+                        <div class="stat-value-card">310</div>
+                        <div class="stat-label-card">Votes totaux</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-value">8</div>
-                        <div class="stat-label">Services évalués</div>
+                    <div class="stat-item-card">
+                        <div class="stat-value-card">8</div>
+                        <div class="stat-label-card">Services évalués</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-value">185</div>
-                        <div class="stat-label">Avec commentaires</div>
+                    <div class="stat-item-card">
+                        <div class="stat-value-card">185</div>
+                        <div class="stat-label-card">Avec commentaires</div>
                     </div>
                 </div>
                 
                 <h5 style="margin-top: 20px; margin-bottom: 10px;"><i class="fas fa-th-list"></i> Votes par Service</h5>
-                <div class="votes-by-service">
-                    <div class="service-vote-item">
-                        <span class="service-name">Santé Publique</span>
-                        <span class="service-votes">128 votes</span>
+                <div class="votes-by-service-list">
+                    <div class="service-vote-item-card">
+                        <span class="service-name-card">Santé Publique</span>
+                        <span class="service-votes-card">128 votes</span>
                     </div>
-                    <div class="service-vote-item">
-                        <span class="service-name">Éducation Nationale</span>
-                        <span class="service-votes">95 votes</span>
+                    <div class="service-vote-item-card">
+                        <span class="service-name-card">Éducation Nationale</span>
+                        <span class="service-votes-card">95 votes</span>
                     </div>
-                    <div class="service-vote-item">
-                        <span class="service-name">Transports</span>
-                        <span class="service-votes">87 votes</span>
+                    <div class="service-vote-item-card">
+                        <span class="service-name-card">Transports</span>
+                        <span class="service-votes-card">87 votes</span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="rating-disclaimer">
             <i class="fas fa-info-circle"></i>
-            Ces données sont à titre démonstratif. Les fonctionnalités complètes seront activées 
-            lorsque la base de données sera configurée.
+            Ces données sont à titre démonstratif. Les fonctionnalités complètes seront activées lorsque la base de données sera configurée.
         </div>
     `;
 }
@@ -1696,15 +1681,38 @@ function sharePromise(promiseId) {
     const url = window.location.href;
     
     if (navigator.share) {
-        navigator.share({
-            title: 'Engagement du Projet Sénégal',
-            text: text,
-            url: url
-        }).catch(err => console.log('Erreur partage:', err));
+        navigator.share({ title: 'Engagement du Projet Sénégal', text: text, url: url })
+            .catch(err => console.log('Erreur partage:', err));
     } else {
         const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
         window.open(shareUrl, '_blank');
     }
+}
+
+function shareToPlatform(promiseId, platform) {
+    const promise = CONFIG.promises.find(p => p.id === promiseId);
+    if (!promise) return;
+    
+    const text = `📊 "${promise.engagement.substring(0, 100)}..." - Suivi des engagements du Projet Sénégal`;
+    const url = window.location.href;
+    
+    let shareUrl = '';
+    
+    switch(platform) {
+        case 'facebook':
+            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`;
+            break;
+        case 'twitter':
+            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+            break;
+        case 'whatsapp':
+            shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' ' + url)}`;
+            break;
+        default:
+            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    }
+    
+    window.open(shareUrl, '_blank', 'width=600,height=400');
 }
 
 // ==========================================
@@ -1717,11 +1725,7 @@ function showNotification(message, type = 'success') {
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     
-    const icons = {
-        success: 'check-circle',
-        error: 'exclamation-circle',
-        info: 'info-circle'
-    };
+    const icons = { success: 'check-circle', error: 'exclamation-circle', info: 'info-circle' };
     
     notification.innerHTML = `
         <i class="fas fa-${icons[type] || icons.success}"></i>

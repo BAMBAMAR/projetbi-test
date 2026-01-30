@@ -7,8 +7,7 @@ const supabase = window.supabase.create({
     supabaseUrl: SUPABASE_URL,
     supabaseKey: SUPABASE_ANON_KEY
 });
-
-// Variables pour le fonctionnement de l'interface
+// ========== VARIABLES GLOBALES ==========
 let currentIndex = 0;
 let pressCurrentIndex = 0;
 let autoPlayInterval = null;
@@ -21,200 +20,54 @@ let startX = 0;
 let startY = 0;
 let startTranslateX = 0;
 let startTranslateY = 0;
+let promisesData = [];
+let currentSlideIndex = 0;
+let kpiIndex = 0;
+const kpiItems = [
+    { icon: 'fas fa-users', value: '15K+', label: 'Citoyens Engagés' },
+    { icon: 'fas fa-chart-line', value: '42', label: 'Engagements Suivis' },
+    { icon: 'fas fa-comments', value: '1.2K', label: 'Commentaires' },
+    { icon: 'fas fa-star', value: '4.3', label: 'Note Moyenne' }
+];
 
 // ========== ÉVÉNEMENTS AU CHARGEMENT ==========
 document.addEventListener('DOMContentLoaded', function() {
     // Initialiser la date
     updateCurrentDate();
     
-    // Charger les données depuis Supabase
-    loadDataFromSupabase();
+    // Charger les données simulées (remplacer par Supabase en production)
+    loadMockData();
     
     // Initialiser les carrousels
     initFeaturedCarousel();
     initPressCarousel();
+    initKpiCarousel();
     
     // Gérer le scroll
     window.addEventListener('scroll', handleScroll);
     
     // Gérer le drag pour la presse
     initPressDrag();
+    
+    // Initialiser le visualiseur de photos
+    initPhotoViewer();
+    
+    // Charger les résultats de notation
+    loadRatingResults();
 });
 
-// ========== FONCTIONS SUPABASE ==========
+// ========== FONCTIONS PRINCIPALES ==========
 
-async function loadDataFromSupabase() {
-    try {
-        // Charger les engagements
-        const { data: promises, error: promisesError } = await supabase
-            .from('promises')
-            .select('*')
-            .order('created_at', { ascending: false });
-        
-        if (promisesError) throw promisesError;
-        displayPromises(promises);
-        
-        // Charger les actualités
-        const { data: news, error: newsError } = await supabase
-            .from('news')
-            .select('*')
-            .order('date', { ascending: false })
-            .limit(6);
-        
-        if (newsError) throw newsError;
-        displayNews(news);
-        
-        // Charger les quotidiens
-        const { data: newspapers, error: newspapersError } = await supabase
-            .from('newspapers')
-            .select('*')
-            .order('date', { ascending: false })
-            .limit(8);
-        
-        if (newspapersError) throw newspapersError;
-        displayNewspapers(newspapers);
-        
-        // Charger la promesse du jour (aléatoire ou la plus récente)
-        if (promises && promises.length > 0) {
-            const randomIndex = Math.floor(Math.random() * promises.length);
-            loadDailyPromise(promises[randomIndex]);
-        }
-        
-        // Charger les promesses en vedette (top 6)
-        const featuredPromises = promises.slice(0, 6);
-        generateFeaturedCards(featuredPromises);
-        
-        // Mettre à jour les statistiques
-        updateStatsFromData(promises);
-        
-    } catch (error) {
-        console.error('Erreur lors du chargement des données Supabase:', error);
-        showNotification('Erreur lors du chargement des données', 'error');
-        
-        // Charger les données simulées en cas d'erreur
-        loadMockData();
-    }
+function updateCurrentDate() {
+    const now = new Date();
+    const options = { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+        weekday: 'long'
+    };
+    document.getElementById('currentDate').textContent = now.toLocaleDateString('fr-FR', options);
 }
-
-function displayPromises(promises) {
-    const grid = document.getElementById('promisesGrid');
-    grid.innerHTML = '';
-    
-    if (!promises || promises.length === 0) {
-        grid.innerHTML = `
-            <div class="loading-state">
-                <p>Aucun engagement trouvé pour le moment.</p>
-            </div>
-        `;
-        document.getElementById('resultsInfo').textContent = '0 engagement(s) trouvé(s)';
-        return;
-    }
-    
-    promises.forEach(promise => {
-        const card = document.createElement('div');
-        card.className = `promise-card status-${promise.status || 'encours'}`;
-        card.innerHTML = createPromiseCardHTML(promise);
-        grid.appendChild(card);
-    });
-    
-    document.getElementById('resultsInfo').textContent = `${promises.length} engagement(s) trouvé(s)`;
-}
-
-function displayNews(news) {
-    const grid = document.getElementById('newsGrid');
-    grid.innerHTML = '';
-    
-    if (!news || news.length === 0) {
-        grid.innerHTML = `
-            <div class="loading-state">
-                <p>Aucune actualité disponible pour le moment.</p>
-            </div>
-        `;
-        return;
-    }
-    
-    news.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'news-card';
-        card.innerHTML = `
-            <div class="news-image">
-                <i class="fas fa-newspaper fa-4x"></i>
-            </div>
-            <div class="news-content">
-                <h3>${item.title || 'Titre non disponible'}</h3>
-                <p>${item.summary || 'Résumé non disponible'}</p>
-                <div class="news-footer">
-                    <span><i class="fas fa-calendar"></i> ${new Date(item.date).toLocaleDateString('fr-FR')}</span>
-                    <span><i class="fas fa-eye"></i> ${item.views || 0}</span>
-                </div>
-            </div>
-        `;
-        grid.appendChild(card);
-    });
-}
-
-function displayNewspapers(newspapers) {
-    const grid = document.getElementById('newspapersGrid');
-    grid.innerHTML = '';
-    
-    if (!newspapers || newspapers.length === 0) {
-        grid.innerHTML = `
-            <div class="loading-state">
-                <p>Aucun quotidien disponible pour le moment.</p>
-            </div>
-        `;
-        return;
-    }
-    
-    newspapers.forEach(paper => {
-        const card = document.createElement('div');
-        card.className = 'newspaper-card';
-        card.innerHTML = `
-            <div class="newspaper-preview">
-                <img src="${paper.image_url || 'placeholder-press.jpg'}" alt="${paper.name || 'Quotidien'}">
-            </div>
-            <h4>${paper.name || 'Nom non disponible'}</h4>
-            <div class="newspaper-date">
-                <i class="fas fa-calendar"></i> ${new Date(paper.date).toLocaleDateString('fr-FR')}
-            </div>
-        `;
-        grid.appendChild(card);
-    });
-}
-
-function updateStatsFromData(promises) {
-    if (!promises || promises.length === 0) return;
-    
-    // Calculer les statistiques
-    const total = promises.length;
-    const realise = promises.filter(p => p.status === 'realise').length;
-    const encours = promises.filter(p => p.status === 'encours').length;
-    const nonLance = promises.filter(p => p.status === 'non-lance').length;
-    const late = promises.filter(p => p.status === 'late').length;
-    const tauxRealisation = Math.round((realise / total) * 100);
-    const avecMaj = promises.filter(p => p.updates && p.updates.length > 0).length;
-    
-    // Mettre à jour l'UI
-    document.querySelector('.stat-total .stat-value').textContent = total;
-    document.querySelector('.stat-success .stat-value').textContent = realise;
-    document.querySelector('.stat-success .stat-percentage').textContent = `${Math.round((realise / total) * 100)}%`;
-    document.querySelector('.stat-progress .stat-value').textContent = encours;
-    document.querySelector('.stat-progress .stat-percentage').textContent = `${Math.round((encours / total) * 100)}%`;
-    document.querySelector('.stat-pending .stat-value').textContent = nonLance;
-    document.querySelector('.stat-pending .stat-percentage').textContent = `${Math.round((nonLance / total) * 100)}%`;
-    document.querySelector('.stat-warning .stat-value').textContent = late;
-    document.querySelector('.stat-warning .stat-percentage').textContent = `${Math.round((late / total) * 100)}%`;
-    document.querySelector('.stat-rate .stat-value').textContent = `${tauxRealisation}%`;
-    document.querySelector('.stat-update .stat-value').textContent = avecMaj;
-    document.querySelector('.stat-update .stat-percentage').textContent = `${Math.round((avecMaj / total) * 100)}%`;
-    
-    // Note moyenne (simulée ou depuis les données)
-    const avgRating = promises.reduce((sum, p) => sum + (p.rating || 0), 0) / total;
-    document.querySelector('.stat-rating .stat-value').textContent = avgRating.toFixed(1);
-    document.querySelector('.stat-rating .stat-subvalue').textContent = `${promises.reduce((sum, p) => sum + (p.votes || 0), 0)} votes`;
-}
-
-// ========== DONNÉES SIMULÉES (fallback) ==========
 
 function loadMockData() {
     // Promesses en vedette
@@ -287,17 +140,17 @@ function loadMockData() {
     // Charger la promesse du jour
     loadDailyPromise(featuredPromises[0]);
     
-    // Charger les engagements (sans progression)
+    // Charger les engagements
     loadAllPromises();
     
     // Charger les actualités
     loadNews();
     
-    // Charger les quotidiens (taille agrandie)
+    // Charger les quotidiens
     loadNewspapers();
     
-    // Charger les résultats de notation (optimisés)
-    loadRatingResults();
+    // Mettre à jour les statistiques
+    updateStats();
 }
 
 // ========== CARROUSEL PROMESSES EN VEDETTE ==========
@@ -305,7 +158,11 @@ function loadMockData() {
 function initFeaturedCarousel() {
     const track = document.getElementById('featuredCarouselTrack');
     const dotsContainer = document.getElementById('carouselDots');
-    const totalItems = document.querySelectorAll('.featured-promise-card').length;
+    
+    if (!track || !dotsContainer) return;
+    
+    const cards = track.querySelectorAll('.featured-promise-card');
+    const totalItems = cards.length;
     
     // Créer les dots
     dotsContainer.innerHTML = '';
@@ -321,9 +178,13 @@ function initFeaturedCarousel() {
     startAutoPlay();
     
     // Écouteurs pour les boutons de contrôle
-    document.getElementById('carouselPlayPause').addEventListener('click', togglePlayPause);
-    document.getElementById('carouselPrev').addEventListener('click', prevSlide);
-    document.getElementById('carouselNext').addEventListener('click', nextSlide);
+    const playPauseBtn = document.getElementById('carouselPlayPause');
+    const prevBtn = document.getElementById('carouselPrev');
+    const nextBtn = document.getElementById('carouselNext');
+    
+    if (playPauseBtn) playPauseBtn.addEventListener('click', togglePlayPause);
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
     
     // Pause au survol
     track.addEventListener('mouseenter', pauseAutoPlay);
@@ -332,6 +193,8 @@ function initFeaturedCarousel() {
 
 function generateFeaturedCards(promises) {
     const track = document.getElementById('featuredCarouselTrack');
+    if (!track) return;
+    
     track.innerHTML = '';
     
     promises.forEach(promise => {
@@ -451,6 +314,8 @@ function goToSlide(index) {
     const dots = document.querySelectorAll('.carousel-dot');
     const cards = document.querySelectorAll('.featured-promise-card');
     
+    if (!track || !cards.length) return;
+    
     if (index < 0 || index >= cards.length) return;
     
     currentIndex = index;
@@ -483,12 +348,14 @@ function startAutoPlay() {
 
 function pauseAutoPlay() {
     clearInterval(autoPlayInterval);
-    document.getElementById('carouselPlayPause').innerHTML = '<i class="fas fa-play"></i>';
+    const btn = document.getElementById('carouselPlayPause');
+    if (btn) btn.innerHTML = '<i class="fas fa-play"></i>';
 }
 
 function resumeAutoPlay() {
     startAutoPlay();
-    document.getElementById('carouselPlayPause').innerHTML = '<i class="fas fa-pause"></i>';
+    const btn = document.getElementById('carouselPlayPause');
+    if (btn) btn.innerHTML = '<i class="fas fa-pause"></i>';
 }
 
 function togglePlayPause() {
@@ -525,15 +392,17 @@ function initPressCarousel() {
     
     // Créer les indicateurs
     const indicators = document.getElementById('pressIndicators');
-    indicators.innerHTML = '';
-    
-    newspapers.forEach((_, index) => {
-        const indicator = document.createElement('button');
-        indicator.className = `indicator ${index === 0 ? 'active' : ''}`;
-        indicator.dataset.index = index;
-        indicator.addEventListener('click', () => goToPressSlide(index));
-        indicators.appendChild(indicator);
-    });
+    if (indicators) {
+        indicators.innerHTML = '';
+        
+        newspapers.forEach((_, index) => {
+            const indicator = document.createElement('button');
+            indicator.className = `indicator ${index === 0 ? 'active' : ''}`;
+            indicator.dataset.index = index;
+            indicator.addEventListener('click', () => goToPressSlide(index));
+            indicators.appendChild(indicator);
+        });
+    }
     
     // Charger la première édition
     loadPressEdition(newspapers[0]);
@@ -543,10 +412,15 @@ function initPressCarousel() {
 }
 
 function loadPressEdition(edition) {
-    document.getElementById('pressTitle').textContent = edition.title;
-    document.getElementById('pressDate').textContent = edition.date;
-    document.getElementById('pressLink').href = edition.url;
-    document.getElementById('pressMainImage').src = edition.image;
+    const titleEl = document.getElementById('pressTitle');
+    const dateEl = document.getElementById('pressDate');
+    const linkEl = document.getElementById('pressLink');
+    const imgEl = document.getElementById('pressMainImage');
+    
+    if (titleEl) titleEl.textContent = edition.title;
+    if (dateEl) dateEl.textContent = edition.date;
+    if (linkEl) linkEl.href = edition.url;
+    if (imgEl) imgEl.src = edition.image;
 }
 
 function goToPressSlide(index) {
@@ -582,13 +456,16 @@ function startPressAutoPlay() {
 }
 
 function togglePressAutoPlay() {
+    const btn = document.getElementById('pressPlayPause');
+    if (!btn) return;
+    
     if (pressAutoPlayInterval) {
         clearInterval(pressAutoPlayInterval);
         pressAutoPlayInterval = null;
-        document.getElementById('pressPlayPause').innerHTML = '<i class="fas fa-play"></i>';
+        btn.innerHTML = '<i class="fas fa-play"></i>';
     } else {
         startPressAutoPlay();
-        document.getElementById('pressPlayPause').innerHTML = '<i class="fas fa-pause"></i>';
+        btn.innerHTML = '<i class="fas fa-pause"></i>';
     }
 }
 
@@ -596,6 +473,8 @@ function togglePressZoom() {
     const img = document.getElementById('pressMainImage');
     const btn = document.getElementById('pressZoomBtn');
     const info = document.getElementById('zoomInfo');
+    
+    if (!img || !btn || !info) return;
     
     if (pressScale === 1) {
         pressScale = 2;
@@ -675,19 +554,69 @@ function initPressDrag() {
     }
 }
 
+// ========== KPI CAROUSEL ==========
+
+function initKpiCarousel() {
+    const carousel = document.getElementById('kpiCarousel');
+    if (!carousel) return;
+    
+    updateKpiDisplay();
+    
+    document.querySelectorAll('.kpi-nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (btn.classList.contains('prev')) {
+                kpiIndex = (kpiIndex - 1 + kpiItems.length) % kpiItems.length;
+            } else {
+                kpiIndex = (kpiIndex + 1) % kpiItems.length;
+            }
+            updateKpiDisplay();
+        });
+    });
+}
+
+function updateKpiDisplay() {
+    const carousel = document.getElementById('kpiCarousel');
+    if (!carousel) return;
+    
+    const item = kpiItems[kpiIndex];
+    carousel.innerHTML = `
+        <div class="kpi-item">
+            <div class="kpi-icon">
+                <i class="${item.icon}"></i>
+            </div>
+            <div class="kpi-content">
+                <div class="kpi-value">${item.value}</div>
+                <div class="kpi-label">${item.label}</div>
+            </div>
+        </div>
+    `;
+}
+
 // ========== FONCTIONS DE CHARGEMENT ==========
 
 function loadDailyPromise(promise) {
-    document.getElementById('dailyPromiseTitle').textContent = promise.title;
-    document.getElementById('dailyDomain').innerHTML = `<i class="fas fa-building"></i><span>${promise.domain}</span>`;
-    document.getElementById('dailyStatus').className = `article-status status-${promise.status}`;
-    document.getElementById('dailyStatus').innerHTML = getStatusHTML(promise.status);
-    document.getElementById('dailyLead').innerHTML = `<i class="fas fa-quote-left"></i>${promise.description.substring(0, 100)}...`;
-    document.getElementById('dailyObjective').textContent = promise.description;
-    document.getElementById('dailyProgress').textContent = promise.progress;
-    document.getElementById('dailyDeadline').textContent = '2027';
-    document.getElementById('dailyStatusLabel').textContent = getStatusLabel(promise.status);
-    document.getElementById('dailyUpdates').innerHTML = `
+    const titleEl = document.getElementById('dailyPromiseTitle');
+    const domainEl = document.getElementById('dailyDomain');
+    const statusEl = document.getElementById('dailyStatus');
+    const leadEl = document.getElementById('dailyLead');
+    const objectiveEl = document.getElementById('dailyObjective');
+    const progressEl = document.getElementById('dailyProgress');
+    const deadlineEl = document.getElementById('dailyDeadline');
+    const statusLabelEl = document.getElementById('dailyStatusLabel');
+    const updatesEl = document.getElementById('dailyUpdates');
+    
+    if (titleEl) titleEl.textContent = promise.title;
+    if (domainEl) domainEl.innerHTML = `<i class="fas fa-building"></i><span>${promise.domain}</span>`;
+    if (statusEl) {
+        statusEl.className = `article-status status-${promise.status}`;
+        statusEl.innerHTML = getStatusHTML(promise.status);
+    }
+    if (leadEl) leadEl.innerHTML = `<i class="fas fa-quote-left"></i>${promise.description.substring(0, 100)}...`;
+    if (objectiveEl) objectiveEl.textContent = promise.description;
+    if (progressEl) progressEl.textContent = promise.progress;
+    if (deadlineEl) deadlineEl.textContent = '2027';
+    if (statusLabelEl) statusLabelEl.textContent = getStatusLabel(promise.status);
+    if (updatesEl) updatesEl.innerHTML = `
         <div class="update-item-small">
             <div class="update-date-small">15 Janvier 2026</div>
             <div class="update-text-small">${promise.progress}</div>
@@ -725,6 +654,8 @@ function getStatusLabel(status) {
 
 function loadAllPromises() {
     const grid = document.getElementById('promisesGrid');
+    if (!grid) return;
+    
     grid.innerHTML = '';
     
     const promises = [
@@ -745,6 +676,24 @@ function loadAllPromises() {
             result: '✅ 120 établissements construits',
             rating: 4.8,
             votes: 234
+        },
+        {
+            id: 'p3',
+            title: 'Accès à l\'eau potable pour tous',
+            domain: 'Eau & Assainissement',
+            status: 'encours',
+            result: '75% de la population couverte',
+            rating: 4.3,
+            votes: 167
+        },
+        {
+            id: 'p4',
+            title: 'Réforme du système judiciaire',
+            domain: 'Justice',
+            status: 'non-lance',
+            result: 'étude d\'impact en cours',
+            rating: 3.5,
+            votes: 98
         }
     ];
     
@@ -801,23 +750,31 @@ function loadAllPromises() {
         grid.appendChild(card);
     });
     
-    document.getElementById('resultsInfo').textContent = `${promises.length} engagement(s) trouvé(s)`;
+    const infoEl = document.getElementById('resultsInfo');
+    if (infoEl) infoEl.textContent = `${promises.length} engagement(s) trouvé(s)`;
 }
 
 function loadNews() {
     const grid = document.getElementById('newsGrid');
+    if (!grid) return;
+    
     grid.innerHTML = '';
     
     const news = [
         {
             title: 'Lancement du programme de santé gratuit',
             date: '28 Janvier 2026',
-            summary: 'Le gouvernement lance officiellement le programme de gratuité des soins...'
+            summary: 'Le gouvernement lance officiellement le programme de gratuité des soins pour les enfants et personnes âgées.'
         },
         {
             title: 'Inauguration de 20 nouvelles écoles',
             date: '25 Janvier 2026',
-            summary: 'Le président inaugure 20 nouvelles écoles dans les régions rurales...'
+            summary: 'Le président inaugure 20 nouvelles écoles dans les régions rurales du Sénégal.'
+        },
+        {
+            title: 'Nouvelle plateforme digitale pour l\'administration',
+            date: '22 Janvier 2026',
+            summary: 'Lancement de la plateforme digitale pour simplifier les démarches administratives.'
         }
     ];
     
@@ -843,13 +800,15 @@ function loadNews() {
 
 function loadNewspapers() {
     const grid = document.getElementById('newspapersGrid');
+    if (!grid) return;
+    
     grid.innerHTML = '';
     
     const newspapers = [
-        { name: 'Le Soleil', date: '30 Janvier 2026' },
-        { name: "L'Observateur", date: '29 Janvier 2026' },
-        { name: 'WalFadjri', date: '28 Janvier 2026' },
-        { name: 'Sud Quotidien', date: '27 Janvier 2026' }
+        { name: 'Le Soleil', date: '30 Janvier 2026', image: 'placeholder-press.jpg' },
+        { name: "L'Observateur", date: '29 Janvier 2026', image: 'placeholder-press.jpg' },
+        { name: 'WalFadjri', date: '28 Janvier 2026', image: 'placeholder-press.jpg' },
+        { name: 'Sud Quotidien', date: '27 Janvier 2026', image: 'placeholder-press.jpg' }
     ];
     
     newspapers.forEach(paper => {
@@ -857,7 +816,7 @@ function loadNewspapers() {
         card.className = 'newspaper-card';
         card.innerHTML = `
             <div class="newspaper-preview">
-                <i class="fas fa-newspaper fa-5x"></i>
+                <img src="${paper.image}" alt="${paper.name}">
             </div>
             <h4>${paper.name}</h4>
             <div class="newspaper-date">
@@ -871,73 +830,98 @@ function loadNewspapers() {
 function loadRatingResults() {
     // Top services
     const topServices = document.getElementById('topServices');
-    topServices.innerHTML = `
-        <div class="service-item-card">
-            <div class="service-rank-badge gold">1</div>
-            <div class="service-info-card">
-                <span class="service-name-card">Santé Publique</span>
-                <div class="service-stats-card">
-                    <span class="service-score-card"><i class="fas fa-star"></i> 4.5</span>
-                    <span class="service-count-card">234 votes</span>
+    if (topServices) {
+        topServices.innerHTML = `
+            <div class="service-item-card">
+                <div class="service-rank-badge gold">1</div>
+                <div class="service-info-card">
+                    <span class="service-name-card">Santé Publique</span>
+                    <div class="service-stats-card">
+                        <span class="service-score-card"><i class="fas fa-star"></i> 4.5</span>
+                        <span class="service-count-card">234 votes</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="service-item-card">
-            <div class="service-rank-badge silver">2</div>
-            <div class="service-info-card">
-                <span class="service-name-card">Éducation Nationale</span>
-                <div class="service-stats-card">
-                    <span class="service-score-card"><i class="fas fa-star"></i> 4.3</span>
-                    <span class="service-count-card">198 votes</span>
+            <div class="service-item-card">
+                <div class="service-rank-badge silver">2</div>
+                <div class="service-info-card">
+                    <span class="service-name-card">Éducation Nationale</span>
+                    <div class="service-stats-card">
+                        <span class="service-score-card"><i class="fas fa-star"></i> 4.3</span>
+                        <span class="service-count-card">198 votes</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="service-item-card">
-            <div class="service-rank-badge bronze">3</div>
-            <div class="service-info-card">
-                <span class="service-name-card">Administration Générale</span>
-                <div class="service-stats-card">
-                    <span class="service-score-card"><i class="fas fa-star"></i> 4.1</span>
-                    <span class="service-count-card">156 votes</span>
+            <div class="service-item-card">
+                <div class="service-rank-badge bronze">3</div>
+                <div class="service-info-card">
+                    <span class="service-name-card">Administration Générale</span>
+                    <div class="service-stats-card">
+                        <span class="service-score-card"><i class="fas fa-star"></i> 4.1</span>
+                        <span class="service-count-card">156 votes</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    `;
+        `;
+    }
     
     // Stats
-    document.getElementById('totalVotes').textContent = '588';
-    document.getElementById('avgRating').textContent = '4.3';
-    document.getElementById('totalServices').textContent = '8';
+    const totalVotesEl = document.getElementById('totalVotes');
+    const avgRatingEl = document.getElementById('avgRating');
+    const totalServicesEl = document.getElementById('totalServices');
+    
+    if (totalVotesEl) totalVotesEl.textContent = '588';
+    if (avgRatingEl) avgRatingEl.textContent = '4.3';
+    if (totalServicesEl) totalServicesEl.textContent = '8';
     
     // Votes par service
     const votesList = document.getElementById('votesByService');
-    votesList.innerHTML = `
-        <div class="service-vote-item-card">
-            <span class="service-name-card">Santé Publique</span>
-            <span class="service-votes-card">234 votes</span>
-        </div>
-        <div class="service-vote-item-card">
-            <span class="service-name-card">Éducation Nationale</span>
-            <span class="service-votes-card">198 votes</span>
-        </div>
-        <div class="service-vote-item-card">
-            <span class="service-name-card">Administration Générale</span>
-            <span class="service-votes-card">156 votes</span>
-        </div>
-    `;
+    if (votesList) {
+        votesList.innerHTML = `
+            <div class="service-vote-item-card">
+                <span class="service-name-card">Santé Publique</span>
+                <span class="service-votes-card">234 votes</span>
+            </div>
+            <div class="service-vote-item-card">
+                <span class="service-name-card">Éducation Nationale</span>
+                <span class="service-votes-card">198 votes</span>
+            </div>
+            <div class="service-vote-item-card">
+                <span class="service-name-card">Administration Générale</span>
+                <span class="service-votes-card">156 votes</span>
+            </div>
+        `;
+    }
 }
 
 // ========== FONCTIONS UTILITAIRES ==========
 
-function updateCurrentDate() {
-    const now = new Date();
-    const options = { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric',
-        weekday: 'long'
-    };
-    document.getElementById('currentDate').textContent = now.toLocaleDateString('fr-FR', options);
+function updateStats() {
+    // Mettre à jour les statistiques avec des données simulées
+    const statElements = [
+        { selector: '.stat-total .stat-value', value: '42' },
+        { selector: '.stat-success .stat-value', value: '8' },
+        { selector: '.stat-success .stat-percentage', value: '19%' },
+        { selector: '.stat-progress .stat-value', value: '21' },
+        { selector: '.stat-progress .stat-percentage', value: '50%' },
+        { selector: '.stat-pending .stat-value', value: '10' },
+        { selector: '.stat-pending .stat-percentage', value: '24%' },
+        { selector: '.stat-warning .stat-value', value: '3' },
+        { selector: '.stat-warning .stat-percentage', value: '7%' },
+        { selector: '.stat-rate .stat-value', value: '38%' },
+        { selector: '.stat-rating .stat-value', value: '4.3' },
+        { selector: '.stat-rating .stat-subvalue', value: '588 votes' },
+        { selector: '.stat-update .stat-value', value: '29' },
+        { selector: '.stat-update .stat-percentage', value: '69%' },
+        { selector: '.stat-time .stat-value', value: '312j' },
+        { selector: '.stat-domain .stat-value', value: 'Santé' },
+        { selector: '.stat-domain .stat-subvalue', value: '12 engagements' }
+    ];
+    
+    statElements.forEach(el => {
+        const element = document.querySelector(el.selector);
+        if (element) element.textContent = el.value;
+    });
 }
 
 function handleScroll() {
@@ -946,22 +930,27 @@ function handleScroll() {
     const docHeight = document.documentElement.scrollHeight;
     const winHeight = window.innerHeight;
     const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
-    document.querySelector('.progress-indicator').style.width = `${scrollPercent}%`;
+    const progressIndicator = document.querySelector('.progress-indicator');
+    if (progressIndicator) progressIndicator.style.width = `${scrollPercent}%`;
     
     // Scroll to top button
     const scrollToTopBtn = document.getElementById('scrollToTop');
-    if (scrollTop > 300) {
-        scrollToTopBtn.classList.add('visible');
-    } else {
-        scrollToTopBtn.classList.remove('visible');
+    if (scrollToTopBtn) {
+        if (scrollTop > 300) {
+            scrollToTopBtn.classList.add('visible');
+        } else {
+            scrollToTopBtn.classList.remove('visible');
+        }
     }
     
     // Navbar scroll effect
     const navbar = document.querySelector('.navbar');
-    if (scrollTop > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
+    if (navbar) {
+        if (scrollTop > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
     }
 }
 
@@ -976,23 +965,231 @@ function scrollToTop() {
 
 function toggleFilters() {
     const filtersSection = document.getElementById('filtersSection');
-    filtersSection.classList.toggle('active');
+    if (filtersSection) filtersSection.classList.toggle('active');
 }
 
 function resetFilters() {
-    document.getElementById('statusFilter').value = 'all';
-    document.getElementById('domainFilter').value = 'all';
-    document.getElementById('searchFilter').value = '';
+    const statusFilter = document.getElementById('statusFilter');
+    const domainFilter = document.getElementById('domainFilter');
+    const searchFilter = document.getElementById('searchFilter');
+    
+    if (statusFilter) statusFilter.value = 'all';
+    if (domainFilter) domainFilter.value = 'all';
+    if (searchFilter) searchFilter.value = '';
+    
     showNotification('Filtres réinitialisés', 'info');
 }
 
 function exportData() {
     showNotification('Exportation en cours...', 'info');
+    // Logique d'exportation à implémenter
 }
 
 function showMorePromises() {
-    document.getElementById('showMoreBtn').style.display = 'none';
-    document.getElementById('showLessBtn').style.display = 'inline-flex';
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showLessBtn = document.getElementById('showLessBtn');
+    
+    if (showMoreBtn && showLessBtn) {
+        showMoreBtn.style.display = 'none';
+        showLessBtn.style.display = 'inline-flex';
+    }
 }
 
-function showLessPromises()
+function showLessPromises() {
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showLessBtn = document.getElementById('showLessBtn');
+    
+    if (showMoreBtn && showLessBtn) {
+        showMoreBtn.style.display = 'inline-flex';
+        showLessBtn.style.display = 'none';
+    }
+}
+
+function shareDailyPromise() {
+    shareOnFacebook('daily');
+}
+
+function rateDailyPromise() {
+    ratePromise('daily');
+}
+
+function shareOnFacebook(id) {
+    const url = window.location.href;
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
+    showNotification('Partagé sur Facebook !', 'info');
+}
+
+function shareOnTwitter(id) {
+    const url = window.location.href;
+    const text = 'Découvrez cette promesse présidentielle sur LE PROJET SÉNÉGAL';
+    window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank', 'width=600,height=400');
+    showNotification('Partagé sur Twitter !', 'info');
+}
+
+function shareOnWhatsApp(id) {
+    const url = window.location.href;
+    const text = 'Découvrez cette promesse présidentielle sur LE PROJET SÉNÉGAL';
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}%20${encodeURIComponent(url)}`, '_blank');
+    showNotification('Partagé sur WhatsApp !', 'info');
+}
+
+function ratePromise(id) {
+    showNotification('Cliquez sur une étoile pour noter !', 'info');
+}
+
+function setRating(container, criterion) {
+    const stars = container.querySelectorAll('i');
+    let selectedRating = 0;
+    
+    stars.forEach((star, index) => {
+        star.addEventListener('click', function() {
+            selectedRating = index + 1;
+            
+            stars.forEach((s, i) => {
+                s.className = i <= index ? 'fas fa-star' : 'far fa-star';
+            });
+            
+            showNotification(`${criterion}: ${selectedRating}/5 étoiles`, 'success');
+        });
+        
+        star.addEventListener('mouseover', function() {
+            stars.forEach((s, i) => {
+                if (i <= index) {
+                    s.className = 'fas fa-star';
+                }
+            });
+        });
+        
+        star.addEventListener('mouseout', function() {
+            if (selectedRating === 0) {
+                stars.forEach(s => {
+                    s.className = 'far fa-star';
+                });
+            } else {
+                stars.forEach((s, i) => {
+                    if (i >= selectedRating) {
+                        s.className = 'far fa-star';
+                    }
+                });
+            }
+        });
+    });
+}
+
+// ========== FONCTION MANQUANTE AJOUTÉE ==========
+function submitRating(event) {
+    event.preventDefault();
+    const service = document.getElementById('serviceSelect').value;
+    if (!service) {
+        showNotification('Veuillez sélectionner un service', 'error');
+        return;
+    }
+    showNotification('Notation soumise avec succès !', 'success');
+    
+    // Réinitialiser le formulaire
+    const form = document.getElementById('ratingForm');
+    if (form) form.reset();
+    
+    // Réinitialiser les étoiles
+    document.querySelectorAll('.stars-container i').forEach(star => {
+        star.className = 'far fa-star';
+    });
+}
+// ========== FIN DE LA FONCTION MANQUANTE ==========
+
+function showNotification(message, type = 'info') {
+    const container = document.getElementById('notification-container');
+    if (!container) return;
+    
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <i class="fas ${type === 'success' ? 'fa-check-circle' : 
+                         type === 'info' ? 'fa-info-circle' : 
+                         type === 'warning' ? 'fa-exclamation-triangle' : 
+                         'fa-times-circle'}"></i>
+        <span>${message}</span>
+    `;
+    
+    container.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(400px)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// ========== PHOTO VIEWER ==========
+function initPhotoViewer() {
+    // Ajouter les écouteurs pour les images cliquables
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.newspaper-preview img')) {
+            e.preventDefault();
+            openPhotoViewer(e.target.src);
+        }
+    });
+}
+
+function openPhotoViewer(src) {
+    // Créer le modal si nécessaire
+    let modal = document.getElementById('photoViewerModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'photoViewerModal';
+        modal.className = 'photo-viewer-modal';
+        modal.innerHTML = `
+            <div class="photo-viewer-content">
+                <div class="photo-viewer-header">
+                    <h3><i class="fas fa-image"></i> Visualiseur d'images</h3>
+                    <div class="photo-viewer-controls">
+                        <button class="nav-btn prev" onclick="changePhoto(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="nav-btn next" onclick="changePhoto(1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <button id="closeViewerBtn" onclick="closePhotoViewer()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="photo-viewer-body">
+                    <div class="photo-container">
+                        <img id="photoViewerImage" src="${src}" alt="Image agrandie">
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    } else {
+        document.getElementById('photoViewerImage').src = src;
+    }
+    
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closePhotoViewer() {
+    const modal = document.getElementById('photoViewerModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+function changePhoto(direction) {
+    // Logique pour changer de photo (à implémenter selon les besoins)
+    showNotification('Fonctionnalité de navigation entre images à venir', 'info');
+}
+
+// ========== ÉVÉNEMENTS CLAVIER ==========
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closePhotoViewer();
+    }
+});

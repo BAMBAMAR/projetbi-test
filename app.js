@@ -1,12 +1,20 @@
-// ========== VARIABLES GLOBALES SUPABASE ==========
-const SUPABASE_URL = 'https://votre-projet.supabase.co'; // Remplacer par votre URL Supabase
-const SUPABASE_ANON_KEY = 'votre-clé-anon'; // Remplacer par votre clé anonyme
+// Configuration Supabase
+const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_joJuW7-vMiQG302_2Mvj5A_sVaD8Wap';
+let supabaseClient = null;
 
-// Initialisation du client Supabase
-const supabase = window.supabase.create({
-    supabaseUrl: SUPABASE_URL,
-    supabaseKey: SUPABASE_ANON_KEY
-});
+// Initialisation Supabase
+try {
+    if (typeof supabase !== 'undefined' && supabase.createClient) {
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        console.log('✅ Supabase initialisé avec succès');
+    } else {
+        console.warn('⚠️ SDK Supabase non disponible - fonctionnalités limitées');
+    }
+} catch (error) {
+    console.error('❌ Erreur initialisation Supabase:', error);
+    supabaseClient = null;
+}
 // ========== VARIABLES GLOBALES ==========
 let currentIndex = 0;
 let pressCurrentIndex = 0;

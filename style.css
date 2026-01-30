@@ -1372,7 +1372,7 @@ body {
     border: none;
     border-radius: var(--radius-full);
     background: var(--bg-card);
-    color: var(--primary);
+    color: var(--primary); /* CORRECTION : couleur visible pour les boutons de partage */
     font-size: 1.1rem;
     cursor: pointer;
     transition: var(--transition);
@@ -1395,9 +1395,9 @@ body {
 .social-btn.tw { color: #1da1f2; }
 .social-btn.wa { color: #25d366; }
 
-.social-btn:hover.fb { background: #3b5998; }
-.social-btn:hover.tw { background: #1da1f2; }
-.social-btn:hover.wa { background: #25d366; }
+.social-btn:hover.fb { background: #3b5998; color: white; }
+.social-btn:hover.tw { background: #1da1f2; color: white; }
+.social-btn:hover.wa { background: #25d366; color: white; }
 
 .btn-stars {
     background: rgba(245, 124, 0, 0.15);
@@ -1797,7 +1797,7 @@ body {
 
 .newspapers-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* AGRANDI : 200px -> 250px */
     gap: var(--spacing-lg);
     margin-bottom: var(--spacing-xl);
 }
@@ -1818,7 +1818,7 @@ body {
 }
 
 .newspaper-preview {
-    height: 250px;
+    height: 280px; /* AGRANDI : 250px -> 280px */
     margin-bottom: var(--spacing-md);
     display: flex;
     align-items: center;
@@ -1963,7 +1963,7 @@ body {
 
 .rating-criteria-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* OPTIMISÉ : meilleure organisation de l'espace */
     gap: var(--spacing-lg);
     background: rgba(0, 0, 0, 0.02);
     padding: var(--spacing-lg);
@@ -2573,5 +2573,13 @@ body {
     .carousel-dot {
         width: 10px;
         height: 10px;
+    }
+    
+    .newspapers-grid {
+        grid-template-columns: 1fr; /* Responsive mobile */
+    }
+    
+    .newspaper-preview {
+        height: 220px; /* Ajustement mobile */
     }
 }

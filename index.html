@@ -576,23 +576,31 @@
         </div>
     </section>
 
-    <!-- Notation des Services Publics Section -->
-    <section class="rating-section" id="rating">
-        <div class="container">
-            <div class="rating-container">
-                <div class="rating-header">
-                    <div class="rating-icon-large">
-                        <i class="fas fa-star"></i>
+   <!-- Notation des Services Publics Section -->
+<section class="rating-section" id="rating">
+    <div class="container">
+        <!-- Titre de la section -->
+        <div class="section-header-modern">
+            <h2 class="section-title">
+                <i class="fas fa-star-half-alt"></i>
+                Notation des Services Publics
+            </h2>
+        </div>
+
+        <!-- Conteneur en deux colonnes côte à côte -->
+        <div class="rating-two-columns">
+            <!-- Colonne GAUCHE : Formulaire de notation -->
+            <div class="rating-column">
+                <div class="rating-form-card">
+                    <div class="rating-form-header">
+                        <h3>
+                            <i class="fas fa-pencil-alt"></i>
+                            Donnez votre avis
+                        </h3>
+                        <p>Partagez votre expérience avec un service public</p>
                     </div>
-                    <h2>Noter les Services Publics</h2>
-                    <p>
-                        Partagez votre expérience avec les services de l'État et contribuez à l'amélioration continue.
-                    </p>
-                </div>
-                
-                <!-- Formulaire de notation -->
-                <form class="rating-form" id="ratingForm">
-                    <div class="form-grid">
+                    
+                    <form class="rating-form" id="ratingForm">
                         <div class="form-group">
                             <label for="service">
                                 <i class="fas fa-building"></i>
@@ -610,97 +618,113 @@
                                 <option value="Autre">Autre</option>
                             </select>
                         </div>
-                    </div>
-                    
-                    <div class="rating-criteria-grid">
-                        <div class="criteria-item">
-                            <label for="accessibility">
-                                <i class="fas fa-wheelchair"></i>
-                                Accessibilité
-                            </label>
-                            <div class="stars-container" data-field="accessibility">
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <input type="hidden" id="accessibility" value="3">
+                        
+                        <div class="rating-criteria-grid">
+                            <div class="criteria-item">
+                                <label for="accessibility">
+                                    <i class="fas fa-wheelchair"></i>
+                                    Accessibilité
+                                </label>
+                                <div class="stars-container" data-field="accessibility">
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <input type="hidden" id="accessibility" value="3">
+                                </div>
+                            </div>
+                            
+                            <div class="criteria-item">
+                                <label for="welcome">
+                                    <i class="fas fa-handshake"></i>
+                                    Accueil
+                                </label>
+                                <div class="stars-container" data-field="welcome">
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <input type="hidden" id="welcome" value="3">
+                                </div>
+                            </div>
+                            
+                            <div class="criteria-item">
+                                <label for="efficiency">
+                                    <i class="fas fa-bolt"></i>
+                                    Efficacité
+                                </label>
+                                <div class="stars-container" data-field="efficiency">
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <input type="hidden" id="efficiency" value="3">
+                                </div>
+                            </div>
+                            
+                            <div class="criteria-item">
+                                <label for="transparency">
+                                    <i class="fas fa-eye"></i>
+                                    Transparence
+                                </label>
+                                <div class="stars-container" data-field="transparency">
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <input type="hidden" id="transparency" value="3">
+                                </div>
                             </div>
                         </div>
                         
-                        <div class="criteria-item">
-                            <label for="welcome">
-                                <i class="fas fa-handshake"></i>
-                                Accueil
+                        <div class="form-group">
+                            <label for="comment">
+                                <i class="fas fa-comment"></i>
+                                Commentaire (optionnel)
                             </label>
-                            <div class="stars-container" data-field="welcome">
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <input type="hidden" id="welcome" value="3">
-                            </div>
+                            <textarea 
+                                class="form-textarea" 
+                                id="comment" 
+                                rows="3" 
+                                placeholder="Partagez votre expérience..."></textarea>
                         </div>
                         
-                        <div class="criteria-item">
-                            <label for="efficiency">
-                                <i class="fas fa-bolt"></i>
-                                Efficacité
-                            </label>
-                            <div class="stars-container" data-field="efficiency">
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <input type="hidden" id="efficiency" value="3">
-                            </div>
-                        </div>
-                        
-                        <div class="criteria-item">
-                            <label for="transparency">
-                                <i class="fas fa-eye"></i>
-                                Transparence
-                            </label>
-                            <div class="stars-container" data-field="transparency">
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <i class="far fa-star"></i>
-                                <input type="hidden" id="transparency" value="3">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="comment">
-                            <i class="fas fa-comment"></i>
-                            Commentaire (optionnel)
-                        </label>
-                        <textarea 
-                            class="form-textarea" 
-                            id="comment" 
-                            rows="3" 
-                            placeholder="Partagez votre expérience..."></textarea>
-                    </div>
-                    
-                    <div class="btn-submit-container">
-                        <button type="submit" class="btn-submit">
+                        <button type="submit" class="btn-submit-rating">
                             <i class="fas fa-paper-plane"></i>
                             Soumettre ma notation
                         </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Colonne DROITE : Résultats des notations -->
+            <div class="rating-column">
+                <div class="rating-results-card">
+                    <div class="rating-results-header">
+                        <h3>
+                            <i class="fas fa-chart-bar"></i>
+                            Résultats des notations
+                        </h3>
+                        <p>Découvrez ce que pensent les autres citoyens</p>
                     </div>
-                </form>
-                
-                <!-- Résultats des notations -->
-                <div id="ratingResults" class="rating-results-section">
-                    <!-- Chargé dynamiquement par JavaScript -->
+                    
+                    <!-- Résultats chargés dynamiquement -->
+                    <div id="ratingResults" class="rating-results-section">
+                        <!-- Chargé dynamiquement par JavaScript -->
+                        <div class="loading-state">
+                            <div class="spinner"></div>
+                            <p>Chargement des résultats...</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Footer -->
     <footer class="footer">

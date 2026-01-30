@@ -1,5 +1,5 @@
 // ==========================================
-// APP.JS - VERSION OPTIMISÉE ET CORRIGÉE
+// APP.JS - VERSION OPTIMISÉE POUR VOTRE STRUCTURE
 // ==========================================
 // Configuration Supabase
 const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
@@ -69,7 +69,7 @@ const KPI_ITEMS = [
 // FONCTION DE CONVERSION DES DÉLAIS TEXTE EN JOURS
 // ==========================================
 function parseDelayToDays(delayText) {
-    if (!delayText || delayText.trim() === '') return 0;
+    if (!delayText || delayText.trim() === '') return 1095; // 3 ans par défaut
     
     const lower = delayText.toLowerCase();
     if (lower.includes('immédiat') || lower.includes('immediat') || lower.includes('dès')) {
@@ -90,9 +90,13 @@ function parseDelayToDays(delayText) {
     const daysMatch = delayText.match(/(\d+)\s*jour[s]?/i);
     if (daysMatch) totalDays += parseInt(daysMatch[1], 10);
     
+    // Expressions comme "3 premières années"
+    const firstYearsMatch = delayText.match(/(\d+)\s*premières?\s*années?/i);
+    if (firstYearsMatch) totalDays += parseInt(firstYearsMatch[1], 10) * 365;
+    
     if (totalDays === 0) {
         const num = parseInt(delayText, 10);
-        totalDays = !isNaN(num) ? num : 365;
+        totalDays = !isNaN(num) ? num * 365 : 1095; // 3 ans par défaut
     }
     
     return totalDays;
@@ -229,7 +233,7 @@ function initDateDisplay() {
 }
 
 // ==========================================
-// CHARGEMENT DES DONNÉES
+// CHARGEMENT DES DONNÉES - ADAPTÉ À VOTRE STRUCTURE
 // ==========================================
 async function loadData() {
     try {
@@ -240,29 +244,56 @@ async function loadData() {
             CONFIG.promises = generateTestPromises();
         } else {
             const data = await response.json();
-            CONFIG.START_DATE = new Date(data.start_date || '2024-04-02');
             
+            // Récupérer la date de début depuis le JSON
+            if (data.start_date) {
+                CONFIG.START_DATE = new Date(data.start_date);
+            }
+            
+            // Traiter les promesses selon votre structure
             CONFIG.promises = (data.promises || []).map(p => {
-                let status = p.status || p.statut || 'Non lancé';
-                if (status.includes('réalisé') || status.includes('realise')) status = 'Réalisé';
-                else if (status.includes('retard')) status = 'En retard';
-                else if (status.includes('cours') || status.includes('encours')) status = 'En cours';
-                else if (status.includes('lancé') || status.includes('lance')) status = 'Non lancé';
+                // Normaliser le statut
+                let status = 'Non lancé';
+                if (p.status) {
+                    const statusLower = p.status.toLowerCase();
+                    if (statusLower.includes('realise') || statusLower.includes('réalisé')) {
+                        status = 'Réalisé';
+                    } else if (statusLower.includes('cours') || statusLower.includes('encours')) {
+                        status = 'En cours';
+                    } else if (statusLower.includes('retard')) {
+                        status = 'En retard';
+                    } else if (statusLower.includes('lancé') || statusLower.includes('lance')) {
+                        status = 'Non lancé';
+                    }
+                }
                 
-                const domain = p.domaine || p.categorie || p.domain || 'Autre';
-                const delayDays = parseDelayToDays(p.delai || p.delai_texte || '365');
+                // Normaliser le domaine
+                const domain = p.domaine || p.domain || p.categorie || 'Autre';
+                
+                // Convertir le délai en jours
+                const delayDays = parseDelayToDays(p.delai || '3 premières années');
+                
+                // Calculer la date limite
                 const deadline = calculateDeadlineFromDays(delayDays);
+                
+                // Vérifier si en retard
                 const isLate = checkIfLate(status, deadline);
+                
+                // Normaliser les mises à jour
+                const updates = (p.mises_a_jour || []).map(update => ({
+                    date: update.date || '',
+                    description: update.text || update.description || 'Mise à jour'
+                }));
                 
                 return {
                     id: p.id || Math.random().toString(36).substr(2, 9),
-                    engagement: p.engagement || p.titre || p.description || 'Engagement non spécifié',
+                    engagement: p.engagement || p.titre || 'Engagement non spécifié',
                     domain: domain,
                     status: status,
                     delai: delayDays.toString(),
-                    delai_texte: p.delai || p.delai_texte || `${delayDays} jours`,
-                    resultat: p.resultat || p.objectif || p['résultats attendus'] || 'Résultats non spécifiés',
-                    updates: p.updates || p.mises_a_jour || [],
+                    delai_texte: p.delai || `${Math.round(delayDays/365)} années`,
+                    resultat: p.resultat || p.objectif || 'Résultats non spécifiés',
+                    updates: updates,
                     deadline: deadline,
                     isLate: isLate,
                     publicAvg: 0,
@@ -271,12 +302,14 @@ async function loadData() {
             });
         }
         
+        // Trier les promesses : d'abord en retard, puis par date limite
         CONFIG.promises.sort((a, b) => {
             if (a.isLate && !b.isLate) return -1;
             if (!a.isLate && b.isLate) return 1;
             return a.deadline - b.deadline;
         });
         
+        // Charger les votes publics si Supabase est disponible
         if (supabaseClient) {
             setTimeout(() => {
                 fetchAndDisplayPublicVotes().catch(error => {
@@ -285,12 +318,14 @@ async function loadData() {
             }, 1000);
         }
         
+        // Données de démonstration pour les actualités
         CONFIG.news = [
             { id: '1', title: 'Lancement officiel de la plateforme', excerpt: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle.', date: '25/01/2026', source: 'Le Soleil', image: 'school' },
             { id: '2', title: 'Première école numérique inaugurée', excerpt: 'Le gouvernement a inauguré la première école entièrement numérique à Dakar.', date: '20/01/2026', source: 'Sud Quotidien', image: 'inauguration' },
             { id: '3', title: 'Budget 2026 axé sur la relance économique', excerpt: 'Le budget de l\'État pour 2026 prévoit d\'importants investissements dans les infrastructures.', date: '15/01/2026', source: 'WalFadjri', image: 'budget' }
         ];
         
+        // Rendre tout
         renderAll();
         renderNews(CONFIG.news);
         renderNewspapers();
@@ -303,50 +338,70 @@ async function loadData() {
     }
 }
 
-// Générer des données de test
+// Générer des données de test adaptées à votre structure
 function generateTestPromises() {
     return [
         {
-            id: '1',
-            engagement: 'Supprimer le poste de Premier Ministre et instaurer un poste de Vice-Président',
-            domain: 'Gouvernance',
-            status: 'En retard',
-            delai: '730',
-            delai_texte: '2 ans',
-            resultat: 'Exécutif resserré et équilibre des pouvoirs',
-            updates: [
-                { date: '2025-06-15', description: 'Analyse constitutionnelle en cours' },
-                { date: '2025-03-10', description: 'Consultations avec les partis politiques' }
+            id: 'promise_19',
+            domaine: 'Lutte Corruption',
+            engagement: 'Loi de protection des lanceurs d\'alerte',
+            resultat: 'Encouragement dénonciation civique',
+            delai: '3 premières années',
+            status: 'realise',
+            mises_a_jour: [
+                {
+                    date: '26/08/2025',
+                    text: 'Au Sénégal, la protection des lanceurs d\'alerte est désormais régie par la Loi n° 2025-14, adoptée par l\'Assemblée nationale le 26 août 2025 et promulguée en septembre 2025[...]'
+                }
             ]
         },
         {
-            id: '2',
-            engagement: 'Transformer le Conseil Constitutionnel en Cour Constitutionnelle',
-            domain: 'Justice',
-            status: 'En retard',
-            delai: '730',
-            delai_texte: '2 ans',
-            resultat: 'Organe au sommet de l\'organisation judiciaire',
-            updates: [
-                { date: '2025-05-20', description: 'Projet de loi en préparation' }
+            id: 'promise_20',
+            domaine: 'Éducation',
+            engagement: 'Construction de 100 nouvelles écoles',
+            resultat: 'Amélioration accès éducation',
+            delai: '5 ans',
+            status: 'en cours',
+            mises_a_jour: [
+                {
+                    date: '15/10/2025',
+                    text: '30 écoles déjà construites, 50 en construction'
+                }
             ]
         },
         {
-            id: '3',
-            engagement: 'Couverture Sanitaire Universelle (CSU)',
-            domain: 'Santé',
-            status: 'En retard',
-            delai: '730',
-            delai_texte: '2 ans',
-            resultat: 'Soins pour tous',
-            updates: []
+            id: 'promise_21',
+            domaine: 'Santé',
+            engagement: 'Couverture Santé Universelle',
+            resultat: 'Soins accessibles à tous',
+            delai: '2 premières années',
+            status: 'en retard',
+            mises_a_jour: []
         }
     ].map(p => {
-        const deadline = calculateDeadlineFromDays(parseInt(p.delai));
+        const delayDays = parseDelayToDays(p.delai);
+        const deadline = calculateDeadlineFromDays(delayDays);
+        const status = p.status === 'realise' ? 'Réalisé' : 
+                      p.status === 'en cours' ? 'En cours' : 
+                      p.status === 'en retard' ? 'En retard' : 'Non lancé';
+        const isLate = checkIfLate(status, deadline);
+        
+        const updates = (p.mises_a_jour || []).map(update => ({
+            date: update.date || '',
+            description: update.text || update.description || 'Mise à jour'
+        }));
+        
         return {
-            ...p,
+            id: p.id,
+            engagement: p.engagement,
+            domain: p.domaine || p.domain || 'Autre',
+            status: status,
+            delai: delayDays.toString(),
+            delai_texte: p.delai,
+            resultat: p.resultat,
+            updates: updates,
             deadline: deadline,
-            isLate: checkIfLate(p.status, deadline),
+            isLate: isLate,
             publicAvg: 0,
             publicCount: 0
         };
@@ -455,8 +510,8 @@ function setupDailyPromise() {
                         <h3><i class="fas fa-history"></i> Dernières mises à jour</h3>
                         ${promise.updates.slice(0, 3).map(update => `
                             <div class="update-item-small">
-                                <div class="update-date-small">${formatDateProper(update.date || update.created_at)}</div>
-                                <div class="update-text-small">${update.description || update.texte || 'Mise à jour'}</div>
+                                <div class="update-date-small">${formatDateProper(update.date || '')}</div>
+                                <div class="update-text-small">${update.description || 'Mise à jour'}</div>
                             </div>
                         `).join('')}
                     </div>
@@ -749,8 +804,8 @@ function renderPromises(promises) {
                         <div class="updates-list" id="updates-${promise.id}" style="display: none;">
                             ${promise.updates.map(update => `
                                 <div class="update-item">
-                                    <div class="update-date">${formatDateProper(update.date || update.created_at)}</div>
-                                    <div class="update-text">${update.description || update.texte || 'Mise à jour des engagements'}</div>
+                                    <div class="update-date">${formatDateProper(update.date || '')}</div>
+                                    <div class="update-text">${update.description || 'Mise à jour des engagements'}</div>
                                 </div>
                             `).join('')}
                         </div>
@@ -830,14 +885,38 @@ function formatDate(dateInput) {
 function formatDateProper(dateInput) {
     if (!dateInput) return 'Pas de date';
     
-    const date = new Date(dateInput);
-    if (isNaN(date.getTime())) return 'Date non disponible';
-    
-    return date.toLocaleDateString('fr-FR', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-    });
+    try {
+        // Essayer de parser la date au format DD/MM/YYYY
+        const parts = dateInput.split('/');
+        if (parts.length === 3) {
+            const day = parseInt(parts[0], 10);
+            const month = parseInt(parts[1], 10) - 1;
+            const year = parseInt(parts[2], 10);
+            const date = new Date(year, month, day);
+            
+            if (!isNaN(date.getTime())) {
+                return date.toLocaleDateString('fr-FR', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+            }
+        }
+        
+        // Essayer le format standard
+        const date = new Date(dateInput);
+        if (!isNaN(date.getTime())) {
+            return date.toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+        }
+        
+        return dateInput; // Retourner la chaîne originale si elle ne peut pas être parsée
+    } catch (error) {
+        return dateInput;
+    }
 }
 
 function generateStars(rating) {
@@ -1709,209 +1788,6 @@ function displayEmptyRatingResults() {
 }
 
 // ==========================================
-// PHOTO VIEWER PRESSE
-// ==========================================
-function initPhotoViewer() {
-    const modal = document.createElement('div');
-    modal.id = 'photoViewerModal';
-    modal.className = 'photo-viewer-modal';
-    modal.innerHTML = `
-        <div class="photo-viewer-content">
-            <div class="photo-viewer-header">
-                <h3 id="photoViewerTitle">Titre du journal</h3>
-                <div class="photo-viewer-controls">
-                    <button id="zoomOutBtn" title="Zoom -"><i class="fas fa-search-minus"></i></button>
-                    <button id="zoomResetBtn" title="Réinitialiser"><i class="fas fa-expand"></i></button>
-                    <button id="zoomInBtn" title="Zoom +"><i class="fas fa-search-plus"></i></button>
-                    <button id="rotateBtn" title="Pivoter"><i class="fas fa-sync-alt"></i></button>
-                    <button id="closeViewerBtn" title="Fermer">&times;</button>
-                </div>
-            </div>
-            <div class="photo-viewer-body">
-                <button id="prevPhotoBtn" class="nav-btn prev"><i class="fas fa-chevron-left"></i></button>
-                <div class="photo-container" id="photoContainer">
-                    <img src="" id="photoViewerImage" alt="" onerror="this.onerror=null; this.src='https://picsum.photos/600/800?random='+Math.random()">
-                </div>
-                <button id="nextPhotoBtn" class="nav-btn next"><i class="fas fa-chevron-right"></i></button>
-            </div>
-            <div class="photo-viewer-footer">
-                <span id="photoCounter">1 / ${CONFIG.press.length}</span>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(modal);
-}
-
-function setupPhotoViewerControls() {
-    const modal = document.getElementById('photoViewerModal');
-    const closeBtn = document.getElementById('closeViewerBtn');
-    const prevBtn = document.getElementById('prevPhotoBtn');
-    const nextBtn = document.getElementById('nextPhotoBtn');
-    const zoomInBtn = document.getElementById('zoomInBtn');
-    const zoomOutBtn = document.getElementById('zoomOutBtn');
-    const zoomResetBtn = document.getElementById('zoomResetBtn');
-    const rotateBtn = document.getElementById('rotateBtn');
-    const photoContainer = document.getElementById('photoContainer');
-    const photoImage = document.getElementById('photoViewerImage');
-    
-    let scale = 1;
-    let rotate = 0;
-    let isDragging = false;
-    let startX, startY, translateX = 0, translateY = 0;
-    
-    function updatePhotoTransform() {
-        photoImage.style.transform = `scale(${scale}) rotate(${rotate}deg) translate(${translateX}px, ${translateY}px)`;
-        if (scale > 1) {
-            photoImage.style.cursor = 'grab';
-        } else {
-            photoImage.style.cursor = 'default';
-        }
-    }
-    
-    // Drag functionality
-    photoImage.addEventListener('mousedown', (e) => {
-        if (scale > 1) {
-            isDragging = true;
-            startX = e.clientX - translateX;
-            startY = e.clientY - translateY;
-            photoImage.style.cursor = 'grabbing';
-        }
-    });
-    
-    document.addEventListener('mousemove', (e) => {
-        if (!isDragging || scale <= 1) return;
-        e.preventDefault();
-        
-        translateX = e.clientX - startX;
-        translateY = e.clientY - startY;
-        
-        // Limiter le déplacement
-        const maxX = (photoImage.clientWidth * scale - photoContainer.clientWidth) / 2;
-        const maxY = (photoImage.clientHeight * scale - photoContainer.clientHeight) / 2;
-        
-        translateX = Math.max(-maxX, Math.min(maxX, translateX));
-        translateY = Math.max(-maxY, Math.min(maxY, translateY));
-        
-        updatePhotoTransform();
-    });
-    
-    document.addEventListener('mouseup', () => {
-        isDragging = false;
-        if (scale > 1) {
-            photoImage.style.cursor = 'grab';
-        }
-    });
-    
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-            scale = 1;
-            rotate = 0;
-            translateX = 0;
-            translateY = 0;
-            updatePhotoTransform();
-        });
-    }
-    
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.style.display = 'none';
-            scale = 1;
-            rotate = 0;
-            translateX = 0;
-            translateY = 0;
-            updatePhotoTransform();
-        }
-    });
-    
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            CONFIG.currentIndex = (CONFIG.currentIndex - 1 + CONFIG.press.length) % CONFIG.press.length;
-            updatePhotoViewer();
-        });
-    }
-    
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            CONFIG.currentIndex = (CONFIG.currentIndex + 1) % CONFIG.press.length;
-            updatePhotoViewer();
-        });
-    }
-    
-    if (zoomInBtn) {
-        zoomInBtn.addEventListener('click', () => {
-            scale = Math.min(scale + 0.2, 3);
-            updatePhotoTransform();
-        });
-    }
-    
-    if (zoomOutBtn) {
-        zoomOutBtn.addEventListener('click', () => {
-            scale = Math.max(scale - 0.2, 0.5);
-            updatePhotoTransform();
-        });
-    }
-    
-    if (zoomResetBtn) {
-        zoomResetBtn.addEventListener('click', () => {
-            scale = 1;
-            rotate = 0;
-            translateX = 0;
-            translateY = 0;
-            updatePhotoTransform();
-        });
-    }
-    
-    if (rotateBtn) {
-        rotateBtn.addEventListener('click', () => {
-            rotate = (rotate + 90) % 360;
-            updatePhotoTransform();
-        });
-    }
-    
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    photoContainer.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    });
-    
-    photoContainer.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        if (touchStartX - touchEndX > 50) {
-            CONFIG.currentIndex = (CONFIG.currentIndex + 1) % CONFIG.press.length;
-            updatePhotoViewer();
-        }
-        if (touchEndX - touchStartX > 50) {
-            CONFIG.currentIndex = (CONFIG.currentIndex - 1 + CONFIG.press.length) % CONFIG.press.length;
-            updatePhotoViewer();
-        }
-    });
-}
-
-function openPhotoViewer(paperId) {
-    const modal = document.getElementById('photoViewerModal');
-    const paper = CONFIG.press.find(p => p.id === paperId);
-    
-    if (paper) {
-        CONFIG.currentIndex = CONFIG.press.findIndex(p => p.id === paperId);
-        updatePhotoViewer();
-        modal.style.display = 'flex';
-    }
-}
-
-function updatePhotoViewer() {
-    const currentPaper = CONFIG.press[CONFIG.currentIndex];
-    const titleEl = document.getElementById('photoViewerTitle');
-    const imageEl = document.getElementById('photoViewerImage');
-    const counterEl = document.getElementById('photoCounter');
-    
-    if (titleEl) titleEl.textContent = currentPaper.title;
-    if (imageEl) imageEl.src = currentPaper.image;
-    if (counterEl) counterEl.textContent = `${CONFIG.currentIndex + 1} / ${CONFIG.press.length}`;
-}
-
-// ==========================================
 // VOTES PUBLICS
 // ==========================================
 async function fetchAndDisplayPublicVotes() {
@@ -1960,9 +1836,6 @@ function toggleUpdates(promiseId) {
         updatesList.style.display = updatesList.style.display === 'none' ? 'block' : 'none';
     }
 }
-
-// Fonction ratePromise remplacée par showRatingModal
-// function ratePromise(promiseId) { ... }
 
 function sharePromise(promiseId) {
     const promise = CONFIG.promises.find(p => p.id === promiseId);

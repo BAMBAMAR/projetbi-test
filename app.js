@@ -1682,7 +1682,235 @@ function setupServiceRatings() {
     
     fetchAndDisplayServiceRatings();
 }
+// ==========================================
+// INITIALISATION DES ÉTOILES DE NOTATION
+// ==========================================
+function initStarRatings() {
+    console.log('⭐ Initialisation des étoiles de notation...');
+    
+    // Fonction pour mettre à jour l'affichage des étoiles
+    function updateStars(container, rating) {
+        const stars = container.querySelectorAll('i.far, i.fas');
+        stars.forEach((star, index) => {
+            const starValue = parseInt(star.getAttribute('data-value'));
+            if (starValue <= rating) {
+                star.classList.remove('far');
+                star.classList.add('fas', 'star-active');
+            } else {
+                star.classList.remove('fas', 'star-active');
+                star.classList.add('far');
+            }
+        });
+    }
+    
+    // Initialiser chaque ensemble d'étoiles
+    document.querySelectorAll('.stars-rating').forEach(container => {
+        const criteria = container.getAttribute('data-criteria');
+        const input = container.querySelector(`input[name="${criteria}"]`);
+        
+        if (!input) return;
+        
+        const stars = container.querySelectorAll('i[data-value]');
+        
+        // Valeur par défaut
+        const defaultValue = parseInt(input.value) || 3;
+        updateStars(container, defaultValue);
+        
+        // Gestion des clics
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const value = parseInt(star.getAttribute('data-value'));
+                input.value = value;
+                updateStars(container, value);
+            });
+            
+            // Effet hover
+            star.addEventListener('mouseenter', () => {
+                const hoverValue = parseInt(star.getAttribute('data-value'));
+                updateStars(container, hoverValue);
+            });
+            
+            star.addEventListener('mouseleave', () => {
+                const currentValue = parseInt(input.value) || 3;
+                updateStars(container, currentValue);
+            });
+        });
+    });
+}
 
+// ==========================================
+// CORRECTION DE setupServiceRatings
+// ==========================================
+function setupServiceRatings() {
+    const form = document.getElementById('ratingForm');
+    
+    if (!form) {
+        console.error('❌ Formulaire de notation non trouvé');
+        return;
+    }
+    
+    console.log('✅ Formulaire de notation trouvé');
+    
+    // Initialiser les étoiles
+    initStarRatings();
+    
+    // Gestion de la soumission du formulaire
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const service = document.getElementById('service').value;
+        const accessibility = document.getElementById('accessibility').value;
+        const welcome = document.getElementById('welcome').value;
+        const efficiency = document.getElementById('efficiency').value;
+        const transparency = document.getElementById('transparency').value;
+        const comment = document.getElementById('comment').value.trim();
+        
+        // Validation
+        if (!service) {
+            showNotification('Veuillez sélectionner un service', 'error');
+            return;
+        }
+        
+        // Préparer les données
+        const ratingData = {
+            service: service,
+            accessibility: parseInt(accessibility) || 0,
+            welcome: parseInt(welcome) || 0,
+            efficiency: parseInt(efficiency) || 0,
+            transparency: parseInt(transparency) || 0,
+            comment: comment,
+            date: new Date().toISOString(),
+            ip_address: await getIPAddress()
+        };
+        
+        console.log('📝 Données à envoyer:', ratingData);
+        
+        // Sauvegarder localement
+        saveRatingLocally(ratingData);
+        
+        // Essayer d'envoyer à Supabase
+        const success = await saveRatingToSupabase(ratingData);
+        
+        if (success) {
+            showNotification('Merci pour votre notation !', 'success');
+            form.reset();
+            resetStars();
+            setTimeout(() => fetchAndDisplayServiceRatings(), 1000);
+        } else {
+            showNotification('Notation enregistrée en local', 'info');
+        }
+    });
+}
+
+// ==========================================
+// FONCTIONS AUXILIAIRES POUR LES NOTATIONS
+// ==========================================
+function resetStars() {
+    document.querySelectorAll('.stars-rating').forEach(container => {
+        const criteria = container.getAttribute('data-criteria');
+        const input = container.querySelector(`input[name="${criteria}"]`);
+        if (input) {
+            input.value = '3';
+        }
+        
+        const stars = container.querySelectorAll('i[data-value]');
+        stars.forEach((star, index) => {
+            if (index < 3) {
+                star.classList.remove('far');
+                star.classList.add('fas', 'star-active');
+            } else {
+                star.classList.remove('fas', 'star-active');
+                star.classList.add('far');
+            }
+        });
+    });
+}
+
+async function getIPAddress() {
+    try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        return data.ip;
+    } catch (error) {
+        return 'unknown';
+    }
+}
+
+function saveRatingLocally(ratingData) {
+    const ratings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
+    ratings.push({
+        id: Date.now().toString(),
+        ...ratingData
+    });
+    localStorage.setItem('service_ratings', JSON.stringify(ratings));
+    console.log('💾 Notation sauvegardée localement');
+}
+
+async function saveRatingToSupabase(ratingData) {
+    if (!supabaseClient) {
+        console.log('⚠️ Supabase non disponible - mode local seulement');
+        return false;
+    }
+    
+    try {
+        console.log('🚀 Envoi à Supabase...');
+        
+        // Structure des données pour Supabase
+        const supabaseData = {
+            service: ratingData.service,
+            accessibility: ratingData.accessibility,
+            welcome: ratingData.welcome,
+            efficiency: ratingData.efficiency,
+            transparency: ratingData.transparency,
+            comment: ratingData.comment,
+            created_at: new Date().toISOString(),
+            ip_address: ratingData.ip_address
+        };
+        
+        console.log('📤 Données Supabase:', supabaseData);
+        
+        const { data, error } = await supabaseClient
+            .from('service_ratings')
+            .insert([supabaseData]);
+        
+        if (error) {
+            console.error('❌ Erreur Supabase:', error);
+            
+            // Vérifier si la table existe
+            if (error.message.includes('relation')) {
+                console.error('📋 La table "service_ratings" n\'existe pas dans Supabase');
+                console.log('💡 Créez la table avec cette commande SQL:');
+                console.log(`
+                    CREATE TABLE service_ratings (
+                        id BIGSERIAL PRIMARY KEY,
+                        service TEXT NOT NULL,
+                        accessibility INTEGER DEFAULT 3,
+                        welcome INTEGER DEFAULT 3,
+                        efficiency INTEGER DEFAULT 3,
+                        transparency INTEGER DEFAULT 3,
+                        comment TEXT,
+                        created_at TIMESTAMPTZ DEFAULT NOW(),
+                        ip_address TEXT
+                    );
+                    
+                    -- Activez RLS si nécessaire
+                    ALTER TABLE service_ratings ENABLE ROW LEVEL SECURITY;
+                    CREATE POLICY "Enable all operations" ON service_ratings
+                        FOR ALL USING (true);
+                `);
+            }
+            
+            return false;
+        }
+        
+        console.log('✅ Notation envoyée à Supabase:', data);
+        return true;
+        
+    } catch (error) {
+        console.error('❌ Erreur envoi Supabase:', error);
+        return false;
+    }
+}
 async function fetchAndDisplayServiceRatings() {
     console.log('📊 Chargement des notations service...');
     

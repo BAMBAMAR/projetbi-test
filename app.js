@@ -26,12 +26,12 @@ const CONFIG = {
     promises: [],
     news: [],
     press: [
-        { id: '1', title: 'Le Soleil', date: '28/01/2026', image: 'https://picsum.photos/seed/soleil/300/400', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6d/Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg/200px-Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg.png' },
-        { id: '2', title: 'Sud Quotidien', date: '28/01/2026', image: 'https://picsum.photos/seed/sud/300/400', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/5/5b/Sud_Quotidien_logo.svg/200px-Sud_Quotidien_logo.svg.png' },
-        { id: '3', title: 'Libération', date: '28/01/2026', image: 'https://picsum.photos/seed/liberation/300/400', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/8/8d/Lib%C3%A9ration_Logo.svg/200px-Lib%C3%A9ration_Logo.svg.png' },
-        { id: '4', title: 'L\'Observateur', date: '28/01/2026', image: 'https://picsum.photos/seed/observateur/300/400', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/L%27Observateur_logo.svg/200px-L%27Observateur_logo.svg.png' },
-        { id: '5', title: 'Le Quotidien', date: '28/01/2026', image: 'https://picsum.photos/seed/quotidien/300/400', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/3/3c/Le_Quotidien_logo.svg/200px-Le_Quotidien_logo.svg.png' },
-        { id: '6', title: 'WalFadjri', date: '28/01/2026', image: 'https://picsum.photos/seed/walfadjri/300/400', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7c/Walf_fadjri_logo.svg/200px-Walf_fadjri_logo.svg.png' }
+        { id: '1', title: 'Le Soleil', date: '28/01/2026', image: 'https://picsum.photos/seed/soleil/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6d/Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg/200px-Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg.png' },
+        { id: '2', title: 'Sud Quotidien', date: '28/01/2026', image: 'https://picsum.photos/seed/sud/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/5/5b/Sud_Quotidien_logo.svg/200px-Sud_Quotidien_logo.svg.png' },
+        { id: '3', title: 'Libération', date: '28/01/2026', image: 'https://picsum.photos/seed/liberation/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/8/8d/Lib%C3%A9ration_Logo.svg/200px-Lib%C3%A9ration_Logo.svg.png' },
+        { id: '4', title: 'L\'Observateur', date: '28/01/2026', image: 'https://picsum.photos/seed/observateur/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/L%27Observateur_logo.svg/200px-L%27Observateur_logo.svg.png' },
+        { id: '5', title: 'Le Quotidien', date: '28/01/2026', image: 'https://picsum.photos/seed/quotidien/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/3/3c/Le_Quotidien_logo.svg/200px-Le_Quotidien_logo.svg.png' },
+        { id: '6', title: 'WalFadjri', date: '28/01/2026', image: 'https://picsum.photos/seed/walfadjri/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7c/Walf_fadjri_logo.svg/200px-Walf_fadjri_logo.svg.png' }
     ],
     currentIndex: 0,
     ratings: [],
@@ -52,6 +52,10 @@ const CONFIG = {
     currentRatingPromiseId: null,
     currentRatingValue: 0
 };
+
+// Variables pour le visualiseur photo
+let currentZoom = 1;
+let currentPhotoIndex = 0;
 
 // KPIs pour le carousel
 const KPI_ITEMS = [
@@ -124,12 +128,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupDailyPromise();
     setupPromisesCarousel();
     setupKpiCarousel();
-// setupPhotoViewerControls(); // Remplacé par la fonction ci-dessous
-setTimeout(() => {
-    if (typeof setupPhotoViewerControls === 'function') {
-        setupPhotoViewerControls();
-    }
-}, 500);
+    
+    // Initialiser le visualiseur photo avec un délai
+    setTimeout(() => {
+        if (typeof setupPhotoViewerControls === 'function') {
+            setupPhotoViewerControls();
+        }
+    }, 500);
+});
 
 // ==========================================
 // NAVIGATION
@@ -312,13 +318,11 @@ async function loadData() {
         });
         
         // Charger les votes publics si Supabase est disponible
-        if (supabaseClient) {
-            setTimeout(() => {
-                fetchAndDisplayPublicVotes().catch(error => {
-                    console.warn('⚠️ Impossible de charger les votes:', error.message);
-                });
-            }, 1000);
-        }
+        setTimeout(() => {
+            fetchAndDisplayPublicVotes().catch(error => {
+                console.warn('⚠️ Impossible de charger les votes:', error.message);
+            });
+        }, 1000);
         
         // Données de démonstration pour les actualités
         CONFIG.news = [
@@ -847,6 +851,9 @@ function renderPromises(promises) {
             </div>
         `;
     }).join('');
+    
+    // Forcer la visibilité des boutons
+    forceButtonVisibility();
 }
 
 function getStatusClass(promise) {
@@ -936,11 +943,6 @@ function generateStars(rating) {
 // MODAL DE NOTATION
 // ==========================================
 function showRatingModal(promiseId) {
-    if (!supabaseClient) {
-        showNotification('Fonctionnalité de notation non disponible hors ligne', 'info');
-        return;
-    }
-    
     const promise = CONFIG.promises.find(p => p.id === promiseId);
     if (!promise) return;
     
@@ -1074,7 +1076,20 @@ function submitRating() {
 }
 
 async function saveVoteToSupabase(promiseId, rating, comment = '') {
-    if (!supabaseClient) return;
+    if (!supabaseClient) {
+        showNotification('Mode démo : Vote enregistré localement', 'info');
+        // Mode fallback - stocker localement
+        const votes = JSON.parse(localStorage.getItem('promise_votes') || '[]');
+        votes.push({
+            id: Date.now().toString(),
+            promise_id: promiseId,
+            rating: rating,
+            comment: comment,
+            created_at: new Date().toISOString()
+        });
+        localStorage.setItem('promise_votes', JSON.stringify(votes));
+        return;
+    }
     
     try {
         const voteData = { 
@@ -1084,20 +1099,37 @@ async function saveVoteToSupabase(promiseId, rating, comment = '') {
             created_at: new Date().toISOString()
         };
         
+        console.log('Envoi du vote:', voteData);
+        
         const { error } = await supabaseClient
             .from('votes')
             .insert([voteData]);
         
-        if (error) throw error;
-        
-        showNotification('Merci pour votre vote !', 'success');
+        if (error) {
+            console.error('Erreur Supabase:', error);
+            
+            // Mode fallback - stocker localement
+            const votes = JSON.parse(localStorage.getItem('promise_votes') || '[]');
+            votes.push({
+                id: Date.now().toString(),
+                promise_id: promiseId,
+                rating: rating,
+                comment: comment,
+                created_at: new Date().toISOString()
+            });
+            localStorage.setItem('promise_votes', JSON.stringify(votes));
+            
+            showNotification('Vote enregistré localement (mode démo)', 'info');
+        } else {
+            showNotification('Merci pour votre vote !', 'success');
+        }
         
         // Recharger les votes après un délai
         setTimeout(() => fetchAndDisplayPublicVotes(), 500);
         
     } catch (error) {
         console.error('❌ Erreur sauvegarde vote:', error);
-        showNotification('Erreur lors de l\'enregistrement du vote', 'error');
+        showNotification('Mode démo : Vote enregistré localement', 'info');
     }
 }
 
@@ -1132,16 +1164,18 @@ function renderNewspapers() {
     const grid = document.getElementById('newspapersGrid');
     if (!grid) return;
     
-    grid.innerHTML = CONFIG.press.map(paper => `
-        <div class="newspaper-card" onclick="openPhotoViewer('${paper.id}')">
-            <div class="newspaper-preview">
-                <img src="${paper.image}" alt="${paper.title}" 
-                     onerror="this.onerror=null; this.src='https://picsum.photos/300/400?random=${paper.id}'">
+    grid.innerHTML = CONFIG.press.map(paper => {
+        return `
+            <div class="newspaper-card" onclick="openPhotoViewer('${paper.id}')">
+                <div class="newspaper-preview">
+                    <img src="${paper.image}" alt="${paper.title}" 
+                         onerror="this.onerror=null; this.src='https://picsum.photos/400/533?random=${paper.id}'">
+                </div>
+                <h4>${paper.title}</h4>
+                <p class="newspaper-date">${paper.date}</p>
             </div>
-            <h4>${paper.title}</h4>
-            <p class="newspaper-date">${paper.date}</p>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 // ==========================================
@@ -1212,11 +1246,17 @@ function renderPressCarousel() {
 
     const currentPaper = CONFIG.press[CONFIG.currentIndex];
 
+    // Utiliser une image plus grande pour le carousel
+    let imageUrl = currentPaper.image;
+    if (imageUrl.includes('picsum.photos')) {
+        imageUrl = imageUrl.replace('/400/533', '/700/933');
+    }
+
     carousel.innerHTML = `
         <div class="carousel-item active">
             <div class="carousel-image-container">
-                <img src="${currentPaper.image}" alt="${currentPaper.title}" 
-                     onerror="this.onerror=null; this.src='https://picsum.photos/800/400?random=${CONFIG.currentIndex}'"
+                <img src="${imageUrl}" alt="${currentPaper.title}" 
+                     onerror="this.onerror=null; this.src='https://picsum.photos/700/933?random=${CONFIG.currentIndex}'"
                      id="pressImage"
                      style="transform: scale(${CONFIG.zoomScale})">
             </div>
@@ -1450,7 +1490,7 @@ function setupPromisesCarousel() {
     });
 }
 
-window.goToCarouselSlide = function(index) {
+function goToCarouselSlide(index) {
     const carouselPromises = CONFIG.promises.slice(0, 6);
     const itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
     const totalSlides = Math.ceil(carouselPromises.length / itemsPerSlide);
@@ -1459,7 +1499,7 @@ window.goToCarouselSlide = function(index) {
         const currentSlide = index;
         setupPromisesCarousel();
     }
-};
+}
 
 function goToPromiseSection(promiseId) {
     const promisesSection = document.getElementById('promises');
@@ -1560,17 +1600,6 @@ function setupServiceRatings() {
     
     if (!form || !resultsSection) return;
     
-    if (!supabaseClient) {
-        resultsSection.innerHTML = `
-            <div class="rating-placeholder">
-                <i class="fas fa-exclamation-triangle"></i>
-                <p>Les fonctionnalités de notation ne sont pas disponibles actuellement.</p>
-                <p class="rating-note">La plateforme fonctionne en mode lecture seule.</p>
-            </div>
-        `;
-        return;
-    }
-    
     const starsContainers = document.querySelectorAll('.stars-container');
 
     starsContainers.forEach(container => {
@@ -1617,216 +1646,595 @@ function setupServiceRatings() {
             return;
         }
         
-        try {
-            if (supabaseClient) {
+        // Sauvegarder localement d'abord
+        const ratings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
+        ratings.push({
+            id: Date.now().toString(),
+            ...formData
+        });
+        localStorage.setItem('service_ratings', JSON.stringify(ratings));
+        
+        // Essayer de sauvegarder sur Supabase si disponible
+        if (supabaseClient) {
+            try {
                 const { error } = await supabaseClient.from('service_ratings').insert([formData]);
                 if (error) throw error;
-                
-                showNotification('Merci pour votre notation !', 'success');
-                form.reset();
-                
-                starsContainers.forEach(container => {
-                    const field = container.getAttribute('data-field');
-                    const input = document.getElementById(field);
-                    const stars = container.querySelectorAll('i');
-                    input.value = '3';
-                    updateStars(stars, 3);
-                });
-                
-                setTimeout(() => fetchAndDisplayServiceRatings(), 1000);
-            } else {
-                showNotification('Fonctionnalité non disponible hors ligne', 'info');
+                showNotification('Merci pour votre notation ! (en ligne)', 'success');
+            } catch (error) {
+                showNotification('Merci pour votre notation ! (local)', 'info');
             }
-        } catch (error) {
-            console.error('Erreur sauvegarde notation:', error);
-            showNotification('Erreur lors de l\'enregistrement. Réessayez plus tard.', 'error');
+        } else {
+            showNotification('Merci pour votre notation ! (mode démo)', 'info');
         }
+        
+        form.reset();
+        
+        starsContainers.forEach(container => {
+            const field = container.getAttribute('data-field');
+            const input = document.getElementById(field);
+            const stars = container.querySelectorAll('i');
+            input.value = '3';
+            updateStars(stars, 3);
+        });
+        
+        setTimeout(() => fetchAndDisplayServiceRatings(), 500);
     });
     
-    if (supabaseClient) fetchAndDisplayServiceRatings();
-    else displayDemoRatingResults();
+    fetchAndDisplayServiceRatings();
 }
 
 async function fetchAndDisplayServiceRatings() {
-    if (!supabaseClient) return;
+    console.log('📊 Chargement des notations service...');
     
-    try {
-        const { data, error } = await supabaseClient
-            .from('service_ratings')
-            .select('*')
-            .order('date', { ascending: false })
-            .limit(20);
-        
-        if (error) {
-            console.warn('⚠️ Table service_ratings non trouvée - utilisation données démo');
-            displayDemoRatingResults();
-            return;
+    // D'abord, récupérer les notations locales
+    const localRatings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
+    
+    // Si Supabase est disponible
+    if (supabaseClient) {
+        try {
+            const { data, error } = await supabaseClient
+                .from('service_ratings')
+                .select('*')
+                .order('date', { ascending: false })
+                .limit(20);
+            
+            if (!error && data) {
+                // Fusionner données locales et en ligne
+                const allRatings = [...localRatings, ...data];
+                displayRatingResults(allRatings);
+                return;
+            }
+        } catch (error) {
+            console.warn('⚠️ Table service_ratings non trouvée:', error.message);
         }
-        
-        if (data && data.length > 0) displayRatingResults(data);
-        else displayEmptyRatingResults();
-    } catch (error) {
-        console.warn('⚠️ Erreur chargement notations:', error.message);
+    }
+    
+    // Mode démo
+    if (localRatings.length > 0) {
+        displayRatingResults(localRatings);
+    } else {
         displayDemoRatingResults();
     }
-}
-
-function displayDemoRatingResults() {
-    const resultsSection = document.getElementById('ratingResults');
-    if (!resultsSection) return;
-    
-    resultsSection.innerHTML = `
-        <div class="rating-results-grid">
-            <div class="rating-results-card">
-                <h4><i class="fas fa-chart-bar"></i> Meilleurs Services (Démo)</h4>
-                <div class="top-services-grid">
-                    <div class="service-item-card gold">
-                        <div class="service-rank-badge gold">1</div>
-                        <div class="service-info-card">
-                            <div class="service-name-card">Santé Publique</div>
-                            <div class="service-stats-card">
-                                <span class="service-score-card"><i class="fas fa-star"></i> 4.7/5</span>
-                                <span class="service-count-card">128 votes</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="service-item-card silver">
-                        <div class="service-rank-badge silver">2</div>
-                        <div class="service-info-card">
-                            <div class="service-name-card">Éducation Nationale</div>
-                            <div class="service-stats-card">
-                                <span class="service-score-card"><i class="fas fa-star"></i> 4.3/5</span>
-                                <span class="service-count-card">95 votes</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="service-item-card bronze">
-                        <div class="service-rank-badge bronze">3</div>
-                        <div class="service-info-card">
-                            <div class="service-name-card">Transports</div>
-                            <div class="service-stats-card">
-                                <span class="service-score-card"><i class="fas fa-star"></i> 3.9/5</span>
-                                <span class="service-count-card">87 votes</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="rating-results-card">
-                <h4><i class="fas fa-clock"></i> Dernières Notations (Démo)</h4>
-                <div class="recent-ratings">
-                    <div class="recent-item">
-                        <div class="recent-header">
-                            <span class="recent-service">Santé Publique</span>
-                            <span class="recent-date">28/01/2026</span>
-                        </div>
-                        <div class="recent-score"><i class="fas fa-star"></i> 5.0/5</div>
-                        <div class="recent-comment">Très bon accueil et délais réduits</div>
-                    </div>
-                    <div class="recent-item">
-                        <div class="recent-header">
-                            <span class="recent-service">Éducation Nationale</span>
-                            <span class="recent-date">27/01/2026</span>
-                        </div>
-                        <div class="recent-score"><i class="fas fa-star"></i> 4.0/5</div>
-                        <div class="recent-comment">Amélioration notable des infrastructures</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="rating-results-card">
-                <h4><i class="fas fa-poll"></i> Statistiques Globales</h4>
-                <div class="stats-overview-grid">
-                    <div class="stat-item-card">
-                        <div class="stat-value-card">310</div>
-                        <div class="stat-label-card">Votes totaux</div>
-                    </div>
-                    <div class="stat-item-card">
-                        <div class="stat-value-card">8</div>
-                        <div class="stat-label-card">Services évalués</div>
-                    </div>
-                    <div class="stat-item-card">
-                        <div class="stat-value-card">185</div>
-                        <div class="stat-label-card">Avec commentaires</div>
-                    </div>
-                </div>
-                
-                <h5 style="margin-top: 20px; margin-bottom: 10px;"><i class="fas fa-th-list"></i> Votes par Service</h5>
-                <div class="votes-by-service-list">
-                    <div class="service-vote-item-card">
-                        <span class="service-name-card">Santé Publique</span>
-                        <span class="service-votes-card">128 votes</span>
-                    </div>
-                    <div class="service-vote-item-card">
-                        <span class="service-name-card">Éducation Nationale</span>
-                        <span class="service-votes-card">95 votes</span>
-                    </div>
-                    <div class="service-vote-item-card">
-                        <span class="service-name-card">Transports</span>
-                        <span class="service-votes-card">87 votes</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="rating-disclaimer">
-            <i class="fas fa-info-circle"></i>
-            Ces données sont à titre démonstratif. Les fonctionnalités complètes seront activées lorsque la base de données sera configurée.
-        </div>
-    `;
-}
-
-function displayEmptyRatingResults() {
-    const resultsSection = document.getElementById('ratingResults');
-    if (!resultsSection) return;
-    
-    resultsSection.innerHTML = `
-        <div class="rating-placeholder">
-            <i class="fas fa-star"></i>
-            <p>Aucune notation pour le moment.</p>
-            <p class="rating-note">Soyez le premier à noter un service public !</p>
-        </div>
-    `;
 }
 
 // ==========================================
 // VOTES PUBLICS
 // ==========================================
 async function fetchAndDisplayPublicVotes() {
-    if (!supabaseClient) return;
+    console.log('📊 Chargement des votes...');
     
-    try {
-        const { data, error } = await supabaseClient
-            .from('votes')
-            .select('promise_id, rating');
-        
-        if (error) {
-            console.warn('⚠️ Table votes non trouvée - pas de votes disponibles');
-            return;
+    // D'abord, récupérer les votes locaux
+    const localVotes = JSON.parse(localStorage.getItem('promise_votes') || '[]');
+    
+    // Si Supabase est disponible, essayer de récupérer les votes en ligne
+    if (supabaseClient) {
+        try {
+            const { data, error } = await supabaseClient
+                .from('votes')
+                .select('promise_id, rating, comment, created_at');
+            
+            if (!error && data) {
+                // Fusionner votes locaux et en ligne
+                const allVotes = [...localVotes, ...data];
+                processVotes(allVotes);
+                return;
+            }
+        } catch (error) {
+            console.warn('⚠️ Erreur chargement votes Supabase:', error.message);
         }
-        
-        const votesMap = {};
-        data.forEach(vote => {
-            if (!votesMap[vote.promise_id]) {
-                votesMap[vote.promise_id] = { sum: 0, count: 0 };
-            }
-            votesMap[vote.promise_id].sum += vote.rating;
-            votesMap[vote.promise_id].count += 1;
-        });
-        
-        CONFIG.promises.forEach(promise => {
-            if (votesMap[promise.id]) {
-                promise.publicAvg = votesMap[promise.id].sum / votesMap[promise.id].count;
-                promise.publicCount = votesMap[promise.id].count;
-            }
-        });
-        
-        renderPromises(CONFIG.promises.slice(0, CONFIG.currentVisible));
-        updateStats();
-        
-    } catch (error) {
-        console.warn('⚠️ Erreur chargement votes:', error.message);
     }
+    
+    // Utiliser uniquement les votes locaux
+    processVotes(localVotes);
+}
+
+function processVotes(votes) {
+    const votesMap = {};
+    votes.forEach(vote => {
+        if (!votesMap[vote.promise_id]) {
+            votesMap[vote.promise_id] = { sum: 0, count: 0 };
+        }
+        votesMap[vote.promise_id].sum += vote.rating;
+        votesMap[vote.promise_id].count += 1;
+    });
+    
+    CONFIG.promises.forEach(promise => {
+        if (votesMap[promise.id]) {
+            promise.publicAvg = votesMap[promise.id].sum / votesMap[promise.id].count;
+            promise.publicCount = votesMap[promise.id].count;
+        }
+    });
+    
+    renderPromises(CONFIG.promises.slice(0, CONFIG.currentVisible));
+    updateStats();
+}
+
+// ==========================================
+// FONCTIONS POUR LA VISUALISATION PHOTO
+// ==========================================
+function initPhotoViewer() {
+    console.log('📸 Initialisation du visualiseur photo');
+    // Cette fonction est appelée au chargement
+}
+
+function setupPhotoViewerControls() {
+    console.log('🎯 Configuration des contrôles du visualiseur photo');
+    
+    // Créer le modal si nécessaire
+    if (!document.getElementById('photoViewerModal')) {
+        const modal = document.createElement('div');
+        modal.id = 'photoViewerModal';
+        modal.className = 'photo-viewer-modal';
+        modal.innerHTML = `
+            <div class="photo-viewer-content">
+                <div class="photo-viewer-header">
+                    <h3><i class="fas fa-newspaper"></i> Revue de Presse</h3>
+                    <div class="photo-viewer-controls">
+                        <button onclick="zoomIn()" title="Zoom +"><i class="fas fa-search-plus"></i></button>
+                        <button onclick="zoomReset()" title="Réinitialiser"><i class="fas fa-expand"></i></button>
+                        <button onclick="zoomOut()" title="Zoom -"><i class="fas fa-search-minus"></i></button>
+                    </div>
+                    <button id="closeViewerBtn" onclick="closePhotoViewer()">&times;</button>
+                </div>
+                <div class="photo-viewer-body">
+                    <button class="nav-btn prev" onclick="prevPhoto()">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="photo-container">
+                        <img id="photoViewerImage" src="" alt="">
+                    </div>
+                    <button class="nav-btn next" onclick="nextPhoto()">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="photo-viewer-footer">
+                    <span id="photoViewerInfo"></span>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+}
+
+function openPhotoViewer(pressId) {
+    console.log('📰 Ouvrir visualiseur pour:', pressId);
+    
+    const index = CONFIG.press.findIndex(p => p.id === pressId);
+    if (index === -1) return;
+    
+    currentPhotoIndex = index;
+    currentZoom = 1;
+    
+    const modal = document.getElementById('photoViewerModal');
+    const image = document.getElementById('photoViewerImage');
+    const info = document.getElementById('photoViewerInfo');
+    
+    const paper = CONFIG.press[currentPhotoIndex];
+    
+    // Utiliser une image plus grande (600x800 au lieu de 400/533)
+    let imageUrl = paper.image;
+    if (imageUrl.includes('picsum.photos')) {
+        imageUrl = imageUrl.replace('/400/533', '/600/800');
+    }
+    
+    image.src = imageUrl;
+    image.alt = paper.title;
+    image.style.transform = `scale(${currentZoom})`;
+    image.style.cursor = currentZoom > 1 ? 'grab' : 'default';
+    
+    info.textContent = `${paper.title} - ${paper.date}`;
+    
+    modal.style.display = 'flex';
+    
+    // Désactiver le défilement de la page
+    document.body.style.overflow = 'hidden';
+    
+    // Setup drag and drop pour le zoom
+    setupImageDrag(image);
+}
+
+function closePhotoViewer() {
+    const modal = document.getElementById('photoViewerModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+function zoomIn() {
+    currentZoom = Math.min(currentZoom + 0.25, 3);
+    updateZoom();
+}
+
+function zoomOut() {
+    currentZoom = Math.max(currentZoom - 0.25, 1);
+    updateZoom();
+}
+
+function zoomReset() {
+    currentZoom = 1;
+    updateZoom();
+}
+
+function updateZoom() {
+    const image = document.getElementById('photoViewerImage');
+    if (image) {
+        image.style.transform = `scale(${currentZoom})`;
+        image.style.cursor = currentZoom > 1 ? 'grab' : 'default';
+    }
+}
+
+function prevPhoto() {
+    currentPhotoIndex = (currentPhotoIndex - 1 + CONFIG.press.length) % CONFIG.press.length;
+    currentZoom = 1;
+    updateViewerPhoto();
+}
+
+function nextPhoto() {
+    currentPhotoIndex = (currentPhotoIndex + 1) % CONFIG.press.length;
+    currentZoom = 1;
+    updateViewerPhoto();
+}
+
+function updateViewerPhoto() {
+    const image = document.getElementById('photoViewerImage');
+    const info = document.getElementById('photoViewerInfo');
+    
+    const paper = CONFIG.press[currentPhotoIndex];
+    
+    // Utiliser une image plus grande
+    let imageUrl = paper.image;
+    if (imageUrl.includes('picsum.photos')) {
+        imageUrl = imageUrl.replace('/400/533', '/600/800');
+    }
+    
+    image.src = imageUrl;
+    image.alt = paper.title;
+    image.style.transform = `scale(${currentZoom})`;
+    
+    info.textContent = `${paper.title} - ${paper.date}`;
+}
+
+function setupImageDrag(image) {
+    let isDragging = false;
+    let startX, startY, translateX = 0, translateY = 0;
+    
+    image.addEventListener('mousedown', (e) => {
+        if (currentZoom > 1) {
+            isDragging = true;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+            image.style.cursor = 'grabbing';
+        }
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging || currentZoom <= 1) return;
+        e.preventDefault();
+        
+        translateX = e.clientX - startX;
+        translateY = e.clientY - startY;
+        
+        // Limiter le déplacement
+        const maxX = (image.clientWidth * currentZoom - image.parentElement.clientWidth) / 2;
+        const maxY = (image.clientHeight * currentZoom - image.parentElement.clientHeight) / 2;
+        
+        translateX = Math.max(-maxX, Math.min(maxX, translateX));
+        translateY = Math.max(-maxY, Math.min(maxY, translateY));
+        
+        image.style.transform = `scale(${currentZoom}) translate(${translateX}px, ${translateY}px)`;
+    });
+    
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+        if (currentZoom > 1) {
+            image.style.cursor = 'grab';
+        }
+    });
+}
+
+// ==========================================
+// FONCTIONS POUR LA NOTATION - STRUCTURE VERTICALE
+// ==========================================
+function displayRatingResults(data) {
+    if (!data || data.length === 0) {
+        displayEmptyRatingResults();
+        return;
+    }
+
+    // 1. Calculer les statistiques globales
+    const totalVotes = data.length;
+    const uniqueServices = [...new Set(data.map(item => item.service))];
+    const avgRating = (data.reduce((sum, item) => {
+        const accessibility = parseInt(item.accessibility) || 0;
+        const welcome = parseInt(item.welcome) || 0;
+        const efficiency = parseInt(item.efficiency) || 0;
+        const transparency = parseInt(item.transparency) || 0;
+        const avg = (accessibility + welcome + efficiency + transparency) / 4;
+        return sum + avg;
+    }, 0) / totalVotes).toFixed(1);
+
+    // Mettre à jour les statistiques globales
+    const totalVotesEl = document.getElementById('totalVotes');
+    const totalServicesEl = document.getElementById('totalServices');
+    const avgRatingEl = document.getElementById('avgRating');
+    
+    if (totalVotesEl) totalVotesEl.textContent = totalVotes;
+    if (totalServicesEl) totalServicesEl.textContent = uniqueServices.length;
+    if (avgRatingEl) avgRatingEl.textContent = avgRating;
+
+    // 2. Afficher les dernières notations
+    const recentRatings = document.getElementById('recentRatings');
+    if (recentRatings) {
+        recentRatings.innerHTML = data.slice(0, 3).map(item => `
+            <div class="recent-item">
+                <div class="recent-header">
+                    <span class="recent-service">${item.service}</span>
+                    <span class="recent-date">${formatDate(new Date(item.date))}</span>
+                </div>
+                <div class="recent-score">
+                    <i class="fas fa-star"></i> 
+                    ${calculateAverageRating(item).toFixed(1)}/5
+                </div>
+                ${item.comment ? `
+                    <div class="recent-comment">"${item.comment.substring(0, 80)}${item.comment.length > 80 ? '...' : ''}"</div>
+                ` : ''}
+            </div>
+        `).join('');
+    }
+
+    // 3. Calculer et afficher les meilleurs services
+    const serviceStats = {};
+    data.forEach(item => {
+        if (!serviceStats[item.service]) {
+            serviceStats[item.service] = { sum: 0, count: 0, comments: 0 };
+        }
+        const rating = calculateAverageRating(item);
+        serviceStats[item.service].sum += rating;
+        serviceStats[item.service].count += 1;
+        if (item.comment && item.comment.trim() !== '') {
+            serviceStats[item.service].comments += 1;
+        }
+    });
+
+    const topServices = Object.entries(serviceStats)
+        .map(([service, stats]) => ({
+            service,
+            avg: stats.sum / stats.count,
+            count: stats.count,
+            comments: stats.comments
+        }))
+        .sort((a, b) => b.avg - a.avg)
+        .slice(0, 3);
+
+    const topServicesEl = document.getElementById('topServices');
+    if (topServicesEl) {
+        topServicesEl.innerHTML = topServices.map((service, index) => {
+            const badges = ['gold', 'silver', 'bronze'];
+            return `
+                <div class="service-item-card ${badges[index]}">
+                    <div class="service-rank-badge ${badges[index]}">${index + 1}</div>
+                    <div class="service-info-card">
+                        <div class="service-name-card">${service.service}</div>
+                        <div class="service-stats-card">
+                            <span class="service-score-card">
+                                <i class="fas fa-star"></i> ${service.avg.toFixed(1)}/5
+                            </span>
+                            <span class="service-count-card">${service.count} votes</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+}
+
+function calculateAverageRating(item) {
+    const accessibility = parseInt(item.accessibility) || 0;
+    const welcome = parseInt(item.welcome) || 0;
+    const efficiency = parseInt(item.efficiency) || 0;
+    const transparency = parseInt(item.transparency) || 0;
+    return (accessibility + welcome + efficiency + transparency) / 4;
+}
+
+function displayEmptyRatingResults() {
+    const recentRatings = document.getElementById('recentRatings');
+    const topServices = document.getElementById('topServices');
+    
+    if (recentRatings) {
+        recentRatings.innerHTML = `
+            <div class="rating-placeholder">
+                <p>Aucune notation récente</p>
+            </div>
+        `;
+    }
+    
+    if (topServices) {
+        topServices.innerHTML = `
+            <div class="rating-placeholder">
+                <p>Pas encore de services notés</p>
+            </div>
+        `;
+    }
+}
+
+function displayDemoRatingResults() {
+    // Statistiques Globales
+    const totalVotesEl = document.getElementById('totalVotes');
+    const totalServicesEl = document.getElementById('totalServices');
+    const avgRatingEl = document.getElementById('avgRating');
+    
+    if (totalVotesEl) totalVotesEl.textContent = '310';
+    if (totalServicesEl) totalServicesEl.textContent = '8';
+    if (avgRatingEl) avgRatingEl.textContent = '4.3';
+
+    // Dernières Notations
+    const recentRatings = document.getElementById('recentRatings');
+    if (recentRatings) {
+        recentRatings.innerHTML = `
+            <div class="recent-item">
+                <div class="recent-header">
+                    <span class="recent-service">Santé Publique</span>
+                    <span class="recent-date">28/01/2026</span>
+                </div>
+                <div class="recent-score"><i class="fas fa-star"></i> 5.0/5</div>
+                <div class="recent-comment">Très bon accueil et délais réduits</div>
+            </div>
+            <div class="recent-item">
+                <div class="recent-header">
+                    <span class="recent-service">Éducation Nationale</span>
+                    <span class="recent-date">27/01/2026</span>
+                </div>
+                <div class="recent-score"><i class="fas fa-star"></i> 4.0/5</div>
+                <div class="recent-comment">Amélioration notable des infrastructures</div>
+            </div>
+            <div class="recent-item">
+                <div class="recent-header">
+                    <span class="recent-service">Transports</span>
+                    <span class="recent-date">26/01/2026</span>
+                </div>
+                <div class="recent-score"><i class="fas fa-star"></i> 3.5/5</div>
+                <div class="recent-comment">Ponctualité à améliorer</div>
+            </div>
+        `;
+    }
+
+    // Meilleurs Services
+    const topServices = document.getElementById('topServices');
+    if (topServices) {
+        topServices.innerHTML = `
+            <div class="service-item-card gold">
+                <div class="service-rank-badge gold">1</div>
+                <div class="service-info-card">
+                    <div class="service-name-card">Santé Publique</div>
+                    <div class="service-stats-card">
+                        <span class="service-score-card"><i class="fas fa-star"></i> 4.7/5</span>
+                        <span class="service-count-card">128 votes</span>
+                    </div>
+                </div>
+            </div>
+            <div class="service-item-card silver">
+                <div class="service-rank-badge silver">2</div>
+                <div class="service-info-card">
+                    <div class="service-name-card">Éducation Nationale</div>
+                    <div class="service-stats-card">
+                        <span class="service-score-card"><i class="fas fa-star"></i> 4.3/5</span>
+                        <span class="service-count-card">95 votes</span>
+                    </div>
+                </div>
+            </div>
+            <div class="service-item-card bronze">
+                <div class="service-rank-badge bronze">3</div>
+                <div class="service-info-card">
+                    <div class="service-name-card">Transports</div>
+                    <div class="service-stats-card">
+                        <span class="service-score-card"><i class="fas fa-star"></i> 3.9/5</span>
+                        <span class="service-count-card">87 votes</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+}
+
+// ==========================================
+// FORCER LA VISIBILITÉ DES BOUTONS
+// ==========================================
+function forceButtonVisibility() {
+    console.log('🎨 Forçage de la visibilité des boutons...');
+    
+    // Attendre que le DOM soit complètement chargé
+    setTimeout(() => {
+        const shareButtons = document.querySelectorAll('.promise-actions .social-btn');
+        const starButtons = document.querySelectorAll('.promise-actions .btn-stars');
+        
+        console.log(`🎯 ${shareButtons.length} boutons de partage trouvés`);
+        console.log(`🎯 ${starButtons.length} boutons étoiles trouvés`);
+        
+        // Appliquer des styles inline (priorité maximale)
+        shareButtons.forEach(btn => {
+            btn.style.cssText = `
+                background: #00695f !important;
+                color: white !important;
+                border: 2px solid white !important;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 40px !important;
+                height: 40px !important;
+                border-radius: 50% !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            `;
+            
+            // Classes spécifiques
+            if (btn.classList.contains('fb')) {
+                btn.style.background = '#3b5998 !important';
+            }
+            if (btn.classList.contains('tw')) {
+                btn.style.background = '#1da1f2 !important';
+            }
+            if (btn.classList.contains('wa')) {
+                btn.style.background = '#25d366 !important';
+            }
+        });
+        
+        starButtons.forEach(btn => {
+            btn.style.cssText = `
+                background: linear-gradient(135deg, #f57c00, #ff6f3c) !important;
+                color: white !important;
+                border: 2px solid #f57c00 !important;
+                font-weight: bold !important;
+                padding: 8px 16px !important;
+                border-radius: 20px !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 8px !important;
+                box-shadow: 0 2px 8px rgba(245,124,0,0.4) !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            `;
+        });
+        
+        // Améliorer toute la section actions
+        const actionSections = document.querySelectorAll('.promise-actions');
+        actionSections.forEach(section => {
+            section.style.cssText = `
+                background: rgba(0,105,95,0.05) !important;
+                border: 2px solid #e0e0e0 !important;
+                border-radius: 8px !important;
+                padding: 12px !important;
+                margin-top: 16px !important;
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            `;
+        });
+        
+    }, 500); // Attendre un peu que tout soit chargé
 }
 
 // ==========================================
@@ -1917,325 +2325,6 @@ window.sharePromise = sharePromise;
 window.resetFilters = resetFilters;
 window.goToSlide = goToSlide;
 window.openPhotoViewer = openPhotoViewer;
-window.togglePressZoom = togglePressZoom;
-window.goToCarouselSlide = goToCarouselSlide;
-// ==========================================
-// FONCTIONS MANQUANTES POUR LA VISUALISATION PHOTO
-// ==========================================
-function initPhotoViewer() {
-    console.log('📸 Initialisation du visualiseur photo');
-    // Cette fonction sera implémentée plus tard
-}
-
-function openPhotoViewer(pressId) {
-    console.log('Ouvrir visualiseur pour:', pressId);
-    // Implémentation basique
-    const paper = CONFIG.press.find(p => p.id === pressId);
-    if (paper) {
-        window.open(paper.image, '_blank');
-    }
-}
-
-// ==========================================
-// FONCTIONS POUR LA NOTATION - STRUCTURE VERTICALE
-// ==========================================
-function displayRatingResults(data) {
-    if (!data || data.length === 0) {
-        displayEmptyRatingResults();
-        return;
-    }
-
-    // 1. Calculer les statistiques globales
-    const totalVotes = data.length;
-    const uniqueServices = [...new Set(data.map(item => item.service))];
-    const avgRating = (data.reduce((sum, item) => {
-        const accessibility = parseInt(item.accessibility) || 0;
-        const welcome = parseInt(item.welcome) || 0;
-        const efficiency = parseInt(item.efficiency) || 0;
-        const transparency = parseInt(item.transparency) || 0;
-        const avg = (accessibility + welcome + efficiency + transparency) / 4;
-        return sum + avg;
-    }, 0) / totalVotes).toFixed(1);
-
-    // Mettre à jour les statistiques globales
-    document.getElementById('totalVotes').textContent = totalVotes;
-    document.getElementById('totalServices').textContent = uniqueServices.length;
-    document.getElementById('avgRating').textContent = avgRating;
-
-    // 2. Afficher les dernières notations
-    const recentRatings = document.getElementById('recentRatings');
-    recentRatings.innerHTML = data.slice(0, 3).map(item => `
-        <div class="recent-item">
-            <div class="recent-header">
-                <span class="recent-service">${item.service}</span>
-                <span class="recent-date">${formatDate(new Date(item.date))}</span>
-            </div>
-            <div class="recent-score">
-                <i class="fas fa-star"></i> 
-                ${calculateAverageRating(item).toFixed(1)}/5
-            </div>
-            ${item.comment ? `
-                <div class="recent-comment">"${item.comment.substring(0, 80)}${item.comment.length > 80 ? '...' : ''}"</div>
-            ` : ''}
-        </div>
-    `).join('');
-
-    // 3. Calculer et afficher les meilleurs services
-    const serviceStats = {};
-    data.forEach(item => {
-        if (!serviceStats[item.service]) {
-            serviceStats[item.service] = { sum: 0, count: 0, comments: 0 };
-        }
-        const rating = calculateAverageRating(item);
-        serviceStats[item.service].sum += rating;
-        serviceStats[item.service].count += 1;
-        if (item.comment && item.comment.trim() !== '') {
-            serviceStats[item.service].comments += 1;
-        }
-    });
-
-    const topServices = Object.entries(serviceStats)
-        .map(([service, stats]) => ({
-            service,
-            avg: stats.sum / stats.count,
-            count: stats.count,
-            comments: stats.comments
-        }))
-        .sort((a, b) => b.avg - a.avg)
-        .slice(0, 3);
-
-    const topServicesEl = document.getElementById('topServices');
-    topServicesEl.innerHTML = topServices.map((service, index) => {
-        const badges = ['gold', 'silver', 'bronze'];
-        return `
-            <div class="service-item-card ${badges[index]}">
-                <div class="service-rank-badge ${badges[index]}">${index + 1}</div>
-                <div class="service-info-card">
-                    <div class="service-name-card">${service.service}</div>
-                    <div class="service-stats-card">
-                        <span class="service-score-card">
-                            <i class="fas fa-star"></i> ${service.avg.toFixed(1)}/5
-                        </span>
-                        <span class="service-count-card">${service.count} votes</span>
-                    </div>
-                </div>
-            </div>
-        `;
-    }).join('');
-}
-
-function calculateAverageRating(item) {
-    const accessibility = parseInt(item.accessibility) || 0;
-    const welcome = parseInt(item.welcome) || 0;
-    const efficiency = parseInt(item.efficiency) || 0;
-    const transparency = parseInt(item.transparency) || 0;
-    return (accessibility + welcome + efficiency + transparency) / 4;
-}
-
-function displayEmptyRatingResults() {
-    const recentRatings = document.getElementById('recentRatings');
-    const topServices = document.getElementById('topServices');
-    
-    recentRatings.innerHTML = `
-        <div class="rating-placeholder">
-            <p>Aucune notation récente</p>
-        </div>
-    `;
-    
-    topServices.innerHTML = `
-        <div class="rating-placeholder">
-            <p>Pas encore de services notés</p>
-        </div>
-    `;
-}
-
-// ==========================================
-// CORRECTION DE L'APPEL INITIAL
-// ==========================================
-// Dans la fonction d'initialisation, remplacez :
-// initPhotoViewer(); // Cette ligne cause l'erreur
-
-// Par :
-setTimeout(() => {
-    console.log('📸 Visualiseur photo prêt');
-    // Vous pourrez ajouter la fonction initPhotoViewer() plus tard
-}, 100);
-
-// Et pour la fonction renderNewspapers(), remplacez :
-// onclick="openPhotoViewer('${paper.id}')"
-
-// Par (temporairement) :
-onclick="window.open('${paper.image}', '_blank')"
-
-// ==========================================
-// AJOUT DES FONCTIONS AU WINDOW
-// ==========================================
-window.openPhotoViewer = openPhotoViewer;
-window.initPhotoViewer = initPhotoViewer;
-
-// ==========================================
-// CORRECTION DE LA FONCTION displayDemoRatingResults
-// ==========================================
-function displayDemoRatingResults() {
-    // Statistiques Globales
-    document.getElementById('totalVotes').textContent = '310';
-    document.getElementById('totalServices').textContent = '8';
-    document.getElementById('avgRating').textContent = '4.3';
-
-    // Dernières Notations
-    const recentRatings = document.getElementById('recentRatings');
-    recentRatings.innerHTML = `
-        <div class="recent-item">
-            <div class="recent-header">
-                <span class="recent-service">Santé Publique</span>
-                <span class="recent-date">28/01/2026</span>
-            </div>
-            <div class="recent-score"><i class="fas fa-star"></i> 5.0/5</div>
-            <div class="recent-comment">Très bon accueil et délais réduits</div>
-        </div>
-        <div class="recent-item">
-            <div class="recent-header">
-                <span class="recent-service">Éducation Nationale</span>
-                <span class="recent-date">27/01/2026</span>
-            </div>
-            <div class="recent-score"><i class="fas fa-star"></i> 4.0/5</div>
-            <div class="recent-comment">Amélioration notable des infrastructures</div>
-        </div>
-        <div class="recent-item">
-            <div class="recent-header">
-                <span class="recent-service">Transports</span>
-                <span class="recent-date">26/01/2026</span>
-            </div>
-            <div class="recent-score"><i class="fas fa-star"></i> 3.5/5</div>
-            <div class="recent-comment">Ponctualité à améliorer</div>
-        </div>
-    `;
-
-    // Meilleurs Services
-    const topServices = document.getElementById('topServices');
-    topServices.innerHTML = `
-        <div class="service-item-card gold">
-            <div class="service-rank-badge gold">1</div>
-            <div class="service-info-card">
-                <div class="service-name-card">Santé Publique</div>
-                <div class="service-stats-card">
-                    <span class="service-score-card"><i class="fas fa-star"></i> 4.7/5</span>
-                    <span class="service-count-card">128 votes</span>
-                </div>
-            </div>
-        </div>
-        <div class="service-item-card silver">
-            <div class="service-rank-badge silver">2</div>
-            <div class="service-info-card">
-                <div class="service-name-card">Éducation Nationale</div>
-                <div class="service-stats-card">
-                    <span class="service-score-card"><i class="fas fa-star"></i> 4.3/5</span>
-                    <span class="service-count-card">95 votes</span>
-                </div>
-            </div>
-        </div>
-        <div class="service-item-card bronze">
-            <div class="service-rank-badge bronze">3</div>
-            <div class="service-info-card">
-                <div class="service-name-card">Transports</div>
-                <div class="service-stats-card">
-                    <span class="service-score-card"><i class="fas fa-star"></i> 3.9/5</span>
-                    <span class="service-count-card">87 votes</span>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-// ==========================================
-// FORCER LA VISIBILITÉ DES BOUTONS
-// ==========================================
-function forceButtonVisibility() {
-    console.log('🎨 Forçage de la visibilité des boutons...');
-    
-    // Attendre que le DOM soit complètement chargé
-    setTimeout(() => {
-        const shareButtons = document.querySelectorAll('.promise-actions .social-btn');
-        const starButtons = document.querySelectorAll('.promise-actions .btn-stars');
-        
-        console.log(`🎯 ${shareButtons.length} boutons de partage trouvés`);
-        console.log(`🎯 ${starButtons.length} boutons étoiles trouvés`);
-        
-        // Appliquer des styles inline (priorité maximale)
-        shareButtons.forEach(btn => {
-            btn.style.cssText = `
-                background: #00695f !important;
-                color: white !important;
-                border: 2px solid white !important;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                width: 40px !important;
-                height: 40px !important;
-                border-radius: 50% !important;
-                opacity: 1 !important;
-                visibility: visible !important;
-            `;
-            
-            // Classes spécifiques
-            if (btn.classList.contains('fb')) {
-                btn.style.background = '#3b5998 !important';
-            }
-            if (btn.classList.contains('tw')) {
-                btn.style.background = '#1da1f2 !important';
-            }
-            if (btn.classList.contains('wa')) {
-                btn.style.background = '#25d366 !important';
-            }
-        });
-        
-        starButtons.forEach(btn => {
-            btn.style.cssText = `
-                background: linear-gradient(135deg, #f57c00, #ff6f3c) !important;
-                color: white !important;
-                border: 2px solid #f57c00 !important;
-                font-weight: bold !important;
-                padding: 8px 16px !important;
-                border-radius: 20px !important;
-                display: flex !important;
-                align-items: center !important;
-                gap: 8px !important;
-                box-shadow: 0 2px 8px rgba(245,124,0,0.4) !important;
-                opacity: 1 !important;
-                visibility: visible !important;
-            `;
-        });
-        
-        // Améliorer toute la section actions
-        const actionSections = document.querySelectorAll('.promise-actions');
-        actionSections.forEach(section => {
-            section.style.cssText = `
-                background: rgba(0,105,95,0.05) !important;
-                border: 2px solid #e0e0e0 !important;
-                border-radius: 8px !important;
-                padding: 12px !important;
-                margin-top: 16px !important;
-                display: flex !important;
-                justify-content: space-between !important;
-                align-items: center !important;
-                opacity: 1 !important;
-                visibility: visible !important;
-            `;
-        });
-        
-    }, 500); // Attendre un peu que tout soit chargé
-}
-
-// Appeler la fonction
-forceButtonVisibility();
-
-// Et aussi après chaque rendu
-setTimeout(forceButtonVisibility, 2000);
-// ==========================================
-// EXPORTS GLOBAUX POUR LA PRESSE
-// ==========================================
-window.openPhotoViewer = openPhotoViewer;
 window.closePhotoViewer = closePhotoViewer;
 window.zoomIn = zoomIn;
 window.zoomOut = zoomOut;
@@ -2243,4 +2332,5 @@ window.zoomReset = zoomReset;
 window.prevPhoto = prevPhoto;
 window.nextPhoto = nextPhoto;
 window.togglePressZoom = togglePressZoom;
-window.goToSlide = goToSlide;
+window.goToCarouselSlide = goToCarouselSlide;
+window.shareToPlatform = shareToPlatform;

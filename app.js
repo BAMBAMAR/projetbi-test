@@ -1917,3 +1917,230 @@ window.goToSlide = goToSlide;
 window.openPhotoViewer = openPhotoViewer;
 window.togglePressZoom = togglePressZoom;
 window.goToCarouselSlide = goToCarouselSlide;
+// ==========================================
+// FONCTIONS MANQUANTES POUR LA VISUALISATION PHOTO
+// ==========================================
+function initPhotoViewer() {
+    console.log('📸 Initialisation du visualiseur photo');
+    // Cette fonction sera implémentée plus tard
+}
+
+function openPhotoViewer(pressId) {
+    console.log('Ouvrir visualiseur pour:', pressId);
+    // Implémentation basique
+    const paper = CONFIG.press.find(p => p.id === pressId);
+    if (paper) {
+        window.open(paper.image, '_blank');
+    }
+}
+
+// ==========================================
+// FONCTIONS POUR LA NOTATION - STRUCTURE VERTICALE
+// ==========================================
+function displayRatingResults(data) {
+    if (!data || data.length === 0) {
+        displayEmptyRatingResults();
+        return;
+    }
+
+    // 1. Calculer les statistiques globales
+    const totalVotes = data.length;
+    const uniqueServices = [...new Set(data.map(item => item.service))];
+    const avgRating = (data.reduce((sum, item) => {
+        const accessibility = parseInt(item.accessibility) || 0;
+        const welcome = parseInt(item.welcome) || 0;
+        const efficiency = parseInt(item.efficiency) || 0;
+        const transparency = parseInt(item.transparency) || 0;
+        const avg = (accessibility + welcome + efficiency + transparency) / 4;
+        return sum + avg;
+    }, 0) / totalVotes).toFixed(1);
+
+    // Mettre à jour les statistiques globales
+    document.getElementById('totalVotes').textContent = totalVotes;
+    document.getElementById('totalServices').textContent = uniqueServices.length;
+    document.getElementById('avgRating').textContent = avgRating;
+
+    // 2. Afficher les dernières notations
+    const recentRatings = document.getElementById('recentRatings');
+    recentRatings.innerHTML = data.slice(0, 3).map(item => `
+        <div class="recent-item">
+            <div class="recent-header">
+                <span class="recent-service">${item.service}</span>
+                <span class="recent-date">${formatDate(new Date(item.date))}</span>
+            </div>
+            <div class="recent-score">
+                <i class="fas fa-star"></i> 
+                ${calculateAverageRating(item).toFixed(1)}/5
+            </div>
+            ${item.comment ? `
+                <div class="recent-comment">"${item.comment.substring(0, 80)}${item.comment.length > 80 ? '...' : ''}"</div>
+            ` : ''}
+        </div>
+    `).join('');
+
+    // 3. Calculer et afficher les meilleurs services
+    const serviceStats = {};
+    data.forEach(item => {
+        if (!serviceStats[item.service]) {
+            serviceStats[item.service] = { sum: 0, count: 0, comments: 0 };
+        }
+        const rating = calculateAverageRating(item);
+        serviceStats[item.service].sum += rating;
+        serviceStats[item.service].count += 1;
+        if (item.comment && item.comment.trim() !== '') {
+            serviceStats[item.service].comments += 1;
+        }
+    });
+
+    const topServices = Object.entries(serviceStats)
+        .map(([service, stats]) => ({
+            service,
+            avg: stats.sum / stats.count,
+            count: stats.count,
+            comments: stats.comments
+        }))
+        .sort((a, b) => b.avg - a.avg)
+        .slice(0, 3);
+
+    const topServicesEl = document.getElementById('topServices');
+    topServicesEl.innerHTML = topServices.map((service, index) => {
+        const badges = ['gold', 'silver', 'bronze'];
+        return `
+            <div class="service-item-card ${badges[index]}">
+                <div class="service-rank-badge ${badges[index]}">${index + 1}</div>
+                <div class="service-info-card">
+                    <div class="service-name-card">${service.service}</div>
+                    <div class="service-stats-card">
+                        <span class="service-score-card">
+                            <i class="fas fa-star"></i> ${service.avg.toFixed(1)}/5
+                        </span>
+                        <span class="service-count-card">${service.count} votes</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function calculateAverageRating(item) {
+    const accessibility = parseInt(item.accessibility) || 0;
+    const welcome = parseInt(item.welcome) || 0;
+    const efficiency = parseInt(item.efficiency) || 0;
+    const transparency = parseInt(item.transparency) || 0;
+    return (accessibility + welcome + efficiency + transparency) / 4;
+}
+
+function displayEmptyRatingResults() {
+    const recentRatings = document.getElementById('recentRatings');
+    const topServices = document.getElementById('topServices');
+    
+    recentRatings.innerHTML = `
+        <div class="rating-placeholder">
+            <p>Aucune notation récente</p>
+        </div>
+    `;
+    
+    topServices.innerHTML = `
+        <div class="rating-placeholder">
+            <p>Pas encore de services notés</p>
+        </div>
+    `;
+}
+
+// ==========================================
+// CORRECTION DE L'APPEL INITIAL
+// ==========================================
+// Dans la fonction d'initialisation, remplacez :
+// initPhotoViewer(); // Cette ligne cause l'erreur
+
+// Par :
+setTimeout(() => {
+    console.log('📸 Visualiseur photo prêt');
+    // Vous pourrez ajouter la fonction initPhotoViewer() plus tard
+}, 100);
+
+// Et pour la fonction renderNewspapers(), remplacez :
+// onclick="openPhotoViewer('${paper.id}')"
+
+// Par (temporairement) :
+onclick="window.open('${paper.image}', '_blank')"
+
+// ==========================================
+// AJOUT DES FONCTIONS AU WINDOW
+// ==========================================
+window.openPhotoViewer = openPhotoViewer;
+window.initPhotoViewer = initPhotoViewer;
+
+// ==========================================
+// CORRECTION DE LA FONCTION displayDemoRatingResults
+// ==========================================
+function displayDemoRatingResults() {
+    // Statistiques Globales
+    document.getElementById('totalVotes').textContent = '310';
+    document.getElementById('totalServices').textContent = '8';
+    document.getElementById('avgRating').textContent = '4.3';
+
+    // Dernières Notations
+    const recentRatings = document.getElementById('recentRatings');
+    recentRatings.innerHTML = `
+        <div class="recent-item">
+            <div class="recent-header">
+                <span class="recent-service">Santé Publique</span>
+                <span class="recent-date">28/01/2026</span>
+            </div>
+            <div class="recent-score"><i class="fas fa-star"></i> 5.0/5</div>
+            <div class="recent-comment">Très bon accueil et délais réduits</div>
+        </div>
+        <div class="recent-item">
+            <div class="recent-header">
+                <span class="recent-service">Éducation Nationale</span>
+                <span class="recent-date">27/01/2026</span>
+            </div>
+            <div class="recent-score"><i class="fas fa-star"></i> 4.0/5</div>
+            <div class="recent-comment">Amélioration notable des infrastructures</div>
+        </div>
+        <div class="recent-item">
+            <div class="recent-header">
+                <span class="recent-service">Transports</span>
+                <span class="recent-date">26/01/2026</span>
+            </div>
+            <div class="recent-score"><i class="fas fa-star"></i> 3.5/5</div>
+            <div class="recent-comment">Ponctualité à améliorer</div>
+        </div>
+    `;
+
+    // Meilleurs Services
+    const topServices = document.getElementById('topServices');
+    topServices.innerHTML = `
+        <div class="service-item-card gold">
+            <div class="service-rank-badge gold">1</div>
+            <div class="service-info-card">
+                <div class="service-name-card">Santé Publique</div>
+                <div class="service-stats-card">
+                    <span class="service-score-card"><i class="fas fa-star"></i> 4.7/5</span>
+                    <span class="service-count-card">128 votes</span>
+                </div>
+            </div>
+        </div>
+        <div class="service-item-card silver">
+            <div class="service-rank-badge silver">2</div>
+            <div class="service-info-card">
+                <div class="service-name-card">Éducation Nationale</div>
+                <div class="service-stats-card">
+                    <span class="service-score-card"><i class="fas fa-star"></i> 4.3/5</span>
+                    <span class="service-count-card">95 votes</span>
+                </div>
+            </div>
+        </div>
+        <div class="service-item-card bronze">
+            <div class="service-rank-badge bronze">3</div>
+            <div class="service-info-card">
+                <div class="service-name-card">Transports</div>
+                <div class="service-stats-card">
+                    <span class="service-score-card"><i class="fas fa-star"></i> 3.9/5</span>
+                    <span class="service-count-card">87 votes</span>
+                </div>
+            </div>
+        </div>
+    `;
+}

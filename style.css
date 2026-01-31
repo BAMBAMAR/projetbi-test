@@ -2990,8 +2990,8 @@ body {
 /* ===== CONTAINER D'IMAGE POUR DRAG ===== */
 .carousel-image-container {
     width: 100%;
-    height: 500px;
-    max-width: 900px;
+    height: 700px;
+    max-width: 1200px;
     display: flex;
     align-items: center;
     justify-content: center;

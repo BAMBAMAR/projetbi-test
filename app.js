@@ -1536,10 +1536,7 @@ function renderPressCarousel() {
                 <div class="carousel-info">
                     <div class="carousel-title">${currentPaper.title}</div>
                     <div class="carousel-date">${currentPaper.date}</div>
-                    <a href="https://projetbi.org/presse" target="_blank" class="carousel-link">
-                        Lire l'article <i class="fas fa-external-link-alt"></i>
-                    </a>
-                </div>
+                    </div>
             </div>
             
             <div class="carousel-controls-panel">

@@ -3870,3 +3870,41 @@ body {
     box-shadow: var(--shadow);
     background: linear-gradient(135deg, var(--primary-dark), var(--primary));
 }
+/* Styles pour les étoiles de notation */
+.stars-rating {
+    display: flex;
+    gap: 5px;
+    margin-top: 8px;
+}
+
+.stars-rating i {
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #ddd;
+}
+
+.stars-rating i.fas {
+    color: #FFD700; /* Couleur or */
+}
+
+.stars-rating i.star-active {
+    color: #FFD700;
+    transform: scale(1.1);
+}
+
+.stars-rating i:hover,
+.stars-rating i:hover ~ i {
+    color: #FFD700;
+}
+
+/* Animation pour les étoiles */
+@keyframes starPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.stars-rating i:active {
+    animation: starPulse 0.3s ease;
+}

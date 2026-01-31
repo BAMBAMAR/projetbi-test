@@ -576,10 +576,11 @@
         </div>
     </section>
 
-  <!-- Notation des Services Publics Section -->
+<!-- Remplacez la section Notation des Services Publics par ceci : -->
+
+<!-- Notation des Services Publics Section -->
 <section class="rating-section" id="rating">
     <div class="container">
-        <!-- Titre de la section -->
         <div class="section-header-modern">
             <h2 class="section-title">
                 <i class="fas fa-star-half-alt"></i>
@@ -587,7 +588,7 @@
             </h2>
         </div>
 
-        <!-- FORMULAIRE DE NOTATION (EN HAUT) -->
+        <!-- FORMULAIRE DE NOTATION -->
         <div class="rating-form-card" style="margin-bottom: var(--spacing-2xl);">
             <div class="rating-form-header">
                 <h3>
@@ -617,63 +618,67 @@
                 </div>
                 
                 <div class="rating-criteria-grid">
+                    <!-- Accessibilité -->
                     <div class="criteria-item">
-                        <label for="accessibility">
+                        <label>
                             <i class="fas fa-wheelchair"></i>
                             Accessibilité
                         </label>
-                        <div class="stars-container" data-field="accessibility">
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <input type="hidden" id="accessibility" value="3">
+                        <div class="stars-rating" data-criteria="accessibility">
+                            <i class="far fa-star" data-value="1"></i>
+                            <i class="far fa-star" data-value="2"></i>
+                            <i class="far fa-star" data-value="3"></i>
+                            <i class="far fa-star" data-value="4"></i>
+                            <i class="far fa-star" data-value="5"></i>
+                            <input type="hidden" name="accessibility" id="accessibility" value="3">
                         </div>
                     </div>
                     
+                    <!-- Accueil -->
                     <div class="criteria-item">
-                        <label for="welcome">
+                        <label>
                             <i class="fas fa-handshake"></i>
                             Accueil
                         </label>
-                        <div class="stars-container" data-field="welcome">
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <input type="hidden" id="welcome" value="3">
+                        <div class="stars-rating" data-criteria="welcome">
+                            <i class="far fa-star" data-value="1"></i>
+                            <i class="far fa-star" data-value="2"></i>
+                            <i class="far fa-star" data-value="3"></i>
+                            <i class="far fa-star" data-value="4"></i>
+                            <i class="far fa-star" data-value="5"></i>
+                            <input type="hidden" name="welcome" id="welcome" value="3">
                         </div>
                     </div>
                     
+                    <!-- Efficacité -->
                     <div class="criteria-item">
-                        <label for="efficiency">
+                        <label>
                             <i class="fas fa-bolt"></i>
                             Efficacité
                         </label>
-                        <div class="stars-container" data-field="efficiency">
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <input type="hidden" id="efficiency" value="3">
+                        <div class="stars-rating" data-criteria="efficiency">
+                            <i class="far fa-star" data-value="1"></i>
+                            <i class="far fa-star" data-value="2"></i>
+                            <i class="far fa-star" data-value="3"></i>
+                            <i class="far fa-star" data-value="4"></i>
+                            <i class="far fa-star" data-value="5"></i>
+                            <input type="hidden" name="efficiency" id="efficiency" value="3">
                         </div>
                     </div>
                     
+                    <!-- Transparence -->
                     <div class="criteria-item">
-                        <label for="transparency">
+                        <label>
                             <i class="fas fa-eye"></i>
                             Transparence
                         </label>
-                        <div class="stars-container" data-field="transparency">
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <input type="hidden" id="transparency" value="3">
+                        <div class="stars-rating" data-criteria="transparency">
+                            <i class="far fa-star" data-value="1"></i>
+                            <i class="far fa-star" data-value="2"></i>
+                            <i class="far fa-star" data-value="3"></i>
+                            <i class="far fa-star" data-value="4"></i>
+                            <i class="far fa-star" data-value="5"></i>
+                            <input type="hidden" name="transparency" id="transparency" value="3">
                         </div>
                     </div>
                 </div>
@@ -686,6 +691,7 @@
                     <textarea 
                         class="form-textarea" 
                         id="comment" 
+                        name="comment"
                         rows="3" 
                         placeholder="Partagez votre expérience..."></textarea>
                 </div>
@@ -697,7 +703,7 @@
             </form>
         </div>
 
-        <!-- RÉSULTATS DES NOTATIONS (EN BAS) -->
+        <!-- RÉSULTATS DES NOTATIONS -->
         <div class="rating-results-card">
             <div class="rating-results-header">
                 <h3>
@@ -707,9 +713,8 @@
                 <p>Découvrez ce que pensent les autres citoyens</p>
             </div>
             
-            <!-- Grille des résultats en 3 cartes -->
             <div class="rating-results-grid">
-                <!-- 1. Statistiques Globales -->
+                <!-- Statistiques Globales -->
                 <div class="rating-results-card">
                     <h4><i class="fas fa-chart-pie"></i> Statistiques Globales</h4>
                     <div class="stats-overview-grid">
@@ -728,7 +733,7 @@
                     </div>
                 </div>
                 
-                <!-- 2. Dernières Notations -->
+                <!-- Dernières Notations -->
                 <div class="rating-results-card">
                     <h4><i class="fas fa-history"></i> Dernières Notations</h4>
                     <div id="recentRatings" class="recent-ratings">
@@ -739,7 +744,7 @@
                     </div>
                 </div>
                 
-                <!-- 3. Meilleurs Services -->
+                <!-- Meilleurs Services -->
                 <div class="rating-results-card">
                     <h4><i class="fas fa-trophy"></i> Meilleurs Services</h4>
                     <div id="topServices" class="top-services-grid">

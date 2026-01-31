@@ -96,7 +96,7 @@ const KPI_ITEMS = [
     { label: '🔄 En Cours', value: '0', icon: '🔄' },
     { label: '⚠️ En Retard', value: '0', icon: '⚠️' },
     { label: '📈 Taux Réalisation', value: '0%', icon: '📈' },
-    { label: '⏱️ Délai Moyen', value: '0j', icon: '⏱️' },
+    { label: '⏱️ Délai/R. Moyen', value: 'N/A', icon: '⏱️' }, // Changé ici
     { label: '⭐ Note Moyenne', value: '0.0', icon: '⭐' },
     { label: '📋 Avec MAJ', value: '0', icon: '📋' }
 ];
@@ -502,9 +502,23 @@ function checkIfLate(status, deadline) {
     return CONFIG.CURRENT_DATE > deadline;
 }
 
+// ==========================================
+// FONCTION POUR CALCULER LES JOURS RESTANTS (AVEC SIGNE)
+// ==========================================
 function getDaysRemaining(deadline) {
-    const diff = deadline - CONFIG.CURRENT_DATE;
-    return Math.ceil(diff / (1000 * 60 * 60 * 24));
+    if (!deadline || !(deadline instanceof Date)) {
+        console.warn('Date limite invalide:', deadline);
+        return 0;
+    }
+    
+    const diff = deadline.getTime() - CONFIG.CURRENT_DATE.getTime();
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    
+    // Retourne:
+    // - Positif: jours restants avant échéance
+    // - Négatif: jours de retard
+    // - 0: échéance aujourd'hui
+    return days;
 }
 
 // ==========================================
@@ -579,8 +593,8 @@ function setupDailyPromise() {
                         <div class="deadline-item">
                             <span class="deadline-label">Temps restant :</span>
                             <span class="deadline-value ${daysRemaining < 0 ? 'late' : ''}">
-                                ${daysRemaining > 0 ? `${daysRemaining} jours` : daysRemaining < 0 ? `${Math.abs(daysRemaining)} jours de retard` : 'Aujourd\'hui'}
-                            </span>
+    ${formatDaysRemaining(daysRemaining)}
+</span>
                         </div>
                     </div>
                 </div>
@@ -623,6 +637,9 @@ function renderAll() {
 // ==========================================
 // UPDATE STATS
 // ==========================================
+// ==========================================
+// UPDATE STATS - VERSION CORRIGÉE
+// ==========================================
 function updateStats() {
     const total = CONFIG.promises.length;
     const realise = CONFIG.promises.filter(p => p.status === 'Réalisé').length;
@@ -632,27 +649,66 @@ function updateStats() {
     const withUpdates = CONFIG.promises.filter(p => p.updates && p.updates.length > 0).length;
     const tauxRealisation = total > 0 ? Math.round((realise / total) * 100) : 0;
     
-    KPI_ITEMS[0].value = total;
-    KPI_ITEMS[1].value = realise;
-    KPI_ITEMS[2].value = encours;
-    KPI_ITEMS[3].value = retard;
-    KPI_ITEMS[4].value = `${tauxRealisation}%`;
+    // ============= CALCULS CORRIGÉS =============
     
-    const nonRealises = CONFIG.promises.filter(p => p.status !== 'Réalisé');
-    const avgDelay = nonRealises.length > 0
-        ? nonRealises.reduce((sum, p) => sum + Math.abs(getDaysRemaining(p.deadline)), 0) / nonRealises.length
+    // 1. Séparer les promesses non réalisées
+    const promisesNonRealisees = CONFIG.promises.filter(p => p.status !== 'Réalisé');
+    
+    // 2. Calculer le délai moyen AVANT échéance (seulement celles qui ne sont pas en retard)
+    const promisesNonEchues = promisesNonRealisees.filter(p => !p.isLate);
+    const avgDelayNonEchues = promisesNonEchues.length > 0
+        ? promisesNonEchues.reduce((sum, p) => {
+            const daysRemaining = getDaysRemaining(p.deadline);
+            return sum + Math.max(0, daysRemaining); // Garantir positif
+        }, 0) / promisesNonEchues.length
         : 0;
     
-    KPI_ITEMS[5].value = `${Math.round(avgDelay)}j`;
+    // 3. Calculer le retard moyen (seulement celles en retard)
+    const promisesEnRetard = CONFIG.promises.filter(p => p.isLate);
+    const avgRetard = promisesEnRetard.length > 0
+        ? promisesEnRetard.reduce((sum, p) => {
+            const daysRemaining = getDaysRemaining(p.deadline);
+            return sum + Math.abs(daysRemaining); // Valeur absolue pour le retard
+        }, 0) / promisesEnRetard.length
+        : 0;
     
+    // 4. Note moyenne publique
     const allRatings = CONFIG.promises.filter(p => p.publicCount > 0);
     const avgRating = allRatings.length > 0
         ? (allRatings.reduce((sum, p) => sum + p.publicAvg, 0) / allRatings.length).toFixed(1)
         : '0.0';
     const totalVotes = allRatings.reduce((sum, p) => sum + p.publicCount, 0);
     
+    // ============= MISE À JOUR DES KPIs =============
+    
+    KPI_ITEMS[0].value = total;
+    KPI_ITEMS[1].value = realise;
+    KPI_ITEMS[2].value = encours;
+    KPI_ITEMS[3].value = retard;
+    KPI_ITEMS[4].value = `${tauxRealisation}%`;
+    
+    // Changer le KPI[5] pour afficher soit délai moyen, soit retard moyen
+    if (avgDelayNonEchues > 0 && avgRetard === 0) {
+        // Cas 1: Seulement des délais (pas de retards)
+        KPI_ITEMS[5].value = `${Math.round(avgDelayNonEchues)}j`;
+        KPI_ITEMS[5].label = '⏱️ Délai Moyen';
+        KPI_ITEMS[5].icon = '⏱️';
+    } else if (avgRetard > 0) {
+        // Cas 2: Il y a des retards
+        KPI_ITEMS[5].value = `${Math.round(avgRetard)}j`;
+        KPI_ITEMS[5].label = '⚠️ Retard Moyen';
+        KPI_ITEMS[5].icon = '⚠️';
+    } else {
+        // Cas 3: Toutes réalisées ou aucune date
+        KPI_ITEMS[5].value = 'N/A';
+        KPI_ITEMS[5].label = '⏱️ Délai/R. Moyen';
+        KPI_ITEMS[5].icon = '⏱️';
+    }
+    
     KPI_ITEMS[6].value = avgRating;
     KPI_ITEMS[7].value = withUpdates;
+    
+    // ============= MISE À JOUR DES STATISTIQUES =============
     
     updateStatValue('total', total);
     updateStatValue('realise', realise);
@@ -663,8 +719,17 @@ function updateStats() {
     updateStatValue('taux-realisation', `${tauxRealisation}%`);
     updateStatValue('moyenne-notes', avgRating);
     updateStatValue('votes-total', `${totalVotes.toLocaleString('fr-FR')} votes`);
-    updateStatValue('delai-moyen', `${Math.round(avgDelay)}j`);
     
+    // Afficher le délai moyen ou retard moyen selon le cas
+    if (avgRetard > 0) {
+        updateStatValue('delai-moyen', `${Math.round(avgRetard)}j de retard moyen`);
+    } else if (avgDelayNonEchues > 0) {
+        updateStatValue('delai-moyen', `${Math.round(avgDelayNonEchues)}j restants en moyenne`);
+    } else {
+        updateStatValue('delai-moyen', 'N/A');
+    }
+    
+    // Pourcentage
     updateStatPercentage('total-percentage', total, total);
     updateStatPercentage('realise-percentage', realise, total);
     updateStatPercentage('encours-percentage', encours, total);
@@ -672,6 +737,7 @@ function updateStats() {
     updateStatPercentage('retard-percentage', retard, total);
     updateStatPercentage('avec-maj-percentage', withUpdates, total);
     
+    // Domaines
     const domains = CONFIG.promises.reduce((acc, p) => {
         const domain = p.domain || 'Autre';
         acc[domain] = (acc[domain] || 0) + 1;
@@ -687,7 +753,22 @@ function updateStats() {
         updateStatValue('domaine-count', '0 engagements');
     }
 }
-
+// ==========================================
+// FONCTION POUR FORMATER LES JOURS RESTANTS/RETARD
+// ==========================================
+function formatDaysRemaining(days) {
+    if (days > 0) {
+        // Jours restants avant échéance
+        return `${days} jour${days > 1 ? 's' : ''} restant${days > 1 ? 's' : ''}`;
+    } else if (days < 0) {
+        // En retard
+        const absDays = Math.abs(days);
+        return `${absDays} jour${absDays > 1 ? 's' : ''} de retard`;
+    } else {
+        // Échéance aujourd'hui
+        return 'Aujourd\'hui';
+    }
+}
 function updateStatValue(id, value) {
     const el = document.getElementById(id);
     if (el) el.textContent = value || '0';
@@ -872,7 +953,7 @@ function renderPromises(promises) {
                
                 <div class="promise-meta">
                     <span><i class="fas fa-calendar"></i> ${formatDate(promise.deadline)}</span>
-                    <span><i class="fas fa-clock"></i> ${daysRemaining > 0 ? `${daysRemaining} jours restants` : daysRemaining < 0 ? `${Math.abs(daysRemaining)} jours de retard` : 'Aujourd\'hui'}</span>
+<span><i class="fas fa-clock"></i> ${formatDaysRemaining(daysRemaining)}</span>
                 </div>
                
                 ${promise.updates && promise.updates.length > 0 ? `

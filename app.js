@@ -2649,3 +2649,33 @@ setTimeout(() => {
         diagnoseSupabase();
     }
 }, 2000);
+async function testSupabaseConnection() {
+    console.log('🔍 Test de connexion Supabase...');
+    
+    if (!supabaseClient) {
+        console.error('❌ Client Supabase non initialisé');
+        return;
+    }
+    
+    try {
+        // Test simple de connexion
+        const { data, error } = await supabaseClient
+            .from('service_ratings')
+            .select('count', { count: 'exact', head: true });
+        
+        if (error) {
+            console.error('❌ Erreur de connexion:', error.message);
+            console.log('💡 Vérifiez:');
+            console.log('   1. La table "service_ratings" existe');
+            console.log('   2. Les permissions RLS sont correctes');
+            console.log('   3. La clé API est valide');
+        } else {
+            console.log('✅ Connexion Supabase OK');
+        }
+    } catch (error) {
+        console.error('❌ Exception:', error.message);
+    }
+}
+
+// Appeler le test après l'initialisation
+setTimeout(testSupabaseConnection, 1000);

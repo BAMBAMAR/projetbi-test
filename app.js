@@ -283,6 +283,7 @@ function initDateDisplay() {
 // ==========================================
 async function loadData() {
     try {
+        // 1. Charger les promesses
         const response = await fetch('promises.json');
         
         if (!response.ok) {
@@ -355,32 +356,67 @@ async function loadData() {
             return a.deadline - b.deadline;
         });
         
-        // Charger les votes publics si Supabase est disponible
+        // 2. Charger les données de la presse
+        try {
+            const pressResponse = await fetch('press.json?v=' + Date.now());
+            
+            if (!pressResponse.ok) {
+                console.warn('Fichier press.json non trouvé - données de presse par défaut');
+                CONFIG.press = getDefaultPressData();
+            } else {
+                const pressData = await pressResponse.json();
+                
+                if (pressData && Array.isArray(pressData.press)) {
+                    // Trier par date (les plus récents d'abord)
+                    CONFIG.press = pressData.press.sort((a, b) => {
+                        try {
+                            const dateA = new Date(a.date.split('/').reverse().join('-'));
+                            const dateB = new Date(b.date.split('/').reverse().join('-'));
+                            return dateB - dateA;
+                        } catch {
+                            return 0;
+                        }
+                    });
+                    
+                    console.log(`✅ ${CONFIG.press.length} journaux chargés depuis press.json`);
+                } else {
+                    console.warn('Format press.json invalide - données par défaut');
+                    CONFIG.press = getDefaultPressData();
+                }
+            }
+        } catch (pressError) {
+            console.error('❌ Erreur chargement presse:', pressError);
+            CONFIG.press = getDefaultPressData();
+        }
+        
+        // 3. Charger les votes publics si Supabase est disponible
         setTimeout(() => {
             fetchAndDisplayPublicVotes().catch(error => {
                 console.warn('⚠️ Impossible de charger les votes:', error.message);
             });
         }, 1000);
         
-        // Données de démonstration pour les actualités
+        // 4. Données de démonstration pour les actualités
         CONFIG.news = [
             { id: '1', title: 'Lancement officiel de la plateforme', excerpt: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle.', date: '25/01/2026', source: 'Le Soleil', image: 'school' },
             { id: '2', title: 'Première école numérique inaugurée', excerpt: 'Le gouvernement a inauguré la première école entièrement numérique à Dakar.', date: '20/01/2026', source: 'Sud Quotidien', image: 'inauguration' },
             { id: '3', title: 'Budget 2026 axé sur la relance économique', excerpt: 'Le budget de l\'État pour 2026 prévoit d\'importants investissements dans les infrastructures.', date: '15/01/2026', source: 'WalFadjri', image: 'budget' }
         ];
         
-        // Rendre tout
+        // 5. Rendre tout
         renderAll();
         renderNews(CONFIG.news);
         renderNewspapers();
         
     } catch (error) {
-        console.error('❌ Erreur chargement:', error);
+        console.error('❌ Erreur chargement général:', error);
         showNotification('Erreur de chargement des données', 'error');
         CONFIG.promises = generateTestPromises();
+        CONFIG.press = getDefaultPressData();
         renderAll();
     }
 }
+
 
 // Générer des données de test adaptées à votre structure
 function generateTestPromises() {
@@ -1198,11 +1234,24 @@ function renderNews(news) {
 // ==========================================
 // RENDER NEWSPAPERS
 // ==========================================
-function renderNewspapers() {
+
+async function renderNewspapers() {
     const grid = document.getElementById('newspapersGrid');
     if (!grid) return;
     
-    grid.innerHTML = CONFIG.press.map(paper => {
+    // Vérifier les images disponibles
+    const availablePress = await checkAvailableNewspapers();
+    
+    if (availablePress.length === 0) {
+        grid.innerHTML = `
+            <div class="loading-state">
+                <p><i class="fas fa-newspaper"></i> Aucun journal disponible pour le moment</p>
+            </div>
+        `;
+        return;
+    }
+
+    grid.innerHTML = availablePress.map(paper => {
         return `
             <div class="newspaper-card" onclick="openPhotoViewer('${paper.id}')">
                 <div class="newspaper-preview">
@@ -1211,31 +1260,221 @@ function renderNewspapers() {
                 </div>
                 <h4>${paper.title}</h4>
                 <p class="newspaper-date">${paper.date}</p>
+                ${paper.logo ? `<img src="${paper.logo}" class="newspaper-logo" alt="Logo ${paper.title}">` : ''}
             </div>
         `;
     }).join('');
 }
-
 // ==========================================
 // CAROUSEL PRESSE - VERSION JOURNAL
 // ==========================================
-function setupPressCarousel() {
+
+
+
+
+// ==========================================
+// CONFIGURATION PRESSE - AVEC VOS FICHIERS
+// ==========================================
+
+// Données par défaut si press.json n'est pas chargé
+const DEFAULT_PRESS = [
+    {
+        id: '1',
+        title: 'Le Soleil',
+        date: '31/01/2024',
+        image: 'revuedepresse/lesoleil.jpg',
+        logo: 'images/logos/le_soleil.png',
+        link: 'http://www.lesoleil.sn/'
+    },
+    {
+        id: '2',
+        title: 'Sud Quotidien',
+        date: '31/01/2024',
+        image: 'revuedepresse/sudquotidien.jpg',
+        logo: 'images/logos/sud_quotidien.png',
+        link: 'http://www.sudonline.sn/'
+    },
+    {
+        id: '3',
+        title: 'Libération',
+        date: '31/01/2024',
+        image: 'revuedepresse/liberation.jpg',
+        logo: 'images/logos/liberation.png',
+        link: 'http://www.liberation.sn/'
+    },
+    {
+        id: '4',
+        title: 'L\'Observateur',
+        date: '31/01/2024',
+        image: 'revuedepresse/observateur.jpg',
+        logo: 'images/logos/observateur.png',
+        link: 'http://www.observateur.sn/'
+    },
+    {
+        id: '5',
+        title: 'Le Quotidien',
+        date: '31/01/2024',
+        image: 'revuedepresse/lequotidien.jpg',
+        logo: 'images/logos/le_quotidien.png',
+        link: 'http://www.lequotidien.sn/'
+    },
+    {
+        id: '6',
+        title: 'Rewmi Sport',
+        date: '31/01/2024',
+        image: 'revuedepresse/rewmisport.jpg',
+        logo: 'images/logos/rewmi_sport.png',
+        link: '#'
+    },
+    {
+        id: '7',
+        title: 'Solo Quotidien',
+        date: '31/01/2024',
+        image: 'revuedepresse/soloquotidien.jpg',
+        logo: 'images/logos/solo_quotidien.png',
+        link: '#'
+    },
+    {
+        id: '8',
+        title: 'Yoor Yoor',
+        date: '31/01/2024',
+        image: 'revuedepresse/yooryoor.jpg',
+        logo: 'images/logos/yooryoor.png',
+        link: '#'
+    },
+    {
+        id: '9',
+        title: 'Record',
+        date: '31/01/2024',
+        image: 'revuedepresse/record.jpg',
+        logo: 'images/logos/record.png',
+        link: '#'
+    }
+];
+
+let PRESS_DATA = [...DEFAULT_PRESS];
+
+// ==========================================
+// CHARGEMENT DES DONNÉES PRESSE
+// ==========================================
+
+async function loadPressData() {
+    console.log('📰 Chargement des données presse depuis revuedepresse/...');
+    
+    try {
+        // Essayer de charger depuis press.json
+        const response = await fetch('press.json?v=' + Date.now());
+        
+        if (!response.ok) {
+            console.warn('Fichier press.json non trouvé - utilisation des chemins par défaut');
+            PRESS_DATA = DEFAULT_PRESS;
+            return;
+        }
+        
+        const data = await response.json();
+        
+        // Vérifier et utiliser les données
+        if (data && Array.isArray(data.press)) {
+            PRESS_DATA = data.press;
+            console.log(`✅ ${PRESS_DATA.length} journaux chargés depuis press.json`);
+        } else {
+            console.warn('Format press.json invalide - utilisation chemins par défaut');
+            PRESS_DATA = DEFAULT_PRESS;
+        }
+        
+    } catch (error) {
+        console.error('❌ Erreur chargement presse:', error);
+        PRESS_DATA = DEFAULT_PRESS;
+    }
+}
+
+// ==========================================
+// FONCTION POUR DÉTECTER LES IMAGES DISPONIBLES
+// ==========================================
+
+async function checkAvailableNewspapers() {
+    const availablePapers = [];
+    
+    // Liste de vos fichiers existants
+    const existingFiles = [
+        'revuedepresse/lesoleil.jpg',
+        'revuedepresse/sudquotidien.jpg',
+        'revuedepresse/liberation.jpg',
+        'revuedepresse/observateur.jpg',
+        'revuedepresse/lequotidien.jpg',
+        'revuedepresse/rewmisport.jpg',
+        'revuedepresse/soloquotidien.jpg',
+        'revuedepresse/yooryoor.jpg',
+        'revuedepresse/record.jpg'
+    ];
+    
+    // Vérifier quels fichiers existent réellement
+    for (const paper of PRESS_DATA) {
+        try {
+            const response = await fetch(paper.image, { method: 'HEAD' });
+            if (response.ok) {
+                availablePapers.push(paper);
+            } else {
+                console.warn(`Image non trouvée: ${paper.image}`);
+            }
+        } catch (error) {
+            console.warn(`Erreur vérification: ${paper.image}`);
+        }
+    }
+    
+    // Si aucune image n'est trouvée, utiliser toutes les données
+    if (availablePapers.length === 0) {
+        console.log('⚠️ Aucune image vérifiée, utilisation de toutes les données');
+        return PRESS_DATA;
+    }
+    
+    console.log(`📊 ${availablePapers.length}/${PRESS_DATA.length} images disponibles`);
+    return availablePapers;
+}
+
+// ==========================================
+// MODIFIEZ VOTRE FONCTION setupPressCarousel
+// ==========================================
+
+async function setupPressCarousel() {
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const autoPlayToggle = document.getElementById('autoPlayToggle');
     const indicators = document.getElementById('carouselIndicators');
     
-    if (!prevBtn || !nextBtn || !indicators) return;
+    if (!prevBtn || !nextBtn || !indicators) {
+        console.error('Éléments carousel non trouvés');
+        return;
+    }
 
+    // Vérifier les images disponibles
+    const availablePress = await checkAvailableNewspapers();
+    
+    if (availablePress.length === 0) {
+        console.error('Aucun journal disponible');
+        document.getElementById('pressCarousel').innerHTML = `
+            <div class="loading-state">
+                <p><i class="fas fa-newspaper"></i> Aucun journal disponible pour le moment</p>
+            </div>
+        `;
+        return;
+    }
+
+    // Mettre à jour CONFIG.press avec les journaux disponibles
+    CONFIG.press = availablePress;
+    CONFIG.currentIndex = 0;
+    CONFIG.zoomScale = 1;
+
+    // Configuration des boutons
     prevBtn.addEventListener('click', () => {
         CONFIG.currentIndex = (CONFIG.currentIndex - 1 + CONFIG.press.length) % CONFIG.press.length;
-        CONFIG.zoomScale = 1; // Reset zoom when changing slide
+        CONFIG.zoomScale = 1;
         renderPressCarousel();
     });
 
     nextBtn.addEventListener('click', () => {
         CONFIG.currentIndex = (CONFIG.currentIndex + 1) % CONFIG.press.length;
-        CONFIG.zoomScale = 1; // Reset zoom when changing slide
+        CONFIG.zoomScale = 1;
         renderPressCarousel();
     });
 
@@ -1251,14 +1490,9 @@ function setupPressCarousel() {
         });
     }
 
-    indicators.innerHTML = CONFIG.press.map((_, index) => 
-        `<button class="indicator ${index === CONFIG.currentIndex ? 'active' : ''}" onclick="goToSlide(${index})"></button>`
-    ).join('');
-    
     renderPressCarousel();
     startCarouselAutoPlay();
 }
-
 function startCarouselAutoPlay() {
     stopCarouselAutoPlay();
     CONFIG.carouselInterval = setInterval(() => {

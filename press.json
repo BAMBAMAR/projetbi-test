@@ -1,0 +1,77 @@
+{
+  "last_updated": "31/01/2024",
+  "press": [
+    {
+      "id": "1",
+      "title": "Le Soleil",
+      "date": "31/01/2024",
+      "image": "revuedepresse/lesoleil.jpg",
+      "logo": "images/logos/le_soleil.png",
+      "link": "http://www.lesoleil.sn/"
+    },
+    {
+      "id": "2",
+      "title": "Sud Quotidien",
+      "date": "31/01/2024",
+      "image": "revuedepresse/sudquotidien.jpg",
+      "logo": "images/logos/sud_quotidien.png",
+      "link": "http://www.sudonline.sn/"
+    },
+    {
+      "id": "3",
+      "title": "Libération",
+      "date": "31/01/2024",
+      "image": "revuedepresse/liberation.jpg",
+      "logo": "images/logos/liberation.png",
+      "link": "http://www.liberation.sn/"
+    },
+    {
+      "id": "4",
+      "title": "L'Observateur",
+      "date": "31/01/2024",
+      "image": "revuedepresse/observateur.jpg",
+      "logo": "images/logos/observateur.png",
+      "link": "http://www.observateur.sn/"
+    },
+    {
+      "id": "5",
+      "title": "Le Quotidien",
+      "date": "31/01/2024",
+      "image": "revuedepresse/lequotidien.jpg",
+      "logo": "images/logos/le_quotidien.png",
+      "link": "http://www.lequotidien.sn/"
+    },
+    {
+      "id": "6",
+      "title": "Rewmi Sport",
+      "date": "31/01/2024",
+      "image": "revuedepresse/rewmisport.jpg",
+      "logo": "images/logos/rewmi_sport.png",
+      "link": "#"
+    },
+    {
+      "id": "7",
+      "title": "Solo Quotidien",
+      "date": "31/01/2024",
+      "image": "revuedepresse/soloquotidien.jpg",
+      "logo": "images/logos/solo_quotidien.png",
+      "link": "#"
+    },
+    {
+      "id": "8",
+      "title": "Yoor Yoor",
+      "date": "31/01/2024",
+      "image": "revuedepresse/yooryoor.jpg",
+      "logo": "images/logos/yooryoor.png",
+      "link": "#"
+    },
+    {
+      "id": "9",
+      "title": "Record",
+      "date": "31/01/2024",
+      "image": "revuedepresse/record.jpg",
+      "logo": "images/logos/record.png",
+      "link": "#"
+    }
+  ]
+}

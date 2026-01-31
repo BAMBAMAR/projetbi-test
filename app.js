@@ -124,10 +124,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupDailyPromise();
     setupPromisesCarousel();
     setupKpiCarousel();
-// setupPhotoViewerControls(); // Commenté car non définie
-console.log('🎯 Contrôles du visualiseur photo désactivés (fonction non définie)');
-    console.log('✅ Initialisation terminée');
-});
+// setupPhotoViewerControls(); // Remplacé par la fonction ci-dessous
+setTimeout(() => {
+    if (typeof setupPhotoViewerControls === 'function') {
+        setupPhotoViewerControls();
+    }
+}, 500);
 
 // ==========================================
 // NAVIGATION

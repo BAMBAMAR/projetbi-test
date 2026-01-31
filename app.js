@@ -2144,3 +2144,41 @@ function displayDemoRatingResults() {
         </div>
     `;
 }
+// ==========================================
+// DÉBOGAGE DES BOUTONS DE PARTAGE
+// ==========================================
+function debugShareButtons() {
+    console.log('🔍 Débogage des boutons de partage...');
+    
+    const cards = document.querySelectorAll('.promise-card');
+    console.log(`Nombre de cartes trouvées: ${cards.length}`);
+    
+    cards.forEach((card, index) => {
+        const actions = card.querySelector('.promise-actions');
+        const shareButtons = actions ? actions.querySelectorAll('.social-btn') : [];
+        const starButton = actions ? actions.querySelector('.btn-stars') : null;
+        
+        console.log(`Carte ${index + 1}:`);
+        console.log(`- Section actions présente: ${!!actions}`);
+        console.log(`- Boutons de partage: ${shareButtons.length}`);
+        console.log(`- Bouton étoiles présent: ${!!starButton}`);
+        
+        // Appliquer des styles visibles pour débogage
+        if (shareButtons.length > 0) {
+            shareButtons.forEach(btn => {
+                btn.style.backgroundColor = '#00695f';
+                btn.style.color = 'white';
+                btn.style.border = '2px solid white';
+            });
+        }
+        
+        if (starButton) {
+            starButton.style.backgroundColor = '#ff6f3c';
+            starButton.style.color = 'white';
+            starButton.style.fontWeight = 'bold';
+        }
+    });
+}
+
+// Appeler après le rendu des promesses
+setTimeout(debugShareButtons, 1000);

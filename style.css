@@ -2989,9 +2989,9 @@ body {
 
 /* ===== CONTAINER D'IMAGE POUR DRAG ===== */
 .carousel-image-container {
-    width: 100%;
+    width: 110%;
     height: 700px;
-    max-width: 1200px;
+    max-width: 1400px;
     display: flex;
     align-items: center;
     justify-content: center;

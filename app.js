@@ -2334,3 +2334,88 @@ window.nextPhoto = nextPhoto;
 window.togglePressZoom = togglePressZoom;
 window.goToCarouselSlide = goToCarouselSlide;
 window.shareToPlatform = shareToPlatform;
+// ==========================================
+// SCRIPT DE DIAGNOSTIC SUPABASE
+// ==========================================
+
+async function diagnoseSupabase() {
+    console.log('🔍 DIAGNOSTIC SUPABASE');
+    console.log('=======================');
+    
+    // 1. Vérifier l'URL et la clé
+    console.log('1. Configuration:');
+    console.log('   URL:', SUPABASE_URL);
+    console.log('   Clé disponible:', SUPABASE_KEY ? 'OUI' : 'NON');
+    console.log('   Client créé:', !!supabaseClient);
+    
+    if (!supabaseClient) {
+        console.log('❌ Client non initialisé');
+        return;
+    }
+    
+    // 2. Tester différentes requêtes
+    console.log('\n2. Tests de requêtes:');
+    
+    // Test 1: Sélection simple
+    try {
+        console.log('   Test 1: SELECT id FROM votes LIMIT 1');
+        const { data: test1, error: err1 } = await supabaseClient
+            .from('votes')
+            .select('id')
+            .limit(1);
+        
+        console.log('   Résultat:', err1 ? `ERREUR: ${err1.message}` : `SUCCÈS (${test1?.length} résultats)`);
+    } catch (e) {
+        console.log('   Exception:', e.message);
+    }
+    
+    // Test 2: Compter
+    try {
+        console.log('   Test 2: COUNT(*) FROM votes');
+        const { count, error: err2 } = await supabaseClient
+            .from('votes')
+            .select('*', { count: 'exact', head: true });
+        
+        console.log('   Résultat:', err2 ? `ERREUR: ${err2.message}` : `SUCCÈS (${count} enregistrements)`);
+    } catch (e) {
+        console.log('   Exception:', e.message);
+    }
+    
+    // Test 3: Voir les tables disponibles
+    try {
+        console.log('   Test 3: Tables disponibles');
+        // Note: Cette requête fonctionne différemment dans Supabase
+        const { data: tables, error: err3 } = await supabaseClient
+            .from('votes')
+            .select('*')
+            .limit(0); // Juste pour voir si la table existe
+        
+        console.log('   Table "votes":', err3 ? `NON (${err3.message})` : 'OUI');
+    } catch (e) {
+        console.log('   Exception:', e.message);
+    }
+    
+    console.log('\n3. Recommandations:');
+    
+    if (supabaseClient) {
+        console.log('   ✅ Client Supabase initialisé');
+        console.log('   ⚠️  Problème probable:');
+        console.log('      - Permissions RLS (Row Level Security)');
+        console.log('      - Table "votes" inexistante');
+        console.log('      - Colonnes inexistantes dans le SELECT');
+        
+        console.log('\n   🔧 Actions recommandées:');
+        console.log('      1. Vérifiez que la table "votes" existe');
+        console.log('      2. Vérifiez les permissions RLS:');
+        console.log('         ALTER TABLE votes ENABLE ROW LEVEL SECURITY;');
+        console.log('         CREATE POLICY "enable_all" ON votes FOR ALL USING (true);');
+        console.log('      3. Utilisez SELECT * pour tester d\'abord');
+    }
+}
+
+// Exécuter le diagnostic
+setTimeout(() => {
+    if (supabaseClient) {
+        diagnoseSupabase();
+    }
+}, 2000);

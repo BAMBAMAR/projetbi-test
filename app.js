@@ -1538,18 +1538,6 @@ function renderPressCarousel() {
                     </div>
             </div>
             
-            <div class="carousel-controls-panel">
-                <button class="carousel-control-btn" onclick="togglePressZoom('out')" title="Zoom -">
-                    <i class="fas fa-search-minus"></i>
-                </button>
-                <button class="carousel-control-btn" onclick="togglePressZoom('reset')" title="Réinitialiser">
-                    <i class="fas fa-expand"></i>
-                </button>
-                <button class="carousel-control-btn" onclick="togglePressZoom('in')" title="Zoom +">
-                    <i class="fas fa-search-plus"></i>
-                </button>
-                <div class="carousel-zoom-info">${Math.round(CONFIG.zoomScale * 100)}%</div>
-            </div>
         </div>
     `;
 

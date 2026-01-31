@@ -988,7 +988,7 @@ function updateStats() {
     
     // Afficher correctement le délai moyen
     if (retard > 0) {
-        updateStatValue('Retard-moyen', `${avgRetard}j `);
+        updateStatValue('delai-moyen', `${avgRetard}j `);
     } else if (avgDelay > 0) {
         updateStatValue('delai-moyen', `${avgDelay}j restants en moyenne`);
     } else {

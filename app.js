@@ -2230,3 +2230,15 @@ forceButtonVisibility();
 
 // Et aussi après chaque rendu
 setTimeout(forceButtonVisibility, 2000);
+// ==========================================
+// EXPORTS GLOBAUX POUR LA PRESSE
+// ==========================================
+window.openPhotoViewer = openPhotoViewer;
+window.closePhotoViewer = closePhotoViewer;
+window.zoomIn = zoomIn;
+window.zoomOut = zoomOut;
+window.zoomReset = zoomReset;
+window.prevPhoto = prevPhoto;
+window.nextPhoto = nextPhoto;
+window.togglePressZoom = togglePressZoom;
+window.goToSlide = goToSlide;

@@ -1260,7 +1260,6 @@ async function renderNewspapers() {
                 </div>
                 <h4>${paper.title}</h4>
                 <p class="newspaper-date">${paper.date}</p>
-                ${paper.logo ? `<img src="${paper.logo}" class="newspaper-logo" alt="Logo ${paper.title}">` : ''}
             </div>
         `;
     }).join('');

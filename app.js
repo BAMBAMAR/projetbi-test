@@ -31,7 +31,7 @@ async function checkSupabaseConnection() {
 // Appelez cette fonction après l'initialisation
 setTimeout(checkSupabaseConnection, 1000);
 // ==========================================
-// APP.JS - VERSION OPTIMISÉE POUR VOTRE STRUCTURE
+// APP.JS - VERSION CORRIGÉE POUR LES DÉLAIS
 // ==========================================
 // Configuration Supabase
 const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
@@ -54,6 +54,7 @@ try {
 // Configuration globale
 const CONFIG = {
     START_DATE: new Date('2024-04-02'),
+    END_DATE: new Date('2029-04-02'), // Fin du mandat
     CURRENT_DATE: new Date(),
     promises: [],
     news: [],
@@ -96,46 +97,189 @@ const KPI_ITEMS = [
     { label: '🔄 En Cours', value: '0', icon: '🔄' },
     { label: '⚠️ En Retard', value: '0', icon: '⚠️' },
     { label: '📈 Taux Réalisation', value: '0%', icon: '📈' },
-    { label: '⏱️ Délai/R. Moyen', value: 'N/A', icon: '⏱️' }, // Changé ici
+    { label: '⏱️ Délai Moyen', value: '0j', icon: '⏱️' },
     { label: '⭐ Note Moyenne', value: '0.0', icon: '⭐' },
     { label: '📋 Avec MAJ', value: '0', icon: '📋' }
 ];
 
 // ==========================================
-// FONCTION DE CONVERSION DES DÉLAIS TEXTE EN JOURS
+// FONCTION DE CONVERSION DES DÉLAIS TEXTE EN JOURS - CORRIGÉE
 // ==========================================
 function parseDelayToDays(delayText) {
-    if (!delayText || delayText.trim() === '') return 1095; // 3 ans par défaut
+    if (!delayText || delayText.trim() === '') return 365; // 1 an par défaut
     
-    const lower = delayText.toLowerCase();
+    const lower = delayText.toLowerCase().trim();
+    
+    // CORRECTION: Dates trop éloignées
+    if (lower.includes('2030')) {
+        return 1825; // Fin du mandat (5 ans)
+    }
+    
+    if (lower.includes('2029')) {
+        return 1825; // Fin du mandat (5 ans)
+    }
+    
+    // "Immédiat" = 0 jour
     if (lower.includes('immédiat') || lower.includes('immediat') || lower.includes('dès')) {
         return 0;
     }
     
-    let totalDays = 0;
-    
-    // Années
-    const yearsMatch = delayText.match(/(\d+)\s*an[s]?/i);
-    if (yearsMatch) totalDays += parseInt(yearsMatch[1], 10) * 365;
-    
-    // Mois
-    const monthsMatch = delayText.match(/(\d+)\s*mois/i);
-    if (monthsMatch) totalDays += parseInt(monthsMatch[1], 10) * 30;
-    
-    // Jours
-    const daysMatch = delayText.match(/(\d+)\s*jour[s]?/i);
-    if (daysMatch) totalDays += parseInt(daysMatch[1], 10);
-    
-    // Expressions comme "3 premières années"
-    const firstYearsMatch = delayText.match(/(\d+)\s*premières?\s*années?/i);
-    if (firstYearsMatch) totalDays += parseInt(firstYearsMatch[1], 10) * 365;
-    
-    if (totalDays === 0) {
-        const num = parseInt(delayText, 10);
-        totalDays = !isNaN(num) ? num * 365 : 1095; // 3 ans par défaut
+    // "Mandat" ou "Quinquennat" = durée complète du mandat (5 ans)
+    if (lower.includes('mandat') || lower.includes('quinquennat')) {
+        return 1825; // 5 ans en jours
     }
     
-    return totalDays;
+    let totalDays = 0;
+    
+    // Années complètes
+    const yearsMatch = lower.match(/(\d+)\s*an[s]?/i);
+    if (yearsMatch) {
+        const years = parseInt(yearsMatch[1], 10);
+        totalDays += years * 365;
+    }
+    
+    // Mois
+    const monthsMatch = lower.match(/(\d+)\s*mois/i);
+    if (monthsMatch) {
+        const months = parseInt(monthsMatch[1], 10);
+        totalDays += months * 30;
+    }
+    
+    // Jours
+    const daysMatch = lower.match(/(\d+)\s*jour[s]?/i);
+    if (daysMatch) {
+        const days = parseInt(daysMatch[1], 10);
+        totalDays += days;
+    }
+    
+    // Expressions comme "6 premiers mois"
+    const premiersMoisMatch = lower.match(/(\d+)\s*premiers?\s*mois/i);
+    if (premiersMoisMatch) {
+        const mois = parseInt(premiersMoisMatch[1], 10);
+        totalDays += mois * 30;
+    }
+    
+    // Expressions comme "3 premières années"
+    const firstYearsMatch = lower.match(/(\d+)\s*premières?\s*années?/i);
+    if (firstYearsMatch) {
+        const years = parseInt(firstYearsMatch[1], 10);
+        totalDays += years * 365;
+    }
+    
+    // "2 premières années"
+    if (lower.includes('2 premières années') || lower.includes('2 premières annees')) {
+        totalDays = 730; // 2 ans exactement
+    }
+    
+    // "1ère année"
+    if (lower.includes('1ère année') || lower.includes('1ere annee') || lower.includes('1ère annee')) {
+        totalDays = 365; // 1 an exactement
+    }
+    
+    // "2 ans" (sans "premières")
+    const ansSimpleMatch = lower.match(/(\d+)\s*ans$/i);
+    if (ansSimpleMatch && !lower.includes('premières') && !lower.includes('premiere')) {
+        const ans = parseInt(ansSimpleMatch[1], 10);
+        totalDays = ans * 365;
+    }
+    
+    // "2 à 3 ans" - prendre la moyenne
+    const rangeMatch = lower.match(/(\d+)\s*à\s*(\d+)\s*an[s]?/i);
+    if (rangeMatch) {
+        const min = parseInt(rangeMatch[1], 10) * 365;
+        const max = parseInt(rangeMatch[2], 10) * 365;
+        totalDays = Math.round((min + max) / 2);
+    }
+    
+    // "3 à 5 ans" - prendre la moyenne
+    const longRangeMatch = lower.match(/(\d+)\s*à\s*(\d+)\s*an[s]?/i);
+    if (longRangeMatch) {
+        const min = parseInt(longRangeMatch[1], 10) * 365;
+        const max = parseInt(longRangeMatch[2], 10) * 365;
+        totalDays = Math.round((min + max) / 2);
+    }
+    
+    // "5 à 10 ans" - prendre la moyenne mais limiter à 5 ans max
+    const veryLongRangeMatch = lower.match(/5\s*à\s*10\s*an[s]?/i);
+    if (veryLongRangeMatch) {
+        totalDays = 1825; // Limiter à 5 ans max (durée du mandat)
+    }
+    
+    // Dates spécifiques (format AAAA-MM-JJ)
+    const dateMatch = delayText.match(/\d{4}-\d{2}-\d{2}/);
+    if (dateMatch) {
+        try {
+            const targetDate = new Date(dateMatch[0]);
+            const startDate = CONFIG.START_DATE;
+            
+            // Calculer la différence en jours
+            const diffTime = targetDate.getTime() - startDate.getTime();
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            // Ne pas retourner de valeurs négatives
+            totalDays = Math.max(0, diffDays);
+            
+            // Limiter à la durée du mandat (5 ans max)
+            totalDays = Math.min(totalDays, 1825);
+            
+        } catch (e) {
+            console.warn('Erreur conversion date:', dateMatch[0]);
+        }
+    }
+    
+    // Si aucune correspondance, essayer de trouver un nombre simple
+    if (totalDays === 0) {
+        const num = parseInt(delayText.replace(/[^0-9]/g, ''), 10);
+        if (!isNaN(num)) {
+            // Si c'est juste un nombre, supposer que c'est des années
+            totalDays = num * 365;
+        } else {
+            totalDays = 365; // 1 an par défaut
+        }
+    }
+    
+    // LIMITER À LA DURÉE MAXIMALE DU MANDAT (5 ans = 1825 jours)
+    const MANDAT_MAX_DAYS = 1825;
+    const result = Math.min(totalDays, MANDAT_MAX_DAYS);
+    
+    console.log(`parseDelayToDays: "${delayText}" → ${result} jours`);
+    return result;
+}
+
+// ==========================================
+// FONCTION POUR CALCULER LES JOURS RESTANTS (AVEC SIGNE) - CORRIGÉE
+// ==========================================
+function getDaysRemaining(deadline) {
+    if (!deadline || !(deadline instanceof Date) || isNaN(deadline.getTime())) {
+        console.warn('Date limite invalide pour getDaysRemaining:', deadline);
+        return 0;
+    }
+    
+    const diff = deadline.getTime() - CONFIG.CURRENT_DATE.getTime();
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    
+    // Retourne:
+    // - Positif: jours restants avant échéance
+    // - Négatif: jours de retard
+    // - 0: échéance aujourd'hui
+    return days;
+}
+
+// ==========================================
+// FONCTION POUR FORMATER LES JOURS RESTANTS/RETARD
+// ==========================================
+function formatDaysRemaining(days) {
+    if (days > 0) {
+        // Jours restants avant échéance
+        return `${days} jour${days > 1 ? 's' : ''} restant${days > 1 ? 's' : ''}`;
+    } else if (days < 0) {
+        // En retard
+        const absDays = Math.abs(days);
+        return `${absDays} jour${absDays > 1 ? 's' : ''} de retard`;
+    } else {
+        // Échéance aujourd'hui
+        return 'Aujourd\'hui';
+    }
 }
 
 // ==========================================
@@ -173,6 +317,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Testez la connexion Supabase
     setTimeout(testServiceRatingsTable, 3000);
+    
+    // Débogage des délais
+    setTimeout(debugDelays, 2000);
 });
 
 // ==========================================
@@ -295,6 +442,8 @@ async function loadData() {
             // Récupérer la date de début depuis le JSON
             if (data.start_date) {
                 CONFIG.START_DATE = new Date(data.start_date);
+                CONFIG.END_DATE = new Date(CONFIG.START_DATE);
+                CONFIG.END_DATE.setFullYear(CONFIG.END_DATE.getFullYear() + 5); // 5 ans après
             }
             
             // Traiter les promesses selon votre structure
@@ -317,10 +466,16 @@ async function loadData() {
                 // Normaliser le domaine
                 const domain = p.domaine || p.domain || p.categorie || 'Autre';
                 
-                // Convertir le délai en jours
-                const delayDays = parseDelayToDays(p.delai || '3 premières années');
+                // Convertir le délai en jours (avec limite à 5 ans max)
+                let delayText = p.delai || '12 premiers mois';
+                let delayDays = parseDelayToDays(delayText);
                 
-                // Calculer la date limite
+                // S'assurer que delayDays est un nombre valide
+                if (isNaN(delayDays) || delayDays < 0) {
+                    delayDays = 365; // Valeur par défaut
+                }
+                
+                // Calculer la date limite (ne jamais dépasser la fin du mandat)
                 const deadline = calculateDeadlineFromDays(delayDays);
                 
                 // Vérifier si en retard
@@ -338,7 +493,7 @@ async function loadData() {
                     domain: domain,
                     status: status,
                     delai: delayDays.toString(),
-                    delai_texte: p.delai || `${Math.round(delayDays/365)} années`,
+                    delai_texte: delayText,
                     resultat: p.resultat || p.objectif || 'Résultats non spécifiés',
                     updates: updates,
                     deadline: deadline,
@@ -348,6 +503,9 @@ async function loadData() {
                 };
             });
         }
+        
+        // Corriger les délais invalides
+        fixInvalidDelays();
         
         // Trier les promesses : d'abord en retard, puis par date limite
         CONFIG.promises.sort((a, b) => {
@@ -416,7 +574,6 @@ async function loadData() {
         renderAll();
     }
 }
-
 
 // Générer des données de test adaptées à votre structure
 function generateTestPromises() {
@@ -489,36 +646,127 @@ function generateTestPromises() {
 }
 
 // ==========================================
-// CALCULS
+// CALCULS - CORRIGÉS
 // ==========================================
 function calculateDeadlineFromDays(days) {
+    // Garantir que days est un nombre positif
+    const daysNum = Math.max(0, parseInt(days, 10) || 0);
+    
     const deadline = new Date(CONFIG.START_DATE);
-    deadline.setDate(deadline.getDate() + parseInt(days, 10));
+    
+    // Si le délai est 0 (immédiat), date limite = date de début
+    if (daysNum === 0) {
+        return deadline;
+    }
+    
+    // Ajouter les jours
+    deadline.setDate(deadline.getDate() + daysNum);
+    
+    // Ne jamais dépasser la fin du mandat (5 ans après le début)
+    if (deadline > CONFIG.END_DATE) {
+        return new Date(CONFIG.END_DATE);
+    }
+    
     return deadline;
 }
 
 function checkIfLate(status, deadline) {
     if (status === 'Réalisé') return false;
+    
+    // Vérifier que la date limite est valide
+    if (!deadline || !(deadline instanceof Date) || isNaN(deadline.getTime())) {
+        return false;
+    }
+    
+    // Une promesse est en retard si la date actuelle dépasse la date limite
     return CONFIG.CURRENT_DATE > deadline;
 }
 
 // ==========================================
-// FONCTION POUR CALCULER LES JOURS RESTANTS (AVEC SIGNE)
+// FONCTION POUR CORRIGER LES DÉLAIS INVALIDES
 // ==========================================
-function getDaysRemaining(deadline) {
-    if (!deadline || !(deadline instanceof Date)) {
-        console.warn('Date limite invalide:', deadline);
-        return 0;
+function fixInvalidDelays() {
+    console.log('🔧 Correction des délais invalides...');
+    let corrections = 0;
+    
+    CONFIG.promises.forEach(promise => {
+        const currentDelay = parseInt(promise.delai);
+        
+        // Si délai > 5 ans (1825 jours), le corriger
+        if (currentDelay > 1825) {
+            console.log(`Correction: ${promise.id} - ${promise.engagement.substring(0, 50)}...`);
+            console.log(`  Ancien délai: ${currentDelay} jours (${Math.round(currentDelay/365)} années)`);
+            
+            // Nouveau délai = max 5 ans (durée du mandat)
+            promise.delai = '1825';
+            promise.delai_texte = 'Quinquennat';
+            
+            // Recalculer la date limite
+            promise.deadline = calculateDeadlineFromDays(1825);
+            
+            // Recalculer si en retard
+            promise.isLate = checkIfLate(promise.status, promise.deadline);
+            
+            console.log(`  Nouveau délai: 1825 jours (5 années)`);
+            console.log(`  Nouvelle date limite: ${formatDate(promise.deadline)}`);
+            corrections++;
+        }
+    });
+    
+    if (corrections > 0) {
+        console.log(`✅ ${corrections} délais corrigés`);
+    } else {
+        console.log('✅ Aucun délai invalide trouvé');
     }
+}
+
+// ==========================================
+// FONCTION DE DÉBOGAGE DES DÉLAIS
+// ==========================================
+function debugDelays() {
+    console.log('🔍 ANALYSE DES DÉLAIS');
+    console.log('=====================');
+    console.log('Date de début du mandat:', CONFIG.START_DATE.toLocaleDateString());
+    console.log('Date de fin du mandat:', CONFIG.END_DATE.toLocaleDateString());
+    console.log('Date actuelle:', CONFIG.CURRENT_DATE.toLocaleDateString());
+    console.log('');
     
-    const diff = deadline.getTime() - CONFIG.CURRENT_DATE.getTime();
-    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    let totalDelays = 0;
+    let validPromisesCount = 0;
     
-    // Retourne:
-    // - Positif: jours restants avant échéance
-    // - Négatif: jours de retard
-    // - 0: échéance aujourd'hui
-    return days;
+    CONFIG.promises.forEach((promise, index) => {
+        const daysRemaining = getDaysRemaining(promise.deadline);
+        const delaiTexte = promise.delai_texte || promise.delai;
+        
+        console.log(`${index + 1}. [${promise.id}] ${promise.engagement.substring(0, 50)}...`);
+        console.log(`   Domaine: ${promise.domain}`);
+        console.log(`   Statut: ${promise.status} ${promise.isLate ? '(EN RETARD)' : ''}`);
+        console.log(`   Délai texte: "${delaiTexte}"`);
+        console.log(`   Délai jours: ${promise.delai} jours`);
+        console.log(`   Date limite: ${formatDate(promise.deadline)}`);
+        console.log(`   Jours restants/retard: ${daysRemaining} (${formatDaysRemaining(daysRemaining)})`);
+        
+        // Pour le calcul du délai moyen
+        if (!promise.isLate && promise.status !== 'Réalisé') {
+            if (daysRemaining >= 0 && daysRemaining <= 1825) {
+                totalDelays += daysRemaining;
+                validPromisesCount++;
+            }
+        }
+        
+        console.log('   ---');
+    });
+    
+    // Calcul du délai moyen réel
+    const avgDelay = validPromisesCount > 0 ? Math.round(totalDelays / validPromisesCount) : 0;
+    
+    console.log('');
+    console.log('📊 CALCUL DU DÉLAI MOYEN:');
+    console.log(`   Nombre de promesses valides (non réalisées, non en retard): ${validPromisesCount}`);
+    console.log(`   Somme des jours restants: ${totalDelays}`);
+    console.log(`   Délai moyen calculé: ${avgDelay} jours`);
+    
+    return avgDelay;
 }
 
 // ==========================================
@@ -593,8 +841,8 @@ function setupDailyPromise() {
                         <div class="deadline-item">
                             <span class="deadline-label">Temps restant :</span>
                             <span class="deadline-value ${daysRemaining < 0 ? 'late' : ''}">
-    ${formatDaysRemaining(daysRemaining)}
-</span>
+                                ${formatDaysRemaining(daysRemaining)}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -635,9 +883,6 @@ function renderAll() {
 }
 
 // ==========================================
-// UPDATE STATS
-// ==========================================
-// ==========================================
 // UPDATE STATS - VERSION CORRIGÉE
 // ==========================================
 function updateStats() {
@@ -649,30 +894,51 @@ function updateStats() {
     const withUpdates = CONFIG.promises.filter(p => p.updates && p.updates.length > 0).length;
     const tauxRealisation = total > 0 ? Math.round((realise / total) * 100) : 0;
     
-    // ============= CALCULS CORRIGÉS =============
+    // ============= CALCUL DU DÉLAI MOYEN CORRIGÉ =============
     
-    // 1. Séparer les promesses non réalisées
-    const promisesNonRealisees = CONFIG.promises.filter(p => p.status !== 'Réalisé');
+    // 1. Filtrer seulement les promesses NON RÉALISÉES et NON EN RETARD
+    const promisesNonRealiseesNonRetard = CONFIG.promises.filter(p => 
+        p.status !== 'Réalisé' && !p.isLate
+    );
     
-    // 2. Calculer le délai moyen AVANT échéance (seulement celles qui ne sont pas en retard)
-    const promisesNonEchues = promisesNonRealisees.filter(p => !p.isLate);
-    const avgDelayNonEchues = promisesNonEchues.length > 0
-        ? promisesNonEchues.reduce((sum, p) => {
-            const daysRemaining = getDaysRemaining(p.deadline);
-            return sum + Math.max(0, daysRemaining); // Garantir positif
-        }, 0) / promisesNonEchues.length
-        : 0;
+    let avgDelay = 0;
     
-    // 3. Calculer le retard moyen (seulement celles en retard)
+    if (promisesNonRealiseesNonRetard.length > 0) {
+        // Calculer la somme des jours restants
+        let totalDaysRemaining = 0;
+        let validPromisesCount = 0;
+        
+        promisesNonRealiseesNonRetard.forEach(promise => {
+            const daysRemaining = getDaysRemaining(promise.deadline);
+            
+            // Ignorer les valeurs aberrantes (trop grandes)
+            if (daysRemaining >= 0 && daysRemaining <= 1825) { // Max 5 ans
+                totalDaysRemaining += daysRemaining;
+                validPromisesCount++;
+            }
+        });
+        
+        if (validPromisesCount > 0) {
+            avgDelay = Math.round(totalDaysRemaining / validPromisesCount);
+        }
+    }
+    
+    // ============= CALCUL DU RETARD MOYEN =============
+    
     const promisesEnRetard = CONFIG.promises.filter(p => p.isLate);
-    const avgRetard = promisesEnRetard.length > 0
-        ? promisesEnRetard.reduce((sum, p) => {
-            const daysRemaining = getDaysRemaining(p.deadline);
-            return sum + Math.abs(daysRemaining); // Valeur absolue pour le retard
-        }, 0) / promisesEnRetard.length
-        : 0;
+    let avgRetard = 0;
     
-    // 4. Note moyenne publique
+    if (promisesEnRetard.length > 0) {
+        const totalRetard = promisesEnRetard.reduce((sum, p) => {
+            const daysRemaining = getDaysRemaining(p.deadline);
+            return sum + Math.abs(daysRemaining);
+        }, 0);
+        
+        avgRetard = Math.round(totalRetard / promisesEnRetard.length);
+    }
+    
+    // ============= NOTE MOYENNE PUBLIQUE =============
+    
     const allRatings = CONFIG.promises.filter(p => p.publicCount > 0);
     const avgRating = allRatings.length > 0
         ? (allRatings.reduce((sum, p) => sum + p.publicAvg, 0) / allRatings.length).toFixed(1)
@@ -687,21 +953,21 @@ function updateStats() {
     KPI_ITEMS[3].value = retard;
     KPI_ITEMS[4].value = `${tauxRealisation}%`;
     
-    // Changer le KPI[5] pour afficher soit délai moyen, soit retard moyen
-    if (avgDelayNonEchues > 0 && avgRetard === 0) {
-        // Cas 1: Seulement des délais (pas de retards)
-        KPI_ITEMS[5].value = `${Math.round(avgDelayNonEchues)}j`;
-        KPI_ITEMS[5].label = '⏱️ Délai Moyen';
-        KPI_ITEMS[5].icon = '⏱️';
-    } else if (avgRetard > 0) {
-        // Cas 2: Il y a des retards
-        KPI_ITEMS[5].value = `${Math.round(avgRetard)}j`;
+    // Choisir quoi afficher comme KPI[5]
+    if (retard > 0) {
+        // S'il y a des retards, afficher le retard moyen
+        KPI_ITEMS[5].value = `${avgRetard}j`;
         KPI_ITEMS[5].label = '⚠️ Retard Moyen';
         KPI_ITEMS[5].icon = '⚠️';
+    } else if (avgDelay > 0) {
+        // Sinon, afficher le délai moyen
+        KPI_ITEMS[5].value = `${avgDelay}j`;
+        KPI_ITEMS[5].label = '⏱️ Délai Moyen';
+        KPI_ITEMS[5].icon = '⏱️';
     } else {
-        // Cas 3: Toutes réalisées ou aucune date
+        // Cas spécial (toutes réalisées)
         KPI_ITEMS[5].value = 'N/A';
-        KPI_ITEMS[5].label = '⏱️ Délai/R. Moyen';
+        KPI_ITEMS[5].label = '⏱️ Délai Moyen';
         KPI_ITEMS[5].icon = '⏱️';
     }
     
@@ -720,11 +986,11 @@ function updateStats() {
     updateStatValue('moyenne-notes', avgRating);
     updateStatValue('votes-total', `${totalVotes.toLocaleString('fr-FR')} votes`);
     
-    // Afficher le délai moyen ou retard moyen selon le cas
-    if (avgRetard > 0) {
-        updateStatValue('delai-moyen', `${Math.round(avgRetard)}j de retard moyen`);
-    } else if (avgDelayNonEchues > 0) {
-        updateStatValue('delai-moyen', `${Math.round(avgDelayNonEchues)}j restants en moyenne`);
+    // Afficher correctement le délai moyen
+    if (retard > 0) {
+        updateStatValue('delai-moyen', `${avgRetard}j de retard moyen`);
+    } else if (avgDelay > 0) {
+        updateStatValue('delai-moyen', `${avgDelay}j restants en moyenne`);
     } else {
         updateStatValue('delai-moyen', 'N/A');
     }
@@ -753,22 +1019,7 @@ function updateStats() {
         updateStatValue('domaine-count', '0 engagements');
     }
 }
-// ==========================================
-// FONCTION POUR FORMATER LES JOURS RESTANTS/RETARD
-// ==========================================
-function formatDaysRemaining(days) {
-    if (days > 0) {
-        // Jours restants avant échéance
-        return `${days} jour${days > 1 ? 's' : ''} restant${days > 1 ? 's' : ''}`;
-    } else if (days < 0) {
-        // En retard
-        const absDays = Math.abs(days);
-        return `${absDays} jour${absDays > 1 ? 's' : ''} de retard`;
-    } else {
-        // Échéance aujourd'hui
-        return 'Aujourd\'hui';
-    }
-}
+
 function updateStatValue(id, value) {
     const el = document.getElementById(id);
     if (el) el.textContent = value || '0';
@@ -953,7 +1204,7 @@ function renderPromises(promises) {
                
                 <div class="promise-meta">
                     <span><i class="fas fa-calendar"></i> ${formatDate(promise.deadline)}</span>
-<span><i class="fas fa-clock"></i> ${formatDaysRemaining(daysRemaining)}</span>
+                    <span><i class="fas fa-clock"></i> ${formatDaysRemaining(daysRemaining)}</span>
                 </div>
                
                 ${promise.updates && promise.updates.length > 0 ? `
@@ -1345,12 +1596,6 @@ async function renderNewspapers() {
         `;
     }).join('');
 }
-// ==========================================
-// CAROUSEL PRESSE - VERSION JOURNAL
-// ==========================================
-
-
-
 
 // ==========================================
 // CONFIGURATION PRESSE - AVEC VOS FICHIERS
@@ -1573,6 +1818,7 @@ async function setupPressCarousel() {
     renderPressCarousel();
     startCarouselAutoPlay();
 }
+
 function startCarouselAutoPlay() {
     stopCarouselAutoPlay();
     CONFIG.carouselInterval = setInterval(() => {
@@ -1757,7 +2003,7 @@ function setupPromisesCarousel() {
                     <h4 class="promise-card-title">${promise.engagement.substring(0, 80)}${promise.engagement.length > 80 ? '...' : ''}</h4>
                     <div class="promise-card-meta">
                         <span><i class="fas fa-calendar"></i> ${formatDate(promise.deadline)}</span>
-                        <span><i class="fas fa-clock"></i> ${daysRemaining}j</span>
+                        <span><i class="fas fa-clock"></i> ${formatDaysRemaining(daysRemaining)}</span>
                     </div>
                     ${promise.publicCount > 0 ? `
                         <div class="promise-card-rating">
@@ -2836,6 +3082,7 @@ async function testServiceRatingsTable() {
         console.error('❌ Erreur test:', error);
     }
 }
+
 // ==========================================
 // FORCER LA VISIBILITÉ DES BOUTONS
 // ==========================================
@@ -3015,6 +3262,21 @@ window.goToCarouselSlide = goToCarouselSlide;
 window.shareToPlatform = shareToPlatform;
 
 // ==========================================
+// FONCTIONS MANQUANTES (pour éviter les erreurs)
+// ==========================================
+
+function getDefaultPressData() {
+    return [
+        { id: '1', title: 'Le Soleil', date: '28/01/2026', image: 'https://picsum.photos/seed/soleil/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6d/Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg/200px-Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg.png' },
+        { id: '2', title: 'Sud Quotidien', date: '28/01/2026', image: 'https://picsum.photos/seed/sud/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/5/5b/Sud_Quotidien_logo.svg/200px-Sud_Quotidien_logo.svg.png' },
+        { id: '3', title: 'Libération', date: '28/01/2026', image: 'liberation.jpg', logo: 'iconeliberation.jpg' },
+        { id: '4', title: 'L\'Observateur', date: '28/01/2026', image: 'observateur.jpg', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/L%27Observateur_logo.svg/200px-L%27Observateur_logo.svg.png' },
+        { id: '5', title: 'Le Quotidien', date: '28/01/2026', image: 'https://picsum.photos/seed/quotidien/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/3/3c/Le_Quotidien_logo.svg/200px-Le_Quotidien_logo.svg.png' },
+        { id: '6', title: 'WalFadjri', date: '28/01/2026', image: 'https://picsum.photos/seed/walfadjri/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7c/Walf_fadjri_logo.svg/200px-Walf_fadjri_logo.svg.png' }
+    ];
+}
+
+// ==========================================
 // SCRIPT DE DIAGNOSTIC SUPABASE
 // ==========================================
 
@@ -3099,6 +3361,7 @@ setTimeout(() => {
         diagnoseSupabase();
     }
 }, 2000);
+
 // ==========================================
 // FONCTIONS DE SECOURS POUR SUPABASE
 // ==========================================

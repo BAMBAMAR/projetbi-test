@@ -1532,9 +1532,7 @@ function renderPressCarousel() {
                      style="transform: scale(${CONFIG.zoomScale})">
             </div>
             <div class="carousel-overlay">
-                <div class="carousel-info">
-                    <div class="carousel-title">${currentPaper.title}</div>
-                    <div class="carousel-date">${currentPaper.date}</div>
+                
                     </div>
             </div>
             

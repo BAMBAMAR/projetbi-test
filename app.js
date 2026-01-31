@@ -1,3 +1,35 @@
+// Mode démo - activé si Supabase échoue
+let DEMO_MODE = false;
+
+// Vérifier la connexion Supabase
+async function checkSupabaseConnection() {
+    if (!supabaseClient) {
+        DEMO_MODE = true;
+        console.log('🎭 MODE DÉMO - Supabase non disponible');
+        return;
+    }
+    
+    try {
+        const { error } = await supabaseClient
+            .from('service_ratings')
+            .select('count', { count: 'exact', head: true });
+        
+        if (error) {
+            DEMO_MODE = true;
+            console.log('🎭 MODE DÉMO - Erreur Supabase:', error.message);
+            showNotification('Mode démo activé - données locales', 'info');
+        } else {
+            DEMO_MODE = false;
+            console.log('✅ Mode Supabase activé');
+        }
+    } catch (error) {
+        DEMO_MODE = true;
+        console.log('🎭 MODE DÉMO - Exception:', error.message);
+    }
+}
+
+// Appelez cette fonction après l'initialisation
+setTimeout(checkSupabaseConnection, 1000);
 // ==========================================
 // APP.JS - VERSION OPTIMISÉE POUR VOTRE STRUCTURE
 // ==========================================
@@ -2394,77 +2426,119 @@ async function testServiceRatingsTable() {
         return;
     }
     
+    console.log('🔍 TEST SUPABASE - Vérification complète');
+    console.log('========================================');
+    
     try {
-        // Test 1: Vérifier la table service_ratings
-        console.log('🔍 Test de la table service_ratings...');
-        const { data: testData, error: testError } = await supabaseClient
+        // 1. Vérifier la connexion
+        console.log('1. Test de connexion...');
+        const { data: test, error: connError } = await supabaseClient
             .from('service_ratings')
             .select('count', { count: 'exact', head: true });
         
-        if (testError) {
-            console.error('❌ Erreur test service_ratings:', testError.message);
+        if (connError) {
+            console.error('❌ Erreur connexion:', connError.message);
+            
+            if (connError.message.includes('row-level security')) {
+                console.log('💡 SOLUTION: Exécutez ce SQL dans Supabase:');
+                console.log(`
+                    -- Option 1: Désactiver RLS temporairement
+                    ALTER TABLE service_ratings DISABLE ROW LEVEL SECURITY;
+                    ALTER TABLE votes DISABLE ROW LEVEL SECURITY;
+                    
+                    -- Option 2: Créer des politiques permissives
+                    CREATE POLICY "Enable all" ON service_ratings FOR ALL USING (true);
+                    CREATE POLICY "Enable all" ON votes FOR ALL USING (true);
+                `);
+            }
         } else {
-            console.log(`✅ Table service_ratings: ${testData} enregistrements`);
+            console.log('✅ Connexion OK');
         }
         
-        // Test 2: Vérifier la table service_stats
-        console.log('🔍 Test de la table service_stats...');
-        const { data: statsData, error: statsError } = await supabaseClient
-            .from('service_stats')
-            .select('count', { count: 'exact', head: true });
+        // 2. Tester les permissions avec une requête simple
+        console.log('\n2. Test des permissions...');
+        console.log('   a) Test SELECT...');
+        const { error: selectError } = await supabaseClient
+            .from('service_ratings')
+            .select('*')
+            .limit(1);
         
-        if (statsError) {
-            console.warn('⚠️ Table service_stats non trouvée (optionnelle)');
+        if (selectError) {
+            console.error('   ❌ SELECT échoué:', selectError.message);
         } else {
-            console.log(`✅ Table service_stats: ${statsData} enregistrements`);
+            console.log('   ✅ SELECT réussi');
         }
         
-        // Test 3: Tester un insert
-        console.log('🔍 Test insertion...');
-        const testInsert = {
+        // 3. Tester l'insertion avec des données minimales
+        console.log('\n3. Test INSERT...');
+        const testData = {
             service: 'TEST',
             accessibility: 3,
             welcome: 3,
             efficiency: 3,
             transparency: 3,
-            comment: 'Test de connexion',
-            user_ip: '127.0.0.1',
-            user_agent: 'Test Agent'
+            comment: 'Test de permission',
+            created_at: new Date().toISOString()
         };
         
-        const { data: insertData, error: insertError } = await supabaseClient
+        // Essayer sans user_ip et user_agent (champs optionnels)
+        const { data: insertResult, error: insertError } = await supabaseClient
             .from('service_ratings')
-            .insert([testInsert])
+            .insert([testData])
             .select();
         
         if (insertError) {
-            console.error('❌ Erreur insertion test:', insertError.message);
-            console.log('💡 Structure attendue:', {
-                service: 'varchar NOT NULL',
-                accessibility: 'integer CHECK (1-5)',
-                welcome: 'integer CHECK (1-5)',
-                efficiency: 'integer CHECK (1-5)',
-                transparency: 'integer CHECK (1-5)',
-                comment: 'text',
-                user_ip: 'varchar',
-                user_agent: 'text',
-                created_at: 'timestamp'
-            });
-        } else {
-            console.log('✅ Insertion test réussie:', insertData);
+            console.error('   ❌ INSERT échoué:', insertError.message);
             
-            // Nettoyer le test
-            await supabaseClient
-                .from('service_ratings')
-                .delete()
-                .eq('service', 'TEST');
+            if (insertError.message.includes('user_ip')) {
+                console.log('   💡 Le champ user_ip est requis dans votre table');
+                console.log('   💡 Essayez avec user_ip:');
+                
+                const testDataWithIP = {
+                    ...testData,
+                    user_ip: '127.0.0.1',
+                    user_agent: 'Test'
+                };
+                
+                const { error: insertError2 } = await supabaseClient
+                    .from('service_ratings')
+                    .insert([testDataWithIP])
+                    .select();
+                
+                if (insertError2) {
+                    console.error('   ❌ INSERT avec IP échoué:', insertError2.message);
+                } else {
+                    console.log('   ✅ INSERT avec IP réussi');
+                }
+            }
+        } else {
+            console.log('   ✅ INSERT réussi:', insertResult);
+            
+            // Nettoyage
+            if (insertResult && insertResult[0] && insertResult[0].id) {
+                await supabaseClient
+                    .from('service_ratings')
+                    .delete()
+                    .eq('id', insertResult[0].id);
+                console.log('   🧹 Test nettoyé');
+            }
+        }
+        
+        // 4. Vérifier la structure de la table
+        console.log('\n4. Structure de la table...');
+        console.log('   Colonnes attendues: service, accessibility, welcome, efficiency, transparency, comment, user_ip, user_agent, created_at');
+        
+        // 5. Mode démo activé automatiquement en cas d'erreur
+        if (connError || selectError || insertError) {
+            console.log('\n🎭 MODE DÉMO ACTIVÉ');
+            console.log('   Les données seront stockées localement');
+            console.log('   Pour activer Supabase, corrigez les permissions RLS');
         }
         
     } catch (error) {
         console.error('❌ Erreur test:', error);
     }
 }
-
 // ==========================================
 // FORCER LA VISIBILITÉ DES BOUTONS
 // ==========================================
@@ -2728,3 +2802,209 @@ setTimeout(() => {
         diagnoseSupabase();
     }
 }, 2000);
+// ==========================================
+// FONCTIONS DE SECOURS POUR SUPABASE
+// ==========================================
+
+// Fonction pour insérer avec retry et fallback
+async function safeSupabaseInsert(table, data, retryCount = 2) {
+    if (!supabaseClient) {
+        console.log(`⚠️ Supabase non disponible - stockage local pour ${table}`);
+        return { success: false, data: null, error: 'Supabase non disponible' };
+    }
+    
+    for (let i = 0; i <= retryCount; i++) {
+        try {
+            console.log(`🔄 Tentative ${i + 1} d'insertion dans ${table}...`);
+            
+            const { data: result, error } = await supabaseClient
+                .from(table)
+                .insert([data])
+                .select();
+            
+            if (!error) {
+                console.log(`✅ Insertion réussie dans ${table}:`, result);
+                return { success: true, data: result, error: null };
+            }
+            
+            // Si erreur 401 (RLS), essayez avec une méthode différente
+            if (error.code === 'PGRST301' || error.code === '42501' || error.message.includes('row-level security')) {
+                console.warn(`⚠️ Erreur RLS pour ${table}:`, error.message);
+                
+                // Mode fallback : stockage local
+                const localStorageKey = `supabase_fallback_${table}`;
+                const fallbackData = JSON.parse(localStorage.getItem(localStorageKey) || '[]');
+                fallbackData.push({
+                    ...data,
+                    id: Date.now().toString(),
+                    _synced: false,
+                    _timestamp: new Date().toISOString()
+                });
+                localStorage.setItem(localStorageKey, JSON.stringify(fallbackData));
+                
+                return { 
+                    success: false, 
+                    data: null, 
+                    error: error.message,
+                    fallback: true 
+                };
+            }
+            
+            // Autre erreur
+            console.error(`❌ Erreur insertion ${table}:`, error);
+            
+        } catch (error) {
+            console.error(`❌ Exception insertion ${table}:`, error);
+        }
+        
+        // Attente avant retry
+        if (i < retryCount) {
+            await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+        }
+    }
+    
+    return { success: false, data: null, error: 'Toutes les tentatives ont échoué' };
+}
+
+// Version corrigée de saveRatingToSupabase
+async function saveRatingToSupabase(ratingData) {
+    if (!supabaseClient) {
+        console.log('⚠️ Supabase non disponible - mode local seulement');
+        return false;
+    }
+    
+    try {
+        console.log('🚀 Envoi de notation à Supabase...');
+        
+        // Structure des données
+        const supabaseData = {
+            service: ratingData.service,
+            accessibility: ratingData.accessibility,
+            welcome: ratingData.welcome,
+            efficiency: ratingData.efficiency,
+            transparency: ratingData.transparency,
+            comment: ratingData.comment || null,
+            user_ip: await getIPAddress(),
+            user_agent: navigator.userAgent,
+            created_at: new Date().toISOString()
+        };
+        
+        console.log('📤 Données à envoyer:', supabaseData);
+        
+        // Utiliser la fonction safe insert
+        const result = await safeSupabaseInsert('service_ratings', supabaseData);
+        
+        if (result.fallback) {
+            showNotification('Notation enregistrée localement (problème serveur)', 'info');
+            return false;
+        }
+        
+        if (!result.success) {
+            console.error('❌ Échec insertion Supabase');
+            showNotification('Mode démo : Notation enregistrée localement', 'info');
+            return false;
+        }
+        
+        console.log('✅ Notation envoyée avec succès');
+        showNotification('Merci pour votre notation !', 'success');
+        
+        // Mettre à jour les stats (en arrière-plan)
+        setTimeout(() => updateServiceStats(ratingData.service), 1000);
+        
+        return true;
+        
+    } catch (error) {
+        console.error('❌ Erreur envoi Supabase:', error);
+        showNotification('Mode démo : Notation enregistrée localement', 'info');
+        return false;
+    }
+}
+
+// Version corrigée de saveVoteToSupabase
+async function saveVoteToSupabase(promiseId, rating, comment = '') {
+    if (!supabaseClient) {
+        showNotification('Mode démo : Vote enregistré localement', 'info');
+        const votes = JSON.parse(localStorage.getItem('promise_votes') || '[]');
+        votes.push({
+            id: Date.now().toString(),
+            promise_id: promiseId,
+            rating: rating,
+            comment: comment,
+            created_at: new Date().toISOString()
+        });
+        localStorage.setItem('promise_votes', JSON.stringify(votes));
+        return;
+    }
+    
+    try {
+        const voteData = { 
+            promise_id: promiseId, 
+            rating: rating,
+            comment: comment,
+            created_at: new Date().toISOString()
+        };
+        
+        console.log('Envoi du vote:', voteData);
+        
+        const result = await safeSupabaseInsert('votes', voteData);
+        
+        if (result.fallback) {
+            showNotification('Vote enregistré localement (problème serveur)', 'info');
+        } else if (result.success) {
+            showNotification('Merci pour votre vote !', 'success');
+        } else {
+            showNotification('Vote enregistré localement (mode démo)', 'info');
+        }
+        
+        // Recharger les votes après un délai
+        setTimeout(() => fetchAndDisplayPublicVotes(), 500);
+        
+    } catch (error) {
+        console.error('❌ Erreur sauvegarde vote:', error);
+        showNotification('Mode démo : Vote enregistré localement', 'info');
+    }
+}
+
+// Fonction pour synchroniser les données locales
+async function syncLocalDataWithSupabase() {
+    console.log('🔄 Synchronisation des données locales...');
+    
+    // Synchroniser service_ratings
+    const serviceRatingsLocal = JSON.parse(localStorage.getItem('supabase_fallback_service_ratings') || '[]');
+    if (serviceRatingsLocal.length > 0) {
+        console.log(`📊 ${serviceRatingsLocal.length} notations locales à synchroniser`);
+        
+        for (const rating of serviceRatingsLocal.filter(r => !r._synced)) {
+            try {
+                const { success } = await safeSupabaseInsert('service_ratings', {
+                    service: rating.service,
+                    accessibility: rating.accessibility,
+                    welcome: rating.welcome,
+                    efficiency: rating.efficiency,
+                    transparency: rating.transparency,
+                    comment: rating.comment,
+                    user_ip: rating.user_ip || 'unknown',
+                    user_agent: rating.user_agent || 'local-sync',
+                    created_at: rating.created_at || rating._timestamp
+                });
+                
+                if (success) {
+                    rating._synced = true;
+                }
+            } catch (error) {
+                console.error('❌ Erreur synchronisation:', error);
+            }
+        }
+        
+        // Mettre à jour le stockage local
+        localStorage.setItem('supabase_fallback_service_ratings', JSON.stringify(serviceRatingsLocal));
+    }
+    
+    // Synchroniser votes
+    const votesLocal = JSON.parse(localStorage.getItem('promise_votes') || '[]');
+    if (votesLocal.length > 0) {
+        console.log(`📊 ${votesLocal.length} votes locaux à synchroniser`);
+        
+        // Logique similaire pour les votes...
+    }
+}

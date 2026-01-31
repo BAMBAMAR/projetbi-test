@@ -72,6 +72,14 @@
       "image": "revuedepresse/record.jpg",
       "logo": "images/logos/record.png",
       "link": "#"
+    },
+     {
+      "id": "1",
+      "title": "Enquête",
+      "date": "31/01/2024",
+      "image": "revuedepresse/enquete.jpg",
+      "logo": "images/logos/enquete.png",
+      "link": "#"
     }
   ]
 }

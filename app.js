@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Configurer les composants
     setupPressCarousel();
+    initStarRatings(); // Ajoutez cette ligne
     setupServiceRatings();
     setupDailyPromise();
     setupPromisesCarousel();
@@ -135,7 +136,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             setupPhotoViewerControls();
         }
     }, 500);
-});
+}
+                         e);
 
 // ==========================================
 // NAVIGATION

@@ -2144,41 +2144,89 @@ function displayDemoRatingResults() {
         </div>
     `;
 }
+
 // ==========================================
-// DÉBOGAGE DES BOUTONS DE PARTAGE
+// FORCER LA VISIBILITÉ DES BOUTONS
 // ==========================================
-function debugShareButtons() {
-    console.log('🔍 Débogage des boutons de partage...');
+function forceButtonVisibility() {
+    console.log('🎨 Forçage de la visibilité des boutons...');
     
-    const cards = document.querySelectorAll('.promise-card');
-    console.log(`Nombre de cartes trouvées: ${cards.length}`);
-    
-    cards.forEach((card, index) => {
-        const actions = card.querySelector('.promise-actions');
-        const shareButtons = actions ? actions.querySelectorAll('.social-btn') : [];
-        const starButton = actions ? actions.querySelector('.btn-stars') : null;
+    // Attendre que le DOM soit complètement chargé
+    setTimeout(() => {
+        const shareButtons = document.querySelectorAll('.promise-actions .social-btn');
+        const starButtons = document.querySelectorAll('.promise-actions .btn-stars');
         
-        console.log(`Carte ${index + 1}:`);
-        console.log(`- Section actions présente: ${!!actions}`);
-        console.log(`- Boutons de partage: ${shareButtons.length}`);
-        console.log(`- Bouton étoiles présent: ${!!starButton}`);
+        console.log(`🎯 ${shareButtons.length} boutons de partage trouvés`);
+        console.log(`🎯 ${starButtons.length} boutons étoiles trouvés`);
         
-        // Appliquer des styles visibles pour débogage
-        if (shareButtons.length > 0) {
-            shareButtons.forEach(btn => {
-                btn.style.backgroundColor = '#00695f';
-                btn.style.color = 'white';
-                btn.style.border = '2px solid white';
-            });
-        }
+        // Appliquer des styles inline (priorité maximale)
+        shareButtons.forEach(btn => {
+            btn.style.cssText = `
+                background: #00695f !important;
+                color: white !important;
+                border: 2px solid white !important;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 40px !important;
+                height: 40px !important;
+                border-radius: 50% !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            `;
+            
+            // Classes spécifiques
+            if (btn.classList.contains('fb')) {
+                btn.style.background = '#3b5998 !important';
+            }
+            if (btn.classList.contains('tw')) {
+                btn.style.background = '#1da1f2 !important';
+            }
+            if (btn.classList.contains('wa')) {
+                btn.style.background = '#25d366 !important';
+            }
+        });
         
-        if (starButton) {
-            starButton.style.backgroundColor = '#ff6f3c';
-            starButton.style.color = 'white';
-            starButton.style.fontWeight = 'bold';
-        }
-    });
+        starButtons.forEach(btn => {
+            btn.style.cssText = `
+                background: linear-gradient(135deg, #f57c00, #ff6f3c) !important;
+                color: white !important;
+                border: 2px solid #f57c00 !important;
+                font-weight: bold !important;
+                padding: 8px 16px !important;
+                border-radius: 20px !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 8px !important;
+                box-shadow: 0 2px 8px rgba(245,124,0,0.4) !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            `;
+        });
+        
+        // Améliorer toute la section actions
+        const actionSections = document.querySelectorAll('.promise-actions');
+        actionSections.forEach(section => {
+            section.style.cssText = `
+                background: rgba(0,105,95,0.05) !important;
+                border: 2px solid #e0e0e0 !important;
+                border-radius: 8px !important;
+                padding: 12px !important;
+                margin-top: 16px !important;
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            `;
+        });
+        
+    }, 500); // Attendre un peu que tout soit chargé
 }
 
-// Appeler après le rendu des promesses
-setTimeout(debugShareButtons, 1000);
+// Appeler la fonction
+forceButtonVisibility();
+
+// Et aussi après chaque rendu
+setTimeout(forceButtonVisibility, 2000);

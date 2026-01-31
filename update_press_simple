@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mise à jour Presse - Projet Sénégal</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #00695c 0%, #004d40 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        header .date {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .files-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 4px solid #00695c;
+        }
+        
+        .files-section h3 {
+            color: #00695c;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .file-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        
+        .file-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        
+        .file-name {
+            font-family: monospace;
+            color: #00695c;
+            font-weight: 500;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-generate {
+            background: #2196F3;
+            color: white;
+        }
+        
+        .btn-generate:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+        }
+        
+        .btn-download {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .btn-download:hover {
+            background: #388E3C;
+            transform: translateY(-2px);
+        }
+        
+        .btn-copy {
+            background: #FF9800;
+            color: white;
+        }
+        
+        .btn-copy:hover {
+            background: #F57C00;
+            transform: translateY(-2px);
+        }
+        
+        .json-section {
+            background: #f5f5f5;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        .json-section h3 {
+            background: #333;
+            color: white;
+            padding: 15px 20px;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 400px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            padding: 20px;
+            border: none;
+            resize: vertical;
+            background: #1e1e1e;
+            color: #d4d4d4;
+        }
+        
+        .instructions {
+            background: #FFF3CD;
+            border: 1px solid #FFEAA7;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .instructions h3 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        
+        .steps {
+            list-style-type: none;
+            counter-reset: step-counter;
+        }
+        
+        .steps li {
+            counter-increment: step-counter;
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        .steps li:before {
+            content: counter(step-counter);
+            background: #00695c;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: bold;
+        }
+        
+        .current-date {
+            background: #E3F2FD;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: inline-block;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .files-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📰 Générateur Presse Quotidienne</h1>
+            <p class="date">Projet Sénégal - Suivi des engagements</p>
+            <div class="current-date">Date du jour : <strong id="currentDate"></strong></div>
+        </header>
+        
+        <div class="content">
+            <section class="files-section">
+                <h3>📁 Vos fichiers dans <code>revuedepresse/</code></h3>
+                <div class="files-grid" id="filesList">
+                    <!-- Les fichiers seront listés ici -->
+                </div>
+            </section>
+            
+            <div class="controls">
+                <button class="btn btn-generate" onclick="generateJSON()">
+                    🔄 Générer JSON
+                </button>
+                <button class="btn btn-download" onclick="downloadJSON()">
+                    💾 Télécharger press.json
+                </button>
+                <button class="btn btn-copy" onclick="copyToClipboard()">
+                    📋 Copier dans presse-papier
+                </button>
+            </div>
+            
+            <section class="json-section">
+                <h3>📄 Résultat JSON :</h3>
+                <textarea id="jsonOutput" readonly></textarea>
+            </section>
+            
+            <section class="instructions">
+                <h3>📝 Instructions :</h3>
+                <ol class="steps">
+                    <li><strong>Téléchargez</strong> les journaux du jour en JPG</li>
+                    <li><strong>Remplacez</strong> les fichiers dans le dossier <code>revuedepresse/</code> sur GitHub</li>
+                    <li><strong>Générez</strong> le nouveau JSON avec le bouton ci-dessus</li>
+                    <li><strong>Téléchargez</strong> le fichier <code>press.json</code></li>
+                    <li><strong>Remplacez</strong> le fichier <code>press.json</code> sur votre site GitHub</li>
+                    <li><strong>Vérifiez</strong> que votre site affiche les nouveaux journaux</li>
+                </ol>
+                
+                <h4 style="margin-top: 20px; color: #00695c;">🔄 Processus rapide :</h4>
+                <p>1. Remplacer JPG → 2. Générer JSON → 3. Upload sur GitHub</p>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Liste de vos fichiers de presse
+        const pressFiles = [
+            'lesoleil.jpg',
+            'sudquotidien.jpg', 
+            'liberation.jpg',
+            'observateur.jpg',
+            'lequotidien.jpg',
+            'rewmisport.jpg',
+            'soloquotidien.jpg',
+            'yooryoor.jpg',
+            'record.jpg'
+        ];
+
+        // Afficher la date du jour
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            document.getElementById('currentDate').textContent = 
+                now.toLocaleDateString('fr-FR', options);
+            
+            return now.toLocaleDateString('fr-FR');
+        }
+
+        // Afficher la liste des fichiers
+        function displayFilesList() {
+            const filesList = document.getElementById('filesList');
+            filesList.innerHTML = pressFiles.map(file => `
+                <div class="file-item">
+                    <div class="file-name">${file}</div>
+                    <small>revuedepresse/${file}</small>
+                </div>
+            `).join('');
+        }
+
+        // Générer le JSON avec la date du jour
+        function generateJSON() {
+            const today = updateCurrentDate();
+            
+            const pressData = {
+                last_updated: today,
+                press: pressFiles.map((file, index) => {
+                    // Extraire le nom du journal du nom de fichier
+                    const name = file.replace('.jpg', '')
+                        .replace(/_/g, ' ')
+                        .replace(/\b\w/g, l => l.toUpperCase());
+                    
+                    // Déterminer le lien selon le journal
+                    let link = "#";
+                    if (file.includes('lesoleil')) link = 'http://www.lesoleil.sn/';
+                    if (file.includes('sudquotidien')) link = 'http://www.sudonline.sn/';
+                    if (file.includes('liberation')) link = 'http://www.liberation.sn/';
+                    if (file.includes('observateur')) link = 'http://www.observateur.sn/';
+                    if (file.includes('lequotidien')) link = 'http://www.lequotidien.sn/';
+                    
+                    return {
+                        id: (index + 1).toString(),
+                        title: name,
+                        date: today,
+                        image: `revuedepresse/${file}`,
+                        logo: `images/logos/${file.replace('.jpg', '.png')}`,
+                        link: link
+                    };
+                })
+            };
+            
+            const jsonOutput = JSON.stringify(pressData, null, 2);
+            document.getElementById('jsonOutput').value = jsonOutput;
+            
+            // Afficher une notification
+            showNotification('✅ JSON généré avec succès !', 'success');
+            
+            return jsonOutput;
+        }
+
+        // Télécharger le JSON
+        function downloadJSON() {
+            const json = document.getElementById('jsonOutput').value;
+            
+            if (!json || json.trim() === '{}') {
+                showNotification('❌ Veuillez d\'abord générer le JSON', 'error');
+                return;
+            }
+            
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'press.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('📥 Fichier press.json téléchargé !', 'success');
+        }
+
+        // Copier dans le presse-papier
+        async function copyToClipboard() {
+            const json = document.getElementById('jsonOutput').value;
+            
+            if (!json || json.trim() === '{}') {
+                showNotification('❌ Rien à copier', 'error');
+                return;
+            }
+            
+            try {
+                await navigator.clipboard.writeText(json);
+                showNotification('📋 JSON copié dans le presse-papier !', 'success');
+            } catch (err) {
+                // Fallback pour anciens navigateurs
+                const textArea = document.createElement('textarea');
+                textArea.value = json;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('📋 JSON copié (méthode ancienne)', 'success');
+            }
+        }
+
+        // Afficher une notification
+        function showNotification(message, type = 'info') {
+            // Supprimer les notifications existantes
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(n => n.remove());
+            
+            // Créer la notification
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                background: ${type === 'success' ? '#4CAF50' : '#f44336'};
+                color: white;
+                border-radius: 5px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            // Ajouter du CSS pour l'animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Supprimer après 3 secondes
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease forwards';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCurrentDate();
+            displayFilesList();
+            generateJSON(); // Générer automatiquement au chargement
+            
+            // Ajouter le CSS pour slideOut
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>

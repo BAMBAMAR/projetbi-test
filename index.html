@@ -1,26 +1,190 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <!-- SEO Enhanced -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Plateforme citoyenne de suivi des engagements du Projet pour un Sénégal Souverain, Juste et Prospère">
-    <meta name="keywords" content="Sénégal, engagements, transparence, Bassirou Diomaye Faye, suivi, promesses">
-    <title>LE PROJET SÉNÉGAL | Suivi des Engagements Présidentiels</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Plateforme citoyenne indépendante pour suivre en temps réel l'avancement des engagements du Président Bassirou Diomaye Faye. Votez et analysez les résultats du Projet pour un Sénégal Souverain, Juste et Prospère.">
+    <meta name="keywords" content="Sénégal, promesses électorales, Bassirou Diomaye Faye, transparence, gouvernance, démocratie, suivi engagements, projet sénégal, engagements présidentiels">
+    <meta name="author" content="ProjetBI">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Thème et couleurs -->
+    <meta name="theme-color" content="#2a6d5d">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://projetbi.org/">
+    <meta property="og:title" content="Suivi des Engagements du Projet | Sénégal Souverain, Juste et Prospère">
+    <meta property="og:description" content="Découvrez l'état d'avancement des engagements présidentiels. Donnez votre avis et suivez la transparence démocratique.">
+    <meta property="og:image" content="https://projetbi.org/og-image.jpg">
+    <meta property="og:image:secure_url" content="https://projetbi.org/og-image.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Suivi des engagements du Projet Sénégal">
+    <meta property="og:site_name" content="LE PROJET SÉNÉGAL - Suivi des Engagements">
+    <meta property="og:locale" content="fr_FR">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="https://projetbi.org/">
+    <meta name="twitter:creator" content="@ProjetSenegal">
+    <meta name="twitter:title" content="Suivi Promesses : PROJET SÉNÉGAL">
+    <meta name="twitter:description" content="Découvrez l'avancement des engagements pour le Sénégal Souverain, Juste et Prospère.">
+    <meta name="twitter:image" content="https://projetbi.org/twitter-card.jpg">
+    <meta name="twitter:image:alt" content="Tableau de bord de suivi des promesses">
+    
+    <!-- Titre optimisé -->
+    <title>LE PROJET SÉNÉGAL | Suivi des Engagements Présidentiels de Bassirou Diomaye Faye</title>
     
     <!-- Favicon -->
     <link rel="icon" href="https://projetbi.org/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="https://projetbi.org/favicon.png">
+    <link rel="canonical" href="https://projetbi.org/">
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Crimson+Pro:wght@400;700&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     
+    <!-- Schema.org pour Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "LE PROJET SÉNÉGAL - Suivi des Engagements",
+      "url": "https://projetbi.org",
+      "description": "Plateforme citoyenne de suivi transparent des engagements du Projet pour un Sénégal Souverain, Juste et Prospère",
+      "publisher": {
+        "@type": "Organization",
+        "name": "ProjetBI",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://projetbi.org/favicon.png"
+        }
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://projetbi.org/#promises?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Style CSS pour le compte à rebours -->
+    <style>
+    .countdown-container {
+        background: linear-gradient(135deg, rgba(0, 91, 187, 0.1) 0%, rgba(255, 221, 0, 0.1) 100%);
+        border: 2px solid rgba(0, 91, 187, 0.3);
+        border-radius: 20px;
+        padding: 1.5rem;
+        margin: 2rem auto;
+        max-width: 800px;
+        box-shadow: 0 8px 32px rgba(0, 91, 187, 0.15);
+        backdrop-filter: blur(10px);
+        text-align: center;
+    }
+
+    .countdown-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--primary-color);
+        color: white;
+        padding: 0.5rem 1.5rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .countdown-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .countdown-item {
+        background: white;
+        border-radius: 15px;
+        padding: 1.2rem 0.5rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease;
+    }
+
+    .countdown-item:hover {
+        transform: translateY(-5px);
+    }
+
+    .countdown-value {
+        font-size: 2.8rem;
+        font-weight: 800;
+        font-family: 'Manrope', sans-serif;
+        color: var(--primary-color);
+        line-height: 1;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .countdown-label {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 0.5rem;
+        font-weight: 600;
+    }
+
+    .countdown-target {
+        font-size: 1.1rem;
+        color: var(--text-primary);
+        background: rgba(255, 255, 255, 0.9);
+        padding: 0.8rem 1.5rem;
+        border-radius: 10px;
+        display: inline-block;
+        margin-top: 0.5rem;
+    }
+
+    .countdown-target strong {
+        color: var(--primary-color);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .countdown-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .countdown-value {
+            font-size: 2.2rem;
+        }
+        
+        .countdown-container {
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .countdown-grid {
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+        }
+        
+        .countdown-value {
+            font-size: 2rem;
+        }
+    }
+    </style>
 </head>
 <body>
     <!-- Progress Indicator -->
@@ -95,6 +259,35 @@
             <p class="subtitle">
                 Plateforme Citoyenne de Suivi des Engagements Présidentiels
             </p>
+            
+            <!-- Compte à rebours -->
+            <div class="countdown-container">
+                <div class="countdown-badge">
+                    <i class="fas fa-hourglass-half"></i>
+                    Délai des engagements
+                </div>
+                <div class="countdown-grid" id="countdown">
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="days">000</div>
+                        <div class="countdown-label">Jours</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="hours">00</div>
+                        <div class="countdown-label">Heures</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="minutes">00</div>
+                        <div class="countdown-label">Minutes</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="seconds">00</div>
+                        <div class="countdown-label">Secondes</div>
+                    </div>
+                </div>
+                <div class="countdown-target">
+                    Date butoir : <strong>02 AVRIL 2029</strong>
+                </div>
+            </div>
             
             <div class="ref-badge">
                 <i class="fas fa-calendar-alt"></i>
@@ -576,406 +769,377 @@
         </div>
     </section>
 
-<!-- Remplacez la section Notation des Services Publics par ceci : -->
-
-<!-- Notation des Services Publics Section -->
-<section class="rating-section" id="rating">
-    <div class="container">
-        <div class="section-header-modern">
-            <h2 class="section-title">
-                <i class="fas fa-star-half-alt"></i>
-                Notation des Services Publics
-            </h2>
-        </div>
-
-        <!-- FORMULAIRE DE NOTATION -->
-        <div class="rating-form-card" style="margin-bottom: var(--spacing-2xl);">
-            <div class="rating-form-header">
-                <h3>
-                    <i class="fas fa-pencil-alt"></i>
-                    Donnez votre avis
-                </h3>
-                <p>Évaluez votre expérience avec un service public sénégalais</p>
+    <!-- Notation des Services Publics Section -->
+    <section class="rating-section" id="rating">
+        <div class="container">
+            <div class="section-header-modern">
+                <h2 class="section-title">
+                    <i class="fas fa-star-half-alt"></i>
+                    Notation des Services Publics
+                </h2>
             </div>
-            
-            <form class="rating-form" id="ratingForm">
-                <div class="form-group">
-                    <label for="service-category">
-                        <i class="fas fa-folder"></i>
-                        Catégorie de service *
-                    </label>
-                    <select class="form-select" id="service-category" required>
-                        <option value="">Choisissez une catégorie</option>
-                        <option value="sante">🏥 Santé & Hôpitaux</option>
-                        <option value="education">🎓 Éducation & Formation</option>
-                        <option value="securite">👮‍♂️ Sécurité & Défense</option>
-                        <option value="justice">⚖️ Justice & Droit</option>
-                        <option value="administration">🏛️ Administration & État Civil</option>
-                        <option value="finances">💰 Finances & Impôts</option>
-                        <option value="transports">🚌 Transports & Mobilité</option>
-                        <option value="energie">⚡ Énergie & Eau</option>
-                        <option value="communication">📞 Communication & Numérique</option>
-                        <option value="social">🤝 Action Sociale & Solidarité</option>
-                        <option value="emploi">💼 Emploi & Formation Pro</option>
-                        <option value="environnement">🌿 Environnement & Cadre de Vie</option>
-                        <option value="culture">🎭 Culture & Tourisme</option>
-                        <option value="autre">📋 Autre Service Public</option>
-                    </select>
-                </div>
 
-                <div class="form-group">
-                    <label for="service">
-                        <i class="fas fa-building"></i>
-                        Service concerné *
-                    </label>
-                    <select class="form-select" id="service" required disabled>
-                        <option value="">Sélectionnez d'abord une catégorie</option>
-                    </select>
+            <!-- FORMULAIRE DE NOTATION -->
+            <div class="rating-form-card" style="margin-bottom: var(--spacing-2xl);">
+                <div class="rating-form-header">
+                    <h3>
+                        <i class="fas fa-pencil-alt"></i>
+                        Donnez votre avis
+                    </h3>
+                    <p>Évaluez votre expérience avec un service public sénégalais</p>
                 </div>
                 
-                <div class="rating-criteria-grid">
-                    <!-- Accessibilité -->
-                    <div class="criteria-item">
-                        <label>
-                            <i class="fas fa-wheelchair"></i>
-                            Accessibilité
+                <form class="rating-form" id="ratingForm">
+                    <div class="form-group">
+                        <label for="service-category">
+                            <i class="fas fa-folder"></i>
+                            Catégorie de service *
                         </label>
-                        <div class="stars-rating" data-criteria="accessibility">
-                            <i class="far fa-star" data-value="1"></i>
-                            <i class="far fa-star" data-value="2"></i>
-                            <i class="far fa-star" data-value="3"></i>
-                            <i class="far fa-star" data-value="4"></i>
-                            <i class="far fa-star" data-value="5"></i>
-                            <input type="hidden" name="accessibility" id="accessibility" value="3">
-                        </div>
-                        <div class="criteria-description">Facilité d'accès physique et numérique</div>
+                        <select class="form-select" id="service-category" required>
+                            <option value="">Choisissez une catégorie</option>
+                            <option value="sante">🏥 Santé & Hôpitaux</option>
+                            <option value="education">🎓 Éducation & Formation</option>
+                            <option value="securite">👮‍♂️ Sécurité & Défense</option>
+                            <option value="justice">⚖️ Justice & Droit</option>
+                            <option value="administration">🏛️ Administration & État Civil</option>
+                            <option value="finances">💰 Finances & Impôts</option>
+                            <option value="transports">🚌 Transports & Mobilité</option>
+                            <option value="energie">⚡ Énergie & Eau</option>
+                            <option value="communication">📞 Communication & Numérique</option>
+                            <option value="social">🤝 Action Sociale & Solidarité</option>
+                            <option value="emploi">💼 Emploi & Formation Pro</option>
+                            <option value="environnement">🌿 Environnement & Cadre de Vie</option>
+                            <option value="culture">🎭 Culture & Tourisme</option>
+                            <option value="autre">📋 Autre Service Public</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="service">
+                            <i class="fas fa-building"></i>
+                            Service concerné *
+                        </label>
+                        <select class="form-select" id="service" required disabled>
+                            <option value="">Sélectionnez d'abord une catégorie</option>
+                        </select>
                     </div>
                     
-                    <!-- Accueil -->
-                    <div class="criteria-item">
-                        <label>
-                            <i class="fas fa-handshake"></i>
-                            Accueil
-                        </label>
-                        <div class="stars-rating" data-criteria="welcome">
-                            <i class="far fa-star" data-value="1"></i>
-                            <i class="far fa-star" data-value="2"></i>
-                            <i class="far fa-star" data-value="3"></i>
-                            <i class="far fa-star" data-value="4"></i>
-                            <i class="far fa-star" data-value="5"></i>
-                            <input type="hidden" name="welcome" id="welcome" value="3">
+                    <div class="rating-criteria-grid">
+                        <!-- Accessibilité -->
+                        <div class="criteria-item">
+                            <label>
+                                <i class="fas fa-wheelchair"></i>
+                                Accessibilité
+                            </label>
+                            <div class="stars-rating" data-criteria="accessibility">
+                                <i class="far fa-star" data-value="1"></i>
+                                <i class="far fa-star" data-value="2"></i>
+                                <i class="far fa-star" data-value="3"></i>
+                                <i class="far fa-star" data-value="4"></i>
+                                <i class="far fa-star" data-value="5"></i>
+                                <input type="hidden" name="accessibility" id="accessibility" value="3">
+                            </div>
+                            <div class="criteria-description">Facilité d'accès physique et numérique</div>
                         </div>
-                        <div class="criteria-description">Courtoisie et professionnalisme du personnel</div>
+                        
+                        <!-- Accueil -->
+                        <div class="criteria-item">
+                            <label>
+                                <i class="fas fa-handshake"></i>
+                                Accueil
+                            </label>
+                            <div class="stars-rating" data-criteria="welcome">
+                                <i class="far fa-star" data-value="1"></i>
+                                <i class="far fa-star" data-value="2"></i>
+                                <i class="far fa-star" data-value="3"></i>
+                                <i class="far fa-star" data-value="4"></i>
+                                <i class="far fa-star" data-value="5"></i>
+                                <input type="hidden" name="welcome" id="welcome" value="3">
+                            </div>
+                            <div class="criteria-description">Courtoisie et professionnalisme du personnel</div>
+                        </div>
+                        
+                        <!-- Efficacité -->
+                        <div class="criteria-item">
+                            <label>
+                                <i class="fas fa-bolt"></i>
+                                Efficacité
+                            </label>
+                            <div class="stars-rating" data-criteria="efficiency">
+                                <i class="far fa-star" data-value="1"></i>
+                                <i class="far fa-star" data-value="2"></i>
+                                <i class="far fa-star" data-value="3"></i>
+                                <i class="far fa-star" data-value="4"></i>
+                                <i class="far fa-star" data-value="5"></i>
+                                <input type="hidden" name="efficiency" id="efficiency" value="3">
+                            </div>
+                            <div class="criteria-description">Rapidité et qualité du traitement</div>
+                        </div>
+                        
+                        <!-- Transparence -->
+                        <div class="criteria-item">
+                            <label>
+                                <i class="fas fa-eye"></i>
+                                Transparence
+                            </label>
+                            <div class="stars-rating" data-criteria="transparency">
+                                <i class="far fa-star" data-value="1"></i>
+                                <i class="far fa-star" data-value="2"></i>
+                                <i class="far fa-star" data-value="3"></i>
+                                <i class="far fa-star" data-value="4"></i>
+                                <i class="far fa-star" data-value="5"></i>
+                                <input type="hidden" name="transparency" id="transparency" value="3">
+                            </div>
+                            <div class="criteria-description">Clarté des procédures et informations</div>
+                        </div>
                     </div>
                     
-                    <!-- Efficacité -->
-                    <div class="criteria-item">
-                        <label>
-                            <i class="fas fa-bolt"></i>
-                            Efficacité
+                    <div class="form-group">
+                        <label for="comment">
+                            <i class="fas fa-comment"></i>
+                            Commentaire (optionnel)
                         </label>
-                        <div class="stars-rating" data-criteria="efficiency">
-                            <i class="far fa-star" data-value="1"></i>
-                            <i class="far fa-star" data-value="2"></i>
-                            <i class="far fa-star" data-value="3"></i>
-                            <i class="far fa-star" data-value="4"></i>
-                            <i class="far fa-star" data-value="5"></i>
-                            <input type="hidden" name="efficiency" id="efficiency" value="3">
-                        </div>
-                        <div class="criteria-description">Rapidité et qualité du traitement</div>
+                        <textarea 
+                            class="form-textarea" 
+                            id="comment" 
+                            name="comment"
+                            rows="3" 
+                            placeholder="Partagez votre expérience détaillée avec ce service..."></textarea>
                     </div>
                     
-                    <!-- Transparence -->
-                    <div class="criteria-item">
-                        <label>
-                            <i class="fas fa-eye"></i>
-                            Transparence
-                        </label>
-                        <div class="stars-rating" data-criteria="transparency">
-                            <i class="far fa-star" data-value="1"></i>
-                            <i class="far fa-star" data-value="2"></i>
-                            <i class="far fa-star" data-value="3"></i>
-                            <i class="far fa-star" data-value="4"></i>
-                            <i class="far fa-star" data-value="5"></i>
-                            <input type="hidden" name="transparency" id="transparency" value="3">
-                        </div>
-                        <div class="criteria-description">Clarté des procédures et informations</div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="comment">
-                        <i class="fas fa-comment"></i>
-                        Commentaire (optionnel)
-                    </label>
-                    <textarea 
-                        class="form-textarea" 
-                        id="comment" 
-                        name="comment"
-                        rows="3" 
-                        placeholder="Partagez votre expérience détaillée avec ce service..."></textarea>
-                </div>
-                
-                <button type="submit" class="btn-submit-rating">
-                    <i class="fas fa-paper-plane"></i>
-                    Soumettre ma notation
-                </button>
-            </form>
-        </div>
-
-        <!-- RÉSULTATS DES NOTATIONS -->
-        <div class="rating-results-card">
-            <div class="rating-results-header">
-                <h3>
-                    <i class="fas fa-chart-bar"></i>
-                    Résultats des notations citoyennes
-                </h3>
-                <p>Découvrez ce que pensent les autres citoyens des services publics</p>
+                    <button type="submit" class="btn-submit-rating">
+                        <i class="fas fa-paper-plane"></i>
+                        Soumettre ma notation
+                    </button>
+                </form>
             </div>
-            
-            <div class="rating-results-grid">
-                <!-- Statistiques Globales -->
-                <div class="rating-results-card">
-                    <h4><i class="fas fa-chart-pie"></i> Statistiques Globales</h4>
-                    <div class="stats-overview-grid">
-                        <div class="stat-item-card">
-                            <div class="stat-value-card" id="totalVotes">0</div>
-                            <div class="stat-label-card">Votes totaux</div>
-                        </div>
-                        <div class="stat-item-card">
-                            <div class="stat-value-card" id="totalServices">0</div>
-                            <div class="stat-label-card">Services évalués</div>
-                        </div>
-                        <div class="stat-item-card">
-                            <div class="stat-value-card" id="avgRating">0.0</div>
-                            <div class="stat-label-card">Note moyenne</div>
-                        </div>
-                    </div>
+
+            <!-- RÉSULTATS DES NOTATIONS -->
+            <div class="rating-results-card">
+                <div class="rating-results-header">
+                    <h3>
+                        <i class="fas fa-chart-bar"></i>
+                        Résultats des notations citoyennes
+                    </h3>
+                    <p>Découvrez ce que pensent les autres citoyens des services publics</p>
                 </div>
                 
-                <!-- Dernières Notations -->
-                <div class="rating-results-card">
-                    <h4><i class="fas fa-history"></i> Dernières Notations</h4>
-                    <div id="recentRatings" class="recent-ratings">
-                        <div class="loading-state">
-                            <div class="spinner"></div>
-                            <p>Chargement...</p>
+                <div class="rating-results-grid">
+                    <!-- Statistiques Globales -->
+                    <div class="rating-results-card">
+                        <h4><i class="fas fa-chart-pie"></i> Statistiques Globales</h4>
+                        <div class="stats-overview-grid">
+                            <div class="stat-item-card">
+                                <div class="stat-value-card" id="totalVotes">0</div>
+                                <div class="stat-label-card">Votes totaux</div>
+                            </div>
+                            <div class="stat-item-card">
+                                <div class="stat-value-card" id="totalServices">0</div>
+                                <div class="stat-label-card">Services évalués</div>
+                            </div>
+                            <div class="stat-item-card">
+                                <div class="stat-value-card" id="avgRating">0.0</div>
+                                <div class="stat-label-card">Note moyenne</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Meilleurs Services -->
-                <div class="rating-results-card">
-                    <h4><i class="fas fa-trophy"></i> Meilleurs Services</h4>
-                    <div id="topServices" class="top-services-grid">
-                        <div class="loading-state">
-                            <div class="spinner"></div>
-                            <p>Chargement...</p>
+                    
+                    <!-- Dernières Notations -->
+                    <div class="rating-results-card">
+                        <h4><i class="fas fa-history"></i> Dernières Notations</h4>
+                        <div id="recentRatings" class="recent-ratings">
+                            <div class="loading-state">
+                                <div class="spinner"></div>
+                                <p>Chargement...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Meilleurs Services -->
+                    <div class="rating-results-card">
+                        <h4><i class="fas fa-trophy"></i> Meilleurs Services</h4>
+                        <div id="topServices" class="top-services-grid">
+                            <div class="loading-state">
+                                <div class="spinner"></div>
+                                <p>Chargement...</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Données des services (cachées dans le HTML) -->
-<div id="services-data" style="display: none;">
-    <!-- Santé & Hôpitaux -->
-    <div data-category="sante">
-        <option value="Hôpital public">Hôpital public</option>
-        <option value="Centre hospitalier régional">Centre hospitalier régional</option>
-        <option value="Centre de santé">Centre de santé</option>
-        <option value="Pharmacie publique (SEN-Pharmacie)">Pharmacie publique (SEN-Pharmacie)</option>
-        <option value="SAMU (Service d'Assistance Médicale Urgente)">SAMU (Service d'Assistance Médicale Urgente)</option>
-        <option value="Centre national de Transfusion sanguine">Centre national de Transfusion sanguine</option>
-        <option value="Centre national d'Oncologie">Centre national d'Oncologie</option>
-        <option value="Laboratoire d'analyses médicales public">Laboratoire d'analyses médicales public</option>
-        <option value="Centre psychiatrique">Centre psychiatrique</option>
-        <option value="Service de Protection maternelle et infantile">Service de Protection maternelle et infantile</option>
-    </div>
-    
-    <!-- Éducation & Formation -->
-    <div data-category="education">
-        <option value="École publique (élémentaire)">École publique (élémentaire)</option>
-        <option value="Collège public">Collège public</option>
-        <option value="Lycée public">Lycée public</option>
-        <option value="Université publique (UCAD, UGB, etc.)">Université publique (UCAD, UGB, etc.)</option>
-        <option value="Institut Islamique de Dakar">Institut Islamique de Dakar</option>
-        <option value="École nationale d'Administration (ENA)">École nationale d'Administration (ENA)</option>
-        <option value="Centre de Formation judiciaire">Centre de Formation judiciaire</option>
-        <option value="École nationale de Cybersécurité">École nationale de Cybersécurité</option>
-        <option value="Centre régional des Œuvres universitaires">Centre régional des Œuvres universitaires</option>
-        <option value="Inspection d'Académie">Inspection d'Académie</option>
-    </div>
-    
-    <!-- Sécurité & Défense -->
-    <div data-category="securite">
-        <option value="Commissariat de police">Commissariat de police</option>
-        <option value="Brigade de gendarmerie">Brigade de gendarmerie</option>
-        <option value="Police judiciaire (PJ)">Police judiciaire (PJ)</option>
-        <option value="Police routière">Police routière</option>
-        <option value="Sapeurs-pompiers / Protection civile">Sapeurs-pompiers / Protection civile</option>
-        <option value="Douanes (poste frontalier)">Douanes (poste frontalier)</option>
-        <option value="Direction de la Surveillance du Territoire">Direction de la Surveillance du Territoire</option>
-        <option value="Centre national de coordination des alertes">Centre national de coordination des alertes</option>
-        <option value="Administration pénitentiaire">Administration pénitentiaire</option>
-        <option value="Brigade nationale des sapeurs-pompiers">Brigade nationale des sapeurs-pompiers</option>
-    </div>
-    
-    <!-- Justice & Droit -->
-    <div data-category="justice">
-        <option value="Tribunal (civil, pénal, commerce)">Tribunal (civil, pénal, commerce)</option>
-        <option value="Maison de justice">Maison de justice</option>
-        <option value="Centre national des Archives judiciaires">Centre national des Archives judiciaires</option>
-        <option value="Médiateur de la République">Médiateur de la République</option>
-        <option value="Commission nationale des Droits de l'Homme">Commission nationale des Droits de l'Homme</option>
-        <option value="Commission de Protection des Données Personnelles">Commission de Protection des Données Personnelles</option>
-        <option value="Direction de la Justice de Proximité">Direction de la Justice de Proximité</option>
-        <option value="Service d'aide juridictionnelle">Service d'aide juridictionnelle</option>
-    </div>
-    
-    <!-- Administration & État Civil -->
-    <div data-category="administration">
-        <option value="Mairie">Mairie</option>
-        <option value="Préfecture / Sous-préfecture">Préfecture / Sous-préfecture</option>
-        <option value="Service d'état civil (naissance, mariage)">Service d'état civil (naissance, mariage)</option>
-        <option value="Agence nationale de l'état civil">Agence nationale de l'état civil</option>
-        <option value="Archives du Sénégal">Archives du Sénégal</option>
-        <option value="Imprimerie nationale">Imprimerie nationale</option>
-        <option value="Direction générale de l'Administration territoriale">Direction générale de l'Administration territoriale</option>
-        <option value="Service du Protocole d'État">Service du Protocole d'État</option>
-    </div>
-    
-    <!-- Finances & Impôts -->
-    <div data-category="finances">
-        <option value="Trésor public (Trésorerie régionale)">Trésor public (Trésorerie régionale)</option>
-        <option value="Centre des Impôts (DGID)">Centre des Impôts (DGID)</option>
-        <option value="Douanes (dédouanement)">Douanes (dédouanement)</option>
-        <option value="Caisse des Dépôts et Consignations">Caisse des Dépôts et Consignations</option>
-        <option value="Banque agricole">Banque agricole</option>
-        <option value="Banque de l'Habitat du Sénégal">Banque de l'Habitat du Sénégal</option>
-        <option value="Office de recouvrement">Office de recouvrement</option>
-        <option value="Direction générale du Budget">Direction générale du Budget</option>
-    </div>
-    
-    <!-- Transports & Mobilité -->
-    <div data-category="transports">
-        <option value="Transport urbain (Dakar Dem Dikk)">Transport urbain (Dakar Dem Dikk)</option>
-        <option value="Train Express Régional (TER)">Train Express Régional (TER)</option>
-        <option value="Chemins de Fer du Sénégal">Chemins de Fer du Sénégal</option>
-        <option value="Aéroport international Blaise Diagne">Aéroport international Blaise Diagne</option>
-        <option value="Port autonome de Dakar">Port autonome de Dakar</option>
-        <option value="Agence nationale de Sécurité routière">Agence nationale de Sécurité routière</option>
-        <option value="Direction des Transports routiers">Direction des Transports routiers</option>
-        <option value="Société nationale Autoroutes du Sénégal">Société nationale Autoroutes du Sénégal</option>
-    </div>
-    
-    <!-- Énergie & Eau -->
-    <div data-category="energie">
-        <option value="SENELEC (bureau clientèle)">SENELEC (bureau clientèle)</option>
-        <option value="Société nationale des Eaux du Sénégal">Société nationale des Eaux du Sénégal</option>
-        <option value="SDE (Sénégal des Eaux)">SDE (Sénégal des Eaux)</option>
-        <option value="Agence sénégalaise de l'Électrification rurale">Agence sénégalaise de l'Électrification rurale</option>
-        <option value="Office national des Forages ruraux">Office national des Forages ruraux</option>
-        <option value="Office national de l'Assainissement">Office national de l'Assainissement</option>
-        <option value="Commission de Régulation du Secteur de l'Énergie">Commission de Régulation du Secteur de l'Énergie</option>
-    </div>
-    
-    <!-- Communication & Numérique -->
-    <div data-category="communication">
-        <option value="SONATEL (agence)">SONATEL (agence)</option>
-        <option value="La Poste (bureau de poste)">La Poste (bureau de poste)</option>
-        <option value="RTS (Radiodiffusion Télévision Sénégalaise)">RTS (Radiodiffusion Télévision Sénégalaise)</option>
-        <option value="Agence de Presse Sénégalaise (APS)">Agence de Presse Sénégalaise (APS)</option>
-        <option value="Maison de la Presse Babacar TOURE">Maison de la Presse Babacar TOURE</option>
-        <option value="Autorité de Régulation des Télécoms (ARTP)">Autorité de Régulation des Télécoms (ARTP)</option>
-        <option value="Sénégal Numérique SA">Sénégal Numérique SA</option>
-    </div>
-    
-    <!-- Action Sociale & Solidarité -->
-    <div data-category="social">
-        <option value="Commissariat à la Sécurité alimentaire">Commissariat à la Sécurité alimentaire</option>
-        <option value="Agence de Couverture sanitaire universelle">Agence de Couverture sanitaire universelle</option>
-        <option value="Fonds national de l'Entreprenariat féminin">Fonds national de l'Entreprenariat féminin</option>
-        <option value="Office national des Pupilles de la Nation">Office national des Pupilles de la Nation</option>
-        <option value="Centre d'accueil pour enfants">Centre d'accueil pour enfants</option>
-        <option value="Direction de l'Action sociale">Direction de l'Action sociale</option>
-        <option value="Service national d'Hygiène">Service national d'Hygiène</option>
-    </div>
-    
-    <!-- Emploi & Formation Pro -->
-    <div data-category="emploi">
-        <option value="ANPEJ (Promotion de l'Emploi des Jeunes)">ANPEJ (Promotion de l'Emploi des Jeunes)</option>
-        <option value="Office national de Formation professionnelle">Office national de Formation professionnelle</option>
-        <option value="Centre de formation professionnelle">Centre de formation professionnelle</option>
-        <option value="Centre national de Qualification professionnelle">Centre national de Qualification professionnelle</option>
-        <option value="Direction de l'Emploi">Direction de l'Emploi</option>
-        <option value="Service d'orientation professionnelle">Service d'orientation professionnelle</option>
-    </div>
-    
-    <!-- Environnement & Cadre de Vie -->
-    <div data-category="environnement">
-        <option value="Direction des Eaux et Forêts">Direction des Eaux et Forêts</option>
-        <option value="Parc national">Parc national</option>
-        <option value="Agence de la Reforestation et Grande Muraille verte">Agence de la Reforestation et Grande Muraille verte</option>
-        <option value="Centre de Suivi écologique">Centre de Suivi écologique</option>
-        <option value="Service de collecte des ordures (SONAGED)">Service de collecte des ordures (SONAGED)</option>
-        <option value="Direction de la Propreté et Hygiène publique">Direction de la Propreté et Hygiène publique</option>
-        <option value="Commission nationale de Gestion des Produits Chimiques">Commission nationale de Gestion des Produits Chimiques</option>
-    </div>
-    
-    <!-- Culture & Tourisme -->
-    <div data-category="culture">
-        <option value="Musée des Civilisations Noires">Musée des Civilisations Noires</option>
-        <option value="Bibliothèque nationale du Sénégal">Bibliothèque nationale du Sénégal</option>
-        <option value="Grand Théâtre National">Grand Théâtre National</option>
-        <option value="Agence sénégalaise de Promotion touristique">Agence sénégalaise de Promotion touristique</option>
-        <option value="Centre culturel régional">Centre culturel régional</option>
-        <option value="Monument de la Renaissance africaine">Monument de la Renaissance africaine</option>
-        <option value="Musée Boribana">Musée Boribana</option>
-    </div>
-    
-    <!-- Autre Service Public -->
-    <div data-category="autre">
-        <option value="Service agricole / vétérinaire">Service agricole / vétérinaire</option>
-        <option value="Haras national">Haras national</option>
-        <option value="Station piscicole">Station piscicole</option>
-        <option value="Institut de Recherches agricoles">Institut de Recherches agricoles</option>
-        <option value="Service de l'Urbanisme">Service de l'Urbanisme</option>
-        <option value="Société nationale des HLM">Société nationale des HLM</option>
-        <option value="Service des Sports et Jeunesse">Service des Sports et Jeunesse</option>
-        <option value="Autre (précisez en commentaire)">Autre (précisez en commentaire)</option>
-    </div>
-</div>
-
-<!-- JavaScript pour la sélection contextuelle -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const categorySelect = document.getElementById('service-category');
-    const serviceSelect = document.getElementById('service');
-    const servicesData = document.getElementById('services-data');
-    
-    categorySelect.addEventListener('change', function() {
-        const selectedCategory = this.value;
+    <!-- Données des services (cachées dans le HTML) -->
+    <div id="services-data" style="display: none;">
+        <!-- Santé & Hôpitaux -->
+        <div data-category="sante">
+            <option value="Hôpital public">Hôpital public</option>
+            <option value="Centre hospitalier régional">Centre hospitalier régional</option>
+            <option value="Centre de santé">Centre de santé</option>
+            <option value="Pharmacie publique (SEN-Pharmacie)">Pharmacie publique (SEN-Pharmacie)</option>
+            <option value="SAMU (Service d'Assistance Médicale Urgente)">SAMU (Service d'Assistance Médicale Urgente)</option>
+            <option value="Centre national de Transfusion sanguine">Centre national de Transfusion sanguine</option>
+            <option value="Centre national d'Oncologie">Centre national d'Oncologie</option>
+            <option value="Laboratoire d'analyses médicales public">Laboratoire d'analyses médicales public</option>
+            <option value="Centre psychiatrique">Centre psychiatrique</option>
+            <option value="Service de Protection maternelle et infantile">Service de Protection maternelle et infantile</option>
+        </div>
         
-        // Réinitialiser la liste des services
-        serviceSelect.innerHTML = '<option value="">Sélectionnez un service</option>';
-        serviceSelect.disabled = true;
+        <!-- Éducation & Formation -->
+        <div data-category="education">
+            <option value="École publique (élémentaire)">École publique (élémentaire)</option>
+            <option value="Collège public">Collège public</option>
+            <option value="Lycée public">Lycée public</option>
+            <option value="Université publique (UCAD, UGB, etc.)">Université publique (UCAD, UGB, etc.)</option>
+            <option value="Institut Islamique de Dakar">Institut Islamique de Dakar</option>
+            <option value="École nationale d'Administration (ENA)">École nationale d'Administration (ENA)</option>
+            <option value="Centre de Formation judiciaire">Centre de Formation judiciaire</option>
+            <option value="École nationale de Cybersécurité">École nationale de Cybersécurité</option>
+            <option value="Centre régional des Œuvres universitaires">Centre régional des Œuvres universitaires</option>
+            <option value="Inspection d'Académie">Inspection d'Académie</option>
+        </div>
         
-        if (selectedCategory) {
-            // Trouver les services correspondants
-            const categoryServices = servicesData.querySelector(`[data-category="${selectedCategory}"]`);
-            
-            if (categoryServices) {
-                // Activer et peupler la liste
-                serviceSelect.disabled = false;
-                serviceSelect.innerHTML = '<option value="">Choisissez un service</option>' + categoryServices.innerHTML;
-            }
-        }
-    });
-});
-</script>
+        <!-- Sécurité & Défense -->
+        <div data-category="securite">
+            <option value="Commissariat de police">Commissariat de police</option>
+            <option value="Brigade de gendarmerie">Brigade de gendarmerie</option>
+            <option value="Police judiciaire (PJ)">Police judiciaire (PJ)</option>
+            <option value="Police routière">Police routière</option>
+            <option value="Sapeurs-pompiers / Protection civile">Sapeurs-pompiers / Protection civile</option>
+            <option value="Douanes (poste frontalier)">Douanes (poste frontalier)</option>
+            <option value="Direction de la Surveillance du Territoire">Direction de la Surveillance du Territoire</option>
+            <option value="Centre national de coordination des alertes">Centre national de coordination des alertes</option>
+            <option value="Administration pénitentiaire">Administration pénitentiaire</option>
+            <option value="Brigade nationale des sapeurs-pompiers">Brigade nationale des sapeurs-pompiers</option>
+        </div>
+        
+        <!-- Justice & Droit -->
+        <div data-category="justice">
+            <option value="Tribunal (civil, pénal, commerce)">Tribunal (civil, pénal, commerce)</option>
+            <option value="Maison de justice">Maison de justice</option>
+            <option value="Centre national des Archives judiciaires">Centre national des Archives judiciaires</option>
+            <option value="Médiateur de la République">Médiateur de la République</option>
+            <option value="Commission nationale des Droits de l'Homme">Commission nationale des Droits de l'Homme</option>
+            <option value="Commission de Protection des Données Personnelles">Commission de Protection des Données Personnelles</option>
+            <option value="Direction de la Justice de Proximité">Direction de la Justice de Proximité</option>
+            <option value="Service d'aide juridictionnelle">Service d'aide juridictionnelle</option>
+        </div>
+        
+        <!-- Administration & État Civil -->
+        <div data-category="administration">
+            <option value="Mairie">Mairie</option>
+            <option value="Préfecture / Sous-préfecture">Préfecture / Sous-préfecture</option>
+            <option value="Service d'état civil (naissance, mariage)">Service d'état civil (naissance, mariage)</option>
+            <option value="Agence nationale de l'état civil">Agence nationale de l'état civil</option>
+            <option value="Archives du Sénégal">Archives du Sénégal</option>
+            <option value="Imprimerie nationale">Imprimerie nationale</option>
+            <option value="Direction générale de l'Administration territoriale">Direction générale de l'Administration territoriale</option>
+            <option value="Service du Protocole d'État">Service du Protocole d'État</option>
+        </div>
+        
+        <!-- Finances & Impôts -->
+        <div data-category="finances">
+            <option value="Trésor public (Trésorerie régionale)">Trésor public (Trésorerie régionale)</option>
+            <option value="Centre des Impôts (DGID)">Centre des Impôts (DGID)</option>
+            <option value="Douanes (dédouanement)">Douanes (dédouanement)</option>
+            <option value="Caisse des Dépôts et Consignations">Caisse des Dépôts et Consignations</option>
+            <option value="Banque agricole">Banque agricole</option>
+            <option value="Banque de l'Habitat du Sénégal">Banque de l'Habitat du Sénégal</option>
+            <option value="Office de recouvrement">Office de recouvrement</option>
+            <option value="Direction générale du Budget">Direction générale du Budget</option>
+        </div>
+        
+        <!-- Transports & Mobilité -->
+        <div data-category="transports">
+            <option value="Transport urbain (Dakar Dem Dikk)">Transport urbain (Dakar Dem Dikk)</option>
+            <option value="Train Express Régional (TER)">Train Express Régional (TER)</option>
+            <option value="Chemins de Fer du Sénégal">Chemins de Fer du Sénégal</option>
+            <option value="Aéroport international Blaise Diagne">Aéroport international Blaise Diagne</option>
+            <option value="Port autonome de Dakar">Port autonome de Dakar</option>
+            <option value="Agence nationale de Sécurité routière">Agence nationale de Sécurité routière</option>
+            <option value="Direction des Transports routiers">Direction des Transports routiers</option>
+            <option value="Société nationale Autoroutes du Sénégal">Société nationale Autoroutes du Sénégal</option>
+        </div>
+        
+        <!-- Énergie & Eau -->
+        <div data-category="energie">
+            <option value="SENELEC (bureau clientèle)">SENELEC (bureau clientèle)</option>
+            <option value="Société nationale des Eaux du Sénégal">Société nationale des Eaux du Sénégal</option>
+            <option value="SDE (Sénégal des Eaux)">SDE (Sénégal des Eaux)</option>
+            <option value="Agence sénégalaise de l'Électrification rurale">Agence sénégalaise de l'Électrification rurale</option>
+            <option value="Office national des Forages ruraux">Office national des Forages ruraux</option>
+            <option value="Office national de l'Assainissement">Office national de l'Assainissement</option>
+            <option value="Commission de Régulation du Secteur de l'Énergie">Commission de Régulation du Secteur de l'Énergie</option>
+        </div>
+        
+        <!-- Communication & Numérique -->
+        <div data-category="communication">
+            <option value="SONATEL (agence)">SONATEL (agence)</option>
+            <option value="La Poste (bureau de poste)">La Poste (bureau de poste)</option>
+            <option value="RTS (Radiodiffusion Télévision Sénégalaise)">RTS (Radiodiffusion Télévision Sénégalaise)</option>
+            <option value="Agence de Presse Sénégalaise (APS)">Agence de Presse Sénégalaise (APS)</option>
+            <option value="Maison de la Presse Babacar TOURE">Maison de la Presse Babacar TOURE</option>
+            <option value="Autorité de Régulation des Télécoms (ARTP)">Autorité de Régulation des Télécoms (ARTP)</option>
+            <option value="Sénégal Numérique SA">Sénégal Numérique SA</option>
+        </div>
+        
+        <!-- Action Sociale & Solidarité -->
+        <div data-category="social">
+            <option value="Commissariat à la Sécurité alimentaire">Commissariat à la Sécurité alimentaire</option>
+            <option value="Agence de Couverture sanitaire universelle">Agence de Couverture sanitaire universelle</option>
+            <option value="Fonds national de l'Entreprenariat féminin">Fonds national de l'Entreprenariat féminin</option>
+            <option value="Office national des Pupilles de la Nation">Office national des Pupilles de la Nation</option>
+            <option value="Centre d'accueil pour enfants">Centre d'accueil pour enfants</option>
+            <option value="Direction de l'Action sociale">Direction de l'Action sociale</option>
+            <option value="Service national d'Hygiène">Service national d'Hygiène</option>
+        </div>
+        
+        <!-- Emploi & Formation Pro -->
+        <div data-category="emploi">
+            <option value="ANPEJ (Promotion de l'Emploi des Jeunes)">ANPEJ (Promotion de l'Emploi des Jeunes)</option>
+            <option value="Office national de Formation professionnelle">Office national de Formation professionnelle</option>
+            <option value="Centre de formation professionnelle">Centre de formation professionnelle</option>
+            <option value="Centre national de Qualification professionnelle">Centre national de Qualification professionnelle</option>
+            <option value="Direction de l'Emploi">Direction de l'Emploi</option>
+            <option value="Service d'orientation professionnelle">Service d'orientation professionnelle</option>
+        </div>
+        
+        <!-- Environnement & Cadre de Vie -->
+        <div data-category="environnement">
+            <option value="Direction des Eaux et Forêts">Direction des Eaux et Forêts</option>
+            <option value="Parc national">Parc national</option>
+            <option value="Agence de la Reforestation et Grande Muraille verte">Agence de la Reforestation et Grande Muraille verte</option>
+            <option value="Centre de Suivi écologique">Centre de Suivi écologique</option>
+            <option value="Service de collecte des ordures (SONAGED)">Service de collecte des ordures (SONAGED)</option>
+            <option value="Direction de la Propreté et Hygiène publique">Direction de la Propreté et Hygiène publique</option>
+            <option value="Commission nationale de Gestion des Produits Chimiques">Commission nationale de Gestion des Produits Chimiques</option>
+        </div>
+        
+        <!-- Culture & Tourisme -->
+        <div data-category="culture">
+            <option value="Musée des Civilisations Noires">Musée des Civilisations Noires</option>
+            <option value="Bibliothèque nationale du Sénégal">Bibliothèque nationale du Sénégal</option>
+            <option value="Grand Théâtre National">Grand Théâtre National</option>
+            <option value="Agence sénégalaise de Promotion touristique">Agence sénégalaise de Promotion touristique</option>
+            <option value="Centre culturel régional">Centre culturel régional</option>
+            <option value="Monument de la Renaissance africaine">Monument de la Renaissance africaine</option>
+            <option value="Musée Boribana">Musée Boribana</option>
+        </div>
+        
+        <!-- Autre Service Public -->
+        <div data-category="autre">
+            <option value="Service agricole / vétérinaire">Service agricole / vétérinaire</option>
+            <option value="Haras national">Haras national</option>
+            <option value="Station piscicole">Station piscicole</option>
+            <option value="Institut de Recherches agricoles">Institut de Recherches agricoles</option>
+            <option value="Service de l'Urbanisme">Service de l'Urbanisme</option>
+            <option value="Société nationale des HLM">Société nationale des HLM</option>
+            <option value="Service des Sports et Jeunesse">Service des Sports et Jeunesse</option>
+            <option value="Autre (précisez en commentaire)">Autre (précisez en commentaire)</option>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -1088,5 +1252,121 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <!-- JavaScript -->
     <script src="app.js"></script>
+    
+    <!-- JavaScript pour le compte à rebours et la sélection contextuelle -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // === COMPTE À REBOURS ===
+        // Date cible : 02 avril 2029, 00:00:00
+        const targetDate = new Date('April 02, 2029 00:00:00').getTime();
+        
+        // Éléments du compte à rebours
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const timeLeft = targetDate - now;
+            
+            // Calcul des unités de temps
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            
+            // Mise à jour des éléments avec formatage
+            daysEl.textContent = days.toString().padStart(3, '0');
+            hoursEl.textContent = hours.toString().padStart(2, '0');
+            minutesEl.textContent = minutes.toString().padStart(2, '0');
+            secondsEl.textContent = seconds.toString().padStart(2, '0');
+            
+            // Animation des changements
+            if (secondsEl.getAttribute('data-last') !== seconds.toString()) {
+                secondsEl.style.animation = 'none';
+                setTimeout(() => {
+                    secondsEl.style.animation = 'pulse 0.5s ease';
+                }, 10);
+            }
+            secondsEl.setAttribute('data-last', seconds.toString());
+            
+            // Si le compte à rebours est terminé
+            if (timeLeft < 0) {
+                clearInterval(countdownInterval);
+                daysEl.textContent = '000';
+                hoursEl.textContent = '00';
+                minutesEl.textContent = '00';
+                secondsEl.textContent = '00';
+                
+                // Ajouter un message
+                const targetElement = document.querySelector('.countdown-target');
+                if (targetElement) {
+                    targetElement.innerHTML = '<strong>⚠️ Délai des engagements atteint</strong>';
+                    targetElement.style.color = '#e74c3c';
+                }
+            }
+        }
+        
+        // Mettre à jour immédiatement
+        updateCountdown();
+        
+        // Mettre à jour toutes les secondes
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        
+        // Ajouter l'animation CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+            
+            .countdown-value {
+                transition: all 0.3s ease;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // === SÉLECTION CONTEXTUELLE DES SERVICES ===
+        const categorySelect = document.getElementById('service-category');
+        const serviceSelect = document.getElementById('service');
+        const servicesData = document.getElementById('services-data');
+        
+        if (categorySelect && serviceSelect && servicesData) {
+            categorySelect.addEventListener('change', function() {
+                const selectedCategory = this.value;
+                
+                // Réinitialiser la liste des services
+                serviceSelect.innerHTML = '<option value="">Sélectionnez un service</option>';
+                serviceSelect.disabled = true;
+                
+                if (selectedCategory) {
+                    // Trouver les services correspondants
+                    const categoryServices = servicesData.querySelector(`[data-category="${selectedCategory}"]`);
+                    
+                    if (categoryServices) {
+                        // Activer et peupler la liste
+                        serviceSelect.disabled = false;
+                        serviceSelect.innerHTML = '<option value="">Choisissez un service</option>' + categoryServices.innerHTML;
+                    }
+                }
+            });
+        }
+        
+        // === INITIALISATION DE LA DATE ACTUELLE ===
+        const currentDateElement = document.getElementById('current-date');
+        if (currentDateElement) {
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            const now = new Date();
+            currentDateElement.textContent = now.toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).toUpperCase();
+        }
+    });
+    </script>
 </body>
 </html>

@@ -78,127 +78,20 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
-    
-    <!-- Style CSS pour le compte à rebours -->
-    <style>
-    .countdown-container {
-        background: linear-gradient(135deg, rgba(0, 91, 187, 0.1) 0%, rgba(255, 221, 0, 0.1) 100%);
-        border: 2px solid rgba(0, 91, 187, 0.3);
-        border-radius: 20px;
-        padding: 1.5rem;
-        margin: 2rem auto;
-        max-width: 800px;
-        box-shadow: 0 8px 32px rgba(0, 91, 187, 0.15);
-        backdrop-filter: blur(10px);
-        text-align: center;
-    }
-
-    .countdown-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        background: var(--primary);
-        color: white;
-        padding: 0.5rem 1.5rem;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 1.1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .countdown-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1.5rem;
-        margin-bottom: 1rem;
-    }
-
-    .countdown-item {
-        background: white;
-        border-radius: 15px;
-        padding: 1.2rem 0.5rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        transition: transform 0.3s ease;
-    }
-
-    .countdown-item:hover {
-        transform: translateY(-5px);
-    }
-
-    .countdown-value {
-        font-size: 2.8rem;
-        font-weight: 800;
-        font-family: 'Manrope', sans-serif;
-        color: var(--primary);
-        line-height: 1;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .countdown-label {
-        font-size: 0.9rem;
-        color: var(--text-secondary);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-top: 0.5rem;
-        font-weight: 600;
-    }
-
-    .countdown-target {
-        font-size: 1.1rem;
-        color: var(--text-primary);
-        background: rgba(255, 255, 255, 0.9);
-        padding: 0.8rem 1.5rem;
-        border-radius: 10px;
-        display: inline-block;
-        margin-top: 0.5rem;
-    }
-
-    .countdown-target strong {
-        color: var(--primary);
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .countdown-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-        
-        .countdown-value {
-            font-size: 2.2rem;
-        }
-        
-        .countdown-container {
-            padding: 1rem;
-            margin: 1.5rem 0;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .countdown-grid {
-            grid-template-columns: 1fr;
-            gap: 0.8rem;
-        }
-        
-        .countdown-value {
-            font-size: 2rem;
-        }
-    }
-    </style>
 </head>
 <body>
     <!-- Progress Indicator -->
     <div class="progress-indicator" id="progressIndicator"></div>
 
-    <!-- Navigation Bar -->
+    <!-- Navigation Bar optimisée -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="#header" class="nav-logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-                <img src="https://projetbi.org/favicon.png" alt="Logo Projet Sénégal" style="height: 38px; width: auto; border-radius: 5px;">
-                <span style="color: #2a6d5d; font-weight: 700; font-size: 1rem; letter-spacing: -0.5px;">LE PROJET : SUIVI DES PROMESSES</span>
+            <a href="#header" class="nav-logo">
+                <img src="https://projetbi.org/favicon.png" alt="Logo Projet Sénégal" class="nav-logo-img">
+                <span class="nav-logo-text">LE PROJET : SUIVI DES PROMESSES</span>
             </a>
             
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu mobile">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -207,62 +100,63 @@
             <div class="nav-menu" id="navMenu">
                 <a href="#header" class="nav-link active" data-section="header">
                     <i class="fas fa-home"></i>
-                    Accueil
+                    <span>Accueil</span>
                 </a>
                 <a href="#stats" class="nav-link" data-section="stats">
                     <i class="fas fa-chart-line"></i>
-                    Dashboard
+                    <span>Dashboard</span>
                 </a>
                 <a href="#promises" class="nav-link" data-section="promises">
                     <i class="fas fa-tasks"></i>
-                    Engagements
+                    <span>Engagements</span>
                 </a>
                 <a href="#daily" class="nav-link" data-section="daily">
                     <i class="fas fa-star"></i>
-                    Promesse du Jour
+                    <span>Promesse du Jour</span>
                 </a>
                 <a href="#news" class="nav-link" data-section="news">
                     <i class="fas fa-newspaper"></i>
-                    Actualités
+                    <span>Actualités</span>
                 </a>
                 <a href="#press" class="nav-link" data-section="press">
                     <i class="fas fa-book-open"></i>
-                    Revue de Presse
+                    <span>Revue de Presse</span>
                 </a>
                 <a href="#rating" class="nav-link" data-section="rating">
                     <i class="fas fa-star-half-alt"></i>
-                    Notation
+                    <span>Notation</span>
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- Header Section améliorée -->
+    <!-- Header Section optimisée -->
     <header class="header" id="header">
-        <div class="header-container">
-            <div class="header-grid">
-                <!-- Colonne gauche : Contenu principal -->
-                <div class="header-content">
+        <div class="container">
+            <div class="header-content">
+                <!-- Contenu principal -->
+                <div class="header-main">
                     <div class="header-badge">
                         <i class="fas fa-shield-alt"></i>
-                        🇸🇳 République du Sénégal
+                        <span>🇸🇳 République du Sénégal</span>
                     </div>
                     
                     <div class="header-title">
-                        <span class="title-main">LE PROJET</span>
-                        <span class="title-sub">Pour un Sénégal Souverain, Juste et Prospère</span>
+                        <h1 class="title-main">LE PROJET</h1>
+                        <p class="title-sub">Pour un Sénégal Souverain, Juste et Prospère</p>
                     </div>
                     
                     <p class="subtitle">
                         Plateforme Citoyenne de Suivi des Engagements Présidentiels
                     </p>
                     
-                    <!-- Compte à rebours -->
+                    <!-- Compte à rebours optimisé -->
                     <div class="countdown-container">
-                        <div class="countdown-badge">
+                        <div class="countdown-header">
                             <i class="fas fa-hourglass-half"></i>
-                            Délai des engagements
+                            <span>Délai des engagements</span>
                         </div>
+                        
                         <div class="countdown-grid" id="countdown">
                             <div class="countdown-item">
                                 <div class="countdown-value" id="days">000</div>
@@ -281,6 +175,7 @@
                                 <div class="countdown-label">Secondes</div>
                             </div>
                         </div>
+                        
                         <div class="countdown-target">
                             Date butoir : <strong>02 AVRIL 2029</strong>
                         </div>
@@ -289,40 +184,48 @@
                     <div class="header-actions">
                         <div class="ref-badge">
                             <i class="fas fa-calendar-alt"></i>
-                            Date de référence : <span id="current-date">2 AVRIL 2024</span>
+                            <span>Date de référence : <span id="current-date">2 AVRIL 2024</span></span>
                         </div>
                         
                         <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" 
                            class="btn-program" 
                            download target="_blank">
-                            <i class="fas fa-book"></i> Programme Complet (PDF)
+                            <i class="fas fa-book"></i>
+                            <span>Programme Complet (PDF)</span>
                         </a>
                     </div>
                 </div>
                 
-                <!-- Colonne droite : Image Sonko -->
-                <div class="header-image">
-                    <div class="image-card">
-                        <img src="sonko.jpg" alt="Ousmane Sonko - Citation" class="sonko-image">
-                        <div class="image-caption">
+                <!-- Image Sonko optimisée -->
+                <div class="header-sidebar">
+                    <div class="quote-card">
+                        <div class="quote-image">
+                            <img src="sonko.jpg" alt="Ousmane Sonko - Citation" loading="lazy">
+                        </div>
+                        <div class="quote-content">
                             <h3><i class="fas fa-quote-left"></i> Ousmane Sonko</h3>
-                            <p>"Celui qui ne sait pas où tu vas ne peut pas t'accompagner. Donc, la réussite du &lt;PROJET&gt; dépendra du niveau d'appropriation populaire."</p>
+                            <blockquote>
+                                "Celui qui ne sait pas où tu vas ne peut pas t'accompagner. Donc, la réussite du &lt;PROJET&gt; dépendra du niveau d'appropriation populaire."
+                            </blockquote>
                             <div class="hashtag">#UltraSonkiste</div>
                         </div>
                     </div>
                     
-                    <!-- KPI Carousel -->
-                    <div class="kpi-carousel-container">
-                        <button id="kpiPrev" class="kpi-nav-btn" title="Précédent">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <div id="kpiCarousel"></div>
-                        <button id="kpiNext" class="kpi-nav-btn" title="Suivant">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                        <button id="kpiAutoPlayToggle" class="kpi-nav-btn" title="Lecture automatique">
-                            <i class="fas fa-pause"></i>
-                        </button>
+                    <!-- KPI Carousel compact -->
+                    <div class="kpi-mini-carousel">
+                        <div class="kpi-header">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Indicateurs clés</span>
+                        </div>
+                        <div class="kpi-carousel-container">
+                            <button id="kpiPrev" class="kpi-nav-btn" title="Précédent">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <div id="kpiCarousel" class="kpi-carousel"></div>
+                            <button id="kpiNext" class="kpi-nav-btn" title="Suivant">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -332,7 +235,7 @@
     <!-- Stats Section -->
     <section class="stats-section" id="stats">
         <div class="container">
-            <div class="section-header-modern">
+            <div class="section-header">
                 <h2 class="section-title">
                     <i class="fas fa-chart-bar"></i>
                     Tableau de Bord
@@ -536,7 +439,7 @@
     <!-- Promesse du Jour Section -->
     <section class="daily-promise-section" id="daily">
         <div class="container">
-            <div class="section-header-modern">
+            <div class="section-header">
                 <h2 class="section-title">
                     <i class="fas fa-sun"></i>
                     Promesse du Jour
@@ -556,7 +459,7 @@
     <!-- Promesses en Vedette Carousel -->
     <section class="promises-carousel-section" id="promises-carousel">
         <div class="container">
-            <div class="section-header-modern">
+            <div class="section-header">
                 <h2 class="section-title">
                     <i class="fas fa-star"></i>
                     Promesses en Vedette
@@ -588,7 +491,7 @@
     <!-- Tous les Engagements Section -->
     <section class="promises-section" id="promises">
         <div class="container">
-            <div class="section-header-modern">
+            <div class="section-header">
                 <h2 class="section-title">
                     <i class="fas fa-list-check"></i>
                     Tous les Engagements
@@ -696,7 +599,7 @@
     <!-- Actualités Section -->
     <section class="news-section" id="news">
         <div class="container">
-            <div class="section-header-modern">
+            <div class="section-header">
                 <h2 class="section-title">
                     <i class="fas fa-bullhorn"></i>
                     Actualités
@@ -719,7 +622,7 @@
     <!-- Revue de Presse Section -->
     <section class="press-section" id="press">
         <div class="container">
-            <div class="section-header-modern">
+            <div class="section-header">
                 <h2 class="section-title">
                     <i class="fas fa-newspaper"></i>
                     Revue de Presse
@@ -727,7 +630,7 @@
             </div>
             
             <!-- Grille des quotidiens -->
-            <div class="section-header-modern">
+            <div class="section-header">
                 <h3 style="font-size: 1.3rem; margin: 0;">
                     <i class="fas fa-images"></i>
                     Éditions du Jour
@@ -756,7 +659,7 @@
             </div>
             
             <!-- Grille des quotidiens cliquables -->
-            <div class="section-header-modern" style="margin-top: var(--spacing-xl);">
+            <div class="section-header" style="margin-top: var(--spacing-xl);">
                 <h3 style="font-size: 1.3rem; margin: 0;">
                     <i class="fas fa-th-large"></i>
                     Tous les Quotidiens
@@ -772,7 +675,7 @@
     <!-- Notation des Services Publics Section -->
     <section class="rating-section" id="rating">
         <div class="container">
-            <div class="section-header-modern">
+            <div class="section-header">
                 <h2 class="section-title">
                     <i class="fas fa-star-half-alt"></i>
                     Notation des Services Publics
@@ -1243,7 +1146,7 @@
     </footer>
 
     <!-- Scroll to Top Button -->
-    <button class="scroll-to-top" id="scrollToTop">
+    <button class="scroll-to-top" id="scrollToTop" aria-label="Retour en haut">
         <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -1253,14 +1156,10 @@
     <!-- JavaScript -->
     <script src="app.js"></script>
     
-    <!-- JavaScript pour le compte à rebours et la sélection contextuelle -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // === COMPTE À REBOURS ===
-        // Date cible : 02 avril 2029, 00:00:00
+        // Compte à rebours optimisé
         const targetDate = new Date('April 02, 2029 00:00:00').getTime();
-        
-        // Éléments du compte à rebours
         const daysEl = document.getElementById('days');
         const hoursEl = document.getElementById('hours');
         const minutesEl = document.getElementById('minutes');
@@ -1270,19 +1169,30 @@
             const now = new Date().getTime();
             const timeLeft = targetDate - now;
             
-            // Calcul des unités de temps
+            if (timeLeft < 0) {
+                daysEl.textContent = '000';
+                hoursEl.textContent = '00';
+                minutesEl.textContent = '00';
+                secondsEl.textContent = '00';
+                const targetElement = document.querySelector('.countdown-target');
+                if (targetElement) {
+                    targetElement.innerHTML = '<strong>⚠️ Délai des engagements atteint</strong>';
+                    targetElement.style.color = '#e74c3c';
+                }
+                return;
+            }
+            
             const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
             
-            // Mise à jour des éléments avec formatage
             daysEl.textContent = days.toString().padStart(3, '0');
             hoursEl.textContent = hours.toString().padStart(2, '0');
             minutesEl.textContent = minutes.toString().padStart(2, '0');
             secondsEl.textContent = seconds.toString().padStart(2, '0');
             
-            // Animation des changements
+            // Animation pour les secondes
             if (secondsEl.getAttribute('data-last') !== seconds.toString()) {
                 secondsEl.style.animation = 'none';
                 setTimeout(() => {
@@ -1290,46 +1200,108 @@
                 }, 10);
             }
             secondsEl.setAttribute('data-last', seconds.toString());
-            
-            // Si le compte à rebours est terminé
-            if (timeLeft < 0) {
-                clearInterval(countdownInterval);
-                daysEl.textContent = '000';
-                hoursEl.textContent = '00';
-                minutesEl.textContent = '00';
-                secondsEl.textContent = '00';
-                
-                // Ajouter un message
-                const targetElement = document.querySelector('.countdown-target');
-                if (targetElement) {
-                    targetElement.innerHTML = '<strong>⚠️ Délai des engagements atteint</strong>';
-                    targetElement.style.color = '#e74c3c';
-                }
-            }
         }
         
-        // Mettre à jour immédiatement
         updateCountdown();
-        
-        // Mettre à jour toutes les secondes
         const countdownInterval = setInterval(updateCountdown, 1000);
         
-        // Ajouter l'animation CSS
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes pulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.05); }
-                100% { transform: scale(1); }
-            }
-            
-            .countdown-value {
-                transition: all 0.3s ease;
-            }
-        `;
-        document.head.appendChild(style);
+        // Date actuelle
+        const currentDateElement = document.getElementById('current-date');
+        if (currentDateElement) {
+            const now = new Date();
+            currentDateElement.textContent = now.toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).toUpperCase();
+        }
         
-        // === SÉLECTION CONTEXTUELLE DES SERVICES ===
+        // Menu mobile
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        
+        if (mobileMenuBtn && navMenu) {
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('show');
+                this.classList.toggle('active');
+            });
+            
+            // Fermer le menu au clic sur un lien
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('show');
+                    mobileMenuBtn.classList.remove('active');
+                });
+            });
+        }
+        
+        // Navigation smooth et active state
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    // Mettre à jour l'état actif
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Scroll smooth
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Scroll spy pour mettre à jour le menu actif
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        function onScroll() {
+            const scrollPos = window.scrollY + 100;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', onScroll);
+        
+        // Scroll to top button
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        
+        if (scrollToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.classList.add('visible');
+                } else {
+                    scrollToTopBtn.classList.remove('visible');
+                }
+            });
+            
+            scrollToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+        
+        // Sélection contextuelle des services
         const categorySelect = document.getElementById('service-category');
         const serviceSelect = document.getElementById('service');
         const servicesData = document.getElementById('services-data');
@@ -1353,18 +1325,6 @@
                     }
                 }
             });
-        }
-        
-        // === INITIALISATION DE LA DATE ACTUELLE ===
-        const currentDateElement = document.getElementById('current-date');
-        if (currentDateElement) {
-            const options = { day: 'numeric', month: 'long', year: 'numeric' };
-            const now = new Date();
-            currentDateElement.textContent = now.toLocaleDateString('fr-FR', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-            }).toUpperCase();
         }
     });
     </script>

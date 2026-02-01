@@ -640,7 +640,49 @@
                         </label>
                         <input type="url" class="form-input" id="newsLink" placeholder="https://...">
                     </div>
-                    
+                    // Dans la partie "Ajouter une actualité"
+<div class="form-group">
+    <label for="newsImageUrl">
+        <i class="fas fa-image"></i>
+        Image personnalisée (URL)
+    </label>
+    <input type="url" class="form-input" id="newsImageUrl" 
+           placeholder="https://exemple.com/image.jpg">
+    <small>Laissez vide pour utiliser une icône</small>
+</div>
+
+<div class="form-group">
+    <label for="newsContent">
+        <i class="fas fa-align-left"></i>
+        Contenu détaillé *
+    </label>
+    <textarea class="form-textarea" id="newsContent" 
+              placeholder="Contenu complet de l'article..." 
+              rows="6" required></textarea>
+</div>
+
+<div class="form-group">
+    <label for="newsAuthor">
+        <i class="fas fa-user-edit"></i>
+        Auteur
+    </label>
+    <input type="text" class="form-input" id="newsAuthor" 
+           placeholder="Nom de l'auteur" value="Rédaction">
+</div>
+
+<div class="form-group">
+    <label for="newsReadTime">
+        <i class="fas fa-clock"></i>
+        Temps de lecture
+    </label>
+    <select class="form-input" id="newsReadTime">
+        <option value="1 min">1 minute</option>
+        <option value="2 min">2 minutes</option>
+        <option value="3 min" selected>3 minutes</option>
+        <option value="5 min">5 minutes</option>
+        <option value="10 min">10 minutes</option>
+    </select>
+</div>
                     <div class="form-row">
                         <button class="btn btn-primary" onclick="addNews()">
                             <i class="fas fa-plus"></i>
@@ -651,6 +693,7 @@
                             Effacer
                         </button>
                     </div>
+                    
                 </div>
                 
                 <div class="news-list">

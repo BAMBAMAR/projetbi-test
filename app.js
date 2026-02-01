@@ -1731,6 +1731,7 @@ async function checkAvailableNewspapers() {
         'revuedepresse/soloquotidien.jpg',
         'revuedepresse/yooryoor.jpg',
         'revuedepresse/record.jpg'
+         'revuedepresse/enquete.jpg'
     ];
     
     // Vérifier quels fichiers existent réellement

@@ -97,7 +97,7 @@ const KPI_ITEMS = [
     { label: '🔄 En Cours', value: '0', icon: '🔄' },
     { label: '⚠️ En Retard', value: '0', icon: '⚠️' },
     { label: '📈 Taux Réalisation', value: '0%', icon: '📈' },
-    { label: '⏱️ Délai Moyen', value: '0j', icon: '⏱️' },
+    { label: '⏱️ Retard moyen', value: '0j', icon: '⏱️' },
     { label: '⭐ Note Moyenne', value: '0.0', icon: '⭐' },
     { label: '📋 Avec MAJ', value: '0', icon: '📋' }
 ];
@@ -746,7 +746,7 @@ function debugDelays() {
         console.log(`   Date limite: ${formatDate(promise.deadline)}`);
         console.log(`   Jours restants/retard: ${daysRemaining} (${formatDaysRemaining(daysRemaining)})`);
         
-        // Pour le calcul du délai moyen
+        // Pour le calcul du Retard moyen
         if (!promise.isLate && promise.status !== 'Réalisé') {
             if (daysRemaining >= 0 && daysRemaining <= 1825) {
                 totalDelays += daysRemaining;
@@ -757,14 +757,14 @@ function debugDelays() {
         console.log('   ---');
     });
     
-    // Calcul du délai moyen réel
+    // Calcul du Retard moyen réel
     const avgDelay = validPromisesCount > 0 ? Math.round(totalDelays / validPromisesCount) : 0;
     
     console.log('');
-    console.log('📊 CALCUL DU DÉLAI MOYEN:');
+    console.log('📊 CALCUL DU Retard moyen:');
     console.log(`   Nombre de promesses valides (non réalisées, non en retard): ${validPromisesCount}`);
     console.log(`   Somme des jours restants: ${totalDelays}`);
-    console.log(`   Délai moyen calculé: ${avgDelay} jours`);
+    console.log(`   Retard moyen calculé: ${avgDelay} jours`);
     
     return avgDelay;
 }
@@ -894,7 +894,7 @@ function updateStats() {
     const withUpdates = CONFIG.promises.filter(p => p.updates && p.updates.length > 0).length;
     const tauxRealisation = total > 0 ? Math.round((realise / total) * 100) : 0;
     
-    // ============= CALCUL DU DÉLAI MOYEN CORRIGÉ =============
+    // ============= CALCUL DU Retard moyen CORRIGÉ =============
     
     // 1. Filtrer seulement les promesses NON RÉALISÉES et NON EN RETARD
     const promisesNonRealiseesNonRetard = CONFIG.promises.filter(p => 
@@ -960,14 +960,14 @@ function updateStats() {
         KPI_ITEMS[5].label = '⚠️ Retard Moyen';
         KPI_ITEMS[5].icon = '⚠️';
     } else if (avgDelay > 0) {
-        // Sinon, afficher le délai moyen
+        // Sinon, afficher le Retard moyen
         KPI_ITEMS[5].value = `${avgDelay}j`;
-        KPI_ITEMS[5].label = '⏱️ Délai Moyen';
+        KPI_ITEMS[5].label = '⏱️ Retard moyen';
         KPI_ITEMS[5].icon = '⏱️';
     } else {
         // Cas spécial (toutes réalisées)
         KPI_ITEMS[5].value = 'N/A';
-        KPI_ITEMS[5].label = '⏱️ Délai Moyen';
+        KPI_ITEMS[5].label = '⏱️ Retard moyen';
         KPI_ITEMS[5].icon = '⏱️';
     }
     
@@ -986,7 +986,7 @@ function updateStats() {
     updateStatValue('moyenne-notes', avgRating);
     updateStatValue('votes-total', `${totalVotes.toLocaleString('fr-FR')} votes`);
     
-    // Afficher correctement le délai moyen
+    // Afficher correctement le Retard moyen
     if (retard > 0) {
         updateStatValue('delai-moyen', `${avgRetard}j `);
     } else if (avgDelay > 0) {

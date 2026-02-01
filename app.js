@@ -426,152 +426,398 @@ function initDateDisplay() {
 }
 
 // ==========================================
-// CHARGEMENT DES DONNÉES - ADAPTÉ À VOTRE STRUCTURE
+// FONCTIONS UTILITAIRES POUR LE LOCALSTORAGE
 // ==========================================
+
+function safeSetItem(key, value) {
+    try {
+        localStorage.setItem(key, JSON.stringify(value));
+        return true;
+    } catch (error) {
+        console.warn('⚠️ localStorage bloqué - stockage temporaire en mémoire:', error.message);
+        window.tempStorage = window.tempStorage || {};
+        window.tempStorage[key] = value;
+        return false;
+    }
+}
+
+function safeGetItem(key, defaultValue = null) {
+    try {
+        const item = localStorage.getItem(key);
+        return item ? JSON.parse(item) : defaultValue;
+    } catch (error) {
+        console.warn('⚠️ localStorage bloqué - récupération depuis mémoire:', error.message);
+        if (window.tempStorage && window.tempStorage[key]) {
+            return window.tempStorage[key];
+        }
+        return defaultValue;
+    }
+}
+
+// ==========================================
+// CHARGEMENT DES DONNÉES - VERSION CORRIGÉE
+// ==========================================
+
 async function loadData() {
     try {
-        // 1. Charger les promesses
-        const response = await fetch('promises.json');
+        console.log('📥 Début du chargement des données...');
         
-        if (!response.ok) {
-            console.warn('Fichier promises.json non trouvé - utilisation des données de test');
-            CONFIG.promises = generateTestPromises();
-        } else {
-            const data = await response.json();
-            
-            // Récupérer la date de début depuis le JSON
-            if (data.start_date) {
-                CONFIG.START_DATE = new Date(data.start_date);
-                CONFIG.END_DATE = new Date(CONFIG.START_DATE);
-                CONFIG.END_DATE.setFullYear(CONFIG.END_DATE.getFullYear() + 5); // 5 ans après
-            }
-            
-            // Traiter les promesses selon votre structure
-            CONFIG.promises = (data.promises || []).map(p => {
-                // Normaliser le statut
-                let status = 'Non lancé';
-                if (p.status) {
-                    const statusLower = p.status.toLowerCase();
-                    if (statusLower.includes('realise') || statusLower.includes('réalisé')) {
-                        status = 'Réalisé';
-                    } else if (statusLower.includes('cours') || statusLower.includes('encours')) {
-                        status = 'En cours';
-                    } else if (statusLower.includes('retard')) {
-                        status = 'En retard';
-                    } else if (statusLower.includes('lancé') || statusLower.includes('lance')) {
-                        status = 'Non lancé';
-                    }
-                }
-                
-                // Normaliser le domaine
-                const domain = p.domaine || p.domain || p.categorie || 'Autre';
-                
-                // Convertir le délai en jours (avec limite à 5 ans max)
-                let delayText = p.delai || '12 premiers mois';
-                let delayDays = parseDelayToDays(delayText);
-                
-                // S'assurer que delayDays est un nombre valide
-                if (isNaN(delayDays) || delayDays < 0) {
-                    delayDays = 365; // Valeur par défaut
-                }
-                
-                // Calculer la date limite (ne jamais dépasser la fin du mandat)
-                const deadline = calculateDeadlineFromDays(delayDays);
-                
-                // Vérifier si en retard
-                const isLate = checkIfLate(status, deadline);
-                
-                // Normaliser les mises à jour
-                const updates = (p.mises_a_jour || []).map(update => ({
-                    date: update.date || '',
-                    description: update.text || update.description || 'Mise à jour'
-                }));
-                
-                return {
-                    id: p.id || Math.random().toString(36).substr(2, 9),
-                    engagement: p.engagement || p.titre || 'Engagement non spécifié',
-                    domain: domain,
-                    status: status,
-                    delai: delayDays.toString(),
-                    delai_texte: delayText,
-                    resultat: p.resultat || p.objectif || 'Résultats non spécifiés',
-                    updates: updates,
-                    deadline: deadline,
-                    isLate: isLate,
-                    publicAvg: 0,
-                    publicCount: 0
-                };
-            });
-        }
+        // Charger les promesses
+        await loadPromisesData();
         
-        // Corriger les délais invalides
-        fixInvalidDelays();
+        // Charger la presse (async)
+        await loadPressData();
         
-        // Trier les promesses : d'abord en retard, puis par date limite
-        CONFIG.promises.sort((a, b) => {
-            if (a.isLate && !b.isLate) return -1;
-            if (!a.isLate && b.isLate) return 1;
-            return a.deadline - b.deadline;
-        });
+        // Charger les actualités (async)
+        await loadNewsData();
         
-        // 2. Charger les données de la presse
-        try {
-            const pressResponse = await fetch('press.json?v=' + Date.now());
-            
-            if (!pressResponse.ok) {
-                console.warn('Fichier press.json non trouvé - données de presse par défaut');
-                CONFIG.press = getDefaultPressData();
-            } else {
-                const pressData = await pressResponse.json();
-                
-                if (pressData && Array.isArray(pressData.press)) {
-                    // Trier par date (les plus récents d'abord)
-                    CONFIG.press = pressData.press.sort((a, b) => {
-                        try {
-                            const dateA = new Date(a.date.split('/').reverse().join('-'));
-                            const dateB = new Date(b.date.split('/').reverse().join('-'));
-                            return dateB - dateA;
-                        } catch {
-                            return 0;
-                        }
-                    });
-                    
-                    console.log(`✅ ${CONFIG.press.length} journaux chargés depuis press.json`);
-                } else {
-                    console.warn('Format press.json invalide - données par défaut');
-                    CONFIG.press = getDefaultPressData();
-                }
-            }
-        } catch (pressError) {
-            console.error('❌ Erreur chargement presse:', pressError);
-            CONFIG.press = getDefaultPressData();
-        }
-        
-        // 3. Charger les votes publics si Supabase est disponible
+        // Charger les votes publics (avec délai)
         setTimeout(() => {
             fetchAndDisplayPublicVotes().catch(error => {
                 console.warn('⚠️ Impossible de charger les votes:', error.message);
             });
         }, 1000);
         
-        // 4. Données de démonstration pour les actualités
-        CONFIG.news = [
-            { id: '1', title: 'Lancement officiel de la plateforme', excerpt: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle.', date: '25/01/2026', source: 'Le Soleil', image: 'school' },
-            { id: '2', title: 'Première école numérique inaugurée', excerpt: 'Le gouvernement a inauguré la première école entièrement numérique à Dakar.', date: '20/01/2026', source: 'Sud Quotidien', image: 'inauguration' },
-            { id: '3', title: 'Budget 2026 axé sur la relance économique', excerpt: 'Le budget de l\'État pour 2026 prévoit d\'importants investissements dans les infrastructures.', date: '15/01/2026', source: 'WalFadjri', image: 'budget' }
-        ];
-        
-        // 5. Rendre tout
+        // Rendre tout
         renderAll();
-        renderNews(CONFIG.news);
-        renderNewspapers();
+        if (typeof renderNews === 'function') {
+            renderNews(CONFIG.news);
+        }
+        if (typeof renderNewspapers === 'function') {
+            renderNewspapers();
+        }
+        
+        console.log('✅ Toutes les données chargées avec succès');
         
     } catch (error) {
         console.error('❌ Erreur chargement général:', error);
         showNotification('Erreur de chargement des données', 'error');
         CONFIG.promises = generateTestPromises();
         CONFIG.press = getDefaultPressData();
-        renderAll();
+        if (typeof renderAll === 'function') {
+            renderAll();
+        }
+    }
+}
+
+// Fonction séparée pour charger les promesses
+async function loadPromisesData() {
+    try {
+        const response = await fetch('promises.json');
+        
+        if (!response.ok) {
+            console.warn('Fichier promises.json non trouvé - utilisation des données de test');
+            CONFIG.promises = generateTestPromises();
+            return;
+        }
+        
+        const data = await response.json();
+        
+        // Récupérer la date de début depuis le JSON
+        if (data.start_date) {
+            CONFIG.START_DATE = new Date(data.start_date);
+            CONFIG.END_DATE = new Date(CONFIG.START_DATE);
+            CONFIG.END_DATE.setFullYear(CONFIG.END_DATE.getFullYear() + 5); // 5 ans après
+        }
+        
+        // Traiter les promesses
+        CONFIG.promises = (data.promises || []).map(p => {
+            // Normaliser le statut
+            let status = 'Non lancé';
+            if (p.status) {
+                const statusLower = p.status.toLowerCase();
+                if (statusLower.includes('realise') || statusLower.includes('réalisé')) {
+                    status = 'Réalisé';
+                } else if (statusLower.includes('cours') || statusLower.includes('encours')) {
+                    status = 'En cours';
+                } else if (statusLower.includes('retard')) {
+                    status = 'En retard';
+                } else if (statusLower.includes('lancé') || statusLower.includes('lance')) {
+                    status = 'Non lancé';
+                }
+            }
+            
+            // Normaliser le domaine
+            const domain = p.domaine || p.domain || p.categorie || 'Autre';
+            
+            // Convertir le délai en jours
+            let delayText = p.delai || '12 premiers mois';
+            let delayDays = parseDelayToDays(delayText);
+            
+            // S'assurer que delayDays est un nombre valide
+            if (isNaN(delayDays) || delayDays < 0) {
+                delayDays = 365;
+            }
+            
+            // Calculer la date limite
+            const deadline = calculateDeadlineFromDays(delayDays);
+            
+            // Vérifier si en retard
+            const isLate = checkIfLate(status, deadline);
+            
+            // Normaliser les mises à jour
+            const updates = (p.mises_a_jour || []).map(update => ({
+                date: update.date || '',
+                description: update.text || update.description || 'Mise à jour'
+            }));
+            
+            return {
+                id: p.id || Math.random().toString(36).substr(2, 9),
+                engagement: p.engagement || p.titre || 'Engagement non spécifié',
+                domain: domain,
+                status: status,
+                delai: delayDays.toString(),
+                delai_texte: delayText,
+                resultat: p.resultat || p.objectif || 'Résultats non spécifiés',
+                updates: updates,
+                deadline: deadline,
+                isLate: isLate,
+                publicAvg: 0,
+                publicCount: 0
+            };
+        });
+        
+        // Corriger les délais invalides
+        fixInvalidDelays();
+        
+        // Trier les promesses
+        CONFIG.promises.sort((a, b) => {
+            if (a.isLate && !b.isLate) return -1;
+            if (!a.isLate && b.isLate) return 1;
+            return a.deadline - b.deadline;
+        });
+        
+    } catch (error) {
+        console.error('❌ Erreur chargement promesses:', error);
+        CONFIG.promises = generateTestPromises();
+    }
+}
+
+// Fonction séparée pour charger la presse
+async function loadPressData() {
+    try {
+        console.log('📰 Chargement des données presse...');
+        const pressResponse = await fetch('press.json?v=' + Date.now());
+        
+        if (!pressResponse.ok) {
+            console.warn('Fichier press.json non trouvé - données de presse par défaut');
+            CONFIG.press = getDefaultPressData();
+            return;
+        }
+        
+        const pressData = await pressResponse.json();
+        
+        if (pressData && Array.isArray(pressData.press)) {
+            // Trier par date (les plus récents d'abord)
+            CONFIG.press = pressData.press.sort((a, b) => {
+                try {
+                    const dateA = new Date(a.date.split('/').reverse().join('-'));
+                    const dateB = new Date(b.date.split('/').reverse().join('-'));
+                    return dateB - dateA;
+                } catch {
+                    return 0;
+                }
+            });
+            
+            console.log(`✅ ${CONFIG.press.length} journaux chargés depuis press.json`);
+        } else {
+            console.warn('Format press.json invalide - données par défaut');
+            CONFIG.press = getDefaultPressData();
+        }
+        
+    } catch (pressError) {
+        console.error('❌ Erreur chargement presse:', pressError);
+        CONFIG.press = getDefaultPressData();
+    }
+}
+
+// Fonction séparée pour charger les actualités
+async function loadNewsData() {
+    try {
+        console.log('📰 Chargement des actualités...');
+        const newsResponse = await fetch('news.json?v=' + Date.now());
+        
+        if (!newsResponse.ok) {
+            console.warn('Fichier news.json non trouvé - données de démonstration');
+            CONFIG.news = [
+                { 
+                    id: '1', 
+                    title: 'Lancement officiel de la plateforme', 
+                    excerpt: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle.', 
+                    date: '25/01/2026', 
+                    source: 'Le Soleil', 
+                    image: 'school' 
+                },
+                { 
+                    id: '2', 
+                    title: 'Première école numérique inaugurée', 
+                    excerpt: 'Le gouvernement a inauguré la première école entièrement numérique à Dakar.', 
+                    date: '20/01/2026', 
+                    source: 'Sud Quotidien', 
+                    image: 'school' 
+                },
+                { 
+                    id: '3', 
+                    title: 'Budget 2026 axé sur la relance économique', 
+                    excerpt: 'Le budget de l\'État pour 2026 prévoit d\'importants investissements dans les infrastructures.', 
+                    date: '15/01/2026', 
+                    source: 'WalFadjri', 
+                    image: 'money' 
+                }
+            ];
+            return;
+        }
+        
+        const newsData = await newsResponse.json();
+        
+        if (newsData && Array.isArray(newsData.news)) {
+            CONFIG.news = newsData.news;
+            console.log(`✅ ${CONFIG.news.length} actualités chargées depuis news.json`);
+        } else {
+            console.warn('Format news.json invalide - données par défaut');
+            CONFIG.news = [
+                { 
+                    id: '1', 
+                    title: 'Lancement officiel de la plateforme', 
+                    excerpt: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle.', 
+                    date: '25/01/2026', 
+                    source: 'Le Soleil', 
+                    image: 'school' 
+                }
+            ];
+        }
+        
+    } catch (newsError) {
+        console.error('❌ Erreur chargement actualités:', newsError);
+        CONFIG.news = [
+            { 
+                id: '1', 
+                title: 'Lancement officiel de la plateforme', 
+                excerpt: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle.', 
+                date: '25/01/2026', 
+                source: 'Le Soleil', 
+                image: 'school' 
+            }
+        ];
+    }
+}
+
+// ==========================================
+// CORRECTION DES FONCTIONS UTILISANT localStorage
+// ==========================================
+
+// Dans saveVoteToSupabase()
+async function saveVoteToSupabase(promiseId, rating, comment = '') {
+    if (!supabaseClient) {
+        showNotification('Mode démo : Vote enregistré localement', 'info');
+        // Mode fallback - stocker localement
+        const votes = safeGetItem('promise_votes', []);
+        votes.push({
+            id: Date.now().toString(),
+            promise_id: promiseId,
+            rating: rating,
+            comment: comment,
+            created_at: new Date().toISOString()
+        });
+        safeSetItem('promise_votes', votes);
+        return;
+    }
+    
+    try {
+        const voteData = { 
+            promise_id: promiseId, 
+            rating: rating,
+            comment: comment,
+            created_at: new Date().toISOString()
+        };
+        
+        console.log('Envoi du vote:', voteData);
+        
+        const { error } = await supabaseClient
+            .from('votes')
+            .insert([voteData]);
+        
+        if (error) {
+            console.error('Erreur Supabase:', error);
+            
+            // Mode fallback - stocker localement
+            const votes = safeGetItem('promise_votes', []);
+            votes.push({
+                id: Date.now().toString(),
+                promise_id: promiseId,
+                rating: rating,
+                comment: comment,
+                created_at: new Date().toISOString()
+            });
+            safeSetItem('promise_votes', votes);
+            
+            showNotification('Vote enregistré localement (mode démo)', 'info');
+        } else {
+            showNotification('Merci pour votre vote !', 'success');
+        }
+        
+        // Recharger les votes après un délai
+        setTimeout(() => fetchAndDisplayPublicVotes(), 500);
+        
+    } catch (error) {
+        console.error('❌ Erreur sauvegarde vote:', error);
+        showNotification('Mode démo : Vote enregistré localement', 'info');
+    }
+}
+
+// Dans saveRatingLocally()
+function saveRatingLocally(ratingData) {
+    const ratings = safeGetItem('service_ratings', []);
+    ratings.push({
+        id: Date.now().toString(),
+        service: ratingData.service,
+        accessibility: ratingData.accessibility,
+        welcome: ratingData.welcome,
+        efficiency: ratingData.efficiency,
+        transparency: ratingData.transparency,
+        comment: ratingData.comment,
+        created_at: new Date().toISOString()
+    });
+    safeSetItem('service_ratings', ratings);
+    console.log('💾 Notation sauvegardée localement');
+}
+
+// Dans fetchAndDisplayPublicVotes() ou processVotes()
+function processVotes(votes) {
+    const votesMap = {};
+    
+    // D'abord, ajouter les votes de Supabase
+    votes.forEach(vote => {
+        if (!votesMap[vote.promise_id]) {
+            votesMap[vote.promise_id] = { sum: 0, count: 0 };
+        }
+        votesMap[vote.promise_id].sum += vote.rating;
+        votesMap[vote.promise_id].count += 1;
+    });
+    
+    // Ajouter les votes locaux
+    const localVotes = safeGetItem('promise_votes', []);
+    localVotes.forEach(vote => {
+        if (!votesMap[vote.promise_id]) {
+            votesMap[vote.promise_id] = { sum: 0, count: 0 };
+        }
+        votesMap[vote.promise_id].sum += vote.rating;
+        votesMap[vote.promise_id].count += 1;
+    });
+    
+    // Mettre à jour les promesses
+    CONFIG.promises.forEach(promise => {
+        if (votesMap[promise.id]) {
+            promise.publicAvg = votesMap[promise.id].sum / votesMap[promise.id].count;
+            promise.publicCount = votesMap[promise.id].count;
+        }
+    });
+    
+    if (typeof renderPromises === 'function') {
+        renderPromises(CONFIG.promises.slice(0, CONFIG.currentVisible));
+    }
+    if (typeof updateStats === 'function') {
+        updateStats();
     }
 }
 
@@ -3577,13 +3823,4 @@ async function syncLocalDataWithSupabase() {
         // Logique similaire pour les votes...
     }
 }
-// Dans loadData() de app.js, ajoutez :
-try {
-    const newsResponse = await fetch('news.json?v=' + Date.now());
-    if (newsResponse.ok) {
-        const newsData = await newsResponse.json();
-        CONFIG.news = newsData.news || CONFIG.news;
-    }
-} catch (error) {
-    console.warn('Fichier news.json non trouvé - données par défaut');
-}
+

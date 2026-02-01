@@ -79,13 +79,28 @@
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     
-    <!-- Style CSS amélioré pour l'en-tête -->
+    <!-- Style CSS amélioré -->
     <style>
+    /* ===== VARIABLES ===== */
+    :root {
+        --primary-color: #2a6d5d;
+        --secondary-color: #34a853;
+        --accent-color: #f1c40f;
+        --text-primary: #333333;
+        --text-secondary: #666666;
+        --light-bg: #f8f9fa;
+        --white: #ffffff;
+        --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+        --border-radius: 12px;
+        --transition: all 0.3s ease;
+    }
+
     /* ===== NAVIGATION MODERNE ===== */
     .navbar {
         background: rgba(255, 255, 255, 0.98);
         backdrop-filter: blur(10px);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        box-shadow: var(--shadow);
         padding: 0.8rem 0;
         position: sticky;
         top: 0;
@@ -107,7 +122,7 @@
         align-items: center;
         gap: 12px;
         text-decoration: none;
-        transition: transform 0.3s ease;
+        transition: var(--transition);
     }
 
     .nav-logo:hover {
@@ -122,19 +137,19 @@
     }
 
     .nav-logo span {
-        color: #2a6d5d;
+        color: var(--primary-color);
         font-weight: 800;
         font-size: 1.1rem;
         letter-spacing: -0.3px;
         text-transform: uppercase;
-        background: linear-gradient(135deg, #2a6d5d 0%, #34a853 100%);
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
 
     .nav-menu {
         display: flex;
-        gap: 1.5rem;
+        gap: 0.5rem;
         align-items: center;
     }
 
@@ -142,25 +157,25 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        color: #555;
+        color: var(--text-secondary);
         text-decoration: none;
         font-weight: 600;
         font-size: 0.9rem;
         padding: 0.6rem 1.2rem;
         border-radius: 50px;
-        transition: all 0.3s ease;
+        transition: var(--transition);
         position: relative;
         overflow: hidden;
     }
 
     .nav-link i {
         font-size: 1rem;
-        transition: transform 0.3s ease;
+        transition: var(--transition);
     }
 
     .nav-link:hover {
         background: rgba(42, 109, 93, 0.08);
-        color: #2a6d5d;
+        color: var(--primary-color);
         transform: translateY(-2px);
     }
 
@@ -169,8 +184,8 @@
     }
 
     .nav-link.active {
-        background: linear-gradient(135deg, #2a6d5d, #34a853);
-        color: white;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: var(--white);
         box-shadow: 0 4px 15px rgba(42, 109, 93, 0.3);
     }
 
@@ -182,7 +197,7 @@
         transform: translateX(-50%);
         width: 20px;
         height: 3px;
-        background: white;
+        background: var(--white);
         border-radius: 2px;
     }
 
@@ -200,20 +215,21 @@
         display: block;
         width: 25px;
         height: 3px;
-        background: #2a6d5d;
+        background: var(--primary-color);
         border-radius: 2px;
-        transition: 0.3s;
+        transition: var(--transition);
     }
 
     /* ===== HEADER AMÉLIORÉ ===== */
     .header {
-        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-        padding: 3rem 2rem 4rem;
+        background: linear-gradient(135deg, var(--light-bg) 0%, var(--white) 100%);
+        padding: 4rem 2rem 5rem;
         position: relative;
         overflow: hidden;
         min-height: 85vh;
         display: flex;
         align-items: center;
+        border-bottom: 1px solid rgba(42, 109, 93, 0.1);
     }
 
     .header::before {
@@ -248,9 +264,9 @@
         height: 500px;
         border-radius: 20px;
         overflow: hidden;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        box-shadow: var(--shadow-hover);
         transform: perspective(1000px) rotateY(-5deg);
-        transition: transform 0.5s ease;
+        transition: var(--transition);
     }
 
     .header-image-container:hover {
@@ -261,7 +277,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.5s ease;
+        transition: var(--transition);
     }
 
     .header-image-container:hover .header-image {
@@ -274,10 +290,10 @@
         left: 0;
         right: 0;
         background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-        color: white;
+        color: var(--white);
         padding: 2rem;
         transform: translateY(100%);
-        transition: transform 0.5s ease;
+        transition: var(--transition);
     }
 
     .header-image-container:hover .image-overlay {
@@ -288,8 +304,8 @@
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        background: linear-gradient(135deg, #2a6d5d, #34a853);
-        color: white;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: var(--white);
         padding: 0.8rem 1.5rem;
         border-radius: 50px;
         font-weight: 600;
@@ -305,10 +321,10 @@
         display: block;
         font-size: 3.5rem;
         font-weight: 800;
-        color: #2a6d5d;
+        color: var(--primary-color);
         line-height: 1.1;
         margin-bottom: 0.5rem;
-        background: linear-gradient(135deg, #2a6d5d 0%, #34a853 100%);
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
@@ -317,14 +333,14 @@
     .title-sub {
         display: block;
         font-size: 1.4rem;
-        color: #666;
+        color: var(--text-secondary);
         font-weight: 500;
         margin-bottom: 1rem;
     }
 
     .subtitle {
         font-size: 1.1rem;
-        color: #777;
+        color: var(--text-secondary);
         line-height: 1.6;
         margin-bottom: 2rem;
         max-width: 500px;
@@ -332,11 +348,11 @@
 
     /* ===== COMPTE À REBOURS REDIMENSIONNÉ ===== */
     .countdown-container {
-        background: white;
-        border-radius: 20px;
+        background: var(--white);
+        border-radius: var(--border-radius);
         padding: 1.5rem;
         margin: 2rem 0;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        box-shadow: var(--shadow);
         border: 1px solid rgba(42, 109, 93, 0.1);
         backdrop-filter: blur(10px);
         max-width: 600px;
@@ -346,8 +362,8 @@
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        background: linear-gradient(135deg, #2a6d5d, #34a853);
-        color: white;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: var(--white);
         padding: 0.5rem 1.2rem;
         border-radius: 50px;
         font-weight: 600;
@@ -363,12 +379,12 @@
     }
 
     .countdown-item {
-        background: linear-gradient(135deg, #f8f9fa, #ffffff);
+        background: linear-gradient(135deg, var(--light-bg), var(--white));
         border-radius: 12px;
         padding: 1rem 0.5rem;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         border: 1px solid rgba(42, 109, 93, 0.1);
-        transition: all 0.3s ease;
+        transition: var(--transition);
     }
 
     .countdown-item:hover {
@@ -380,14 +396,14 @@
         font-size: 1.8rem;
         font-weight: 800;
         font-family: 'Manrope', sans-serif;
-        color: #2a6d5d;
+        color: var(--primary-color);
         line-height: 1;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
     }
 
     .countdown-label {
         font-size: 0.75rem;
-        color: #666;
+        color: var(--text-secondary);
         text-transform: uppercase;
         letter-spacing: 1px;
         margin-top: 0.3rem;
@@ -396,7 +412,7 @@
 
     .countdown-target {
         font-size: 0.9rem;
-        color: #555;
+        color: var(--text-primary);
         background: rgba(42, 109, 93, 0.05);
         padding: 0.6rem 1rem;
         border-radius: 8px;
@@ -406,7 +422,7 @@
     }
 
     .countdown-target strong {
-        color: #2a6d5d;
+        color: var(--primary-color);
         font-weight: 700;
     }
 
@@ -415,14 +431,14 @@
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        background: linear-gradient(135deg, #2a6d5d, #34a853);
-        color: white;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: var(--white);
         padding: 0.9rem 1.8rem;
         border-radius: 50px;
         text-decoration: none;
         font-weight: 600;
         font-size: 0.95rem;
-        transition: all 0.3s ease;
+        transition: var(--transition);
         box-shadow: 0 4px 15px rgba(42, 109, 93, 0.3);
         border: none;
         cursor: pointer;
@@ -432,7 +448,7 @@
     .btn-program:hover {
         transform: translateY(-3px);
         box-shadow: 0 8px 25px rgba(42, 109, 93, 0.4);
-        background: linear-gradient(135deg, #34a853, #2a6d5d);
+        background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
     }
 
     .btn-program i {
@@ -448,11 +464,60 @@
     }
 
     .kpi-carousel-container {
-        background: white;
+        background: var(--white);
         border-radius: 15px;
         padding: 1rem;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
         border: 1px solid rgba(42, 109, 93, 0.1);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .kpi-nav-btn {
+        background: rgba(42, 109, 93, 0.1);
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: var(--primary-color);
+        transition: var(--transition);
+    }
+
+    .kpi-nav-btn:hover {
+        background: rgba(42, 109, 93, 0.2);
+        transform: scale(1.1);
+    }
+
+    /* ===== SECTIONS GÉNÉRALES ===== */
+    .section-header-modern {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2.5rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin: 0;
+    }
+
+    .section-title i {
+        color: var(--secondary-color);
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
     }
 
     /* ===== RESPONSIVE ===== */
@@ -489,7 +554,7 @@
             top: 100%;
             left: 0;
             right: 0;
-            background: white;
+            background: var(--white);
             flex-direction: column;
             padding: 1rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -524,6 +589,14 @@
         .countdown-grid {
             grid-template-columns: repeat(2, 1fr);
         }
+        
+        .container {
+            padding: 0 1.5rem;
+        }
+        
+        .section-title {
+            font-size: 1.6rem;
+        }
     }
 
     @media (max-width: 480px) {
@@ -556,6 +629,30 @@
             padding: 0.8rem 1.5rem;
             font-size: 0.85rem;
         }
+        
+        .container {
+            padding: 0 1rem;
+        }
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    .fade-in {
+        animation: fadeIn 0.6s ease-out;
+    }
+
+    .pulse {
+        animation: pulse 0.5s ease;
     }
     </style>
 </head>
@@ -625,7 +722,9 @@
                 </div>
                 
                 <p class="subtitle">
-                    Plateforme Citoyenne de Suivi Transparent des Engagements Présidentiels
+                    Plateforme Citoyenne de Suivi Transparent des Engagements Présidentiels. 
+                    Suivez en temps réel l'avancement des promesses et participez à l'évaluation 
+                    de leur réalisation.
                 </p>
                 
                 <!-- Compte à rebours redimensionné -->
@@ -666,14 +765,19 @@
                         <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" 
                            class="btn-program" 
                            download target="_blank">
-                            <i class="fas fa-download"></i> Programme Complet (PDF)
+                            <i class="fas fa-download"></i> Télécharger le Programme Complet (PDF)
                         </a>
                         
                         <div class="kpi-carousel-container">
                             <button id="kpiPrev" class="kpi-nav-btn" title="Précédent">
                                 <i class="fas fa-chevron-left"></i>
                             </button>
-                            <div id="kpiCarousel"></div>
+                            <div id="kpiCarousel" class="kpi-content">
+                                <div class="kpi-item">
+                                    <div class="kpi-value">75%</div>
+                                    <div class="kpi-label">Satisfaction citoyenne</div>
+                                </div>
+                            </div>
                             <button id="kpiNext" class="kpi-nav-btn" title="Suivant">
                                 <i class="fas fa-chevron-right"></i>
                             </button>
@@ -690,26 +794,946 @@
                 <img src="sonko.jpg" alt="Projet Sénégal" class="header-image">
                 <div class="image-overlay">
                     <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem;">Vision 2029</h3>
-                    <p style="margin: 0; font-size: 0.9rem; opacity: 0.9;">Un Sénégal souverain, juste et prospère</p>
+                    <p style="margin: 0; font-size: 0.9rem; opacity: 0.9;">Un Sénégal souverain, juste et prospère pour tous les citoyens</p>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Le reste du contenu reste inchangé -->
-    <!-- ... -->
+    <!-- Stats Section -->
+    <section class="stats-section" id="stats">
+        <div class="container">
+            <div class="section-header-modern">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-bar"></i>
+                    Tableau de Bord
+                </h2>
+            </div>
+            
+            <div class="stats-grid">
+                <!-- Total Engagements -->
+                <div class="stat-card stat-total">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div class="stat-trend positive">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="total">0</div>
+                        <div class="stat-label">Total Engagements</div>
+                    </div>
+                    <div class="stat-footer">
+                        <div class="stat-percentage" id="total-percentage">100%</div>
+                    </div>
+                </div>
+                
+                <!-- Réalisés -->
+                <div class="stat-card stat-success">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-trend positive">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="realise">0</div>
+                        <div class="stat-label">✅ Réalisés</div>
+                    </div>
+                    <div class="stat-footer">
+                        <div class="stat-percentage" id="realise-percentage">0%</div>
+                    </div>
+                </div>
+                
+                <!-- En Cours -->
+                <div class="stat-card stat-progress">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <div class="stat-trend neutral">
+                            <i class="fas fa-equals"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="encours">0</div>
+                        <div class="stat-label">🔄 En Cours</div>
+                    </div>
+                    <div class="stat-footer">
+                        <div class="stat-percentage" id="encours-percentage">0%</div>
+                    </div>
+                </div>
+                
+                <!-- Non Lancés -->
+                <div class="stat-card stat-pending">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-trend negative">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="non-lance">0</div>
+                        <div class="stat-label">⏳ Non Lancés</div>
+                    </div>
+                    <div class="stat-footer">
+                        <div class="stat-percentage" id="non-lance-percentage">0%</div>
+                    </div>
+                </div>
+                
+                <!-- En Retard -->
+                <div class="stat-card stat-warning">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-trend negative">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="retard">0</div>
+                        <div class="stat-label">⚠️ En Retard</div>
+                    </div>
+                    <div class="stat-footer">
+                        <div class="stat-percentage" id="retard-percentage">0%</div>
+                    </div>
+                </div>
+                
+                <!-- Taux de Réalisation -->
+                <div class="stat-card stat-rate">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="stat-trend positive">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="taux-realisation">0%</div>
+                        <div class="stat-label">📈 Taux Réalisation</div>
+                    </div>
+                    <div class="stat-footer">
+                        <div class="stat-label">Progression</div>
+                    </div>
+                </div>
+                
+                <!-- Note Moyenne -->
+                <div class="stat-card stat-rating">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-trend neutral">
+                            <i class="fas fa-equals"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="moyenne-notes">0.0</div>
+                        <div class="stat-label">⭐ Note Moyenne</div>
+                    </div>
+                    <div class="stat-footer">
+                        <div class="stat-subvalue" id="votes-total">0 votes</div>
+                    </div>
+                </div>
+                
+                <!-- Avec MAJ -->
+                <div class="stat-card stat-update">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <div class="stat-trend positive">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="avec-maj">0</div>
+                        <div class="stat-label">📋 Avec MAJ</div>
+                    </div>
+                    <div class="stat-footer">
+                        <div class="stat-percentage" id="avec-maj-percentage">0%</div>
+                    </div>
+                </div>
+                
+                <!-- Retard Moyen -->
+                <div class="stat-card stat-time">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-stopwatch"></i>
+                        </div>
+                        <div class="stat-trend neutral">
+                            <i class="fas fa-equals"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="delai-moyen">0j</div>
+                        <div class="stat-label">⏱️ Retard Moyen</div>
+                    </div>
+                    <div class="stat-footer">
+                        <div class="stat-label">Restant</div>
+                    </div>
+                </div>
+                
+                <!-- Domaine Principal -->
+                <div class="stat-card stat-domain">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="stat-trend neutral">
+                            <i class="fas fa-equals"></i>
+                        </div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-label">🏛️ Domaine Principal</div>
+                        <div class="stat-value" id="domaine-principal">-</div>
+                    </div>
+                    <div class="stat-footer">
+                        <div class="stat-subvalue" id="domaine-count">0 engagements</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- JavaScript avec menu mobile -->
+    <!-- Promesse du Jour Section -->
+    <section class="daily-promise-section" id="daily">
+        <div class="container">
+            <div class="section-header-modern">
+                <h2 class="section-title">
+                    <i class="fas fa-sun"></i>
+                    Promesse du Jour
+                </h2>
+            </div>
+            
+            <div class="daily-promise-card" id="dailyPromise">
+                <!-- Chargé dynamiquement par JavaScript -->
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Chargement de la promesse du jour...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promesses en Vedette Carousel -->
+    <section class="promises-carousel-section" id="promises-carousel">
+        <div class="container">
+            <div class="section-header-modern">
+                <h2 class="section-title">
+                    <i class="fas fa-star"></i>
+                    Promesses en Vedette
+                </h2>
+                <div class="section-actions">
+                    <button id="carouselAutoPlayToggle" class="btn-view-all">
+                        <i class="fas fa-pause"></i>
+                        Pause
+                    </button>
+                </div>
+            </div>
+            
+            <div class="carousel-controls">
+                <div id="promisesCarouselGrid" class="promises-grid">
+                    <!-- Chargé dynamiquement par JavaScript -->
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Chargement des promesses...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="carousel-dots" id="carouselDots">
+                <!-- Dots chargés dynamiquement -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Tous les Engagements Section -->
+    <section class="promises-section" id="promises">
+        <div class="container">
+            <div class="section-header-modern">
+                <h2 class="section-title">
+                    <i class="fas fa-list-check"></i>
+                    Tous les Engagements
+                </h2>
+                <div class="section-actions">
+                    <button class="filter-toggle-btn" id="filterToggleBtn">
+                        <i class="fas fa-filter"></i>
+                        Filtres
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Filtres -->
+            <div class="filters-section" id="filtersSection">
+                <div class="filters-container">
+                    <div class="filter-group">
+                        <label for="filter-status">
+                            <i class="fas fa-tag"></i>
+                            Statut
+                        </label>
+                        <select class="filter-select" id="filter-status">
+                            <option value="">Tous</option>
+                            <option value="✅ Réalisé">✅ Réalisé</option>
+                            <option value="🔄 En cours">🔄 En cours</option>
+                            <option value="⏳ Non lancé">⏳ Non lancé</option>
+                            <option value="En retard">⚠️ En retard</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="filter-domain">
+                            <i class="fas fa-building"></i>
+                            Domaine
+                        </label>
+                        <select class="filter-select" id="filter-domain">
+                            <option value="">Tous les domaines</option>
+                            <!-- Options chargées dynamiquement -->
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="filter-search">
+                            <i class="fas fa-search"></i>
+                            Rechercher
+                        </label>
+                        <input 
+                            type="text" 
+                            class="filter-input" 
+                            id="filter-search" 
+                            placeholder="Rechercher une promesse..."
+                        >
+                    </div>
+                    
+                    <div class="filter-actions">
+                        <button class="btn-reset" id="resetFilters">
+                            <i class="fas fa-redo"></i>
+                            Réinitialiser
+                        </button>
+                        <button class="btn-export" onclick="exportData('csv')">
+                            <i class="fas fa-download"></i>
+                            Exporter
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Résultats -->
+            <div class="promises-results">
+                <div class="results-info">
+                    <span id="results-count">0 engagement(s) trouvé(s)</span>
+                </div>
+                
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="grid" title="Vue grille">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button class="view-btn" data-view="list" title="Vue liste">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+                
+                <div id="promisesGrid" class="promises-grid">
+                    <!-- Promesses chargées dynamiquement -->
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Chargement des engagements...</p>
+                    </div>
+                </div>
+                
+                <!-- Boutons Afficher Plus/Moins -->
+                <div class="show-more-container">
+                    <button id="showMoreBtn">
+                        <i class="fas fa-arrow-down"></i>
+                        Afficher plus
+                    </button>
+                    <button id="showLessBtn">
+                        <i class="fas fa-arrow-up"></i>
+                        Afficher moins
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Actualités Section -->
+    <section class="news-section" id="news">
+        <div class="container">
+            <div class="section-header-modern">
+                <h2 class="section-title">
+                    <i class="fas fa-bullhorn"></i>
+                    Actualités
+                </h2>
+                <a href="#" class="btn-view-all">
+                    Voir tout <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <div id="newsGrid" class="news-grid">
+                <!-- Actualités chargées dynamiquement -->
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Chargement des actualités...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Revue de Presse Section -->
+    <section class="press-section" id="press">
+        <div class="container">
+            <div class="section-header-modern">
+                <h2 class="section-title">
+                    <i class="fas fa-newspaper"></i>
+                    Revue de Presse
+                </h2>
+            </div>
+            
+            <!-- Grille des quotidiens -->
+            <div class="section-header-modern">
+                <h3 style="font-size: 1.3rem; margin: 0;">
+                    <i class="fas fa-images"></i>
+                    Éditions du Jour
+                </h3>
+                <div class="section-actions">
+                    <button id="autoPlayToggle" class="btn-view-all">
+                        <i class="fas fa-pause"></i>
+                        Pause
+                    </button>
+                </div>
+            </div>
+            
+            <div class="press-carousel-container">
+                <div id="pressCarousel" class="press-carousel"></div>
+                
+                <button class="carousel-btn prev" id="prevBtn" title="Précédent">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-btn next" id="nextBtn" title="Suivant">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <div class="carousel-indicators" id="carouselIndicators">
+                    <!-- Indicateurs chargés dynamiquement -->
+                </div>
+            </div>
+            
+            <!-- Grille des quotidiens cliquables -->
+            <div class="section-header-modern" style="margin-top: var(--spacing-xl);">
+                <h3 style="font-size: 1.3rem; margin: 0;">
+                    <i class="fas fa-th-large"></i>
+                    Tous les Quotidiens
+                </h3>
+            </div>
+            
+            <div id="newspapersGrid" class="newspapers-grid">
+                <!-- Quotidiens chargés dynamiquement -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Notation des Services Publics Section -->
+    <section class="rating-section" id="rating">
+        <div class="container">
+            <div class="section-header-modern">
+                <h2 class="section-title">
+                    <i class="fas fa-star-half-alt"></i>
+                    Notation des Services Publics
+                </h2>
+            </div>
+
+            <!-- FORMULAIRE DE NOTATION -->
+            <div class="rating-form-card" style="margin-bottom: var(--spacing-2xl);">
+                <div class="rating-form-header">
+                    <h3>
+                        <i class="fas fa-pencil-alt"></i>
+                        Donnez votre avis
+                    </h3>
+                    <p>Évaluez votre expérience avec un service public sénégalais</p>
+                </div>
+                
+                <form class="rating-form" id="ratingForm">
+                    <div class="form-group">
+                        <label for="service-category">
+                            <i class="fas fa-folder"></i>
+                            Catégorie de service *
+                        </label>
+                        <select class="form-select" id="service-category" required>
+                            <option value="">Choisissez une catégorie</option>
+                            <option value="sante">🏥 Santé & Hôpitaux</option>
+                            <option value="education">🎓 Éducation & Formation</option>
+                            <option value="securite">👮‍♂️ Sécurité & Défense</option>
+                            <option value="justice">⚖️ Justice & Droit</option>
+                            <option value="administration">🏛️ Administration & État Civil</option>
+                            <option value="finances">💰 Finances & Impôts</option>
+                            <option value="transports">🚌 Transports & Mobilité</option>
+                            <option value="energie">⚡ Énergie & Eau</option>
+                            <option value="communication">📞 Communication & Numérique</option>
+                            <option value="social">🤝 Action Sociale & Solidarité</option>
+                            <option value="emploi">💼 Emploi & Formation Pro</option>
+                            <option value="environnement">🌿 Environnement & Cadre de Vie</option>
+                            <option value="culture">🎭 Culture & Tourisme</option>
+                            <option value="autre">📋 Autre Service Public</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="service">
+                            <i class="fas fa-building"></i>
+                            Service concerné *
+                        </label>
+                        <select class="form-select" id="service" required disabled>
+                            <option value="">Sélectionnez d'abord une catégorie</option>
+                        </select>
+                    </div>
+                    
+                    <div class="rating-criteria-grid">
+                        <!-- Accessibilité -->
+                        <div class="criteria-item">
+                            <label>
+                                <i class="fas fa-wheelchair"></i>
+                                Accessibilité
+                            </label>
+                            <div class="stars-rating" data-criteria="accessibility">
+                                <i class="far fa-star" data-value="1"></i>
+                                <i class="far fa-star" data-value="2"></i>
+                                <i class="far fa-star" data-value="3"></i>
+                                <i class="far fa-star" data-value="4"></i>
+                                <i class="far fa-star" data-value="5"></i>
+                                <input type="hidden" name="accessibility" id="accessibility" value="3">
+                            </div>
+                            <div class="criteria-description">Facilité d'accès physique et numérique</div>
+                        </div>
+                        
+                        <!-- Accueil -->
+                        <div class="criteria-item">
+                            <label>
+                                <i class="fas fa-handshake"></i>
+                                Accueil
+                            </label>
+                            <div class="stars-rating" data-criteria="welcome">
+                                <i class="far fa-star" data-value="1"></i>
+                                <i class="far fa-star" data-value="2"></i>
+                                <i class="far fa-star" data-value="3"></i>
+                                <i class="far fa-star" data-value="4"></i>
+                                <i class="far fa-star" data-value="5"></i>
+                                <input type="hidden" name="welcome" id="welcome" value="3">
+                            </div>
+                            <div class="criteria-description">Courtoisie et professionnalisme du personnel</div>
+                        </div>
+                        
+                        <!-- Efficacité -->
+                        <div class="criteria-item">
+                            <label>
+                                <i class="fas fa-bolt"></i>
+                                Efficacité
+                            </label>
+                            <div class="stars-rating" data-criteria="efficiency">
+                                <i class="far fa-star" data-value="1"></i>
+                                <i class="far fa-star" data-value="2"></i>
+                                <i class="far fa-star" data-value="3"></i>
+                                <i class="far fa-star" data-value="4"></i>
+                                <i class="far fa-star" data-value="5"></i>
+                                <input type="hidden" name="efficiency" id="efficiency" value="3">
+                            </div>
+                            <div class="criteria-description">Rapidité et qualité du traitement</div>
+                        </div>
+                        
+                        <!-- Transparence -->
+                        <div class="criteria-item">
+                            <label>
+                                <i class="fas fa-eye"></i>
+                                Transparence
+                            </label>
+                            <div class="stars-rating" data-criteria="transparency">
+                                <i class="far fa-star" data-value="1"></i>
+                                <i class="far fa-star" data-value="2"></i>
+                                <i class="far fa-star" data-value="3"></i>
+                                <i class="far fa-star" data-value="4"></i>
+                                <i class="far fa-star" data-value="5"></i>
+                                <input type="hidden" name="transparency" id="transparency" value="3">
+                            </div>
+                            <div class="criteria-description">Clarté des procédures et informations</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="comment">
+                            <i class="fas fa-comment"></i>
+                            Commentaire (optionnel)
+                        </label>
+                        <textarea 
+                            class="form-textarea" 
+                            id="comment" 
+                            name="comment"
+                            rows="3" 
+                            placeholder="Partagez votre expérience détaillée avec ce service..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit-rating">
+                        <i class="fas fa-paper-plane"></i>
+                        Soumettre ma notation
+                    </button>
+                </form>
+            </div>
+
+            <!-- RÉSULTATS DES NOTATIONS -->
+            <div class="rating-results-card">
+                <div class="rating-results-header">
+                    <h3>
+                        <i class="fas fa-chart-bar"></i>
+                        Résultats des notations citoyennes
+                    </h3>
+                    <p>Découvrez ce que pensent les autres citoyens des services publics</p>
+                </div>
+                
+                <div class="rating-results-grid">
+                    <!-- Statistiques Globales -->
+                    <div class="rating-results-card">
+                        <h4><i class="fas fa-chart-pie"></i> Statistiques Globales</h4>
+                        <div class="stats-overview-grid">
+                            <div class="stat-item-card">
+                                <div class="stat-value-card" id="totalVotes">0</div>
+                                <div class="stat-label-card">Votes totaux</div>
+                            </div>
+                            <div class="stat-item-card">
+                                <div class="stat-value-card" id="totalServices">0</div>
+                                <div class="stat-label-card">Services évalués</div>
+                            </div>
+                            <div class="stat-item-card">
+                                <div class="stat-value-card" id="avgRating">0.0</div>
+                                <div class="stat-label-card">Note moyenne</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dernières Notations -->
+                    <div class="rating-results-card">
+                        <h4><i class="fas fa-history"></i> Dernières Notations</h4>
+                        <div id="recentRatings" class="recent-ratings">
+                            <div class="loading-state">
+                                <div class="spinner"></div>
+                                <p>Chargement...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Meilleurs Services -->
+                    <div class="rating-results-card">
+                        <h4><i class="fas fa-trophy"></i> Meilleurs Services</h4>
+                        <div id="topServices" class="top-services-grid">
+                            <div class="loading-state">
+                                <div class="spinner"></div>
+                                <p>Chargement...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Données des services (cachées dans le HTML) -->
+    <div id="services-data" style="display: none;">
+        <!-- Santé & Hôpitaux -->
+        <div data-category="sante">
+            <option value="Hôpital public">Hôpital public</option>
+            <option value="Centre hospitalier régional">Centre hospitalier régional</option>
+            <option value="Centre de santé">Centre de santé</option>
+            <option value="Pharmacie publique (SEN-Pharmacie)">Pharmacie publique (SEN-Pharmacie)</option>
+            <option value="SAMU (Service d'Assistance Médicale Urgente)">SAMU (Service d'Assistance Médicale Urgente)</option>
+            <option value="Centre national de Transfusion sanguine">Centre national de Transfusion sanguine</option>
+            <option value="Centre national d'Oncologie">Centre national d'Oncologie</option>
+            <option value="Laboratoire d'analyses médicales public">Laboratoire d'analyses médicales public</option>
+            <option value="Centre psychiatrique">Centre psychiatrique</option>
+            <option value="Service de Protection maternelle et infantile">Service de Protection maternelle et infantile</option>
+        </div>
+        
+        <!-- Éducation & Formation -->
+        <div data-category="education">
+            <option value="École publique (élémentaire)">École publique (élémentaire)</option>
+            <option value="Collège public">Collège public</option>
+            <option value="Lycée public">Lycée public</option>
+            <option value="Université publique (UCAD, UGB, etc.)">Université publique (UCAD, UGB, etc.)</option>
+            <option value="Institut Islamique de Dakar">Institut Islamique de Dakar</option>
+            <option value="École nationale d'Administration (ENA)">École nationale d'Administration (ENA)</option>
+            <option value="Centre de Formation judiciaire">Centre de Formation judiciaire</option>
+            <option value="École nationale de Cybersécurité">École nationale de Cybersécurité</option>
+            <option value="Centre régional des Œuvres universitaires">Centre régional des Œuvres universitaires</option>
+            <option value="Inspection d'Académie">Inspection d'Académie</option>
+        </div>
+        
+        <!-- Sécurité & Défense -->
+        <div data-category="securite">
+            <option value="Commissariat de police">Commissariat de police</option>
+            <option value="Brigade de gendarmerie">Brigade de gendarmerie</option>
+            <option value="Police judiciaire (PJ)">Police judiciaire (PJ)</option>
+            <option value="Police routière">Police routière</option>
+            <option value="Sapeurs-pompiers / Protection civile">Sapeurs-pompiers / Protection civile</option>
+            <option value="Douanes (poste frontalier)">Douanes (poste frontalier)</option>
+            <option value="Direction de la Surveillance du Territoire">Direction de la Surveillance du Territoire</option>
+            <option value="Centre national de coordination des alertes">Centre national de coordination des alertes</option>
+            <option value="Administration pénitentiaire">Administration pénitentiaire</option>
+            <option value="Brigade nationale des sapeurs-pompiers">Brigade nationale des sapeurs-pompiers</option>
+        </div>
+        
+        <!-- Justice & Droit -->
+        <div data-category="justice">
+            <option value="Tribunal (civil, pénal, commerce)">Tribunal (civil, pénal, commerce)</option>
+            <option value="Maison de justice">Maison de justice</option>
+            <option value="Centre national des Archives judiciaires">Centre national des Archives judiciaires</option>
+            <option value="Médiateur de la République">Médiateur de la République</option>
+            <option value="Commission nationale des Droits de l'Homme">Commission nationale des Droits de l'Homme</option>
+            <option value="Commission de Protection des Données Personnelles">Commission de Protection des Données Personnelles</option>
+            <option value="Direction de la Justice de Proximité">Direction de la Justice de Proximité</option>
+            <option value="Service d'aide juridictionnelle">Service d'aide juridictionnelle</option>
+        </div>
+        
+        <!-- Administration & État Civil -->
+        <div data-category="administration">
+            <option value="Mairie">Mairie</option>
+            <option value="Préfecture / Sous-préfecture">Préfecture / Sous-préfecture</option>
+            <option value="Service d'état civil (naissance, mariage)">Service d'état civil (naissance, mariage)</option>
+            <option value="Agence nationale de l'état civil">Agence nationale de l'état civil</option>
+            <option value="Archives du Sénégal">Archives du Sénégal</option>
+            <option value="Imprimerie nationale">Imprimerie nationale</option>
+            <option value="Direction générale de l'Administration territoriale">Direction générale de l'Administration territoriale</option>
+            <option value="Service du Protocole d'État">Service du Protocole d'État</option>
+        </div>
+        
+        <!-- Finances & Impôts -->
+        <div data-category="finances">
+            <option value="Trésor public (Trésorerie régionale)">Trésor public (Trésorerie régionale)</option>
+            <option value="Centre des Impôts (DGID)">Centre des Impôts (DGID)</option>
+            <option value="Douanes (dédouanement)">Douanes (dédouanement)</option>
+            <option value="Caisse des Dépôts et Consignations">Caisse des Dépôts et Consignations</option>
+            <option value="Banque agricole">Banque agricole</option>
+            <option value="Banque de l'Habitat du Sénégal">Banque de l'Habitat du Sénégal</option>
+            <option value="Office de recouvrement">Office de recouvrement</option>
+            <option value="Direction générale du Budget">Direction générale du Budget</option>
+        </div>
+        
+        <!-- Transports & Mobilité -->
+        <div data-category="transports">
+            <option value="Transport urbain (Dakar Dem Dikk)">Transport urbain (Dakar Dem Dikk)</option>
+            <option value="Train Express Régional (TER)">Train Express Régional (TER)</option>
+            <option value="Chemins de Fer du Sénégal">Chemins de Fer du Sénégal</option>
+            <option value="Aéroport international Blaise Diagne">Aéroport international Blaise Diagne</option>
+            <option value="Port autonome de Dakar">Port autonome de Dakar</option>
+            <option value="Agence nationale de Sécurité routière">Agence nationale de Sécurité routière</option>
+            <option value="Direction des Transports routiers">Direction des Transports routiers</option>
+            <option value="Société nationale Autoroutes du Sénégal">Société nationale Autoroutes du Sénégal</option>
+        </div>
+        
+        <!-- Énergie & Eau -->
+        <div data-category="energie">
+            <option value="SENELEC (bureau clientèle)">SENELEC (bureau clientèle)</option>
+            <option value="Société nationale des Eaux du Sénégal">Société nationale des Eaux du Sénégal</option>
+            <option value="SDE (Sénégal des Eaux)">SDE (Sénégal des Eaux)</option>
+            <option value="Agence sénégalaise de l'Électrification rurale">Agence sénégalaise de l'Électrification rurale</option>
+            <option value="Office national des Forages ruraux">Office national des Forages ruraux</option>
+            <option value="Office national de l'Assainissement">Office national de l'Assainissement</option>
+            <option value="Commission de Régulation du Secteur de l'Énergie">Commission de Régulation du Secteur de l'Énergie</option>
+        </div>
+        
+        <!-- Communication & Numérique -->
+        <div data-category="communication">
+            <option value="SONATEL (agence)">SONATEL (agence)</option>
+            <option value="La Poste (bureau de poste)">La Poste (bureau de poste)</option>
+            <option value="RTS (Radiodiffusion Télévision Sénégalaise)">RTS (Radiodiffusion Télévision Sénégalaise)</option>
+            <option value="Agence de Presse Sénégalaise (APS)">Agence de Presse Sénégalaise (APS)</option>
+            <option value="Maison de la Presse Babacar TOURE">Maison de la Presse Babacar TOURE</option>
+            <option value="Autorité de Régulation des Télécoms (ARTP)">Autorité de Régulation des Télécoms (ARTP)</option>
+            <option value="Sénégal Numérique SA">Sénégal Numérique SA</option>
+        </div>
+        
+        <!-- Action Sociale & Solidarité -->
+        <div data-category="social">
+            <option value="Commissariat à la Sécurité alimentaire">Commissariat à la Sécurité alimentaire</option>
+            <option value="Agence de Couverture sanitaire universelle">Agence de Couverture sanitaire universelle</option>
+            <option value="Fonds national de l'Entreprenariat féminin">Fonds national de l'Entreprenariat féminin</option>
+            <option value="Office national des Pupilles de la Nation">Office national des Pupilles de la Nation</option>
+            <option value="Centre d'accueil pour enfants">Centre d'accueil pour enfants</option>
+            <option value="Direction de l'Action sociale">Direction de l'Action sociale</option>
+            <option value="Service national d'Hygiène">Service national d'Hygiène</option>
+        </div>
+        
+        <!-- Emploi & Formation Pro -->
+        <div data-category="emploi">
+            <option value="ANPEJ (Promotion de l'Emploi des Jeunes)">ANPEJ (Promotion de l'Emploi des Jeunes)</option>
+            <option value="Office national de Formation professionnelle">Office national de Formation professionnelle</option>
+            <option value="Centre de formation professionnelle">Centre de formation professionnelle</option>
+            <option value="Centre national de Qualification professionnelle">Centre national de Qualification professionnelle</option>
+            <option value="Direction de l'Emploi">Direction de l'Emploi</option>
+            <option value="Service d'orientation professionnelle">Service d'orientation professionnelle</option>
+        </div>
+        
+        <!-- Environnement & Cadre de Vie -->
+        <div data-category="environnement">
+            <option value="Direction des Eaux et Forêts">Direction des Eaux et Forêts</option>
+            <option value="Parc national">Parc national</option>
+            <option value="Agence de la Reforestation et Grande Muraille verte">Agence de la Reforestation et Grande Muraille verte</option>
+            <option value="Centre de Suivi écologique">Centre de Suivi écologique</option>
+            <option value="Service de collecte des ordures (SONAGED)">Service de collecte des ordures (SONAGED)</option>
+            <option value="Direction de la Propreté et Hygiène publique">Direction de la Propreté et Hygiène publique</option>
+            <option value="Commission nationale de Gestion des Produits Chimiques">Commission nationale de Gestion des Produits Chimiques</option>
+        </div>
+        
+        <!-- Culture & Tourisme -->
+        <div data-category="culture">
+            <option value="Musée des Civilisations Noires">Musée des Civilisations Noires</option>
+            <option value="Bibliothèque nationale du Sénégal">Bibliothèque nationale du Sénégal</option>
+            <option value="Grand Théâtre National">Grand Théâtre National</option>
+            <option value="Agence sénégalaise de Promotion touristique">Agence sénégalaise de Promotion touristique</option>
+            <option value="Centre culturel régional">Centre culturel régional</option>
+            <option value="Monument de la Renaissance africaine">Monument de la Renaissance africaine</option>
+            <option value="Musée Boribana">Musée Boribana</option>
+        </div>
+        
+        <!-- Autre Service Public -->
+        <div data-category="autre">
+            <option value="Service agricole / vétérinaire">Service agricole / vétérinaire</option>
+            <option value="Haras national">Haras national</option>
+            <option value="Station piscicole">Station piscicole</option>
+            <option value="Institut de Recherches agricoles">Institut de Recherches agricoles</option>
+            <option value="Service de l'Urbanisme">Service de l'Urbanisme</option>
+            <option value="Société nationale des HLM">Société nationale des HLM</option>
+            <option value="Service des Sports et Jeunesse">Service des Sports et Jeunesse</option>
+            <option value="Autre (précisez en commentaire)">Autre (précisez en commentaire)</option>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-flag"></i>
+                        </div>
+                        <div>
+                            <h4>LE PROJET SÉNÉGAL</h4>
+                            <p>Transparence & Redevabilité</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">
+                        Plateforme citoyenne indépendante dédiée au suivi transparent des engagements 
+                        du Projet pour un Sénégal Souverain, Juste et Prospère.
+                    </p>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <div class="footer-links">
+                        <a href="mailto:contact@projetbi.org" class="footer-link">
+                            <i class="fas fa-envelope"></i>
+                            contact@projetbi.org
+                        </a>
+                        <a href="tel:+221769455253" class="footer-link">
+                            <i class="fas fa-phone"></i>
+                            +221 76 945 52 53
+                        </a>
+                        <a href="#" class="footer-link">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Dakar, Sénégal
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Suivez-nous</h4>
+                    <div class="footer-social">
+                        <a href="#" class="social-btn">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-btn">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-btn">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-btn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Liens Utiles</h4>
+                    <div class="footer-links">
+                        <a href="#header" class="footer-link">
+                            <i class="fas fa-home"></i>
+                            Accueil
+                        </a>
+                        <a href="#promises" class="footer-link">
+                            <i class="fas fa-tasks"></i>
+                            Engagements
+                        </a>
+                        <a href="#rating" class="footer-link">
+                            <i class="fas fa-star"></i>
+                            Notation
+                        </a>
+                        <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="footer-link" target="_blank">
+                            <i class="fas fa-book"></i>
+                            Programme PDF
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-divider"></div>
+            
+            <div class="footer-bottom">
+                <div class="footer-about">
+                    <h5>
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Disclaimer
+                    </h5>
+                    <p>
+                        Cette plateforme est indépendante et à but informatif. Les évaluations sont 
+                        basées sur des données publiques vérifiables. Les informations sont mises à 
+                        jour régulièrement pour garantir la transparence démocratique.
+                    </p>
+                </div>
+                
+                <p class="footer-copyright">
+                    Développé avec passion pour la transparence démocratique<br>
+                    © 2026 LE PROJET SÉNÉGAL - Tous droits réservés
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
+
+    <!-- JavaScript -->
+    <script src="app.js"></script>
+    
+    <!-- JavaScript amélioré -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Menu mobile
+        // === MENU MOBILE ===
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navMenu = document.getElementById('navMenu');
         
         if (mobileMenuBtn && navMenu) {
             mobileMenuBtn.addEventListener('click', function() {
                 navMenu.classList.toggle('active');
-                // Animation des barres du burger
                 const spans = this.querySelectorAll('span');
                 if (navMenu.classList.contains('active')) {
                     spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
@@ -734,8 +1758,144 @@
             });
         }
         
-        // Le reste du JavaScript (compte à rebours, etc.) reste inchangé
-        // ... (garder le code JavaScript existant)
+        // === COMPTE À REBOURS ===
+        const targetDate = new Date('April 02, 2029 00:00:00').getTime();
+        
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const timeLeft = targetDate - now;
+            
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            
+            daysEl.textContent = days.toString().padStart(3, '0');
+            hoursEl.textContent = hours.toString().padStart(2, '0');
+            minutesEl.textContent = minutes.toString().padStart(2, '0');
+            secondsEl.textContent = seconds.toString().padStart(2, '0');
+            
+            // Animation des changements
+            if (secondsEl.getAttribute('data-last') !== seconds.toString()) {
+                secondsEl.classList.remove('pulse');
+                void secondsEl.offsetWidth; // Trigger reflow
+                secondsEl.classList.add('pulse');
+            }
+            secondsEl.setAttribute('data-last', seconds.toString());
+            
+            if (timeLeft < 0) {
+                clearInterval(countdownInterval);
+                daysEl.textContent = '000';
+                hoursEl.textContent = '00';
+                minutesEl.textContent = '00';
+                secondsEl.textContent = '00';
+                
+                const targetElement = document.querySelector('.countdown-target');
+                if (targetElement) {
+                    targetElement.innerHTML = '<strong>⚠️ Délai des engagements atteint</strong>';
+                    targetElement.style.color = '#e74c3c';
+                }
+            }
+        }
+        
+        updateCountdown();
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        
+        // === SÉLECTION CONTEXTUELLE DES SERVICES ===
+        const categorySelect = document.getElementById('service-category');
+        const serviceSelect = document.getElementById('service');
+        const servicesData = document.getElementById('services-data');
+        
+        if (categorySelect && serviceSelect && servicesData) {
+            categorySelect.addEventListener('change', function() {
+                const selectedCategory = this.value;
+                
+                serviceSelect.innerHTML = '<option value="">Sélectionnez un service</option>';
+                serviceSelect.disabled = true;
+                
+                if (selectedCategory) {
+                    const categoryServices = servicesData.querySelector(`[data-category="${selectedCategory}"]`);
+                    
+                    if (categoryServices) {
+                        serviceSelect.disabled = false;
+                        serviceSelect.innerHTML = '<option value="">Choisissez un service</option>' + categoryServices.innerHTML;
+                    }
+                }
+            });
+        }
+        
+        // === INITIALISATION DE LA DATE ACTUELLE ===
+        const currentDateElement = document.getElementById('current-date');
+        if (currentDateElement) {
+            const now = new Date();
+            currentDateElement.textContent = now.toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).toUpperCase();
+        }
+        
+        // === NAVIGATION SMOOTH SCROLL ===
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // === SCROLL TO TOP ===
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        if (scrollToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.style.opacity = '1';
+                    scrollToTopBtn.style.visibility = 'visible';
+                } else {
+                    scrollToTopBtn.style.opacity = '0';
+                    scrollToTopBtn.style.visibility = 'hidden';
+                }
+            });
+            
+            scrollToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+        
+        // === ANIMATION AU SCROLL ===
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+        
+        // Observer les sections principales
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
     });
     </script>
 </body>

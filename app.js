@@ -632,6 +632,10 @@ async function loadPressData() {
 }
 
 // Fonction séparée pour charger les actualités
+// ==========================================
+// CHARGEMENT DES ACTUALITÉS - VERSION AMÉLIORÉE
+// ==========================================
+
 async function loadNewsData() {
     try {
         console.log('📰 Chargement des actualités...');
@@ -639,69 +643,275 @@ async function loadNewsData() {
         
         if (!newsResponse.ok) {
             console.warn('Fichier news.json non trouvé - données de démonstration');
-            CONFIG.news = [
-                { 
-                    id: '1', 
-                    title: 'Lancement officiel de la plateforme', 
-                    excerpt: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle.', 
-                    date: '25/01/2026', 
-                    source: 'Le Soleil', 
-                    image: 'school' 
-                },
-                { 
-                    id: '2', 
-                    title: 'Première école numérique inaugurée', 
-                    excerpt: 'Le gouvernement a inauguré la première école entièrement numérique à Dakar.', 
-                    date: '20/01/2026', 
-                    source: 'Sud Quotidien', 
-                    image: 'school' 
-                },
-                { 
-                    id: '3', 
-                    title: 'Budget 2026 axé sur la relance économique', 
-                    excerpt: 'Le budget de l\'État pour 2026 prévoit d\'importants investissements dans les infrastructures.', 
-                    date: '15/01/2026', 
-                    source: 'WalFadjri', 
-                    image: 'money' 
-                }
-            ];
+            CONFIG.news = getDefaultNewsData();
             return;
         }
         
         const newsData = await newsResponse.json();
         
         if (newsData && Array.isArray(newsData.news)) {
-            CONFIG.news = newsData.news;
+            CONFIG.news = newsData.news.map(item => ({
+                id: item.id || Date.now().toString() + Math.random().toString(36).substr(2, 9),
+                title: item.title || 'Sans titre',
+                excerpt: item.excerpt || 'Pas de description',
+                date: item.date || new Date().toLocaleDateString('fr-FR'),
+                source: item.source || 'Source inconnue',
+                category: item.category || 'general',
+                image: item.image || 'news',
+                image_url: item.image_url || null, // Nouveau : URL d'image personnalisée
+                link: item.link || '#',
+                content: item.content || item.excerpt || 'Contenu non disponible', // Contenu détaillé
+                author: item.author || 'Rédaction',
+                read_time: item.read_time || '3 min'
+            }));
             console.log(`✅ ${CONFIG.news.length} actualités chargées depuis news.json`);
         } else {
             console.warn('Format news.json invalide - données par défaut');
-            CONFIG.news = [
-                { 
-                    id: '1', 
-                    title: 'Lancement officiel de la plateforme', 
-                    excerpt: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle.', 
-                    date: '25/01/2026', 
-                    source: 'Le Soleil', 
-                    image: 'school' 
-                }
-            ];
+            CONFIG.news = getDefaultNewsData();
         }
         
     } catch (newsError) {
         console.error('❌ Erreur chargement actualités:', newsError);
-        CONFIG.news = [
-            { 
-                id: '1', 
-                title: 'Lancement officiel de la plateforme', 
-                excerpt: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle.', 
-                date: '25/01/2026', 
-                source: 'Le Soleil', 
-                image: 'school' 
-            }
-        ];
+        CONFIG.news = getDefaultNewsData();
     }
 }
 
+function getDefaultNewsData() {
+    return [
+        { 
+            id: '1', 
+            title: 'Lancement officiel de la plateforme', 
+            excerpt: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle.', 
+            date: '25/01/2026', 
+            source: 'Le Soleil', 
+            category: 'gouvernance',
+            image: 'flag',
+            link: '#',
+            content: 'La plateforme citoyenne de suivi des engagements présidentiels a été officiellement lancée ce lundi. Cet outil numérique permet aux citoyens de suivre en temps réel la progression des promesses électorales.',
+            author: 'Rédaction',
+            read_time: '3 min'
+        }
+    ];
+}
+
+// ==========================================
+// RENDU DES ACTUALITÉS - VERSION AMÉLIORÉE
+// ==========================================
+
+function renderNews(news) {
+    const grid = document.getElementById('newsGrid');
+    if (!grid) return;
+    
+    grid.innerHTML = news.map(item => {
+        const iconMap = {
+            'school': 'fa-school',
+            'flag': 'fa-flag',
+            'money': 'fa-money-bill-wave',
+            'hospital': 'fa-hospital',
+            'road': 'fa-road',
+            'users': 'fa-users',
+            'chart': 'fa-chart-line',
+            'graduation': 'fa-graduation-cap',
+            'home': 'fa-home',
+            'news': 'fa-newspaper',
+            'inauguration': 'fa-building',
+            'budget': 'fa-coins'
+        };
+        
+        const categoryMap = {
+            'general': 'Général',
+            'education': 'Éducation',
+            'sante': 'Santé',
+            'economie': 'Économie',
+            'infrastructures': 'Infrastructures',
+            'gouvernance': 'Gouvernance',
+            'transparence': 'Transparence',
+            'autres': 'Autres'
+        };
+        
+        const icon = iconMap[item.image] || 'fa-newspaper';
+        const categoryLabel = categoryMap[item.category] || 'Général';
+        
+        return `
+            <article class="news-card" data-id="${item.id}">
+                ${item.image_url ? `
+                    <div class="news-image-real">
+                        <img src="${item.image_url}" alt="${item.title}" 
+                             onerror="this.onerror=null; this.src='https://picsum.photos/400/250?random=${item.id}'">
+                    </div>
+                ` : `
+                    <div class="news-icon">
+                        <i class="fas ${icon} fa-3x"></i>
+                    </div>
+                `}
+                <div class="news-content">
+                    <div class="news-meta">
+                        <span class="news-category">${categoryLabel}</span>
+                        <span class="news-date">${item.date}</span>
+                    </div>
+                    <h3>${item.title}</h3>
+                    <p class="news-excerpt">${item.excerpt}</p>
+                    <div class="news-footer">
+                        <span><i class="fas fa-newspaper"></i> ${item.source}</span>
+                        <span><i class="fas fa-clock"></i> ${item.read_time}</span>
+                        ${item.link !== '#' ? `
+                            <a href="${item.link}" target="_blank" class="news-link">
+                                <i class="fas fa-external-link-alt"></i> Lire
+                            </a>
+                        ` : `
+                            <button class="news-read-more" onclick="openNewsDetail('${item.id}')">
+                                <i class="fas fa-book-open"></i> Lire la suite
+                            </button>
+                        `}
+                    </div>
+                </div>
+            </article>
+        `;
+    }).join('');
+}
+
+// ==========================================
+// MODAL DÉTAIL ACTUALITÉ
+// ==========================================
+
+function openNewsDetail(newsId) {
+    const newsItem = CONFIG.news.find(item => item.id === newsId);
+    if (!newsItem) return;
+    
+    // Créer le modal
+    const modal = document.createElement('div');
+    modal.className = 'news-detail-modal';
+    modal.id = 'newsDetailModal';
+    
+    const iconMap = {
+        'school': 'fa-school',
+        'flag': 'fa-flag',
+        'money': 'fa-money-bill-wave',
+        'hospital': 'fa-hospital',
+        'road': 'fa-road',
+        'users': 'fa-users',
+        'chart': 'fa-chart-line',
+        'graduation': 'fa-graduation-cap',
+        'home': 'fa-home',
+        'news': 'fa-newspaper',
+        'inauguration': 'fa-building',
+        'budget': 'fa-coins'
+    };
+    
+    const icon = iconMap[newsItem.image] || 'fa-newspaper';
+    
+    modal.innerHTML = `
+        <div class="news-detail-content">
+            <div class="news-detail-header">
+                <h2>${newsItem.title}</h2>
+                <button class="close-news-modal" onclick="closeNewsDetail()">&times;</button>
+            </div>
+            
+            <div class="news-detail-body">
+                <div class="news-detail-meta">
+                    <div class="news-detail-source">
+                        <i class="fas fa-newspaper"></i>
+                        <span>${newsItem.source}</span>
+                    </div>
+                    <div class="news-detail-date">
+                        <i class="fas fa-calendar"></i>
+                        <span>${newsItem.date}</span>
+                    </div>
+                    <div class="news-detail-author">
+                        <i class="fas fa-user-edit"></i>
+                        <span>${newsItem.author}</span>
+                    </div>
+                    <div class="news-detail-time">
+                        <i class="fas fa-clock"></i>
+                        <span>${newsItem.read_time} de lecture</span>
+                    </div>
+                </div>
+                
+                ${newsItem.image_url ? `
+                    <div class="news-detail-image">
+                        <img src="${newsItem.image_url}" alt="${newsItem.title}">
+                    </div>
+                ` : `
+                    <div class="news-detail-icon">
+                        <i class="fas ${icon} fa-4x"></i>
+                    </div>
+                `}
+                
+                <div class="news-detail-excerpt">
+                    <h3>Résumé</h3>
+                    <p>${newsItem.excerpt}</p>
+                </div>
+                
+                <div class="news-detail-content-text">
+                    <h3>Article complet</h3>
+                    <p>${newsItem.content}</p>
+                </div>
+                
+                ${newsItem.link !== '#' ? `
+                    <div class="news-detail-link">
+                        <a href="${newsItem.link}" target="_blank" class="btn-external-link">
+                            <i class="fas fa-external-link-alt"></i>
+                            Lire l'article original sur ${newsItem.source}
+                        </a>
+                    </div>
+                ` : ''}
+            </div>
+            
+            <div class="news-detail-footer">
+                <button class="btn-share-news" onclick="shareNews('${newsItem.id}')">
+                    <i class="fas fa-share-alt"></i>
+                    Partager cette actualité
+                </button>
+                <button class="btn-close-news" onclick="closeNewsDetail()">
+                    <i class="fas fa-times"></i>
+                    Fermer
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeNewsDetail() {
+    const modal = document.getElementById('newsDetailModal');
+    if (modal) {
+        modal.style.animation = 'fadeOut 0.3s ease forwards';
+        setTimeout(() => {
+            modal.remove();
+            document.body.style.overflow = 'auto';
+        }, 300);
+    }
+}
+
+function shareNews(newsId) {
+    const newsItem = CONFIG.news.find(item => item.id === newsId);
+    if (!newsItem) return;
+    
+    const text = `📰 "${newsItem.title}" - ${newsItem.excerpt.substring(0, 100)}...`;
+    const url = window.location.origin + window.location.pathname;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: newsItem.title,
+            text: text,
+            url: url
+        });
+    } else {
+        const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+        window.open(shareUrl, '_blank');
+    }
+}
+
+// ==========================================
+// AJOUT AUX FONCTIONS GLOBALES
+// ==========================================
+
+window.openNewsDetail = openNewsDetail;
+window.closeNewsDetail = closeNewsDetail;
+window.shareNews = shareNews;
 // ==========================================
 // CORRECTION DES FONCTIONS UTILISANT localStorage
 // ==========================================

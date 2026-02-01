@@ -1674,6 +1674,14 @@ const DEFAULT_PRESS = [
         image: 'revuedepresse/record.jpg',
         logo: 'images/logos/record.png',
         link: '#'
+    },
+    {
+        id: '10',
+        title: 'Enquete',
+        date: '31/01/2024',
+        image: 'revuedepresse/enquete.jpg',
+        logo: 'images/logos/enquete.png',
+        link: '#'
     }
 ];
 
@@ -1730,8 +1738,8 @@ async function checkAvailableNewspapers() {
         'revuedepresse/rewmisport.jpg',
         'revuedepresse/soloquotidien.jpg',
         'revuedepresse/yooryoor.jpg',
-        'revuedepresse/record.jpg'
-         'revuedepresse/enquete.jpg'
+        'revuedepresse/record.jpg',
+        'revuedepresse/enquete.jpg'
     ];
     
     // Vérifier quels fichiers existent réellement

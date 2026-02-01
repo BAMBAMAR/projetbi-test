@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -346,6 +347,118 @@
         max-width: 500px;
     }
 
+    /* ===== ÉLÉMENTS SUPERPOSÉS ===== */
+    .header-overlay-elements {
+        position: relative;
+        margin-top: 2rem;
+        max-width: 600px;
+    }
+
+    .date-ref-container {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 0.8rem 1.2rem;
+        border-radius: 50px;
+        border: 1px solid rgba(42, 109, 93, 0.15);
+        box-shadow: var(--shadow);
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    .date-ref-container i {
+        color: var(--primary-color);
+        font-size: 1rem;
+    }
+
+    .date-ref-label {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .date-ref-value {
+        font-size: 0.95rem;
+        color: var(--primary-color);
+        font-weight: 700;
+        margin-left: 0.3rem;
+    }
+
+    .pdf-download-container {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: var(--white);
+        padding: 0.9rem 1.8rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: var(--transition);
+        box-shadow: 0 4px 15px rgba(42, 109, 93, 0.3);
+        border: none;
+        cursor: pointer;
+        margin-left: -1.5rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .pdf-download-container:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 8px 25px rgba(42, 109, 93, 0.4);
+        background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    }
+
+    .pdf-download-container i {
+        font-size: 1.1rem;
+    }
+
+    .kpi-overlay-container {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: var(--border-radius);
+        padding: 1.2rem 1.5rem;
+        box-shadow: var(--shadow-hover);
+        border: 1px solid rgba(42, 109, 93, 0.15);
+        min-width: 140px;
+        text-align: center;
+        z-index: 3;
+    }
+
+    .kpi-overlay-value {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: var(--primary-color);
+        line-height: 1;
+        margin-bottom: 0.3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .kpi-overlay-label {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .kpi-trend {
+        color: var(--secondary-color);
+        font-size: 1.2rem;
+        animation: pulse 2s infinite;
+    }
+
     /* ===== COMPTE À REBOURS REDIMENSIONNÉ ===== */
     .countdown-container {
         background: var(--white);
@@ -426,73 +539,6 @@
         font-weight: 700;
     }
 
-    /* ===== BOUTON PDF STYLÉ ===== */
-    .btn-program {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        color: var(--white);
-        padding: 0.9rem 1.8rem;
-        border-radius: 50px;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.95rem;
-        transition: var(--transition);
-        box-shadow: 0 4px 15px rgba(42, 109, 93, 0.3);
-        border: none;
-        cursor: pointer;
-        margin-top: 1rem;
-    }
-
-    .btn-program:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(42, 109, 93, 0.4);
-        background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-    }
-
-    .btn-program i {
-        font-size: 1.1rem;
-    }
-
-    /* ===== KPI CAROUSEL ===== */
-    .header-actions {
-        margin-top: 2rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-
-    .kpi-carousel-container {
-        background: var(--white);
-        border-radius: 15px;
-        padding: 1rem;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-        border: 1px solid rgba(42, 109, 93, 0.1);
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .kpi-nav-btn {
-        background: rgba(42, 109, 93, 0.1);
-        border: none;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        color: var(--primary-color);
-        transition: var(--transition);
-    }
-
-    .kpi-nav-btn:hover {
-        background: rgba(42, 109, 93, 0.2);
-        transform: scale(1.1);
-    }
-
     /* ===== SECTIONS GÉNÉRALES ===== */
     .section-header-modern {
         display: flex;
@@ -544,6 +590,19 @@
         
         .countdown-container {
             margin: 2rem auto;
+        }
+        
+        .kpi-overlay-container {
+            position: relative;
+            right: auto;
+            top: auto;
+            transform: none;
+            margin-top: 1.5rem;
+            display: inline-block;
+        }
+        
+        .header-overlay-elements {
+            text-align: center;
         }
     }
 
@@ -597,6 +656,22 @@
         .section-title {
             font-size: 1.6rem;
         }
+        
+        .date-ref-container {
+            display: block;
+            margin-bottom: 0.8rem;
+        }
+        
+        .pdf-download-container {
+            margin-left: 0;
+            display: block;
+        }
+        
+        .header-overlay-elements {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
     }
 
     @media (max-width: 480px) {
@@ -625,9 +700,18 @@
             font-size: 1.5rem;
         }
         
-        .btn-program {
+        .pdf-download-container {
             padding: 0.8rem 1.5rem;
             font-size: 0.85rem;
+        }
+        
+        .kpi-overlay-container {
+            padding: 1rem;
+            min-width: 120px;
+        }
+        
+        .kpi-overlay-value {
+            font-size: 1.8rem;
         }
         
         .container {
@@ -642,9 +726,14 @@
     }
 
     @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-        100% { transform: scale(1); }
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.1); opacity: 0.8; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateX(-20px); }
+        to { opacity: 1; transform: translateX(0); }
     }
 
     .fade-in {
@@ -653,6 +742,10 @@
 
     .pulse {
         animation: pulse 0.5s ease;
+    }
+
+    .slide-in {
+        animation: slideIn 0.5s ease-out;
     }
     </style>
 </head>
@@ -727,6 +820,30 @@
                     de leur réalisation.
                 </p>
                 
+                <!-- Éléments superposés -->
+                <div class="header-overlay-elements">
+                    <!-- Date de référence et PDF -->
+                    <div class="date-ref-container slide-in">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span class="date-ref-label">Date de référence :</span>
+                        <span class="date-ref-value">1 FÉVRIER 2026</span>
+                    </div>
+                    
+                    <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" 
+                       class="pdf-download-container slide-in" 
+                       download target="_blank">
+                        <i class="fas fa-download"></i> Télécharger le Programme Complet (PDF)
+                    </a>
+                    
+                    <!-- KPI superposé -->
+                    <div class="kpi-overlay-container fade-in">
+                        <div class="kpi-overlay-value">
+                            <span class="kpi-trend">📈</span>7%
+                        </div>
+                        <div class="kpi-overlay-label">Taux Réalisation</div>
+                    </div>
+                </div>
+                
                 <!-- Compte à rebours redimensionné -->
                 <div class="countdown-container">
                     <div class="countdown-badge">
@@ -753,38 +870,6 @@
                     </div>
                     <div class="countdown-target">
                         Date butoir : <strong>02 AVRIL 2029</strong>
-                    </div>
-                </div>
-                
-                <div class="ref-badge">
-                    <i class="fas fa-calendar-alt"></i>
-                    Date de référence : <span id="current-date">2 AVRIL 2024</span>
-                    
-                    <!-- Programme PDF stylé -->
-                    <div class="header-actions">
-                        <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" 
-                           class="btn-program" 
-                           download target="_blank">
-                            <i class="fas fa-download"></i> Télécharger le Programme Complet (PDF)
-                        </a>
-                        
-                        <div class="kpi-carousel-container">
-                            <button id="kpiPrev" class="kpi-nav-btn" title="Précédent">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <div id="kpiCarousel" class="kpi-content">
-                                <div class="kpi-item">
-                                    <div class="kpi-value">75%</div>
-                                    <div class="kpi-label">Satisfaction citoyenne</div>
-                                </div>
-                            </div>
-                            <button id="kpiNext" class="kpi-nav-btn" title="Suivant">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                            <button id="kpiAutoPlayToggle" class="kpi-nav-btn" title="Lecture automatique">
-                                <i class="fas fa-pause"></i>
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>

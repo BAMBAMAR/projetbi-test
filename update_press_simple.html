@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mise à jour Presse - Projet Sénégal</title>
+    <title>Mise à jour Presse & Actualités - Projet Sénégal</title>
     <style>
         * {
             box-sizing: border-box;
@@ -21,7 +21,7 @@
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
@@ -41,6 +41,12 @@
             margin-bottom: 10px;
         }
         
+        header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
         header .date {
             font-size: 1.1rem;
             opacity: 0.9;
@@ -50,26 +56,76 @@
             padding: 30px;
         }
         
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            background: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .tab-btn:hover {
+            background: rgba(0, 105, 92, 0.1);
+        }
+        
+        .tab-btn.active {
+            background: #00695c;
+            color: white;
+            border-bottom: 3px solid #ff6f3c;
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
         .files-section {
             background: #f8f9fa;
             border-radius: 10px;
-            padding: 20px;
+            padding: 25px;
             margin-bottom: 30px;
             border-left: 4px solid #00695c;
         }
         
         .files-section h3 {
             color: #00695c;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 1.3rem;
         }
         
         .files-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 15px;
+            margin-bottom: 20px;
         }
         
         .file-item {
@@ -78,6 +134,7 @@
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             transition: transform 0.2s;
+            border: 1px solid #e0e0e0;
         }
         
         .file-item:hover {
@@ -89,6 +146,14 @@
             font-family: monospace;
             color: #00695c;
             font-weight: 500;
+            font-size: 0.9rem;
+            word-break: break-all;
+        }
+        
+        .file-size {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 5px;
         }
         
         .controls {
@@ -96,6 +161,10 @@
             gap: 15px;
             flex-wrap: wrap;
             margin: 30px 0;
+            padding: 20px;
+            background: #f1f8e9;
+            border-radius: 10px;
+            border: 1px solid #c5e1a5;
         }
         
         .btn {
@@ -111,33 +180,43 @@
             gap: 10px;
         }
         
-        .btn-generate {
+        .btn-primary {
             background: #2196F3;
             color: white;
         }
         
-        .btn-generate:hover {
+        .btn-primary:hover {
             background: #1976D2;
             transform: translateY(-2px);
         }
         
-        .btn-download {
+        .btn-success {
             background: #4CAF50;
             color: white;
         }
         
-        .btn-download:hover {
+        .btn-success:hover {
             background: #388E3C;
             transform: translateY(-2px);
         }
         
-        .btn-copy {
+        .btn-warning {
             background: #FF9800;
             color: white;
         }
         
-        .btn-copy:hover {
+        .btn-warning:hover {
             background: #F57C00;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #757575;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #616161;
             transform: translateY(-2px);
         }
         
@@ -154,6 +233,9 @@
             padding: 15px 20px;
             margin: 0;
             font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         textarea {
@@ -173,13 +255,14 @@
             background: #FFF3CD;
             border: 1px solid #FFEAA7;
             border-radius: 10px;
-            padding: 20px;
+            padding: 25px;
             margin-top: 30px;
         }
         
         .instructions h3 {
             color: #856404;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
         }
         
         .steps {
@@ -218,6 +301,165 @@
             display: inline-block;
         }
         
+        /* Formulaire pour les actualités */
+        .news-form {
+            background: #fff;
+            border: 2px dashed #4CAF50;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #00695c;
+        }
+        
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #00695c;
+            box-shadow: 0 0 0 2px rgba(0, 105, 92, 0.1);
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .file-upload {
+            border: 2px dashed #2196F3;
+            padding: 30px;
+            text-align: center;
+            border-radius: 8px;
+            background: #E3F2FD;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .file-upload:hover {
+            background: #BBDEFB;
+            border-color: #1976D2;
+        }
+        
+        .file-upload input {
+            display: none;
+        }
+        
+        .file-upload label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .file-upload i {
+            font-size: 2rem;
+            color: #2196F3;
+        }
+        
+        .file-preview {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .news-list {
+            margin-top: 30px;
+        }
+        
+        .news-item {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: transform 0.2s;
+        }
+        
+        .news-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .news-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .news-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #00695c;
+            margin: 0;
+        }
+        
+        .news-date {
+            font-size: 0.9rem;
+            color: #757575;
+            background: #f5f5f5;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+        
+        .news-excerpt {
+            color: #616161;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .news-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #9e9e9e;
+        }
+        
+        .news-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-small {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            border-radius: 4px;
+        }
+        
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -225,6 +467,10 @@
             
             .content {
                 padding: 20px;
+            }
+            
+            .tabs {
+                flex-direction: column;
             }
             
             .files-grid {
@@ -239,62 +485,226 @@
                 width: 100%;
                 justify-content: center;
             }
+            
+            .form-row {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>📰 Générateur Presse Quotidienne</h1>
-            <p class="date">Projet Sénégal - Suivi des engagements</p>
+            <h1>📰 Gestionnaire Presse & Actualités</h1>
+            <p class="subtitle">Projet Sénégal - Suivi des engagements</p>
             <div class="current-date">Date du jour : <strong id="currentDate"></strong></div>
         </header>
         
         <div class="content">
-            <section class="files-section">
-                <h3>📁 Vos fichiers dans <code>revuedepresse/</code></h3>
-                <div class="files-grid" id="filesList">
-                    <!-- Les fichiers seront listés ici -->
-                </div>
-            </section>
-            
-            <div class="controls">
-                <button class="btn btn-generate" onclick="generateJSON()">
-                    🔄 Générer JSON
+            <!-- Onglets -->
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="press">
+                    <i class="fas fa-newspaper"></i>
+                    Revue de Presse
                 </button>
-                <button class="btn btn-download" onclick="downloadJSON()">
-                    💾 Télécharger press.json
-                </button>
-                <button class="btn btn-copy" onclick="copyToClipboard()">
-                    📋 Copier dans presse-papier
+                <button class="tab-btn" data-tab="news">
+                    <i class="fas fa-bullhorn"></i>
+                    Actualités
                 </button>
             </div>
             
-            <section class="json-section">
-                <h3>📄 Résultat JSON :</h3>
-                <textarea id="jsonOutput" readonly></textarea>
-            </section>
+            <!-- Onglet Revue de Presse -->
+            <div id="press-tab" class="tab-content active">
+                <section class="files-section">
+                    <h3>📁 Votre bibliothèque presse</h3>
+                    <div class="files-grid" id="filesList">
+                        <!-- Les fichiers seront listés ici -->
+                    </div>
+                    
+                    <div class="file-upload" onclick="document.getElementById('pressUpload').click()">
+                        <input type="file" id="pressUpload" accept=".jpg,.jpeg,.png" multiple onchange="handlePressUpload(event)">
+                        <label>
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Glissez-déposez ou cliquez pour ajouter des journaux</span>
+                            <small>Formats acceptés: JPG, PNG</small>
+                        </label>
+                    </div>
+                    <div class="file-preview" id="pressPreview"></div>
+                </section>
+                
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="generatePressJSON()">
+                        <i class="fas fa-code"></i>
+                        Générer JSON Presse
+                    </button>
+                    <button class="btn btn-success" onclick="downloadPressJSON()">
+                        <i class="fas fa-download"></i>
+                        Télécharger press.json
+                    </button>
+                    <button class="btn btn-warning" onclick="copyPressToClipboard()">
+                        <i class="fas fa-copy"></i>
+                        Copier JSON Presse
+                    </button>
+                </div>
+                
+                <section class="json-section">
+                    <h3>
+                        <span><i class="fas fa-file-code"></i> Sortie JSON Presse :</span>
+                        <span id="pressCounter">0 journaux</span>
+                    </h3>
+                    <textarea id="pressJsonOutput" readonly></textarea>
+                </section>
+            </div>
+            
+            <!-- Onglet Actualités -->
+            <div id="news-tab" class="tab-content">
+                <div class="news-form">
+                    <h3><i class="fas fa-plus-circle"></i> Ajouter une actualité</h3>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="newsTitle">
+                                <i class="fas fa-heading"></i>
+                                Titre *
+                            </label>
+                            <input type="text" class="form-input" id="newsTitle" placeholder="Titre de l'actualité" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="newsDate">
+                                <i class="fas fa-calendar"></i>
+                                Date *
+                            </label>
+                            <input type="date" class="form-input" id="newsDate" value="" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newsSource">
+                            <i class="fas fa-newspaper"></i>
+                            Source (journal)
+                        </label>
+                        <input type="text" class="form-input" id="newsSource" placeholder="Ex: Le Soleil, Sud Quotidien...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newsExcerpt">
+                            <i class="fas fa-align-left"></i>
+                            Résumé/Description *
+                        </label>
+                        <textarea class="form-textarea" id="newsExcerpt" 
+                                  placeholder="Décrivez brièvement l'actualité..." 
+                                  rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="newsCategory">
+                                <i class="fas fa-tag"></i>
+                                Catégorie
+                            </label>
+                            <select class="form-input" id="newsCategory">
+                                <option value="general">Général</option>
+                                <option value="education">Éducation</option>
+                                <option value="sante">Santé</option>
+                                <option value="economie">Économie</option>
+                                <option value="infrastructures">Infrastructures</option>
+                                <option value="gouvernance">Gouvernance</option>
+                                <option value="transparence">Transparence</option>
+                                <option value="autres">Autres</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="newsImage">
+                                <i class="fas fa-image"></i>
+                                Icône
+                            </label>
+                            <select class="form-input" id="newsImage">
+                                <option value="school">🏫 École</option>
+                                <option value="hospital">🏥 Hôpital</option>
+                                <option value="money">💰 Budget</option>
+                                <option value="road">🛣️ Infrastructure</option>
+                                <option value="flag">🚩 Politique</option>
+                                <option value="chart">📈 Économie</option>
+                                <option value="users">👥 Société</option>
+                                <option value="graduation">🎓 Formation</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newsLink">
+                            <i class="fas fa-link"></i>
+                            Lien (optionnel)
+                        </label>
+                        <input type="url" class="form-input" id="newsLink" placeholder="https://...">
+                    </div>
+                    
+                    <div class="form-row">
+                        <button class="btn btn-primary" onclick="addNews()">
+                            <i class="fas fa-plus"></i>
+                            Ajouter l'actualité
+                        </button>
+                        <button class="btn btn-secondary" onclick="clearNewsForm()">
+                            <i class="fas fa-redo"></i>
+                            Effacer
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="news-list">
+                    <h3><i class="fas fa-list"></i> Liste des actualités</h3>
+                    <div id="newsList">
+                        <!-- Liste dynamique des actualités -->
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="generateNewsJSON()">
+                        <i class="fas fa-code"></i>
+                        Générer JSON Actualités
+                    </button>
+                    <button class="btn btn-success" onclick="downloadNewsJSON()">
+                        <i class="fas fa-download"></i>
+                        Télécharger news.json
+                    </button>
+                    <button class="btn btn-warning" onclick="copyNewsToClipboard()">
+                        <i class="fas fa-copy"></i>
+                        Copier JSON Actualités
+                    </button>
+                </div>
+                
+                <section class="json-section">
+                    <h3>
+                        <span><i class="fas fa-file-code"></i> Sortie JSON Actualités :</span>
+                        <span id="newsCounter">0 actualités</span>
+                    </h3>
+                    <textarea id="newsJsonOutput" readonly></textarea>
+                </section>
+            </div>
             
             <section class="instructions">
-                <h3>📝 Instructions :</h3>
+                <h3>📝 Instructions de mise à jour</h3>
                 <ol class="steps">
-                    <li><strong>Téléchargez</strong> les journaux du jour en JPG</li>
-                    <li><strong>Remplacez</strong> les fichiers dans le dossier <code>revuedepresse/</code> sur GitHub</li>
-                    <li><strong>Générez</strong> le nouveau JSON avec le bouton ci-dessus</li>
-                    <li><strong>Téléchargez</strong> le fichier <code>press.json</code></li>
-                    <li><strong>Remplacez</strong> le fichier <code>press.json</code> sur votre site GitHub</li>
-                    <li><strong>Vérifiez</strong> que votre site affiche les nouveaux journaux</li>
+                    <li><strong>Pour la presse :</strong> Téléchargez les journaux du jour en JPG/PNG</li>
+                    <li><strong>Pour les actualités :</strong> Ajoutez les nouvelles actualités via le formulaire</li>
+                    <li><strong>Générez</strong> les fichiers JSON correspondants</li>
+                    <li><strong>Téléchargez</strong> les fichiers press.json et news.json</li>
+                    <li><strong>Remplacez</strong> ces fichiers dans votre site GitHub</li>
+                    <li><strong>Vérifiez</strong> que votre site affiche les nouvelles données</li>
                 </ol>
                 
-                <h4 style="margin-top: 20px; color: #00695c;">🔄 Processus rapide :</h4>
-                <p>1. Remplacer JPG → 2. Générer JSON → 3. Upload sur GitHub</p>
+                <h4 style="margin-top: 20px; color: #00695c;">📂 Structure des fichiers :</h4>
+                <p><strong>press.json</strong> : Contient la liste des journaux avec images, dates et liens</p>
+                <p><strong>news.json</strong> : Contient les actualités avec titres, dates, sources et descriptions</p>
             </section>
         </div>
     </div>
 
     <script>
-        // Liste de vos fichiers de presse
-        const pressFiles = [
+        // Données initiales
+        const PRESS_FILES = [
             'lesoleil.jpg',
             'sudquotidien.jpg', 
             'liberation.jpg',
@@ -304,10 +714,52 @@
             'soloquotidien.jpg',
             'yooryoor.jpg',
             'record.jpg',
-             'enquete.jpg'
+            'enquete.jpg'
         ];
 
-        // Afficher la date du jour
+        // Données d'actualités par défaut
+        let NEWS_DATA = [
+            {
+                id: '1',
+                title: 'Lancement officiel de la plateforme',
+                excerpt: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle.',
+                date: '25/01/2026',
+                source: 'Le Soleil',
+                category: 'gouvernance',
+                image: 'school',
+                link: '#'
+            },
+            {
+                id: '2',
+                title: 'Première école numérique inaugurée',
+                excerpt: 'Le gouvernement a inauguré la première école entièrement numérique à Dakar.',
+                date: '20/01/2026',
+                source: 'Sud Quotidien',
+                category: 'education',
+                image: 'school',
+                link: '#'
+            },
+            {
+                id: '3',
+                title: 'Budget 2026 axé sur la relance économique',
+                excerpt: 'Le budget de l\'État pour 2026 prévoit d\'importants investissements dans les infrastructures.',
+                date: '15/01/2026',
+                source: 'WalFadjri',
+                category: 'economie',
+                image: 'money',
+                link: '#'
+            }
+        ];
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCurrentDate();
+            setupTabs();
+            loadInitialData();
+        });
+
+        // ==================== GÉNÉRAL ====================
+        
         function updateCurrentDate() {
             const now = new Date();
             const options = { 
@@ -319,33 +771,153 @@
             document.getElementById('currentDate').textContent = 
                 now.toLocaleDateString('fr-FR', options);
             
+            // Définir la date du jour par défaut dans le formulaire
+            const today = now.toISOString().split('T')[0];
+            document.getElementById('newsDate').value = today;
+            
             return now.toLocaleDateString('fr-FR');
         }
 
-        // Afficher la liste des fichiers
-        function displayFilesList() {
-            const filesList = document.getElementById('filesList');
-            filesList.innerHTML = pressFiles.map(file => `
-                <div class="file-item">
-                    <div class="file-name">${file}</div>
-                    <small>revuedepresse/${file}</small>
-                </div>
-            `).join('');
+        function setupTabs() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabId = btn.getAttribute('data-tab');
+                    
+                    // Désactiver tous les onglets
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Activer l'onglet sélectionné
+                    btn.classList.add('active');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
         }
 
-        // Générer le JSON avec la date du jour
-        function generateJSON() {
-            const today = updateCurrentDate();
+        function showNotification(message, type = 'success') {
+            const types = {
+                success: { icon: '✅', bg: '#4CAF50' },
+                error: { icon: '❌', bg: '#f44336' },
+                info: { icon: 'ℹ️', bg: '#2196F3' },
+                warning: { icon: '⚠️', bg: '#FF9800' }
+            };
+            
+            const notif = document.createElement('div');
+            notif.className = 'notification';
+            notif.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                background: ${types[type].bg};
+                color: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                animation: slideIn 0.3s ease;
+                max-width: 400px;
+            `;
+            
+            notif.innerHTML = `
+                <span style="font-size: 1.2rem;">${types[type].icon}</span>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notif);
+            
+            setTimeout(() => {
+                notif.style.animation = 'slideOut 0.3s ease forwards';
+                setTimeout(() => notif.remove(), 300);
+            }, 3000);
+            
+            // Ajouter les animations CSS
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+
+        // ==================== PRESSE ====================
+
+        function loadInitialData() {
+            displayPressFiles();
+            displayNewsList();
+            generatePressJSON();
+            generateNewsJSON();
+        }
+
+        function displayPressFiles() {
+            const filesList = document.getElementById('filesList');
+            if (!filesList) return;
+            
+            filesList.innerHTML = PRESS_FILES.map(file => {
+                const fileSize = Math.floor(Math.random() * 500) + 300; // Simuler taille
+                return `
+                    <div class="file-item">
+                        <div class="file-name">${file}</div>
+                        <div class="file-size">${fileSize} KB</div>
+                        <small>revuedepresse/${file}</small>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function handlePressUpload(event) {
+            const files = event.target.files;
+            const preview = document.getElementById('pressPreview');
+            
+            if (files.length === 0) return;
+            
+            let html = `<p><strong>${files.length} fichier(s) sélectionné(s) :</strong></p><ul>`;
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const size = (file.size / 1024).toFixed(1);
+                html += `<li>${file.name} (${size} KB)</li>`;
+                
+                // Ajouter à la liste des fichiers
+                if (!PRESS_FILES.includes(file.name)) {
+                    PRESS_FILES.push(file.name);
+                }
+            }
+            
+            html += '</ul>';
+            preview.innerHTML = html;
+            
+            // Mettre à jour l'affichage
+            displayPressFiles();
+            
+            showNotification(`${files.length} fichier(s) ajouté(s) à la liste`, 'success');
+        }
+
+        function generatePressJSON() {
+            const today = new Date();
+            const formattedDate = today.toLocaleDateString('fr-FR');
             
             const pressData = {
-                last_updated: today,
-                press: pressFiles.map((file, index) => {
-                    // Extraire le nom du journal du nom de fichier
-                    const name = file.replace('.jpg', '')
+                last_updated: formattedDate,
+                press: PRESS_FILES.map((file, index) => {
+                    const name = file.replace('.jpg', '').replace('.png', '')
                         .replace(/_/g, ' ')
                         .replace(/\b\w/g, l => l.toUpperCase());
                     
-                    // Déterminer le lien selon le journal
                     let link = "#";
                     if (file.includes('lesoleil')) link = 'http://www.lesoleil.sn/';
                     if (file.includes('sudquotidien')) link = 'http://www.sudonline.sn/';
@@ -356,26 +928,23 @@
                     return {
                         id: (index + 1).toString(),
                         title: name,
-                        date: today,
+                        date: formattedDate,
                         image: `revuedepresse/${file}`,
-                        logo: `images/logos/${file.replace('.jpg', '.png')}`,
+                        logo: `images/logos/${file.replace('.jpg', '.png').replace('.png', '.png')}`,
                         link: link
                     };
                 })
             };
             
             const jsonOutput = JSON.stringify(pressData, null, 2);
-            document.getElementById('jsonOutput').value = jsonOutput;
-            
-            // Afficher une notification
-            showNotification('✅ JSON généré avec succès !', 'success');
+            document.getElementById('pressJsonOutput').value = jsonOutput;
+            document.getElementById('pressCounter').textContent = `${PRESS_FILES.length} journaux`;
             
             return jsonOutput;
         }
 
-        // Télécharger le JSON
-        function downloadJSON() {
-            const json = document.getElementById('jsonOutput').value;
+        function downloadPressJSON() {
+            const json = document.getElementById('pressJsonOutput').value;
             
             if (!json || json.trim() === '{}') {
                 showNotification('❌ Veuillez d\'abord générer le JSON', 'error');
@@ -395,9 +964,8 @@
             showNotification('📥 Fichier press.json téléchargé !', 'success');
         }
 
-        // Copier dans le presse-papier
-        async function copyToClipboard() {
-            const json = document.getElementById('jsonOutput').value;
+        async function copyPressToClipboard() {
+            const json = document.getElementById('pressJsonOutput').value;
             
             if (!json || json.trim() === '{}') {
                 showNotification('❌ Rien à copier', 'error');
@@ -408,7 +976,6 @@
                 await navigator.clipboard.writeText(json);
                 showNotification('📋 JSON copié dans le presse-papier !', 'success');
             } catch (err) {
-                // Fallback pour anciens navigateurs
                 const textArea = document.createElement('textarea');
                 textArea.value = json;
                 document.body.appendChild(textArea);
@@ -419,64 +986,222 @@
             }
         }
 
-        // Afficher une notification
-        function showNotification(message, type = 'info') {
-            // Supprimer les notifications existantes
-            const existingNotifications = document.querySelectorAll('.notification');
-            existingNotifications.forEach(n => n.remove());
+        // ==================== ACTUALITÉS ====================
+
+        function addNews() {
+            const title = document.getElementById('newsTitle').value.trim();
+            const dateInput = document.getElementById('newsDate').value;
+            const source = document.getElementById('newsSource').value.trim();
+            const excerpt = document.getElementById('newsExcerpt').value.trim();
+            const category = document.getElementById('newsCategory').value;
+            const image = document.getElementById('newsImage').value;
+            const link = document.getElementById('newsLink').value.trim();
             
-            // Créer la notification
-            const notification = document.createElement('div');
-            notification.className = `notification notification-${type}`;
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 15px 20px;
-                background: ${type === 'success' ? '#4CAF50' : '#f44336'};
-                color: white;
-                border-radius: 5px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                z-index: 1000;
-                animation: slideIn 0.3s ease;
-            `;
+            // Validation
+            if (!title || !excerpt || !dateInput) {
+                showNotification('Veuillez remplir les champs obligatoires', 'error');
+                return;
+            }
             
-            // Ajouter du CSS pour l'animation
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes slideIn {
-                    from { transform: translateX(100%); opacity: 0; }
-                    to { transform: translateX(0); opacity: 1; }
-                }
-            `;
-            document.head.appendChild(style);
+            // Formater la date
+            const dateParts = dateInput.split('-');
+            const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
             
-            notification.textContent = message;
-            document.body.appendChild(notification);
+            // Créer l'objet actualité
+            const newsItem = {
+                id: (NEWS_DATA.length + 1).toString(),
+                title: title,
+                excerpt: excerpt,
+                date: formattedDate,
+                source: source || 'Le Soleil',
+                category: category,
+                image: image,
+                link: link || '#'
+            };
             
-            // Supprimer après 3 secondes
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease forwards';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
+            // Ajouter en tête de liste
+            NEWS_DATA.unshift(newsItem);
+            
+            // Mettre à jour l'affichage
+            displayNewsList();
+            
+            // Générer le JSON
+            generateNewsJSON();
+            
+            // Réinitialiser le formulaire
+            clearNewsForm();
+            
+            showNotification('Actualité ajoutée avec succès !', 'success');
         }
 
-        // Initialisation
-        document.addEventListener('DOMContentLoaded', () => {
-            updateCurrentDate();
-            displayFilesList();
-            generateJSON(); // Générer automatiquement au chargement
+        function clearNewsForm() {
+            document.getElementById('newsTitle').value = '';
+            document.getElementById('newsExcerpt').value = '';
+            document.getElementById('newsSource').value = '';
+            document.getElementById('newsLink').value = '';
+            document.getElementById('newsCategory').value = 'general';
+            document.getElementById('newsImage').value = 'school';
             
-            // Ajouter le CSS pour slideOut
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes slideOut {
-                    from { transform: translateX(0); opacity: 1; }
-                    to { transform: translateX(100%); opacity: 0; }
-                }
-            `;
-            document.head.appendChild(style);
-        });
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('newsDate').value = today;
+        }
+
+        function displayNewsList() {
+            const newsList = document.getElementById('newsList');
+            if (!newsList) return;
+            
+            if (NEWS_DATA.length === 0) {
+                newsList.innerHTML = `
+                    <div class="news-item" style="text-align: center; padding: 40px;">
+                        <i class="fas fa-newspaper" style="font-size: 2rem; color: #ddd; margin-bottom: 10px;"></i>
+                        <p>Aucune actualité pour le moment</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            newsList.innerHTML = NEWS_DATA.map(item => `
+                <div class="news-item" data-id="${item.id}">
+                    <div class="news-header">
+                        <h4 class="news-title">${item.title}</h4>
+                        <span class="news-date">${item.date}</span>
+                    </div>
+                    <div class="news-excerpt">${item.excerpt}</div>
+                    <div class="news-footer">
+                        <div>
+                            <span><i class="fas fa-newspaper"></i> ${item.source}</span>
+                            <span style="margin-left: 15px;">
+                                <i class="fas fa-tag"></i> ${getCategoryLabel(item.category)}
+                            </span>
+                        </div>
+                        <div class="news-actions">
+                            <button class="btn btn-small btn-warning" onclick="editNews('${item.id}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-small btn-secondary" onclick="deleteNews('${item.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getCategoryLabel(category) {
+            const labels = {
+                'general': 'Général',
+                'education': 'Éducation',
+                'sante': 'Santé',
+                'economie': 'Économie',
+                'infrastructures': 'Infrastructures',
+                'gouvernance': 'Gouvernance',
+                'transparence': 'Transparence',
+                'autres': 'Autres'
+            };
+            return labels[category] || category;
+        }
+
+        function editNews(id) {
+            const newsItem = NEWS_DATA.find(item => item.id === id);
+            if (!newsItem) return;
+            
+            // Remplir le formulaire
+            document.getElementById('newsTitle').value = newsItem.title;
+            document.getElementById('newsExcerpt').value = newsItem.excerpt;
+            document.getElementById('newsSource').value = newsItem.source;
+            document.getElementById('newsLink').value = newsItem.link === '#' ? '' : newsItem.link;
+            document.getElementById('newsCategory').value = newsItem.category;
+            document.getElementById('newsImage').value = newsItem.image;
+            
+            // Formater la date pour l'input
+            const dateParts = newsItem.date.split('/');
+            const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+            document.getElementById('newsDate').value = formattedDate;
+            
+            // Supprimer l'ancien élément
+            deleteNews(id);
+            
+            showNotification('Modifiez l\'actualité et cliquez sur "Ajouter"', 'info');
+        }
+
+        function deleteNews(id) {
+            NEWS_DATA = NEWS_DATA.filter(item => item.id !== id);
+            displayNewsList();
+            generateNewsJSON();
+            showNotification('Actualité supprimée', 'warning');
+        }
+
+        function generateNewsJSON() {
+            const newsData = {
+                last_updated: new Date().toISOString().split('T')[0],
+                news: NEWS_DATA
+            };
+            
+            const jsonOutput = JSON.stringify(newsData, null, 2);
+            document.getElementById('newsJsonOutput').value = jsonOutput;
+            document.getElementById('newsCounter').textContent = `${NEWS_DATA.length} actualités`;
+            
+            return jsonOutput;
+        }
+
+        function downloadNewsJSON() {
+            const json = document.getElementById('newsJsonOutput').value;
+            
+            if (!json || json.trim() === '{}') {
+                showNotification('❌ Veuillez d\'abord générer le JSON', 'error');
+                return;
+            }
+            
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'news.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('📥 Fichier news.json téléchargé !', 'success');
+        }
+
+        async function copyNewsToClipboard() {
+            const json = document.getElementById('newsJsonOutput').value;
+            
+            if (!json || json.trim() === '{}') {
+                showNotification('❌ Rien à copier', 'error');
+                return;
+            }
+            
+            try {
+                await navigator.clipboard.writeText(json);
+                showNotification('📋 JSON copié dans le presse-papier !', 'success');
+            } catch (err) {
+                const textArea = document.createElement('textarea');
+                textArea.value = json;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('📋 JSON copié (méthode ancienne)', 'success');
+            }
+        }
+
+        // ==================== UTILITAIRES ====================
+
+        // Fonctions globales
+        window.handlePressUpload = handlePressUpload;
+        window.addNews = addNews;
+        window.clearNewsForm = clearNewsForm;
+        window.editNews = editNews;
+        window.deleteNews = deleteNews;
+        window.generatePressJSON = generatePressJSON;
+        window.generateNewsJSON = generateNewsJSON;
+        window.downloadPressJSON = downloadPressJSON;
+        window.downloadNewsJSON = downloadNewsJSON;
+        window.copyPressToClipboard = copyPressToClipboard;
+        window.copyNewsToClipboard = copyNewsToClipboard;
+
     </script>
 </body>
 </html>

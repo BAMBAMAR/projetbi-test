@@ -1,321 +1,63 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <!-- SEO Enhanced -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="description" content="Plateforme citoyenne indépendante pour suivre en temps réel l'avancement des engagements du Président Bassirou Diomaye Faye. Votez et analysez les résultats du Projet pour un Sénégal Souverain, Juste et Prospère.">
-    <meta name="keywords" content="Sénégal, promesses électorales, Bassirou Diomaye Faye, transparence, gouvernance, démocratie, suivi engagements, projet sénégal, engagements présidentiels">
-    <meta name="author" content="ProjetBI">
-    <meta name="robots" content="index, follow">
-    
-    <!-- Thème et couleurs -->
-    <meta name="theme-color" content="#2a6d5d">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://projetbi.org/">
-    <meta property="og:title" content="Suivi des Engagements du Projet | Sénégal Souverain, Juste et Prospère">
-    <meta property="og:description" content="Découvrez l'état d'avancement des engagements présidentiels. Donnez votre avis et suivez la transparence démocratique.">
-    <meta property="og:image" content="https://projetbi.org/og-image.jpg">
-    <meta property="og:image:secure_url" content="https://projetbi.org/og-image.jpg">
-    <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Suivi des engagements du Projet Sénégal">
-    <meta property="og:site_name" content="LE PROJET SÉNÉGAL - Suivi des Engagements">
-    <meta property="og:locale" content="fr_FR">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="https://projetbi.org/">
-    <meta name="twitter:creator" content="@ProjetSenegal">
-    <meta name="twitter:title" content="Suivi Promesses : PROJET SÉNÉGAL">
-    <meta name="twitter:description" content="Découvrez l'avancement des engagements pour le Sénégal Souverain, Juste et Prospère.">
-    <meta name="twitter:image" content="https://projetbi.org/twitter-card.jpg">
-    <meta name="twitter:image:alt" content="Tableau de bord de suivi des promesses">
-    
-    <!-- Titre optimisé -->
-    <title>LE PROJET SÉNÉGAL | Suivi des Engagements Présidentiels de Bassirou Diomaye Faye</title>
-    
-    <!-- Favicon -->
-    <link rel="icon" href="https://projetbi.org/favicon.png" type="image/png">
-    <link rel="apple-touch-icon" href="https://projetbi.org/favicon.png">
-    <link rel="canonical" href="https://projetbi.org/">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Crimson+Pro:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    
-    <!-- Schema.org pour Google -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "LE PROJET SÉNÉGAL - Suivi des Engagements",
-      "url": "https://projetbi.org",
-      "description": "Plateforme citoyenne de suivi transparent des engagements du Projet pour un Sénégal Souverain, Juste et Prospère",
-      "publisher": {
-        "@type": "Organization",
-        "name": "ProjetBI",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://projetbi.org/favicon.png"
-        }
-      },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://projetbi.org/#promises?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
-    
-    <!-- Style CSS pour le compte à rebours -->
-    <style>
-    .countdown-container {
-        background: linear-gradient(135deg, rgba(0, 91, 187, 0.1) 0%, rgba(255, 221, 0, 0.1) 100%);
-        border: 2px solid rgba(0, 91, 187, 0.3);
-        border-radius: 20px;
-        padding: 1.5rem;
-        margin: 2rem auto;
-        max-width: 800px;
-        box-shadow: 0 8px 32px rgba(0, 91, 187, 0.15);
-        backdrop-filter: blur(10px);
-        text-align: center;
-    }
-
-    .countdown-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        background: var(--primary-color);
-        color: white;
-        padding: 0.5rem 1.5rem;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 1.1rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .countdown-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1.5rem;
-        margin-bottom: 1rem;
-    }
-
-    .countdown-item {
-        background: white;
-        border-radius: 15px;
-        padding: 1.2rem 0.5rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        transition: transform 0.3s ease;
-    }
-
-    .countdown-item:hover {
-        transform: translateY(-5px);
-    }
-
-    .countdown-value {
-        font-size: 2.8rem;
-        font-weight: 800;
-        font-family: 'Manrope', sans-serif;
-        color: var(--primary-color);
-        line-height: 1;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .countdown-label {
-        font-size: 0.9rem;
-        color: var(--text-secondary);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-top: 0.5rem;
-        font-weight: 600;
-    }
-
-    .countdown-target {
-        font-size: 1.1rem;
-        color: var(--text-primary);
-        background: rgba(255, 255, 255, 0.9);
-        padding: 0.8rem 1.5rem;
-        border-radius: 10px;
-        display: inline-block;
-        margin-top: 0.5rem;
-    }
-
-    .countdown-target strong {
-        color: var(--primary-color);
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .countdown-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-        
-        .countdown-value {
-            font-size: 2.2rem;
-        }
-        
-        .countdown-container {
-            padding: 1rem;
-            margin: 1.5rem 0;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .countdown-grid {
-            grid-template-columns: 1fr;
-            gap: 0.8rem;
-        }
-        
-        .countdown-value {
-            font-size: 2rem;
-        }
-    }
-    </style>
-</head>
-<body>
-    <!-- Progress Indicator -->
-    <div class="progress-indicator" id="progressIndicator"></div>
-
-    <!-- Navigation Bar -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#header" class="nav-logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-      <img src="https://projetbi.org/favicon.png" alt="Logo JJJ" style="height: 38px; width: auto; border-radius: 5px;">
-      <span style="color: #2a6d5d; font-weight: 700; font-size: 1rem; letter-spacing: -0.5px;">LE PROJET : SUIVI DES PROMESSES</span>
-    </a>
-            
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            
-            <div class="nav-menu" id="navMenu">
-                <a href="#header" class="nav-link active" data-section="header">
-                    <i class="fas fa-home"></i>
-                    Accueil
-                </a>
-                <a href="#stats" class="nav-link" data-section="stats">
-                    <i class="fas fa-chart-line"></i>
-                    Dashboard
-                </a>
-                <a href="#promises" class="nav-link" data-section="promises">
-                    <i class="fas fa-tasks"></i>
-                    Engagements
-                </a>
-                <a href="#daily" class="nav-link" data-section="daily">
-                    <i class="fas fa-star"></i>
-                    Promesse du Jour
-                </a>
-                <a href="#news" class="nav-link" data-section="news">
-                    <i class="fas fa-newspaper"></i>
-                    Actualités
-                </a>
-                <a href="#press" class="nav-link" data-section="press">
-                    <i class="fas fa-book-open"></i>
-                   Revue de Presse
-                </a>
-                <a href="#rating" class="nav-link" data-section="rating">
-                    <i class="fas fa-star-half-alt"></i>
-                    Notation
-                </a>
-            </div>
+<header class="site-header">
+    <div class="container header-container">
+        <!-- Logo et titre principal -->
+        <div class="header-brand">
+            <a href="/" class="logo-link">
+                <div class="logo-container">
+                    <i class="fas fa-flag logo-icon"></i>
+                    <div class="logo-text">
+                        <h1 class="site-title">LE PROJET SÉNÉGAL</h1>
+                        <p class="site-subtitle">Suivi des Engagements Présidentiels</p>
+                    </div>
+                </div>
+            </a>
         </div>
-    </nav>
 
-    <!-- Header Section -->
-    <header class="header" id="header">
-        <div class="header-background">
-            <div class="header-pattern"></div>
-        </div>
-        
-        <div class="header-content">
-            <div class="header-badge">
-                <i class="fas fa-shield-alt"></i>
-                🇸🇳 République du Sénégal
-            </div>
-            
-            <div class="header-title">
-                <span class="title-main">LE PROJET</span>
-                <span class="title-sub">Pour un Sénégal Souverain, Juste et Prospère</span>
-            </div>
-            
-            <p class="subtitle">
-                Plateforme Citoyenne de Suivi des Engagements Présidentiels
-            </p>
-            
-            <!-- Compte à rebours -->
-            <div class="countdown-container">
-                <div class="countdown-badge">
-                    <i class="fas fa-hourglass-half"></i>
-                    Délai des engagements
+        <!-- Citation et image Sonko -->
+        <div class="header-quote">
+            <div class="quote-container">
+                <div class="quote-content">
+                    <blockquote class="sonko-quote">
+                        <p class="quote-text">"Celui qui ne sait pas où tu vas ne peut pas t'accompagner. Donc, la réussite du <strong>PROJET</strong> dépendra du niveau d'appropriation populaire."</p>
+                        <footer class="quote-author">
+                            <cite>Ousmane Sonko</cite>
+                            <span class="quote-tag">#UltraSonkiste</span>
+                        </footer>
+                    </blockquote>
                 </div>
-                <div class="countdown-grid" id="countdown">
-                    <div class="countdown-item">
-                        <div class="countdown-value" id="days">000</div>
-                        <div class="countdown-label">Jours</div>
-                    </div>
-                    <div class="countdown-item">
-                        <div class="countdown-value" id="hours">00</div>
-                        <div class="countdown-label">Heures</div>
-                    </div>
-                    <div class="countdown-item">
-                        <div class="countdown-value" id="minutes">00</div>
-                        <div class="countdown-label">Minutes</div>
-                    </div>
-                    <div class="countdown-item">
-                        <div class="countdown-value" id="seconds">00</div>
-                        <div class="countdown-label">Secondes</div>
-                    </div>
-                </div>
-                <div class="countdown-target">
-                    Date butoir : <strong>02 AVRIL 2029</strong>
-                </div>
-            </div>
-            
-            <div class="ref-badge">
-                <i class="fas fa-calendar-alt"></i>
-                Date de référence : <span id="current-date">2 AVRIL 2024</span>
-                
-                <!-- Programme PDF et KPI Carousel -->
-                <div class="header-actions">
-                    <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" 
-                       class="btn-program" 
-                       download target="_blank">
-                        <i class="fas fa-book"></i> Programme Complet (PDF)
-                    </a>
-                    
-                    <div class="kpi-carousel-container">
-                        <button id="kpiPrev" class="kpi-nav-btn" title="Précédent">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <div id="kpiCarousel"></div>
-                        <button id="kpiNext" class="kpi-nav-btn" title="Suivant">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                        <button id="kpiAutoPlayToggle" class="kpi-nav-btn" title="Lecture automatique">
-                            <i class="fas fa-pause"></i>
-                        </button>
+                <div class="quote-image">
+                    <img src="sonko.jpg" alt="Ousmane Sonko - Citation sur le projet" class="sonko-portrait" loading="lazy">
+                    <div class="image-overlay">
+                        <span class="overlay-text">Pour un Sénégal Souverain</span>
                     </div>
                 </div>
             </div>
         </div>
-    </header>
 
+        <!-- Navigation et actions -->
+        <div class="header-actions">
+            <nav class="main-navigation">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#promises" class="nav-link"><i class="fas fa-bullseye"></i> Engagements</a></li>
+                    <li class="nav-item"><a href="#progress" class="nav-link"><i class="fas fa-chart-line"></i> Avancement</a></li>
+                    <li class="nav-item"><a href="#vote" class="nav-link"><i class="fas fa-vote-yea"></i> Voter</a></li>
+                    <li class="nav-item"><a href="#about" class="nav-link"><i class="fas fa-info-circle"></i> À propos</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-actions">
+                <button class="btn btn-primary btn-small">
+                    <i class="fas fa-user-plus"></i> S'inscrire
+                </button>
+                <button class="btn btn-outline btn-small">
+                    <i class="fas fa-sign-in-alt"></i> Connexion
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
     <!-- Stats Section -->
     <section class="stats-section" id="stats">
         <div class="container">

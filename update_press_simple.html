@@ -1129,7 +1129,161 @@
                 </div>
             `).join('');
         }
+// Après la fonction displayNewsList() et avant generateNewsJSON()
 
+// ==================== FONCTIONS ACTUALITÉS ====================
+
+function displayNewsList() {
+    // ... code existant ...
+}
+
+// FONCTION POUR AJOUTER UNE ACTUALITÉ
+function addNews() {
+    const title = document.getElementById('newsTitle').value.trim();
+    const dateInput = document.getElementById('newsDate').value;
+    const source = document.getElementById('newsSource').value.trim();
+    const excerpt = document.getElementById('newsExcerpt').value.trim();
+    const content = document.getElementById('newsContent').value.trim();
+    const category = document.getElementById('newsCategory').value;
+    const image = document.getElementById('newsImage').value;
+    const imageUrl = document.getElementById('newsImageUrl').value.trim();
+    const link = document.getElementById('newsLink').value.trim();
+    const author = document.getElementById('newsAuthor').value.trim() || 'Rédaction';
+    const readTime = document.getElementById('newsReadTime').value;
+    
+    // Validation
+    if (!title || !excerpt || !content || !dateInput) {
+        showNotification('Veuillez remplir les champs obligatoires (*)', 'error');
+        return;
+    }
+    
+    // Formater la date (DD/MM/YYYY)
+    const dateParts = dateInput.split('-');
+    const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+    
+    // Créer l'objet actualité
+    const newsItem = {
+        id: `news_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        title: title,
+        excerpt: excerpt,
+        content: content,
+        date: formattedDate,
+        source: source || 'Le Soleil',
+        category: category,
+        image: image,
+        image_url: imageUrl || null,
+        link: link || '#',
+        author: author,
+        read_time: readTime,
+        created_at: new Date().toISOString()
+    };
+    
+    // Ajouter en tête de liste
+    NEWS_DATA.unshift(newsItem);
+    
+    // Mettre à jour l'affichage
+    displayNewsList();
+    
+    // Générer le JSON
+    generateNewsJSON();
+    
+    // Sauvegarder localement
+    saveNewsToLocal();
+    
+    // Réinitialiser le formulaire
+    clearNewsForm();
+    
+    showNotification('✅ Actualité ajoutée avec succès !', 'success');
+}
+
+function clearNewsForm() {
+    // Réinitialiser tous les champs du formulaire
+    document.getElementById('newsTitle').value = '';
+    document.getElementById('newsExcerpt').value = '';
+    document.getElementById('newsContent').value = '';
+    document.getElementById('newsSource').value = '';
+    document.getElementById('newsLink').value = '';
+    document.getElementById('newsImageUrl').value = '';
+    document.getElementById('newsAuthor').value = 'Rédaction';
+    document.getElementById('newsCategory').value = 'general';
+    document.getElementById('newsImage').value = 'school';
+    document.getElementById('newsReadTime').value = '3 min';
+    
+    // Date du jour par défaut
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('newsDate').value = today;
+}
+
+function editNews(id) {
+    const newsItem = NEWS_DATA.find(item => item.id === id);
+    if (!newsItem) return;
+    
+    // Remplir le formulaire
+    document.getElementById('newsTitle').value = newsItem.title;
+    document.getElementById('newsExcerpt').value = newsItem.excerpt;
+    document.getElementById('newsContent').value = newsItem.content;
+    document.getElementById('newsSource').value = newsItem.source;
+    document.getElementById('newsLink').value = newsItem.link === '#' ? '' : newsItem.link;
+    document.getElementById('newsImageUrl').value = newsItem.image_url || '';
+    document.getElementById('newsAuthor').value = newsItem.author;
+    document.getElementById('newsCategory').value = newsItem.category;
+    document.getElementById('newsImage').value = newsItem.image;
+    document.getElementById('newsReadTime').value = newsItem.read_time;
+    
+    // Formater la date pour l'input (YYYY-MM-DD)
+    const dateParts = newsItem.date.split('/');
+    const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+    document.getElementById('newsDate').value = formattedDate;
+    
+    // Supprimer l'ancien élément
+    deleteNews(id);
+    
+    showNotification('📝 Modifiez l\'actualité et cliquez sur "Ajouter"', 'info');
+}
+
+function deleteNews(id) {
+    NEWS_DATA = NEWS_DATA.filter(item => item.id !== id);
+    displayNewsList();
+    generateNewsJSON();
+    saveNewsToLocal();
+    showNotification('🗑️ Actualité supprimée', 'warning');
+}
+
+function generateNewsJSON() {
+    const newsData = {
+        last_updated: new Date().toISOString().split('T')[0],
+        news: NEWS_DATA
+    };
+    
+    const jsonOutput = JSON.stringify(newsData, null, 2);
+    document.getElementById('newsJsonOutput').value = jsonOutput;
+    document.getElementById('newsCounter').textContent = `${NEWS_DATA.length} actualité(s)`;
+    
+    return jsonOutput;
+}
+
+// Fonctions de sauvegarde locale
+function saveNewsToLocal() {
+    try {
+        localStorage.setItem('news_backup', JSON.stringify(NEWS_DATA));
+    } catch (error) {
+        console.warn('localStorage bloqué - sauvegarde en mémoire');
+        window.newsBackup = NEWS_DATA;
+    }
+}
+
+function loadNewsFromLocal() {
+    try {
+        const saved = localStorage.getItem('news_backup');
+        if (saved) {
+            NEWS_DATA = JSON.parse(saved);
+        }
+    } catch (error) {
+        if (window.newsBackup) {
+            NEWS_DATA = window.newsBackup;
+        }
+    }
+}
         function getCategoryLabel(category) {
             const labels = {
                 'general': 'Général',

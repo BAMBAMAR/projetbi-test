@@ -8,7 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CORRIGÉ : CDN Font Awesome remplacé pour éviter le blocage -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,7 +17,7 @@
     <div class="progress-indicator"></div>
 
     <!-- Navbar -->
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#header" class="nav-logo">
                 <div class="nav-logo-icon">
@@ -25,13 +26,13 @@
                 <span class="nav-logo-text">LE PROJET SÉNÉGAL</span>
             </a>
             <div class="nav-menu" id="navMenu">
-                <a href="#header" class="nav-link active">Accueil</a>
-                <a href="#stats" class="nav-link">Dashboard</a>
-                <a href="#promises" class="nav-link">Engagements</a>
-                <a href="#daily" class="nav-link">Promesse du Jour</a>
-                <a href="#news" class="nav-link">Actualités</a>
-                <a href="#press" class="nav-link">Revue de Presse</a>
-                <a href="#rating" class="nav-link">Notation</a>
+                <a href="#header" class="nav-link active" data-section="header">Accueil</a>
+                <a href="#stats" class="nav-link" data-section="stats">Dashboard</a>
+                <a href="#promises" class="nav-link" data-section="promises">Engagements</a>
+                <a href="#daily" class="nav-link" data-section="daily">Promesse du Jour</a>
+                <a href="#news" class="nav-link" data-section="news">Actualités</a>
+                <a href="#press" class="nav-link" data-section="press">Revue de Presse</a>
+                <a href="#rating" class="nav-link" data-section="rating">Notation</a>
             </div>
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <span></span>
@@ -41,76 +42,24 @@
         </div>
     </nav>
 
-    <!-- Header Section - Amélioré -->
-    <header class="header-modern" id="header">
-        <div class="header-container">
-            <div class="header-badge-section">
-                <span class="header-badge">
-                    <i class="fas fa-certificate"></i>
-                    Suivi des Engagements Présidentiels
-                </span>
-                <span class="ref-badge">
-                    <i class="fas fa-calendar-check"></i>
-                    Référence : 2 AVRIL 2024
-                </span>
+    <!-- Header Section -->
+    <header class="header" id="header">
+        <div class="header-content">
+            <span class="header-badge">
+                <i class="fas fa-certificate"></i>
+                Suivi Citoyen des Engagements Présidentiels
+            </span>
+            <div class="header-title">
+                <span class="title-main">LE PROJET</span>
+                <span class="title-sub">Pour un Sénégal Souverain, Juste et Prospère</span>
             </div>
-
-            <div class="header-content-modern">
-                <h1 class="title-main-modern">
-                    <span class="title-highlight">LE PROJET</span>
-                    <span class="title-subline">Pour un Sénégal Souverain, Juste et Prospère</span>
-                </h1>
-                <p class="subtitle-modern">
-                    Plateforme Citoyenne de Suivi Transparent des Engagements Présidentiels de Bassirou Diomaye Faye
-                </p>
-            </div>
-
-            <div class="header-actions">
-                <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="btn-download">
-                    <i class="fas fa-download"></i>
-                    <span>Télécharger le Programme Complet (PDF)</span>
-                </a>
-            </div>
-
-            <div class="header-countdown-section">
-                <div class="countdown-container">
-                    <div class="countdown-item">
-                        <div class="countdown-value" id="days">000</div>
-                        <div class="countdown-label">Jours</div>
-                    </div>
-                    <div class="countdown-separator">:</div>
-                    <div class="countdown-item">
-                        <div class="countdown-value" id="hours">00</div>
-                        <div class="countdown-label">Heures</div>
-                    </div>
-                    <div class="countdown-separator">:</div>
-                    <div class="countdown-item">
-                        <div class="countdown-value" id="minutes">00</div>
-                        <div class="countdown-label">Minutes</div>
-                    </div>
-                    <div class="countdown-separator">:</div>
-                    <div class="countdown-item">
-                        <div class="countdown-value" id="seconds">00</div>
-                        <div class="countdown-label">Secondes</div>
-                    </div>
-                </div>
-                <div class="countdown-footer">
-                    <i class="fas fa-flag-checkered"></i>
-                    Date butoir : 02 AVRIL 2029
-                </div>
-            </div>
-
-            <div class="header-image-section">
-                <div class="image-wrapper">
-                    <img src="https://projetbi.org/placeholder-president.jpg" alt="Président Bassirou Diomaye Faye" class="header-image">
-                    <div class="image-overlay">
-                        <div class="image-caption">
-                            <i class="fas fa-user-tie"></i>
-                            Bassirou Diomaye Faye - Président de la République du Sénégal
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <p class="subtitle">
+                Plateforme Citoyenne de Suivi Transparent des Engagements de Bassirou Diomaye Faye
+            </p>
+            <span class="ref-badge">
+                <i class="fas fa-calendar-check"></i>
+                Date de référence : 2 AVRIL 2024
+            </span>
         </div>
     </header>
 
@@ -137,11 +86,11 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value">0</div>
+                        <div class="stat-value" id="total">0</div>
                         <div class="stat-label">Total Engagements</div>
                     </div>
                     <div class="stat-footer">
-                        <div class="stat-percentage">100%</div>
+                        <div class="stat-percentage" id="total-percentage">100%</div>
                     </div>
                 </div>
                 <div class="stat-card stat-success">
@@ -151,11 +100,11 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value">0</div>
+                        <div class="stat-value" id="realise">0</div>
                         <div class="stat-label">✅ Réalisés</div>
                     </div>
                     <div class="stat-footer">
-                        <div class="stat-percentage">0%</div>
+                        <div class="stat-percentage" id="realise-percentage">0%</div>
                     </div>
                 </div>
                 <div class="stat-card stat-progress">
@@ -165,11 +114,11 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value">0</div>
+                        <div class="stat-value" id="encours">0</div>
                         <div class="stat-label">🔄 En Cours</div>
                     </div>
                     <div class="stat-footer">
-                        <div class="stat-percentage">0%</div>
+                        <div class="stat-percentage" id="encours-percentage">0%</div>
                     </div>
                 </div>
                 <div class="stat-card stat-pending">
@@ -179,11 +128,11 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value">0</div>
+                        <div class="stat-value" id="non-lance">0</div>
                         <div class="stat-label">⏳ Non Lancés</div>
                     </div>
                     <div class="stat-footer">
-                        <div class="stat-percentage">0%</div>
+                        <div class="stat-percentage" id="non-lance-percentage">0%</div>
                     </div>
                 </div>
                 <div class="stat-card stat-warning">
@@ -193,11 +142,11 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value">0</div>
+                        <div class="stat-value" id="retard">0</div>
                         <div class="stat-label">⚠️ En Retard</div>
                     </div>
                     <div class="stat-footer">
-                        <div class="stat-percentage">0%</div>
+                        <div class="stat-percentage" id="retard-percentage">0%</div>
                     </div>
                 </div>
                 <div class="stat-card stat-rate">
@@ -207,7 +156,7 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value">0%</div>
+                        <div class="stat-value" id="taux-realisation">0%</div>
                         <div class="stat-label">📈 Taux Réalisation</div>
                     </div>
                     <div class="stat-footer">
@@ -221,11 +170,11 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value">0</div>
+                        <div class="stat-value" id="moyenne-notes">0.0</div>
                         <div class="stat-label">⭐ Note Moyenne</div>
                     </div>
                     <div class="stat-footer">
-                        <div class="stat-subvalue">0 votes</div>
+                        <div class="stat-subvalue" id="votes-total">0 votes</div>
                     </div>
                 </div>
                 <div class="stat-card stat-update">
@@ -235,11 +184,11 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value">0</div>
+                        <div class="stat-value" id="avec-maj">0</div>
                         <div class="stat-label">📋 Avec MAJ</div>
                     </div>
                     <div class="stat-footer">
-                        <div class="stat-subvalue">0%</div>
+                        <div class="stat-percentage" id="avec-maj-percentage">0%</div>
                     </div>
                 </div>
                 <div class="stat-card stat-time">
@@ -249,7 +198,7 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value">0j</div>
+                        <div class="stat-value" id="delai-moyen">0j</div>
                         <div class="stat-label">⏱️ Retard Moyen</div>
                     </div>
                     <div class="stat-footer">
@@ -263,11 +212,11 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value">🏛️</div>
+                        <div class="stat-value" id="domaine-principal">🏛️</div>
                         <div class="stat-label">Domaine Principal</div>
                     </div>
                     <div class="stat-footer">
-                        <div class="stat-subvalue">-0 engagements</div>
+                        <div class="stat-subvalue" id="domaine-count">-0 engagements</div>
                     </div>
                 </div>
             </div>
@@ -283,19 +232,19 @@
                     Promesse du Jour
                 </h2>
             </div>
-            <div class="daily-promise-card">
+            <div class="daily-promise-card" id="dailyPromise">
                 <div class="daily-newspaper-header">
                     <span class="newspaper-badge">
                         <i class="fas fa-newspaper"></i>
                         ÉDITION SPÉCIALE
                     </span>
-                    <span class="newspaper-date">
+                    <span class="newspaper-date" id="current-date">
                         <i class="fas fa-calendar-day"></i>
-                        <span id="currentDate">Lundi, 02 Février 2026</span>
+                        Lundi, 02 Février 2026
                     </span>
                 </div>
                 <div class="daily-newspaper-article">
-                    <h3 class="article-title">Chargement de la promesse du jour...</h3>
+                    <h2 class="article-title">Chargement de la promesse du jour...</h2>
                 </div>
             </div>
         </div>
@@ -311,36 +260,17 @@
                 </h2>
             </div>
             <div class="carousel-controls">
-                <button class="carousel-btn prev" id="prevCarousel">
+                <button class="carousel-btn prev" id="carouselPrevBtn">
                     <i class="fas fa-chevron-left"></i>
                 </button>
                 <div id="promisesCarouselGrid" class="carousel-grid">
-                    <!-- Promises will be loaded here -->
-                    <div class="carousel-promise-card status-non-lance">
-                        <div class="promise-card-header">
-                            <h4 class="promise-card-title">Chargement des promesses...</h4>
-                        </div>
-                    </div>
-                    <div class="carousel-promise-card status-non-lance">
-                        <div class="promise-card-header">
-                            <h4 class="promise-card-title">Chargement des promesses...</h4>
-                        </div>
-                    </div>
-                    <div class="carousel-promise-card status-non-lance">
-                        <div class="promise-card-header">
-                            <h4 class="promise-card-title">Chargement des promesses...</h4>
-                        </div>
-                    </div>
+                    <!-- Chargé dynamiquement -->
                 </div>
-                <button class="carousel-btn next" id="nextCarousel">
+                <button class="carousel-btn next" id="carouselNextBtn">
                     <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
-            <div class="carousel-dots">
-                <button class="carousel-dot active"></button>
-                <button class="carousel-dot"></button>
-                <button class="carousel-dot"></button>
-            </div>
+            <div class="carousel-dots" id="carouselDots"></div>
         </div>
     </section>
 
@@ -353,7 +283,7 @@
                     Tous les Engagements
                 </h2>
                 <div class="section-actions">
-                    <button class="filter-toggle-btn" id="filterToggle">
+                    <button class="filter-toggle-btn" id="filterToggleBtn">
                         <i class="fas fa-filter"></i>
                         <span>Filtres</span>
                     </button>
@@ -371,33 +301,33 @@
             <div class="filters-section" id="filtersSection">
                 <div class="filters-container">
                     <div class="filter-group">
-                        <label for="statusFilter">
+                        <label for="filter-status">
                             <i class="fas fa-tag"></i>
                             Statut
                         </label>
-                        <select class="filter-select" id="statusFilter">
-                            <option value="all">Tous</option>
-                            <option value="realise">✅ Réalisé</option>
-                            <option value="encours">🔄 En cours</option>
-                            <option value="nonlance">⏳ Non lancé</option>
-                            <option value="retard">⚠️ En retard</option>
+                        <select class="filter-select" id="filter-status">
+                            <option value="">Tous</option>
+                            <option value="✅ Réalisé">✅ Réalisé</option>
+                            <option value="🔄 En cours">🔄 En cours</option>
+                            <option value="⏳ Non lancé">⏳ Non lancé</option>
+                            <option value="En retard">⚠️ En retard</option>
                         </select>
                     </div>
                     <div class="filter-group">
-                        <label for="domainFilter">
+                        <label for="filter-domain">
                             <i class="fas fa-folder"></i>
                             Domaine
                         </label>
-                        <select class="filter-select" id="domainFilter">
-                            <option value="all">Tous les domaines</option>
+                        <select class="filter-select" id="filter-domain">
+                            <option value="">Tous les domaines</option>
                         </select>
                     </div>
                     <div class="filter-group">
-                        <label for="searchFilter">
+                        <label for="filter-search">
                             <i class="fas fa-search"></i>
                             Rechercher
                         </label>
-                        <input type="text" class="filter-input" id="searchFilter" placeholder="Rechercher...">
+                        <input type="text" class="filter-input" id="filter-search" placeholder="Mots-clés...">
                     </div>
                     <div class="filter-actions">
                         <button class="btn-reset" id="resetFilters">
@@ -414,14 +344,10 @@
 
             <div class="promises-results">
                 <div class="results-info">
-                    <span id="resultsCount">0 engagement(s) trouvé(s)</span>
+                    <span id="results-count">0 engagement(s) trouvé(s)</span>
                 </div>
                 <div class="promises-grid" id="promisesGrid">
-                    <!-- Promises will be loaded here -->
-                    <div class="loading-state">
-                        <div class="spinner"></div>
-                        <p>Chargement des engagements...</p>
-                    </div>
+                    <!-- Chargé dynamiquement -->
                 </div>
                 <div class="show-more-container">
                     <button id="showMoreBtn">
@@ -452,11 +378,8 @@
                     </a>
                 </div>
             </div>
-            <div class="news-grid">
-                <div class="loading-state">
-                    <div class="spinner"></div>
-                    <p>Chargement des actualités...</p>
-                </div>
+            <div class="news-grid" id="newsGrid">
+                <!-- Chargé dynamiquement -->
             </div>
         </div>
     </section>
@@ -483,7 +406,9 @@
                 </div>
                 
                 <div class="carousel-item">
-                    <img src="https://projetbi.org/placeholder-press.jpg" alt="Revue de presse" id="pressImage">
+                    <div class="carousel-image-container">
+                        <img src="https://projetbi.org/placeholder-press.jpg" alt="Revue de presse" id="pressImage">
+                    </div>
                 </div>
                 
                 <div class="carousel-overlay">
@@ -504,8 +429,8 @@
                     Tous les Quotidiens
                 </h2>
             </div>
-            <div class="newspapers-grid">
-                <!-- Newspapers will be loaded here -->
+            <div class="newspapers-grid" id="newspapersGrid">
+                <!-- Chargé dynamiquement -->
             </div>
         </div>
     </section>
@@ -571,12 +496,13 @@
                                 </label>
                                 <p class="criteria-desc">Facilité d'accès physique et numérique</p>
                                 <div class="stars-container" id="accessibility">
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star" data-value="1"></i>
+                                    <i class="far fa-star" data-value="2"></i>
+                                    <i class="far fa-star" data-value="3"></i>
+                                    <i class="far fa-star" data-value="4"></i>
+                                    <i class="far fa-star" data-value="5"></i>
                                 </div>
+                                <input type="hidden" name="accessibility" id="accessibility-input" value="3">
                             </div>
                             <div class="criteria-item">
                                 <label for="welcome">
@@ -585,12 +511,13 @@
                                 </label>
                                 <p class="criteria-desc">Courtoisie et professionnalisme du personnel</p>
                                 <div class="stars-container" id="welcome">
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star" data-value="1"></i>
+                                    <i class="far fa-star" data-value="2"></i>
+                                    <i class="far fa-star" data-value="3"></i>
+                                    <i class="far fa-star" data-value="4"></i>
+                                    <i class="far fa-star" data-value="5"></i>
                                 </div>
+                                <input type="hidden" name="welcome" id="welcome-input" value="3">
                             </div>
                             <div class="criteria-item">
                                 <label for="efficiency">
@@ -599,12 +526,13 @@
                                 </label>
                                 <p class="criteria-desc">Rapidité et qualité du traitement</p>
                                 <div class="stars-container" id="efficiency">
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star" data-value="1"></i>
+                                    <i class="far fa-star" data-value="2"></i>
+                                    <i class="far fa-star" data-value="3"></i>
+                                    <i class="far fa-star" data-value="4"></i>
+                                    <i class="far fa-star" data-value="5"></i>
                                 </div>
+                                <input type="hidden" name="efficiency" id="efficiency-input" value="3">
                             </div>
                             <div class="criteria-item">
                                 <label for="transparency">
@@ -613,12 +541,13 @@
                                 </label>
                                 <p class="criteria-desc">Clarté des procédures et informations</p>
                                 <div class="stars-container" id="transparency">
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star" data-value="1"></i>
+                                    <i class="far fa-star" data-value="2"></i>
+                                    <i class="far fa-star" data-value="3"></i>
+                                    <i class="far fa-star" data-value="4"></i>
+                                    <i class="far fa-star" data-value="5"></i>
                                 </div>
+                                <input type="hidden" name="transparency" id="transparency-input" value="3">
                             </div>
                         </div>
                         
@@ -648,15 +577,15 @@
                     <div class="rating-results-section">
                         <div class="stats-overview-grid">
                             <div class="stat-item-card">
-                                <div class="stat-value-card">0</div>
+                                <div class="stat-value-card" id="totalVotes">0</div>
                                 <div class="stat-label-card">Votes totaux</div>
                             </div>
                             <div class="stat-item-card">
-                                <div class="stat-value-card">0</div>
+                                <div class="stat-value-card" id="totalServices">0</div>
                                 <div class="stat-label-card">Services évalués</div>
                             </div>
                             <div class="stat-item-card">
-                                <div class="stat-value-card">0.0</div>
+                                <div class="stat-value-card" id="avgRating">0.0</div>
                                 <div class="stat-label-card">Note moyenne</div>
                             </div>
                         </div>
@@ -665,22 +594,16 @@
                             <i class="fas fa-medal"></i>
                             Meilleurs Services
                         </h4>
-                        <div class="top-services-grid">
-                            <div class="loading-state">
-                                <div class="spinner"></div>
-                                <p>Chargement...</p>
-                            </div>
+                        <div class="top-services-grid" id="topServices">
+                            <!-- Chargé dynamiquement -->
                         </div>
                         
                         <h4>
                             <i class="fas fa-clock"></i>
                             Dernières Notations
                         </h4>
-                        <div class="recent-ratings">
-                            <div class="loading-state">
-                                <div class="spinner"></div>
-                                <p>Chargement...</p>
-                            </div>
+                        <div class="recent-ratings" id="recentRatings">
+                            <!-- Chargé dynamiquement -->
                         </div>
                     </div>
                 </div>
@@ -694,13 +617,13 @@
             <div class="footer-grid">
                 <div class="footer-col">
                     <h4>LE PROJET SÉNÉGAL</h4>
-                    <p class="footer-about">
+                    <div class="footer-about">
                         <h5>
                             <i class="fas fa-bullseye"></i>
                             Transparence & Redevabilité
                         </h5>
                         <p>Plateforme citoyenne indépendante dédiée au suivi transparent des engagements du Projet pour un Sénégal Souverain, Juste et Prospère.</p>
-                    </p>
+                    </div>
                 </div>
                 <div class="footer-col">
                     <h4>Contact</h4>
@@ -831,11 +754,11 @@
                 <p class="promise-preview" id="promisePreview">Chargement...</p>
                 <div class="stars-rating-container">
                     <div class="stars-large" id="ratingStars">
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i>
+                        <i class="far fa-star" data-value="1"></i>
+                        <i class="far fa-star" data-value="2"></i>
+                        <i class="far fa-star" data-value="3"></i>
+                        <i class="far fa-star" data-value="4"></i>
+                        <i class="far fa-star" data-value="5"></i>
                     </div>
                     <div class="rating-label" id="ratingLabel">Sélectionnez une note</div>
                 </div>
@@ -919,6 +842,7 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- CORRIGÉ : Script renommé en app.js -->
+    <script src="app.js"></script>
 </body>
 </html>

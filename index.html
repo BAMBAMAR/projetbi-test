@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LE PROJET SÉNÉGAL | Suivi des Engagements Présidentiels</title>
+    <title>LE PROJET SÉNÉGAL | Suivi des Engagements Présidentiels de Bassirou Diomaye Faye</title>
     <link rel="icon" href="https://projetbi.org/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,22 +44,74 @@
 
     <!-- Header Section -->
     <header class="header" id="header">
-        <div class="header-content">
-            <span class="header-badge">
-                <i class="fas fa-certificate"></i>
-                Suivi Citoyen des Engagements Présidentiels
-            </span>
-            <div class="header-title">
-                <span class="title-main">LE PROJET</span>
-                <span class="title-sub">Pour un Sénégal Souverain, Juste et Prospère</span>
+        <div class="header-container">
+            <div class="header-badge-section">
+                <span class="header-badge">
+                    <i class="fas fa-certificate"></i>
+                    Suivi des Engagements Présidentiels
+                </span>
+                <span class="ref-badge">
+                    <i class="fas fa-calendar-check"></i>
+                    Référence : 2 AVRIL 2024
+                </span>
             </div>
-            <p class="subtitle">
-                Plateforme Citoyenne de Suivi Transparent des Engagements de Bassirou Diomaye Faye
-            </p>
-            <span class="ref-badge">
-                <i class="fas fa-calendar-check"></i>
-                Date de référence : 2 AVRIL 2024
-            </span>
+
+            <div class="header-content">
+                <h1 class="title-main">
+                    <span class="title-highlight">LE PROJET</span>
+                    <span class="title-subline">Pour un Sénégal Souverain, Juste et Prospère</span>
+                </h1>
+                <p class="subtitle">
+                    Plateforme Citoyenne de Suivi Transparent des Engagements Présidentiels de Bassirou Diomaye Faye
+                </p>
+            </div>
+
+            <div class="header-actions">
+                <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="btn-download">
+                    <i class="fas fa-download"></i>
+                    <span>Télécharger le Programme Complet (PDF)</span>
+                </a>
+            </div>
+
+            <div class="header-countdown-section">
+                <div class="countdown-container">
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="days">000</div>
+                        <div class="countdown-label">Jours</div>
+                    </div>
+                    <div class="countdown-separator">:</div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="hours">00</div>
+                        <div class="countdown-label">Heures</div>
+                    </div>
+                    <div class="countdown-separator">:</div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="minutes">00</div>
+                        <div class="countdown-label">Minutes</div>
+                    </div>
+                    <div class="countdown-separator">:</div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="seconds">00</div>
+                        <div class="countdown-label">Secondes</div>
+                    </div>
+                </div>
+                <div class="countdown-footer">
+                    <i class="fas fa-flag-checkered"></i>
+                    Date butoir : 02 AVRIL 2029
+                </div>
+            </div>
+
+            <div class="header-image-section">
+                <div class="image-wrapper">
+                    <img src="https://projetbi.org/placeholder-president.jpg" alt="Président Bassirou Diomaye Faye" class="header-image">
+                    <div class="image-overlay">
+                        <div class="image-caption">
+                            <i class="fas fa-user-tie"></i>
+                            Bassirou Diomaye Faye - Président de la République du Sénégal
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -86,11 +138,11 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value" id="total">0</div>
+                        <div class="stat-value">0</div>
                         <div class="stat-label">Total Engagements</div>
                     </div>
                     <div class="stat-footer">
-                        <div class="stat-percentage" id="total-percentage">100%</div>
+                        <div class="stat-percentage">100%</div>
                     </div>
                 </div>
                 <div class="stat-card stat-success">
@@ -100,11 +152,11 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value" id="realise">0</div>
+                        <div class="stat-value">0</div>
                         <div class="stat-label">✅ Réalisés</div>
                     </div>
                     <div class="stat-footer">
-                        <div class="stat-percentage" id="realise-percentage">0%</div>
+                        <div class="stat-percentage">0%</div>
                     </div>
                 </div>
                 <div class="stat-card stat-progress">
@@ -114,11 +166,11 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value" id="encours">0</div>
+                        <div class="stat-value">0</div>
                         <div class="stat-label">🔄 En Cours</div>
                     </div>
                     <div class="stat-footer">
-                        <div class="stat-percentage" id="encours-percentage">0%</div>
+                        <div class="stat-percentage">0%</div>
                     </div>
                 </div>
                 <div class="stat-card stat-pending">
@@ -128,11 +180,11 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value" id="non-lance">0</div>
+                        <div class="stat-value">0</div>
                         <div class="stat-label">⏳ Non Lancés</div>
                     </div>
                     <div class="stat-footer">
-                        <div class="stat-percentage" id="non-lance-percentage">0%</div>
+                        <div class="stat-percentage">0%</div>
                     </div>
                 </div>
                 <div class="stat-card stat-warning">
@@ -142,11 +194,11 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value" id="retard">0</div>
+                        <div class="stat-value">0</div>
                         <div class="stat-label">⚠️ En Retard</div>
                     </div>
                     <div class="stat-footer">
-                        <div class="stat-percentage" id="retard-percentage">0%</div>
+                        <div class="stat-percentage">0%</div>
                     </div>
                 </div>
                 <div class="stat-card stat-rate">
@@ -156,7 +208,7 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value" id="taux-realisation">0%</div>
+                        <div class="stat-value">0%</div>
                         <div class="stat-label">📈 Taux Réalisation</div>
                     </div>
                     <div class="stat-footer">
@@ -170,11 +222,11 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value" id="moyenne-notes">0.0</div>
+                        <div class="stat-value">0</div>
                         <div class="stat-label">⭐ Note Moyenne</div>
                     </div>
                     <div class="stat-footer">
-                        <div class="stat-subvalue" id="votes-total">0 votes</div>
+                        <div class="stat-subvalue">0 votes</div>
                     </div>
                 </div>
                 <div class="stat-card stat-update">
@@ -184,11 +236,11 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value" id="avec-maj">0</div>
+                        <div class="stat-value">0</div>
                         <div class="stat-label">📋 Avec MAJ</div>
                     </div>
                     <div class="stat-footer">
-                        <div class="stat-percentage" id="avec-maj-percentage">0%</div>
+                        <div class="stat-subvalue">0%</div>
                     </div>
                 </div>
                 <div class="stat-card stat-time">
@@ -198,7 +250,7 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value" id="delai-moyen">0j</div>
+                        <div class="stat-value">0j</div>
                         <div class="stat-label">⏱️ Retard Moyen</div>
                     </div>
                     <div class="stat-footer">
@@ -212,11 +264,11 @@
                         </div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value" id="domaine-principal">🏛️</div>
+                        <div class="stat-value">🏛️</div>
                         <div class="stat-label">Domaine Principal</div>
                     </div>
                     <div class="stat-footer">
-                        <div class="stat-subvalue" id="domaine-count">-0 engagements</div>
+                        <div class="stat-subvalue">-0 engagements</div>
                     </div>
                 </div>
             </div>

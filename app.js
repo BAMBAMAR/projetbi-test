@@ -3577,3 +3577,13 @@ async function syncLocalDataWithSupabase() {
         // Logique similaire pour les votes...
     }
 }
+// Dans loadData() de app.js, ajoutez :
+try {
+    const newsResponse = await fetch('news.json?v=' + Date.now());
+    if (newsResponse.ok) {
+        const newsData = await newsResponse.json();
+        CONFIG.news = newsData.news || CONFIG.news;
+    }
+} catch (error) {
+    console.warn('Fichier news.json non trouvé - données par défaut');
+}

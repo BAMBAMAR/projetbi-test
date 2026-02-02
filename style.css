@@ -155,7 +155,7 @@ body {
 .nav-menu {
     display: flex;
     gap: var(--spacing-sm);
-    align-items: center;
+    align-items: left;
     margin-left: var(--spacing-lg);
 }
 

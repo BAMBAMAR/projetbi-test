@@ -3834,4 +3834,134 @@ async function syncLocalDataWithSupabase() {
         // Logique similaire pour les votes...
     }
 }
-
+// ===== CORRECTION SIMPLIFIÉE DES ÉLÉMENTS QUI SE DÉCALENT =====
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Fonction principale pour tout corriger
+    function fixAllLayoutIssues() {
+        const viewportWidth = window.innerWidth;
+        
+        // 1. CORRIGER LA NAVBAR
+        fixNavbar();
+        
+        // 2. CORRIGER LES STATISTIQUES
+        fixStatsGrid();
+        
+        // 3. CORRIGER LES CTA (PDF + COUNTDOWN)
+        fixCtaRow();
+        
+        // 4. EMPÊCHER LE DÉBORDEMENT HORIZONTAL
+        preventHorizontalOverflow();
+    }
+    
+    // 1. Correction de la navbar
+    function fixNavbar() {
+        const navMenu = document.querySelector('.nav-menu');
+        const navContainer = document.querySelector('.nav-container');
+        
+        if (!navMenu || !navContainer) return;
+        
+        const containerWidth = navContainer.offsetWidth;
+        const menuWidth = navMenu.scrollWidth;
+        const availableWidth = containerWidth - 150; // 150px pour le logo
+        
+        if (menuWidth > availableWidth) {
+            // Réduire progressivement l'espacement
+            if (menuWidth > availableWidth + 100) {
+                navMenu.style.gap = '5px';
+                navMenu.style.fontSize = '0.8rem';
+            } else if (menuWidth > availableWidth + 50) {
+                navMenu.style.gap = '8px';
+                navMenu.style.fontSize = '0.85rem';
+            } else {
+                navMenu.style.gap = '10px';
+                navMenu.style.fontSize = '0.9rem';
+            }
+        } else {
+            // Réinitialiser
+            navMenu.style.gap = '';
+            navMenu.style.fontSize = '';
+        }
+    }
+    
+    // 2. Correction des statistiques
+    function fixStatsGrid() {
+        const statsGrid = document.querySelector('.stats-grid');
+        if (!statsGrid) return;
+        
+        const viewportWidth = window.innerWidth;
+        
+        if (viewportWidth < 768) {
+            statsGrid.style.gridTemplateColumns = '1fr';
+        } else if (viewportWidth < 992) {
+            statsGrid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        } else if (viewportWidth < 1200) {
+            statsGrid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+        } else {
+            statsGrid.style.gridTemplateColumns = 'repeat(5, 1fr)';
+        }
+    }
+    
+    // 3. Correction des CTA
+    function fixCtaRow() {
+        const ctaRow = document.querySelector('.cta-row');
+        if (!ctaRow) return;
+        
+        const viewportWidth = window.innerWidth;
+        
+        if (viewportWidth < 992) {
+            ctaRow.style.flexDirection = 'column';
+            ctaRow.style.alignItems = 'stretch';
+            
+            // Forcer les enfants à prendre toute la largeur
+            const children = ctaRow.children;
+            Array.from(children).forEach(child => {
+                child.style.width = '100%';
+                child.style.maxWidth = '100%';
+            });
+        } else {
+            ctaRow.style.flexDirection = 'row';
+            ctaRow.style.alignItems = 'center';
+            
+            // Réinitialiser les enfants
+            const children = ctaRow.children;
+            Array.from(children).forEach(child => {
+                child.style.width = '';
+                child.style.maxWidth = '';
+            });
+        }
+    }
+    
+    // 4. Empêcher le débordement horizontal
+    function preventHorizontalOverflow() {
+        // Empêcher le scroll horizontal sur le body
+        if (document.body.scrollWidth > window.innerWidth) {
+            document.body.style.overflowX = 'hidden';
+        } else {
+            document.body.style.overflowX = '';
+        }
+        
+        // Vérifier les conteneurs principaux
+        const containers = document.querySelectorAll('.container, .header-container');
+        containers.forEach(container => {
+            if (container.scrollWidth > container.clientWidth) {
+                container.style.overflowX = 'hidden';
+            } else {
+                container.style.overflowX = '';
+            }
+        });
+    }
+    
+    // Exécuter au chargement
+    fixAllLayoutIssues();
+    
+    // Exécuter lors du redimensionnement (optimisé)
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(fixAllLayoutIssues, 100);
+    });
+    
+    // Exécuter après le chargement complet
+    window.addEventListener('load', fixAllLayoutIssues);
+});

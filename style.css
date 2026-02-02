@@ -113,25 +113,27 @@ body {
 }
 
 .nav-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-md); /* Espace minimal mais propre */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--spacing-lg);
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 20px;
+    display: flex; 
+    justify-content: flex-start; /* ← Aligner à gauche */
+    align-items: center; 
+    height: 100%;
+    position: relative;
+    gap: 30px; /* ← Espace entre logo et menu */
 }
 
 .nav-logo {
     display: flex;
     align-items: center;
-    gap: var(--spacing-md);
+    gap: 12px;
     text-decoration: none;
-    color: var(--primary);
+    color: var(--primary-color);
     font-weight: 700;
     font-size: 1.1rem;
-    margin: 0; /* ⚠️ S’assure qu’aucune marge n’est ajoutée */
-    padding: 0; /* ⚠️ Évite tout padding implicite */
+    margin: 0;   /* ← Important */
+    padding: 0;  /* ← Important */
 }
 
 .nav-logo-icon {

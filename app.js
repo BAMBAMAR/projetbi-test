@@ -325,11 +325,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ==========================================
 // NAVIGATION
 // ==========================================
+// ==========================================
+// NAVIGATION - VERSION CORRIGÉE
+// ==========================================
 function initNavigation() {
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navMenu = document.getElementById('navMenu');
     const navLinks = document.querySelectorAll('.nav-link');
-
+    
     if (mobileMenuBtn && navMenu) {
         mobileMenuBtn.addEventListener('click', () => {
             navMenu.classList.toggle('show');
@@ -340,7 +343,12 @@ function initNavigation() {
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            const section = link.getAttribute('data-section');
+            
+            // ✅ CORRECTION : Extraire l'ID depuis href au lieu de data-section
+            const href = link.getAttribute('href');
+            if (!href || !href.startsWith('#')) return;
+            
+            const section = href.substring(1); // Supprime le #
             const target = document.getElementById(section);
 
             if (target) {
@@ -355,7 +363,7 @@ function initNavigation() {
                 navLinks.forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
 
-                if (navMenu.classList.contains('show')) {
+                if (navMenu && navMenu.classList.contains('show')) {
                     navMenu.classList.remove('show');
                     mobileMenuBtn?.classList.remove('active');
                 }
@@ -377,7 +385,10 @@ function initNavigation() {
 
         navLinks.forEach(link => {
             link.classList.remove('active');
-            if (link.getAttribute('data-section') === current) {
+            
+            // ✅ CORRECTION : Comparer avec href
+            const href = link.getAttribute('href');
+            if (href && href === `#${current}`) {
                 link.classList.add('active');
             }
         });

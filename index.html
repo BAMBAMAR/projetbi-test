@@ -40,17 +40,46 @@
             z-index: 2000;
             transition: all 0.3s ease;
         }
-
-     .nav-container {
+.nav-container {
     max-width: 1200px; 
     margin: 0 auto; 
-    padding: 0; /* ← Plus de padding horizontal ici */
+    padding: 0 20px; /* Ajout de padding horizontal pour l'espacement sur les côtés */
     display: flex; 
-    justify-content: space-between; 
-    align-items: left; 
+    justify-content: space-between; /* S'assure que logo est à gauche et menu à droite */
+    align-items: center; /* Centre verticalement */
     height: 100%;
     position: relative;
-    gap: 30px; /* ← Espace entre logo et menu */
+    gap: 0; /* Supprime l'espace entre logo et menu */
+}
+
+.nav-menu { 
+    display: flex; 
+    gap: 15px; 
+    align-items: center; 
+    margin-left: auto; /* Pousse le menu complètement à droite */
+}
+
+/* Pour le responsive, ajustez aussi */
+@media (max-width: 992px) {
+    .nav-menu {
+        position: fixed;
+        top: 75px; 
+        left: 0; 
+        width: 100%;
+        background: white;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        transform: translateY(-150%);
+        transition: transform 0.4s ease;
+        z-index: 1999;
+        border-bottom: 2px solid var(--primary-color);
+        height: auto;
+        max-height: 80vh;
+        overflow-y: auto;
+        margin-left: 0; /* Réinitialise pour mobile */
+    }
 }
 
         .nav-logo { 
@@ -77,12 +106,7 @@
             font-weight: 700; 
         }
 
-        .nav-menu { 
-            display: flex; 
-            gap: 15px; 
-            align-items: center; 
-        }
-        .nav-link { 
+          .nav-link { 
             text-decoration: none; 
             color: #444; 
             font-weight: 600; 
@@ -332,30 +356,7 @@
         }
 
         /* --- 4. RESPONSIVE --- */
-        @media (max-width: 992px) {
-            .mobile-menu-btn { 
-                display: flex; 
-            }
-
-            .nav-menu {
-                position: fixed;
-                top: 75px; 
-                left: 0; 
-                width: 100%;
-                background: white;
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 20px;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-                transform: translateY(-150%);
-                transition: transform 0.4s ease;
-                z-index: 1999;
-                border-bottom: 2px solid var(--primary-color);
-                height: auto;
-                max-height: 80vh;
-                overflow-y: auto;
-            }
-
+     
             .nav-menu.active { 
                 transform: translateY(0); 
             }

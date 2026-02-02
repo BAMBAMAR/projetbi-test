@@ -147,11 +147,17 @@ body {
     font-size: 1rem;
     font-weight: 800;
 }
-
 .nav-menu {
     display: flex;
     gap: var(--spacing-sm);
     align-items: center;
+    margin-left: var(--spacing-lg);
+}
+
+@media (min-width: 768px) {
+    .nav-menu {
+        margin-left: var(--spacing-xl);
+    }
 }
 
 .nav-link {

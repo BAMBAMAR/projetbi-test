@@ -92,33 +92,46 @@ body {
     transition: width 0.1s ease;
 }
 
+/* ===== NAVBAR ===== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-light);
+    box-shadow: var(--shadow-sm);
+    z-index: 1000;
+    padding: var(--spacing-md) 0;
+    transition: var(--transition);
+}
+
 .navbar.scrolled {
     padding: var(--spacing-sm) 0;
     box-shadow: var(--shadow);
 }
 
 .nav-container {
-    max-width: 1200px; 
-    margin: 0 auto; 
-    padding: 0 20px;
-    display: flex; 
-    justify-content: flex-start; /* ← Aligner à gauche */
-    align-items: center; 
-    height: 100%;
-    position: relative;
-    gap: 30px; /* ← Espace entre logo et menu */
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md); /* Espace minimal mais propre */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-lg);
 }
 
 .nav-logo {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: var(--spacing-md);
     text-decoration: none;
-    color: var(--primary-color);
+    color: var(--primary);
     font-weight: 700;
     font-size: 1.1rem;
-    margin: 0;   /* ← Important */
-    padding: 0;  /* ← Important */
+    margin: 0; /* ⚠️ S’assure qu’aucune marge n’est ajoutée */
+    padding: 0; /* ⚠️ Évite tout padding implicite */
 }
 
 .nav-logo-icon {
@@ -127,8 +140,8 @@ body {
     background: linear-gradient(135deg, var(--primary), var(--primary-light));
     border-radius: var(--radius);
     display: flex;
-    align-items: left;
-    justify-content: left;
+    align-items: center;
+    justify-content: center;
     color: white;
     box-shadow: var(--shadow);
 }
@@ -136,6 +149,18 @@ body {
 .nav-logo-text {
     font-size: 1rem;
     font-weight: 800;
+}
+.nav-menu {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+    margin-left: var(--spacing-lg);
+}
+
+@media (min-width: 768px) {
+    .nav-menu {
+        margin-left: var(--spacing-xl);
+    }
 }
 
 .nav-link {

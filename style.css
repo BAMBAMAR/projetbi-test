@@ -100,63 +100,159 @@ body {
     transition: width 0.1s ease;
 }
 
-/* ===== NAVBAR CORRECTION ===== */
+/* ===== NAVBAR OPTIMISÉE SANS DÉCALAGE ===== */
+.navbar {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(42, 109, 93, 0.1);
+    height: 75px;
+    position: fixed;
+    top: 0; 
+    width: 100%; 
+    z-index: 2000;
+    transition: all 0.3s ease;
+    /* Empêcher tout débordement */
+    overflow: hidden;
+}
+
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 15px; /* Réduit de 20px à 15px */
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 100%;
     position: relative;
+    /* IMPORTANT: Supprimer gap pour éviter les décalages */
     gap: 0;
-    /* Empêcher le retour à la ligne */
     flex-wrap: nowrap;
+    /* Assurer que tout reste dans les limites */
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.nav-logo { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    text-decoration: none; 
+    z-index: 2001;
+    /* Éviter le rétrécissement */
+    flex-shrink: 0;
 }
 
 .nav-menu { 
     display: flex; 
-    gap: 15px; 
+    gap: 12px; /* Réduit de 15px à 12px */
     align-items: center; 
+    /* IMPORTANT: Utiliser auto à la place de fixed margin */
     margin-left: auto;
-    /* Empêcher le retour à la ligne */
     flex-wrap: nowrap;
-    /* Empêcher le rétrécissement */
-    flex-shrink: 0;
+    flex-shrink: 1; /* Permet un léger rétrécissement contrôlé */
+    /* Limiter la largeur maximale */
+    max-width: calc(100% - 200px); /* Réserve 200px pour le logo */
+    overflow: visible;
 }
 
 .nav-link { 
     text-decoration: none; 
     color: #444; 
     font-weight: 600; 
-    font-size: 0.9rem;
+    font-size: 0.85rem; /* Réduit de 0.9rem à 0.85rem */
     transition: 0.3s; 
     display: flex; 
     align-items: center; 
-    gap: 8px; 
-    padding: 8px 12px;
+    gap: 6px; /* Réduit de 8px à 6px */
+    padding: 8px 10px; /* Réduit de 8px 12px à 8px 10px */
     border-radius: 8px; 
     cursor: pointer;
-    /* Empêcher le retour à la ligne du texte */
     white-space: nowrap;
-    /* Empêcher le rétrécissement */
+    flex-shrink: 0; /* Empêche le rétrécissement */
+    /* Assurer une taille minimale cohérente */
+    min-width: max-content;
+    box-sizing: border-box;
+}
+
+.nav-link:hover { 
+    color: var(--primary-color); 
+    background: rgba(42, 109, 93, 0.05); 
+}
+
+.btn-nav-action {
+    background: var(--primary-color); 
+    color: white !important;
+    padding: 8px 16px; /* Réduit de 10px 20px */
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(42, 109, 93, 0.2);
+    /* Éviter l'expansion */
     flex-shrink: 0;
 }
 
-/* Réduire l'espacement sur les écrans moyens */
-@media (max-width: 1100px) {
+.mobile-menu-btn { 
+    display: none; 
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    flex-direction: column; 
+    gap: 5px; 
+    z-index: 2001; 
+    padding: 5px;
+    position: relative;
+    /* Éviter le décalage */
+    flex-shrink: 0;
+    margin-left: 10px;
+}
+
+.mobile-menu-btn span {
+    display: block; 
+    width: 25px; 
+    height: 3px; 
+    background-color: var(--primary-color);
+    transition: 0.3s; 
+    border-radius: 3px;
+    transform-origin: center;
+}
+
+/* ===== CORRECTIONS RESPONSIVE SÉCURISÉES ===== */
+
+/* Réduction progressive pour éviter les décalages brusques */
+@media (max-width: 1150px) {
     .nav-menu {
         gap: 10px;
     }
     
     .nav-link {
-        padding: 8px 10px;
-        font-size: 0.85rem;
+        font-size: 0.82rem;
+        padding: 7px 9px;
+        gap: 5px;
+    }
+    
+    .btn-nav-action {
+        padding: 7px 14px;
+        font-size: 0.82rem;
     }
 }
 
-/* Cacher certains éléments sur petits écrans */
+@media (max-width: 1050px) {
+    .nav-menu {
+        gap: 8px;
+        max-width: calc(100% - 180px); /* Réduit la réserve */
+    }
+    
+    .nav-link {
+        font-size: 0.8rem;
+        padding: 6px 8px;
+    }
+    
+    /* Cacher les icônes pour gagner de la place */
+    .nav-link i:not(.btn-nav-action i) {
+        display: none;
+    }
+}
+
+/* Version mobile sécurisée */
 @media (max-width: 992px) {
     .mobile-menu-btn { 
         display: flex; 
@@ -169,8 +265,8 @@ body {
         width: 100%;
         background: white;
         flex-direction: column;
-        align-items: flex-start;
-        padding: 20px;
+        align-items: stretch; /* IMPORTANT: étire sur toute la largeur */
+        padding: 15px; /* Réduit de 20px */
         box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         transform: translateY(-150%);
         transition: transform 0.4s ease;
@@ -179,9 +275,11 @@ body {
         height: auto;
         max-height: 80vh;
         overflow-y: auto;
-        /* Réinitialiser pour mobile */
-        flex-wrap: wrap;
+        /* Réinitialisation complète */
+        flex-wrap: nowrap;
         margin-left: 0;
+        max-width: 100%;
+        gap: 0;
     }
 
     .nav-menu.active { 
@@ -190,21 +288,65 @@ body {
     
     .nav-link { 
         width: 100%; 
-        padding: 15px; 
+        padding: 12px 15px; 
         border-bottom: 1px solid #eee; 
-        /* Réinitialiser pour mobile */
+        /* Réinitialisation mobile */
         white-space: normal;
         justify-content: flex-start;
+        font-size: 0.9rem;
+        gap: 10px;
+        /* Réafficher les icônes */
+        display: flex;
+    }
+    
+    .nav-link i {
+        display: inline-block !important;
     }
     
     .btn-nav-action { 
         width: 100%; 
         text-align: center; 
         justify-content: center; 
-        margin-top: 15px; 
+        margin-top: 10px;
+        padding: 10px 15px;
+    }
+    
+    /* Masquer le menu desktop */
+    .nav-menu:not(.active) {
+        display: none;
     }
 }
 
+/* ===== CORRECTION ULTIME POUR LES TRÈS PETITS ÉCRANS ===== */
+@media (max-width: 400px) {
+    .nav-container {
+        padding: 0 10px;
+    }
+    
+    .nav-logo {
+        gap: 8px;
+    }
+    
+    .logo-main {
+        font-size: 1rem;
+    }
+    
+    .mobile-menu-btn {
+        margin-left: 5px;
+    }
+}
+
+/* ===== GARANTIE ANTI-DÉCALAGE ===== */
+/* Ces règles garantissent qu'aucun élément ne peut déborder */
+.navbar * {
+    box-sizing: border-box;
+}
+
+.nav-container::after {
+    content: '';
+    display: table;
+    clear: both;
+}
 /* ===== HEADER COMBINÉ ===== */
 .header {
     /* Styles de index.html */
@@ -3747,4 +3889,14 @@ body {
     .title-sub {
         font-size: 1.2rem;
     }
+}
+/* Garantie supplémentaire */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+}
+
+* {
+    max-width: 100%;
 }

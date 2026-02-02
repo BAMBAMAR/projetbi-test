@@ -41,16 +41,17 @@
             transition: all 0.3s ease;
         }
 
-        .nav-container {
-            max-width: 1200px; 
-            margin: 0 auto; 
-            padding: 0 20px;
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            height: 100%;
-            position: relative;
-        }
+     .nav-container {
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0; /* ← Plus de padding horizontal ici */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    height: 100%;
+    position: relative;
+    gap: 30px; /* ← Espace entre logo et menu */
+}
 
         .nav-logo { 
             display: flex; 

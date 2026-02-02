@@ -142,8 +142,8 @@ body {
     background: linear-gradient(135deg, var(--primary), var(--primary-light));
     border-radius: var(--radius);
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: left;
+    justify-content: left;
     color: white;
     box-shadow: var(--shadow);
 }

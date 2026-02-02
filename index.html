@@ -17,8 +17,8 @@
     <meta property="og:url" content="https://projetbi.org/">
     <meta property="og:title" content="Suivi des Engagements du Projet | Sénégal Souverain, Juste et Prospère">
     <meta property="og:description" content="Découvrez l'état d'avancement des engagements présidentiels. Donnez votre avis et suivez la transparence démocratique.">
-    <meta property="og:image" content="https://projetbi.org/og-image.jpg">
-    <meta property="og:image:secure_url" content="https://projetbi.org/og-image.jpg">
+    <meta property="og:image" content="https://projetbi.org/sonko.jpg">
+    <meta property="og:image:secure_url" content="https://projetbi.org/sonko.jpg">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -32,7 +32,7 @@
     <meta name="twitter:creator" content="@ProjetSenegal">
     <meta name="twitter:title" content="Suivi Promesses : PROJET SÉNÉGAL">
     <meta name="twitter:description" content="Découvrez l'avancement des engagements pour le Sénégal Souverain, Juste et Prospère.">
-    <meta name="twitter:image" content="https://projetbi.org/twitter-card.jpg">
+    <meta name="twitter:image" content="https://projetbi.org/sonko.jpg">
     <meta name="twitter:image:alt" content="Tableau de bord de suivi des promesses">
     
     <!-- Titre optimisé -->
@@ -79,413 +79,447 @@
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     
-    <!-- Style CSS moderne pour l'en-tête -->
+    <!-- Style CSS amélioré pour l'en-tête, menu et compte à rebours -->
     <style>
-    /* ===== EN-TÊTE MODERNE ET UNIFIÉ ===== */
-    .modern-header-wrapper {
+    /* === STYLES AMÉLIORÉS POUR L'EN-TÊTE === */
+    .header {
+        background: linear-gradient(135deg, #1a3c32 0%, #2a6d5d 100%);
+        color: white;
+        padding: 140px 0 60px;
+        margin-top: 80px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .header-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('sonko.jpg') center/cover no-repeat;
+        opacity: 0.15;
+        z-index: 1;
+    }
+    
+    .header-pattern {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, transparent 65%, rgba(255,255,255,0.05) 65%);
+        z-index: 2;
+    }
+    
+    .header-content {
+        position: relative;
+        z-index: 3;
         max-width: 1200px;
         margin: 0 auto;
         padding: 0 2rem;
+        text-align: center;
     }
     
-    .hero-block {
-        display: grid;
-        grid-template-columns: 1.3fr 380px;
-        gap: 3rem;
-        align-items: center;
-        margin-bottom: 2rem;
-    }
-    
-    .badge-top {
+    .header-badge {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        background: rgba(255, 255, 255, 0.25);
+        gap: 10px;
+        background: rgba(255, 255, 255, 0.15);
         backdrop-filter: blur(10px);
-        padding: 0.6rem 1.3rem;
+        padding: 10px 22px;
         border-radius: 50px;
-        font-size: 0.9rem;
         font-weight: 600;
-        color: white;
+        font-size: 1rem;
+        margin-bottom: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .header-title {
         margin-bottom: 1.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.3);
     }
     
-    .main-title {
-        font-size: 3.8rem;
-        font-weight: 900;
+    .title-main {
+        display: block;
+        font-size: 3.5rem;
+        font-weight: 800;
+        font-family: 'Manrope', sans-serif;
         color: white;
-        line-height: 0.95;
-        margin: 0 0 1.5rem 0;
-        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        margin-bottom: 10px;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
     
-    .sub-title {
+    .title-sub {
         display: block;
         font-size: 1.5rem;
-        font-weight: 600;
-        margin-top: 1rem;
-        opacity: 0.95;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.9);
+        font-family: 'Crimson Pro', serif;
+        max-width: 800px;
+        margin: 0 auto;
         line-height: 1.4;
     }
     
-    .description-text {
+    .subtitle {
         font-size: 1.2rem;
-        color: rgba(255, 255, 255, 0.95);
-        margin-bottom: 2.5rem;
-        line-height: 1.7;
-    }
-    
-    .action-buttons {
-        display: flex;
-        gap: 1.2rem;
-        flex-wrap: wrap;
-    }
-    
-    .btn-main, .btn-outline {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 1.1rem 2.2rem;
-        border-radius: 12px;
-        font-weight: 700;
-        font-size: 1.05rem;
-        text-decoration: none;
-        transition: all 0.35s ease;
-        cursor: pointer;
-    }
-    
-    .btn-main {
-        background: white;
-        color: var(--primary-color);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    }
-    
-    .btn-main:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-    }
-    
-    .btn-outline {
-        background: transparent;
-        color: white;
-        border: 2px solid white;
-    }
-    
-    .btn-outline:hover {
-        background: white;
-        color: var(--primary-color);
-        transform: translateY(-4px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    }
-    
-    .hero-photo {
-        display: flex;
-        justify-content: flex-end;
-    }
-    
-    .hero-photo img {
-        width: 100%;
-        max-width: 380px;
-        height: auto;
-        border-radius: 20px;
-        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
-        border: 6px solid rgba(255, 255, 255, 0.3);
-        transition: transform 0.4s ease;
-    }
-    
-    .hero-photo img:hover {
-        transform: scale(1.05) rotate(2deg);
-    }
-    
-    /* Compte à rebours modernisé */
-    .countdown-container {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.95) 100%);
-        border-radius: 20px;
-        padding: 2rem;
-        margin-bottom: 1.5rem;
-        box-shadow: 0 10px 50px rgba(0, 0, 0, 0.15);
-        border: 1px solid rgba(0, 91, 187, 0.1);
-    }
-    
-    .countdown-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        background: linear-gradient(135deg, var(--primary-color) 0%, #0047a3 100%);
-        color: white;
-        padding: 0.7rem 1.8rem;
-        border-radius: 50px;
-        font-weight: 700;
-        font-size: 1.1rem;
-        margin-bottom: 1.8rem;
-        box-shadow: 0 4px 15px rgba(0, 91, 187, 0.3);
-    }
-    
-    .countdown-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1.2rem;
-        margin-bottom: 1.5rem;
-    }
-    
-    .countdown-item {
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        border-radius: 16px;
-        padding: 1.8rem 1rem;
-        text-align: center;
-        border: 2px solid rgba(0, 91, 187, 0.12);
-        transition: all 0.35s ease;
-    }
-    
-    .countdown-item:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 10px 35px rgba(0, 91, 187, 0.25);
-        border-color: var(--primary-color);
-    }
-    
-    .countdown-value {
-        font-size: 3rem;
-        font-weight: 900;
-        font-family: 'Manrope', sans-serif;
-        background: linear-gradient(135deg, var(--primary-color) 0%, #0047a3 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        line-height: 1;
-    }
-    
-    .countdown-label {
-        font-size: 0.9rem;
-        color: #6c757d;
-        text-transform: uppercase;
-        letter-spacing: 1.2px;
-        margin-top: 1rem;
-        font-weight: 700;
-    }
-    
-    .countdown-target {
-        text-align: center;
-        font-size: 1.05rem;
-        color: #495057;
-        background: rgba(0, 91, 187, 0.08);
-        padding: 1rem 2rem;
-        border-radius: 12px;
-    }
-    
-    .countdown-target strong {
-        color: var(--primary-color);
-        font-weight: 800;
-    }
-    
-    .ref-badge {
-        background: rgba(255, 255, 255, 0.97);
-        padding: 1.3rem 2rem;
-        border-radius: 16px;
-        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.12);
-        text-align: center;
-        font-size: 1rem;
-        color: #495057;
-    }
-    
-    .ref-badge i {
-        color: var(--primary-color);
-        margin-right: 0.7rem;
-    }
-    
-    .ref-badge #current-date {
-        font-weight: 800;
-        color: var(--primary-color);
-    }
-    
-    .header-actions {
-        margin-top: 1.2rem;
-    }
-    
-    /* Responsive */
-    @media (max-width: 1024px) {
-        .hero-block {
-            grid-template-columns: 1fr;
-            text-align: center;
-        }
-        
-        .hero-photo {
-            justify-content: center;
-            order: -1;
-        }
-        
-        .action-buttons {
-            justify-content: center;
-        }
-        
-        .main-title {
-            font-size: 3rem;
-        }
-        
-        .sub-title {
-            font-size: 1.3rem;
-        }
-    }
-    
-    @media (max-width: 768px) {
-        .modern-header-wrapper {
-            padding: 0 1rem;
-        }
-        
-        .main-title {
-            font-size: 2.3rem;
-        }
-        
-        .sub-title {
-            font-size: 1.1rem;
-        }
-        
-        .description-text {
-            font-size: 1rem;
-        }
-        
-        .countdown-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-        
-        .countdown-value {
-            font-size: 2.5rem;
-        }
-        
-        .countdown-container {
-            padding: 1.5rem;
-        }
-        
-        .hero-photo img {
-            max-width: 300px;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .main-title {
-            font-size: 1.9rem;
-        }
-        
-        .countdown-value {
-            font-size: 2rem;
-        }
-        
-        .action-buttons {
-            flex-direction: column;
-            width: 100%;
-        }
-        
-        .btn-main, .btn-outline {
-            width: 100%;
-            justify-content: center;
-        }
-    }
-    </style>
-    
-    <!-- Style CSS pour le compte à rebours -->
-    <style>
-    .countdown-container {
-        background: linear-gradient(135deg, rgba(0, 91, 187, 0.1) 0%, rgba(255, 221, 0, 0.1) 100%);
-        border: 2px solid rgba(0, 91, 187, 0.3);
-        border-radius: 20px;
-        padding: 1.5rem;
-        margin: 2rem auto;
+        color: rgba(255, 255, 255, 0.85);
         max-width: 800px;
-        box-shadow: 0 8px 32px rgba(0, 91, 187, 0.15);
+        margin: 0 auto 3rem;
+        line-height: 1.6;
+        padding: 0 1rem;
+    }
+    
+    /* === MENU AMÉLIORÉ === */
+    .navbar {
+        background: rgba(255, 255, 255, 0.98);
         backdrop-filter: blur(10px);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        border-bottom: 2px solid #2a6d5d;
+    }
+    
+    .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 80px;
+    }
+    
+    .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+    }
+    
+    .nav-logo img {
+        height: 42px;
+        width: auto;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .nav-logo span {
+        color: #2a6d5d;
+        font-weight: 700;
+        font-size: 1.1rem;
+        letter-spacing: -0.3px;
+    }
+    
+    .nav-menu {
+        display: flex;
+        gap: 4px;
+    }
+    
+    .nav-link {
+        padding: 12px 20px;
+        text-decoration: none;
+        color: #333;
+        font-weight: 600;
+        font-size: 0.95rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        position: relative;
+    }
+    
+    .nav-link:hover {
+        background: linear-gradient(135deg, #2a6d5d 0%, #1a3c32 100%);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(42, 109, 93, 0.2);
+    }
+    
+    .nav-link.active {
+        background: linear-gradient(135deg, #2a6d5d 0%, #1a3c32 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(42, 109, 93, 0.2);
+    }
+    
+    .nav-link i {
+        font-size: 1.1rem;
+    }
+    
+    .mobile-menu-btn {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+    }
+    
+    .mobile-menu-btn span {
+        width: 25px;
+        height: 2px;
+        background: #2a6d5d;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+    }
+    
+    /* === COMPTE À REBOURS AMÉLIORÉ (plus petit) === */
+    .countdown-container {
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 16px;
+        padding: 1.2rem;
+        margin: 2rem auto;
+        max-width: 700px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
         text-align: center;
     }
-
+    
     .countdown-badge {
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
-        background: var(--primary-color);
-        color: white;
-        padding: 0.5rem 1.5rem;
+        gap: 8px;
+        background: linear-gradient(135deg, #e9b949 0%, #ff9f1c 100%);
+        color: #1a3c32;
+        padding: 8px 18px;
         border-radius: 50px;
-        font-weight: 600;
-        font-size: 1.1rem;
-        margin-bottom: 1.5rem;
+        font-weight: 700;
+        font-size: 0.95rem;
+        margin-bottom: 1.2rem;
+        box-shadow: 0 4px 12px rgba(233, 185, 73, 0.3);
     }
-
+    
     .countdown-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 1.5rem;
-        margin-bottom: 1rem;
+        gap: 0.8rem;
+        margin-bottom: 0.8rem;
     }
-
+    
     .countdown-item {
-        background: white;
-        border-radius: 15px;
-        padding: 1.2rem 0.5rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        transition: transform 0.3s ease;
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 12px;
+        padding: 0.8rem 0.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.3);
     }
-
+    
     .countdown-item:hover {
-        transform: translateY(-5px);
+        transform: translateY(-4px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
     }
-
+    
     .countdown-value {
-        font-size: 2.8rem;
+        font-size: 2rem;
         font-weight: 800;
         font-family: 'Manrope', sans-serif;
-        color: var(--primary-color);
+        color: #2a6d5d;
         line-height: 1;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
     }
-
+    
     .countdown-label {
-        font-size: 0.9rem;
-        color: var(--text-secondary);
+        font-size: 0.75rem;
+        color: #666;
         text-transform: uppercase;
         letter-spacing: 1px;
         margin-top: 0.5rem;
         font-weight: 600;
     }
-
+    
     .countdown-target {
-        font-size: 1.1rem;
-        color: var(--text-primary);
-        background: rgba(255, 255, 255, 0.9);
-        padding: 0.8rem 1.5rem;
-        border-radius: 10px;
+        font-size: 0.95rem;
+        color: white;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
         display: inline-block;
         margin-top: 0.5rem;
+        backdrop-filter: blur(5px);
     }
-
+    
     .countdown-target strong {
-        color: var(--primary-color);
+        color: #e9b949;
     }
-
-    /* Responsive */
+    
+    /* === BOUTON PDF STYLISÉ === */
+    .btn-program {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(135deg, #e9b949 0%, #ff9f1c 100%);
+        color: #1a3c32;
+        padding: 12px 25px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(233, 185, 73, 0.3);
+        margin: 0.5rem 0;
+    }
+    
+    .btn-program:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(233, 185, 73, 0.4);
+        background: linear-gradient(135deg, #ff9f1c 0%, #e9b949 100%);
+    }
+    
+    /* === EN-TÊTE ACTIONS AMÉLIORÉES === */
+    .ref-badge {
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        padding: 1.2rem;
+        margin: 1.5rem auto 0;
+        max-width: 700px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .ref-badge i {
+        color: #e9b949;
+        margin-right: 8px;
+    }
+    
+    .header-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    
+    /* === RESPONSIVE === */
+    @media (max-width: 992px) {
+        .title-main {
+            font-size: 2.8rem;
+        }
+        
+        .title-sub {
+            font-size: 1.3rem;
+        }
+        
+        .nav-menu {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background: white;
+            flex-direction: column;
+            padding: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transform: translateY(-100%);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+        
+        .nav-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .nav-link {
+            padding: 15px;
+            justify-content: center;
+            border-radius: 8px;
+        }
+        
+        .mobile-menu-btn {
+            display: flex;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+    }
+    
     @media (max-width: 768px) {
+        .header {
+            padding: 120px 0 40px;
+        }
+        
+        .title-main {
+            font-size: 2.2rem;
+        }
+        
+        .title-sub {
+            font-size: 1.1rem;
+        }
+        
         .countdown-grid {
             grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
+            gap: 0.6rem;
         }
         
         .countdown-value {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
+        }
+        
+        .nav-container {
+            padding: 0 1rem;
+        }
+        
+        .btn-program {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .header {
+            padding: 110px 0 30px;
+        }
+        
+        .title-main {
+            font-size: 1.8rem;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+        }
+        
+        .countdown-grid {
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+        }
+        
+        .countdown-value {
+            font-size: 1.6rem;
         }
         
         .countdown-container {
             padding: 1rem;
-            margin: 1.5rem 0;
+            margin: 1rem;
         }
     }
-
-    @media (max-width: 480px) {
-        .countdown-grid {
-            grid-template-columns: 1fr;
-            gap: 0.8rem;
-        }
-        
-        .countdown-value {
-            font-size: 2rem;
-        }
+    
+    /* Animation du compte à rebours */
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
+    .countdown-value.changed {
+        animation: pulse 0.5s ease;
     }
     </style>
 </head>
@@ -493,13 +527,13 @@
     <!-- Progress Indicator -->
     <div class="progress-indicator" id="progressIndicator"></div>
 
-    <!-- Navigation Bar -->
+    <!-- Navigation Bar Améliorée -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="#header" class="nav-logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-      <img src="https://projetbi.org/favicon.png" alt="Logo JJJ" style="height: 38px; width: auto; border-radius: 5px;">
-      <span style="color: #2a6d5d; font-weight: 700; font-size: 1rem; letter-spacing: -0.5px;">LE PROJET : SUIVI DES PROMESSES</span>
-    </a>
+            <a href="#header" class="nav-logo">
+                <img src="https://projetbi.org/favicon.png" alt="Logo Projet Sénégal">
+                <span>LE PROJET : SUIVI DES PROMESSES</span>
+            </a>
             
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <span></span>
@@ -530,7 +564,7 @@
                 </a>
                 <a href="#press" class="nav-link" data-section="press">
                     <i class="fas fa-book-open"></i>
-                   Revue de Presse
+                    Revue de Presse
                 </a>
                 <a href="#rating" class="nav-link" data-section="rating">
                     <i class="fas fa-star-half-alt"></i>
@@ -540,48 +574,28 @@
         </div>
     </nav>
 
-    <!-- Header Section -->
+    <!-- Header Section Améliorée -->
     <header class="header" id="header">
         <div class="header-background">
             <div class="header-pattern"></div>
         </div>
         
-        <div class="modern-header-wrapper">
-            <!-- Bloc hero avec contenu + photo -->
-            <div class="hero-block">
-                <div class="hero-text">
-                    <div class="badge-top">
-                        <i class="fas fa-flag"></i>
-                        🇸🇳 République du Sénégal
-                    </div>
-                    
-                    <h1 class="main-title">
-                        LE PROJET
-                        <span class="sub-title">Sénégal Souverain, Juste et Prospère</span>
-                    </h1>
-                    
-                    <p class="description-text">
-                        Plateforme Citoyenne de Suivi Transparent des Engagements Présidentiels
-                    </p>
-                    
-                    <div class="action-buttons">
-                        <a href="#promises" class="btn-main">
-                            <i class="fas fa-list-check"></i>
-                            Voir les Engagements
-                        </a>
-                        <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="btn-outline" target="_blank">
-                            <i class="fas fa-file-pdf"></i>
-                            Programme PDF
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="hero-photo">
-                    <img src="sonko.jpg" alt="Président Bassirou Diomaye Faye" onerror="this.src='https://via.placeholder.com/350x450/005bbb/ffffff?text=Photo+Officielle'">
-                </div>
+        <div class="header-content">
+            <div class="header-badge">
+                <i class="fas fa-shield-alt"></i>
+                🇸🇳 République du Sénégal
             </div>
             
-            <!-- Compte à rebours -->
+            <div class="header-title">
+                <span class="title-main">LE PROJET</span>
+                <span class="title-sub">Pour un Sénégal Souverain, Juste et Prospère</span>
+            </div>
+            
+            <p class="subtitle">
+                Plateforme Citoyenne de Suivi des Engagements Présidentiels
+            </p>
+            
+            <!-- Compte à rebours amélioré (plus petit) -->
             <div class="countdown-container">
                 <div class="countdown-badge">
                     <i class="fas fa-hourglass-half"></i>
@@ -616,6 +630,12 @@
                 
                 <!-- Programme PDF et KPI Carousel -->
                 <div class="header-actions">
+                    <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" 
+                       class="btn-program" 
+                       download target="_blank">
+                        <i class="fas fa-book"></i> Télécharger le Programme Complet (PDF)
+                    </a>
+                    
                     <div class="kpi-carousel-container">
                         <button id="kpiPrev" class="kpi-nav-btn" title="Précédent">
                             <i class="fas fa-chevron-left"></i>
@@ -633,6 +653,7 @@
         </div>
     </header>
 
+    <!-- Le reste du contenu reste inchangé -->
     <!-- Stats Section -->
     <section class="stats-section" id="stats">
         <div class="container">
@@ -1470,9 +1491,9 @@
                 <div class="footer-col">
                     <h4>Contact</h4>
                     <div class="footer-links">
-                        <a href="/cdn-cgi/l/email-protection#51323e3f253032251121233e3b342533387f3e2336" class="footer-link">
+                        <a href="mailto:contact@projetbi.org" class="footer-link">
                             <i class="fas fa-envelope"></i>
-                            <span class="__cf_email__" data-cfemail="ed8e8283998c8e99ad9d9f828788998f84c3829f8a">[email&#160;protected]</span>
+                            contact@projetbi.org
                         </a>
                         <a href="tel:+221769455253" class="footer-link">
                             <i class="fas fa-phone"></i>
@@ -1558,47 +1579,44 @@
     <div id="notification-container"></div>
 
     <!-- JavaScript -->
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="app.js"></script>
+    <script src="app.js"></script>
     
-    <!-- JavaScript pour le compte à rebours et la sélection contextuelle -->
+    <!-- JavaScript amélioré pour l'en-tête -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // === COMPTE À REBOURS ===
-        // Date cible : 02 avril 2029, 00:00:00
-        const targetDate = new Date('April 02, 2029 00:00:00').getTime();
+        // === MENU MOBILE ===
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
         
-        // Éléments du compte à rebours
+        if (mobileMenuBtn && navMenu) {
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                this.classList.toggle('active');
+            });
+            
+            // Fermer le menu en cliquant sur un lien
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    mobileMenuBtn.classList.remove('active');
+                });
+            });
+        }
+        
+        // === COMPTE À REBOURS AMÉLIORÉ ===
+        const targetDate = new Date('April 02, 2029 00:00:00').getTime();
         const daysEl = document.getElementById('days');
         const hoursEl = document.getElementById('hours');
         const minutesEl = document.getElementById('minutes');
         const secondsEl = document.getElementById('seconds');
         
+        let lastSeconds = -1;
+        
         function updateCountdown() {
             const now = new Date().getTime();
             const timeLeft = targetDate - now;
             
-            // Calcul des unités de temps
-            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-            
-            // Mise à jour des éléments avec formatage
-            daysEl.textContent = days.toString().padStart(3, '0');
-            hoursEl.textContent = hours.toString().padStart(2, '0');
-            minutesEl.textContent = minutes.toString().padStart(2, '0');
-            secondsEl.textContent = seconds.toString().padStart(2, '0');
-            
-            // Animation des changements
-            if (secondsEl.getAttribute('data-last') !== seconds.toString()) {
-                secondsEl.style.animation = 'none';
-                setTimeout(() => {
-                    secondsEl.style.animation = 'pulse 0.5s ease';
-                }, 10);
-            }
-            secondsEl.setAttribute('data-last', seconds.toString());
-            
-            // Si le compte à rebours est terminé
             if (timeLeft < 0) {
                 clearInterval(countdownInterval);
                 daysEl.textContent = '000';
@@ -1606,35 +1624,38 @@
                 minutesEl.textContent = '00';
                 secondsEl.textContent = '00';
                 
-                // Ajouter un message
                 const targetElement = document.querySelector('.countdown-target');
                 if (targetElement) {
                     targetElement.innerHTML = '<strong>⚠️ Délai des engagements atteint</strong>';
-                    targetElement.style.color = '#e74c3c';
+                    targetElement.style.color = '#ff6b6b';
                 }
-            }
-        }
-        
-        // Mettre à jour immédiatement
-        updateCountdown();
-        
-        // Mettre à jour toutes les secondes
-        const countdownInterval = setInterval(updateCountdown, 1000);
-        
-        // Ajouter l'animation CSS
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes pulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.05); }
-                100% { transform: scale(1); }
+                return;
             }
             
-            .countdown-value {
-                transition: all 0.3s ease;
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            
+            // Animation des changements
+            [daysEl, hoursEl, minutesEl, secondsEl].forEach(el => {
+                el.classList.remove('changed');
+            });
+            
+            if (seconds !== lastSeconds) {
+                secondsEl.classList.add('changed');
+                lastSeconds = seconds;
             }
-        `;
-        document.head.appendChild(style);
+            
+            // Mise à jour des valeurs
+            daysEl.textContent = days.toString().padStart(3, '0');
+            hoursEl.textContent = hours.toString().padStart(2, '0');
+            minutesEl.textContent = minutes.toString().padStart(2, '0');
+            secondsEl.textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        updateCountdown();
+        const countdownInterval = setInterval(updateCountdown, 1000);
         
         // === SÉLECTION CONTEXTUELLE DES SERVICES ===
         const categorySelect = document.getElementById('service-category');
@@ -1644,17 +1665,12 @@
         if (categorySelect && serviceSelect && servicesData) {
             categorySelect.addEventListener('change', function() {
                 const selectedCategory = this.value;
-                
-                // Réinitialiser la liste des services
                 serviceSelect.innerHTML = '<option value="">Sélectionnez un service</option>';
                 serviceSelect.disabled = true;
                 
                 if (selectedCategory) {
-                    // Trouver les services correspondants
                     const categoryServices = servicesData.querySelector(`[data-category="${selectedCategory}"]`);
-                    
                     if (categoryServices) {
-                        // Activer et peupler la liste
                         serviceSelect.disabled = false;
                         serviceSelect.innerHTML = '<option value="">Choisissez un service</option>' + categoryServices.innerHTML;
                     }
@@ -1662,8 +1678,29 @@
             });
         }
         
-        // === INITIALISATION DE LA DATE ACTUELLE ===
+        // === DATE ACTUELLE ===
         const currentDateElement = document.getElementById('current-date');
         if (currentDateElement) {
-            const options = { day: 'numeric', month: 'long', year: 'numeric' };
             const now = new Date();
+            currentDateElement.textContent = now.toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).toUpperCase();
+        }
+        
+        // === SCROLL ANIMATION POUR LE MENU ===
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.style.boxShadow = '0 6px 20px rgba(0,0,0,0.12)';
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.08)';
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            }
+        });
+    });
+    </script>
+</body>
+</html>

@@ -130,6 +130,8 @@ body {
     color: var(--primary);
     font-weight: 700;
     font-size: 1.1rem;
+    margin: 0; /* ⚠️ S’assure qu’aucune marge n’est ajoutée */
+    padding: 0; /* ⚠️ Évite tout padding implicite */
 }
 
 .nav-logo-icon {

@@ -3834,27 +3834,158 @@ async function syncLocalDataWithSupabase() {
         // Logique similaire pour les votes...
     }
 }
-// CORRECTION MINIMALISTE POUR DÉCALAGES
+// ===== CORRECTION SPÉCIFIQUE POUR ACTUALITÉS ET REVUE DE PRESSE =====
 document.addEventListener('DOMContentLoaded', function() {
-    function quickFix() {
-        // Empêcher tout débordement
-        document.body.style.overflowX = 'hidden';
+    
+    function fixNewsAndPressLayout() {
+        const viewportWidth = window.innerWidth;
         
-        // Fixer les grilles
-        const grids = document.querySelectorAll('.news-grid, .newspapers-grid');
-        grids.forEach(grid => {
-            grid.style.maxWidth = '100%';
-            grid.style.overflow = 'hidden';
+        // 1. CORRIGER LES ACTUALITÉS
+        const newsGrid = document.querySelector('.news-grid');
+        if (newsGrid) {
+            // Calculer le nombre optimal de colonnes
+            const container = newsGrid.closest('.container') || document.querySelector('.container');
+            if (container) {
+                const containerWidth = container.offsetWidth;
+                
+                // Ajuster dynamiquement la taille minimale des cartes
+                let minCardWidth = 300;
+                if (viewportWidth < 1200) minCardWidth = 280;
+                if (viewportWidth < 992) minCardWidth = 250;
+                if (viewportWidth < 768) minCardWidth = 220;
+                if (viewportWidth < 576) minCardWidth = 300;
+                
+                // Appliquer le grid-template-columns
+                if (viewportWidth < 576) {
+                    newsGrid.style.gridTemplateColumns = '1fr';
+                } else {
+                    const columns = Math.max(1, Math.floor(containerWidth / minCardWidth));
+                    newsGrid.style.gridTemplateColumns = `repeat(${columns}, minmax(${minCardWidth}px, 1fr))`;
+                }
+            }
+        }
+        
+        // 2. CORRIGER LA REVUE DE PRESSE
+        const pressCarousel = document.querySelector('.press-carousel-container');
+        if (pressCarousel) {
+            // Ajuster la hauteur selon la largeur
+            if (viewportWidth < 768) {
+                pressCarousel.style.height = '400px';
+            } else if (viewportWidth < 992) {
+                pressCarousel.style.height = '450px';
+            } else if (viewportWidth < 1200) {
+                pressCarousel.style.height = '550px';
+            } else {
+                pressCarousel.style.height = '600px';
+            }
+            
+            // Ajuster les boutons de navigation
+            const navButtons = document.querySelectorAll('.press-carousel .carousel-btn');
+            navButtons.forEach(btn => {
+                if (viewportWidth < 768) {
+                    btn.style.width = '36px';
+                    btn.style.height = '36px';
+                    btn.style.fontSize = '1rem';
+                } else if (viewportWidth < 992) {
+                    btn.style.width = '42px';
+                    btn.style.height = '42px';
+                    btn.style.fontSize = '1.1rem';
+                }
+            });
+        }
+        
+        // 3. CORRIGER LES JOURNAUX
+        const newspapersGrid = document.querySelector('.newspapers-grid');
+        if (newspapersGrid) {
+            // Ajuster le nombre de colonnes
+            if (viewportWidth < 576) {
+                newspapersGrid.style.gridTemplateColumns = '1fr';
+            } else if (viewportWidth < 768) {
+                newspapersGrid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+            } else {
+                newspapersGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(250px, 1fr))';
+            }
+        }
+        
+        // 4. ÉVITER LE DÉBORDEMENT HORIZONTAL
+        preventHorizontalOverflow();
+    }
+    
+    function preventHorizontalOverflow() {
+        // Vérifier chaque section
+        const sections = document.querySelectorAll('.news-section, .press-section');
+        
+        sections.forEach(section => {
+            if (section.scrollWidth > section.clientWidth) {
+                // Appliquer des corrections d'urgence
+                section.style.overflowX = 'hidden';
+                section.style.maxWidth = '100%';
+                
+                // Forcer les enfants à ne pas déborder
+                const children = section.querySelectorAll('*');
+                children.forEach(child => {
+                    child.style.maxWidth = '100%';
+                    child.style.boxSizing = 'border-box';
+                });
+            }
         });
         
-        // Fixer le carousel
-        const carousel = document.querySelector('.press-carousel-container');
-        if (carousel) {
-            carousel.style.maxWidth = '100%';
-            carousel.style.overflow = 'hidden';
+        // Vérifier le body
+        if (document.body.scrollWidth > window.innerWidth) {
+            console.log('Débordement détecté, correction en cours...');
+            document.body.style.overflowX = 'hidden';
         }
     }
     
-    quickFix();
-    window.addEventListener('resize', quickFix);
+    // 5. CORRECTION SPÉCIFIQUE POUR LES IMAGES
+    function fixImages() {
+        const images = document.querySelectorAll('.news-image img, .newspaper-preview img, #pressImage');
+        
+        images.forEach(img => {
+            // S'assurer que les images ne dépassent pas
+            if (img.naturalWidth > img.clientWidth) {
+                img.style.maxWidth = '100%';
+                img.style.height = 'auto';
+                img.style.objectFit = 'contain';
+            }
+        });
+    }
+    
+    // Exécuter les corrections
+    fixNewsAndPressLayout();
+    fixImages();
+    
+    // Redimensionnement optimisé
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            fixNewsAndPressLayout();
+            fixImages();
+        }, 100);
+    });
+    
+    // Exécuter après le chargement des images
+    window.addEventListener('load', function() {
+        setTimeout(fixNewsAndPressLayout, 500);
+        setTimeout(fixImages, 500);
+    });
+    
+    // ===== CORRECTION ULTIME POUR LES DÉCALAGES PERSISTANTS =====
+    function emergencyFix() {
+        // Force un recalcul du layout
+        document.body.style.display = 'none';
+        void document.body.offsetHeight; // Force reflow
+        document.body.style.display = '';
+        
+        // Appliquer des garanties supplémentaires
+        const allContainers = document.querySelectorAll('.container, .news-grid, .press-carousel-container, .newspapers-grid');
+        allContainers.forEach(el => {
+            el.style.maxWidth = '100%';
+            el.style.overflow = 'hidden';
+        });
+    }
+    
+    // Exécuter une correction d'urgence après 2 secondes
+    setTimeout(emergencyFix, 2000);
 });

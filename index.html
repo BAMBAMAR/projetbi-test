@@ -41,6 +41,18 @@
             transition: all 0.3s ease;
         }
 
+     .nav-container {
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0; /* ← Plus de padding horizontal ici */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: left; 
+    height: 100%;
+    position: relative;
+    gap: 30px; /* ← Espace entre logo et menu */
+}
+
         .nav-logo { 
             display: flex; 
             align-items: center; 
@@ -65,7 +77,12 @@
             font-weight: 700; 
         }
 
-          .nav-link { 
+        .nav-menu { 
+            display: flex; 
+            gap: 15px; 
+            align-items: center; 
+        }
+        .nav-link { 
             text-decoration: none; 
             color: #444; 
             font-weight: 600; 
@@ -315,7 +332,30 @@
         }
 
         /* --- 4. RESPONSIVE --- */
-     
+        @media (max-width: 992px) {
+            .mobile-menu-btn { 
+                display: flex; 
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 75px; 
+                left: 0; 
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                transform: translateY(-150%);
+                transition: transform 0.4s ease;
+                z-index: 1999;
+                border-bottom: 2px solid var(--primary-color);
+                height: auto;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
             .nav-menu.active { 
                 transform: translateY(0); 
             }
@@ -427,7 +467,7 @@
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#header" class="nav-logo">
-                <img src="https://projetbi.org/favicon.png" alt="Logo" style="height: 82px;border-radius: 8px;">
+                <img src="https://projetbi.org/favicon.png" alt="Logo" style="height: 82px;border-radius: 20px;">
                 <div class="logo-text">
                     <span class="logo-main">PROJETBI</span>
                 </div>

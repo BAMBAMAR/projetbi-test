@@ -194,7 +194,7 @@ body {
 /* ===== HEADER ===== */
 .header {
     margin: var(--spacing-2xl) auto;
-    padding: var(--spacing-2xl);
+    padding: var(--spacing-2xl) var(--spacing-xl); /* ✅ Ajuster verticalement/horizontalement */
     background: var(--bg-card);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow);
@@ -202,10 +202,12 @@ body {
     overflow: hidden;
     text-align: center;
     
-    /* ✅ Utilise toute la largeur SANS déborder */
+    /* ✅ Largeur contrôlée */
     width: 100%;
-    max-width: 1200px; /* ou 1400px selon votre design */
-    box-sizing: border-box; /* inclut padding dans la largeur */
+    max-width: 1200px;
+    box-sizing: border-box;
+    
+    /* ✅ Pas de height fixe → hauteur s'adapte au contenu */
 }
 /* ===== STATS GRID ===== */
 .stats-section {

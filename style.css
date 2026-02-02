@@ -191,7 +191,7 @@ body {
     transition: var(--transition);
 }
 
-//* ===== HEADER ===== */
+/* ===== HEADER ===== */
 .header {
     margin: var(--spacing-2xl) 0;
     padding: var(--spacing-2xl);
@@ -201,6 +201,7 @@ body {
     position: relative;
     overflow: hidden;
     text-align: center;
+    min-height: min-content; /* ← AJOUTÉ : adapte la hauteur au contenu minimum */
 }
 
 .header-content {

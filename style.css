@@ -115,11 +115,11 @@ body {
 .nav-container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 var(--spacing-lg);
+    padding: 0 var(--spacing-md); /* Espace minimal mais propre */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: var(--spacing-xl); /* ← AJOUTÉ : espace entre logo et menu */
+    gap: var(--spacing-xl);
 }
 
 .nav-logo {

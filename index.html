@@ -76,593 +76,274 @@
     }
     </script>
     
-    <!-- CSS Original (simplifié) -->
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Style CSS pour le compte à rebours -->
     <style>
-    /* Variables CSS */
-    :root {
-        --primary-color: #2a6d5d;
-        --secondary-color: #34a853;
-        --accent-color: #f1c40f;
-        --text-primary: #333333;
-        --text-secondary: #666666;
-        --light-bg: #f8f9fa;
-        --white: #ffffff;
-        --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.1);
-        --border-radius: 10px;
-        --transition: all 0.3s ease;
-    }
-
-    /* Reset */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Manrope', sans-serif;
-        line-height: 1.6;
-        color: var(--text-primary);
-        background-color: var(--light-bg);
-    }
-
-    /* Container */
-    .container {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 0 2rem;
-    }
-
-    /* Navigation (style modifié seulement) */
-    .navbar {
-        background: rgba(255, 255, 255, 0.98);
-        backdrop-filter: blur(10px);
-        box-shadow: var(--shadow);
-        padding: 0.8rem 0;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        border-bottom: 1px solid rgba(42, 109, 93, 0.1);
-    }
-
-    .nav-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 0 2rem;
-    }
-
-    .nav-logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-        transition: var(--transition);
-    }
-
-    .nav-logo:hover {
-        transform: translateY(-2px);
-    }
-
-    .nav-logo img {
-        height: 38px;
-        width: auto;
-        border-radius: 5px;
-    }
-
-    .nav-logo span {
-        color: var(--primary-color);
-        font-weight: 700;
-        font-size: 1rem;
-        letter-spacing: -0.5px;
-    }
-
-    .nav-menu {
-        display: flex;
-        gap: 0.5rem;
-        align-items: center;
-    }
-
-    .nav-link {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        color: var(--text-secondary);
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.9rem;
-        padding: 0.6rem 1.2rem;
-        border-radius: 6px;
-        transition: var(--transition);
-    }
-
-    .nav-link i {
-        font-size: 1rem;
-    }
-
-    .nav-link:hover {
-        background: rgba(42, 109, 93, 0.08);
-        color: var(--primary-color);
-    }
-
-    .nav-link.active {
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        color: var(--white);
-        box-shadow: 0 4px 15px rgba(42, 109, 93, 0.3);
-    }
-
-    .mobile-menu-btn {
-        display: none;
-        background: none;
-        border: none;
-        cursor: pointer;
-        flex-direction: column;
-        gap: 4px;
-        padding: 8px;
-    }
-
-    .mobile-menu-btn span {
-        display: block;
-        width: 25px;
-        height: 3px;
-        background: var(--primary-color);
-        border-radius: 2px;
-        transition: var(--transition);
-    }
-
-    /* Header - Structure modifiée seulement */
-    .header {
-        background: linear-gradient(135deg, var(--light-bg) 0%, var(--white) 100%);
-        padding: 3rem 2rem 4rem;
-        position: relative;
-        border-bottom: 1px solid rgba(42, 109, 93, 0.1);
-    }
-
-    .header-content {
-        max-width: 1400px;
-        margin: 0 auto;
+    /* ===== AMÉLIORATION DU HEADER ===== */
+    .header-content-wrapper {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1.5fr 0.5fr;
         gap: 3rem;
         align-items: center;
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 0 2rem;
     }
-
-    /* Colonne gauche - Texte */
-    .header-text {
-        padding-right: 1rem;
+    
+    .header-content {
+        text-align: left;
     }
-
-    .header-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        color: var(--white);
-        padding: 0.8rem 1.5rem;
-        border-radius: 50px;
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-        box-shadow: 0 4px 15px rgba(42, 109, 93, 0.3);
-    }
-
-    .header-title {
-        margin-bottom: 1.5rem;
-    }
-
-    .title-main {
-        display: block;
-        font-size: 2.8rem;
-        font-weight: 800;
-        color: var(--primary-color);
-        line-height: 1.1;
-        margin-bottom: 0.5rem;
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .title-sub {
-        display: block;
-        font-size: 1.3rem;
-        color: var(--text-secondary);
-        font-weight: 500;
-        margin-bottom: 1rem;
-    }
-
-    .subtitle {
-        font-size: 1.1rem;
-        color: var(--text-secondary);
-        line-height: 1.6;
-        margin-bottom: 2rem;
-        max-width: 600px;
-    }
-
-    /* Infos rapides */
-    .quick-info-container {
+    
+    .header-image {
         display: flex;
-        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .header-image img {
+        width: 100%;
+        max-width: 280px;
+        height: auto;
+        border-radius: 16px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        transition: transform 0.3s ease;
+        object-fit: cover;
+    }
+    
+    .header-image img:hover {
+        transform: scale(1.03);
+    }
+    
+    .header-actions-top {
+        display: flex;
         gap: 1rem;
-        align-items: center;
-        margin: 1.5rem 0;
+        margin-top: 2rem;
+        flex-wrap: wrap;
     }
-
-    .date-ref-badge {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(255, 255, 255, 0.9);
-        padding: 0.7rem 1.2rem;
-        border-radius: 50px;
-        border: 1px solid rgba(42, 109, 93, 0.15);
-        box-shadow: var(--shadow);
-    }
-
-    .date-ref-badge i {
-        color: var(--primary-color);
-    }
-
-    .date-ref-label {
-        font-size: 0.9rem;
-        color: var(--text-secondary);
-    }
-
-    .date-ref-value {
-        font-size: 0.9rem;
-        color: var(--primary-color);
-        font-weight: 700;
-        margin-left: 5px;
-    }
-
-    .pdf-btn {
+    
+    .btn-cta {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        color: var(--white);
-        padding: 0.8rem 1.5rem;
-        border-radius: 50px;
+        gap: 8px;
+        padding: 0.9rem 1.8rem;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.95rem;
         text-decoration: none;
-        font-weight: 600;
-        font-size: 0.9rem;
-        transition: var(--transition);
-        box-shadow: 0 4px 15px rgba(42, 109, 93, 0.3);
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
     }
-
-    .pdf-btn:hover {
+    
+    .btn-cta-primary {
+        background: white;
+        color: var(--primary-color);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .btn-cta-primary:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(42, 109, 93, 0.4);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .btn-cta-secondary {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.4);
+    }
+    
+    .btn-cta-secondary:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+    }
+    
+    /* ===== COMPTE À REBOURS COMPACT ===== */
+    .countdown-container-compact {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        padding: 1.5rem 2rem;
+        margin: 2rem auto;
+        max-width: 900px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(0, 91, 187, 0.1);
     }
 
-    .kpi-badge {
+    .countdown-badge-compact {
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        background: rgba(241, 196, 15, 0.1);
-        padding: 0.7rem 1.2rem;
-        border-radius: 50px;
-        border: 1px solid rgba(241, 196, 15, 0.2);
-        margin-left: 1rem;
-    }
-
-    .kpi-value {
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: #e67e22;
-    }
-
-    .kpi-label {
-        font-size: 0.8rem;
-        color: var(--text-secondary);
-        font-weight: 600;
-    }
-
-    /* Compte à rebours (style original gardé mais compact) */
-    .countdown-container {
-        background: var(--white);
-        border-radius: var(--border-radius);
-        padding: 1.5rem;
-        margin: 2rem 0;
-        box-shadow: var(--shadow);
-        border: 1px solid rgba(42, 109, 93, 0.1);
-        max-width: 700px;
-    }
-
-    .countdown-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-        color: var(--white);
+        background: linear-gradient(135deg, var(--primary-color) 0%, #0047a3 100%);
+        color: white;
         padding: 0.5rem 1.2rem;
         border-radius: 50px;
         font-weight: 600;
         font-size: 0.9rem;
-        margin-bottom: 1.2rem;
+        margin-bottom: 1rem;
     }
 
-    .countdown-grid {
+    .countdown-grid-compact {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 1rem;
         margin-bottom: 1rem;
     }
 
-    .countdown-item {
-        background: linear-gradient(135deg, var(--light-bg), var(--white));
+    .countdown-item-compact {
+        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
         border-radius: 12px;
         padding: 1rem 0.5rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        border: 1px solid rgba(42, 109, 93, 0.1);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 91, 187, 0.1);
         text-align: center;
     }
 
-    .countdown-value {
+    .countdown-item-compact:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .countdown-item-compact .countdown-value {
         font-size: 1.8rem;
         font-weight: 800;
         font-family: 'Manrope', sans-serif;
-        color: var(--primary-color);
+        background: linear-gradient(135deg, var(--primary-color) 0%, #0047a3 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
         line-height: 1;
-        margin-bottom: 0.3rem;
     }
 
-    .countdown-label {
-        font-size: 0.75rem;
+    .countdown-item-compact .countdown-label {
+        font-size: 0.8rem;
         color: var(--text-secondary);
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
+        margin-top: 0.5rem;
         font-weight: 600;
     }
 
-    .countdown-target {
-        font-size: 0.9rem;
+    .countdown-target-compact {
+        font-size: 0.95rem;
         color: var(--text-primary);
-        background: rgba(42, 109, 93, 0.05);
+        background: rgba(0, 91, 187, 0.05);
         padding: 0.6rem 1rem;
         border-radius: 8px;
         display: inline-block;
         margin-top: 0.5rem;
+        text-align: center;
+    }
+
+    .countdown-target-compact strong {
+        color: var(--primary-color);
+    }
+    
+    /* ===== NAVIGATION AMÉLIORÉE ===== */
+    .navbar {
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+    }
+    
+    .nav-link {
+        padding: 0.7rem 1.1rem;
+        border-radius: 10px;
+        transition: all 0.3s ease;
         font-weight: 500;
     }
-
-    .countdown-target strong {
-        color: var(--primary-color);
-        font-weight: 700;
+    
+    .nav-link:hover {
+        background: linear-gradient(135deg, var(--primary-color) 0%, #1e4f43 100%);
+        color: white;
+        transform: translateY(-2px);
     }
-
-    /* Colonne droite - Image */
-    .header-image-container {
-        position: relative;
-        height: 400px;
-        border-radius: var(--border-radius);
-        overflow: hidden;
-        box-shadow: var(--shadow-hover);
-    }
-
-    .header-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .image-overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-        color: var(--white);
-        padding: 1.5rem;
-    }
-
-    .overlay-title {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin: 0 0 0.3rem 0;
-    }
-
-    .overlay-subtitle {
-        font-size: 0.85rem;
-        opacity: 0.9;
-        margin: 0;
-    }
-
-    /* Mini stats */
-    .mini-stats {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
-        margin-top: 1.5rem;
-    }
-
-    .mini-stat-item {
-        background: var(--white);
-        border-radius: 8px;
-        padding: 1rem;
-        text-align: center;
-        box-shadow: var(--shadow);
-        border: 1px solid rgba(42, 109, 93, 0.1);
-    }
-
-    .mini-stat-value {
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: var(--primary-color);
-        margin-bottom: 0.3rem;
-    }
-
-    .mini-stat-label {
-        font-size: 0.8rem;
-        color: var(--text-secondary);
-        font-weight: 600;
-    }
-
-    /* Sections générales */
-    section {
-        padding: 4rem 0;
-    }
-
-    .section-header-modern {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 2.5rem;
-    }
-
-    .section-title {
-        font-size: 2rem;
-        color: var(--primary-color);
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-        margin: 0;
-    }
-
-    /* Styles pour les autres sections (garder l'original mais avec améliorations visuelles) */
-    .stat-card, .promise-card, .news-card {
-        background: var(--white);
-        border-radius: var(--border-radius);
-        box-shadow: var(--shadow);
-        border: 1px solid rgba(42, 109, 93, 0.1);
-        transition: var(--transition);
-    }
-
-    .stat-card:hover, .promise-card:hover, .news-card:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-hover);
-    }
-
-    /* KPI Carousel */
-    .header-actions {
-        margin-top: 1.5rem;
-    }
-
-    .kpi-carousel-container {
-        background: var(--white);
-        border-radius: 15px;
-        padding: 1rem;
-        box-shadow: var(--shadow);
-        border: 1px solid rgba(42, 109, 93, 0.1);
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        max-width: 500px;
-    }
-
-    .kpi-nav-btn {
-        background: rgba(42, 109, 93, 0.1);
-        border: none;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        color: var(--primary-color);
-        transition: var(--transition);
-    }
-
-    .kpi-nav-btn:hover {
-        background: rgba(42, 109, 93, 0.2);
-        transform: scale(1.1);
+    
+    .nav-link.active {
+        background: linear-gradient(135deg, var(--primary-color) 0%, #1e4f43 100%);
+        color: white;
     }
 
     /* Responsive */
     @media (max-width: 1024px) {
-        .header-content {
+        .header-content-wrapper {
             grid-template-columns: 1fr;
             gap: 2rem;
+            text-align: center;
         }
         
-        .header-text {
-            padding-right: 0;
+        .header-content {
+            text-align: center;
         }
         
-        .header-image-container {
-            height: 350px;
+        .header-actions-top {
+            justify-content: center;
         }
         
-        .quick-info-container {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        
-        .kpi-badge {
-            margin-left: 0;
-            margin-top: 0.5rem;
+        .header-image {
+            order: -1;
         }
     }
-
+    
     @media (max-width: 768px) {
-        .nav-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: var(--white);
-            flex-direction: column;
-            padding: 1rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border-radius: 0 0 var(--border-radius) var(--border-radius);
-        }
-        
-        .nav-menu.active {
-            display: flex;
-        }
-        
-        .mobile-menu-btn {
-            display: flex;
-        }
-        
-        .title-main {
-            font-size: 2.2rem;
-        }
-        
-        .title-sub {
-            font-size: 1.1rem;
-        }
-        
-        .header {
-            padding: 2rem 1.5rem 3rem;
-        }
-        
-        .countdown-grid {
+        .countdown-grid-compact {
             grid-template-columns: repeat(2, 1fr);
         }
         
-        .mini-stats {
-            grid-template-columns: repeat(2, 1fr);
+        .countdown-item-compact .countdown-value {
+            font-size: 1.5rem;
         }
         
-        .container {
-            padding: 0 1.5rem;
+        .countdown-container-compact {
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 1rem;
+        }
+        
+        .header-content-wrapper {
+            padding: 0 1rem;
+        }
+        
+        .header-image img {
+            max-width: 240px;
         }
     }
 
     @media (max-width: 480px) {
-        .countdown-grid {
-            grid-template-columns: 1fr;
+        .countdown-item-compact .countdown-value {
+            font-size: 1.3rem;
         }
         
-        .mini-stats {
-            grid-template-columns: 1fr;
+        .header-actions-top {
+            flex-direction: column;
+            width: 100%;
         }
         
-        .header-image-container {
-            height: 280px;
+        .btn-cta {
+            width: 100%;
+            justify-content: center;
         }
-        
-        .title-main {
-            font-size: 1.8rem;
-        }
-        
-        .title-sub {
-            font-size: 1rem;
-        }
+    }
+    
+    /* ===== STYLE PDF AMÉLIORÉ ===== */
+    .btn-program {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0.8rem 1.5rem;
+        background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        color: white;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        transition: all 0.3s ease;
+    }
+    
+    .btn-program:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
     }
     </style>
 </head>
@@ -673,10 +354,10 @@
     <!-- Navigation Bar -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="#header" class="nav-logo">
-                <img src="https://projetbi.org/favicon.png" alt="Logo Projet Sénégal">
-                <span>LE PROJET : SUIVI DES PROMESSES</span>
-            </a>
+            <a href="#header" class="nav-logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+      <img src="https://projetbi.org/favicon.png" alt="Logo JJJ" style="height: 38px; width: auto; border-radius: 5px;">
+      <span style="color: #2a6d5d; font-weight: 700; font-size: 1rem; letter-spacing: -0.5px;">LE PROJET : SUIVI DES PROMESSES</span>
+    </a>
             
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <span></span>
@@ -707,7 +388,7 @@
                 </a>
                 <a href="#press" class="nav-link" data-section="press">
                     <i class="fas fa-book-open"></i>
-                    Revue de Presse
+                   Revue de Presse
                 </a>
                 <a href="#rating" class="nav-link" data-section="rating">
                     <i class="fas fa-star-half-alt"></i>
@@ -719,8 +400,12 @@
 
     <!-- Header Section -->
     <header class="header" id="header">
-        <div class="header-content">
-            <div class="header-text">
+        <div class="header-background">
+            <div class="header-pattern"></div>
+        </div>
+        
+        <div class="header-content-wrapper">
+            <div class="header-content">
                 <div class="header-badge">
                     <i class="fas fa-shield-alt"></i>
                     🇸🇳 République du Sénégal
@@ -732,104 +417,74 @@
                 </div>
                 
                 <p class="subtitle">
-                    Plateforme Citoyenne de Suivi Transparent des Engagements Présidentiels
+                    Plateforme Citoyenne de Suivi des Engagements Présidentiels
                 </p>
                 
-                <!-- Infos rapides -->
-                <div class="quick-info-container">
-                    <div class="date-ref-badge">
-                        <i class="fas fa-calendar-alt"></i>
-                        <span class="date-ref-label">Date de référence :</span>
-                        <span class="date-ref-value" id="current-date">2 AVRIL 2024</span>
-                    </div>
-                    
-                    <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" 
-                       class="pdf-btn" 
-                       download target="_blank">
-                        <i class="fas fa-download"></i> Programme Complet (PDF)
+                <div class="header-actions-top">
+                    <a href="#promises" class="btn-cta btn-cta-primary">
+                        <i class="fas fa-list-check"></i> Voir les Engagements
                     </a>
-                    
-                    <div class="kpi-badge">
-                        <span class="kpi-value">📈 7%</span>
-                        <span class="kpi-label">Taux Réalisation</span>
-                    </div>
-                </div>
-                
-                <!-- Compte à rebours -->
-                <div class="countdown-container">
-                    <div class="countdown-badge">
-                        <i class="fas fa-hourglass-half"></i>
-                        Délai des engagements
-                    </div>
-                    <div class="countdown-grid" id="countdown">
-                        <div class="countdown-item">
-                            <div class="countdown-value" id="days">000</div>
-                            <div class="countdown-label">Jours</div>
-                        </div>
-                        <div class="countdown-item">
-                            <div class="countdown-value" id="hours">00</div>
-                            <div class="countdown-label">Heures</div>
-                        </div>
-                        <div class="countdown-item">
-                            <div class="countdown-value" id="minutes">00</div>
-                            <div class="countdown-label">Minutes</div>
-                        </div>
-                        <div class="countdown-item">
-                            <div class="countdown-value" id="seconds">00</div>
-                            <div class="countdown-label">Secondes</div>
-                        </div>
-                    </div>
-                    <div class="countdown-target">
-                        Date butoir : <strong>02 AVRIL 2029</strong>
-                    </div>
-                </div>
-                
-                <!-- KPI Carousel -->
-                <div class="header-actions">
-                    <div class="kpi-carousel-container">
-                        <button id="kpiPrev" class="kpi-nav-btn" title="Précédent">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <div id="kpiCarousel"></div>
-                        <button id="kpiNext" class="kpi-nav-btn" title="Suivant">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                        <button id="kpiAutoPlayToggle" class="kpi-nav-btn" title="Lecture automatique">
-                            <i class="fas fa-pause"></i>
-                        </button>
-                    </div>
+                    <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="btn-cta btn-cta-secondary" target="_blank">
+                        <i class="fas fa-file-pdf"></i> Programme PDF
+                    </a>
                 </div>
             </div>
             
-            <!-- Image -->
-            <div>
-                <div class="header-image-container">
-                    <img src="sonko.jpg" alt="Projet Sénégal" class="header-image">
-                    <div class="image-overlay">
-                        <h3 class="overlay-title">Vision 2029</h3>
-                        <p class="overlay-subtitle">Un Sénégal souverain, juste et prospère pour tous les citoyens</p>
-                    </div>
+            <div class="header-image">
+                <img src="sonko.jpg" alt="Président Bassirou Diomaye Faye" onerror="this.src='https://via.placeholder.com/300x400/005bbb/ffffff?text=Photo+Officielle'">
+            </div>
+        </div>
+        
+        <!-- Compte à rebours compact -->
+        <div class="countdown-container-compact">
+            <div class="countdown-badge-compact">
+                <i class="fas fa-hourglass-half"></i>
+                Délai des engagements
+            </div>
+            <div class="countdown-grid-compact" id="countdown">
+                <div class="countdown-item-compact">
+                    <div class="countdown-value" id="days">000</div>
+                    <div class="countdown-label">Jours</div>
                 </div>
-                
-                <div class="mini-stats">
-                    <div class="mini-stat-item">
-                        <div class="mini-stat-value">125</div>
-                        <div class="mini-stat-label">Engagements</div>
-                    </div>
-                    <div class="mini-stat-item">
-                        <div class="mini-stat-value">89%</div>
-                        <div class="mini-stat-label">Participation</div>
-                    </div>
-                    <div class="mini-stat-item">
-                        <div class="mini-stat-value">4.2</div>
-                        <div class="mini-stat-label">Note moyenne</div>
-                    </div>
+                <div class="countdown-item-compact">
+                    <div class="countdown-value" id="hours">00</div>
+                    <div class="countdown-label">Heures</div>
                 </div>
+                <div class="countdown-item-compact">
+                    <div class="countdown-value" id="minutes">00</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-item-compact">
+                    <div class="countdown-value" id="seconds">00</div>
+                    <div class="countdown-label">Secondes</div>
+                </div>
+            </div>
+            <div class="countdown-target-compact">
+                Date butoir : <strong>02 AVRIL 2029</strong>
+            </div>
+        </div>
+        
+        <div class="ref-badge">
+            <i class="fas fa-calendar-alt"></i>
+            Date de référence : <span id="current-date">2 AVRIL 2024</span>
+            
+            <!-- KPI Carousel -->
+            <div class="kpi-carousel-container">
+                <button id="kpiPrev" class="kpi-nav-btn" title="Précédent">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div id="kpiCarousel"></div>
+                <button id="kpiNext" class="kpi-nav-btn" title="Suivant">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <button id="kpiAutoPlayToggle" class="kpi-nav-btn" title="Lecture automatique">
+                    <i class="fas fa-pause"></i>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- Stats Section (Garder le HTML original exactement) -->
+    <!-- Stats Section -->
     <section class="stats-section" id="stats">
         <div class="container">
             <div class="section-header-modern">
@@ -1033,7 +688,7 @@
         </div>
     </section>
 
-    <!-- Promesse du Jour Section (HTML original) -->
+    <!-- Promesse du Jour Section -->
     <section class="daily-promise-section" id="daily">
         <div class="container">
             <div class="section-header-modern">
@@ -1044,6 +699,7 @@
             </div>
             
             <div class="daily-promise-card" id="dailyPromise">
+                <!-- Chargé dynamiquement par JavaScript -->
                 <div class="loading-state">
                     <div class="spinner"></div>
                     <p>Chargement de la promesse du jour...</p>
@@ -1052,7 +708,7 @@
         </div>
     </section>
 
-    <!-- Promesses en Vedette Carousel (HTML original) -->
+    <!-- Promesses en Vedette Carousel -->
     <section class="promises-carousel-section" id="promises-carousel">
         <div class="container">
             <div class="section-header-modern">
@@ -1069,19 +725,24 @@
             </div>
             
             <div class="carousel-controls">
+              
+                
                 <div id="promisesCarouselGrid" class="promises-grid">
+                    <!-- Chargé dynamiquement par JavaScript -->
                     <div class="loading-state">
                         <div class="spinner"></div>
                         <p>Chargement des promesses...</p>
                     </div>
                 </div>
-            </div>
+                         </div>
             
-            <div class="carousel-dots" id="carouselDots"></div>
+            <div class="carousel-dots" id="carouselDots">
+                <!-- Dots chargés dynamiquement -->
+            </div>
         </div>
     </section>
 
-    <!-- Tous les Engagements Section (HTML original) -->
+    <!-- Tous les Engagements Section -->
     <section class="promises-section" id="promises">
         <div class="container">
             <div class="section-header-modern">
@@ -1121,6 +782,7 @@
                         </label>
                         <select class="filter-select" id="filter-domain">
                             <option value="">Tous les domaines</option>
+                            <!-- Options chargées dynamiquement -->
                         </select>
                     </div>
                     
@@ -1166,6 +828,7 @@
                 </div>
                 
                 <div id="promisesGrid" class="promises-grid">
+                    <!-- Promesses chargées dynamiquement -->
                     <div class="loading-state">
                         <div class="spinner"></div>
                         <p>Chargement des engagements...</p>
@@ -1187,7 +850,7 @@
         </div>
     </section>
 
-    <!-- Actualités Section (HTML original) -->
+    <!-- Actualités Section -->
     <section class="news-section" id="news">
         <div class="container">
             <div class="section-header-modern">
@@ -1201,6 +864,7 @@
             </div>
             
             <div id="newsGrid" class="news-grid">
+                <!-- Actualités chargées dynamiquement -->
                 <div class="loading-state">
                     <div class="spinner"></div>
                     <p>Chargement des actualités...</p>
@@ -1209,7 +873,7 @@
         </div>
     </section>
 
-    <!-- Revue de Presse Section (HTML original) -->
+    <!-- Revue de Presse Section -->
     <section class="press-section" id="press">
         <div class="container">
             <div class="section-header-modern">
@@ -1217,6 +881,7 @@
                     <i class="fas fa-newspaper"></i>
                     Revue de Presse
                 </h2>
+                
             </div>
             
             <!-- Grille des quotidiens -->
@@ -1243,22 +908,26 @@
                     <i class="fas fa-chevron-right"></i>
                 </button>
                 
-                <div class="carousel-indicators" id="carouselIndicators"></div>
+                <div class="carousel-indicators" id="carouselIndicators">
+                    <!-- Indicateurs chargés dynamiquement -->
+                </div>
             </div>
             
             <!-- Grille des quotidiens cliquables -->
-            <div class="section-header-modern" style="margin-top: 2rem;">
+            <div class="section-header-modern" style="margin-top: var(--spacing-xl);">
                 <h3 style="font-size: 1.3rem; margin: 0;">
                     <i class="fas fa-th-large"></i>
                     Tous les Quotidiens
                 </h3>
             </div>
             
-            <div id="newspapersGrid" class="newspapers-grid"></div>
+            <div id="newspapersGrid" class="newspapers-grid">
+                <!-- Quotidiens chargés dynamiquement -->
+            </div>
         </div>
     </section>
 
-    <!-- Notation des Services Publics Section (HTML original COMPLET) -->
+    <!-- Notation des Services Publics Section -->
     <section class="rating-section" id="rating">
         <div class="container">
             <div class="section-header-modern">
@@ -1269,7 +938,7 @@
             </div>
 
             <!-- FORMULAIRE DE NOTATION -->
-            <div class="rating-form-card" style="margin-bottom: 3rem;">
+            <div class="rating-form-card" style="margin-bottom: var(--spacing-2xl);">
                 <div class="rating-form-header">
                     <h3>
                         <i class="fas fa-pencil-alt"></i>
@@ -1459,7 +1128,7 @@
         </div>
     </section>
 
-    <!-- Données des services (HTML original) -->
+    <!-- Données des services (cachées dans le HTML) -->
     <div id="services-data" style="display: none;">
         <!-- Santé & Hôpitaux -->
         <div data-category="sante">
@@ -1629,7 +1298,7 @@
         </div>
     </div>
 
-    <!-- Footer (HTML original) -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -1652,9 +1321,9 @@
                 <div class="footer-col">
                     <h4>Contact</h4>
                     <div class="footer-links">
-                        <a href="mailto:contact@projetbi.org" class="footer-link">
+                        <a href="/cdn-cgi/l/email-protection#9af9f5f4eefbf9eedaeae8f5f0ffeef8f3b4f5e8fd" class="footer-link">
                             <i class="fas fa-envelope"></i>
-                            contact@projetbi.org
+                            <span class="__cf_email__" data-cfemail="9cfff3f2e8fdffe8dceceef3f6f9e8fef5b2f3eefb">[email&#160;protected]</span>
                         </a>
                         <a href="tel:+221769455253" class="footer-link">
                             <i class="fas fa-phone"></i>
@@ -1739,10 +1408,10 @@
     <!-- Notification Container -->
     <div id="notification-container"></div>
 
-    <!-- JavaScript ORIGINAL (inchangé) -->
-    <script src="app.js"></script>
+    <!-- JavaScript -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="app.js"></script>
     
-    <!-- JavaScript pour le compte à rebours et la sélection contextuelle (ORIGINAL) -->
+    <!-- JavaScript pour le compte à rebours et la sélection contextuelle -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // === COMPTE À REBOURS ===
@@ -1849,44 +1518,3 @@
         if (currentDateElement) {
             const options = { day: 'numeric', month: 'long', year: 'numeric' };
             const now = new Date();
-            currentDateElement.textContent = now.toLocaleDateString('fr-FR', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-            }).toUpperCase();
-        }
-        
-        // === MENU MOBILE ===
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navMenu = document.getElementById('navMenu');
-        
-        if (mobileMenuBtn && navMenu) {
-            mobileMenuBtn.addEventListener('click', function() {
-                navMenu.classList.toggle('active');
-                const spans = this.querySelectorAll('span');
-                if (navMenu.classList.contains('active')) {
-                    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                    spans[1].style.opacity = '0';
-                    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
-                } else {
-                    spans[0].style.transform = 'none';
-                    spans[1].style.opacity = '1';
-                    spans[2].style.transform = 'none';
-                }
-            });
-            
-            // Fermer le menu en cliquant sur un lien
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', () => {
-                    navMenu.classList.remove('active');
-                    mobileMenuBtn.querySelectorAll('span').forEach((span, index) => {
-                        span.style.transform = 'none';
-                        if (index === 1) span.style.opacity = '1';
-                    });
-                });
-            });
-        }
-    });
-    </script>
-</body>
-</html>

@@ -143,6 +143,39 @@ body {
     flex-shrink: 0;
 }
 
+/* STYLE DU TEXTE DU LOGO RESTAURÉ */
+.logo-text { 
+    display: flex; 
+    flex-direction: column; 
+    line-height: 1.1; 
+}
+
+.logo-main { 
+    font-weight: 800; 
+    color: var(--primary-color); 
+    font-size: 1.1rem; 
+    font-family: 'Manrope', sans-serif;
+    letter-spacing: -0.02em;
+}
+
+.logo-tag { 
+    font-size: 0.65rem; 
+    letter-spacing: 1px; 
+    color: #666; 
+    font-weight: 700; 
+    font-family: 'Manrope', sans-serif;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+/* Image du logo */
+.nav-logo img {
+    height: 40px;
+    width: auto;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
 .nav-menu { 
     display: flex; 
     gap: 12px; /* Réduit de 15px à 12px */
@@ -173,6 +206,7 @@ body {
     /* Assurer une taille minimale cohérente */
     min-width: max-content;
     box-sizing: border-box;
+    font-family: 'Manrope', sans-serif;
 }
 
 .nav-link:hover { 
@@ -188,6 +222,8 @@ body {
     box-shadow: 0 4px 10px rgba(42, 109, 93, 0.2);
     /* Éviter l'expansion */
     flex-shrink: 0;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600;
 }
 
 .mobile-menu-btn { 
@@ -233,6 +269,15 @@ body {
         padding: 7px 14px;
         font-size: 0.82rem;
     }
+    
+    /* Ajustement du logo sur petits écrans */
+    .logo-main {
+        font-size: 1rem;
+    }
+    
+    .logo-tag {
+        font-size: 0.6rem;
+    }
 }
 
 @media (max-width: 1050px) {
@@ -249,6 +294,15 @@ body {
     /* Cacher les icônes pour gagner de la place */
     .nav-link i:not(.btn-nav-action i) {
         display: none;
+    }
+    
+    /* Ajustement supplémentaire du logo */
+    .nav-logo img {
+        height: 35px;
+    }
+    
+    .logo-main {
+        font-size: 0.95rem;
     }
 }
 
@@ -315,6 +369,15 @@ body {
     .nav-menu:not(.active) {
         display: none;
     }
+    
+    /* Logo sur mobile */
+    .logo-main {
+        font-size: 1rem;
+    }
+    
+    .nav-logo img {
+        height: 38px;
+    }
 }
 
 /* ===== CORRECTION ULTIME POUR LES TRÈS PETITS ÉCRANS ===== */
@@ -328,7 +391,15 @@ body {
     }
     
     .logo-main {
-        font-size: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .logo-tag {
+        font-size: 0.55rem;
+    }
+    
+    .nav-logo img {
+        height: 32px;
     }
     
     .mobile-menu-btn {
@@ -346,6 +417,19 @@ body {
     content: '';
     display: table;
     clear: both;
+}
+
+/* ===== ANIMATION POUR LE BOUTON MOBILE ===== */
+.mobile-menu-btn.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.mobile-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-btn.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
 }
 /* ===== HEADER COMBINÉ ===== */
 .header {

@@ -3834,3 +3834,27 @@ async function syncLocalDataWithSupabase() {
         // Logique similaire pour les votes...
     }
 }
+// CORRECTION MINIMALISTE POUR DÉCALAGES
+document.addEventListener('DOMContentLoaded', function() {
+    function quickFix() {
+        // Empêcher tout débordement
+        document.body.style.overflowX = 'hidden';
+        
+        // Fixer les grilles
+        const grids = document.querySelectorAll('.news-grid, .newspapers-grid');
+        grids.forEach(grid => {
+            grid.style.maxWidth = '100%';
+            grid.style.overflow = 'hidden';
+        });
+        
+        // Fixer le carousel
+        const carousel = document.querySelector('.press-carousel-container');
+        if (carousel) {
+            carousel.style.maxWidth = '100%';
+            carousel.style.overflow = 'hidden';
+        }
+    }
+    
+    quickFix();
+    window.addEventListener('resize', quickFix);
+});

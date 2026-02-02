@@ -202,15 +202,11 @@ body {
     overflow: hidden;
     text-align: center;
     
-    /* 🔥 Adaptation au contenu */
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: min(100%, 900px);
-    width: fit-content;
+    /* ✅ Utilise toute la largeur SANS déborder */
+    width: 100%;
+    max-width: 1200px; /* ou 1400px selon votre design */
+    box-sizing: border-box; /* inclut padding dans la largeur */
 }
-
 /* ===== STATS GRID ===== */
 .stats-section {
     margin-bottom: var(--spacing-2xl);

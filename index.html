@@ -20,32 +20,32 @@
     
     <link rel="stylesheet" href="style.css">
 
-</head>
-<body>
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#header" class="nav-logo">
-                <img src="https://projetbi.org/favicon.png" alt="Logo" style="height: 82px;border-radius: 20px;">
-                <div class="logo-text">
-                    <span class="logo-main">PROJETBI</span>
-                </div>
-            </a>
-            
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
-            
-            <div class="nav-menu" id="navMenu">
-                <a href="#header" class="nav-link active"><i class="fas fa-home"></i> Accueil</a>
-                <a href="#stats" class="nav-link"><i class="fas fa-chart-line"></i> Dashboard</a>
-                <a href="#promises" class="nav-link"><i class="fas fa-tasks"></i> Engagements</a>
-                <a href="#daily" class="nav-link"><i class="fas fa-sun"></i> Promesse du Jour</a>
-                <a href="#news" class="nav-link"><i class="fas fa-newspaper"></i> Actualités</a>
-                <a href="#press" class="nav-link"><i class="fas fa-book-open"></i> Revue de Presse</a>
-                <a href="#rating" class="nav-link btn-nav-action"><i class="fas fa-star-half-alt"></i> Noter un service</a>
-            </div>
-        </div>
-    </nav>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="/" class="nav-logo">
+      <img src="https://projetbi.org/favicon.png" alt="Logo" style="height: 82px; border-radius: 20px;">
+      <div class="logo-text">
+        <span class="logo-main">PROJETBI</span>
+      </div>
+    </a>
+
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="nav-menu" id="navMenu">
+      <a href="#header" class="nav-link">Accueil</a>
+      <a href="#stats" class="nav-link">Dashboard</a>
+      <a href="#daily" class="nav-link">Promesse du Jour</a>
+      <a href="#promises" class="nav-link">Engagements</a>
+      <a href="#news" class="nav-link">Actualités</a>
+      <a href="#press" class="nav-link">Revue de Presse</a>
+      <a href="#rating" class="nav-link">Noter un service</a>
+    </div>
+  </div>
+</nav>
     <header class="header" id="header">
         <div class="header-container">
             <div class="header-text-side">                           
@@ -658,7 +658,7 @@
                 <div class="footer-col">
                     <h4>Contact</h4>
                     <div class="footer-links">
-                        <a href="mailto:pastefprojetbi@gmail.com" class="footer-link"><i class="fas fa-envelope"></i>pastefprojetbi@gmail.com</a>
+                        <a href="/cdn-cgi/l/email-protection#b1c1d0c2c5d4d7c1c3dedbd4c5d3d8f1d6dcd0d8dd9fd2dedc" class="footer-link"><i class="fas fa-envelope"></i><span class="__cf_email__" data-cfemail="cdbdacbeb9a8abbdbfa2a7a8b9afa48daaa0aca4a1e3aea2a0">[email&#160;protected]</span></a>
                         <a href="tel:+221769455253" class="footer-link"><i class="fas fa-phone"></i> +221 76 945 52 53</a>
                         <a href="#" class="footer-link"><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</a>
                     </div>
@@ -704,30 +704,11 @@
 
     <div id="notification-container"></div>
 
-    <script src="app.js"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="app.js"></script>
     
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // === 1. GESTION DU MENU MOBILE ===
-        const mobileBtn = document.getElementById('mobileMenuBtn');
-        const navMenu = document.getElementById('navMenu');
-        
-        if (mobileBtn && navMenu) {
-            mobileBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                this.classList.toggle('active');
-                navMenu.classList.toggle('active');
-            });
-            
-            const navLinks = navMenu.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileBtn.classList.remove('active');
-                    navMenu.classList.remove('active');
-                });
-            });
-            
-            document.addEventListener('click', function(e) {
+                  document.addEventListener('click', function(e) {
                 if (navMenu.classList.contains('active') && 
                     !navMenu.contains(e.target) && 
                     !mobileBtn.contains(e.target)) {
@@ -735,7 +716,7 @@
                     navMenu.classList.remove('active');
                 }
             });
-        }
+        
 
         // === 2. COMPTE À REBOURS ===
         const targetDate = new Date('April 02, 2029 00:00:00').getTime();
@@ -787,13 +768,3 @@
         const currentDateElement = document.getElementById('current-date');
         if (currentDateElement) {
             const now = new Date();
-            currentDateElement.textContent = now.toLocaleDateString('fr-FR', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-            }).toUpperCase();
-        }
-    });
-    </script>
-</body>
-</html>

@@ -1,5 +1,6 @@
 // Mode démo - activé si Supabase échoue
 let DEMO_MODE = false;
+// AJOUTER AVEC LES AUTRES VARIABLES GLOBALES
 
 // Vérifier la connexion Supabase
 async function checkSupabaseConnection() {
@@ -51,7 +52,6 @@ try {
     supabaseClient = null;
 }
 
-// Configuration globale
 const CONFIG = {
     START_DATE: new Date('2024-04-02'),
     END_DATE: new Date('2029-04-02'), // Fin du mandat
@@ -83,9 +83,10 @@ const CONFIG = {
     dragStartY: 0,
     isDragging: false,
     currentRatingPromiseId: null,
-    currentRatingValue: 0
+    currentRatingValue: 0,
+    // AJOUTEZ CETTE LIGNE À LA FIN :
+    filteredPromises: []
 };
-
 // Variables pour le visualiseur photo
 let currentZoom = 1;
 let currentPhotoIndex = 0;
@@ -288,71 +289,83 @@ function formatDaysRemaining(days) {
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('🚀 Initialisation...');
     
-    // Initialiser les composants UI
+    // 1. Initialiser les composants UI
     initNavigation();
     initScrollEffects();
     initFilters();
     initDateDisplay();
     initPhotoViewer();
 
-    // Charger les données
+    // 2. Charger les données
     await loadData();
+    
+    // 3. IMPORTANT: Initialiser filteredPromises après chargement
+    CONFIG.filteredPromises = [...CONFIG.promises];
+    CONFIG.currentVisible = Math.min(CONFIG.visibleCount, CONFIG.promises.length);
 
-    // Configurer les composants
+    // 4. Rendre les données
+    renderAll();
+    if (typeof renderNews === 'function') {
+        renderNews(CONFIG.news);
+    }
+    if (typeof renderNewspapers === 'function') {
+        renderNewspapers();
+    }
+    
+    // 5. Configurer les composants
     setupPressCarousel();
     setupServiceRatings();
     setupDailyPromise();
     setupPromisesCarousel();
     setupKpiCarousel();
     
-    // Initialiser les étoiles de notation
+    // 6. Initialiser les étoiles
     initStarRatings();
     
-    // Initialiser le visualiseur photo avec un délai
+    // 7. Initialiser le visualiseur photo
     setTimeout(() => {
         if (typeof setupPhotoViewerControls === 'function') {
             setupPhotoViewerControls();
         }
     }, 500);
-    
-    // Testez la connexion Supabase
-    setTimeout(testServiceRatingsTable, 3000);
-    
-    // Débogage des délais
-    setTimeout(debugDelays, 2000);
 });
-
-// ==========================================
-// NAVIGATION
-// ==========================================
-// ==========================================
-// NAVIGATION - VERSION CORRIGÉE
+// NAVIGATION - VERSION CORRIGÉE POUR HREF
 // ==========================================
 function initNavigation() {
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navMenu = document.getElementById('navMenu');
     const navLinks = document.querySelectorAll('.nav-link');
-    
+
+    // 1. GESTION SIMPLIFIÉE DU MENU MOBILE - CORRIGÉ avec 'active'
     if (mobileMenuBtn && navMenu) {
-        mobileMenuBtn.addEventListener('click', () => {
-            navMenu.classList.toggle('show');
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Empêche la propagation
+            navMenu.classList.toggle('active'); // CHANGÉ: 'show' → 'active'
             mobileMenuBtn.classList.toggle('active');
+            
+            // Ajouter un overlay pour fermer en cliquant à côté
+            if (navMenu.classList.contains('active')) { // CHANGÉ: 'show' → 'active'
+                createMobileOverlay();
+            } else {
+                removeMobileOverlay();
+            }
         });
     }
 
+    // 2. NAVIGATION FONCTIONNELLE
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             
-            // ✅ CORRECTION : Extraire l'ID depuis href au lieu de data-section
             const href = link.getAttribute('href');
             if (!href || !href.startsWith('#')) return;
             
-            const section = href.substring(1); // Supprime le #
-            const target = document.getElementById(section);
+            const targetId = href.substring(1);
+            const target = document.getElementById(targetId);
 
             if (target) {
-                const offset = CONFIG.scrollOffset;
+                // Scroll smooth vers la section
+                const offset = 80;
                 const targetPosition = target.offsetTop - offset;
 
                 window.scrollTo({
@@ -360,39 +373,80 @@ function initNavigation() {
                     behavior: 'smooth'
                 });
 
+                // Mettre à jour l'état actif
                 navLinks.forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
 
-                if (navMenu && navMenu.classList.contains('show')) {
-                    navMenu.classList.remove('show');
-                    mobileMenuBtn?.classList.remove('active');
+                // Fermer le menu mobile si ouvert
+                if (navMenu && navMenu.classList.contains('active')) { // CHANGÉ: 'show' → 'active'
+                    navMenu.classList.remove('active'); // CHANGÉ: 'show' → 'active'
+                    mobileMenuBtn.classList.remove('active');
+                    removeMobileOverlay();
                 }
             }
         });
     });
 
-    // Scroll spy
-    window.addEventListener('scroll', () => {
+    // 3. FONCTIONS POUR L'OVERLAY MOBILE
+    function createMobileOverlay() {
+        const overlay = document.createElement('div');
+        overlay.className = 'mobile-overlay';
+        overlay.id = 'mobileOverlay';
+        document.body.appendChild(overlay);
+        
+        overlay.addEventListener('click', () => {
+            navMenu.classList.remove('active'); // CHANGÉ: 'show' → 'active'
+            mobileMenuBtn.classList.remove('active');
+            removeMobileOverlay();
+        });
+        
+        // Empêcher le défilement
+        document.body.style.overflow = 'hidden';
+    }
+
+    function removeMobileOverlay() {
+        const overlay = document.getElementById('mobileOverlay');
+        if (overlay) {
+            overlay.remove();
+        }
+        document.body.style.overflow = '';
+    }
+
+    // 4. GESTION DU SCROLL POUR ACTIVER LES LIENS
+    window.addEventListener('scroll', debounce(() => {
         let current = '';
         const sections = document.querySelectorAll('section[id]');
 
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
-            if (window.pageYOffset >= (sectionTop - CONFIG.scrollOffset - 50)) {
+            const sectionHeight = section.clientHeight;
+            
+            if (window.scrollY >= (sectionTop - 100)) {
                 current = section.getAttribute('id');
             }
         });
 
         navLinks.forEach(link => {
             link.classList.remove('active');
-            
-            // ✅ CORRECTION : Comparer avec href
             const href = link.getAttribute('href');
             if (href && href === `#${current}`) {
                 link.classList.add('active');
             }
         });
-    });
+    }, 100));
+}
+
+// Fonction debounce pour optimiser les performances
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
 }
 
 // ==========================================
@@ -978,55 +1032,6 @@ function fixInvalidDelays() {
 }
 
 // ==========================================
-// FONCTION DE DÉBOGAGE DES DÉLAIS
-// ==========================================
-function debugDelays() {
-    console.log('🔍 ANALYSE DES DÉLAIS');
-    console.log('=====================');
-    console.log('Date de début du mandat:', CONFIG.START_DATE.toLocaleDateString());
-    console.log('Date de fin du mandat:', CONFIG.END_DATE.toLocaleDateString());
-    console.log('Date actuelle:', CONFIG.CURRENT_DATE.toLocaleDateString());
-    console.log('');
-    
-    let totalDelays = 0;
-    let validPromisesCount = 0;
-    
-    CONFIG.promises.forEach((promise, index) => {
-        const daysRemaining = getDaysRemaining(promise.deadline);
-        const delaiTexte = promise.delai_texte || promise.delai;
-        
-        console.log(`${index + 1}. [${promise.id}] ${promise.engagement.substring(0, 50)}...`);
-        console.log(`   Domaine: ${promise.domain}`);
-        console.log(`   Statut: ${promise.status} ${promise.isLate ? '(EN RETARD)' : ''}`);
-        console.log(`   Délai texte: "${delaiTexte}"`);
-        console.log(`   Délai jours: ${promise.delai} jours`);
-        console.log(`   Date limite: ${formatDate(promise.deadline)}`);
-        console.log(`   Jours restants/retard: ${daysRemaining} (${formatDaysRemaining(daysRemaining)})`);
-        
-        // Pour le calcul du Retard moyen
-        if (!promise.isLate && promise.status !== 'Réalisé') {
-            if (daysRemaining >= 0 && daysRemaining <= 1825) {
-                totalDelays += daysRemaining;
-                validPromisesCount++;
-            }
-        }
-        
-        console.log('   ---');
-    });
-    
-    // Calcul du Retard moyen réel
-    const avgDelay = validPromisesCount > 0 ? Math.round(totalDelays / validPromisesCount) : 0;
-    
-    console.log('');
-    console.log('📊 CALCUL DU Retard moyen:');
-    console.log(`   Nombre de promesses valides (non réalisées, non en retard): ${validPromisesCount}`);
-    console.log(`   Somme des jours restants: ${totalDelays}`);
-    console.log(`   Retard moyen calculé: ${avgDelay} jours`);
-    
-    return avgDelay;
-}
-
-// ==========================================
 // PROMESSE DU JOUR - FORMAT JOURNAL
 // ==========================================
 function setupDailyPromise() {
@@ -1133,20 +1138,59 @@ function setupDailyPromise() {
 // RENDER ALL
 // ==========================================
 function renderAll() {
+    console.log('renderAll: Rendering', CONFIG.promises.length, 'promises');
+    
+    // Initialiser filteredPromises si vide
+    if (!CONFIG.filteredPromises || CONFIG.filteredPromises.length === 0) {
+        CONFIG.filteredPromises = [...CONFIG.promises];
+    }
+    
+    // Mettre à jour les statistiques
     updateStats();
-    renderPromises(CONFIG.promises.slice(0, CONFIG.currentVisible));
+    
+    // Rendre les promesses initiales
+    const initialCount = Math.min(CONFIG.visibleCount, CONFIG.filteredPromises.length);
+    renderPromises(CONFIG.filteredPromises.slice(0, initialCount));
+    
+    // Mettre à jour le compteur
+    updateResultsCount(CONFIG.filteredPromises.length);
+    
+    // Mettre à jour les boutons
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showLessBtn = document.getElementById('showLessBtn');
+    
+    if (CONFIG.filteredPromises.length > CONFIG.visibleCount) {
+        if (showMoreBtn) showMoreBtn.style.display = 'inline-flex';
+        if (showLessBtn) showLessBtn.style.display = 'none';
+    } else {
+        if (showMoreBtn) showMoreBtn.style.display = 'none';
+        if (showLessBtn) showLessBtn.style.display = 'none';
+    }
+    
+    // Remplir le filtre de domaine
     populateDomainFilter();
-    updateKpiCarousel();
 }
 
 // ==========================================
 // UPDATE STATS - VERSION CORRIGÉE
 // ==========================================
-function updateStats() {
-    const total = CONFIG.promises.length;
-    const realise = CONFIG.promises.filter(p => p.status === 'Réalisé').length;
-    const encours = CONFIG.promises.filter(p => p.status === 'En cours').length;
-    const nonLance = CONFIG.promises.filter(p => p.status === 'Non lancé').length;
+    function updateStats() {
+ const total = CONFIG.promises.length;
+    
+    // Logique CORRIGÉE pour le comptage :
+    const realise = CONFIG.promises.filter(p => 
+        p.status === 'Réalisé' && !p.isLate
+    ).length;
+    
+    const encours = CONFIG.promises.filter(p => 
+        p.status === 'En cours' && !p.isLate
+    ).length;
+    
+    const nonLance = CONFIG.promises.filter(p => 
+        p.status === 'Non lancé' && !p.isLate
+    ).length;
+    
+    // Les retards sont séparés
     const retard = CONFIG.promises.filter(p => p.isLate).length;
     const withUpdates = CONFIG.promises.filter(p => p.updates && p.updates.length > 0).length;
     const tauxRealisation = total > 0 ? Math.round((realise / total) * 100) : 0;
@@ -1311,82 +1355,241 @@ function initFilters() {
         });
     }
 
-    [filterStatus, filterDomain, filterSearch].forEach(filter => {
-        if (filter) {
-            filter.addEventListener('change', applyFilters);
-            filter.addEventListener('input', applyFilters);
-        }
-    });
+    // Événements de filtrage
+    if (filterStatus) {
+        filterStatus.addEventListener('change', applyFilters);
+    }
+    
+    if (filterDomain) {
+        filterDomain.addEventListener('change', applyFilters);
+    }
+    
+    if (filterSearch) {
+        filterSearch.addEventListener('input', debounce(applyFilters, 300));
+    }
 
     if (resetFiltersBtn) {
         resetFiltersBtn.addEventListener('click', resetFilters);
     }
 
+    // BOUTONS AFFICHER PLUS/MOINS
     if (showMoreBtn) {
         showMoreBtn.addEventListener('click', () => {
-            CONFIG.currentVisible = CONFIG.promises.length;
-            renderPromises(CONFIG.promises);
+            console.log('Afficher plus cliqué');
+            CONFIG.currentVisible = CONFIG.filteredPromises.length;
+            renderPromises(CONFIG.filteredPromises);
             showMoreBtn.style.display = 'none';
-            showLessBtn.style.display = 'inline-flex';
+            if (showLessBtn) showLessBtn.style.display = 'inline-flex';
         });
     }
 
     if (showLessBtn) {
         showLessBtn.addEventListener('click', () => {
+            console.log('Afficher moins cliqué');
             CONFIG.currentVisible = CONFIG.visibleCount;
-            renderPromises(CONFIG.promises.slice(0, CONFIG.currentVisible));
+            renderPromises(CONFIG.filteredPromises.slice(0, CONFIG.currentVisible));
             showLessBtn.style.display = 'none';
-            showMoreBtn.style.display = 'inline-flex';
+            if (showMoreBtn) showMoreBtn.style.display = 'inline-flex';
         });
+        // Caché par défaut
+        showLessBtn.style.display = 'none';
     }
+    
+    // Initialiser le filtre de domaine
+    populateDomainFilter();
 }
 
+function resetFilters() {
+    console.log('Réinitialisation des filtres');
+    
+    document.getElementById('filter-status').value = '';
+    document.getElementById('filter-domain').value = '';
+    document.getElementById('filter-search').value = '';
+    
+    // Réinitialiser à toutes les promesses
+    CONFIG.filteredPromises = [...CONFIG.promises];
+    CONFIG.currentVisible = CONFIG.visibleCount;
+    
+    // Rendre toutes les promesses
+    renderPromises(CONFIG.filteredPromises.slice(0, CONFIG.currentVisible));
+    updateResultsCount(CONFIG.filteredPromises.length);
+    
+    // Mettre à jour les boutons
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showLessBtn = document.getElementById('showLessBtn');
+    
+    if (CONFIG.promises.length > CONFIG.visibleCount) {
+        if (showMoreBtn) showMoreBtn.style.display = 'inline-flex';
+        if (showLessBtn) showLessBtn.style.display = 'none';
+    } else {
+        if (showMoreBtn) showMoreBtn.style.display = 'none';
+        if (showLessBtn) showLessBtn.style.display = 'none';
+    }
+    
+    showNotification('Filtres réinitialisés');
+}
+
+// Fonction debounce pour la recherche
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+function resetFilters() {
+    document.getElementById('filter-status').value = '';
+    document.getElementById('filter-domain').value = '';
+    document.getElementById('filter-search').value = '';
+    
+    // Réinitialiser à toutes les promesses
+    CONFIG.filteredPromises = [...CONFIG.promises];
+    CONFIG.currentVisible = CONFIG.visibleCount;
+    
+    updateFilteredDisplay();
+    
+    // Réinitialiser les boutons
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showLessBtn = document.getElementById('showLessBtn');
+    
+    if (CONFIG.promises.length > CONFIG.visibleCount) {
+        if (showMoreBtn) showMoreBtn.style.display = 'inline-flex';
+        if (showLessBtn) showLessBtn.style.display = 'none';
+    } else {
+        if (showMoreBtn) showMoreBtn.style.display = 'none';
+        if (showLessBtn) showLessBtn.style.display = 'none';
+    }
+}
 function applyFilters() {
     const filterStatus = document.getElementById('filter-status')?.value || '';
     const filterDomain = document.getElementById('filter-domain')?.value || '';
     const filterSearch = document.getElementById('filter-search')?.value.toLowerCase() || '';
     
-    const filtered = CONFIG.promises.filter(promise => {
-        let match = true;
+    console.log('Filtrage avec:', { filterStatus, filterDomain, filterSearch });
+    
+    // Utiliser toutes les promesses comme base
+    let filtered = CONFIG.promises;
+    
+    // 1. FILTRAGE PAR STATUT - LOGIQUE CORRIGÉE
+    if (filterStatus) {
+        console.log('Filtre statut:', filterStatus);
         
-        if (filterStatus) {
-            if (filterStatus === 'En retard') {
-                match = match && promise.isLate;
-            } else {
-                const statusMap = { '✅ Réalisé': 'Réalisé', '🔄 En cours': 'En cours', '⏳ Non lancé': 'Non lancé' };
-                const normalizedStatus = statusMap[filterStatus] || filterStatus.replace('✅ ', '').replace('🔄 ', '').replace('⏳ ', '').replace('⚠️ ', '');
-                match = match && promise.status.includes(normalizedStatus);
-            }
-        }
-        
-        if (filterDomain && filterDomain !== '') {
-            match = match && (promise.domain || '').includes(filterDomain);
-        }
-        
-        if (filterSearch) {
-            match = match && (
-                promise.engagement.toLowerCase().includes(filterSearch) ||
-                (promise.domain || '').toLowerCase().includes(filterSearch) ||
-                (promise.resultat || '').toLowerCase().includes(filterSearch)
+        if (filterStatus === 'En retard') {
+            // Seulement les promesses EN RETARD
+            filtered = filtered.filter(promise => promise.isLate === true);
+        } 
+        else if (filterStatus === '✅ Réalisé') {
+            // Seulement les promesses RÉALISÉES (et NON en retard)
+            filtered = filtered.filter(promise => 
+                promise.status === 'Réalisé' && promise.isLate === false
+            );
+        } 
+        else if (filterStatus === '🔄 En cours') {
+            // Seulement les promesses EN COURS (et NON en retard)
+            filtered = filtered.filter(promise => 
+                promise.status === 'En cours' && promise.isLate === false
+            );
+        } 
+        else if (filterStatus === '⏳ Non lancé') {
+            // Seulement les promesses NON LANCÉES (et NON en retard)
+            filtered = filtered.filter(promise => 
+                promise.status === 'Non lancé' && promise.isLate === false
             );
         }
-        
-        return match;
-    });
-
-    CONFIG.currentVisible = Math.min(CONFIG.visibleCount, filtered.length);
-    renderPromises(filtered.slice(0, CONFIG.currentVisible));
-    updateResultsCount(filtered.length);
+    }
     
+    // 2. FILTRAGE PAR DOMAINE
+    if (filterDomain && filterDomain !== '') {
+        console.log('Filtre domaine:', filterDomain);
+        filtered = filtered.filter(promise => promise.domain === filterDomain);
+    }
+    
+    // 3. FILTRAGE PAR RECHERCHE
+    if (filterSearch) {
+        console.log('Filtre recherche:', filterSearch);
+        filtered = filtered.filter(promise => 
+            promise.engagement.toLowerCase().includes(filterSearch) ||
+            (promise.domain || '').toLowerCase().includes(filterSearch) ||
+            (promise.resultat || '').toLowerCase().includes(filterSearch)
+        );
+    }
+    
+    console.log('Résultat filtre:', filtered.length, 'promesses');
+    
+    // Stocker le résultat
+    CONFIG.filteredPromises = filtered;
+    
+    // Mettre à jour l'affichage
+    updateFilteredDisplay();
+}
+function updateFilteredDisplay() {
     const showMoreBtn = document.getElementById('showMoreBtn');
     const showLessBtn = document.getElementById('showLessBtn');
-    if (filtered.length > CONFIG.visibleCount) {
-        showMoreBtn.style.display = 'inline-flex';
-        showLessBtn.style.display = 'none';
+    
+    console.log('updateFilteredDisplay:', CONFIG.filteredPromises.length, 'promesses');
+    
+    // Toujours montrer "Afficher plus" s'il y a plus d'éléments
+    if (CONFIG.filteredPromises.length > CONFIG.visibleCount) {
+        CONFIG.currentVisible = CONFIG.visibleCount;
+        if (showMoreBtn) showMoreBtn.style.display = 'inline-flex';
+        if (showLessBtn) showLessBtn.style.display = 'none';
     } else {
-        showMoreBtn.style.display = 'none';
-        showLessBtn.style.display = 'none';
+        CONFIG.currentVisible = CONFIG.filteredPromises.length;
+        if (showMoreBtn) showMoreBtn.style.display = 'none';
+        if (showLessBtn) showLessBtn.style.display = 'none';
     }
+    
+    // Rendre les promesses
+    renderPromises(CONFIG.filteredPromises.slice(0, CONFIG.currentVisible));
+    updateResultsCount(CONFIG.filteredPromises.length);
+}
+
+function updateFilteredDisplay() {
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showLessBtn = document.getElementById('showLessBtn');
+    
+    // Déterminer combien de promesses afficher
+    if (CONFIG.filteredPromises.length > CONFIG.visibleCount) {
+        CONFIG.currentVisible = CONFIG.visibleCount;
+        if (showMoreBtn) showMoreBtn.style.display = 'inline-flex';
+        if (showLessBtn) showLessBtn.style.display = 'none';
+    } else {
+        CONFIG.currentVisible = CONFIG.filteredPromises.length;
+        if (showMoreBtn) showMoreBtn.style.display = 'none';
+        if (showLessBtn) showLessBtn.style.display = 'none';
+    }
+    
+    // Rendre les promesses
+    renderPromises(CONFIG.filteredPromises.slice(0, CONFIG.currentVisible));
+    updateResultsCount(CONFIG.filteredPromises.length);
+}
+// Modifier la fonction pour "Afficher plus"
+function showMorePromises() {
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showLessBtn = document.getElementById('showLessBtn');
+    
+    CONFIG.currentVisible = CONFIG.filteredPromises.length;
+    renderPromises(CONFIG.filteredPromises);
+    
+    showMoreBtn.style.display = 'none';
+    showLessBtn.style.display = 'inline-flex';
+}
+
+// Modifier la fonction pour "Afficher moins"
+function showLessPromises() {
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showLessBtn = document.getElementById('showLessBtn');
+    
+    CONFIG.currentVisible = CONFIG.visibleCount;
+    renderPromises(CONFIG.filteredPromises.slice(0, CONFIG.currentVisible));
+    
+    showLessBtn.style.display = 'none';
+    showMoreBtn.style.display = 'inline-flex';
 }
 
 function resetFilters() {
@@ -1429,10 +1632,15 @@ function renderPromises(promises) {
     const grid = document.getElementById('promisesGrid');
     if (!grid) return;
     
-    if (promises.length === 0) {
+    console.log('renderPromises: Rendering', promises.length, 'promises');
+    
+    if (!promises || promises.length === 0) {
         grid.innerHTML = `
             <div class="loading-state">
                 <p><i class="fas fa-search"></i> Aucun engagement trouvé avec ces critères.</p>
+                <button class="btn-updates" onclick="resetFilters()" style="margin-top: 1rem;">
+                    <i class="fas fa-redo"></i> Réinitialiser les filtres
+                </button>
             </div>
         `;
         return;
@@ -1446,9 +1654,9 @@ function renderPromises(promises) {
         return `
             <div class="promise-card ${statusClass}" data-id="${promise.id}">
                 <div class="promise-header">
-                    <span class="promise-status">
-                        ${statusIcon} ${promise.isLate ? 'En retard' : promise.status}
-                    </span>
+                   <span class="promise-status">
+    ${statusIcon} ${getStatusText(promise)}
+</span>
                     <span class="promise-domain">${promise.domain || 'Non spécifié'}</span>
                 </div>
                
@@ -1483,22 +1691,25 @@ function renderPromises(promises) {
                
                 <div class="promise-actions">
                     <div class="social-share">
-                        <button class="social-btn fb" onclick="shareToPlatform('${promise.id}', 'facebook')" title="Partager sur Facebook">
-                            <i class="fab fa-facebook-f"></i>
+                        <!-- FORCER LES COULEURS AVEC STYLE INLINE -->
+                        <button class="social-btn fb" onclick="shareToPlatform('${promise.id}', 'facebook')" 
+                                title="Partager sur Facebook"
+                                style="background-color: #3b5998 !important; border: none !important;">
+                            <i class="fab fa-facebook-f" style="color: white !important;"></i>
                         </button>
-                        <button class="social-btn tw" onclick="shareToPlatform('${promise.id}', 'twitter')" title="Partager sur Twitter">
-                            <i class="fab fa-twitter"></i>
+                        <button class="social-btn tw" onclick="shareToPlatform('${promise.id}', 'twitter')" 
+                                title="Partager sur Twitter"
+                                style="background-color: #000000 !important; border: none !important;">
+                            <i class="fab fa-x-twitter" style="color: white !important;"></i>
                         </button>
-                        <button class="social-btn wa" onclick="shareToPlatform('${promise.id}', 'whatsapp')" title="Partager sur WhatsApp">
-                            <i class="fab fa-whatsapp"></i>
+                        <button class="social-btn wa" onclick="shareToPlatform('${promise.id}', 'whatsapp')" 
+                                title="Partager sur WhatsApp"
+                                style="background-color: #25D366 !important; border: none !important;">
+                            <i class="fab fa-whatsapp" style="color: white !important;"></i>
                         </button>
                     </div>
                     <button class="btn-stars" onclick="showRatingModal('${promise.id}')" title="Noter cette promesse">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i> Noter
                     </button>
                 </div>
                
@@ -1515,8 +1726,68 @@ function renderPromises(promises) {
         `;
     }).join('');
     
-    // Forcer la visibilité des boutons
-    forceButtonVisibility();
+    // FORCER LA VISIBILITÉ DES BOUTONS APRÈS RENDU
+    setTimeout(() => {
+        forceSocialButtonsColors();
+    }, 100);
+}
+
+// NOUVELLE FONCTION POUR FORCER LES COULEURS
+function forceSocialButtonsColors() {
+    const socialButtons = document.querySelectorAll('.social-btn');
+    
+    socialButtons.forEach(btn => {
+        // Retirer toutes les classes qui pourraient écraser les couleurs
+        btn.className = 'social-btn';
+        
+        // Ajouter la classe spécifique
+        if (btn.innerHTML.includes('fa-facebook')) {
+            btn.classList.add('fb');
+            btn.style.cssText = `
+                background-color: #3b5998 !important;
+                color: white !important;
+                border: none !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 40px !important;
+                height: 40px !important;
+                border-radius: 50% !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            `;
+        } else if (btn.innerHTML.includes('fa-x-twitter') || btn.innerHTML.includes('fa-twitter')) {
+            btn.classList.add('tw');
+            btn.style.cssText = `
+                background-color: #000000 !important;
+                color: white !important;
+                border: none !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 40px !important;
+                height: 40px !important;
+                border-radius: 50% !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            `;
+        } else if (btn.innerHTML.includes('fa-whatsapp')) {
+            btn.classList.add('wa');
+            btn.style.cssText = `
+                background-color: #25D366 !important;
+                color: white !important;
+                border: none !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 40px !important;
+                height: 40px !important;
+                border-radius: 50% !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            `;
+        }
+    });
 }
 
 function getStatusClass(promise) {
@@ -3227,129 +3498,6 @@ function setupImageDrag(image) {
 }
 
 // ==========================================
-// TEST SUPABASE POUR LES SERVICES
-// ==========================================
-async function testServiceRatingsTable() {
-    if (!supabaseClient) {
-        console.error('❌ Client Supabase non initialisé');
-        return;
-    }
-    
-    console.log('🔍 TEST SUPABASE - Vérification complète');
-    console.log('========================================');
-    
-    try {
-        // 1. Vérifier la connexion
-        console.log('1. Test de connexion...');
-        const { data: test, error: connError } = await supabaseClient
-            .from('service_ratings')
-            .select('count', { count: 'exact', head: true });
-        
-        if (connError) {
-            console.error('❌ Erreur connexion:', connError.message);
-            
-            if (connError.message.includes('row-level security')) {
-                console.log('💡 SOLUTION: Exécutez ce SQL dans Supabase:');
-                console.log(`
-                    -- Option 1: Désactiver RLS temporairement
-                    ALTER TABLE service_ratings DISABLE ROW LEVEL SECURITY;
-                    ALTER TABLE votes DISABLE ROW LEVEL SECURITY;
-                    
-                    -- Option 2: Créer des politiques permissives
-                    CREATE POLICY "Enable all" ON service_ratings FOR ALL USING (true);
-                    CREATE POLICY "Enable all" ON votes FOR ALL USING (true);
-                `);
-            }
-        } else {
-            console.log('✅ Connexion OK');
-        }
-        
-        // 2. Tester les permissions avec une requête simple
-        console.log('\n2. Test des permissions...');
-        console.log('   a) Test SELECT...');
-        const { error: selectError } = await supabaseClient
-            .from('service_ratings')
-            .select('*')
-            .limit(1);
-        
-        if (selectError) {
-            console.error('   ❌ SELECT échoué:', selectError.message);
-        } else {
-            console.log('   ✅ SELECT réussi');
-        }
-        
-        // 3. Tester l'insertion avec des données minimales
-        console.log('\n3. Test INSERT...');
-        const testData = {
-            service: 'TEST',
-            accessibility: 3,
-            welcome: 3,
-            efficiency: 3,
-            transparency: 3,
-            comment: 'Test de permission',
-            created_at: new Date().toISOString()
-        };
-        
-        // Essayer sans user_ip et user_agent (champs optionnels)
-        const { data: insertResult, error: insertError } = await supabaseClient
-            .from('service_ratings')
-            .insert([testData])
-            .select();
-        
-        if (insertError) {
-            console.error('   ❌ INSERT échoué:', insertError.message);
-            
-            if (insertError.message.includes('user_ip')) {
-                console.log('   💡 Le champ user_ip est requis dans votre table');
-                console.log('   💡 Essayez avec user_ip:');
-                
-                const testDataWithIP = {
-                    ...testData,
-                    user_ip: '127.0.0.1',
-                    user_agent: 'Test'
-                };
-                
-                const { error: insertError2 } = await supabaseClient
-                    .from('service_ratings')
-                    .insert([testDataWithIP])
-                    .select();
-                
-                if (insertError2) {
-                    console.error('   ❌ INSERT avec IP échoué:', insertError2.message);
-                } else {
-                    console.log('   ✅ INSERT avec IP réussi');
-                }
-            }
-        } else {
-            console.log('   ✅ INSERT réussi:', insertResult);
-            
-            // Nettoyage
-            if (insertResult && insertResult[0] && insertResult[0].id) {
-                await supabaseClient
-                    .from('service_ratings')
-                    .delete()
-                    .eq('id', insertResult[0].id);
-                console.log('   🧹 Test nettoyé');
-            }
-        }
-        
-        // 4. Vérifier la structure de la table
-        console.log('\n4. Structure de la table...');
-        console.log('   Colonnes attendues: service, accessibility, welcome, efficiency, transparency, comment, user_ip, user_agent, created_at');
-        
-        // 5. Mode démo activé automatiquement en cas d'erreur
-        if (connError || selectError || insertError) {
-            console.log('\n🎭 MODE DÉMO ACTIVÉ');
-            console.log('   Les données seront stockées localement');
-            console.log('   Pour activer Supabase, corrigez les permissions RLS');
-        }
-        
-    } catch (error) {
-        console.error('❌ Erreur test:', error);
-    }
-}
-
-// ==========================================
 // FORCER LA VISIBILITÉ DES BOUTONS
 // ==========================================
 function forceButtonVisibility() {
@@ -3541,92 +3689,6 @@ function getDefaultPressData() {
         { id: '6', title: 'WalFadjri', date: '28/01/2026', image: 'https://picsum.photos/seed/walfadjri/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7c/Walf_fadjri_logo.svg/200px-Walf_fadjri_logo.svg.png' }
     ];
 }
-
-// ==========================================
-// SCRIPT DE DIAGNOSTIC SUPABASE
-// ==========================================
-
-async function diagnoseSupabase() {
-    console.log('🔍 DIAGNOSTIC SUPABASE');
-    console.log('=======================');
-    
-    // 1. Vérifier l'URL et la clé
-    console.log('1. Configuration:');
-    console.log('   URL:', SUPABASE_URL);
-    console.log('   Clé disponible:', SUPABASE_KEY ? 'OUI' : 'NON');
-    console.log('   Client créé:', !!supabaseClient);
-    
-    if (!supabaseClient) {
-        console.log('❌ Client non initialisé');
-        return;
-    }
-    
-    // 2. Tester différentes requêtes
-    console.log('\n2. Tests de requêtes:');
-    
-    // Test 1: Sélection simple
-    try {
-        console.log('   Test 1: SELECT id FROM votes LIMIT 1');
-        const { data: test1, error: err1 } = await supabaseClient
-            .from('votes')
-            .select('id')
-            .limit(1);
-        
-        console.log('   Résultat:', err1 ? `ERREUR: ${err1.message}` : `SUCCÈS (${test1?.length} résultats)`);
-    } catch (e) {
-        console.log('   Exception:', e.message);
-    }
-    
-    // Test 2: Compter
-    try {
-        console.log('   Test 2: COUNT(*) FROM votes');
-        const { count, error: err2 } = await supabaseClient
-            .from('votes')
-            .select('*', { count: 'exact', head: true });
-        
-        console.log('   Résultat:', err2 ? `ERREUR: ${err2.message}` : `SUCCÈS (${count} enregistrements)`);
-    } catch (e) {
-        console.log('   Exception:', e.message);
-    }
-    
-    // Test 3: Voir les tables disponibles
-    try {
-        console.log('   Test 3: Tables disponibles');
-        // Note: Cette requête fonctionne différemment dans Supabase
-        const { data: tables, error: err3 } = await supabaseClient
-            .from('votes')
-            .select('*')
-            .limit(0); // Juste pour voir si la table existe
-        
-        console.log('   Table "votes":', err3 ? `NON (${err3.message})` : 'OUI');
-    } catch (e) {
-        console.log('   Exception:', e.message);
-    }
-    
-    console.log('\n3. Recommandations:');
-    
-    if (supabaseClient) {
-        console.log('   ✅ Client Supabase initialisé');
-        console.log('   ⚠️  Problème probable:');
-        console.log('      - Permissions RLS (Row Level Security)');
-        console.log('      - Table "votes" inexistante');
-        console.log('      - Colonnes inexistantes dans le SELECT');
-        
-        console.log('\n   🔧 Actions recommandées:');
-        console.log('      1. Vérifiez que la table "votes" existe');
-        console.log('      2. Vérifiez les permissions RLS:');
-        console.log('         ALTER TABLE votes ENABLE ROW LEVEL SECURITY;');
-        console.log('         CREATE POLICY "enable_all" ON votes FOR ALL USING (true);');
-        console.log('      3. Utilisez SELECT * pour tester d\'abord');
-    }
-}
-
-// Exécuter le diagnostic
-setTimeout(() => {
-    if (supabaseClient) {
-        diagnoseSupabase();
-    }
-}, 2000);
 
 // ==========================================
 // FONCTIONS DE SECOURS POUR SUPABASE
@@ -3833,4 +3895,58 @@ async function syncLocalDataWithSupabase() {
         
         // Logique similaire pour les votes...
     }
+}
+// ==========================================
+// DEBUG MOBILE - AJOUTER DANS app.js
+// ==========================================
+function debugMobileMenu() {
+    console.log('📱 DEBUG MOBILE MENU');
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const navMenu = document.getElementById('navMenu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    console.log('Bouton mobile:', mobileBtn ? '✅ trouvé' : '❌ non trouvé');
+    console.log('Menu navigation:', navMenu ? '✅ trouvé' : '❌ non trouvé');
+    console.log('Liens de navigation:', navLinks.length, 'trouvés');
+    
+    if (mobileBtn && navMenu) {
+        console.log('État initial du menu:', navMenu.classList.contains('show') ? 'ouvert' : 'fermé');
+        
+        // Vérifier les écouteurs d'événements
+        const hasClickHandler = mobileBtn.onclick || mobileBtn._hasClickHandler;
+        console.log('Écouteur bouton mobile:', hasClickHandler ? '✅ actif' : '❌ absent');
+    }
+}
+
+// Appeler le debug au chargement
+document.addEventListener('DOMContentLoaded', () => {
+    // Votre code existant...
+    debugMobileMenu();
+    
+    // Vérifier si c'est mobile
+    if (window.innerWidth <= 768) {
+        console.log('📱 Mode mobile détecté - largeur:', window.innerWidth);
+    }
+});
+
+// Debug lors du clic sur le menu mobile
+document.addEventListener('click', (e) => {
+    if (e.target.closest('#mobileMenuBtn')) {
+        console.log('🍔 Menu mobile cliqué');
+        const navMenu = document.getElementById('navMenu');
+        if (navMenu) {
+            console.log('État après clic:', navMenu.classList.contains('show') ? 'ouvert' : 'fermé');
+        }
+    }
+    
+    // Debug clic sur les liens
+    if (e.target.closest('.nav-link')) {
+        console.log('🔗 Lien de navigation cliqué:', e.target.getAttribute('href'));
+        e.preventDefault();
+        // Votre logique de navigation ici
+    }
+});
+function getStatusText(promise) {
+    if (promise.isLate) return 'En retard';
+    return promise.status;
 }

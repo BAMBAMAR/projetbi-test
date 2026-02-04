@@ -337,7 +337,8 @@ body {
     }
 
     .nav-menu.active { 
-        transform: translateY(0); 
+        transform: translateY(0);
+        display: flex !important; /* AJOUTÉ: Forcer l'affichage */
     }
     
     .nav-link { 
@@ -3824,7 +3825,8 @@ body {
     }
 
     .nav-menu.active { 
-        transform: translateY(0); 
+        transform: translateY(0);
+        display: flex !important; /* AJOUTÉ: Forcer l'affichage */
     }
     
     .nav-link { 

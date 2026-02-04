@@ -3950,3 +3950,47 @@ function getStatusText(promise) {
     if (promise.isLate) return 'En retard';
     return promise.status;
 }
+// Fonction pour réduire l'espace du header
+function reduceHeaderSpace() {
+    console.log('📏 Réduction de l\'espace du header...');
+    
+    // 1. Réduire le padding du header
+    const header = document.querySelector('.header, header, #header');
+    if (header) {
+        header.style.paddingTop = '10px';
+        header.style.paddingBottom = '10px';
+        header.style.marginTop = '0';
+    }
+    
+    // 2. Réduire l'espace de la navbar
+    const navbar = document.querySelector('.navbar, nav');
+    if (navbar) {
+        navbar.style.marginBottom = '0';
+        navbar.style.paddingBottom = '0';
+    }
+    
+    // 3. Ajuster l'image
+    const image = document.querySelector('.sonko-img, .header img, .header-visual-side img');
+    if (image) {
+        image.style.marginTop = '-20px';
+        image.style.maxHeight = '350px';
+    }
+    
+    // 4. Ajuster le conteneur
+    const container = document.querySelector('.header-container, .container, .header > div');
+    if (container) {
+        container.style.paddingTop = '0';
+        container.style.marginTop = '0';
+    }
+    
+    console.log('✅ Espace réduit');
+}
+
+// Appeler au chargement
+document.addEventListener('DOMContentLoaded', () => {
+    // Appeler après un court délai pour que le CSS soit chargé
+    setTimeout(reduceHeaderSpace, 100);
+    
+    // Réappliquer si nécessaire après chargement d'images
+    window.addEventListener('load', reduceHeaderSpace);
+});

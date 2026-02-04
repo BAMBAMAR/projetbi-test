@@ -1,3 +1,78 @@
+// ==========================================
+// MENU MOBILE - CODE CORRIGÉ
+// ==========================================
+document.addEventListener('DOMContentLoaded', function() {
+    // Sélecteurs
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navMenu = document.getElementById('navMenu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    // Toggle du menu mobile
+    if (mobileMenuBtn && navMenu) {
+        mobileMenuBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            mobileMenuBtn.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // Fermer le menu lors du clic sur un lien
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenuBtn.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Fermer le menu lors du clic à l'extérieur
+        document.addEventListener('click', function(e) {
+            if (navMenu.classList.contains('active') && 
+                !navMenu.contains(e.target) && 
+                !mobileMenuBtn.contains(e.target)) {
+                mobileMenuBtn.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    }
+    
+    // Animation du bouton hamburger
+    if (mobileMenuBtn) {
+        const spans = mobileMenuBtn.querySelectorAll('span');
+        mobileMenuBtn.addEventListener('click', function() {
+            if (this.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+    }
+    
+    // Scroll navbar
+    let lastScrollTop = 0;
+    const navbar = document.getElementById('navbar');
+    
+    window.addEventListener('scroll', function() {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (scrollTop > lastScrollTop && scrollTop > 100) {
+            navbar.style.transform = 'translateY(-100%)';
+        } else {
+            navbar.style.transform = 'translateY(0)';
+        }
+        
+        if (scrollTop > 50) {
+            navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+        } else {
+            navbar.style.boxShadow = 'none';
+        }
+        
+        lastScrollTop = scrollTop;
+    });
+});
+
 // Mode démo - activé si Supabase échoue
 let DEMO_MODE = false;
 // AJOUTER AVEC LES AUTRES VARIABLES GLOBALES
@@ -336,15 +411,15 @@ function initNavigation() {
     const navMenu = document.getElementById('navMenu');
     const navLinks = document.querySelectorAll('.nav-link');
 
-    // 1. GESTION SIMPLIFIÉE DU MENU MOBILE - CORRIGÉ avec 'active'
+    // 1. GESTION SIMPLIFIÉE DU MENU MOBILE
     if (mobileMenuBtn && navMenu) {
         mobileMenuBtn.addEventListener('click', (e) => {
             e.stopPropagation(); // Empêche la propagation
-            navMenu.classList.toggle('active'); // CHANGÉ: 'show' → 'active'
+            navMenu.classList.toggle('show');
             mobileMenuBtn.classList.toggle('active');
             
             // Ajouter un overlay pour fermer en cliquant à côté
-            if (navMenu.classList.contains('active')) { // CHANGÉ: 'show' → 'active'
+            if (navMenu.classList.contains('show')) {
                 createMobileOverlay();
             } else {
                 removeMobileOverlay();
@@ -378,8 +453,8 @@ function initNavigation() {
                 link.classList.add('active');
 
                 // Fermer le menu mobile si ouvert
-                if (navMenu && navMenu.classList.contains('active')) { // CHANGÉ: 'show' → 'active'
-                    navMenu.classList.remove('active'); // CHANGÉ: 'show' → 'active'
+                if (navMenu && navMenu.classList.contains('show')) {
+                    navMenu.classList.remove('show');
                     mobileMenuBtn.classList.remove('active');
                     removeMobileOverlay();
                 }
@@ -395,7 +470,7 @@ function initNavigation() {
         document.body.appendChild(overlay);
         
         overlay.addEventListener('click', () => {
-            navMenu.classList.remove('active'); // CHANGÉ: 'show' → 'active'
+            navMenu.classList.remove('show');
             mobileMenuBtn.classList.remove('active');
             removeMobileOverlay();
         });
@@ -3950,47 +4025,3 @@ function getStatusText(promise) {
     if (promise.isLate) return 'En retard';
     return promise.status;
 }
-// Fonction pour réduire l'espace du header
-function reduceHeaderSpace() {
-    console.log('📏 Réduction de l\'espace du header...');
-    
-    // 1. Réduire le padding du header
-    const header = document.querySelector('.header, header, #header');
-    if (header) {
-        header.style.paddingTop = '10px';
-        header.style.paddingBottom = '10px';
-        header.style.marginTop = '0';
-    }
-    
-    // 2. Réduire l'espace de la navbar
-    const navbar = document.querySelector('.navbar, nav');
-    if (navbar) {
-        navbar.style.marginBottom = '0';
-        navbar.style.paddingBottom = '0';
-    }
-    
-    // 3. Ajuster l'image
-    const image = document.querySelector('.sonko-img, .header img, .header-visual-side img');
-    if (image) {
-        image.style.marginTop = '-20px';
-        image.style.maxHeight = '350px';
-    }
-    
-    // 4. Ajuster le conteneur
-    const container = document.querySelector('.header-container, .container, .header > div');
-    if (container) {
-        container.style.paddingTop = '0';
-        container.style.marginTop = '0';
-    }
-    
-    console.log('✅ Espace réduit');
-}
-
-// Appeler au chargement
-document.addEventListener('DOMContentLoaded', () => {
-    // Appeler après un court délai pour que le CSS soit chargé
-    setTimeout(reduceHeaderSpace, 100);
-    
-    // Réappliquer si nécessaire après chargement d'images
-    window.addEventListener('load', reduceHeaderSpace);
-});

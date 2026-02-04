@@ -435,7 +435,7 @@ body {
 /* ===== HEADER COMBINÉ ===== */
 .header {
     /* Styles de index.html */
-    padding: 140px 0 100px 0;
+    padding: 100px 0 100px 0;
     background: linear-gradient(135deg, #f4f9f7 0%, #eef5f2 100%);
     position: relative; 
     overflow: visible;

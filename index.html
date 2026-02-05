@@ -2,746 +2,544 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Plateforme citoyenne indépendante pour suivre en temps réel l'avancement des engagements du Président Bassirou Diomaye Faye.">
+    <meta name="keywords" content="Sénégal, promesses électorales, Bassirou Diomaye Faye, transparence, gouvernance, suivi engagements">
+    <meta name="author" content="ProjetBI">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2a6d5d">
+    
     <title>LE PROJET SÉNÉGAL | Suivi des Engagements Présidentiels</title>
-    <link rel="icon" href="https://projetbi.org/favicon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="icon" href="https://projetbi.org/favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Crimson+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="app.js" defer></script>
 </head>
 <body>
-    <!-- Progress Indicator -->
-    <div class="progress-indicator" id="progressIndicator"></div>
-
-    <!-- Navbar -->
+    <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="#header" class="nav-logo">
-                <img src="favicon.png" alt="Logo">
+            <a href="/" class="nav-logo">
+                <img src="https://projetbi.org/favicon.png" alt="Logo">
                 <div class="logo-text">
                     <span class="logo-main">PROJETBI</span>
-                    <span class="logo-tag">SÉNÉGAL</span>
                 </div>
             </a>
-            
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu mobile">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-            
+
             <div class="nav-menu" id="navMenu">
-                <a href="#header" class="nav-link active">Accueil</a>
+                <a href="#header" class="nav-link">Accueil</a>
                 <a href="#stats" class="nav-link">Dashboard</a>
                 <a href="#daily" class="nav-link">Promesse du Jour</a>
                 <a href="#promises" class="nav-link">Engagements</a>
                 <a href="#news" class="nav-link">Actualités</a>
                 <a href="#press" class="nav-link">Revue de Presse</a>
                 <a href="#rating" class="nav-link">Noter un service</a>
-                <a href="#footer" class="nav-link">Contact</a>
             </div>
         </div>
     </nav>
 
-    <!-- Header Section -->
-    <section id="header" class="header">
+    <!-- Header -->
+    <header class="header" id="header">
         <div class="header-container">
-            <div class="header-text-side">
-                <div class="header-badge">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Le projet pour Sénégal Souverain, Juste et Prospère</span>
-                </div>
+            <div class="header-text-side">                           
                 <h1 class="header-title">
-                    <span class="title-main">Plateforme citoyenne indépendante</span>
-                    <span class="title-top">de suivi en temps réel</span>
-                    <span class="title-bottom">des engagements du Président Bassirou Diomaye Faye</span>
-                    <span class="title-sub">La transparence au service de la démocratie</span>
+                    <span class="title-bottom">Le projet pour Sénégal Souverain, <br>Juste et Prospère</span>
                 </h1>
                 <p class="header-description">
-                    Suivez l'avancement des promesses présidentielles, évaluez les services publics, 
-                    et participez activement au contrôle citoyen de l'action gouvernementale.
-                </p>
-                
-                <div class="cta-row">
-                    <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="btn-pdf-modern" download>
-                        <div class="btn-icon">
-                            <i class="fas fa-file-pdf"></i>
-                        </div>
-                        <div class="btn-text">
-                            <span>Télécharger le</span>
-                            <strong>Programme Complet (PDF)</strong>
-                        </div>
-                    </a>
-                    
-                    <div class="mini-countdown">
-                        <div class="countdown-header">TEMPS RESTANT</div>
-                        <div class="countdown-row" id="countdown">
-                            <div class="c-item">
-                                <span id="days">000</span>
-                                <label>Jours</label>
+                    Plateforme citoyenne indépendante de suivi en temps réel des engagements du Président <strong>Bassirou Diomaye Faye</strong>. La transparence au service de la démocratie.
+                </p>                
+                <div class="header-cta-group">
+                    <div class="cta-row">
+                        <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="btn-pdf-modern" download target="_blank">
+                            <div class="btn-icon"><i class="fas fa-file-pdf"></i></div>
+                            <div class="btn-text">
+                                <span>Télécharger le</span>
+                                <strong>Programme Complet (PDF)</strong>
                             </div>
-                            <div class="c-item">
-                                <span id="hours">00</span>
-                                <label>H</label>
+                        </a>                        
+                        <div class="mini-countdown">
+                            <div class="countdown-header">
+                                <i class="fas fa-hourglass-half"></i> TEMPS RESTANT
                             </div>
-                            <div class="c-item">
-                                <span id="minutes">00</span>
-                                <label>M</label>
-                            </div>
-                            <div class="c-item">
-                                <span id="seconds">00</span>
-                                <label>S</label>
+                            <div class="countdown-row">
+                                <div class="c-item"><span id="days">000</span><label>Jours</label></div>
+                                <div class="c-item"><span id="hours">00</span><label>H</label></div>
+                                <div class="c-item"><span id="minutes">00</span><label>M</label></div>
+                                <div class="c-item"><span id="seconds">00</span><label>S</label></div>
                             </div>
                         </div>
-                        <div class="ref-date-mini">
-                            <i class="fas fa-calendar"></i>
-                            <span>Date de référence : 02 AVRIL 2024</span>
-                        </div>
+                    </div>
+                    <div class="ref-date-mini">
+                        <i class="fas fa-calendar-check"></i> Date de référence : <span>02 AVRIL 2024</span>
                     </div>
                 </div>
             </div>
+
             <div class="header-visual-side">
                 <div class="sonko-wrapper">
-                    <img src="sonko.jpg" alt="Ousmane SONKO" class="sonko-img">
+                    <img src="sonko.jpg" alt="Bassirou Diomaye Faye" class="sonko-img">
                 </div>
             </div>
         </div>
-    </section>
+    </header>
 
     <!-- Stats Section -->
-    <section id="stats" class="stats-section">
+    <section class="stats-section" id="stats">
         <div class="container">
             <div class="section-header-modern">
                 <h2 class="section-title">
-                    <i class="fas fa-chart-line"></i>
+                    <i class="fas fa-chart-bar"></i>
                     Tableau de Bord
                 </h2>
-                <div class="kpi-carousel-container">
-                    <button class="kpi-nav-btn" id="kpiPrev">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <div id="kpiCarousel"></div>
-                    <button class="kpi-nav-btn" id="kpiNext">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
             </div>
             
             <div class="stats-grid">
                 <div class="stat-card stat-total">
                     <div class="stat-header">
-                        <div class="stat-icon">
-                            <i class="fas fa-tasks"></i>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-tasks"></i></div>
+                        <div class="stat-trend positive"><i class="fas fa-arrow-up"></i></div>
                     </div>
                     <div class="stat-body">
                         <div class="stat-value" id="total">0</div>
                         <div class="stat-label">Total Engagements</div>
                     </div>
-                    <div class="stat-footer">
-                        <div class="stat-percentage" id="total-percentage">100%</div>
-                    </div>
+                    <div class="stat-footer"><div class="stat-percentage" id="total-percentage">100%</div></div>
                 </div>
                 
                 <div class="stat-card stat-success">
                     <div class="stat-header">
-                        <div class="stat-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-trend positive"><i class="fas fa-arrow-up"></i></div>
                     </div>
                     <div class="stat-body">
                         <div class="stat-value" id="realise">0</div>
                         <div class="stat-label">✅ Réalisés</div>
                     </div>
-                    <div class="stat-footer">
-                        <div class="stat-percentage" id="realise-percentage">0%</div>
-                    </div>
+                    <div class="stat-footer"><div class="stat-percentage" id="realise-percentage">0%</div></div>
                 </div>
                 
                 <div class="stat-card stat-progress">
                     <div class="stat-header">
-                        <div class="stat-icon">
-                            <i class="fas fa-spinner"></i>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-sync-alt"></i></div>
+                        <div class="stat-trend neutral"><i class="fas fa-equals"></i></div>
                     </div>
                     <div class="stat-body">
                         <div class="stat-value" id="encours">0</div>
                         <div class="stat-label">🔄 En Cours</div>
                     </div>
-                    <div class="stat-footer">
-                        <div class="stat-percentage" id="encours-percentage">0%</div>
-                    </div>
+                    <div class="stat-footer"><div class="stat-percentage" id="encours-percentage">0%</div></div>
                 </div>
                 
                 <div class="stat-card stat-pending">
                     <div class="stat-header">
-                        <div class="stat-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-trend negative"><i class="fas fa-arrow-down"></i></div>
                     </div>
                     <div class="stat-body">
                         <div class="stat-value" id="non-lance">0</div>
                         <div class="stat-label">⏳ Non Lancés</div>
                     </div>
-                    <div class="stat-footer">
-                        <div class="stat-percentage" id="non-lance-percentage">0%</div>
-                    </div>
+                    <div class="stat-footer"><div class="stat-percentage" id="non-lance-percentage">0%</div></div>
                 </div>
                 
                 <div class="stat-card stat-warning">
                     <div class="stat-header">
-                        <div class="stat-icon">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="stat-trend negative"><i class="fas fa-arrow-down"></i></div>
                     </div>
                     <div class="stat-body">
                         <div class="stat-value" id="retard">0</div>
                         <div class="stat-label">⚠️ En Retard</div>
                     </div>
-                    <div class="stat-footer">
-                        <div class="stat-percentage" id="retard-percentage">0%</div>
-                    </div>
+                    <div class="stat-footer"><div class="stat-percentage" id="retard-percentage">0%</div></div>
                 </div>
                 
                 <div class="stat-card stat-rate">
                     <div class="stat-header">
-                        <div class="stat-icon">
-                            <i class="fas fa-percentage"></i>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-percentage"></i></div>
+                        <div class="stat-trend positive"><i class="fas fa-arrow-up"></i></div>
                     </div>
                     <div class="stat-body">
                         <div class="stat-value" id="taux-realisation">0%</div>
                         <div class="stat-label">📈 Taux Réalisation</div>
                     </div>
-                    <div class="stat-footer">
-                        <div class="stat-subvalue">Progression</div>
-                    </div>
+                    <div class="stat-footer"><div class="stat-label">Progression</div></div>
                 </div>
                 
                 <div class="stat-card stat-rating">
                     <div class="stat-header">
-                        <div class="stat-icon">
-                            <i class="fas fa-star"></i>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-star"></i></div>
+                        <div class="stat-trend neutral"><i class="fas fa-equals"></i></div>
                     </div>
                     <div class="stat-body">
                         <div class="stat-value" id="moyenne-notes">0.0</div>
                         <div class="stat-label">⭐ Note Moyenne</div>
                     </div>
-                    <div class="stat-footer">
-                        <div class="stat-subvalue" id="votes-total">0 votes</div>
-                    </div>
+                    <div class="stat-footer"><div class="stat-subvalue" id="votes-total">0 votes</div></div>
                 </div>
                 
                 <div class="stat-card stat-update">
                     <div class="stat-header">
-                        <div class="stat-icon">
-                            <i class="fas fa-sync-alt"></i>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-history"></i></div>
+                        <div class="stat-trend positive"><i class="fas fa-arrow-up"></i></div>
                     </div>
                     <div class="stat-body">
                         <div class="stat-value" id="avec-maj">0</div>
                         <div class="stat-label">📋 Avec MAJ</div>
                     </div>
-                    <div class="stat-footer">
-                        <div class="stat-percentage" id="avec-maj-percentage">0%</div>
-                    </div>
+                    <div class="stat-footer"><div class="stat-percentage" id="avec-maj-percentage">0%</div></div>
                 </div>
                 
                 <div class="stat-card stat-time">
                     <div class="stat-header">
-                        <div class="stat-icon">
-                            <i class="fas fa-hourglass-half"></i>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-stopwatch"></i></div>
+                        <div class="stat-trend neutral"><i class="fas fa-equals"></i></div>
                     </div>
                     <div class="stat-body">
                         <div class="stat-value" id="delai-moyen">0j</div>
                         <div class="stat-label">⏱️ Retard Moyen</div>
                     </div>
-                    <div class="stat-footer">
-                        <div class="stat-subvalue">Restant</div>
-                    </div>
+                    <div class="stat-footer"><div class="stat-label">Restant</div></div>
                 </div>
                 
                 <div class="stat-card stat-domain">
                     <div class="stat-header">
-                        <div class="stat-icon">
-                            <i class="fas fa-building"></i>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-building"></i></div>
+                        <div class="stat-trend neutral"><i class="fas fa-equals"></i></div>
                     </div>
                     <div class="stat-body">
-                        <div class="stat-value" id="domaine-principal">🏛️ Domaine Principal</div>
-                        <div class="stat-label" id="domaine-count">-0 engagements</div>
+                        <div class="stat-label">🏛️ Domaine Principal</div>
+                        <div class="stat-value" id="domaine-principal">-</div>
                     </div>
+                    <div class="stat-footer"><div class="stat-subvalue" id="domaine-count">0 engagements</div></div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Daily Promise Section -->
-    <section id="daily" class="daily-section">
+    <section class="daily-promise-section" id="daily">
         <div class="container">
             <div class="section-header-modern">
-                <h2 class="section-title">
-                    <i class="fas fa-newspaper"></i>
-                    Promesse du Jour
-                </h2>
+                <h2 class="section-title"><i class="fas fa-sun"></i> Promesse du Jour</h2>
             </div>
             <div class="daily-promise-card" id="dailyPromise">
-                <div style="text-align: center; padding: 40px;">
-                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary);"></i>
-                    <p style="margin-top: 15px; color: var(--text-secondary);">Chargement de la promesse du jour...</p>
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Chargement de la promesse du jour...</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Promises Carousel Section -->
-    <section id="promises-carousel" class="promises-carousel-section">
+    <section class="promises-carousel-section" id="promises-carousel">
         <div class="container">
             <div class="section-header-modern">
-                <h2 class="section-title">
-                    <i class="fas fa-star"></i>
-                    Promesses en Vedette
-                </h2>
+                <h2 class="section-title"><i class="fas fa-star"></i> Promesses en Vedette</h2>
                 <div class="section-actions">
-                    <button class="carousel-btn" id="carouselAutoPlayToggle">
-                        <i class="fas fa-pause"></i>
-                    </button>
-                    <button class="carousel-btn" id="carouselPrevBtn">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="carousel-btn" id="carouselNextBtn">
-                        <i class="fas fa-chevron-right"></i>
+                    <button id="carouselAutoPlayToggle" class="btn-view-all">
+                        <i class="fas fa-pause"></i> Pause
                     </button>
                 </div>
             </div>
-            <div id="promisesCarouselGrid" class="promises-grid"></div>
+            <div class="carousel-controls">
+                <div id="promisesCarouselGrid" class="promises-grid">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Chargement des promesses...</p>
+                    </div>
+                </div>
+            </div>
             <div class="carousel-dots" id="carouselDots"></div>
         </div>
     </section>
 
-    <!-- Promises Section -->
-    <section id="promises" class="promises-section">
+    <!-- All Promises Section -->
+    <section class="promises-section" id="promises">
         <div class="container">
             <div class="section-header-modern">
-                <h2 class="section-title">
-                    <i class="fas fa-list-check"></i>
-                    Tous les Engagements
-                </h2>
-                <button class="filter-toggle-btn" id="filterToggleBtn">
-                    <i class="fas fa-filter"></i>
-                    Filtres
-                </button>
+                <h2 class="section-title"><i class="fas fa-list-check"></i> Tous les Engagements</h2>
+                <div class="section-actions">
+                    <button class="filter-toggle-btn" id="filterToggleBtn">
+                        <i class="fas fa-filter"></i> Filtres
+                    </button>
+                </div>
             </div>
             
             <div class="filters-section" id="filtersSection">
                 <div class="filters-container">
                     <div class="filter-group">
-                        <label for="filter-status">
-                            <i class="fas fa-tag"></i>
-                            Statut
-                        </label>
+                        <label for="filter-status"><i class="fas fa-tag"></i> Statut</label>
                         <select class="filter-select" id="filter-status">
                             <option value="">Tous</option>
                             <option value="✅ Réalisé">✅ Réalisé</option>
                             <option value="🔄 En cours">🔄 En cours</option>
                             <option value="⏳ Non lancé">⏳ Non lancé</option>
-                            <option value="⚠️ En retard">⚠️ En retard</option>
+                            <option value="En retard">⚠️ En retard</option>
                         </select>
                     </div>
-                    
                     <div class="filter-group">
-                        <label for="filter-domain">
-                            <i class="fas fa-building"></i>
-                            Domaine
-                        </label>
+                        <label for="filter-domain"><i class="fas fa-building"></i> Domaine</label>
                         <select class="filter-select" id="filter-domain">
                             <option value="">Tous les domaines</option>
                         </select>
                     </div>
-                    
                     <div class="filter-group">
-                        <label for="filter-search">
-                            <i class="fas fa-search"></i>
-                            Rechercher
-                        </label>
-                        <input type="text" class="filter-input" id="filter-search" placeholder="Rechercher...">
+                        <label for="filter-search"><i class="fas fa-search"></i> Rechercher</label>
+                        <input type="text" class="filter-input" id="filter-search" placeholder="Rechercher une promesse...">
                     </div>
-                    
                     <div class="filter-actions">
-                        <button class="btn-reset" id="resetFilters">
-                            <i class="fas fa-redo"></i>
-                            Réinitialiser
-                        </button>
-                        <button class="btn-export">
-                            <i class="fas fa-download"></i>
-                            Exporter
-                        </button>
+                        <button class="btn-reset" id="resetFilters"><i class="fas fa-redo"></i> Réinitialiser</button>
+                        <button class="btn-export" onclick="exportData('csv')"><i class="fas fa-download"></i> Exporter</button>
                     </div>
                 </div>
             </div>
             
-            <div class="promises-results">
-                <div class="results-info" id="results-count">0 engagement(s) trouvé(s)</div>
-                <div class="promises-grid" id="promisesGrid">
-                    <div style="text-align: center; padding: 40px; grid-column: 1 / -1;">
-                        <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary);"></i>
-                        <p style="margin-top: 15px; color: var(--text-secondary);">Chargement des engagements...</p>
-                    </div>
+            <div class="promises-list" id="promisesList">
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Chargement des engagements...</p>
                 </div>
             </div>
             
-            <div class="show-more-container">
-                <button id="showMoreBtn">
-                    <i class="fas fa-arrow-down"></i>
-                    Afficher plus
-                </button>
-                <button id="showLessBtn">
-                    <i class="fas fa-arrow-up"></i>
-                    Afficher moins
-                </button>
-            </div>
+            <div class="pagination-section" id="paginationSection"></div>
         </div>
     </section>
 
     <!-- News Section -->
-    <section id="news" class="news-section">
+    <section class="news-section" id="news">
         <div class="container">
             <div class="section-header-modern">
-                <h2 class="section-title">
-                    <i class="fas fa-bullhorn"></i>
-                    Actualités
-                </h2>
-                <a href="#" class="btn-view-all">
-                    Voir tout <i class="fas fa-arrow-right"></i>
-                </a>
+                <h2 class="section-title"><i class="fas fa-newspaper"></i> Actualités</h2>
             </div>
             <div class="news-grid" id="newsGrid">
-                <div style="text-align: center; padding: 40px; grid-column: 1 / -1;">
-                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary);"></i>
-                    <p style="margin-top: 15px; color: var(--text-secondary);">Chargement des actualités...</p>
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Chargement des actualités...</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Press Section -->
-    <section id="press" class="press-section">
+    <section class="press-section" id="press">
         <div class="container">
             <div class="section-header-modern">
-                <h2 class="section-title">
-                    <i class="fas fa-newspaper"></i>
-                    Revue de Presse
-                </h2>
+                <h2 class="section-title"><i class="fas fa-book-open"></i> Revue de Presse</h2>
+                <div class="press-date" id="current-date"></div>
             </div>
-            
-            <div class="press-carousel-container">
-                <div id="pressCarousel"></div>
-                <div class="carousel-controls-panel">
-                    <button class="carousel-control-btn" onclick="togglePressZoom('out')" title="Zoom -">
-                        <i class="fas fa-search-minus"></i>
-                    </button>
-                    <button class="carousel-control-btn" onclick="togglePressZoom('reset')" title="Réinitialiser">
-                        <i class="fas fa-expand"></i>
-                    </button>
-                    <button class="carousel-control-btn" onclick="togglePressZoom('in')" title="Zoom +">
-                        <i class="fas fa-search-plus"></i>
-                    </button>
-                    <div class="carousel-zoom-info" id="zoomInfo">100%</div>
-                </div>
-                <button class="carousel-btn prev" id="prevBtn">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="carousel-btn next" id="nextBtn">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-                <div class="carousel-indicators" id="carouselIndicators"></div>
-            </div>
-            
-            <div class="section-header-modern">
-                <h2 class="section-title">
-                    <i class="fas fa-book"></i>
-                    Tous les Quotidiens
-                </h2>
-                <button class="filter-toggle-btn" id="autoPlayToggle">
-                    <i class="fas fa-play"></i>
-                    Lecture auto
-                </button>
-            </div>
-            <div class="newspapers-grid" id="newspapersGrid">
-                <div style="text-align: center; padding: 40px; grid-column: 1 / -1;">
-                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary);"></i>
-                    <p style="margin-top: 15px; color: var(--text-secondary);">Chargement des journaux...</p>
-                </div>
+            <div class="press-carousel">
+                <button class="carousel-btn prev" id="pressPrev"><i class="fas fa-chevron-left"></i></button>
+                <div class="press-track" id="pressTrack"></div>
+                <button class="carousel-btn next" id="pressNext"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
     </section>
 
     <!-- Rating Section -->
-    <section id="rating" class="rating-section">
+    <section class="rating-section" id="rating">
         <div class="container">
-            <div class="rating-two-columns">
-                <!-- Left Column - Form -->
-                <div class="rating-column">
-                    <div class="rating-form-card">
-                        <div class="rating-form-header">
-                            <h3>
-                                <i class="fas fa-edit"></i>
-                                Donnez votre avis
-                            </h3>
-                            <p>Évaluez votre expérience avec un service public sénégalais</p>
+            <div class="section-header-modern">
+                <h2 class="section-title"><i class="fas fa-star"></i> Noter un Service Public</h2>
+            </div>
+            
+            <div class="rating-card">
+                <form id="ratingForm" class="rating-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="service-category"><i class="fas fa-layer-group"></i> Catégorie de service</label>
+                            <select id="service-category" name="category" required>
+                                <option value="">Choisissez une catégorie</option>
+                                <option value="sante">🏥 Santé</option>
+                                <option value="education">📚 Éducation</option>
+                                <option value="transport">🚌 Transport</option>
+                                <option value="administration">🏛️ Administration</option>
+                                <option value="justice">⚖️ Justice</option>
+                                <option value="securite">👮 Sécurité</option>
+                                <option value="eau">💧 Eau & Assainissement</option>
+                                <option value="electricite">⚡ Électricité</option>
+                                <option value="environnement">🌳 Environnement</option>
+                                <option value="social">🤝 Social</option>
+                                <option value="culture">🎭 Culture</option>
+                                <option value="autre">📋 Autre</option>
+                            </select>
                         </div>
-                        
-                        <form id="ratingForm" class="rating-form">
-                            <div class="form-group">
-                                <label for="service-category">
-                                    <i class="fas fa-folder"></i>
-                                    Catégorie de service *
-                                </label>
-                                <select class="form-select" id="service-category" required>
-                                    <option value="">Choisissez une catégorie</option>
-                                    <option value="sante">🏥 Santé & Hôpitaux</option>
-                                    <option value="education">🎓 Éducation & Formation</option>
-                                    <option value="securite">👮‍♂️ Sécurité & Défense</option>
-                                    <option value="justice">⚖️ Justice & Droit</option>
-                                    <option value="administration">🏛️ Administration & État Civil</option>
-                                    <option value="finances">💰 Finances & Impôts</option>
-                                    <option value="transports">🚌 Transports & Mobilité</option>
-                                    <option value="energie">⚡ Énergie & Eau</option>
-                                    <option value="communication">📞 Communication & Numérique</option>
-                                    <option value="social">🤝 Action Sociale & Solidarité</option>
-                                    <option value="emploi">💼 Emploi & Formation Pro</option>
-                                    <option value="environnement">🌿 Environnement & Cadre de Vie</option>
-                                    <option value="culture">🎭 Culture & Tourisme</option>
-                                    <option value="autre">📋 Autre Service Public</option>
-                                </select>
+
+                        <div class="form-group">
+                            <label for="service"><i class="fas fa-building"></i> Nom du service</label>
+                            <select id="service" name="service" required disabled>
+                                <option value="">Sélectionnez d'abord une catégorie</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="rating-value"><i class="fas fa-star"></i> Votre note</label>
+                            <div class="rating-stars" id="ratingStars">
+                                <span class="star" data-value="1">★</span>
+                                <span class="star" data-value="2">★</span>
+                                <span class="star" data-value="3">★</span>
+                                <span class="star" data-value="4">★</span>
+                                <span class="star" data-value="5">★</span>
                             </div>
-                            
-                            <div class="form-group">
-                                <label for="service">
-                                    <i class="fas fa-building"></i>
-                                    Service concerné *
-                                </label>
-                                <select class="form-select" id="service" required>
-                                    <option value="">Sélectionnez d'abord une catégorie</option>
-                                </select>
-                            </div>
-                            
-                            <div class="rating-criteria-grid">
-                                <div class="criteria-item">
-                                    <label for="accessibility">
-                                        <i class="fas fa-wheelchair"></i>
-                                        Accessibilité
-                                    </label>
-                                    <div class="stars-rating" data-criteria="accessibility">
-                                        <i class="far fa-star" data-value="1"></i>
-                                        <i class="far fa-star" data-value="2"></i>
-                                        <i class="far fa-star" data-value="3"></i>
-                                        <i class="far fa-star" data-value="4"></i>
-                                        <i class="far fa-star" data-value="5"></i>
-                                    </div>
-                                    <input type="hidden" id="accessibility" name="accessibility" value="3">
-                                    <p class="criteria-description">Facilité d'accès physique et numérique</p>
-                                </div>
-                                
-                                <div class="criteria-item">
-                                    <label for="welcome">
-                                        <i class="fas fa-handshake"></i>
-                                        Accueil
-                                    </label>
-                                    <div class="stars-rating" data-criteria="welcome">
-                                        <i class="far fa-star" data-value="1"></i>
-                                        <i class="far fa-star" data-value="2"></i>
-                                        <i class="far fa-star" data-value="3"></i>
-                                        <i class="far fa-star" data-value="4"></i>
-                                        <i class="far fa-star" data-value="5"></i>
-                                    </div>
-                                    <input type="hidden" id="welcome" name="welcome" value="3">
-                                    <p class="criteria-description">Courtoisie et professionnalisme du personnel</p>
-                                </div>
-                                
-                                <div class="criteria-item">
-                                    <label for="efficiency">
-                                        <i class="fas fa-bolt"></i>
-                                        Efficacité
-                                    </label>
-                                    <div class="stars-rating" data-criteria="efficiency">
-                                        <i class="far fa-star" data-value="1"></i>
-                                        <i class="far fa-star" data-value="2"></i>
-                                        <i class="far fa-star" data-value="3"></i>
-                                        <i class="far fa-star" data-value="4"></i>
-                                        <i class="far fa-star" data-value="5"></i>
-                                    </div>
-                                    <input type="hidden" id="efficiency" name="efficiency" value="3">
-                                    <p class="criteria-description">Rapidité et qualité du traitement</p>
-                                </div>
-                                
-                                <div class="criteria-item">
-                                    <label for="transparency">
-                                        <i class="fas fa-eye"></i>
-                                        Transparence
-                                    </label>
-                                    <div class="stars-rating" data-criteria="transparency">
-                                        <i class="far fa-star" data-value="1"></i>
-                                        <i class="far fa-star" data-value="2"></i>
-                                        <i class="far fa-star" data-value="3"></i>
-                                        <i class="far fa-star" data-value="4"></i>
-                                        <i class="far fa-star" data-value="5"></i>
-                                    </div>
-                                    <input type="hidden" id="transparency" name="transparency" value="3">
-                                    <p class="criteria-description">Clarté des procédures et informations</p>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="comment">
-                                    <i class="fas fa-comment"></i>
-                                    Commentaire (optionnel)
-                                </label>
-                                <textarea class="form-textarea" id="comment" placeholder="Partagez votre expérience..."></textarea>
-                            </div>
-                            
-                            <button type="submit" class="btn-submit-rating">
-                                <i class="fas fa-paper-plane"></i>
-                                Soumettre ma notation
-                            </button>
-                        </form>
+                            <input type="hidden" id="rating-value" name="rating" required>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="comment"><i class="fas fa-comment"></i> Commentaire (optionnel)</label>
+                            <textarea id="comment" name="comment" rows="4" placeholder="Partagez votre expérience..."></textarea>
+                        </div>
                     </div>
-                </div>
-                
-                <!-- Right Column - Results -->
-                <div class="rating-column">
-                    <div class="rating-results-card">
-                        <div class="rating-results-header">
-                            <h3>
-                                <i class="fas fa-chart-bar"></i>
-                                Résultats des notations citoyennes
-                            </h3>
-                            <p>Statistiques et avis des utilisateurs</p>
-                        </div>
-                        
-                        <div class="stats-overview-grid">
-                            <div class="stat-item-card">
-                                <div class="stat-value-card" id="totalVotes">0</div>
-                                <div class="stat-label-card">Votes totaux</div>
-                            </div>
-                            <div class="stat-item-card">
-                                <div class="stat-value-card" id="totalServices">0</div>
-                                <div class="stat-label-card">Services évalués</div>
-                            </div>
-                            <div class="stat-item-card">
-                                <div class="stat-value-card" id="avgRating">0.0</div>
-                                <div class="stat-label-card">Note moyenne</div>
-                            </div>
-                        </div>
-                        
-                        <h4 style="margin: 30px 0 15px 0; color: var(--primary);">
-                            <i class="fas fa-history"></i> Dernières Notations
-                        </h4>
-                        <div class="recent-ratings" id="recentRatings">
-                            <div style="text-align: center; padding: 20px;">
-                                <i class="fas fa-spinner fa-spin" style="font-size: 1.5rem; color: var(--primary);"></i>
-                                <p style="margin-top: 10px; color: var(--text-secondary);">Chargement...</p>
-                            </div>
-                        </div>
-                        
-                        <h4 style="margin: 30px 0 15px 0; color: var(--primary);">
-                            <i class="fas fa-trophy"></i> Meilleurs Services
-                        </h4>
-                        <div class="top-services-grid" id="topServices">
-                            <div style="text-align: center; padding: 20px;">
-                                <i class="fas fa-spinner fa-spin" style="font-size: 1.5rem; color: var(--primary);"></i>
-                                <p style="margin-top: 10px; color: var(--text-secondary);">Chargement...</p>
-                            </div>
-                        </div>
+
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-paper-plane"></i> Soumettre mon évaluation
+                    </button>
+                </form>
+            </div>
+
+            <div class="ratings-list" id="ratingsList">
+                <h3><i class="fas fa-list"></i> Dernières évaluations</h3>
+                <div id="ratingsContent">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Chargement des évaluations...</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Services Data (Hidden) -->
+    <div id="services-data" style="display: none;">
+        <div data-category="sante">
+            <option value="Hôpital Principal de Dakar">Hôpital Principal de Dakar</option>
+            <option value="Centre de santé Gaspard Kamara">Centre de santé Gaspard Kamara</option>
+            <option value="Hôpital régional">Hôpital régional</option>
+            <option value="Poste de santé">Poste de santé</option>
+            <option value="Pharmacie nationale">Pharmacie nationale</option>
+            <option value="Centre hospitalier universitaire">Centre hospitalier universitaire</option>
+            <option value="Clinique de la Madeleine">Clinique de la Madeleine</option>
+        </div>
+        <div data-category="education">
+            <option value="Université Cheikh Anta Diop">Université Cheikh Anta Diop</option>
+            <option value="Lycée Limamou Laye">Lycée Limamou Laye</option>
+            <option value="École primaire">École primaire</option>
+            <option value="Collège d'enseignement moyen">Collège d'enseignement moyen</option>
+            <option value="Centre de formation professionnelle">Centre de formation professionnelle</option>
+            <option value="Bibliothèque universitaire">Bibliothèque universitaire</option>
+        </div>
+        <div data-category="transport">
+            <option value="AFTU - Agence de financement des transports urbains">AFTU - Agence de financement des transports urbains</option>
+            <option value="Dakar Dem Dikk">Dakar Dem Dikk</option>
+            <option value="Gare routière">Gare routière</option>
+            <option value="Port autonome de Dakar">Port autonome de Dakar</option>
+            <option value="Aéroport international Blaise Diagne">Aéroport international Blaise Diagne</option>
+            <option value="Service des transports régionaux">Service des transports régionaux</option>
+        </div>
+        <div data-category="administration">
+            <option value="Mairie de Dakar">Mairie de Dakar</option>
+            <option value="Préfecture">Préfecture</option>
+            <option value="Centre d'état civil">Centre d'état civil</option>
+            <option value="Service des impôts">Service des impôts</option>
+            <option value="Trésor public">Trésor public</option>
+            <option value="Agence nationale de la statistique">Agence nationale de la statistique</option>
+        </div>
+        <div data-category="justice">
+            <option value="Tribunal de Grande Instance">Tribunal de Grande Instance</option>
+            <option value="Cour d'Appel">Cour d'Appel</option>
+            <option value="Tribunal départemental">Tribunal départemental</option>
+            <option value="Maison de justice">Maison de justice</option>
+        </div>
+        <div data-category="securite">
+            <option value="Commissariat central">Commissariat central</option>
+            <option value="Gendarmerie nationale">Gendarmerie nationale</option>
+            <option value="Sapeurs-pompiers">Sapeurs-pompiers</option>
+            <option value="Protection civile">Protection civile</option>
+        </div>
+        <div data-category="eau">
+            <option value="SDE - Sénégalaise des Eaux">SDE - Sénégalaise des Eaux</option>
+            <option value="ONAS - Office national de l'assainissement">ONAS - Office national de l'assainissement</option>
+            <option value="Forage communautaire">Forage communautaire</option>
+        </div>
+        <div data-category="electricite">
+            <option value="SENELEC">SENELEC</option>
+            <option value="Agence sénégalaise d'électrification rurale">Agence sénégalaise d'électrification rurale</option>
+        </div>
+        <div data-category="environnement">
+            <option value="Service de l'Environnement">Service de l'Environnement</option>
+            <option value="Eaux et Forêts">Eaux et Forêts</option>
+            <option value="Centre de gestion des déchets">Centre de gestion des déchets</option>
+        </div>
+        <div data-category="social">
+            <option value="Centre d'action sociale">Centre d'action sociale</option>
+            <option value="Caisse de sécurité sociale">Caisse de sécurité sociale</option>
+            <option value="Service de l'emploi">Service de l'emploi</option>
+        </div>
+        <div data-category="culture">
+            <option value="Musée des Civilisations Noires">Musée des Civilisations Noires</option>
+            <option value="Bibliothèque nationale du Sénégal">Bibliothèque nationale du Sénégal</option>
+            <option value="Grand Théâtre National">Grand Théâtre National</option>
+            <option value="Centre culturel régional">Centre culturel régional</option>
+        </div>
+        <div data-category="autre">
+            <option value="Service agricole / vétérinaire">Service agricole / vétérinaire</option>
+            <option value="Haras national">Haras national</option>
+            <option value="Service de l'Urbanisme">Service de l'Urbanisme</option>
+            <option value="Autre (précisez en commentaire)">Autre (précisez en commentaire)</option>
+        </div>
+    </div>
+
     <!-- Footer -->
-    <footer id="footer" class="footer">
+    <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h4>
-                        <i class="fas fa-project-diagram"></i>
-                        LE PROJET SÉNÉGAL
-                    </h4>
-                    <p style="color: rgba(255,255,255,0.9); line-height: 1.8; margin-top: 15px;">
-                        Transparence & Redevabilité<br>
-                        Plateforme citoyenne indépendante dédiée au suivi transparent 
-                        des engagements du Projet pour un Sénégal Souverain, Juste et Prospère.
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon"><i class="fas fa-flag"></i></div>
+                        <div>
+                            <h4>LE PROJET SÉNÉGAL</h4>
+                            <p>Transparence & Redevabilité</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">
+                        Plateforme citoyenne indépendante dédiée au suivi transparent des engagements du Projet pour un Sénégal Souverain, Juste et Prospère.
                     </p>
                 </div>
                 
                 <div class="footer-col">
-                    <h4>
-                        <i class="fas fa-envelope"></i>
-                        Contact
-                    </h4>
+                    <h4>Contact</h4>
                     <div class="footer-links">
-                        <a href="mailto:pastefprojetbi@gmail.com" class="footer-link">
-                            <i class="fas fa-envelope"></i>
-                            pastefprojetbi@gmail.com
-                        </a>
-                        <a href="tel:+221769455253" class="footer-link">
-                            <i class="fas fa-phone"></i>
-                            +221 76 945 52 53
-                        </a>
-                        <a href="#" class="footer-link">
-                            <i class="fas fa-map-marker-alt"></i>
-                            Dakar, Sénégal
-                        </a>
+                        <a href="mailto:contact@projetbi.org" class="footer-link"><i class="fas fa-envelope"></i> contact@projetbi.org</a>
+                        <a href="tel:+221769455253" class="footer-link"><i class="fas fa-phone"></i> +221 76 945 52 53</a>
+                        <a href="#" class="footer-link"><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</a>
                     </div>
                 </div>
                 
                 <div class="footer-col">
-                    <h4>
-                        <i class="fas fa-share-alt"></i>
-                        Suivez-nous
-                    </h4>
+                    <h4>Suivez-nous</h4>
                     <div class="footer-social">
-                        <a href="#" class="social-btn">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-btn">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-btn">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="social-btn">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
+                        <a href="#" class="social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-btn" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-btn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 
                 <div class="footer-col">
-                    <h4>
-                        <i class="fas fa-link"></i>
-                        Liens Utiles
-                    </h4>
+                    <h4>Liens Utiles</h4>
                     <div class="footer-links">
-                        <a href="#header" class="footer-link">
-                            <i class="fas fa-home"></i>
-                            Accueil
-                        </a>
-                        <a href="#promises" class="footer-link">
-                            <i class="fas fa-tasks"></i>
-                            Engagements
-                        </a>
-                        <a href="#rating" class="footer-link">
-                            <i class="fas fa-star"></i>
-                            Notation
-                        </a>
-                        <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="footer-link" download>
-                            <i class="fas fa-file-pdf"></i>
-                            Programme PDF
-                        </a>
+                        <a href="#header" class="footer-link"><i class="fas fa-home"></i> Accueil</a>
+                        <a href="#promises" class="footer-link"><i class="fas fa-tasks"></i> Engagements</a>
+                        <a href="#rating" class="footer-link"><i class="fas fa-star"></i> Notation</a>
+                        <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="footer-link" target="_blank"><i class="fas fa-book"></i> Programme PDF</a>
                     </div>
                 </div>
             </div>
@@ -750,14 +548,8 @@
             
             <div class="footer-bottom">
                 <div class="footer-about">
-                    <h5>
-                        <i class="fas fa-exclamation-triangle"></i>
-                        Disclaimer
-                    </h5>
-                    <p>
-                        Cette plateforme est indépendante et à but informatif. 
-                        Les évaluations sont basées sur des données publiques vérifiables.
-                    </p>
+                    <h5><i class="fas fa-exclamation-triangle"></i> Disclaimer</h5>
+                    <p>Cette plateforme est indépendante et à but informatif. Les évaluations sont basées sur des données publiques vérifiables.</p>
                 </div>
                 <p class="footer-copyright">
                     Développé avec passion pour la transparence démocratique<br>
@@ -767,12 +559,36 @@
         </div>
     </footer>
 
-    <!-- Scroll to Top -->
-    <button id="scrollToTop" class="scroll-to-top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTop" aria-label="Retour en haut"><i class="fas fa-arrow-up"></i></button>
 
     <!-- Notification Container -->
     <div id="notification-container"></div>
+
+    <!-- Promise Modal -->
+    <div id="promiseModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Photo Viewer Modal -->
+    <div id="photoViewer" class="photo-viewer">
+        <div class="photo-viewer-content">
+            <button class="photo-close" id="photoClose">&times;</button>
+            <button class="photo-nav photo-prev" id="photoPrev"><i class="fas fa-chevron-left"></i></button>
+            <img id="photoViewerImg" src="" alt="Photo">
+            <button class="photo-nav photo-next" id="photoNext"><i class="fas fa-chevron-right"></i></button>
+            <div class="photo-counter" id="photoCounter"></div>
+            <div class="photo-controls">
+                <button id="zoomIn"><i class="fas fa-search-plus"></i></button>
+                <button id="zoomOut"><i class="fas fa-search-minus"></i></button>
+                <button id="zoomReset"><i class="fas fa-compress"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
 </body>
 </html>

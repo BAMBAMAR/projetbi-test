@@ -1303,11 +1303,13 @@ function updateStatValue(id, value) {
 
 function updateStatPercentage(id, value, total) {
     const el = document.getElementById(id);
-    if (el && total > 0) {
-        const percentage = Math.round((value / total) * 100);
-        el.textContent = `${percentage}%`;
-    } else {
-        el.textContent = '0%';
+    if (el) {
+        if (total > 0) {
+            const percentage = Math.round((value / total) * 100);
+            el.textContent = `${percentage}%`;
+        } else {
+            el.textContent = '0%';
+        }
     }
 }
 

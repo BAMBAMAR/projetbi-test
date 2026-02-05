@@ -1,10 +1,39 @@
-// ==========================================
-// APP.JS - VERSION MODERNE OPTIMISÉE
-// ==========================================
-
 // Mode démo - activé si Supabase échoue
 let DEMO_MODE = false;
+// AJOUTER AVEC LES AUTRES VARIABLES GLOBALES
 
+// Vérifier la connexion Supabase
+async function checkSupabaseConnection() {
+    if (!supabaseClient) {
+        DEMO_MODE = true;
+        console.log('🎭 MODE DÉMO - Supabase non disponible');
+        return;
+    }
+    
+    try {
+        const { error } = await supabaseClient
+            .from('service_ratings')
+            .select('count', { count: 'exact', head: true });
+        
+        if (error) {
+            DEMO_MODE = true;
+            console.log('🎭 MODE DÉMO - Erreur Supabase:', error.message);
+            showNotification('Mode démo activé - données locales', 'info');
+        } else {
+            DEMO_MODE = false;
+            console.log('✅ Mode Supabase activé');
+        }
+    } catch (error) {
+        DEMO_MODE = true;
+        console.log('🎭 MODE DÉMO - Exception:', error.message);
+    }
+}
+
+// Appelez cette fonction après l'initialisation
+setTimeout(checkSupabaseConnection, 1000);
+// ==========================================
+// APP.JS - VERSION CORRIGÉE POUR LES DÉLAIS
+// ==========================================
 // Configuration Supabase
 const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_joJuW7-vMiQG302_2Mvj5A_sVaD8Wap';
@@ -23,14 +52,20 @@ try {
     supabaseClient = null;
 }
 
-// Configuration globale
 const CONFIG = {
     START_DATE: new Date('2024-04-02'),
-    END_DATE: new Date('2029-04-02'),
+    END_DATE: new Date('2029-04-02'), // Fin du mandat
     CURRENT_DATE: new Date(),
     promises: [],
     news: [],
-    press: [],
+    press: [
+        { id: '1', title: 'Le Soleil', date: '28/01/2026', image: 'https://picsum.photos/seed/soleil/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6d/Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg/200px-Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg.png' },
+        { id: '2', title: 'Sud Quotidien', date: '28/01/2026', image: 'https://picsum.photos/seed/sud/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/5/5b/Sud_Quotidien_logo.svg/200px-Sud_Quotidien_logo.svg.png' },
+        { id: '3', title: 'Libération', date: '28/01/2026', image: 'liberation.jpg', logo: 'iconeliberation.jpg' },
+        { id: '4', title: 'L\'Observateur', date: '28/01/2026', image: 'observateur.jpg', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/L%27Observateur_logo.svg/200px-L%27Observateur_logo.svg.png' },
+        { id: '5', title: 'Le Quotidien', date: '28/01/2026', image: 'https://picsum.photos/seed/quotidien/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/3/3c/Le_Quotidien_logo.svg/200px-Le_Quotidien_logo.svg.png' },
+        { id: '6', title: 'WalFadjri', date: '28/01/2026', image: 'https://picsum.photos/seed/walfadjri/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7c/Walf_fadjri_logo.svg/200px-Walf_fadjri_logo.svg.png' }
+    ],
     currentIndex: 0,
     ratings: [],
     carouselInterval: null,
@@ -49,8 +84,12 @@ const CONFIG = {
     isDragging: false,
     currentRatingPromiseId: null,
     currentRatingValue: 0,
+    // AJOUTEZ CETTE LIGNE À LA FIN :
     filteredPromises: []
 };
+// Variables pour le visualiseur photo
+let currentZoom = 1;
+let currentPhotoIndex = 0;
 
 // KPIs pour le carousel
 const KPI_ITEMS = [
@@ -64,250 +103,267 @@ const KPI_ITEMS = [
     { label: '📋 Avec MAJ', value: '0', icon: '📋' }
 ];
 
-// Variables pour le visualiseur photo
-let currentZoom = 1;
-let currentPhotoIndex = 0;
-
 // ==========================================
-// FONCTION DE CONVERSION DES DÉLAIS TEXTE EN JOURS
+// FONCTION DE CONVERSION DES DÉLAIS TEXTE EN JOURS - CORRIGÉE
 // ==========================================
 function parseDelayToDays(delayText) {
-    if (!delayText || delayText.trim() === '') return 365;
+    if (!delayText || delayText.trim() === '') return 365; // 1 an par défaut
+    
     const lower = delayText.toLowerCase().trim();
-
+    
+    // CORRECTION: Dates trop éloignées
+    if (lower.includes('2030')) {
+        return 1825; // Fin du mandat (5 ans)
+    }
+    
+    if (lower.includes('2029')) {
+        return 1825; // Fin du mandat (5 ans)
+    }
+    
+    // "Immédiat" = 0 jour
     if (lower.includes('immédiat') || lower.includes('immediat') || lower.includes('dès')) {
         return 0;
     }
-
+    
+    // "Mandat" ou "Quinquennat" = durée complète du mandat (5 ans)
     if (lower.includes('mandat') || lower.includes('quinquennat')) {
-        return 1825;
+        return 1825; // 5 ans en jours
     }
-
+    
     let totalDays = 0;
-
+    
+    // Années complètes
     const yearsMatch = lower.match(/(\d+)\s*an[s]?/i);
     if (yearsMatch) {
         const years = parseInt(yearsMatch[1], 10);
         totalDays += years * 365;
     }
-
+    
+    // Mois
     const monthsMatch = lower.match(/(\d+)\s*mois/i);
     if (monthsMatch) {
         const months = parseInt(monthsMatch[1], 10);
         totalDays += months * 30;
     }
-
+    
+    // Jours
     const daysMatch = lower.match(/(\d+)\s*jour[s]?/i);
     if (daysMatch) {
         const days = parseInt(daysMatch[1], 10);
         totalDays += days;
     }
-
+    
+    // Expressions comme "6 premiers mois"
     const premiersMoisMatch = lower.match(/(\d+)\s*premiers?\s*mois/i);
     if (premiersMoisMatch) {
         const mois = parseInt(premiersMoisMatch[1], 10);
         totalDays += mois * 30;
     }
-
+    
+    // Expressions comme "3 premières années"
     const firstYearsMatch = lower.match(/(\d+)\s*premières?\s*années?/i);
     if (firstYearsMatch) {
         const years = parseInt(firstYearsMatch[1], 10);
         totalDays += years * 365;
     }
-
+    
+    // "2 premières années"
     if (lower.includes('2 premières années') || lower.includes('2 premières annees')) {
-        totalDays = 730;
+        totalDays = 730; // 2 ans exactement
     }
-
+    
+    // "1ère année"
     if (lower.includes('1ère année') || lower.includes('1ere annee') || lower.includes('1ère annee')) {
-        totalDays = 365;
+        totalDays = 365; // 1 an exactement
     }
-
+    
+    // "2 ans" (sans "premières")
     const ansSimpleMatch = lower.match(/(\d+)\s*ans$/i);
     if (ansSimpleMatch && !lower.includes('premières') && !lower.includes('premiere')) {
         const ans = parseInt(ansSimpleMatch[1], 10);
         totalDays = ans * 365;
     }
-
+    
+    // "2 à 3 ans" - prendre la moyenne
     const rangeMatch = lower.match(/(\d+)\s*à\s*(\d+)\s*an[s]?/i);
     if (rangeMatch) {
         const min = parseInt(rangeMatch[1], 10) * 365;
         const max = parseInt(rangeMatch[2], 10) * 365;
         totalDays = Math.round((min + max) / 2);
     }
-
+    
+    // "3 à 5 ans" - prendre la moyenne
+    const longRangeMatch = lower.match(/(\d+)\s*à\s*(\d+)\s*an[s]?/i);
+    if (longRangeMatch) {
+        const min = parseInt(longRangeMatch[1], 10) * 365;
+        const max = parseInt(longRangeMatch[2], 10) * 365;
+        totalDays = Math.round((min + max) / 2);
+    }
+    
+    // "5 à 10 ans" - prendre la moyenne mais limiter à 5 ans max
+    const veryLongRangeMatch = lower.match(/5\s*à\s*10\s*an[s]?/i);
+    if (veryLongRangeMatch) {
+        totalDays = 1825; // Limiter à 5 ans max (durée du mandat)
+    }
+    
+    // Dates spécifiques (format AAAA-MM-JJ)
     const dateMatch = delayText.match(/\d{4}-\d{2}-\d{2}/);
     if (dateMatch) {
         try {
             const targetDate = new Date(dateMatch[0]);
             const startDate = CONFIG.START_DATE;
+            
+            // Calculer la différence en jours
             const diffTime = targetDate.getTime() - startDate.getTime();
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            // Ne pas retourner de valeurs négatives
             totalDays = Math.max(0, diffDays);
+            
+            // Limiter à la durée du mandat (5 ans max)
             totalDays = Math.min(totalDays, 1825);
+            
         } catch (e) {
             console.warn('Erreur conversion date:', dateMatch[0]);
         }
     }
-
+    
+    // Si aucune correspondance, essayer de trouver un nombre simple
     if (totalDays === 0) {
         const num = parseInt(delayText.replace(/[^0-9]/g, ''), 10);
         if (!isNaN(num)) {
+            // Si c'est juste un nombre, supposer que c'est des années
             totalDays = num * 365;
         } else {
-            totalDays = 365;
+            totalDays = 365; // 1 an par défaut
         }
     }
-
+    
+    // LIMITER À LA DURÉE MAXIMALE DU MANDAT (5 ans = 1825 jours)
     const MANDAT_MAX_DAYS = 1825;
     const result = Math.min(totalDays, MANDAT_MAX_DAYS);
+    
+    console.log(`parseDelayToDays: "${delayText}" → ${result} jours`);
     return result;
 }
 
 // ==========================================
-// FONCTIONS UTILITAIRES
+// FONCTION POUR CALCULER LES JOURS RESTANTS (AVEC SIGNE) - CORRIGÉE
 // ==========================================
 function getDaysRemaining(deadline) {
     if (!deadline || !(deadline instanceof Date) || isNaN(deadline.getTime())) {
+        console.warn('Date limite invalide pour getDaysRemaining:', deadline);
         return 0;
     }
+    
     const diff = deadline.getTime() - CONFIG.CURRENT_DATE.getTime();
-    return Math.ceil(diff / (1000 * 60 * 60 * 24));
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    
+    // Retourne:
+    // - Positif: jours restants avant échéance
+    // - Négatif: jours de retard
+    // - 0: échéance aujourd'hui
+    return days;
 }
 
+// ==========================================
+// FONCTION POUR FORMATER LES JOURS RESTANTS/RETARD
+// ==========================================
 function formatDaysRemaining(days) {
     if (days > 0) {
+        // Jours restants avant échéance
         return `${days} jour${days > 1 ? 's' : ''} restant${days > 1 ? 's' : ''}`;
     } else if (days < 0) {
+        // En retard
         const absDays = Math.abs(days);
         return `${absDays} jour${absDays > 1 ? 's' : ''} de retard`;
     } else {
+        // Échéance aujourd'hui
         return 'Aujourd\'hui';
     }
 }
 
-function calculateDeadlineFromDays(days) {
-    const daysNum = Math.max(0, parseInt(days, 10) || 0);
-    const deadline = new Date(CONFIG.START_DATE);
-    if (daysNum === 0) {
-        return deadline;
-    }
-    deadline.setDate(deadline.getDate() + daysNum);
-    if (deadline > CONFIG.END_DATE) {
-        return new Date(CONFIG.END_DATE);
-    }
-    return deadline;
-}
-
-function checkIfLate(status, deadline) {
-    if (status === 'Réalisé') return false;
-    if (!deadline || !(deadline instanceof Date) || isNaN(deadline.getTime())) {
-        return false;
-    }
-    return CONFIG.CURRENT_DATE > deadline;
-}
-
-function formatDate(dateInput) {
-    let date;
-    if (!dateInput) return 'Date inconnue';
-    if (dateInput instanceof Date) {
-        date = dateInput;
-    } else if (typeof dateInput === 'string' || typeof dateInput === 'number') {
-        date = new Date(dateInput);
-    } else {
-        return 'Date inconnue';
-    }
-
-    if (isNaN(date.getTime())) return 'Date inconnue';
-
-    return date.toLocaleDateString('fr-FR', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric'
-    });
-}
-
-function formatDateProper(dateInput) {
-    if (!dateInput) return 'Pas de date';
-    try {
-        const parts = dateInput.split('/');
-        if (parts.length === 3) {
-            const day = parseInt(parts[0], 10);
-            const month = parseInt(parts[1], 10) - 1;
-            const year = parseInt(parts[2], 10);
-            const date = new Date(year, month, day);
-            
-            if (!isNaN(date.getTime())) {
-                return date.toLocaleDateString('fr-FR', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                });
-            }
-        }
-        
-        const date = new Date(dateInput);
-        if (!isNaN(date.getTime())) {
-            return date.toLocaleDateString('fr-FR', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-            });
-        }
-        
-        return dateInput;
-    } catch (error) {
-        return dateInput;
-    }
-}
-
 // ==========================================
-// NAVIGATION MODERNE - VERSION AMÉLIORÉE
+// INITIALISATION
+// ==========================================
+document.addEventListener('DOMContentLoaded', async () => {
+    console.log('🚀 Initialisation...');
+    
+    // 1. Initialiser les composants UI
+    initNavigation();
+    initScrollEffects();
+    initFilters();
+    initDateDisplay();
+    initPhotoViewer();
+
+    // 2. Charger les données
+    await loadData();
+    
+    // 3. IMPORTANT: Initialiser filteredPromises après chargement
+    CONFIG.filteredPromises = [...CONFIG.promises];
+    CONFIG.currentVisible = Math.min(CONFIG.visibleCount, CONFIG.promises.length);
+
+    // 4. Rendre les données
+    renderAll();
+    if (typeof renderNews === 'function') {
+        renderNews(CONFIG.news);
+    }
+    if (typeof renderNewspapers === 'function') {
+        renderNewspapers();
+    }
+    
+    // 5. Configurer les composants
+    setupPressCarousel();
+    setupServiceRatings();
+    setupDailyPromise();
+    setupPromisesCarousel();
+    setupKpiCarousel();
+    
+    // 6. Initialiser les étoiles
+    initStarRatings();
+    
+    // 7. Initialiser le visualiseur photo
+    setTimeout(() => {
+        if (typeof setupPhotoViewerControls === 'function') {
+            setupPhotoViewerControls();
+        }
+    }, 500);
+});
+// NAVIGATION - VERSION CORRIGÉE POUR HREF
 // ==========================================
 function initNavigation() {
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileOverlay = document.getElementById('mobileOverlay');
-    const navLinks = document.querySelectorAll('.nav-link-modern');
-    const navbar = document.querySelector('.modern-navbar');
+    const navMenu = document.getElementById('navMenu');
+    const navLinks = document.querySelectorAll('.nav-link');
 
-    // 1. GESTION DU MENU MOBILE MODERNE
-    if (mobileMenuBtn && mobileMenu && mobileOverlay) {
+    // 1. GESTION SIMPLIFIÉE DU MENU MOBILE
+    if (mobileMenuBtn && navMenu) {
         mobileMenuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            mobileMenu.classList.toggle('active');
+            e.stopPropagation(); // Empêche la propagation
+            navMenu.classList.toggle('show');
             mobileMenuBtn.classList.toggle('active');
-            mobileOverlay.classList.toggle('active');
-            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-        });
-
-        // Fermer le menu en cliquant sur l'overlay
-        mobileOverlay.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            mobileMenuBtn.classList.remove('active');
-            mobileOverlay.classList.remove('active');
-            document.body.style.overflow = '';
+            
+            // Ajouter un overlay pour fermer en cliquant à côté
+            if (navMenu.classList.contains('show')) {
+                createMobileOverlay();
+            } else {
+                removeMobileOverlay();
+            }
         });
     }
 
-    // 2. NAVIGATION MODERNE AVEC ANIMATION
+    // 2. NAVIGATION FONCTIONNELLE
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
+            e.preventDefault();
+            
             const href = link.getAttribute('href');
             if (!href || !href.startsWith('#')) return;
-
+            
             const targetId = href.substring(1);
             const target = document.getElementById(targetId);
 
             if (target) {
-                // Fermer le menu mobile si ouvert
-                if (mobileMenu && mobileMenu.classList.contains('active')) {
-                    mobileMenu.classList.remove('active');
-                    mobileMenuBtn.classList.remove('active');
-                    mobileOverlay.classList.remove('active');
-                    document.body.style.overflow = '';
-                }
-
                 // Scroll smooth vers la section
                 const offset = 80;
                 const targetPosition = target.offsetTop - offset;
@@ -317,62 +373,55 @@ function initNavigation() {
                     behavior: 'smooth'
                 });
 
-                // Mettre à jour l'état actif avec animation
-                navLinks.forEach(l => {
-                    l.classList.remove('active');
-                });
-                
+                // Mettre à jour l'état actif
+                navLinks.forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
 
-                // Effet de highlight sur la section ciblée
-                setTimeout(() => {
-                    target.style.boxShadow = '0 0 0 3px rgba(42, 109, 93, 0.3)';
-                    setTimeout(() => {
-                        target.style.boxShadow = '';
-                    }, 2000);
-                }, 500);
+                // Fermer le menu mobile si ouvert
+                if (navMenu && navMenu.classList.contains('show')) {
+                    navMenu.classList.remove('show');
+                    mobileMenuBtn.classList.remove('active');
+                    removeMobileOverlay();
+                }
             }
         });
     });
 
-    // 3. GESTION DU SCROLL POUR LE MENU
-    let lastScroll = 0;
+    // 3. FONCTIONS POUR L'OVERLAY MOBILE
+    function createMobileOverlay() {
+        const overlay = document.createElement('div');
+        overlay.className = 'mobile-overlay';
+        overlay.id = 'mobileOverlay';
+        document.body.appendChild(overlay);
+        
+        overlay.addEventListener('click', () => {
+            navMenu.classList.remove('show');
+            mobileMenuBtn.classList.remove('active');
+            removeMobileOverlay();
+        });
+        
+        // Empêcher le défilement
+        document.body.style.overflow = 'hidden';
+    }
 
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-
-        // Animation du menu au scroll
-        if (currentScroll > 100) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
+    function removeMobileOverlay() {
+        const overlay = document.getElementById('mobileOverlay');
+        if (overlay) {
+            overlay.remove();
         }
+        document.body.style.overflow = '';
+    }
 
-        // Cacher/montrer le menu au scroll
-        if (currentScroll > lastScroll && currentScroll > 200) {
-            // Scroll vers le bas - cacher le menu
-            navbar.style.transform = 'translateY(-100%)';
-        } else {
-            // Scroll vers le haut - montrer le menu
-            navbar.style.transform = 'translateY(0)';
-        }
-
-        lastScroll = currentScroll;
-
-        // Mettre à jour les liens actifs
-        updateActiveLinks();
-    });
-
-    // Fonction pour mettre à jour les liens actifs
-    function updateActiveLinks() {
+    // 4. GESTION DU SCROLL POUR ACTIVER LES LIENS
+    window.addEventListener('scroll', debounce(() => {
         let current = '';
         const sections = document.querySelectorAll('section[id]');
 
         sections.forEach(section => {
-            const sectionTop = section.offsetTop - 150;
+            const sectionTop = section.offsetTop;
             const sectionHeight = section.clientHeight;
             
-            if (window.scrollY >= sectionTop) {
+            if (window.scrollY >= (sectionTop - 100)) {
                 current = section.getAttribute('id');
             }
         });
@@ -384,42 +433,34 @@ function initNavigation() {
                 link.classList.add('active');
             }
         });
-    }
+    }, 100));
+}
 
-    // 4. FERMER LE MENU EN CLIQUANT À L'EXTÉRIEUR
-    document.addEventListener('click', (e) => {
-        if (mobileMenu && mobileMenu.classList.contains('active')) {
-            const isClickInside = mobileMenu.contains(e.target) || 
-                                 mobileMenuBtn.contains(e.target);
-            
-            if (!isClickInside) {
-                mobileMenu.classList.remove('active');
-                mobileMenuBtn.classList.remove('active');
-                mobileOverlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        }
-    });
-
-    // 5. FERMER LE MENU EN APPUYANT SUR ÉCHAP
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) {
-            mobileMenu.classList.remove('active');
-            mobileMenuBtn.classList.remove('active');
-            mobileOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    });
+// Fonction debounce pour optimiser les performances
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
 }
 
 // ==========================================
 // SCROLL EFFECTS
 // ==========================================
 function initScrollEffects() {
+    const navbar = document.getElementById('navbar');
     const scrollToTop = document.getElementById('scrollToTop');
     const progressIndicator = document.getElementById('progressIndicator');
-    
+
     window.addEventListener('scroll', () => {
+        if (navbar && window.scrollY > 50) navbar.classList.add('scrolled');
+        else if (navbar) navbar.classList.remove('scrolled');
+
         if (scrollToTop) scrollToTop.classList.toggle('visible', window.scrollY > 400);
 
         if (progressIndicator) {
@@ -452,6 +493,7 @@ function initDateDisplay() {
 // ==========================================
 // FONCTIONS UTILITAIRES POUR LE LOCALSTORAGE
 // ==========================================
+
 function safeSetItem(key, value) {
     try {
         localStorage.setItem(key, JSON.stringify(value));
@@ -478,8 +520,9 @@ function safeGetItem(key, defaultValue = null) {
 }
 
 // ==========================================
-// CHARGEMENT DES DONNÉES
+// CHARGEMENT DES DONNÉES - VERSION CORRIGÉE
 // ==========================================
+
 async function loadData() {
     try {
         console.log('📥 Début du chargement des données...');
@@ -500,6 +543,15 @@ async function loadData() {
             });
         }, 1000);
         
+        // Rendre tout
+        renderAll();
+        if (typeof renderNews === 'function') {
+            renderNews(CONFIG.news);
+        }
+        if (typeof renderNewspapers === 'function') {
+            renderNewspapers();
+        }
+        
         console.log('✅ Toutes les données chargées avec succès');
         
     } catch (error) {
@@ -507,6 +559,9 @@ async function loadData() {
         showNotification('Erreur de chargement des données', 'error');
         CONFIG.promises = generateTestPromises();
         CONFIG.press = getDefaultPressData();
+        if (typeof renderAll === 'function') {
+            renderAll();
+        }
     }
 }
 
@@ -514,6 +569,7 @@ async function loadData() {
 async function loadPromisesData() {
     try {
         const response = await fetch('promises.json');
+        
         if (!response.ok) {
             console.warn('Fichier promises.json non trouvé - utilisation des données de test');
             CONFIG.promises = generateTestPromises();
@@ -526,7 +582,7 @@ async function loadPromisesData() {
         if (data.start_date) {
             CONFIG.START_DATE = new Date(data.start_date);
             CONFIG.END_DATE = new Date(CONFIG.START_DATE);
-            CONFIG.END_DATE.setFullYear(CONFIG.END_DATE.getFullYear() + 5);
+            CONFIG.END_DATE.setFullYear(CONFIG.END_DATE.getFullYear() + 5); // 5 ans après
         }
         
         // Traiter les promesses
@@ -607,6 +663,7 @@ async function loadPressData() {
     try {
         console.log('📰 Chargement des données presse...');
         const pressResponse = await fetch('press.json?v=' + Date.now());
+        
         if (!pressResponse.ok) {
             console.warn('Fichier press.json non trouvé - données de presse par défaut');
             CONFIG.press = getDefaultPressData();
@@ -644,6 +701,7 @@ async function loadNewsData() {
     try {
         console.log('📰 Chargement des actualités...');
         const newsResponse = await fetch('news.json?v=' + Date.now());
+        
         if (!newsResponse.ok) {
             console.warn('Fichier news.json non trouvé - données de démonstration');
             CONFIG.news = [
@@ -710,11 +768,238 @@ async function loadNewsData() {
 }
 
 // ==========================================
-// CORRECTION DES DÉLAIS INVALIDES
+// CORRECTION DES FONCTIONS UTILISANT localStorage
+// ==========================================
+
+// Dans saveVoteToSupabase()
+async function saveVoteToSupabase(promiseId, rating, comment = '') {
+    if (!supabaseClient) {
+        showNotification('Mode démo : Vote enregistré localement', 'info');
+        // Mode fallback - stocker localement
+        const votes = safeGetItem('promise_votes', []);
+        votes.push({
+            id: Date.now().toString(),
+            promise_id: promiseId,
+            rating: rating,
+            comment: comment,
+            created_at: new Date().toISOString()
+        });
+        safeSetItem('promise_votes', votes);
+        return;
+    }
+    
+    try {
+        const voteData = { 
+            promise_id: promiseId, 
+            rating: rating,
+            comment: comment,
+            created_at: new Date().toISOString()
+        };
+        
+        console.log('Envoi du vote:', voteData);
+        
+        const { error } = await supabaseClient
+            .from('votes')
+            .insert([voteData]);
+        
+        if (error) {
+            console.error('Erreur Supabase:', error);
+            
+            // Mode fallback - stocker localement
+            const votes = safeGetItem('promise_votes', []);
+            votes.push({
+                id: Date.now().toString(),
+                promise_id: promiseId,
+                rating: rating,
+                comment: comment,
+                created_at: new Date().toISOString()
+            });
+            safeSetItem('promise_votes', votes);
+            
+            showNotification('Vote enregistré localement (mode démo)', 'info');
+        } else {
+            showNotification('Merci pour votre vote !', 'success');
+        }
+        
+        // Recharger les votes après un délai
+        setTimeout(() => fetchAndDisplayPublicVotes(), 500);
+        
+    } catch (error) {
+        console.error('❌ Erreur sauvegarde vote:', error);
+        showNotification('Mode démo : Vote enregistré localement', 'info');
+    }
+}
+
+// Dans saveRatingLocally()
+function saveRatingLocally(ratingData) {
+    const ratings = safeGetItem('service_ratings', []);
+    ratings.push({
+        id: Date.now().toString(),
+        service: ratingData.service,
+        accessibility: ratingData.accessibility,
+        welcome: ratingData.welcome,
+        efficiency: ratingData.efficiency,
+        transparency: ratingData.transparency,
+        comment: ratingData.comment,
+        created_at: new Date().toISOString()
+    });
+    safeSetItem('service_ratings', ratings);
+    console.log('💾 Notation sauvegardée localement');
+}
+
+// Dans fetchAndDisplayPublicVotes() ou processVotes()
+function processVotes(votes) {
+    const votesMap = {};
+    
+    // D'abord, ajouter les votes de Supabase
+    votes.forEach(vote => {
+        if (!votesMap[vote.promise_id]) {
+            votesMap[vote.promise_id] = { sum: 0, count: 0 };
+        }
+        votesMap[vote.promise_id].sum += vote.rating;
+        votesMap[vote.promise_id].count += 1;
+    });
+    
+    // Ajouter les votes locaux
+    const localVotes = safeGetItem('promise_votes', []);
+    localVotes.forEach(vote => {
+        if (!votesMap[vote.promise_id]) {
+            votesMap[vote.promise_id] = { sum: 0, count: 0 };
+        }
+        votesMap[vote.promise_id].sum += vote.rating;
+        votesMap[vote.promise_id].count += 1;
+    });
+    
+    // Mettre à jour les promesses
+    CONFIG.promises.forEach(promise => {
+        if (votesMap[promise.id]) {
+            promise.publicAvg = votesMap[promise.id].sum / votesMap[promise.id].count;
+            promise.publicCount = votesMap[promise.id].count;
+        }
+    });
+    
+    if (typeof renderPromises === 'function') {
+        renderPromises(CONFIG.promises.slice(0, CONFIG.currentVisible));
+    }
+    if (typeof updateStats === 'function') {
+        updateStats();
+    }
+}
+
+// Générer des données de test adaptées à votre structure
+function generateTestPromises() {
+    return [
+        {
+            id: 'promise_19',
+            domaine: 'Lutte Corruption',
+            engagement: 'Loi de protection des lanceurs d\'alerte',
+            resultat: 'Encouragement dénonciation civique',
+            delai: '3 premières années',
+            status: 'realise',
+            mises_a_jour: [
+                {
+                    date: '26/08/2025',
+                    text: 'Au Sénégal, la protection des lanceurs d\'alerte est désormais régie par la Loi n° 2025-14, adoptée par l\'Assemblée nationale le 26 août 2025 et promulguée en septembre 2025[...]'
+                }
+            ]
+        },
+        {
+            id: 'promise_20',
+            domaine: 'Éducation',
+            engagement: 'Construction de 100 nouvelles écoles',
+            resultat: 'Amélioration accès éducation',
+            delai: '5 ans',
+            status: 'en cours',
+            mises_a_jour: [
+                {
+                    date: '15/10/2025',
+                    text: '30 écoles déjà construites, 50 en construction'
+                }
+            ]
+        },
+        {
+            id: 'promise_21',
+            domaine: 'Santé',
+            engagement: 'Couverture Santé Universelle',
+            resultat: 'Soins accessibles à tous',
+            delai: '2 premières années',
+            status: 'en retard',
+            mises_a_jour: []
+        }
+    ].map(p => {
+        const delayDays = parseDelayToDays(p.delai);
+        const deadline = calculateDeadlineFromDays(delayDays);
+        const status = p.status === 'realise' ? 'Réalisé' : 
+                      p.status === 'en cours' ? 'En cours' : 
+                      p.status === 'en retard' ? 'En retard' : 'Non lancé';
+        const isLate = checkIfLate(status, deadline);
+        
+        const updates = (p.mises_a_jour || []).map(update => ({
+            date: update.date || '',
+            description: update.text || update.description || 'Mise à jour'
+        }));
+        
+        return {
+            id: p.id,
+            engagement: p.engagement,
+            domain: p.domaine || p.domain || 'Autre',
+            status: status,
+            delai: delayDays.toString(),
+            delai_texte: p.delai,
+            resultat: p.resultat,
+            updates: updates,
+            deadline: deadline,
+            isLate: isLate,
+            publicAvg: 0,
+            publicCount: 0
+        };
+    });
+}
+
+// ==========================================
+// CALCULS - CORRIGÉS
+// ==========================================
+function calculateDeadlineFromDays(days) {
+    // Garantir que days est un nombre positif
+    const daysNum = Math.max(0, parseInt(days, 10) || 0);
+    
+    const deadline = new Date(CONFIG.START_DATE);
+    
+    // Si le délai est 0 (immédiat), date limite = date de début
+    if (daysNum === 0) {
+        return deadline;
+    }
+    
+    // Ajouter les jours
+    deadline.setDate(deadline.getDate() + daysNum);
+    
+    // Ne jamais dépasser la fin du mandat (5 ans après le début)
+    if (deadline > CONFIG.END_DATE) {
+        return new Date(CONFIG.END_DATE);
+    }
+    
+    return deadline;
+}
+
+function checkIfLate(status, deadline) {
+    if (status === 'Réalisé') return false;
+    
+    // Vérifier que la date limite est valide
+    if (!deadline || !(deadline instanceof Date) || isNaN(deadline.getTime())) {
+        return false;
+    }
+    
+    // Une promesse est en retard si la date actuelle dépasse la date limite
+    return CONFIG.CURRENT_DATE > deadline;
+}
+
+// ==========================================
+// FONCTION POUR CORRIGER LES DÉLAIS INVALIDES
 // ==========================================
 function fixInvalidDelays() {
     console.log('🔧 Correction des délais invalides...');
     let corrections = 0;
+    
     CONFIG.promises.forEach(promise => {
         const currentDelay = parseInt(promise.delai);
         
@@ -738,7 +1023,7 @@ function fixInvalidDelays() {
             corrections++;
         }
     });
-
+    
     if (corrections > 0) {
         console.log(`✅ ${corrections} délais corrigés`);
     } else {
@@ -751,12 +1036,13 @@ function fixInvalidDelays() {
 // ==========================================
 function setupDailyPromise() {
     const promisesWithDetails = CONFIG.promises.filter(p => p.engagement && p.resultat && p.delai);
+    
     if (promisesWithDetails.length === 0) return;
-
+    
     const today = new Date().getDate();
     const promiseIndex = today % promisesWithDetails.length;
     const promise = promisesWithDetails[promiseIndex];
-
+    
     const dailyPromiseCard = document.getElementById('dailyPromise');
     if (!dailyPromiseCard) return;
 
@@ -764,7 +1050,7 @@ function setupDailyPromise() {
     const statusClass = promise.isLate ? 'status-late' : 
                        promise.status === 'Réalisé' ? 'status-realise' :
                        promise.status === 'En cours' ? 'status-encours' : 'status-non-lance';
-
+    
     const statusIcon = promise.isLate ? '⚠️' :
                       promise.status === 'Réalisé' ? '✅' :
                       promise.status === 'En cours' ? '🔄' : '⏳';
@@ -858,21 +1144,21 @@ function renderAll() {
     if (!CONFIG.filteredPromises || CONFIG.filteredPromises.length === 0) {
         CONFIG.filteredPromises = [...CONFIG.promises];
     }
-
+    
     // Mettre à jour les statistiques
     updateStats();
-
+    
     // Rendre les promesses initiales
     const initialCount = Math.min(CONFIG.visibleCount, CONFIG.filteredPromises.length);
     renderPromises(CONFIG.filteredPromises.slice(0, initialCount));
-
+    
     // Mettre à jour le compteur
     updateResultsCount(CONFIG.filteredPromises.length);
-
+    
     // Mettre à jour les boutons
     const showMoreBtn = document.getElementById('showMoreBtn');
     const showLessBtn = document.getElementById('showLessBtn');
-
+    
     if (CONFIG.filteredPromises.length > CONFIG.visibleCount) {
         if (showMoreBtn) showMoreBtn.style.display = 'inline-flex';
         if (showLessBtn) showLessBtn.style.display = 'none';
@@ -880,44 +1166,44 @@ function renderAll() {
         if (showMoreBtn) showMoreBtn.style.display = 'none';
         if (showLessBtn) showLessBtn.style.display = 'none';
     }
-
+    
     // Remplir le filtre de domaine
     populateDomainFilter();
 }
 
 // ==========================================
-// UPDATE STATS
+// UPDATE STATS - VERSION CORRIGÉE
 // ==========================================
-function updateStats() {
-    const total = CONFIG.promises.length;
+    function updateStats() {
+ const total = CONFIG.promises.length;
     
     // Logique CORRIGÉE pour le comptage :
     const realise = CONFIG.promises.filter(p => 
         p.status === 'Réalisé' && !p.isLate
     ).length;
-
+    
     const encours = CONFIG.promises.filter(p => 
         p.status === 'En cours' && !p.isLate
     ).length;
-
+    
     const nonLance = CONFIG.promises.filter(p => 
         p.status === 'Non lancé' && !p.isLate
     ).length;
-
+    
     // Les retards sont séparés
     const retard = CONFIG.promises.filter(p => p.isLate).length;
     const withUpdates = CONFIG.promises.filter(p => p.updates && p.updates.length > 0).length;
     const tauxRealisation = total > 0 ? Math.round((realise / total) * 100) : 0;
-
+    
     // ============= CALCUL DU Retard moyen CORRIGÉ =============
-
+    
     // 1. Filtrer seulement les promesses NON RÉALISÉES et NON EN RETARD
     const promisesNonRealiseesNonRetard = CONFIG.promises.filter(p => 
         p.status !== 'Réalisé' && !p.isLate
     );
-
+    
     let avgDelay = 0;
-
+    
     if (promisesNonRealiseesNonRetard.length > 0) {
         // Calculer la somme des jours restants
         let totalDaysRemaining = 0;
@@ -937,12 +1223,12 @@ function updateStats() {
             avgDelay = Math.round(totalDaysRemaining / validPromisesCount);
         }
     }
-
+    
     // ============= CALCUL DU RETARD MOYEN =============
-
+    
     const promisesEnRetard = CONFIG.promises.filter(p => p.isLate);
     let avgRetard = 0;
-
+    
     if (promisesEnRetard.length > 0) {
         const totalRetard = promisesEnRetard.reduce((sum, p) => {
             const daysRemaining = getDaysRemaining(p.deadline);
@@ -951,23 +1237,23 @@ function updateStats() {
         
         avgRetard = Math.round(totalRetard / promisesEnRetard.length);
     }
-
+    
     // ============= NOTE MOYENNE PUBLIQUE =============
-
+    
     const allRatings = CONFIG.promises.filter(p => p.publicCount > 0);
     const avgRating = allRatings.length > 0
         ? (allRatings.reduce((sum, p) => sum + p.publicAvg, 0) / allRatings.length).toFixed(1)
         : '0.0';
     const totalVotes = allRatings.reduce((sum, p) => sum + p.publicCount, 0);
-
+    
     // ============= MISE À JOUR DES KPIs =============
-
+    
     KPI_ITEMS[0].value = total;
     KPI_ITEMS[1].value = realise;
     KPI_ITEMS[2].value = encours;
     KPI_ITEMS[3].value = retard;
     KPI_ITEMS[4].value = `${tauxRealisation}%`;
-
+    
     // Choisir quoi afficher comme KPI[5]
     if (retard > 0) {
         // S'il y a des retards, afficher le retard moyen
@@ -985,12 +1271,12 @@ function updateStats() {
         KPI_ITEMS[5].label = '⏱️ Retard moyen';
         KPI_ITEMS[5].icon = '⏱️';
     }
-
+    
     KPI_ITEMS[6].value = avgRating;
     KPI_ITEMS[7].value = withUpdates;
-
+    
     // ============= MISE À JOUR DES STATISTIQUES =============
-
+    
     updateStatValue('total', total);
     updateStatValue('realise', realise);
     updateStatValue('encours', encours);
@@ -1000,16 +1286,16 @@ function updateStats() {
     updateStatValue('taux-realisation', `${tauxRealisation}%`);
     updateStatValue('moyenne-notes', avgRating);
     updateStatValue('votes-total', `${totalVotes.toLocaleString('fr-FR')} votes`);
-
+    
     // Afficher correctement le Retard moyen
     if (retard > 0) {
-        updateStatValue('delai-moyen', `${avgRetard}j`);
+        updateStatValue('delai-moyen', `${avgRetard}j `);
     } else if (avgDelay > 0) {
         updateStatValue('delai-moyen', `${avgDelay}j restants en moyenne`);
     } else {
         updateStatValue('delai-moyen', 'N/A');
     }
-
+    
     // Pourcentage
     updateStatPercentage('total-percentage', total, total);
     updateStatPercentage('realise-percentage', realise, total);
@@ -1017,14 +1303,14 @@ function updateStats() {
     updateStatPercentage('non-lance-percentage', nonLance, total);
     updateStatPercentage('retard-percentage', retard, total);
     updateStatPercentage('avec-maj-percentage', withUpdates, total);
-
+    
     // Domaines
     const domains = CONFIG.promises.reduce((acc, p) => {
         const domain = p.domain || 'Autre';
         acc[domain] = (acc[domain] || 0) + 1;
         return acc;
     }, {});
-
+    
     if (Object.keys(domains).length > 0) {
         const principalDomain = Object.entries(domains).sort((a, b) => b[1] - a[1])[0];
         updateStatValue('domaine-principal', principalDomain[0]);
@@ -1062,7 +1348,7 @@ function initFilters() {
     const resetFiltersBtn = document.getElementById('resetFilters');
     const showMoreBtn = document.getElementById('showMoreBtn');
     const showLessBtn = document.getElementById('showLessBtn');
-    
+
     if (filterToggleBtn && filtersSection) {
         filterToggleBtn.addEventListener('click', () => {
             filtersSection.classList.toggle('active');
@@ -1073,11 +1359,11 @@ function initFilters() {
     if (filterStatus) {
         filterStatus.addEventListener('change', applyFilters);
     }
-
+    
     if (filterDomain) {
         filterDomain.addEventListener('change', applyFilters);
     }
-
+    
     if (filterSearch) {
         filterSearch.addEventListener('input', debounce(applyFilters, 300));
     }
@@ -1108,29 +1394,30 @@ function initFilters() {
         // Caché par défaut
         showLessBtn.style.display = 'none';
     }
-
+    
     // Initialiser le filtre de domaine
     populateDomainFilter();
 }
 
 function resetFilters() {
     console.log('Réinitialisation des filtres');
+    
     document.getElementById('filter-status').value = '';
     document.getElementById('filter-domain').value = '';
     document.getElementById('filter-search').value = '';
-
+    
     // Réinitialiser à toutes les promesses
     CONFIG.filteredPromises = [...CONFIG.promises];
     CONFIG.currentVisible = CONFIG.visibleCount;
-
+    
     // Rendre toutes les promesses
     renderPromises(CONFIG.filteredPromises.slice(0, CONFIG.currentVisible));
     updateResultsCount(CONFIG.filteredPromises.length);
-
+    
     // Mettre à jour les boutons
     const showMoreBtn = document.getElementById('showMoreBtn');
     const showLessBtn = document.getElementById('showLessBtn');
-
+    
     if (CONFIG.promises.length > CONFIG.visibleCount) {
         if (showMoreBtn) showMoreBtn.style.display = 'inline-flex';
         if (showLessBtn) showLessBtn.style.display = 'none';
@@ -1138,7 +1425,7 @@ function resetFilters() {
         if (showMoreBtn) showMoreBtn.style.display = 'none';
         if (showLessBtn) showLessBtn.style.display = 'none';
     }
-
+    
     showNotification('Filtres réinitialisés');
 }
 
@@ -1155,15 +1442,39 @@ function debounce(func, wait) {
     };
 }
 
+function resetFilters() {
+    document.getElementById('filter-status').value = '';
+    document.getElementById('filter-domain').value = '';
+    document.getElementById('filter-search').value = '';
+    
+    // Réinitialiser à toutes les promesses
+    CONFIG.filteredPromises = [...CONFIG.promises];
+    CONFIG.currentVisible = CONFIG.visibleCount;
+    
+    updateFilteredDisplay();
+    
+    // Réinitialiser les boutons
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showLessBtn = document.getElementById('showLessBtn');
+    
+    if (CONFIG.promises.length > CONFIG.visibleCount) {
+        if (showMoreBtn) showMoreBtn.style.display = 'inline-flex';
+        if (showLessBtn) showLessBtn.style.display = 'none';
+    } else {
+        if (showMoreBtn) showMoreBtn.style.display = 'none';
+        if (showLessBtn) showLessBtn.style.display = 'none';
+    }
+}
 function applyFilters() {
     const filterStatus = document.getElementById('filter-status')?.value || '';
     const filterDomain = document.getElementById('filter-domain')?.value || '';
     const filterSearch = document.getElementById('filter-search')?.value.toLowerCase() || '';
+    
     console.log('Filtrage avec:', { filterStatus, filterDomain, filterSearch });
-
+    
     // Utiliser toutes les promesses comme base
     let filtered = CONFIG.promises;
-
+    
     // 1. FILTRAGE PAR STATUT - LOGIQUE CORRIGÉE
     if (filterStatus) {
         console.log('Filtre statut:', filterStatus);
@@ -1191,13 +1502,13 @@ function applyFilters() {
             );
         }
     }
-
+    
     // 2. FILTRAGE PAR DOMAINE
     if (filterDomain && filterDomain !== '') {
         console.log('Filtre domaine:', filterDomain);
         filtered = filtered.filter(promise => promise.domain === filterDomain);
     }
-
+    
     // 3. FILTRAGE PAR RECHERCHE
     if (filterSearch) {
         console.log('Filtre recherche:', filterSearch);
@@ -1207,21 +1518,21 @@ function applyFilters() {
             (promise.resultat || '').toLowerCase().includes(filterSearch)
         );
     }
-
+    
     console.log('Résultat filtre:', filtered.length, 'promesses');
-
+    
     // Stocker le résultat
     CONFIG.filteredPromises = filtered;
-
+    
     // Mettre à jour l'affichage
     updateFilteredDisplay();
 }
-
 function updateFilteredDisplay() {
     const showMoreBtn = document.getElementById('showMoreBtn');
     const showLessBtn = document.getElementById('showLessBtn');
+    
     console.log('updateFilteredDisplay:', CONFIG.filteredPromises.length, 'promesses');
-
+    
     // Toujours montrer "Afficher plus" s'il y a plus d'éléments
     if (CONFIG.filteredPromises.length > CONFIG.visibleCount) {
         CONFIG.currentVisible = CONFIG.visibleCount;
@@ -1232,10 +1543,67 @@ function updateFilteredDisplay() {
         if (showMoreBtn) showMoreBtn.style.display = 'none';
         if (showLessBtn) showLessBtn.style.display = 'none';
     }
-
+    
     // Rendre les promesses
     renderPromises(CONFIG.filteredPromises.slice(0, CONFIG.currentVisible));
     updateResultsCount(CONFIG.filteredPromises.length);
+}
+
+function updateFilteredDisplay() {
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showLessBtn = document.getElementById('showLessBtn');
+    
+    // Déterminer combien de promesses afficher
+    if (CONFIG.filteredPromises.length > CONFIG.visibleCount) {
+        CONFIG.currentVisible = CONFIG.visibleCount;
+        if (showMoreBtn) showMoreBtn.style.display = 'inline-flex';
+        if (showLessBtn) showLessBtn.style.display = 'none';
+    } else {
+        CONFIG.currentVisible = CONFIG.filteredPromises.length;
+        if (showMoreBtn) showMoreBtn.style.display = 'none';
+        if (showLessBtn) showLessBtn.style.display = 'none';
+    }
+    
+    // Rendre les promesses
+    renderPromises(CONFIG.filteredPromises.slice(0, CONFIG.currentVisible));
+    updateResultsCount(CONFIG.filteredPromises.length);
+}
+// Modifier la fonction pour "Afficher plus"
+function showMorePromises() {
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showLessBtn = document.getElementById('showLessBtn');
+    
+    CONFIG.currentVisible = CONFIG.filteredPromises.length;
+    renderPromises(CONFIG.filteredPromises);
+    
+    showMoreBtn.style.display = 'none';
+    showLessBtn.style.display = 'inline-flex';
+}
+
+// Modifier la fonction pour "Afficher moins"
+function showLessPromises() {
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showLessBtn = document.getElementById('showLessBtn');
+    
+    CONFIG.currentVisible = CONFIG.visibleCount;
+    renderPromises(CONFIG.filteredPromises.slice(0, CONFIG.currentVisible));
+    
+    showLessBtn.style.display = 'none';
+    showMoreBtn.style.display = 'inline-flex';
+}
+
+function resetFilters() {
+    const filterStatus = document.getElementById('filter-status');
+    const filterDomain = document.getElementById('filter-domain');
+    const filterSearch = document.getElementById('filter-search');
+    
+    if (filterStatus) filterStatus.value = '';
+    if (filterDomain) filterDomain.value = '';
+    if (filterSearch) filterSearch.value = '';
+
+    CONFIG.currentVisible = CONFIG.visibleCount;
+    renderPromises(CONFIG.promises.slice(0, CONFIG.currentVisible));
+    updateResultsCount(CONFIG.promises.length);
 }
 
 function updateResultsCount(count) {
@@ -1248,6 +1616,7 @@ function updateResultsCount(count) {
 function populateDomainFilter() {
     const filterDomain = document.getElementById('filter-domain');
     if (!filterDomain) return;
+    
     const domains = [...new Set(CONFIG.promises.map(p => p.domain || 'Autre'))].filter(d => d !== 'Autre');
     domains.sort();
 
@@ -1257,13 +1626,14 @@ function populateDomainFilter() {
 }
 
 // ==========================================
-// RENDER PROMISES
+// RENDER PROMISES - AVEC ICÔNES PARTAGE/NOTATION
 // ==========================================
 function renderPromises(promises) {
     const grid = document.getElementById('promisesGrid');
     if (!grid) return;
+    
     console.log('renderPromises: Rendering', promises.length, 'promises');
-
+    
     if (!promises || promises.length === 0) {
         grid.innerHTML = `
             <div class="loading-state">
@@ -1284,23 +1654,24 @@ function renderPromises(promises) {
         return `
             <div class="promise-card ${statusClass}" data-id="${promise.id}">
                 <div class="promise-header">
-                    <span class="promise-status">
-                        ${statusIcon} ${getStatusText(promise)}
-                    </span>
+                   <span class="promise-status">
+    ${statusIcon} ${getStatusText(promise)}
+</span>
                     <span class="promise-domain">${promise.domain || 'Non spécifié'}</span>
                 </div>
+               
                 <h3 class="promise-title">${promise.engagement}</h3>
                 
                 <div class="promise-result">
                     <strong><i class="fas fa-bullseye"></i> Résultat attendu :</strong>
                     <p>${promise.resultat || 'Non spécifié'}</p>
                 </div>
-              
+               
                 <div class="promise-meta">
                     <span><i class="fas fa-calendar"></i> ${formatDate(promise.deadline)}</span>
                     <span><i class="fas fa-clock"></i> ${formatDaysRemaining(daysRemaining)}</span>
                 </div>
-              
+               
                 ${promise.updates && promise.updates.length > 0 ? `
                     <div class="promise-updates">
                         <button class="btn-updates" onclick="toggleUpdates('${promise.id}')">
@@ -1317,24 +1688,31 @@ function renderPromises(promises) {
                         </div>
                     </div>
                 ` : ''}
-              
+               
                 <div class="promise-actions">
                     <div class="social-share">
-                        <button class="social-btn fb" onclick="shareToPlatform('${promise.id}', 'facebook')" title="Partager sur Facebook">
-                            <i class="fab fa-facebook-f"></i>
+                        <!-- FORCER LES COULEURS AVEC STYLE INLINE -->
+                        <button class="social-btn fb" onclick="shareToPlatform('${promise.id}', 'facebook')" 
+                                title="Partager sur Facebook"
+                                style="background-color: #3b5998 !important; border: none !important;">
+                            <i class="fab fa-facebook-f" style="color: white !important;"></i>
                         </button>
-                        <button class="social-btn tw" onclick="shareToPlatform('${promise.id}', 'twitter')" title="Partager sur Twitter">
-                            <i class="fab fa-x-twitter"></i>
+                        <button class="social-btn tw" onclick="shareToPlatform('${promise.id}', 'twitter')" 
+                                title="Partager sur Twitter"
+                                style="background-color: #000000 !important; border: none !important;">
+                            <i class="fab fa-x-twitter" style="color: white !important;"></i>
                         </button>
-                        <button class="social-btn wa" onclick="shareToPlatform('${promise.id}', 'whatsapp')" title="Partager sur WhatsApp">
-                            <i class="fab fa-whatsapp"></i>
+                        <button class="social-btn wa" onclick="shareToPlatform('${promise.id}', 'whatsapp')" 
+                                title="Partager sur WhatsApp"
+                                style="background-color: #25D366 !important; border: none !important;">
+                            <i class="fab fa-whatsapp" style="color: white !important;"></i>
                         </button>
                     </div>
                     <button class="btn-stars" onclick="showRatingModal('${promise.id}')" title="Noter cette promesse">
                         <i class="fas fa-star"></i> Noter
                     </button>
                 </div>
-              
+               
                 ${promise.publicCount > 0 ? `
                     <div class="promise-rating">
                         <span class="rating-value">${promise.publicAvg.toFixed(1)}</span>
@@ -1347,6 +1725,69 @@ function renderPromises(promises) {
             </div>
         `;
     }).join('');
+    
+    // FORCER LA VISIBILITÉ DES BOUTONS APRÈS RENDU
+    setTimeout(() => {
+        forceSocialButtonsColors();
+    }, 100);
+}
+
+// NOUVELLE FONCTION POUR FORCER LES COULEURS
+function forceSocialButtonsColors() {
+    const socialButtons = document.querySelectorAll('.social-btn');
+    
+    socialButtons.forEach(btn => {
+        // Retirer toutes les classes qui pourraient écraser les couleurs
+        btn.className = 'social-btn';
+        
+        // Ajouter la classe spécifique
+        if (btn.innerHTML.includes('fa-facebook')) {
+            btn.classList.add('fb');
+            btn.style.cssText = `
+                background-color: #3b5998 !important;
+                color: white !important;
+                border: none !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 40px !important;
+                height: 40px !important;
+                border-radius: 50% !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            `;
+        } else if (btn.innerHTML.includes('fa-x-twitter') || btn.innerHTML.includes('fa-twitter')) {
+            btn.classList.add('tw');
+            btn.style.cssText = `
+                background-color: #000000 !important;
+                color: white !important;
+                border: none !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 40px !important;
+                height: 40px !important;
+                border-radius: 50% !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            `;
+        } else if (btn.innerHTML.includes('fa-whatsapp')) {
+            btn.classList.add('wa');
+            btn.style.cssText = `
+                background-color: #25D366 !important;
+                color: white !important;
+                border: none !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 40px !important;
+                height: 40px !important;
+                border-radius: 50% !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            `;
+        }
+    });
 }
 
 function getStatusClass(promise) {
@@ -1363,9 +1804,62 @@ function getStatusIcon(promise) {
     return '⏳';
 }
 
-function getStatusText(promise) {
-    if (promise.isLate) return 'En retard';
-    return promise.status;
+function formatDate(dateInput) {
+    let date;
+    if (!dateInput) return 'Date inconnue';
+    
+    if (dateInput instanceof Date) {
+        date = dateInput;
+    } else if (typeof dateInput === 'string' || typeof dateInput === 'number') {
+        date = new Date(dateInput);
+    } else {
+        return 'Date inconnue';
+    }
+    
+    if (isNaN(date.getTime())) return 'Date inconnue';
+    
+    return date.toLocaleDateString('fr-FR', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+    });
+}
+
+function formatDateProper(dateInput) {
+    if (!dateInput) return 'Pas de date';
+    
+    try {
+        // Essayer de parser la date au format DD/MM/YYYY
+        const parts = dateInput.split('/');
+        if (parts.length === 3) {
+            const day = parseInt(parts[0], 10);
+            const month = parseInt(parts[1], 10) - 1;
+            const year = parseInt(parts[2], 10);
+            const date = new Date(year, month, day);
+            
+            if (!isNaN(date.getTime())) {
+                return date.toLocaleDateString('fr-FR', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+            }
+        }
+        
+        // Essayer le format standard
+        const date = new Date(dateInput);
+        if (!isNaN(date.getTime())) {
+            return date.toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+        }
+        
+        return dateInput; // Retourner la chaîne originale si elle ne peut pas être parsée
+    } catch (error) {
+        return dateInput;
+    }
 }
 
 function generateStars(rating) {
@@ -1385,9 +1879,10 @@ function generateStars(rating) {
 function showRatingModal(promiseId) {
     const promise = CONFIG.promises.find(p => p.id === promiseId);
     if (!promise) return;
+    
     CONFIG.currentRatingPromiseId = promiseId;
     CONFIG.currentRatingValue = 0;
-
+    
     // Créer le modal de notation
     const modal = document.createElement('div');
     modal.className = 'rating-modal';
@@ -1439,9 +1934,9 @@ function showRatingModal(promiseId) {
             </div>
         </div>
     `;
-
+    
     document.body.appendChild(modal);
-
+    
     // Initialiser les étoiles
     const stars = modal.querySelectorAll('#ratingStars i');
     stars.forEach(star => {
@@ -1466,11 +1961,11 @@ function showRatingModal(promiseId) {
             updateStars(stars, value, true);
         });
     });
-
+    
     modal.querySelector('#ratingStars').addEventListener('mouseleave', () => {
         updateStars(stars, CONFIG.currentRatingValue);
     });
-
+    
     modal.style.display = 'flex';
 }
 
@@ -1488,9 +1983,9 @@ function updateStars(stars, value, isHover = false) {
     stars.forEach((star, index) => {
         if (index < value) {
             star.classList.remove('far');
-            star.classList.add('fas', 'star-active');
+            star.classList.add('fas', 'active');
         } else {
-            star.classList.remove('fas', 'star-active');
+            star.classList.remove('fas', 'active');
             star.classList.add('far');
         }
         
@@ -1507,8 +2002,9 @@ function submitRating() {
         showNotification('Veuillez sélectionner une note', 'error');
         return;
     }
+    
     const comment = document.getElementById('ratingComment')?.value.trim() || '';
-
+    
     saveVoteToSupabase(CONFIG.currentRatingPromiseId, CONFIG.currentRatingValue, comment);
     closeRatingModal();
 }
@@ -1517,7 +2013,7 @@ async function saveVoteToSupabase(promiseId, rating, comment = '') {
     if (!supabaseClient) {
         showNotification('Mode démo : Vote enregistré localement', 'info');
         // Mode fallback - stocker localement
-        const votes = safeGetItem('promise_votes', []);
+        const votes = JSON.parse(localStorage.getItem('promise_votes') || '[]');
         votes.push({
             id: Date.now().toString(),
             promise_id: promiseId,
@@ -1525,9 +2021,10 @@ async function saveVoteToSupabase(promiseId, rating, comment = '') {
             comment: comment,
             created_at: new Date().toISOString()
         });
-        safeSetItem('promise_votes', votes);
+        localStorage.setItem('promise_votes', JSON.stringify(votes));
         return;
     }
+    
     try {
         const voteData = { 
             promise_id: promiseId, 
@@ -1546,7 +2043,7 @@ async function saveVoteToSupabase(promiseId, rating, comment = '') {
             console.error('Erreur Supabase:', error);
             
             // Mode fallback - stocker localement
-            const votes = safeGetItem('promise_votes', []);
+            const votes = JSON.parse(localStorage.getItem('promise_votes') || '[]');
             votes.push({
                 id: Date.now().toString(),
                 promise_id: promiseId,
@@ -1554,7 +2051,7 @@ async function saveVoteToSupabase(promiseId, rating, comment = '') {
                 comment: comment,
                 created_at: new Date().toISOString()
             });
-            safeSetItem('promise_votes', votes);
+            localStorage.setItem('promise_votes', JSON.stringify(votes));
             
             showNotification('Vote enregistré localement (mode démo)', 'info');
         } else {
@@ -1576,6 +2073,7 @@ async function saveVoteToSupabase(promiseId, rating, comment = '') {
 function renderNews(news) {
     const grid = document.getElementById('newsGrid');
     if (!grid) return;
+    
     grid.innerHTML = news.map(item => `
         <article class="news-card">
             <div class="news-image">
@@ -1596,13 +2094,14 @@ function renderNews(news) {
 // ==========================================
 // RENDER NEWSPAPERS
 // ==========================================
+
 async function renderNewspapers() {
     const grid = document.getElementById('newspapersGrid');
     if (!grid) return;
     
     // Vérifier les images disponibles
     const availablePress = await checkAvailableNewspapers();
-
+    
     if (availablePress.length === 0) {
         grid.innerHTML = `
             <div class="loading-state">
@@ -1617,7 +2116,7 @@ async function renderNewspapers() {
             <div class="newspaper-card" onclick="openPhotoViewer('${paper.id}')">
                 <div class="newspaper-preview">
                     <img src="${paper.image}" alt="${paper.title}" 
-                        onerror="this.onerror=null; this.src='https://picsum.photos/400/533?random=${paper.id}'">
+                         onerror="this.onerror=null; this.src='https://picsum.photos/400/533?random=${paper.id}'">
                 </div>
                 <h4>${paper.title}</h4>
                 <p class="newspaper-date">${paper.date}</p>
@@ -1629,6 +2128,8 @@ async function renderNewspapers() {
 // ==========================================
 // CONFIGURATION PRESSE - AVEC VOS FICHIERS
 // ==========================================
+
+// Données par défaut si press.json n'est pas chargé
 const DEFAULT_PRESS = [
     {
         id: '1',
@@ -1715,11 +2216,61 @@ const DEFAULT_PRESS = [
 let PRESS_DATA = [...DEFAULT_PRESS];
 
 // ==========================================
+// CHARGEMENT DES DONNÉES PRESSE
+// ==========================================
+
+async function loadPressData() {
+    console.log('📰 Chargement des données presse depuis revuedepresse/...');
+    
+    try {
+        // Essayer de charger depuis press.json
+        const response = await fetch('press.json?v=' + Date.now());
+        
+        if (!response.ok) {
+            console.warn('Fichier press.json non trouvé - utilisation des chemins par défaut');
+            PRESS_DATA = DEFAULT_PRESS;
+            return;
+        }
+        
+        const data = await response.json();
+        
+        // Vérifier et utiliser les données
+        if (data && Array.isArray(data.press)) {
+            PRESS_DATA = data.press;
+            console.log(`✅ ${PRESS_DATA.length} journaux chargés depuis press.json`);
+        } else {
+            console.warn('Format press.json invalide - utilisation chemins par défaut');
+            PRESS_DATA = DEFAULT_PRESS;
+        }
+        
+    } catch (error) {
+        console.error('❌ Erreur chargement presse:', error);
+        PRESS_DATA = DEFAULT_PRESS;
+    }
+}
+
+// ==========================================
 // FONCTION POUR DÉTECTER LES IMAGES DISPONIBLES
 // ==========================================
+
 async function checkAvailableNewspapers() {
     const availablePapers = [];
     
+    // Liste de vos fichiers existants
+    const existingFiles = [
+        'revuedepresse/lesoleil.jpg',
+        'revuedepresse/sudquotidien.jpg',
+        'revuedepresse/liberation.jpg',
+        'revuedepresse/observateur.jpg',
+        'revuedepresse/lequotidien.jpg',
+        'revuedepresse/rewmisport.jpg',
+        'revuedepresse/soloquotidien.jpg',
+        'revuedepresse/yooryoor.jpg',
+        'revuedepresse/record.jpg',
+        'revuedepresse/enquete.jpg'
+    ];
+    
+    // Vérifier quels fichiers existent réellement
     for (const paper of PRESS_DATA) {
         try {
             const response = await fetch(paper.image, { method: 'HEAD' });
@@ -1732,20 +2283,21 @@ async function checkAvailableNewspapers() {
             console.warn(`Erreur vérification: ${paper.image}`);
         }
     }
-
+    
     // Si aucune image n'est trouvée, utiliser toutes les données
     if (availablePapers.length === 0) {
         console.log('⚠️ Aucune image vérifiée, utilisation de toutes les données');
         return PRESS_DATA;
     }
-
+    
     console.log(`📊 ${availablePapers.length}/${PRESS_DATA.length} images disponibles`);
     return availablePapers;
 }
 
 // ==========================================
-// SETUP PRESS CAROUSEL
+// MODIFIEZ VOTRE FONCTION setupPressCarousel
 // ==========================================
+
 async function setupPressCarousel() {
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
@@ -1759,7 +2311,7 @@ async function setupPressCarousel() {
 
     // Vérifier les images disponibles
     const availablePress = await checkAvailableNewspapers();
-
+    
     if (availablePress.length === 0) {
         console.error('Aucun journal disponible');
         document.getElementById('pressCarousel').innerHTML = `
@@ -1792,8 +2344,8 @@ async function setupPressCarousel() {
         autoPlayToggle.addEventListener('click', () => {
             CONFIG.carouselAutoPlay = !CONFIG.carouselAutoPlay;
             autoPlayToggle.innerHTML = CONFIG.carouselAutoPlay ? 
-                '<i class="fas fa-pause"></i>' : 
-                '<i class="fas fa-play"></i>';
+                '<i class="fas fa-pause"></i> Pause' : 
+                '<i class="fas fa-play"></i> Lecture auto';
             
             if (CONFIG.carouselAutoPlay) startCarouselAutoPlay();
             else stopCarouselAutoPlay();
@@ -1826,6 +2378,7 @@ function renderPressCarousel() {
     const carousel = document.getElementById('pressCarousel');
     const indicators = document.getElementById('carouselIndicators');
     if (!carousel || !indicators) return;
+
     const currentPaper = CONFIG.press[CONFIG.currentIndex];
 
     // Utiliser une image plus grande pour le carousel
@@ -1838,32 +2391,84 @@ function renderPressCarousel() {
         <div class="carousel-item active">
             <div class="carousel-image-container">
                 <img src="${imageUrl}" alt="${currentPaper.title}" 
-                    onerror="this.onerror=null; this.src='https://picsum.photos/700/933?random=${CONFIG.currentIndex}'"
-                    id="pressImage"
-                    style="transform: scale(${CONFIG.zoomScale})">
+                     onerror="this.onerror=null; this.src='https://picsum.photos/700/933?random=${CONFIG.currentIndex}'"
+                     id="pressImage"
+                     style="transform: scale(${CONFIG.zoomScale})">
             </div>
             <div class="carousel-overlay">
-                <div class="carousel-info">
-                    <h3 class="carousel-title">${currentPaper.title}</h3>
-                    <div class="carousel-date">${currentPaper.date}</div>
-                    <a href="${currentPaper.link || '#'}" target="_blank" class="carousel-link">
-                        <i class="fas fa-external-link-alt"></i> Lire l'édition complète
-                    </a>
-                </div>
+                
+                    </div>
             </div>
+            
         </div>
     `;
 
-    // Mettre à jour les indicateurs
-    indicators.innerHTML = CONFIG.press.map((_, index) => 
-        `<button class="indicator ${index === CONFIG.currentIndex ? 'active' : ''}" 
-                 onclick="goToSlide(${index})"></button>`
-    ).join('');
-
-    // Setup zoom controls
-    const zoomInfo = document.getElementById('zoomInfo');
-    if (zoomInfo) {
-        zoomInfo.textContent = `${Math.round(CONFIG.zoomScale * 100)}%`;
+    const indicatorBtns = indicators.querySelectorAll('.indicator');
+    indicatorBtns.forEach((btn, index) => {
+        btn.classList.toggle('active', index === CONFIG.currentIndex);
+    });
+    
+    // Setup drag and drop
+    const pressImage = document.getElementById('pressImage');
+    const imageContainer = carousel.querySelector('.carousel-image-container');
+    
+    if (pressImage && imageContainer) {
+        let isDragging = false;
+        let startX, startY, translateX = 0, translateY = 0;
+        
+        imageContainer.addEventListener('mousedown', (e) => {
+            if (CONFIG.zoomScale > 1) {
+                isDragging = true;
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+                pressImage.style.cursor = 'grabbing';
+            }
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging || CONFIG.zoomScale <= 1) return;
+            e.preventDefault();
+            
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            
+            // Limiter le déplacement pour éviter de sortir de l'image
+            const maxX = (pressImage.clientWidth * CONFIG.zoomScale - imageContainer.clientWidth) / 2;
+            const maxY = (pressImage.clientHeight * CONFIG.zoomScale - imageContainer.clientHeight) / 2;
+            
+            translateX = Math.max(-maxX, Math.min(maxX, translateX));
+            translateY = Math.max(-maxY, Math.min(maxY, translateY));
+            
+            pressImage.style.transform = `scale(${CONFIG.zoomScale}) translate(${translateX}px, ${translateY}px)`;
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            if (CONFIG.zoomScale > 1) {
+                pressImage.style.cursor = 'grab';
+            } else {
+                pressImage.style.cursor = 'default';
+            }
+        });
+        
+        pressImage.addEventListener('mouseenter', () => {
+            if (CONFIG.zoomScale > 1) {
+                pressImage.style.cursor = 'grab';
+            }
+        });
+        
+        pressImage.addEventListener('mouseleave', () => {
+            if (!isDragging) {
+                pressImage.style.cursor = 'default';
+            }
+        });
+        
+        // Reset position when zoom changes
+        if (CONFIG.zoomScale === 1) {
+            translateX = 0;
+            translateY = 0;
+            pressImage.style.transform = 'scale(1)';
+        }
     }
 }
 
@@ -1882,9 +2487,14 @@ function togglePressZoom(action) {
             CONFIG.zoomScale = 1;
             break;
     }
-
+    
     pressImage.style.transform = `scale(${CONFIG.zoomScale})`;
     document.querySelector('.carousel-zoom-info').textContent = `${Math.round(CONFIG.zoomScale * 100)}%`;
+    
+    // Reset drag position when zoom changes
+    if (action === 'reset') {
+        pressImage.style.transform = 'scale(1)';
+    }
 }
 
 function goToSlide(index) {
@@ -1904,10 +2514,10 @@ function setupPromisesCarousel() {
     const dotsContainer = document.getElementById('carouselDots');
     
     if (!carouselGrid) return;
-
+    
     const carouselPromises = CONFIG.promises.slice(0, 6);
     let currentSlide = 0;
-
+    
     function renderCarousel() {
         const itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
         const totalSlides = Math.ceil(carouselPromises.length / itemsPerSlide);
@@ -1920,7 +2530,7 @@ function setupPromisesCarousel() {
             const statusClass = getStatusClass(promise);
             const statusIcon = getStatusIcon(promise);
             const daysRemaining = getDaysRemaining(promise.deadline);
-             
+            
             return `
                 <div class="carousel-promise-card ${statusClass}" onclick="goToPromiseSection('${promise.id}')">
                     <div class="promise-card-header">
@@ -1948,7 +2558,7 @@ function setupPromisesCarousel() {
             ).join('');
         }
     }
-
+    
     if (prevBtn) {
         prevBtn.addEventListener('click', () => {
             const itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
@@ -1957,7 +2567,7 @@ function setupPromisesCarousel() {
             renderCarousel();
         });
     }
-
+    
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
             const itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
@@ -1966,16 +2576,16 @@ function setupPromisesCarousel() {
             renderCarousel();
         });
     }
-
+    
     if (autoPlayToggle) {
         autoPlayToggle.addEventListener('click', () => {
             CONFIG.carouselAutoPlay = !CONFIG.carouselAutoPlay;
             autoPlayToggle.innerHTML = CONFIG.carouselAutoPlay ? 
-                '<i class="fas fa-pause"></i>' : 
-                '<i class="fas fa-play"></i>';
+                '<i class="fas fa-pause"></i> Pause' : 
+                '<i class="fas fa-play"></i> Lecture auto';
         });
     }
-
+    
     let carouselInterval;
     function startCarousel() {
         if (carouselInterval) clearInterval(carouselInterval);
@@ -1988,10 +2598,10 @@ function setupPromisesCarousel() {
             }
         }, 5000);
     }
-
+    
     startCarousel();
     renderCarousel();
-
+    
     // Handle window resize
     window.addEventListener('resize', () => {
         renderCarousel();
@@ -2002,6 +2612,7 @@ function goToCarouselSlide(index) {
     const carouselPromises = CONFIG.promises.slice(0, 6);
     const itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
     const totalSlides = Math.ceil(carouselPromises.length / itemsPerSlide);
+    
     if (index >= 0 && index < totalSlides) {
         const currentSlide = index;
         setupPromisesCarousel();
@@ -2013,6 +2624,7 @@ function goToPromiseSection(promiseId) {
     if (promisesSection) {
         const offset = CONFIG.scrollOffset;
         const targetPosition = promisesSection.offsetTop - offset;
+        
         window.scrollTo({
             top: targetPosition,
             behavior: 'smooth'
@@ -2036,31 +2648,42 @@ function setupKpiCarousel() {
     const kpiCarousel = document.getElementById('kpiCarousel');
     const kpiPrev = document.getElementById('kpiPrev');
     const kpiNext = document.getElementById('kpiNext');
+    const kpiAutoPlayToggle = document.getElementById('kpiAutoPlayToggle');
     
     if (!kpiCarousel) return;
-
+    
     renderKpiItem();
-
+    
     if (kpiPrev) {
         kpiPrev.addEventListener('click', () => {
             CONFIG.kpiCarouselIndex = (CONFIG.kpiCarouselIndex - 1 + KPI_ITEMS.length) % KPI_ITEMS.length;
             renderKpiItem();
         });
     }
-
+    
     if (kpiNext) {
         kpiNext.addEventListener('click', () => {
             CONFIG.kpiCarouselIndex = (CONFIG.kpiCarouselIndex + 1) % KPI_ITEMS.length;
             renderKpiItem();
         });
     }
-
+    
+    if (kpiAutoPlayToggle) {
+        kpiAutoPlayToggle.addEventListener('click', () => {
+            CONFIG.kpiAutoPlay = !CONFIG.kpiAutoPlay;
+            kpiAutoPlayToggle.innerHTML = CONFIG.kpiAutoPlay ? 
+                '<i class="fas fa-pause"></i>' : 
+                '<i class="fas fa-play"></i>';
+        });
+    }
+    
     startKpiAutoPlay();
 }
 
 function renderKpiItem() {
     const kpiCarousel = document.getElementById('kpiCarousel');
     if (!kpiCarousel) return;
+    
     const currentItem = KPI_ITEMS[CONFIG.kpiCarouselIndex];
     kpiCarousel.innerHTML = `
         <div class="kpi-item">
@@ -2082,21 +2705,82 @@ function startKpiAutoPlay() {
     }, 3000);
 }
 
+function updateKpiCarousel() {
+    renderKpiItem();
+}
+
 // ==========================================
-// NOTATION DES SERVICES PUBLICS
+// INITIALISATION DES ÉTOILES DE NOTATION DES SERVICES
+// ==========================================
+function initStarRatings() {
+    console.log('⭐ Initialisation des étoiles de notation...');
+    
+    // Fonction pour mettre à jour l'affichage des étoiles
+    function updateStars(container, rating) {
+        const stars = container.querySelectorAll('i.far, i.fas');
+        stars.forEach((star, index) => {
+            const starValue = parseInt(star.getAttribute('data-value'));
+            if (starValue <= rating) {
+                star.classList.remove('far');
+                star.classList.add('fas', 'star-active');
+            } else {
+                star.classList.remove('fas', 'star-active');
+                star.classList.add('far');
+            }
+        });
+    }
+    
+    // Initialiser chaque ensemble d'étoiles
+    document.querySelectorAll('.stars-rating').forEach(container => {
+        const criteria = container.getAttribute('data-criteria');
+        const input = container.querySelector(`input[name="${criteria}"]`);
+        
+        if (!input) return;
+        
+        const stars = container.querySelectorAll('i[data-value]');
+        
+        // Valeur par défaut
+        const defaultValue = parseInt(input.value) || 3;
+        updateStars(container, defaultValue);
+        
+        // Gestion des clics
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const value = parseInt(star.getAttribute('data-value'));
+                input.value = value;
+                updateStars(container, value);
+            });
+            
+            // Effet hover
+            star.addEventListener('mouseenter', () => {
+                const hoverValue = parseInt(star.getAttribute('data-value'));
+                updateStars(container, hoverValue);
+            });
+            
+            star.addEventListener('mouseleave', () => {
+                const currentValue = parseInt(input.value) || 3;
+                updateStars(container, currentValue);
+            });
+        });
+    });
+}
+
+// ==========================================
+// NOTATION DES SERVICES PUBLICS - CORRIGÉ
 // ==========================================
 function setupServiceRatings() {
     const form = document.getElementById('ratingForm');
+    
     if (!form) {
         console.error('❌ Formulaire de notation non trouvé');
         return;
     }
-
+    
     console.log('✅ Formulaire de notation trouvé');
-
+    
     // Initialiser les étoiles
     initStarRatings();
-
+    
     // Gestion de la soumission du formulaire
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -2142,7 +2826,7 @@ function setupServiceRatings() {
             showNotification('Notation enregistrée en local', 'info');
         }
     });
-
+    
     // Charger les notations existantes
     fetchAndDisplayServiceRatings();
 }
@@ -2150,59 +2834,6 @@ function setupServiceRatings() {
 // ==========================================
 // FONCTIONS AUXILIAIRES POUR LES NOTATIONS DES SERVICES
 // ==========================================
-function initStarRatings() {
-    console.log('⭐ Initialisation des étoiles de notation...');
-    
-    // Fonction pour mettre à jour l'affichage des étoiles
-    function updateStars(container, rating) {
-        const stars = container.querySelectorAll('i.far, i.fas');
-        stars.forEach((star, index) => {
-            const starValue = parseInt(star.getAttribute('data-value'));
-            if (starValue <= rating) {
-                star.classList.remove('far');
-                star.classList.add('fas', 'star-active');
-            } else {
-                star.classList.remove('fas', 'star-active');
-                star.classList.add('far');
-            }
-        });
-    }
-
-    // Initialiser chaque ensemble d'étoiles
-    document.querySelectorAll('.stars-rating').forEach(container => {
-        const criteria = container.getAttribute('data-criteria');
-        const input = container.querySelector(`input[name="${criteria}"]`);
-        
-        if (!input) return;
-        
-        const stars = container.querySelectorAll('i[data-value]');
-        
-        // Valeur par défaut
-        const defaultValue = parseInt(input.value) || 3;
-        updateStars(container, defaultValue);
-        
-        // Gestion des clics
-        stars.forEach(star => {
-            star.addEventListener('click', () => {
-                const value = parseInt(star.getAttribute('data-value'));
-                input.value = value;
-                updateStars(container, value);
-            });
-            
-            // Effet hover
-            star.addEventListener('mouseenter', () => {
-                const hoverValue = parseInt(star.getAttribute('data-value'));
-                updateStars(container, hoverValue);
-            });
-            
-            star.addEventListener('mouseleave', () => {
-                const currentValue = parseInt(input.value) || 3;
-                updateStars(container, currentValue);
-            });
-        });
-    });
-}
-
 function resetStars() {
     document.querySelectorAll('.stars-rating').forEach(container => {
         const criteria = container.getAttribute('data-criteria');
@@ -2225,7 +2856,7 @@ function resetStars() {
 }
 
 function saveRatingLocally(ratingData) {
-    const ratings = safeGetItem('service_ratings', []);
+    const ratings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
     ratings.push({
         id: Date.now().toString(),
         service: ratingData.service,
@@ -2236,7 +2867,7 @@ function saveRatingLocally(ratingData) {
         comment: ratingData.comment,
         created_at: new Date().toISOString()
     });
-    safeSetItem('service_ratings', ratings);
+    localStorage.setItem('service_ratings', JSON.stringify(ratings));
     console.log('💾 Notation sauvegardée localement');
 }
 
@@ -2245,6 +2876,7 @@ async function saveRatingToSupabase(ratingData) {
         console.log('⚠️ Supabase non disponible - mode local seulement');
         return false;
     }
+    
     try {
         console.log('🚀 Envoi à Supabase...');
         
@@ -2295,6 +2927,57 @@ async function getIPAddress() {
     }
 }
 
+// Fonction pour mettre à jour les statistiques du service
+async function updateServiceStats(serviceName) {
+    if (!supabaseClient) return;
+    
+    try {
+        // Calculer les nouvelles moyennes
+        const { data: ratings, error } = await supabaseClient
+            .from('service_ratings')
+            .select('accessibility, welcome, efficiency, transparency')
+            .eq('service', serviceName);
+        
+        if (error) throw error;
+        
+        if (ratings.length > 0) {
+            const total = ratings.length;
+            
+            const sums = ratings.reduce((acc, rating) => ({
+                accessibility: acc.accessibility + (rating.accessibility || 0),
+                welcome: acc.welcome + (rating.welcome || 0),
+                efficiency: acc.efficiency + (rating.efficiency || 0),
+                transparency: acc.transparency + (rating.transparency || 0)
+            }), { accessibility: 0, welcome: 0, efficiency: 0, transparency: 0 });
+            
+            const stats = {
+                service: serviceName,
+                total_ratings: total,
+                avg_accessibility: (sums.accessibility / total).toFixed(2),
+                avg_welcome: (sums.welcome / total).toFixed(2),
+                avg_efficiency: (sums.efficiency / total).toFixed(2),
+                avg_transparency: (sums.transparency / total).toFixed(2),
+                overall_rating: ((sums.accessibility + sums.welcome + sums.efficiency + sums.transparency) / (total * 4)).toFixed(2),
+                last_updated: new Date().toISOString()
+            };
+            
+            // Insérer ou mettre à jour dans service_stats
+            const { error: statsError } = await supabaseClient
+                .from('service_stats')
+                .upsert(stats, { onConflict: 'service' });
+            
+            if (statsError) {
+                console.error('❌ Erreur mise à jour stats:', statsError);
+            } else {
+                console.log('📊 Statistiques mises à jour:', stats);
+            }
+        }
+        
+    } catch (error) {
+        console.error('❌ Erreur calcul stats:', error);
+    }
+}
+
 // ==========================================
 // AFFICHAGE DES RÉSULTATS DE NOTATION DES SERVICES
 // ==========================================
@@ -2302,8 +2985,8 @@ async function fetchAndDisplayServiceRatings() {
     console.log('📊 Chargement des notations service...');
     
     // D'abord, récupérer les notations locales
-    const localRatings = safeGetItem('service_ratings', []);
-
+    const localRatings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
+    
     // Si Supabase est disponible
     if (supabaseClient) {
         try {
@@ -2329,7 +3012,7 @@ async function fetchAndDisplayServiceRatings() {
             console.warn('⚠️ Erreur chargement Supabase:', error.message);
         }
     }
-
+    
     // Mode démo ou fallback
     if (localRatings.length > 0) {
         displayRatingResults(localRatings);
@@ -2343,7 +3026,7 @@ function displayRatingResults(ratings, stats = null) {
         displayEmptyRatingResults();
         return;
     }
-    
+
     // Si on a des stats pré-calculées, les utiliser
     if (stats && stats.length > 0) {
         // Statistiques Globales
@@ -2388,7 +3071,7 @@ function displayRatingResults(ratings, stats = null) {
         const avgRating = (ratings.reduce((sum, item) => {
             const accessibility = parseInt(item.accessibility) || 0;
             const welcome = parseInt(item.welcome) || 0;
-            const efficiency = parseInt(item.efficiency) || 0; 
+            const efficiency = parseInt(item.efficiency) || 0;
             const transparency = parseInt(item.transparency) || 0;
             const avg = (accessibility + welcome + efficiency + transparency) / 4;
             return sum + avg;
@@ -2481,6 +3164,7 @@ function calculateAverageRating(item) {
 function displayEmptyRatingResults() {
     const recentRatings = document.getElementById('recentRatings');
     const topServices = document.getElementById('topServices');
+    
     if (recentRatings) {
         recentRatings.innerHTML = `
             <div class="rating-placeholder">
@@ -2488,7 +3172,7 @@ function displayEmptyRatingResults() {
             </div>
         `;
     }
-
+    
     if (topServices) {
         topServices.innerHTML = `
             <div class="rating-placeholder">
@@ -2503,6 +3187,7 @@ function displayDemoRatingResults() {
     const totalVotesEl = document.getElementById('totalVotes');
     const totalServicesEl = document.getElementById('totalServices');
     const avgRatingEl = document.getElementById('avgRating');
+    
     if (totalVotesEl) totalVotesEl.textContent = '310';
     if (totalServicesEl) totalServicesEl.textContent = '8';
     if (avgRatingEl) avgRatingEl.textContent = '4.3';
@@ -2583,8 +3268,8 @@ async function fetchAndDisplayPublicVotes() {
     console.log('📊 Chargement des votes...');
     
     // D'abord, récupérer les votes locaux
-    const localVotes = safeGetItem('promise_votes', []);
-
+    const localVotes = JSON.parse(localStorage.getItem('promise_votes') || '[]');
+    
     // Si Supabase est disponible, essayer de récupérer les votes en ligne
     if (supabaseClient) {
         try {
@@ -2602,7 +3287,7 @@ async function fetchAndDisplayPublicVotes() {
             console.warn('⚠️ Erreur chargement votes Supabase:', error.message);
         }
     }
-
+    
     // Utiliser uniquement les votes locaux
     processVotes(localVotes);
 }
@@ -2623,43 +3308,278 @@ function processVotes(votes) {
             promise.publicCount = votesMap[promise.id].count;
         }
     });
-
+    
     renderPromises(CONFIG.promises.slice(0, CONFIG.currentVisible));
     updateStats();
 }
 
 // ==========================================
-// NOTIFICATIONS
+// FONCTIONS POUR LA VISUALISATION PHOTO
 // ==========================================
-function showNotification(message, type = 'success') {
-    const container = document.getElementById('notification-container');
-    if (!container) return;
+function initPhotoViewer() {
+    console.log('📸 Initialisation du visualiseur photo');
+    // Cette fonction est appelée au chargement
+}
+
+function setupPhotoViewerControls() {
+    console.log('🎯 Configuration des contrôles du visualiseur photo');
     
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
+    // Créer le modal si nécessaire
+    if (!document.getElementById('photoViewerModal')) {
+        const modal = document.createElement('div');
+        modal.id = 'photoViewerModal';
+        modal.className = 'photo-viewer-modal';
+        modal.innerHTML = `
+            <div class="photo-viewer-content">
+                <div class="photo-viewer-header">
+                    <h3><i class="fas fa-newspaper"></i> Revue de Presse</h3>
+                    <div class="photo-viewer-controls">
+                        <button onclick="zoomIn()" title="Zoom +"><i class="fas fa-search-plus"></i></button>
+                        <button onclick="zoomReset()" title="Réinitialiser"><i class="fas fa-expand"></i></button>
+                        <button onclick="zoomOut()" title="Zoom -"><i class="fas fa-search-minus"></i></button>
+                    </div>
+                    <button id="closeViewerBtn" onclick="closePhotoViewer()">&times;</button>
+                </div>
+                <div class="photo-viewer-body">
+                    <button class="nav-btn prev" onclick="prevPhoto()">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="photo-container">
+                        <img id="photoViewerImage" src="" alt="">
+                    </div>
+                    <button class="nav-btn next" onclick="nextPhoto()">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="photo-viewer-footer">
+                    <span id="photoViewerInfo"></span>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+}
 
-    const icons = { success: 'check-circle', error: 'exclamation-circle', info: 'info-circle' };
+function openPhotoViewer(pressId) {
+    console.log('📰 Ouvrir visualiseur pour:', pressId);
+    
+    const index = CONFIG.press.findIndex(p => p.id === pressId);
+    if (index === -1) return;
+    
+    currentPhotoIndex = index;
+    currentZoom = 1;
+    
+    const modal = document.getElementById('photoViewerModal');
+    const image = document.getElementById('photoViewerImage');
+    const info = document.getElementById('photoViewerInfo');
+    
+    const paper = CONFIG.press[currentPhotoIndex];
+    
+    // Utiliser une image plus grande (600x800 au lieu de 400/533)
+    let imageUrl = paper.image;
+    if (imageUrl.includes('picsum.photos')) {
+        imageUrl = imageUrl.replace('/400/533', '/600/800');
+    }
+    
+    image.src = imageUrl;
+    image.alt = paper.title;
+    image.style.transform = `scale(${currentZoom})`;
+    image.style.cursor = currentZoom > 1 ? 'grab' : 'default';
+    
+    info.textContent = `${paper.title} - ${paper.date}`;
+    
+    modal.style.display = 'flex';
+    
+    // Désactiver le défilement de la page
+    document.body.style.overflow = 'hidden';
+    
+    // Setup drag and drop pour le zoom
+    setupImageDrag(image);
+}
 
-    notification.innerHTML = `
-        <i class="fas fa-${icons[type] || icons.success}"></i>
-        <span>${message}</span>
-    `;
+function closePhotoViewer() {
+    const modal = document.getElementById('photoViewerModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
 
-    container.appendChild(notification);
+function zoomIn() {
+    currentZoom = Math.min(currentZoom + 0.25, 3);
+    updateZoom();
+}
 
+function zoomOut() {
+    currentZoom = Math.max(currentZoom - 0.25, 1);
+    updateZoom();
+}
+
+function zoomReset() {
+    currentZoom = 1;
+    updateZoom();
+}
+
+function updateZoom() {
+    const image = document.getElementById('photoViewerImage');
+    if (image) {
+        image.style.transform = `scale(${currentZoom})`;
+        image.style.cursor = currentZoom > 1 ? 'grab' : 'default';
+    }
+}
+
+function prevPhoto() {
+    currentPhotoIndex = (currentPhotoIndex - 1 + CONFIG.press.length) % CONFIG.press.length;
+    currentZoom = 1;
+    updateViewerPhoto();
+}
+
+function nextPhoto() {
+    currentPhotoIndex = (currentPhotoIndex + 1) % CONFIG.press.length;
+    currentZoom = 1;
+    updateViewerPhoto();
+}
+
+function updateViewerPhoto() {
+    const image = document.getElementById('photoViewerImage');
+    const info = document.getElementById('photoViewerInfo');
+    
+    const paper = CONFIG.press[currentPhotoIndex];
+    
+    // Utiliser une image plus grande
+    let imageUrl = paper.image;
+    if (imageUrl.includes('picsum.photos')) {
+        imageUrl = imageUrl.replace('/400/533', '/600/800');
+    }
+    
+    image.src = imageUrl;
+    image.alt = paper.title;
+    image.style.transform = `scale(${currentZoom})`;
+    
+    info.textContent = `${paper.title} - ${paper.date}`;
+}
+
+function setupImageDrag(image) {
+    let isDragging = false;
+    let startX, startY, translateX = 0, translateY = 0;
+    
+    image.addEventListener('mousedown', (e) => {
+        if (currentZoom > 1) {
+            isDragging = true;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+            image.style.cursor = 'grabbing';
+        }
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging || currentZoom <= 1) return;
+        e.preventDefault();
+        
+        translateX = e.clientX - startX;
+        translateY = e.clientY - startY;
+        
+        // Limiter le déplacement
+        const maxX = (image.clientWidth * currentZoom - image.parentElement.clientWidth) / 2;
+        const maxY = (image.clientHeight * currentZoom - image.parentElement.clientHeight) / 2;
+        
+        translateX = Math.max(-maxX, Math.min(maxX, translateX));
+        translateY = Math.max(-maxY, Math.min(maxY, translateY));
+        
+        image.style.transform = `scale(${currentZoom}) translate(${translateX}px, ${translateY}px)`;
+    });
+    
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+        if (currentZoom > 1) {
+            image.style.cursor = 'grab';
+        }
+    });
+}
+
+// ==========================================
+// FORCER LA VISIBILITÉ DES BOUTONS
+// ==========================================
+function forceButtonVisibility() {
+    console.log('🎨 Forçage de la visibilité des boutons...');
+    
+    // Attendre que le DOM soit complètement chargé
     setTimeout(() => {
-        notification.style.animation = 'slideOutRight 0.3s ease forwards';
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
+        const shareButtons = document.querySelectorAll('.promise-actions .social-btn');
+        const starButtons = document.querySelectorAll('.promise-actions .btn-stars');
+        
+        console.log(`🎯 ${shareButtons.length} boutons de partage trouvés`);
+        console.log(`🎯 ${starButtons.length} boutons étoiles trouvés`);
+        
+        // Appliquer des styles inline (priorité maximale)
+        shareButtons.forEach(btn => {
+            btn.style.cssText = `
+                background: #00695f !important;
+                color: white !important;
+                border: 2px solid white !important;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 40px !important;
+                height: 40px !important;
+                border-radius: 50% !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            `;
+            
+            // Classes spécifiques
+            if (btn.classList.contains('fb')) {
+                btn.style.background = '#3b5998 !important';
+            }
+            if (btn.classList.contains('tw')) {
+                btn.style.background = '#1da1f2 !important';
+            }
+            if (btn.classList.contains('wa')) {
+                btn.style.background = '#25d366 !important';
+            }
+        });
+        
+        starButtons.forEach(btn => {
+            btn.style.cssText = `
+                background: linear-gradient(135deg, #f57c00, #ff6f3c) !important;
+                color: white !important;
+                border: 2px solid #f57c00 !important;
+                font-weight: bold !important;
+                padding: 8px 16px !important;
+                border-radius: 20px !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 8px !important;
+                box-shadow: 0 2px 8px rgba(245,124,0,0.4) !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            `;
+        });
+        
+        // Améliorer toute la section actions
+        const actionSections = document.querySelectorAll('.promise-actions');
+        actionSections.forEach(section => {
+            section.style.cssText = `
+                background: rgba(0,105,95,0.05) !important;
+                border: 2px solid #e0e0e0 !important;
+                border-radius: 8px !important;
+                padding: 12px !important;
+                margin-top: 16px !important;
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            `;
+        });
+        
+    }, 500); // Attendre un peu que tout soit chargé
 }
 
 // ==========================================
-// FONCTIONS MANQUANTES
+// ACTIONS
 // ==========================================
-function getDefaultPressData() {
-    return DEFAULT_PRESS;
-}
-
 function toggleUpdates(promiseId) {
     const updatesList = document.getElementById(`updates-${promiseId}`);
     if (updatesList) {
@@ -2670,9 +3590,10 @@ function toggleUpdates(promiseId) {
 function sharePromise(promiseId) {
     const promise = CONFIG.promises.find(p => p.id === promiseId);
     if (!promise) return;
+    
     const text = `📊 "${promise.engagement.substring(0, 100)}..." - Suivi des engagements du Projet Sénégal`;
     const url = window.location.href;
-
+    
     if (navigator.share) {
         navigator.share({ title: 'Engagement du Projet Sénégal', text: text, url: url })
             .catch(err => console.log('Erreur partage:', err));
@@ -2685,11 +3606,12 @@ function sharePromise(promiseId) {
 function shareToPlatform(promiseId, platform) {
     const promise = CONFIG.promises.find(p => p.id === promiseId);
     if (!promise) return;
+    
     const text = `📊 "${promise.engagement.substring(0, 100)}..." - Suivi des engagements du Projet Sénégal`;
     const url = window.location.href;
-
+    
     let shareUrl = '';
-
+    
     switch(platform) {
         case 'facebook':
             shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`;
@@ -2703,45 +3625,328 @@ function shareToPlatform(promiseId, platform) {
         default:
             shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
     }
-
+    
     window.open(shareUrl, '_blank', 'width=600,height=400');
 }
 
 // ==========================================
-// INITIALISATION
+// NOTIFICATIONS
 // ==========================================
-document.addEventListener('DOMContentLoaded', async () => {
-    console.log('🚀 Initialisation...');
+function showNotification(message, type = 'success') {
+    const container = document.getElementById('notification-container');
+    if (!container) return;
     
-    // 1. Initialiser les composants UI
-    initNavigation();
-    initScrollEffects();
-    initFilters();
-    initDateDisplay();
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    
+    const icons = { success: 'check-circle', error: 'exclamation-circle', info: 'info-circle' };
+    
+    notification.innerHTML = `
+        <i class="fas fa-${icons[type] || icons.success}"></i>
+        <span>${message}</span>
+    `;
+    
+    container.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease forwards';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
 
-    // 2. Charger les données
-    await loadData();
+// ==========================================
+// EXPORTS GLOBAUX
+// ==========================================
+window.toggleUpdates = toggleUpdates;
+window.showRatingModal = showRatingModal;
+window.closeRatingModal = closeRatingModal;
+window.submitRating = submitRating;
+window.sharePromise = sharePromise;
+window.resetFilters = resetFilters;
+window.goToSlide = goToSlide;
+window.openPhotoViewer = openPhotoViewer;
+window.closePhotoViewer = closePhotoViewer;
+window.zoomIn = zoomIn;
+window.zoomOut = zoomOut;
+window.zoomReset = zoomReset;
+window.prevPhoto = prevPhoto;
+window.nextPhoto = nextPhoto;
+window.togglePressZoom = togglePressZoom;
+window.goToCarouselSlide = goToCarouselSlide;
+window.shareToPlatform = shareToPlatform;
 
-    // 3. IMPORTANT: Initialiser filteredPromises après chargement
-    CONFIG.filteredPromises = [...CONFIG.promises];
-    CONFIG.currentVisible = Math.min(CONFIG.visibleCount, CONFIG.promises.length);
+// ==========================================
+// FONCTIONS MANQUANTES (pour éviter les erreurs)
+// ==========================================
 
-    // 4. Rendre les données
-    renderAll();
-    if (typeof renderNews === 'function') {
-        renderNews(CONFIG.news);
+function getDefaultPressData() {
+    return [
+        { id: '1', title: 'Le Soleil', date: '28/01/2026', image: 'https://picsum.photos/seed/soleil/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6d/Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg/200px-Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg.png' },
+        { id: '2', title: 'Sud Quotidien', date: '28/01/2026', image: 'https://picsum.photos/seed/sud/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/5/5b/Sud_Quotidien_logo.svg/200px-Sud_Quotidien_logo.svg.png' },
+        { id: '3', title: 'Libération', date: '28/01/2026', image: 'liberation.jpg', logo: 'iconeliberation.jpg' },
+        { id: '4', title: 'L\'Observateur', date: '28/01/2026', image: 'observateur.jpg', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/L%27Observateur_logo.svg/200px-L%27Observateur_logo.svg.png' },
+        { id: '5', title: 'Le Quotidien', date: '28/01/2026', image: 'https://picsum.photos/seed/quotidien/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/3/3c/Le_Quotidien_logo.svg/200px-Le_Quotidien_logo.svg.png' },
+        { id: '6', title: 'WalFadjri', date: '28/01/2026', image: 'https://picsum.photos/seed/walfadjri/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/7/7c/Walf_fadjri_logo.svg/200px-Walf_fadjri_logo.svg.png' }
+    ];
+}
+
+// ==========================================
+// FONCTIONS DE SECOURS POUR SUPABASE
+// ==========================================
+
+// Fonction pour insérer avec retry et fallback
+async function safeSupabaseInsert(table, data, retryCount = 2) {
+    if (!supabaseClient) {
+        console.log(`⚠️ Supabase non disponible - stockage local pour ${table}`);
+        return { success: false, data: null, error: 'Supabase non disponible' };
     }
-    if (typeof renderNewspapers === 'function') {
-        renderNewspapers();
+    
+    for (let i = 0; i <= retryCount; i++) {
+        try {
+            console.log(`🔄 Tentative ${i + 1} d'insertion dans ${table}...`);
+            
+            const { data: result, error } = await supabaseClient
+                .from(table)
+                .insert([data])
+                .select();
+            
+            if (!error) {
+                console.log(`✅ Insertion réussie dans ${table}:`, result);
+                return { success: true, data: result, error: null };
+            }
+            
+            // Si erreur 401 (RLS), essayez avec une méthode différente
+            if (error.code === 'PGRST301' || error.code === '42501' || error.message.includes('row-level security')) {
+                console.warn(`⚠️ Erreur RLS pour ${table}:`, error.message);
+                
+                // Mode fallback : stockage local
+                const localStorageKey = `supabase_fallback_${table}`;
+                const fallbackData = JSON.parse(localStorage.getItem(localStorageKey) || '[]');
+                fallbackData.push({
+                    ...data,
+                    id: Date.now().toString(),
+                    _synced: false,
+                    _timestamp: new Date().toISOString()
+                });
+                localStorage.setItem(localStorageKey, JSON.stringify(fallbackData));
+                
+                return { 
+                    success: false, 
+                    data: null, 
+                    error: error.message,
+                    fallback: true 
+                };
+            }
+            
+            // Autre erreur
+            console.error(`❌ Erreur insertion ${table}:`, error);
+            
+        } catch (error) {
+            console.error(`❌ Exception insertion ${table}:`, error);
+        }
+        
+        // Attente avant retry
+        if (i < retryCount) {
+            await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+        }
     }
+    
+    return { success: false, data: null, error: 'Toutes les tentatives ont échoué' };
+}
 
-    // 5. Configurer les composants
-    setupPressCarousel();
-    setupServiceRatings();
-    setupDailyPromise();
-    setupPromisesCarousel();
-    setupKpiCarousel();
+// Version corrigée de saveRatingToSupabase
+async function saveRatingToSupabase(ratingData) {
+    if (!supabaseClient) {
+        console.log('⚠️ Supabase non disponible - mode local seulement');
+        return false;
+    }
+    
+    try {
+        console.log('🚀 Envoi de notation à Supabase...');
+        
+        // Structure des données
+        const supabaseData = {
+            service: ratingData.service,
+            accessibility: ratingData.accessibility,
+            welcome: ratingData.welcome,
+            efficiency: ratingData.efficiency,
+            transparency: ratingData.transparency,
+            comment: ratingData.comment || null,
+            user_ip: await getIPAddress(),
+            user_agent: navigator.userAgent,
+            created_at: new Date().toISOString()
+        };
+        
+        console.log('📤 Données à envoyer:', supabaseData);
+        
+        // Utiliser la fonction safe insert
+        const result = await safeSupabaseInsert('service_ratings', supabaseData);
+        
+        if (result.fallback) {
+            showNotification('Notation enregistrée localement (problème serveur)', 'info');
+            return false;
+        }
+        
+        if (!result.success) {
+            console.error('❌ Échec insertion Supabase');
+            showNotification('Mode démo : Notation enregistrée localement', 'info');
+            return false;
+        }
+        
+        console.log('✅ Notation envoyée avec succès');
+        showNotification('Merci pour votre notation !', 'success');
+        
+        // Mettre à jour les stats (en arrière-plan)
+        setTimeout(() => updateServiceStats(ratingData.service), 1000);
+        
+        return true;
+        
+    } catch (error) {
+        console.error('❌ Erreur envoi Supabase:', error);
+        showNotification('Mode démo : Notation enregistrée localement', 'info');
+        return false;
+    }
+}
 
-    // 6. Initialiser les étoiles
-    initStarRatings();
+// Version corrigée de saveVoteToSupabase
+async function saveVoteToSupabase(promiseId, rating, comment = '') {
+    if (!supabaseClient) {
+        showNotification('Mode démo : Vote enregistré localement', 'info');
+        const votes = JSON.parse(localStorage.getItem('promise_votes') || '[]');
+        votes.push({
+            id: Date.now().toString(),
+            promise_id: promiseId,
+            rating: rating,
+            comment: comment,
+            created_at: new Date().toISOString()
+        });
+        localStorage.setItem('promise_votes', JSON.stringify(votes));
+        return;
+    }
+    
+    try {
+        const voteData = { 
+            promise_id: promiseId, 
+            rating: rating,
+            comment: comment,
+            created_at: new Date().toISOString()
+        };
+        
+        console.log('Envoi du vote:', voteData);
+        
+        const result = await safeSupabaseInsert('votes', voteData);
+        
+        if (result.fallback) {
+            showNotification('Vote enregistré localement (problème serveur)', 'info');
+        } else if (result.success) {
+            showNotification('Merci pour votre vote !', 'success');
+        } else {
+            showNotification('Vote enregistré localement (mode démo)', 'info');
+        }
+        
+        // Recharger les votes après un délai
+        setTimeout(() => fetchAndDisplayPublicVotes(), 500);
+        
+    } catch (error) {
+        console.error('❌ Erreur sauvegarde vote:', error);
+        showNotification('Mode démo : Vote enregistré localement', 'info');
+    }
+}
+
+// Fonction pour synchroniser les données locales
+async function syncLocalDataWithSupabase() {
+    console.log('🔄 Synchronisation des données locales...');
+    
+    // Synchroniser service_ratings
+    const serviceRatingsLocal = JSON.parse(localStorage.getItem('supabase_fallback_service_ratings') || '[]');
+    if (serviceRatingsLocal.length > 0) {
+        console.log(`📊 ${serviceRatingsLocal.length} notations locales à synchroniser`);
+        
+        for (const rating of serviceRatingsLocal.filter(r => !r._synced)) {
+            try {
+                const { success } = await safeSupabaseInsert('service_ratings', {
+                    service: rating.service,
+                    accessibility: rating.accessibility,
+                    welcome: rating.welcome,
+                    efficiency: rating.efficiency,
+                    transparency: rating.transparency,
+                    comment: rating.comment,
+                    user_ip: rating.user_ip || 'unknown',
+                    user_agent: rating.user_agent || 'local-sync',
+                    created_at: rating.created_at || rating._timestamp
+                });
+                
+                if (success) {
+                    rating._synced = true;
+                }
+            } catch (error) {
+                console.error('❌ Erreur synchronisation:', error);
+            }
+        }
+        
+        // Mettre à jour le stockage local
+        localStorage.setItem('supabase_fallback_service_ratings', JSON.stringify(serviceRatingsLocal));
+    }
+    
+    // Synchroniser votes
+    const votesLocal = JSON.parse(localStorage.getItem('promise_votes') || '[]');
+    if (votesLocal.length > 0) {
+        console.log(`📊 ${votesLocal.length} votes locaux à synchroniser`);
+        
+        // Logique similaire pour les votes...
+    }
+}
+// ==========================================
+// DEBUG MOBILE - AJOUTER DANS app.js
+// ==========================================
+function debugMobileMenu() {
+    console.log('📱 DEBUG MOBILE MENU');
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const navMenu = document.getElementById('navMenu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    console.log('Bouton mobile:', mobileBtn ? '✅ trouvé' : '❌ non trouvé');
+    console.log('Menu navigation:', navMenu ? '✅ trouvé' : '❌ non trouvé');
+    console.log('Liens de navigation:', navLinks.length, 'trouvés');
+    
+    if (mobileBtn && navMenu) {
+        console.log('État initial du menu:', navMenu.classList.contains('show') ? 'ouvert' : 'fermé');
+        
+        // Vérifier les écouteurs d'événements
+        const hasClickHandler = mobileBtn.onclick || mobileBtn._hasClickHandler;
+        console.log('Écouteur bouton mobile:', hasClickHandler ? '✅ actif' : '❌ absent');
+    }
+}
+
+// Appeler le debug au chargement
+document.addEventListener('DOMContentLoaded', () => {
+    // Votre code existant...
+    debugMobileMenu();
+    
+    // Vérifier si c'est mobile
+    if (window.innerWidth <= 768) {
+        console.log('📱 Mode mobile détecté - largeur:', window.innerWidth);
+    }
 });
+
+// Debug lors du clic sur le menu mobile
+document.addEventListener('click', (e) => {
+    if (e.target.closest('#mobileMenuBtn')) {
+        console.log('🍔 Menu mobile cliqué');
+        const navMenu = document.getElementById('navMenu');
+        if (navMenu) {
+            console.log('État après clic:', navMenu.classList.contains('show') ? 'ouvert' : 'fermé');
+        }
+    }
+    
+    // Debug clic sur les liens
+    if (e.target.closest('.nav-link')) {
+        console.log('🔗 Lien de navigation cliqué:', e.target.getAttribute('href'));
+        e.preventDefault();
+        // Votre logique de navigation ici
+    }
+});
+function getStatusText(promise) {
+    if (promise.isLate) return 'En retard';
+    return promise.status;
+}

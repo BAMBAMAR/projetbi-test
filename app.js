@@ -329,36 +329,30 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }, 500);
 });
-// NAVIGATION - VERSION CORRIGÉE POUR HREF
+// NAVIGATION - VERSION MODERNE
 // ==========================================
 function initNavigation() {
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const navMenu = document.getElementById('navMenu');
-    const navLinks = document.querySelectorAll('.nav-link');
+    // Nouveau menu moderne
+    const modernHamburger = document.getElementById('modernHamburger');
+    const modernMenu = document.getElementById('modernMenu');
+    const modernLinks = document.querySelectorAll('.modern-link');
 
-    // 1. GESTION SIMPLIFIÉE DU MENU MOBILE
-    if (mobileMenuBtn && navMenu) {
-        mobileMenuBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Empêche la propagation
-            navMenu.classList.toggle('show');
-            mobileMenuBtn.classList.toggle('active');
-            
-            // Ajouter un overlay pour fermer en cliquant à côté
-            if (navMenu.classList.contains('show')) {
-                createMobileOverlay();
-            } else {
-                removeMobileOverlay();
-            }
+    // 1. GESTION DU MENU HAMBURGER
+    if (modernHamburger && modernMenu) {
+        modernHamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            modernHamburger.classList.toggle('active');
+            modernMenu.classList.toggle('active');
         });
     }
 
     // 2. NAVIGATION FONCTIONNELLE
-    navLinks.forEach(link => {
+    modernLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-            e.preventDefault();
-            
             const href = link.getAttribute('href');
             if (!href || !href.startsWith('#')) return;
+            
+            e.preventDefault();
             
             const targetId = href.substring(1);
             const target = document.getElementById(targetId);
@@ -373,44 +367,25 @@ function initNavigation() {
                     behavior: 'smooth'
                 });
 
-                // Mettre à jour l'état actif
-                navLinks.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-
                 // Fermer le menu mobile si ouvert
-                if (navMenu && navMenu.classList.contains('show')) {
-                    navMenu.classList.remove('show');
-                    mobileMenuBtn.classList.remove('active');
-                    removeMobileOverlay();
+                if (modernMenu && modernMenu.classList.contains('active')) {
+                    modernMenu.classList.remove('active');
+                    modernHamburger.classList.remove('active');
                 }
             }
         });
     });
 
-    // 3. FONCTIONS POUR L'OVERLAY MOBILE
-    function createMobileOverlay() {
-        const overlay = document.createElement('div');
-        overlay.className = 'mobile-overlay';
-        overlay.id = 'mobileOverlay';
-        document.body.appendChild(overlay);
-        
-        overlay.addEventListener('click', () => {
-            navMenu.classList.remove('show');
-            mobileMenuBtn.classList.remove('active');
-            removeMobileOverlay();
-        });
-        
-        // Empêcher le défilement
-        document.body.style.overflow = 'hidden';
-    }
-
-    function removeMobileOverlay() {
-        const overlay = document.getElementById('mobileOverlay');
-        if (overlay) {
-            overlay.remove();
+    // 3. FERMER LE MENU EN CLIQUANT EN DEHORS
+    document.addEventListener('click', (e) => {
+        if (modernMenu && modernHamburger) {
+            const modernNav = document.getElementById('modernNav');
+            if (!modernNav.contains(e.target) && modernMenu.classList.contains('active')) {
+                modernMenu.classList.remove('active');
+                modernHamburger.classList.remove('active');
+            }
         }
-        document.body.style.overflow = '';
-    }
+    });
 
     // 4. GESTION DU SCROLL POUR ACTIVER LES LIENS
     window.addEventListener('scroll', debounce(() => {
@@ -426,7 +401,7 @@ function initNavigation() {
             }
         });
 
-        navLinks.forEach(link => {
+        modernLinks.forEach(link => {
             link.classList.remove('active');
             const href = link.getAttribute('href');
             if (href && href === `#${current}`) {

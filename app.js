@@ -6,13 +6,12 @@ const SUPABASE_KEY = 'sb_publishable_joJuW7-vMiQG302_2Mvj5A_sVaD8Wap';
 let supabaseClient = null;
 let DEMO_MODE = false;
 
-// Initialisation Supabase
 try {
     if (typeof supabase !== 'undefined' && supabase.createClient) {
         supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         console.log('✅ Supabase initialisé avec succès');
     } else {
-        console.warn('⚠️ SDK Supabase non disponible - fonctionnalités limitées');
+        console.warn('⚠️ SDK Supabase non disponible');
     }
 } catch (error) {
     console.error('❌ Erreur initialisation Supabase:', error);
@@ -43,11 +42,9 @@ const CONFIG = {
     zoomScale: 1,
     currentRatingPromiseId: null,
     currentRatingValue: 0,
-    filteredPromises: [],
-    currentPhotoIndex: 0
+    filteredPromises: []
 };
 
-// KPIs pour le carousel
 const KPI_ITEMS = [
     { label: 'Total Engagements', value: '0', icon: '📊' },
     { label: '✅ Réalisés', value: '0', icon: '✅' },
@@ -76,7 +73,6 @@ async function checkSupabaseConnection() {
         if (error) {
             DEMO_MODE = true;
             console.log('🎭 MODE DÉMO - Erreur Supabase:', error.message);
-            showNotification('Mode démo activé - données locales', 'info');
         } else {
             DEMO_MODE = false;
             console.log('✅ Mode Supabase activé');
@@ -115,11 +111,11 @@ function parseDelayToDays(delayText) {
     const firstYearsMatch = lower.match(/(\d+)\s*premières?\s*années?/i);
     if (firstYearsMatch) totalDays += parseInt(firstYearsMatch[1], 10) * 365;
 
-    if (lower.includes('2 premières années') || lower.includes('2 premières annees')) totalDays = 730;
-    if (lower.includes('1ère année') || lower.includes('1ere annee')) totalDays = 365;
+    if (lower.includes('2 premières années')) totalDays = 730;
+    if (lower.includes('1ère année')) totalDays = 365;
 
     const ansSimpleMatch = lower.match(/(\d+)\s*ans$/i);
-    if (ansSimpleMatch && !lower.includes('premières') && !lower.includes('premiere')) {
+    if (ansSimpleMatch && !lower.includes('premières')) {
         totalDays = parseInt(ansSimpleMatch[1], 10) * 365;
     }
 
@@ -422,7 +418,7 @@ function generateTestPromises() {
             mises_a_jour: [
                 {
                     date: '26/08/2025',
-                    text: 'Au Sénégal, la protection des lanceurs d\'alerte est désormais régie par la Loi n° 2025-14, adoptée par l\'Assemblée nationale le 26 août 2025 et promulguée en septembre 2025[...]'
+                    text: 'Au Sénégal, la protection des lanceurs d\'alerte est désormais régie par la Loi n° 2025-14...'
                 }
             ]
         },
@@ -517,17 +513,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupKpiCarousel();
     initStarRatings();
     
-    setTimeout(() => {
-        if (typeof setupPhotoViewerControls === 'function') {
-            setupPhotoViewerControls();
-        }
-    }, 500);
-    
     setTimeout(checkSupabaseConnection, 1000);
 });
 
 // ==========================================
-// NAVIGATION
+// NAVIGATION - VERSION MODERNE
 // ==========================================
 function initNavigation() {
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');

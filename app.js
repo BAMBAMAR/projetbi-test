@@ -2374,39 +2374,72 @@ async function checkAvailableNewspapers() {
 // ==========================================
 
 async function setupPressCarousel() {
-    const prevBtn = document.getElementById('pressPrev');
-    const nextBtn = document.getElementById('pressNext');
-    const pressTrack = document.getElementById('pressTrack');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const autoPlayToggle = document.getElementById('autoPlayToggle');
+    const indicators = document.getElementById('carouselIndicators');
     
-    if (!prevBtn || !nextBtn || !pressTrack) {
-        console.warn('Éléments carousel de presse non trouvés - fonctionnalité désactivée');
+    if (!prevBtn || !nextBtn || !indicators) {
+        console.error('Éléments carousel non trouvés');
         return;
     }
 
-    // Rendre le carousel de presse
-    renderPressCarousel();
+    // Vérifier les images disponibles
+    const availablePress = await checkAvailableNewspapers();
+    
+    if (availablePress.length === 0) {
+        console.error('Aucun journal disponible');
+        document.getElementById('pressCarousel').innerHTML = `
+            <div class="loading-state">
+                <p><i class="fas fa-newspaper"></i> Aucun journal disponible pour le moment</p>
+            </div>
+        `;
+        return;
+    }
 
-    // Navigation
+    // Mettre à jour CONFIG.press avec les journaux disponibles
+    CONFIG.press = availablePress;
+    CONFIG.currentIndex = 0;
+    CONFIG.zoomScale = 1;
+
+    // Configuration des boutons
     prevBtn.addEventListener('click', () => {
         CONFIG.currentIndex = (CONFIG.currentIndex - 1 + CONFIG.press.length) % CONFIG.press.length;
+        CONFIG.zoomScale = 1;
         renderPressCarousel();
     });
 
     nextBtn.addEventListener('click', () => {
         CONFIG.currentIndex = (CONFIG.currentIndex + 1) % CONFIG.press.length;
+        CONFIG.zoomScale = 1;
         renderPressCarousel();
     });
 
-    // Auto-play simple
-    setInterval(() => {
-        CONFIG.currentIndex = (CONFIG.currentIndex + 1) % CONFIG.press.length;
-        renderPressCarousel();
-    }, 5000);
+    if (autoPlayToggle) {
+        autoPlayToggle.addEventListener('click', () => {
+            CONFIG.carouselAutoPlay = !CONFIG.carouselAutoPlay;
+            autoPlayToggle.innerHTML = CONFIG.carouselAutoPlay ? 
+                '<i class="fas fa-pause"></i> Pause' : 
+                '<i class="fas fa-play"></i> Lecture auto';
+            
+            if (CONFIG.carouselAutoPlay) startCarouselAutoPlay();
+            else stopCarouselAutoPlay();
+        });
+    }
+
+    renderPressCarousel();
+    startCarouselAutoPlay();
 }
 
 function startCarouselAutoPlay() {
-    // Fonction conservée pour compatibilité
     stopCarouselAutoPlay();
+    CONFIG.carouselInterval = setInterval(() => {
+        if (CONFIG.carouselAutoPlay) {
+            CONFIG.currentIndex = (CONFIG.currentIndex + 1) % CONFIG.press.length;
+            CONFIG.zoomScale = 1; // Reset zoom when changing slide
+            renderPressCarousel();
+        }
+    }, 10000);
 }
 
 function stopCarouselAutoPlay() {
@@ -2417,36 +2450,101 @@ function stopCarouselAutoPlay() {
 }
 
 function renderPressCarousel() {
-    const pressTrack = document.getElementById('pressTrack');
-    if (!pressTrack) {
-        console.warn('pressTrack non trouvé');
-        return;
+    const carousel = document.getElementById('pressCarousel');
+    const indicators = document.getElementById('carouselIndicators');
+    if (!carousel || !indicators) return;
+
+    const currentPaper = CONFIG.press[CONFIG.currentIndex];
+
+    // Utiliser une image plus grande pour le carousel
+    let imageUrl = currentPaper.image;
+    if (imageUrl.includes('picsum.photos')) {
+        imageUrl = imageUrl.replace('/400/533', '/700/933');
     }
 
-    if (!CONFIG.press || CONFIG.press.length === 0) {
-        pressTrack.innerHTML = '<div class="loading-state"><p>Aucun journal disponible</p></div>';
-        return;
-    }
-
-    pressTrack.innerHTML = CONFIG.press.map((paper, index) => `
-        <div class="press-item ${index === CONFIG.currentIndex ? 'active' : ''}" 
-             onclick="openPhotoViewer('${paper.image}', ${index})" 
-             style="display: ${index === CONFIG.currentIndex ? 'block' : 'none'}">
-            <div class="press-item-inner">
-                <img src="${paper.image}" 
-                     alt="${paper.title}"
-                     onerror="this.src='https://via.placeholder.com/400x533?text=${encodeURIComponent(paper.title)}'">
-                <div class="press-overlay">
-                    <img src="${paper.logo}" alt="${paper.title} logo" class="press-logo" 
-                         onerror="this.style.display='none'">
-                    <div class="press-info">
-                        <h4>${paper.title}</h4>
-                        <p><i class="fas fa-calendar"></i> ${paper.date}</p>
-                    </div>
-                </div>
+    carousel.innerHTML = `
+        <div class="carousel-item active">
+            <div class="carousel-image-container">
+                <img src="${imageUrl}" alt="${currentPaper.title}" 
+                     onerror="this.onerror=null; this.src='https://picsum.photos/700/933?random=${CONFIG.currentIndex}'"
+                     id="pressImage"
+                     style="transform: scale(${CONFIG.zoomScale})">
             </div>
+            <div class="carousel-overlay">
+                
+                    </div>
+            </div>
+            
         </div>
-    `).join('');
+    `;
+
+    const indicatorBtns = indicators.querySelectorAll('.indicator');
+    indicatorBtns.forEach((btn, index) => {
+        btn.classList.toggle('active', index === CONFIG.currentIndex);
+    });
+    
+    // Setup drag and drop
+    const pressImage = document.getElementById('pressImage');
+    const imageContainer = carousel.querySelector('.carousel-image-container');
+    
+    if (pressImage && imageContainer) {
+        let isDragging = false;
+        let startX, startY, translateX = 0, translateY = 0;
+        
+        imageContainer.addEventListener('mousedown', (e) => {
+            if (CONFIG.zoomScale > 1) {
+                isDragging = true;
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+                pressImage.style.cursor = 'grabbing';
+            }
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging || CONFIG.zoomScale <= 1) return;
+            e.preventDefault();
+            
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            
+            // Limiter le déplacement pour éviter de sortir de l'image
+            const maxX = (pressImage.clientWidth * CONFIG.zoomScale - imageContainer.clientWidth) / 2;
+            const maxY = (pressImage.clientHeight * CONFIG.zoomScale - imageContainer.clientHeight) / 2;
+            
+            translateX = Math.max(-maxX, Math.min(maxX, translateX));
+            translateY = Math.max(-maxY, Math.min(maxY, translateY));
+            
+            pressImage.style.transform = `scale(${CONFIG.zoomScale}) translate(${translateX}px, ${translateY}px)`;
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            if (CONFIG.zoomScale > 1) {
+                pressImage.style.cursor = 'grab';
+            } else {
+                pressImage.style.cursor = 'default';
+            }
+        });
+        
+        pressImage.addEventListener('mouseenter', () => {
+            if (CONFIG.zoomScale > 1) {
+                pressImage.style.cursor = 'grab';
+            }
+        });
+        
+        pressImage.addEventListener('mouseleave', () => {
+            if (!isDragging) {
+                pressImage.style.cursor = 'default';
+            }
+        });
+        
+        // Reset position when zoom changes
+        if (CONFIG.zoomScale === 1) {
+            translateX = 0;
+            translateY = 0;
+            pressImage.style.transform = 'scale(1)';
+        }
+    }
 }
 
 function togglePressZoom(action) {

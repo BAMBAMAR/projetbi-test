@@ -128,7 +128,6 @@ body {
     justify-content: space-between;
 }
 
-/* Logo */
 .modern-logo {
     display: flex;
     align-items: center;
@@ -156,7 +155,6 @@ body {
     font-family: 'Manrope', sans-serif;
 }
 
-/* Menu Desktop */
 .modern-menu {
     display: flex;
     align-items: center;
@@ -196,7 +194,6 @@ body {
     transform: translateX(-50%) scaleX(1);
 }
 
-/* Bouton CTA */
 .modern-link-cta {
     background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
     color: white !important;
@@ -216,7 +213,6 @@ body {
     box-shadow: 0 6px 20px rgba(42, 109, 93, 0.4);
 }
 
-/* Hamburger */
 .modern-hamburger {
     display: none;
     flex-direction: column;
@@ -236,7 +232,6 @@ body {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Animation Hamburger */
 .modern-hamburger.active span:nth-child(1) {
     transform: rotate(45deg) translate(7px, 7px);
 }
@@ -250,9 +245,6 @@ body {
     transform: rotate(-45deg) translate(7px, -7px);
 }
 
-/* ===== RESPONSIVE MODERNE ===== */
-
-/* Tablettes */
 @media (max-width: 1024px) {
     .modern-link {
         font-size: 0.9rem;
@@ -264,7 +256,6 @@ body {
     }
 }
 
-/* Mobile */
 @media (max-width: 768px) {
     .modern-nav {
         height: 65px;

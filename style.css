@@ -6,6 +6,7 @@
     --primary-light: #3e9e90;
     --primary-dark: #004d40;
     --secondary: #37474f;
+    --accent-color: #ffdd00;
     --accent: #ff6f3c;
     --teal: #00897b;
     --purple: #6a1b9a;
@@ -88,13 +89,17 @@ body {
     width: 100%;
 }
 
+.section {
+    margin-bottom: var(--spacing-2xl);
+}
+
 /* ===== PROGRESS INDICATOR ===== */
 .progress-indicator {
     position: fixed;
     top: 0;
     left: 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    background: linear-gradient(90deg, var(--primary), var(--accent));
     z-index: 10000;
     transition: width 0.1s ease;
 }
@@ -122,6 +127,11 @@ body {
     align-items: center;
     height: 100%;
     position: relative;
+    gap: 0;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .nav-logo {
@@ -129,6 +139,7 @@ body {
     align-items: center;
     gap: 12px;
     text-decoration: none;
+    z-index: 2001;
     flex-shrink: 0;
 }
 
@@ -143,12 +154,17 @@ body {
     color: var(--primary-color);
     font-size: 1.1rem;
     font-family: 'Manrope', sans-serif;
+    letter-spacing: -0.02em;
 }
 
 .logo-tag {
     font-size: 0.65rem;
+    letter-spacing: 1px;
     color: #666;
     font-weight: 700;
+    font-family: 'Manrope', sans-serif;
+    text-transform: uppercase;
+    margin-top: 2px;
 }
 
 .nav-logo img {
@@ -158,7 +174,6 @@ body {
     object-fit: contain;
 }
 
-/* ===== MENU NAVIGATION ===== */
 .nav-menu {
     display: flex;
     gap: 12px;
@@ -167,6 +182,7 @@ body {
     flex-wrap: nowrap;
     flex-shrink: 1;
     max-width: calc(100% - 200px);
+    overflow: visible;
 }
 
 .nav-link {
@@ -174,7 +190,7 @@ body {
     color: #444;
     font-weight: 600;
     font-size: 0.85rem;
-    transition: var(--transition);
+    transition: 0.3s;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -183,6 +199,9 @@ body {
     cursor: pointer;
     white-space: nowrap;
     flex-shrink: 0;
+    min-width: max-content;
+    box-sizing: border-box;
+    font-family: 'Manrope', sans-serif;
 }
 
 .nav-link:hover,
@@ -191,7 +210,27 @@ body {
     background: rgba(42, 109, 93, 0.05);
 }
 
-/* ===== BOUTON MENU MOBILE ===== */
+.btn-nav-action {
+    background: var(--primary-color);
+    color: white !important;
+    padding: 8px 16px;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(42, 109, 93, 0.2);
+    flex-shrink: 0;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+}
+
+.btn-nav-action:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
 .mobile-menu-btn {
     display: none;
     background: none;
@@ -201,6 +240,7 @@ body {
     gap: 5px;
     z-index: 2001;
     padding: 5px;
+    position: relative;
     flex-shrink: 0;
     margin-left: 10px;
 }
@@ -215,31 +255,7 @@ body {
     transform-origin: center;
 }
 
-.mobile-menu-btn.active span:nth-child(1) {
-    transform: rotate(45deg) translate(6px, 6px);
-}
-
-.mobile-menu-btn.active span:nth-child(2) {
-    opacity: 0;
-}
-
-.mobile-menu-btn.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(7px, -6px);
-}
-
-/* ===== OVERLAY MOBILE ===== */
-.mobile-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1998;
-    display: none;
-}
-
-/* ===== RESPONSIVE ===== */
+/* ===== RESPONSIVE NAVBAR ===== */
 @media (max-width: 992px) {
     .mobile-menu-btn {
         display: flex;
@@ -254,7 +270,7 @@ body {
         flex-direction: column;
         align-items: stretch;
         padding: 15px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         transform: translateY(-150%);
         transition: transform 0.4s ease;
         z-index: 1999;
@@ -262,14 +278,14 @@ body {
         height: auto;
         max-height: 80vh;
         overflow-y: auto;
-        margin-left: 0;
-        max-width: 100%;
-        gap: 0;
     }
     
     .nav-menu.show {
         transform: translateY(0);
-        display: flex;
+    }
+    
+    .nav-menu.show .nav-link {
+        display: flex !important;
     }
     
     .nav-link {
@@ -282,56 +298,23 @@ body {
         gap: 10px;
     }
     
-    .nav-link:last-child {
-        border-bottom: none;
-    }
-}
-
-@media (max-width: 400px) {
-    .nav-container {
-        padding: 0 10px;
+    .nav-link i {
+        display: inline-block !important;
     }
     
-    .logo-main {
-        font-size: 0.9rem;
+    .btn-nav-action {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        margin-top: 10px;
+        padding: 10px 15px;
     }
     
-    .nav-logo img {
-        height: 32px;
+    .nav-menu:not(.show) {
+        display: none;
     }
 }
 
-/* ===== SCROLL EFFECTS ===== */
-.navbar.scrolled {
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    background: white;
-}
-
-/* ===== HEADER ===== */
-.header {
-    padding: 140px 0 100px 0;
-    background: linear-gradient(135deg, #f4f9f7 0%, #eef5f2 100%);
-    position: relative;
-}
-
-.header-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 50px;
-    align-items: center;
-}
-
-/* ... (styles complets pour toutes les sections - identiques à la version précédente mais avec corrections mobile) ... */
-
-/* ===== GARANTIE ANTI-DÉCALAGE ===== */
-.navbar * {
-    box-sizing: border-box;
-}
-
-/* ===== CORRECTION ULTIME POUR LES TRÈS PETITS ÉCRANS ===== */
 @media (max-width: 400px) {
     .nav-container {
         padding: 0 10px;
@@ -354,52 +337,57 @@ body {
     }
 }
 
-/* ===== STYLES POUR LES BOUTONS DE PARTAGE FIXES ===== */
-.social-btn.fb { background-color: #3b5998 !important; }
-.social-btn.tw { background-color: #000000 !important; }
-.social-btn.wa { background-color: #25D366 !important; }
+.mobile-menu-btn.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
 
-.social-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
+.mobile-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-btn.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* ===== MOBILE OVERLAY ===== */
+.mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: block;
+}
+
+/* ===== HEADER ===== */
+.header {
+    padding: 140px 0 100px 0;
+    background: linear-gradient(135deg, #f4f9f7 0%, #eef5f2 100%);
+    position: relative;
+    overflow: visible;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 50px;
     align-items: center;
-    justify-content: center;
-    color: white !important;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.2s;
 }
 
-.social-btn:hover {
-    transform: scale(1.1);
-}
-
-/* ===== CORRECTION RESPONSIVE BOUTONS ===== */
-@media (max-width: 768px) {
-    .promise-actions {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .social-share {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        width: 100%;
-    }
-}
-
-/* ===== FORCER LES COULEURS DES BOUTONS DE PARTAGE ===== */
-button.social-btn {
-    all: unset;
-    cursor: pointer;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 40px !important;
-    height: 40px !important;
-    border-radius: 50% !important;
-    margin: 0 4px !important;
-}
+.header-badge {
+    background: white;
+    color: var(--primary-color);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 

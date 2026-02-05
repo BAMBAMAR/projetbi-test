@@ -79,7 +79,7 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     min-height: 100vh;
-    padding-top: 80px;
+    padding-top: 70px;
 }
 
 .container {
@@ -337,20 +337,13 @@ body {
 
 /* ===== HEADER COMBINÉ ===== */
 .header {
-    /* Styles de index.html */
-    padding: 140px 0 100px 0;
+    padding: 80px 0 100px 0;
     background: linear-gradient(135deg, #f4f9f7 0%, #eef5f2 100%);
     position: relative; 
     overflow: visible;
-    
-    /* Styles de style.css */
-    margin: var(--spacing-2xl) 0;
-    padding: var(--spacing-2xl);
-    background: var(--bg-card);
+    margin: 0;
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow);
-    position: relative;
-    overflow: hidden;
     text-align: center;
     min-height: min-content;
 }
@@ -3909,65 +3902,8 @@ html, body {
     width: 100%; /* Force la largeur complète */
   }
 }
-/* OVERLAY MOBILE */
-.mobile-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    display: block;
-}
-
-/* MENU MOBILE QUAND OUVERT */
-.nav-menu.show {
-    display: flex !important;
-    flex-direction: column;
-    position: fixed;
-    top: 70px;
-    left: 0;
-    right: 0;
-    background: white;
-    padding: 20px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    z-index: 1000;
-    max-height: calc(100vh - 70px);
-    overflow-y: auto;
-}
-
-/* BOUTONS SOCIAL FIXES */
-.social-btn.fb { background-color: #3b5998 !important; }
-.social-btn.tw { background-color: #000000 !important; }
-.social-btn.wa { background-color: #25D366 !important; }
-
-.social-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white !important;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.social-btn:hover {
-    transform: scale(1.1);
-}
-
 /* CORRECTION RESPONSIVE */
 @media (max-width: 768px) {
-    .nav-menu {
-        display: none;
-    }
-    
-    .mobile-menu-btn {
-        display: flex !important;
-    }
     
     .promise-actions {
         flex-direction: column;
@@ -3980,41 +3916,4 @@ html, body {
         gap: 10px;
         width: 100%;
     }
-}
-/* FORCER LES COULEURS DES BOUTONS DE PARTAGE */
-.social-btn.fb {
-    background-color: #3b5998 !important;
-    border: 2px solid #3b5998 !important;
-}
-
-.social-btn.tw {
-    background-color: #000000 !important;
-    border: 2px solid #000000 !important;
-}
-
-.social-btn.wa {
-    background-color: #25D366 !important;
-    border: 2px solid #25D366 !important;
-}
-
-.social-btn i {
-    color: white !important;
-}
-
-/* Éviter les héritages de couleurs */
-.promise-actions .social-share button {
-    background-color: transparent !important;
-}
-
-/* Priorité maximale pour les boutons */
-button.social-btn {
-    all: unset;
-    cursor: pointer;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 40px !important;
-    height: 40px !important;
-    border-radius: 50% !important;
-    margin: 0 4px !important;
 }

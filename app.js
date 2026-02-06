@@ -3599,6 +3599,8 @@ function shareToPlatform(promiseId, platform) {
     const statut = promise.statut || 'Non défini';
     const deadline = promise.deadline || '';
     const resultat = promise.resultat || '';
+    const priorite = promise.priorite || '';
+    const responsable = promise.responsable || '';
     
     // Calcul jours restants
     let joursRestants = '';
@@ -3608,38 +3610,68 @@ function shareToPlatform(promiseId, platform) {
         joursRestants = diff > 0 ? `${diff} jours restants` : `Échéance dépassée`;
     }
     
+    // Mises à jour récentes
+    let derniereUpdate = '';
+    if (promise.updates && promise.updates.length > 0) {
+        const lastUpdate = promise.updates[promise.updates.length - 1];
+        derniereUpdate = lastUpdate.description || 'Mise à jour récente';
+    }
+    
     const url = window.location.href;
     let shareText = '';
     
     if (platform === 'facebook') {
-        shareText = `🎯 ${engagement}
+        shareText = `🎯 ENGAGEMENT PRÉSIDENTIEL
+
+📋 ${engagement}
+
 📍 Domaine: ${domaine}
+${priorite ? `🔥 Priorité: ${priorite}` : ''}
+${responsable ? `👤 Responsable: ${responsable}` : ''}
 📅 Délai: ${deadline || 'Non spécifié'}
 🔖 Statut: ${emoji} ${statut}
 ${joursRestants ? `⏰ ${joursRestants}` : ''}
-${resultat ? `📝 Description: ${resultat.substring(0, 100)}` : ''}
 
-📊 Suivez tous les engagements: ${url}`;
+${resultat ? `📝 Résultat attendu:\n${resultat.substring(0, 150)}${resultat.length > 150 ? '...' : ''}` : ''}
+
+${derniereUpdate ? `🔄 Dernière mise à jour:\n${derniereUpdate.substring(0, 100)}${derniereUpdate.length > 100 ? '...' : ''}` : ''}
+
+📊 Suivez tous les engagements sur:
+${url}
+
+#ProjetSénégal #Transparence #BDF2024`;
     } else if (platform === 'twitter' || platform === 'x') {
-        const short = engagement.substring(0, 100);
-        shareText = `🎯 ${short}
+        const short = engagement.substring(0, 80);
+        shareText = `🎯 ${short}${engagement.length > 80 ? '...' : ''}
+
 📍 ${domaine}
 🔖 ${emoji} ${statut}
 ${joursRestants ? `⏰ ${joursRestants}` : ''}
 
-#ProjetSénégal`;
+📊 Plus d'infos: ${url}
+
+#ProjetSénégal #BDF2024`;
     } else if (platform === 'whatsapp') {
-        shareText = `🎯 *${engagement}*
+        shareText = `🎯 *ENGAGEMENT PRÉSIDENTIEL*
+
+📋 *${engagement}*
 
 📍 *Domaine:* ${domaine}
+${priorite ? `🔥 *Priorité:* ${priorite}` : ''}
+${responsable ? `👤 *Responsable:* ${responsable}` : ''}
 📅 *Délai:* ${deadline || 'Non spécifié'}
 🔖 *Statut:* ${emoji} ${statut}
 ${joursRestants ? `⏰ *${joursRestants}*` : ''}
-${resultat ? `📝 *Description:* ${resultat}` : ''}
 
-📊 Suivez tous les engagements: ${url}
+${resultat ? `📝 *Résultat attendu:*\n${resultat}` : ''}
 
-_Via LE PROJET SÉNÉGAL_`;
+${derniereUpdate ? `🔄 *Dernière mise à jour:*\n${derniereUpdate}` : ''}
+
+📊 *Suivez tous les engagements:*
+${url}
+
+_Via LE PROJET SÉNÉGAL_
+_Transparence & Redevabilité_`;
     }
     
     let shareUrl = '';
@@ -4067,9 +4099,61 @@ function shareNewsEnriched(newsId, platform) {
     const news = CONFIG.news.find(n => n.id === newsId);
     if (!news) return;
     
-    // Créer un texte enrichi
-    const shareText = `📰 ${news.title}\n\n${news.excerpt || news.content.substring(0, 200) + '...'}\n\n📅 ${news.date} | 📰 ${news.source || 'Le Soleil'}\n🏷️ ${getCategoryLabel(news.category || 'general')}`;
     const shareUrl = news.link && news.link !== '#' ? news.link : window.location.href;
+    const categoryLabel = getCategoryLabel(news.category || 'general');
+    const source = news.source || 'Le Soleil';
+    
+    let shareText = '';
+    
+    if (platform === 'facebook') {
+        // Format enrichi pour Facebook
+        shareText = `📰 ACTUALITÉ - ${categoryLabel.toUpperCase()}
+
+${news.title}
+
+${news.content || news.excerpt || ''}
+
+📅 Date: ${news.date}
+📰 Source: ${source}
+🏷️ Catégorie: ${categoryLabel}
+
+📊 Restez informé sur:
+${shareUrl}
+
+#ProjetSénégal #Actualités #${categoryLabel.replace(/\s/g, '')}`;
+    } else if (platform === 'twitter') {
+        // Format optimisé pour Twitter/X (280 caractères)
+        const maxLength = 180;
+        const content = news.excerpt || news.content || '';
+        const truncated = content.length > maxLength ? content.substring(0, maxLength) + '...' : content;
+        
+        shareText = `📰 ${news.title}
+
+${truncated}
+
+📅 ${news.date} | 📰 ${source}
+
+${shareUrl}
+
+#ProjetSénégal`;
+    } else if (platform === 'whatsapp') {
+        // Format détaillé pour WhatsApp
+        shareText = `📰 *ACTUALITÉ - ${categoryLabel.toUpperCase()}*
+
+*${news.title}*
+
+${news.content || news.excerpt || ''}
+
+📅 *Date:* ${news.date}
+📰 *Source:* ${source}
+🏷️ *Catégorie:* ${categoryLabel}
+
+📊 *Lire plus:*
+${shareUrl}
+
+_Via LE PROJET SÉNÉGAL_
+_Transparence & Information_`;
+    }
     
     let url = '';
     switch(platform) {
@@ -4080,11 +4164,10 @@ function shareNewsEnriched(newsId, platform) {
             }
             break;
         case 'twitter':
-            const tweetText = `📰 ${news.title}\n\n${news.excerpt ? news.excerpt.substring(0, 180) : news.content.substring(0, 180)}...\n\n${shareUrl}`;
-            url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+            url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
             break;
         case 'whatsapp':
-            url = `https://wa.me/?text=${encodeURIComponent(shareText + '\n\n' + shareUrl)}`;
+            url = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
             break;
     }
     
@@ -4165,8 +4248,18 @@ function renderNewsImproved() {
     }
     
     newsGrid.innerHTML = CONFIG.news.map(news => {
-        const hasLongContent = news.content && news.content.length > 300;
-        const displayText = hasLongContent ? (news.excerpt || news.content.substring(0, 200) + '...') : (news.content || news.excerpt);
+        // Limitation intelligente à 70 mots
+        const wordLimit = 70;
+        const fullText = news.content || news.excerpt || '';
+        const words = fullText.split(/\s+/);
+        const hasLongContent = words.length > wordLimit;
+        
+        let displayText = '';
+        if (hasLongContent) {
+            displayText = words.slice(0, wordLimit).join(' ') + '...';
+        } else {
+            displayText = fullText;
+        }
         
         return `
             <div class="news-card">
@@ -4195,8 +4288,8 @@ function renderNewsImproved() {
                             <button class="social-btn-small fb" onclick="shareNewsEnriched('${news.id}', 'facebook')" title="Partager sur Facebook">
                                 <i class="fab fa-facebook-f"></i>
                             </button>
-                            <button class="social-btn-small tw" onclick="shareNewsEnriched('${news.id}', 'twitter')" title="Partager sur Twitter">
-                                <i class="fab fa-twitter"></i>
+                            <button class="social-btn-small tw" onclick="shareNewsEnriched('${news.id}', 'twitter')" title="Partager sur X">
+                                <i class="fab fa-x-twitter"></i>
                             </button>
                             <button class="social-btn-small wa" onclick="shareNewsEnriched('${news.id}', 'whatsapp')" title="Partager sur WhatsApp">
                                 <i class="fab fa-whatsapp"></i>

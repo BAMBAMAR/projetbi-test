@@ -3042,3 +3042,136 @@ function updateServiceList() {
         });
     }
 }
+// FONCTION DE SECOURS POUR LES ACTUALITÉS
+async function loadNewsData() {
+  try {
+    console.log('📰 Chargement des actualités...');
+    const newsResponse = await fetch('news.json?v=' + Date.now());
+    
+    if (!newsResponse.ok) {
+      console.warn('Fichier news.json non trouvé - utilisation données de démonstration');
+      CONFIG.news = getDemoNews();
+      renderNews(CONFIG.news);
+      return;
+    }
+    
+    const newsData = await newsResponse.json();
+    
+    if (newsData && Array.isArray(newsData.news)) {
+      CONFIG.news = newsData.news;
+      console.log(`✅ ${CONFIG.news.length} actualités chargées depuis news.json`);
+      renderNews(CONFIG.news);
+    } else {
+      console.warn('Format news.json invalide - données de démonstration');
+      CONFIG.news = getDemoNews();
+      renderNews(CONFIG.news);
+    }
+    
+  } catch (newsError) {
+    console.error('❌ Erreur chargement actualités:', newsError);
+    CONFIG.news = getDemoNews();
+    renderNews(CONFIG.news);
+  }
+}
+
+// DONNÉES DE DÉMONSTRATION POUR LES ACTUALITÉS
+function getDemoNews() {
+  return [
+    { 
+      id: '1', 
+      title: 'Lancement officiel de la plateforme', 
+      excerpt: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle.',
+      content: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle. Elle permet aux citoyens de suivre en temps réel les progrès des engagements du Président Bassirou Diomaye Faye.',
+      date: new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }),
+      source: 'Le Soleil',
+      category: 'gouvernance',
+      image: 'https://picsum.photos/seed/news1/800/450',
+      author: 'Rédaction Projet Sénégal',
+      readTime: '3 minutes'
+    },
+    { 
+      id: '2', 
+      title: 'Première école numérique inaugurée à Dakar', 
+      excerpt: 'Le gouvernement a inauguré la première école entièrement numérique à Dakar.',
+      content: 'Dans le cadre de la modernisation du système éducatif, le gouvernement a inauguré ce matin la première école entièrement numérique à Dakar. Cet établissement équipé de tablettes et tableaux interactifs accueillera 500 élèves dès la rentrée prochaine.',
+      date: new Date(Date.now() - 86400000).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }),
+      source: 'Sud Quotidien',
+      category: 'education',
+      image: 'https://picsum.photos/seed/news2/800/450',
+      author: 'Service Éducation',
+      readTime: '4 minutes'
+    },
+    { 
+      id: '3', 
+      title: 'Budget 2026 : Priorité à la santé et l\'éducation', 
+      excerpt: 'Le budget de l\'État pour 2026 prévoit d\'importants investissements dans les infrastructures.',
+      content: 'Le projet de loi de finances 2026 place la santé et l\'éducation au cœur des priorités avec une augmentation de 15% des crédits alloués à ces secteurs. Le gouvernement entend ainsi concrétiser ses engagements en faveur du capital humain.',
+      date: new Date(Date.now() - 2*86400000).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }),
+      source: 'WalFadjri',
+      category: 'economie',
+      image: 'https://picsum.photos/seed/news3/800/450',
+      author: 'Service Économie',
+      readTime: '5 minutes'
+    }
+  ];
+}
+
+// FONCTION DE RENDU DES ACTUALITÉS (AJOUTEZ-LA SI MANQUANTE)
+function renderNews(news) {
+  const grid = document.getElementById('newsGrid');
+  if (!grid) return;
+  
+  if (!news || news.length === 0) {
+    grid.innerHTML = `
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Aucune actualité disponible pour le moment</p>
+      </div>
+    `;
+    return;
+  }
+  
+  grid.innerHTML = news.map(item => {
+    // Déterminer l'icône par catégorie
+    const categoryIcons = {
+      'education': '🎓',
+      'sante': '🏥',
+      'economie': '📈',
+      'infrastructures': '🏗️',
+      'gouvernance': '🏛️',
+      'transparence': '👁️',
+      'general': '📰'
+    };
+    
+    const icon = categoryIcons[item.category] || '📰';
+    const categoryClass = `cat-${item.category || 'general'}`;
+    
+    return `
+      <article class="news-card">
+        <div class="news-image-real">
+          <img src="${item.image || 'https://picsum.photos/seed/' + item.id + '/800/450'}" 
+               alt="${item.title}" 
+               onerror="this.src='https://picsum.photos/seed/fallback/800/450'">
+        </div>
+        <div class="news-content">
+          <div class="news-meta">
+            <span class="news-category ${categoryClass}">
+              <span>${icon}</span> ${item.category || 'Actualité'}
+            </span>
+            <span class="news-date">
+              <i class="fas fa-calendar"></i> ${item.date}
+            </span>
+          </div>
+          <h3>${item.title}</h3>
+          <p class="news-excerpt">${item.excerpt}</p>
+          <div class="news-footer">
+            <span><i class="fas fa-newspaper"></i> ${item.source || 'Source non spécifiée'}</span>
+            <button class="news-read-more" onclick="openNewsDetail('${item.id}')">
+              <i class="fas fa-arrow-right"></i> Lire plus
+            </button>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+}

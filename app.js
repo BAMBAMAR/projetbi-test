@@ -3722,44 +3722,6 @@ Plateforme citoyenne de suivi transparent des engagements présidentiels.`;
     showNotification(`Partage vers ${platform === 'x' || platform === 'twitter' ? 'X' : platform} ouvert`, 'success');
 }
 
-📋 *Engagement:*
-${engagement}
-
-📊 *Statut:* ${statut}
-${deadline ? `⏰ ${deadline}` : ''}
-
-🔗 Voir tous les engagements:
-${url}
-
-_Via LE PROJET SÉNÉGAL - Plateforme citoyenne de suivi des engagements présidentiels_`;
-            
-            shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
-            break;
-            
-        case 'linkedin':
-            shareText = `${title}
-
-${description}
-
-${status}
-${category}
-${deadline ? deadline : ''}
-
-Plateforme citoyenne de suivi transparent des engagements présidentiels.`;
-            
-            shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
-            break;
-            
-        default:
-            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}`;
-    }
-    
-    // Ouvrir dans une nouvelle fenêtre
-    window.open(shareUrl, '_blank', 'width=600,height=400');
-    
-    showNotification(`Partage vers ${platform === 'x' || platform === 'twitter' ? 'X (Twitter)' : platform} ouvert`, 'success');
-}
-
 // ==========================================
 // NOTIFICATIONS
 // ==========================================

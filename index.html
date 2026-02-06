@@ -9,20 +9,6 @@
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#2a6d5d">
     
-    <!-- Open Graph Meta Tags pour partage Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="LE PROJET SÉNÉGAL">
-    <meta property="og:title" content="Suivi des Engagements Présidentiels">
-    <meta property="og:description" content="Plateforme citoyenne de suivi transparent des engagements présidentiels">
-    <meta property="og:image" content="https://projetbi.org/favicon.png">
-    <meta property="og:url" content="https://projetbi.org">
-    
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="LE PROJET SÉNÉGAL">
-    <meta name="twitter:description" content="Suivi transparent des engagements présidentiels">
-    <meta name="twitter:image" content="https://projetbi.org/favicon.png">
-    
     <title>LE PROJET SÉNÉGAL | Suivi des Engagements Présidentiels</title>
     
     <link rel="icon" href="https://projetbi.org/favicon.png" type="image/png">
@@ -502,7 +488,7 @@
                         <div id="recentRatings" class="recent-ratings">
                             <div class="loading-state"><div class="spinner"></div><p>Chargement...</p></div>
                         </div>
-                        <button class="view-all-btn" onclick="showAllRatings('recent')">
+                        <button class="view-all-btn" onclick="showAllRatings('recent')" style="margin-top: 15px;">
                             <i class="fas fa-list"></i> Liste complète
                         </button>
                     </div>
@@ -512,7 +498,7 @@
                         <div id="topServices" class="top-services-grid">
                             <div class="loading-state"><div class="spinner"></div><p>Chargement...</p></div>
                         </div>
-                        <button class="view-all-btn" onclick="showAllRatings('top-rated')">
+                        <button class="view-all-btn" onclick="showAllRatings('top-rated')" style="margin-top: 15px;">
                             <i class="fas fa-list"></i> Liste complète
                         </button>
                     </div>
@@ -651,14 +637,6 @@
             <option value="Monument de la Renaissance africaine">Monument de la Renaissance africaine</option>
             <option value="Musée Boribana">Musée Boribana</option>
         </div>
-        <div data-category="emploi">
-            <option value="Agence Nationale pour l'Emploi des Jeunes (ANPEJ)">Agence Nationale pour l'Emploi des Jeunes (ANPEJ)</option>
-            <option value="Délégation à l'Insertion, Réinsertion (DIR)">Délégation à l'Insertion, Réinsertion (DIR)</option>
-            <option value="Fonds National de Promotion de l'Entreprise Féminine">Fonds National de Promotion de l'Entreprise Féminine</option>
-            <option value="Centre de Formation Professionnelle">Centre de Formation Professionnelle</option>
-            <option value="SENELEC (Service recrutement)">SENELEC (Service recrutement)</option>
-            <option value="Fonction publique (Concours)">Fonction publique (Concours)</option>
-        </div>
         <div data-category="autre">
             <option value="Service agricole / vétérinaire">Service agricole / vétérinaire</option>
             <option value="Haras national">Haras national</option>
@@ -671,12 +649,11 @@
         </div>
     </div>
 
-    <footer class="footer-enhanced">
+    <footer class="footer">
         <div class="container">
-            <div class="footer-grid-enhanced">
-                <!-- À propos -->
-                <div class="footer-col-enhanced">
-                    <div class="footer-logo-enhanced">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
                         <div class="footer-logo-icon"><i class="fas fa-flag"></i></div>
                         <div>
                             <h4>LE PROJET SÉNÉGAL</h4>
@@ -684,111 +661,51 @@
                         </div>
                     </div>
                     <p class="footer-description">
-                        Plateforme citoyenne indépendante dédiée au suivi transparent des engagements du Projet pour un Sénégal Souverain, Juste et Prospère. Initiative citoyenne pour une gouvernance participative et responsable.
+                        Plateforme citoyenne indépendante dédiée au suivi transparent des engagements du Projet pour un Sénégal Souverain, Juste et Prospère.
                     </p>
-                    <div class="footer-stats">
-                        <div class="footer-stat-item">
-                            <strong id="footer-promises-count">0</strong>
-                            <span>Engagements suivis</span>
-                        </div>
-                        <div class="footer-stat-item">
-                            <strong id="footer-ratings-count">0</strong>
-                            <span>Évaluations citoyennes</span>
-                        </div>
-                    </div>
                 </div>
                 
-                <!-- Contact -->
-                <div class="footer-col-enhanced">
-                    <h4><i class="fas fa-phone-alt"></i> Contact</h4>
-                    <div class="footer-links-enhanced">
-                        <a href="mailto:contact@projetbi.org" class="footer-link"><i class="fas fa-envelope"></i> contact@projetbi.org</a>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <div class="footer-links">
+                        <a href="/cdn-cgi/l/email-protection#c2a1adacb6a3a1b682b2b0ada8a7b6a0abecadb0a5" class="footer-link"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="b3d0dcddc7d2d0c7f3c3c1dcd9d6c7d1da9ddcc1d4">[email&#160;protected]</span></a>
                         <a href="tel:+221769455253" class="footer-link"><i class="fas fa-phone"></i> +221 76 945 52 53</a>
                         <a href="#" class="footer-link"><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</a>
                     </div>
-                    <div class="footer-hours">
-                        <h5><i class="fas fa-clock"></i> Horaires de disponibilité</h5>
-                        <p>Lundi - Vendredi : 8h - 18h<br>Samedi : 9h - 13h</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Suivez-nous</h4>
+                    <div class="footer-social">
+                        <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-btn"><i class="fab fa-x-twitter"></i></a>
+                        <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 
-                <!-- Réseaux sociaux -->
-                <div class="footer-col-enhanced">
-                    <h4><i class="fas fa-share-alt"></i> Suivez-nous</h4>
-                    <p class="social-description">Restez informés de nos actualités et participez aux discussions</p>
-                    <div class="footer-social-enhanced">
-                        <a href="#" class="social-btn-enhanced facebook" aria-label="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                            <span>Facebook</span>
-                        </a>
-                        <a href="#" class="social-btn-enhanced twitter" aria-label="X (Twitter)">
-                            <i class="fab fa-x-twitter"></i>
-                            <span>X (Twitter)</span>
-                        </a>
-                        <a href="#" class="social-btn-enhanced instagram" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                            <span>Instagram</span>
-                        </a>
-                        <a href="#" class="social-btn-enhanced linkedin" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                            <span>LinkedIn</span>
-                        </a>
-                        <a href="#" class="social-btn-enhanced youtube" aria-label="YouTube">
-                            <i class="fab fa-youtube"></i>
-                            <span>YouTube</span>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Liens utiles -->
-                <div class="footer-col-enhanced">
-                    <h4><i class="fas fa-link"></i> Liens Utiles</h4>
-                    <div class="footer-links-enhanced">
+                <div class="footer-col">
+                    <h4>Liens Utiles</h4>
+                    <div class="footer-links">
                         <a href="#header" class="footer-link"><i class="fas fa-home"></i> Accueil</a>
-                        <a href="#stats" class="footer-link"><i class="fas fa-chart-bar"></i> Tableau de bord</a>
                         <a href="#promises" class="footer-link"><i class="fas fa-tasks"></i> Engagements</a>
-                        <a href="#news" class="footer-link"><i class="fas fa-newspaper"></i> Actualités</a>
-                        <a href="#rating" class="footer-link"><i class="fas fa-star"></i> Noter un service</a>
-                        <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="footer-link" target="_blank">
-                            <i class="fas fa-book"></i> Programme complet (PDF)
-                        </a>
+                        <a href="#rating" class="footer-link"><i class="fas fa-star"></i> Notation</a>
+                        <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="footer-link" target="_blank"><i class="fas fa-book"></i> Programme PDF</a>
                     </div>
                 </div>
             </div>
             
             <div class="footer-divider"></div>
             
-            <!-- Bottom footer -->
-            <div class="footer-bottom-enhanced">
-                <div class="footer-disclaimer">
-                    <h5><i class="fas fa-exclamation-triangle"></i> Avertissement Important</h5>
-                    <p>
-                        Cette plateforme est une initiative citoyenne <strong>indépendante</strong> à but purement informatif. 
-                        Les évaluations et analyses présentées sont basées sur des données publiques vérifiables et des contributions citoyennes. 
-                        Nous ne sommes affiliés à aucun parti politique ni institution gouvernementale.
-                    </p>
+            <div class="footer-bottom">
+                <div class="footer-about">
+                    <h5><i class="fas fa-exclamation-triangle"></i> Disclaimer</h5>
+                    <p>Cette plateforme est indépendante et à but informatif. Les évaluations sont basées sur des données publiques vérifiables.</p>
                 </div>
-                
-                <div class="footer-legal">
-                    <p class="footer-copyright">
-                        © 2024-2026 LE PROJET SÉNÉGAL - Tous droits réservés
-                    </p>
-                    <div class="footer-legal-links">
-                        <a href="#">Mentions légales</a>
-                        <span>•</span>
-                        <a href="#">Politique de confidentialité</a>
-                        <span>•</span>
-                        <a href="#">Conditions d'utilisation</a>
-                    </div>
-                </div>
-                
-                <div class="footer-credit">
-                    <p>
-                        <i class="fas fa-code"></i> Développé avec passion pour la transparence démocratique
-                        <br>
-                        <i class="fas fa-heart"></i> Pour un Sénégal meilleur, ensemble
-                    </p>
-                </div>
+                <p class="footer-copyright">
+                    Développé avec passion pour la transparence démocratique<br>
+                    © 2026 LE PROJET SÉNÉGAL - Tous droits réservés
+                </p>
             </div>
         </div>
     </footer>
@@ -797,8 +714,8 @@
 
     <div id="notification-container"></div>
 
-    <!-- Modal Article Complet -->
-    <div id="articleModal" class="article-modal">
+    <!-- Modal pour article complet -->
+    <div id="articleModal" class="article-modal" style="display:none;">
         <div class="article-modal-content">
             <button class="article-modal-close" onclick="closeArticleModal()">
                 <i class="fas fa-times"></i>
@@ -807,8 +724,8 @@
         </div>
     </div>
 
-    <!-- Modal Liste Complète des Notations -->
-    <div id="ratingsListModal" class="ratings-modal">
+    <!-- Modal pour liste complète notations -->
+    <div id="ratingsListModal" class="ratings-modal" style="display:none;">
         <div class="ratings-modal-content">
             <button class="ratings-modal-close" onclick="closeRatingsModal()">
                 <i class="fas fa-times"></i>
@@ -847,33 +764,43 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
         
-        // === 2. SÉLECTION CONTEXTUELLE DES SERVICES - CORRIGÉ ===
+        // === 2. SÉLECTION CONTEXTUELLE DES SERVICES ===
         const categorySelect = document.getElementById('service-category');
         const serviceSelect = document.getElementById('service');
         const servicesData = document.getElementById('services-data');
         
+        console.log('Category select:', categorySelect);
+        console.log('Service select:', serviceSelect);
+        console.log('Services data:', servicesData);
+        
         if (categorySelect && serviceSelect && servicesData) {
             categorySelect.addEventListener('change', function() {
                 const selectedCategory = this.value;
+                console.log('Selected category:', selectedCategory);
                 
-                // Réinitialiser la liste
-                serviceSelect.innerHTML = '<option value="">Choisissez un service</option>';
+                serviceSelect.innerHTML = '<option value="">Sélectionnez un service</option>';
                 serviceSelect.disabled = true;
                 
                 if (selectedCategory) {
-                    // Chercher le div correspondant à la catégorie
-                    const categoryDiv = servicesData.querySelector(`[data-category="${selectedCategory}"]`);
+                    const categoryServices = servicesData.querySelector(`[data-category="${selectedCategory}"]`);
+                    console.log('Found services:', categoryServices);
                     
-                    if (categoryDiv) {
-                        // Copier les options du div vers le select
-                        const options = categoryDiv.querySelectorAll('option');
-                        options.forEach(option => {
-                            const newOption = option.cloneNode(true);
-                            serviceSelect.appendChild(newOption);
-                        });
+                    if (categoryServices) {
                         serviceSelect.disabled = false;
+                        serviceSelect.innerHTML = '<option value="">Choisissez un service</option>' + categoryServices.innerHTML;
+                        console.log('Services loaded successfully');
+                    } else {
+                        console.warn('No services found for category:', selectedCategory);
                     }
                 }
+            });
+            
+            console.log('Service selector initialized successfully');
+        } else {
+            console.error('Missing elements:', {
+                categorySelect: !!categorySelect,
+                serviceSelect: !!serviceSelect,
+                servicesData: !!servicesData
             });
         }
         

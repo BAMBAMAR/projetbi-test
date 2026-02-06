@@ -1299,11 +1299,7 @@ function updateStatValue(id, value) {
 
 function updateStatPercentage(id, value, total) {
     const el = document.getElementById(id);
-    if (!el) {
-        // Élément non trouvé - pas d'erreur, juste un avertissement silencieux
-        return;
-    }
-    if (total > 0) {
+    if (el && total > 0) {
         const percentage = Math.round((value / total) * 100);
         el.textContent = `${percentage}%`;
     } else {
@@ -2050,43 +2046,25 @@ function renderNews(news) {
     if (!grid) return;
     
     grid.innerHTML = news.map(item => {
-        // Limiter le texte à 70 mots
-        const fullText = item.excerpt || item.content || '';
-        const words = fullText.split(' ');
+        // Limiter à 70 mots
+        const text = item.excerpt || '';
+        const words = text.split(' ');
         const isLong = words.length > 70;
-        const displayText = isLong ? words.slice(0, 70).join(' ') + '...' : fullText;
+        const displayText = isLong ? words.slice(0, 70).join(' ') + '...' : text;
         
-        // Déterminer l'icône à afficher
-        const iconMap = {
-            'school': 'school',
-            'budget': 'coins',
-            'money': 'coins',
-            'users': 'users',
-            'road': 'road',
-            'flag': 'flag',
-            'health': 'heartbeat',
-            'infrastructure': 'building',
-            'agriculture': 'seedling',
-            'economy': 'chart-line'
-        };
+        // Icônes
+        const iconMap = {'school': 'school', 'budget': 'coins', 'money': 'coins', 'users': 'users', 'road': 'road', 'flag': 'flag'};
         const icon = iconMap[item.image] || 'newspaper';
         
         return `
             <article class="news-card">
                 <div class="news-image">
-                    ${item.imageUrl ? 
-                        `<img src="${item.imageUrl}" alt="${item.title}" onerror="this.style.display='none'">` :
-                        `<i class="fas fa-${icon} fa-3x"></i>`
-                    }
+                    <i class="fas fa-${icon} fa-3x"></i>
                 </div>
                 <div class="news-content">
                     <h3>${item.title}</h3>
                     <p>${displayText}</p>
-                    ${isLong ? `
-                        <button class="read-more-btn" onclick="openArticleModal('${item.id || ''}')">
-                            <i class="fas fa-book-open"></i> Lire la suite
-                        </button>
-                    ` : ''}
+                    ${isLong ? `<button class="read-more-btn" onclick="openArticleModal('${item.id || ''}')"><i class="fas fa-book-open"></i> Lire la suite</button>` : ''}
                     <div class="news-footer">
                         <span><i class="fas fa-calendar"></i> ${item.date}</span>
                         <span><i class="fas fa-newspaper"></i> ${item.source}</span>
@@ -3611,115 +3589,69 @@ function sharePromise(promiseId) {
 
 function shareToPlatform(promiseId, platform) {
     const promise = CONFIG.promises.find(p => p.id === promiseId);
-    if (!promise) {
-        console.error('Promesse non trouvée:', promiseId);
-        showNotification('Impossible de partager : promesse non trouvée', 'error');
-        return;
-    }
+    if (!promise) return;
     
-    // Créer un message enrichi avec toutes les informations importantes
-    const statusEmoji = {
-        'Réalisé': '✅',
-        'En cours': '🔄',
-        'Non lancé': '⏳',
-        'En retard': '⚠️'
-    };
-    
+    const statusEmoji = {'Réalisé': '✅', 'En cours': '🔄', 'Non lancé': '⏳', 'En retard': '⚠️'};
     const emoji = statusEmoji[promise.statut] || '📊';
     
-    // Extraction sécurisée des données
-    const engagement = promise.engagement || promise.title || 'Engagement non spécifié';
-    const categorie = promise.categorie || promise.category || promise.domaine || promise.domain || 'Non catégorisé';
-    const statut = promise.statut || promise.status || 'Non défini';
-    const echeance = promise.deadline || promise.echeance || promise.date_limite || '';
-    const resultat = promise.resultat || promise.result || promise.description || '';
+    const engagement = promise.engagement || '';
+    const domaine = promise.domain || promise.domaine || 'Non spécifié';
+    const statut = promise.statut || 'Non défini';
+    const deadline = promise.deadline || '';
+    const resultat = promise.resultat || '';
     
-    // Calculer les jours restants
+    // Calcul jours restants
     let joursRestants = '';
-    if (echeance) {
-        const deadlineDate = new Date(echeance);
-        const today = new Date();
-        const diff = Math.ceil((deadlineDate - today) / (1000 * 60 * 60 * 24));
-        joursRestants = diff > 0 ? `${diff} jours restants` : `Échéance dépassée de ${Math.abs(diff)} jours`;
+    if (deadline) {
+        const d = new Date(deadline);
+        const diff = Math.ceil((d - new Date()) / 86400000);
+        joursRestants = diff > 0 ? `${diff} jours restants` : `Échéance dépassée`;
     }
     
-    // URL de la page
     const url = window.location.href;
-    
-    let shareUrl = '';
     let shareText = '';
     
-    switch(platform) {
-        case 'facebook':
-            // Facebook avec format structuré
-            shareText = `🎯 ${engagement}
-
-📍 Domaine: ${categorie}
-📅 Délai: ${echeance || 'Non spécifié'}
+    if (platform === 'facebook') {
+        shareText = `🎯 ${engagement}
+📍 Domaine: ${domaine}
+📅 Délai: ${deadline || 'Non spécifié'}
 🔖 Statut: ${emoji} ${statut}
 ${joursRestants ? `⏰ ${joursRestants}` : ''}
-${resultat ? `📝 Description: ${resultat.substring(0, 100)}${resultat.length > 100 ? '...' : ''}` : ''}
+${resultat ? `📝 Description: ${resultat.substring(0, 100)}` : ''}
 
 📊 Suivez tous les engagements: ${url}`;
-            
-            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(shareText)}`;
-            break;
-            
-        case 'twitter':
-        case 'x':
-            // Twitter/X format compact
-            const tweetEngagement = engagement.length > 100 ? engagement.substring(0, 97) + '...' : engagement;
-            shareText = `🎯 ${tweetEngagement}
-
-📍 ${categorie}
+    } else if (platform === 'twitter' || platform === 'x') {
+        const short = engagement.substring(0, 100);
+        shareText = `🎯 ${short}
+📍 ${domaine}
 🔖 ${emoji} ${statut}
 ${joursRestants ? `⏰ ${joursRestants}` : ''}
 
-#ProjetSénégal #Transparence`;
-            
-            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}`;
-            break;
-            
-        case 'whatsapp':
-            // WhatsApp avec message complet et formaté
-            shareText = `🎯 *${engagement}*
+#ProjetSénégal`;
+    } else if (platform === 'whatsapp') {
+        shareText = `🎯 *${engagement}*
 
-📍 *Domaine:* ${categorie}
-📅 *Délai:* ${echeance || 'Non spécifié'}
+📍 *Domaine:* ${domaine}
+📅 *Délai:* ${deadline || 'Non spécifié'}
 🔖 *Statut:* ${emoji} ${statut}
 ${joursRestants ? `⏰ *${joursRestants}*` : ''}
 ${resultat ? `📝 *Description:* ${resultat}` : ''}
 
-📊 Suivez tous les engagements:
-${url}
+📊 Suivez tous les engagements: ${url}
 
-_Via LE PROJET SÉNÉGAL - Plateforme citoyenne de suivi des engagements présidentiels_`;
-            
-            shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
-            break;
-            
-        case 'linkedin':
-            shareText = `🎯 ${engagement}
-
-📍 Domaine: ${categorie}
-📅 Délai: ${echeance || 'Non spécifié'}
-🔖 Statut: ${emoji} ${statut}
-${joursRestants ? `⏰ ${joursRestants}` : ''}
-${resultat ? `📝 ${resultat}` : ''}
-
-Plateforme citoyenne de suivi transparent des engagements présidentiels.`;
-            
-            shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
-            break;
-            
-        default:
-            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}`;
+_Via LE PROJET SÉNÉGAL_`;
     }
     
-    // Ouvrir dans une nouvelle fenêtre
-    window.open(shareUrl, '_blank', 'width=600,height=400');
+    let shareUrl = '';
+    if (platform === 'facebook') {
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(shareText)}`;
+    } else if (platform === 'twitter' || platform === 'x') {
+        shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}`;
+    } else if (platform === 'whatsapp') {
+        shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+    }
     
-    showNotification(`Partage vers ${platform === 'x' || platform === 'twitter' ? 'X' : platform} ouvert`, 'success');
+    window.open(shareUrl, '_blank', 'width=600,height=400');
 }
 
 // ==========================================
@@ -4286,193 +4218,67 @@ function renderNewsImproved() {
 
 console.log('✅ Améliorations chargées');
 
-// ==========================================
-// FONCTIONS POUR MODALS ACTUALITÉS ET NOTATIONS
-// ==========================================
-
-// Fonction pour ouvrir le modal de l'article complet
+// Fonctions pour modals
 function openArticleModal(newsId) {
     const news = CONFIG.news.find(n => n.id === newsId);
     if (!news) return;
-    
     const modal = document.getElementById('articleModal');
-    const modalBody = document.getElementById('articleModalBody');
-    
-    if (!modal || !modalBody) return;
-    
-    modalBody.innerHTML = `
-        <div class="article-full">
-            ${news.imageUrl ? `<img src="${news.imageUrl}" alt="${news.title}" class="article-full-image">` : ''}
-            <h2>${news.title}</h2>
-            <div class="article-meta">
-                <span><i class="fas fa-calendar"></i> ${news.date}</span>
-                <span><i class="fas fa-newspaper"></i> ${news.source}</span>
-            </div>
-            <div class="article-content">
-                ${news.content || news.excerpt}
-            </div>
-        </div>
-    `;
-    
+    const body = document.getElementById('articleModalBody');
+    if (!modal || !body) return;
+    body.innerHTML = `<div class="article-full"><h2>${news.title}</h2><div class="article-meta"><span><i class="fas fa-calendar"></i> ${news.date}</span><span><i class="fas fa-newspaper"></i> ${news.source}</span></div><div class="article-content">${news.content || news.excerpt}</div></div>`;
     modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
 }
 
-// Fonction pour fermer le modal article
 function closeArticleModal() {
     const modal = document.getElementById('articleModal');
-    if (modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = '';
-    }
+    if (modal) modal.style.display = 'none';
 }
 
-// Fonction pour afficher toutes les notations
 function showAllRatings(category) {
     const modal = document.getElementById('ratingsListModal');
-    const modalTitle = document.getElementById('ratingsModalTitle');
-    const modalBody = document.getElementById('ratingsModalBody');
+    const title = document.getElementById('ratingsModalTitle');
+    const body = document.getElementById('ratingsModalBody');
+    if (!modal || !title || !body) return;
     
-    if (!modal || !modalTitle || !modalBody) return;
-    
-    // Définir le titre selon la catégorie
     const titles = {
         'top-rated': '<i class="fas fa-trophy"></i> Liste complète - Meilleurs Services',
-        'low-rated': '<i class="fas fa-exclamation-triangle"></i> Liste complète - Services à Améliorer',
         'recent': '<i class="fas fa-clock"></i> Liste complète - Notations Récentes'
     };
+    title.innerHTML = titles[category] || 'Liste complète';
     
-    modalTitle.innerHTML = titles[category] || 'Liste complète des notations';
-    
-    // Charger les notations
-    loadAllRatingsForModal(category, modalBody);
-    
+    body.innerHTML = '<div class="loading">Chargement...</div>';
     modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-}
-
-async function loadAllRatingsForModal(category, container) {
-    try {
-        container.innerHTML = '<div class="loading">Chargement des notations...</div>';
-        
-        let allRatings = [];
-        
-        // Essayer de charger depuis Supabase si disponible
-        if (!DEMO_MODE && supabaseClient) {
-            const { data, error } = await supabaseClient
-                .from('service_ratings')
-                .select('*')
-                .order('created_at', { ascending: false });
-            
-            if (!error && data) {
-                allRatings = data;
-            }
+    
+    // Charger les données
+    setTimeout(() => {
+        const ratings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
+        if (ratings.length === 0) {
+            body.innerHTML = '<div class="empty-state">Aucune notation disponible</div>';
+            return;
         }
         
-        // Mode fallback - données locales
-        if (allRatings.length === 0) {
-            allRatings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
+        let filtered = [...ratings];
+        if (category === 'top-rated') {
+            filtered = filtered.filter(r => r.rating >= 4).sort((a, b) => b.rating - a.rating);
+        } else if (category === 'recent') {
+            filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         }
         
-        displayAllRatings(allRatings, category, container);
-        
-    } catch (error) {
-        console.error('Erreur chargement notations:', error);
-        container.innerHTML = '<div class="error-state">Erreur lors du chargement des notations</div>';
-    }
-}
-
-function displayAllRatings(ratings, category, container) {
-    if (!ratings || ratings.length === 0) {
-        container.innerHTML = '<div class="empty-state">Aucune notation disponible</div>';
-        return;
-    }
-    
-    // Filtrer et trier selon la catégorie
-    let filteredRatings = [...ratings];
-    
-    if (category === 'top-rated') {
-        filteredRatings = filteredRatings
-            .filter(r => r.rating >= 4)
-            .sort((a, b) => b.rating - a.rating);
-    } else if (category === 'low-rated') {
-        filteredRatings = filteredRatings
-            .filter(r => r.rating <= 2)
-            .sort((a, b) => a.rating - b.rating);
-    } else if (category === 'recent') {
-        filteredRatings.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-    }
-    
-    if (filteredRatings.length === 0) {
-        container.innerHTML = '<div class="empty-state">Aucune notation dans cette catégorie</div>';
-        return;
-    }
-    
-    container.innerHTML = `
-        <div class="ratings-full-list">
-            ${filteredRatings.map(rating => {
-                const stars = '★'.repeat(rating.rating) + '☆'.repeat(5 - rating.rating);
-                const date = new Date(rating.created_at).toLocaleDateString('fr-FR');
-                const ratingClass = rating.rating >= 4 ? 'rating-good' : rating.rating >= 3 ? 'rating-average' : 'rating-poor';
-                
-                return `
-                    <div class="rating-full-item">
-                        <div class="rating-full-header">
-                            <h4>${rating.service_name || rating.service}</h4>
-                            <div class="rating-full-stars ${ratingClass}">
-                                ${stars}
-                            </div>
-                        </div>
-                        <div class="rating-full-category">
-                            <i class="fas fa-tag"></i> ${getCategoryLabel(rating.category)}
-                        </div>
-                        ${rating.comment ? `
-                            <div class="rating-full-comment">
-                                <i class="fas fa-comment"></i> "${rating.comment}"
-                            </div>
-                        ` : ''}
-                        <div class="rating-full-footer">
-                            <span><i class="fas fa-calendar"></i> ${date}</span>
-                        </div>
-                    </div>
-                `;
-            }).join('')}
-        </div>
-    `;
-}
-
-function getCategoryLabel(category) {
-    const labels = {
-        'sante': '🏥 Santé',
-        'education': '📚 Éducation',
-        'justice': '⚖️ Justice',
-        'securite': '🛡️ Sécurité',
-        'administration': '🏛️ Administration',
-        'finances': '💰 Finances',
-        'transports': '🚗 Transports',
-        'energie': '⚡ Énergie',
-        'communication': '📡 Communication',
-        'social': '🤝 Social',
-        'agriculture': '🌾 Agriculture',
-        'environnement': '🌳 Environnement',
-        'culture': '🎭 Culture',
-        'autre': '➕ Autre'
-    };
-    return labels[category] || category;
+        body.innerHTML = `<div class="ratings-full-list">${filtered.map(r => {
+            const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+            const date = new Date(r.created_at).toLocaleDateString('fr-FR');
+            const color = r.rating >= 4 ? 'rating-good' : r.rating >= 3 ? 'rating-average' : 'rating-poor';
+            return `<div class="rating-full-item"><div class="rating-full-header"><h4>${r.service_name || r.service}</h4><div class="rating-full-stars ${color}">${stars}</div></div>${r.comment ? `<div class="rating-full-comment"><i class="fas fa-comment"></i> "${r.comment}"</div>` : ''}<div class="rating-full-footer"><span><i class="fas fa-calendar"></i> ${date}</span></div></div>`;
+        }).join('')}</div>`;
+    }, 100);
 }
 
 function closeRatingsModal() {
     const modal = document.getElementById('ratingsListModal');
-    if (modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = '';
-    }
+    if (modal) modal.style.display = 'none';
 }
 
-// Exporter les fonctions
 window.openArticleModal = openArticleModal;
 window.closeArticleModal = closeArticleModal;
 window.showAllRatings = showAllRatings;
 window.closeRatingsModal = closeRatingsModal;
-
-console.log('✅ Fonctions modals chargées');

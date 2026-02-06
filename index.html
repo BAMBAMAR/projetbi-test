@@ -662,7 +662,7 @@
                 <div class="footer-col">
                     <h4>Contact</h4>
                     <div class="footer-links">
-                        <a href="/cdn-cgi/l/email-protection#beddd1d0cadfddcafececcd1d4dbcadcd790d1ccd9" class="footer-link"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="5a3935342e3b392e1a2a2835303f2e38337435283d">[email&#160;protected]</span></a>
+                        <a href="/cdn-cgi/l/email-protection#c2a1adacb6a3a1b682b2b0ada8a7b6a0abecadb0a5" class="footer-link"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="b3d0dcddc7d2d0c7f3c3c1dcd9d6c7d1da9ddcc1d4">[email&#160;protected]</span></a>
                         <a href="tel:+221769455253" class="footer-link"><i class="fas fa-phone"></i> +221 76 945 52 53</a>
                         <a href="#" class="footer-link"><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</a>
                     </div>
@@ -708,7 +708,77 @@
 
     <div id="notification-container"></div>
 
-    <script src="app.js"></script>
-</body>
-</html>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="app.js"></script>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // === 1. COMPTE À REBOURS ===
+        const targetDate = new Date('April 02, 2029 00:00:00').getTime();
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const timeLeft = targetDate - now;
+            
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            
+            if(daysEl) daysEl.textContent = days.toString().padStart(3, '0');
+            if(hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
+            if(minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
+            if(secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // === 2. SÉLECTION CONTEXTUELLE DES SERVICES ===
+        const categorySelect = document.getElementById('service-category');
+        const serviceSelect = document.getElementById('service');
+        const servicesData = document.getElementById('services-data');
+        
+        console.log('Category select:', categorySelect);
+        console.log('Service select:', serviceSelect);
+        console.log('Services data:', servicesData);
+        
+        if (categorySelect && serviceSelect && servicesData) {
+            categorySelect.addEventListener('change', function() {
+                const selectedCategory = this.value;
+                console.log('Selected category:', selectedCategory);
+                
+                serviceSelect.innerHTML = '<option value="">Sélectionnez un service</option>';
+                serviceSelect.disabled = true;
+                
+                if (selectedCategory) {
+                    const categoryServices = servicesData.querySelector(`[data-category="${selectedCategory}"]`);
+                    console.log('Found services:', categoryServices);
+                    
+                    if (categoryServices) {
+                        serviceSelect.disabled = false;
+                        serviceSelect.innerHTML = '<option value="">Choisissez un service</option>' + categoryServices.innerHTML;
+                        console.log('Services loaded successfully');
+                    } else {
+                        console.warn('No services found for category:', selectedCategory);
+                    }
+                }
+            });
+            
+            console.log('Service selector initialized successfully');
+        } else {
+            console.error('Missing elements:', {
+                categorySelect: !!categorySelect,
+                serviceSelect: !!serviceSelect,
+                servicesData: !!servicesData
+            });
+        }
+        
+        // === 3. DATE ACTUELLE ===
+        const currentDateElement = document.getElementById('current-date');
+        if (currentDateElement) {
+            const now = new Date();
        

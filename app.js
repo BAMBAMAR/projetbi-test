@@ -305,9 +305,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 4. Rendre les données
     renderAll();
-    if (typeof renderNews === 'function') {
-        renderNews(CONFIG.news);
-    }
+    renderNewsImproved();
     if (typeof renderNewspapers === 'function') {
         renderNewspapers();
     }
@@ -520,9 +518,7 @@ async function loadData() {
         
         // Rendre tout
         renderAll();
-        if (typeof renderNews === 'function') {
-            renderNews(CONFIG.news);
-        }
+        renderNewsImproved();
         if (typeof renderNewspapers === 'function') {
             renderNewspapers();
         }
@@ -3925,3 +3921,245 @@ function getStatusText(promise) {
     if (promise.isLate) return 'En retard';
     return promise.status;
 }
+// ==========================================
+// AMÉLIORATIONS POUR APP.JS
+// À ajouter à la fin du fichier app.js existant
+// ==========================================
+
+// ========== MODAL POUR ARTICLES COMPLETS ==========
+function openArticleModal(newsId) {
+    const news = CONFIG.news.find(n => n.id === newsId);
+    if (!news) return;
+    
+    // Créer la modal si elle n'existe pas
+    let modal = document.getElementById('articleModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'articleModal';
+        modal.className = 'article-modal';
+        modal.innerHTML = `
+            <div class="article-modal-overlay" onclick="closeArticleModal()"></div>
+            <div class="article-modal-content">
+                <button class="article-modal-close" onclick="closeArticleModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div id="articleModalBody"></div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+    
+    // Remplir le contenu
+    const modalBody = document.getElementById('articleModalBody');
+    modalBody.innerHTML = `
+        ${news.image ? `<img src="${news.image}" alt="${news.title}" class="article-modal-image">` : ''}
+        <h2 class="article-modal-title">${news.title}</h2>
+        <div class="article-modal-meta">
+            <span><i class="fas fa-calendar"></i> ${news.date}</span>
+            <span><i class="fas fa-newspaper"></i> ${news.source || 'Le Soleil'}</span>
+            ${news.category ? `<span><i class="fas fa-tag"></i> ${getCategoryLabel(news.category)}</span>` : ''}
+        </div>
+        <div class="article-modal-content-text">${news.content || news.excerpt}</div>
+        ${news.link && news.link !== '#' ? `
+            <a href="${news.link}" target="_blank" class="article-modal-link">
+                <i class="fas fa-external-link-alt"></i> Lire la source originale
+            </a>
+        ` : ''}
+        <div class="article-modal-share">
+            <strong>Partager cet article :</strong>
+            <div class="article-modal-share-buttons">
+                <button class="social-btn fb" onclick="shareNewsEnriched('${newsId}', 'facebook')" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+                <button class="social-btn tw" onclick="shareNewsEnriched('${newsId}', 'twitter')" title="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </button>
+                <button class="social-btn wa" onclick="shareNewsEnriched('${newsId}', 'whatsapp')" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </button>
+            </div>
+        </div>
+    `;
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeArticleModal() {
+    const modal = document.getElementById('articleModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+function getCategoryLabel(category) {
+    const labels = {
+        general: 'Général',
+        education: 'Éducation',
+        sante: 'Santé',
+        economie: 'Économie',
+        infrastructure: 'Infrastructure',
+        social: 'Social',
+        environnement: 'Environnement',
+        justice: 'Justice',
+        securite: 'Sécurité'
+    };
+    return labels[category] || category;
+}
+
+// ========== PARTAGE ENRICHI D'ACTUALITÉS ==========
+function shareNewsEnriched(newsId, platform) {
+    const news = CONFIG.news.find(n => n.id === newsId);
+    if (!news) return;
+    
+    // Créer un texte enrichi
+    const shareText = `📰 ${news.title}\n\n${news.excerpt || news.content.substring(0, 200) + '...'}\n\n📅 ${news.date} | 📰 ${news.source || 'Le Soleil'}\n🏷️ ${getCategoryLabel(news.category || 'general')}`;
+    const shareUrl = news.link && news.link !== '#' ? news.link : window.location.href;
+    
+    let url = '';
+    switch(platform) {
+        case 'facebook':
+            url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
+            if (news.image) {
+                url += `&picture=${encodeURIComponent(news.image)}`;
+            }
+            break;
+        case 'twitter':
+            const tweetText = `📰 ${news.title}\n\n${news.excerpt ? news.excerpt.substring(0, 180) : news.content.substring(0, 180)}...\n\n${shareUrl}`;
+            url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+            break;
+        case 'whatsapp':
+            url = `https://wa.me/?text=${encodeURIComponent(shareText + '\n\n' + shareUrl)}`;
+            break;
+    }
+    
+    if (url) {
+        window.open(url, '_blank', 'width=600,height=400');
+    }
+}
+
+// ========== PARTAGE ENRICHI DE PROMESSES ==========
+function sharePromiseEnriched(promiseId, platform) {
+    const promise = CONFIG.promises.find(p => p.id === promiseId);
+    if (!promise) return;
+    
+    // Créer un texte très enrichi avec toutes les informations
+    let shareText = `🎯 ENGAGEMENT PRÉSIDENTIEL\n\n`;
+    shareText += `📋 ${promise.title}\n\n`;
+    shareText += `📍 Domaine: ${promise.domain || 'Non spécifié'}\n`;
+    shareText += `📅 Délai: ${promise.delai || 'Non spécifié'}\n`;
+    shareText += `🔖 Statut: ${getStatusLabel(promise.status)}\n\n`;
+    
+    if (promise.description) {
+        shareText += `📝 ${promise.description.substring(0, 200)}${promise.description.length > 200 ? '...' : ''}\n\n`;
+    }
+    
+    if (promise.date_update) {
+        shareText += `🔄 Dernière mise à jour: ${promise.date_update}\n\n`;
+    }
+    
+    shareText += `📊 Suivez tous les engagements sur: ${window.location.origin}`;
+    
+    const shareUrl = `${window.location.origin}${window.location.pathname}#promises`;
+    
+    let url = '';
+    switch(platform) {
+        case 'facebook':
+            url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
+            break;
+        case 'twitter':
+            const tweetText = `🎯 ${promise.title}\n\n📍 ${promise.domain}\n🔖 ${getStatusLabel(promise.status)}\n\n${shareUrl}`;
+            url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+            break;
+        case 'whatsapp':
+            url = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+            break;
+    }
+    
+    if (url) {
+        window.open(url, '_blank', 'width=600,height=400');
+    }
+}
+
+function getStatusLabel(status) {
+    const labels = {
+        'realise': '✅ Réalisé',
+        'encours': '🔄 En cours',
+        'non-lance': '⏳ Non lancé',
+        'retard': '⚠️ En retard'
+    };
+    return labels[status] || status;
+}
+
+// ========== MODAL POUR LISTE COMPLÈTE DES NOTATIONS ==========
+function showRatingsModal(category, categoryLabel) {
+    // À implémenter : afficher toutes les notations d'une catégorie
+    // Cette fonction sera appelée par le bouton "Liste complète"
+    console.log('Affichage des notations complètes pour:', category, categoryLabel);
+    // TODO: Implémenter l'affichage modal
+}
+
+// ========== AMÉLIORATION DU RENDU DES ACTUALITÉS ==========
+function renderNewsImproved() {
+    const newsGrid = document.getElementById('newsGrid');
+    if (!newsGrid) return;
+    
+    if (!CONFIG.news || CONFIG.news.length === 0) {
+        newsGrid.innerHTML = '<div class="empty-state"><i class="fas fa-newspaper"></i><p>Aucune actualité pour le moment</p></div>';
+        return;
+    }
+    
+    newsGrid.innerHTML = CONFIG.news.map(news => {
+        const hasLongContent = news.content && news.content.length > 300;
+        const displayText = hasLongContent ? (news.excerpt || news.content.substring(0, 200) + '...') : (news.content || news.excerpt);
+        
+        return `
+            <div class="news-card">
+                ${news.image ? `
+                    <div class="news-card-image">
+                        <img src="${news.image}" alt="${news.title}" onerror="this.parentElement.style.display='none'">
+                    </div>
+                ` : ''}
+                <div class="news-card-content">
+                    <div class="news-card-header">
+                        <h3 class="news-card-title">${news.title}</h3>
+                        <span class="news-card-date">${news.date}</span>
+                    </div>
+                    <p class="news-card-excerpt">${displayText}</p>
+                    ${hasLongContent ? `
+                        <a href="#" class="news-read-more" onclick="openArticleModal('${news.id}'); return false;">
+                            Lire l'article complet <i class="fas fa-arrow-right"></i>
+                        </a>
+                    ` : ''}
+                    <div class="news-card-footer">
+                        <div class="news-card-meta">
+                            <span><i class="fas fa-newspaper"></i> ${news.source || 'Le Soleil'}</span>
+                            ${news.category ? `<span><i class="fas fa-tag"></i> ${getCategoryLabel(news.category)}</span>` : ''}
+                        </div>
+                        <div class="news-card-actions">
+                            <button class="social-btn-small fb" onclick="shareNewsEnriched('${news.id}', 'facebook')" title="Partager sur Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </button>
+                            <button class="social-btn-small tw" onclick="shareNewsEnriched('${news.id}', 'twitter')" title="Partager sur Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </button>
+                            <button class="social-btn-small wa" onclick="shareNewsEnriched('${news.id}', 'whatsapp')" title="Partager sur WhatsApp">
+                                <i class="fab fa-whatsapp"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// ========== MODIFIER LA FONCTION renderNews EXISTANTE ==========
+// Remplacer l'appel à renderNews par renderNewsImproved
+// Dans la fonction initiale, remplacer:
+// if (typeof renderNews === 'function') { renderNews(CONFIG.news); }
+// Par:
+// renderNewsImproved();
+
+console.log('✅ Améliorations chargées');

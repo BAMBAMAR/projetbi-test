@@ -57,48 +57,7 @@ const CONFIG = {
     END_DATE: new Date('2029-04-02'), // Fin du mandat
     CURRENT_DATE: new Date(),
     promises: [],
-    news: [
-        {
-            id: 'news1',
-            title: 'Lancement du programme de gratuité scolaire',
-            excerpt: 'Le gouvernement lance officiellement le programme de gratuité de l\'enseignement pour tous les élèves du primaire et du secondaire. Cette mesure phare vise à garantir l\'accès à l\'éducation pour tous les enfants sénégalais sans distinction. Les fournitures scolaires seront distribuées gratuitement dès la rentrée prochaine dans toutes les écoles publiques du pays.',
-            content: 'Le gouvernement lance officiellement le programme de gratuité de l\'enseignement pour tous les élèves du primaire et du secondaire. Cette mesure phare vise à garantir l\'accès à l\'éducation pour tous les enfants sénégalais sans distinction. Les fournitures scolaires seront distribuites gratuitement dès la rentrée prochaine dans toutes les écoles publiques du pays. Le ministre de l\'Éducation nationale a précisé que ce programme concerne plus de 3 millions d\'élèves à travers tout le territoire. Des centres de distribution ont été mis en place dans chaque département pour faciliter l\'accès aux fournitures. Cette initiative s\'inscrit dans le cadre des engagements du Projet pour un Sénégal Souverain, Juste et Prospère.',
-            date: '05/02/2026',
-            source: 'Ministère de l\'Éducation',
-            image: 'school',
-            imageUrl: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800'
-        },
-        {
-            id: 'news2',
-            title: 'Nouveau budget alloué à la santé publique',
-            excerpt: 'Une augmentation significative du budget de la santé a été annoncée aujourd\'hui. Cette décision vise à améliorer la qualité des soins dans les hôpitaux et centres de santé à travers le pays. De nouveaux équipements médicaux modernes seront acquis et le personnel soignant bénéficiera de formations continues pour mieux servir les populations.',
-            content: 'Une augmentation significative du budget de la santé a été annoncée aujourd\'hui. Cette décision vise à améliorer la qualité des soins dans les hôpitaux et centres de santé à travers le pays. De nouveaux équipements médicaux modernes seront acquis et le personnel soignant bénéficiera de formations continues pour mieux servir les populations. Le budget passe de 180 milliards à 250 milliards de FCFA, soit une augmentation de 39%. Cette enveloppe permettra notamment de recruter 2000 nouveaux personnels de santé, de construire 50 postes de santé dans les zones rurales et d\'équiper 15 hôpitaux régionaux en matériel de pointe. La ministre de la Santé a souligné que cette mesure s\'inscrit dans la volonté du gouvernement de garantir l\'accès aux soins de santé de qualité pour tous les Sénégalais.',
-            date: '04/02/2026',
-            source: 'Ministère de la Santé',
-            image: 'health',
-            imageUrl: 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=800'
-        },
-        {
-            id: 'news3',
-            title: 'Infrastructure : Inauguration de la nouvelle autoroute Dakar-Saint-Louis',
-            excerpt: 'Le Président a inauguré ce matin la nouvelle autoroute reliant Dakar à Saint-Louis, réduisant le temps de trajet de 5h à 2h30. Cette infrastructure moderne de 260 km contribuera au développement économique du nord du pays et facilitera les échanges commerciaux entre les régions.',
-            content: 'Le Président a inauguré ce matin la nouvelle autoroute reliant Dakar à Saint-Louis, réduisant le temps de trajet de 5h à 2h30. Cette infrastructure moderne de 260 km contribuera au développement économique du nord du pays et facilitera les échanges commerciaux entre les régions. L\'autoroute comprend 4 voies, 3 aires de repos, 15 échangeurs et respecte les normes internationales de sécurité routière. Plus de 5000 emplois ont été créés durant la phase de construction. Le coût total du projet s\'élève à 450 milliards de FCFA, financé en partie par des partenaires internationaux. Cette réalisation marque une étape importante dans le programme d\'infrastructures du gouvernement.',
-            date: '03/02/2026',
-            source: 'Ministère des Infrastructures',
-            image: 'infrastructure',
-            imageUrl: 'https://images.unsplash.com/photo-1558882268-f9d6e5ebf5fa?w=800'
-        },
-        {
-            id: 'news4',
-            title: 'Agriculture : Distribution de semences aux producteurs',
-            excerpt: 'Le ministère de l\'Agriculture lance une vaste campagne de distribution gratuite de semences améliorées aux petits producteurs. Cette initiative vise à augmenter les rendements agricoles et garantir la sécurité alimentaire.',
-            content: 'Le ministère de l\'Agriculture lance une vaste campagne de distribution gratuite de semences améliorées aux petits producteurs. Cette initiative vise à augmenter les rendements agricoles et garantir la sécurité alimentaire.',
-            date: '02/02/2026',
-            source: 'Ministère de l\'Agriculture',
-            image: 'agriculture',
-            imageUrl: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800'
-        }
-    ],
+    news: [],
     press: [
         { id: '1', title: 'Le Soleil', date: '28/01/2026', image: 'https://picsum.photos/seed/soleil/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/6/6d/Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg/200px-Le_Soleil_%28S%C3%A9n%C3%A9gal%29_logo.svg.png' },
         { id: '2', title: 'Sud Quotidien', date: '28/01/2026', image: 'https://picsum.photos/seed/sud/400/533', logo: 'https://upload.wikimedia.org/wikipedia/fr/thumb/5/5b/Sud_Quotidien_logo.svg/200px-Sud_Quotidien_logo.svg.png' },
@@ -1341,7 +1300,7 @@ function updateStatValue(id, value) {
 function updateStatPercentage(id, value, total) {
     const el = document.getElementById(id);
     if (!el) {
-        console.warn(`Element with id "${id}" not found`);
+        // Élément non trouvé - pas d'erreur, juste un avertissement silencieux
         return;
     }
     if (total > 0) {
@@ -2084,101 +2043,28 @@ async function saveVoteToSupabase(promiseId, rating, comment = '') {
 }
 
 // ==========================================
-// RENDER NEWS - VERSION AMÉLIORÉE
+// RENDER NEWS
 // ==========================================
 function renderNews(news) {
     const grid = document.getElementById('newsGrid');
     if (!grid) return;
     
-    grid.innerHTML = news.map(item => {
-        // Limite le texte à 70 mots
-        const words = (item.excerpt || item.content || '').split(' ');
-        const isLong = words.length > 70;
-        const shortText = isLong ? words.slice(0, 70).join(' ') + '...' : words.join(' ');
-        
-        // Déterminer l'image à afficher
-        let imageHtml = '';
-        if (item.imageUrl) {
-            imageHtml = `<img src="${item.imageUrl}" alt="${item.title}" onerror="this.parentElement.innerHTML='<i class=\'fas fa-newspaper fa-3x\'></i>'">`;
-        } else if (item.image) {
-            const iconMap = {
-                'school': 'school',
-                'budget': 'coins',
-                'flag': 'flag',
-                'health': 'heartbeat',
-                'infrastructure': 'building',
-                'agriculture': 'seedling',
-                'economy': 'chart-line'
-            };
-            const icon = iconMap[item.image] || 'newspaper';
-            imageHtml = `<i class="fas fa-${icon} fa-3x"></i>`;
-        } else {
-            imageHtml = `<i class="fas fa-newspaper fa-3x"></i>`;
-        }
-        
-        return `
-            <article class="news-card-enhanced">
-                <div class="news-image-enhanced">
-                    ${imageHtml}
-                </div>
-                <div class="news-content-enhanced">
-                    <h3>${item.title}</h3>
-                    <p>${shortText}</p>
-                    ${isLong ? `
-                        <button class="read-more-btn" onclick="openArticleModal('${item.id}')">
-                            <i class="fas fa-book-open"></i> Lire l'article
-                        </button>
-                    ` : ''}
-                    <div class="news-footer-enhanced">
-                        <span><i class="fas fa-calendar"></i> ${item.date}</span>
-                        <span><i class="fas fa-newspaper"></i> ${item.source}</span>
-                    </div>
-                </div>
-            </article>
-        `;
-    }).join('');
-}
-
-// Fonction pour ouvrir le modal de l'article complet
-function openArticleModal(newsId) {
-    const news = CONFIG.news.find(n => n.id === newsId);
-    if (!news) return;
-    
-    const modal = document.getElementById('articleModal');
-    const modalBody = document.getElementById('articleModalBody');
-    
-    if (!modal || !modalBody) return;
-    
-    modalBody.innerHTML = `
-        <div class="article-full">
-            ${news.imageUrl ? `<img src="${news.imageUrl}" alt="${news.title}" class="article-full-image">` : ''}
-            <h2>${news.title}</h2>
-            <div class="article-meta">
-                <span><i class="fas fa-calendar"></i> ${news.date}</span>
-                <span><i class="fas fa-newspaper"></i> ${news.source}</span>
+    grid.innerHTML = news.map(item => `
+        <article class="news-card">
+            <div class="news-image">
+                <i class="fas fa-${item.image === 'school' ? 'school' : item.image === 'budget' ? 'coins' : 'flag'} fa-3x"></i>
             </div>
-            <div class="article-content">
-                ${news.content || news.excerpt}
+            <div class="news-content">
+                <h3>${item.title}</h3>
+                <p>${item.excerpt}</p>
+                <div class="news-footer">
+                    <span><i class="fas fa-calendar"></i> ${item.date}</span>
+                    <span><i class="fas fa-newspaper"></i> ${item.source}</span>
+                </div>
             </div>
-        </div>
-    `;
-    
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+        </article>
+    `).join('');
 }
-
-// Fonction pour fermer le modal
-function closeArticleModal() {
-    const modal = document.getElementById('articleModal');
-    if (modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = '';
-    }
-}
-
-// Exporter les fonctions
-window.openArticleModal = openArticleModal;
-window.closeArticleModal = closeArticleModal;
 
 // ==========================================
 // RENDER NEWSPAPERS
@@ -3700,8 +3586,6 @@ function shareToPlatform(promiseId, platform) {
         return;
     }
     
-    console.log('Partage de la promesse:', promise); // Debug
-    
     // Créer un message enrichi avec toutes les informations importantes
     const statusEmoji = {
         'Réalisé': '✅',
@@ -3714,7 +3598,7 @@ function shareToPlatform(promiseId, platform) {
     
     // Extraction sécurisée des données
     const engagement = promise.engagement || promise.title || 'Engagement non spécifié';
-    const categorie = promise.categorie || promise.category || promise.domaine || 'Non catégorisé';
+    const categorie = promise.categorie || promise.category || promise.domaine || promise.domain || 'Non catégorisé';
     const statut = promise.statut || promise.status || 'Non défini';
     const echeance = promise.deadline || promise.echeance || promise.date_limite || '';
     
@@ -3744,7 +3628,6 @@ ${deadline ? deadline : ''}
 
 📱 Suivez tous les engagements sur LE PROJET SÉNÉGAL`;
             
-            // Facebook utilise Open Graph meta tags définis dans le HTML
             shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(shareText)}`;
             break;
             
@@ -3800,31 +3683,7 @@ Plateforme citoyenne de suivi transparent des engagements présidentiels.`;
     // Ouvrir dans une nouvelle fenêtre
     window.open(shareUrl, '_blank', 'width=600,height=400');
     
-    // Log pour debug
-    console.log('Partage:', {
-        platform,
-        promise: engagement.substring(0, 50),
-        shareText: shareText.substring(0, 100)
-    });
-    
     showNotification(`Partage vers ${platform === 'x' || platform === 'twitter' ? 'X (Twitter)' : platform} ouvert`, 'success');
-}
-            shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
-            break;
-            
-        default:
-            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}`;
-    }
-    
-    // Ouvrir dans une nouvelle fenêtre
-    window.open(shareUrl, '_blank', 'width=600,height=400');
-    
-    // Log pour debug
-    console.log('Partage:', {
-        platform,
-        promise: promise.engagement.substring(0, 50),
-        shareText: shareText.substring(0, 100)
-    });
 }
 
 // ==========================================
@@ -4382,10 +4241,57 @@ function renderNewsImproved() {
     }).join('');
 }
 
+// ========== MODIFIER LA FONCTION renderNews EXISTANTE ==========
+// Remplacer l'appel à renderNews par renderNewsImproved
+// Dans la fonction initiale, remplacer:
+// if (typeof renderNews === 'function') { renderNews(CONFIG.news); }
+// Par:
+// renderNewsImproved();
+
+console.log('✅ Améliorations chargées');
+
 // ==========================================
-// FONCTIONS POUR LISTE COMPLÈTE DES NOTATIONS
+// FONCTIONS POUR MODALS ACTUALITÉS ET NOTATIONS
 // ==========================================
 
+// Fonction pour ouvrir le modal de l'article complet
+function openArticleModal(newsId) {
+    const news = CONFIG.news.find(n => n.id === newsId);
+    if (!news) return;
+    
+    const modal = document.getElementById('articleModal');
+    const modalBody = document.getElementById('articleModalBody');
+    
+    if (!modal || !modalBody) return;
+    
+    modalBody.innerHTML = `
+        <div class="article-full">
+            ${news.imageUrl ? `<img src="${news.imageUrl}" alt="${news.title}" class="article-full-image">` : ''}
+            <h2>${news.title}</h2>
+            <div class="article-meta">
+                <span><i class="fas fa-calendar"></i> ${news.date}</span>
+                <span><i class="fas fa-newspaper"></i> ${news.source}</span>
+            </div>
+            <div class="article-content">
+                ${news.content || news.excerpt}
+            </div>
+        </div>
+    `;
+    
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+// Fonction pour fermer le modal article
+function closeArticleModal() {
+    const modal = document.getElementById('articleModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+}
+
+// Fonction pour afficher toutes les notations
 function showAllRatings(category) {
     const modal = document.getElementById('ratingsListModal');
     const modalTitle = document.getElementById('ratingsModalTitle');
@@ -4402,40 +4308,41 @@ function showAllRatings(category) {
     
     modalTitle.innerHTML = titles[category] || 'Liste complète des notations';
     
-    // Récupérer toutes les notations
-    let allRatings = [];
-    
-    // Si Supabase est disponible, charger depuis la base
-    if (!DEMO_MODE && supabaseClient) {
-        loadAllRatingsFromSupabase(category, modalBody);
-    } else {
-        // Mode démo - utiliser les données locales
-        allRatings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
-        displayAllRatings(allRatings, category, modalBody);
-    }
+    // Charger les notations
+    loadAllRatingsForModal(category, modalBody);
     
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
 
-async function loadAllRatingsFromSupabase(category, modalBody) {
+async function loadAllRatingsForModal(category, container) {
     try {
-        modalBody.innerHTML = '<div class="loading">Chargement des notations...</div>';
+        container.innerHTML = '<div class="loading">Chargement des notations...</div>';
         
-        let query = supabaseClient
-            .from('service_ratings')
-            .select('*')
-            .order('created_at', { ascending: false });
+        let allRatings = [];
         
-        const { data, error } = await query;
+        // Essayer de charger depuis Supabase si disponible
+        if (!DEMO_MODE && supabaseClient) {
+            const { data, error } = await supabaseClient
+                .from('service_ratings')
+                .select('*')
+                .order('created_at', { ascending: false });
+            
+            if (!error && data) {
+                allRatings = data;
+            }
+        }
         
-        if (error) throw error;
+        // Mode fallback - données locales
+        if (allRatings.length === 0) {
+            allRatings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
+        }
         
-        displayAllRatings(data || [], category, modalBody);
+        displayAllRatings(allRatings, category, container);
         
     } catch (error) {
         console.error('Erreur chargement notations:', error);
-        modalBody.innerHTML = '<div class="error-state">Erreur lors du chargement des notations</div>';
+        container.innerHTML = '<div class="error-state">Erreur lors du chargement des notations</div>';
     }
 }
 
@@ -4470,12 +4377,13 @@ function displayAllRatings(ratings, category, container) {
             ${filteredRatings.map(rating => {
                 const stars = '★'.repeat(rating.rating) + '☆'.repeat(5 - rating.rating);
                 const date = new Date(rating.created_at).toLocaleDateString('fr-FR');
+                const ratingClass = rating.rating >= 4 ? 'rating-good' : rating.rating >= 3 ? 'rating-average' : 'rating-poor';
                 
                 return `
                     <div class="rating-full-item">
                         <div class="rating-full-header">
-                            <h4>${rating.service_name}</h4>
-                            <div class="rating-full-stars ${getRatingClass(rating.rating)}">
+                            <h4>${rating.service_name || rating.service}</h4>
+                            <div class="rating-full-stars ${ratingClass}">
                                 ${stars}
                             </div>
                         </div>
@@ -4497,23 +4405,21 @@ function displayAllRatings(ratings, category, container) {
     `;
 }
 
-function getRatingClass(rating) {
-    if (rating >= 4) return 'rating-good';
-    if (rating >= 3) return 'rating-average';
-    return 'rating-poor';
-}
-
 function getCategoryLabel(category) {
     const labels = {
         'sante': '🏥 Santé',
         'education': '📚 Éducation',
-        'justice': '⚖️ Justice & Sécurité',
+        'justice': '⚖️ Justice',
+        'securite': '🛡️ Sécurité',
         'administration': '🏛️ Administration',
-        'transport': '🚗 Transport & Mobilité',
-        'eau-energie': '💧 Eau & Énergie',
-        'social': '🤝 Services Sociaux',
+        'finances': '💰 Finances',
+        'transports': '🚗 Transports',
+        'energie': '⚡ Énergie',
+        'communication': '📡 Communication',
+        'social': '🤝 Social',
+        'agriculture': '🌾 Agriculture',
         'environnement': '🌳 Environnement',
-        'culture': '🎭 Culture & Sport',
+        'culture': '🎭 Culture',
         'autre': '➕ Autre'
     };
     return labels[category] || category;
@@ -4528,8 +4434,9 @@ function closeRatingsModal() {
 }
 
 // Exporter les fonctions
+window.openArticleModal = openArticleModal;
+window.closeArticleModal = closeArticleModal;
 window.showAllRatings = showAllRatings;
 window.closeRatingsModal = closeRatingsModal;
 
-console.log('✅ Améliorations chargées');
-
+console.log('✅ Fonctions modals chargées');

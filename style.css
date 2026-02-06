@@ -4775,115 +4775,6 @@ button.social-btn {
 }
 
 /* ==========================================
-   ACTUALITÉS AMÉLIORÉES
-   ========================================== */
-
-.news-grid-enhanced {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 30px;
-    margin-top: 30px;
-}
-
-.news-card-enhanced {
-    background: white;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-}
-
-.news-card-enhanced:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 35px rgba(0,0,0,0.15);
-}
-
-.news-image-enhanced {
-    width: 100%;
-    height: 220px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.news-image-enhanced img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.news-image-enhanced i {
-    color: rgba(255,255,255,0.9);
-    font-size: 4rem;
-}
-
-.news-content-enhanced {
-    padding: 25px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.news-content-enhanced h3 {
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-    color: #1a3a3a;
-    line-height: 1.4;
-}
-
-.news-content-enhanced p {
-    color: #555;
-    line-height: 1.7;
-    margin-bottom: 15px;
-    flex: 1;
-}
-
-.read-more-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin: 15px 0;
-    font-size: 0.95rem;
-}
-
-.read-more-btn:hover {
-    transform: translateX(5px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-}
-
-.news-footer-enhanced {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 15px;
-    border-top: 1px solid #e0e0e0;
-    font-size: 0.85rem;
-    color: #888;
-}
-
-.news-footer-enhanced span {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.news-footer-enhanced i {
-    color: #667eea;
-}
-
-/* ==========================================
    MODAL ARTICLE COMPLET
    ========================================== */
 
@@ -5164,10 +5055,6 @@ button.social-btn {
         justify-content: center;
     }
     
-    .news-grid-enhanced {
-        grid-template-columns: 1fr;
-    }
-    
     .article-full {
         padding: 20px;
     }
@@ -5199,18 +5086,4 @@ button.social-btn {
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-/* Loading états */
-.loading-small {
-    text-align: center;
-    padding: 20px;
-    color: #999;
-}
-
-.error-state {
-    text-align: center;
-    padding: 40px;
-    color: #e74c3c;
-    font-weight: 500;
 }

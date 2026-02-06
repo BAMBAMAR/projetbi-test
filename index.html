@@ -33,8 +33,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     
     <link rel="stylesheet" href="style.css">
-</head>
-<body>
 
 <!-- NOUVEAU MENU MODERNE -->
 <nav class="modern-nav" id="modernNav">
@@ -66,7 +64,6 @@
     </button>
   </div>
 </nav>
-
     <header class="header" id="header">
         <div class="header-container">
             <div class="header-text-side">                           
@@ -171,301 +168,485 @@
                     </div>
                     <div class="stat-footer"><div class="stat-percentage" id="non-lance-percentage">0%</div></div>
                 </div>
-            </div>
-
-            <div class="animated-counter" id="animatedCounter">
-                <div class="counter-display" id="counterDisplay">
-                    <div class="counter-icon">📊</div>
-                    <div class="counter-text">
-                        <div id="counterValue">0</div>
-                        <div id="counterLabel">Total Engagements</div>
+                
+                <div class="stat-card stat-warning">
+                    <div class="stat-header">
+                        <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="stat-trend negative"><i class="fas fa-arrow-down"></i></div>
                     </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="retard">0</div>
+                        <div class="stat-label">⚠️ En Retard</div>
+                    </div>
+                    <div class="stat-footer"><div class="stat-percentage" id="retard-percentage">0%</div></div>
+                </div>
+                
+                <div class="stat-card stat-rate">
+                    <div class="stat-header">
+                        <div class="stat-icon"><i class="fas fa-percentage"></i></div>
+                        <div class="stat-trend positive"><i class="fas fa-arrow-up"></i></div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="taux-realisation">0%</div>
+                        <div class="stat-label">📈 Taux Réalisation</div>
+                    </div>
+                    <div class="stat-footer"><div class="stat-label">Progression</div></div>
+                </div>
+                
+                <div class="stat-card stat-rating">
+                    <div class="stat-header">
+                        <div class="stat-icon"><i class="fas fa-star"></i></div>
+                        <div class="stat-trend neutral"><i class="fas fa-equals"></i></div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="moyenne-notes">0.0</div>
+                        <div class="stat-label">⭐ Note Moyenne</div>
+                    </div>
+                    <div class="stat-footer"><div class="stat-subvalue" id="votes-total">0 votes</div></div>
+                </div>
+                
+                <div class="stat-card stat-update">
+                    <div class="stat-header">
+                        <div class="stat-icon"><i class="fas fa-history"></i></div>
+                        <div class="stat-trend positive"><i class="fas fa-arrow-up"></i></div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="avec-maj">0</div>
+                        <div class="stat-label">📋 Avec MAJ</div>
+                    </div>
+                    <div class="stat-footer"><div class="stat-percentage" id="avec-maj-percentage">0%</div></div>
+                </div>
+                
+                <div class="stat-card stat-time">
+                    <div class="stat-header">
+                        <div class="stat-icon"><i class="fas fa-stopwatch"></i></div>
+                        <div class="stat-trend neutral"><i class="fas fa-equals"></i></div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-value" id="delai-moyen">0j</div>
+                        <div class="stat-label">⏱️ Retard Moyen</div>
+                    </div>
+                    <div class="stat-footer"><div class="stat-label">Restant</div></div>
+                </div>
+                
+                <div class="stat-card stat-domain">
+                    <div class="stat-header">
+                        <div class="stat-icon"><i class="fas fa-building"></i></div>
+                        <div class="stat-trend neutral"><i class="fas fa-equals"></i></div>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-label">🏛️ Domaine Principal</div>
+                        <div class="stat-value" id="domaine-principal">-</div>
+                    </div>
+                    <div class="stat-footer"><div class="stat-subvalue" id="domaine-count">0 engagements</div></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION PROMESSE DU JOUR -->
-    <section class="section-daily" id="daily">
+    <section class="daily-promise-section" id="daily">
         <div class="container">
             <div class="section-header-modern">
-                <h2 class="section-title">
-                    <i class="fas fa-calendar-day"></i>
-                    Promesse du Jour
-                </h2>
-                <p class="section-subtitle">Mise en lumière quotidienne d'un engagement présidentiel</p>
+                <h2 class="section-title"><i class="fas fa-sun"></i> Promesse du Jour</h2>
             </div>
-            
-            <div id="dailyPromiseCard" class="daily-promise-card">
-                <div class="loading">Chargement de la promesse du jour...</div>
+            <div class="daily-promise-card" id="dailyPromise">
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Chargement de la promesse du jour...</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- PROMESSES -->
+    <section class="promises-carousel-section" id="promises-carousel">
+        <div class="container">
+            <div class="section-header-modern">
+                <h2 class="section-title"><i class="fas fa-star"></i> Promesses en Vedette</h2>
+                <div class="section-actions">
+                    <button id="carouselAutoPlayToggle" class="btn-view-all">
+                        <i class="fas fa-pause"></i> Pause
+                    </button>
+                </div>
+            </div>
+            <div class="carousel-controls">
+                <div id="promisesCarouselGrid" class="promises-grid">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Chargement des promesses...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-dots" id="carouselDots"></div>
+        </div>
+    </section>
+
     <section class="promises-section" id="promises">
         <div class="container">
             <div class="section-header-modern">
-                <h2 class="section-title">
-                    <i class="fas fa-tasks"></i>
-                    Tous les Engagements
-                </h2>
-            </div>
-
-            <div class="filter-bar">
-                <div class="search-container">
-                    <input type="text" id="searchPromise" placeholder="Rechercher un engagement..." class="search-input">
-                    <i class="fas fa-search search-icon"></i>
+                <h2 class="section-title"><i class="fas fa-list-check"></i> Tous les Engagements</h2>
+                <div class="section-actions">
+                    <button class="filter-toggle-btn" id="filterToggleBtn">
+                        <i class="fas fa-filter"></i> Filtres
+                    </button>
                 </div>
-                
-                <select id="filterCategory" class="filter-select">
-                    <option value="">Toutes les catégories</option>
-                    <option value="Education">Education</option>
-                    <option value="Santé">Santé</option>
-                    <option value="Economie">Économie</option>
-                    <option value="Agriculture">Agriculture</option>
-                    <option value="Infrastructure">Infrastructure</option>
-                    <option value="Energie">Énergie</option>
-                    <option value="Justice">Justice</option>
-                    <option value="Sécurité">Sécurité</option>
-                    <option value="Environnement">Environnement</option>
-                    <option value="Social">Social</option>
-                    <option value="Gouvernance">Gouvernance</option>
-                    <option value="Culture">Culture</option>
-                </select>
-                
-                <select id="filterStatus" class="filter-select">
-                    <option value="">Tous les statuts</option>
-                    <option value="Réalisé">✅ Réalisé</option>
-                    <option value="En cours">🔄 En cours</option>
-                    <option value="Non lancé">⏳ Non lancé</option>
-                    <option value="En retard">⚠️ En retard</option>
-                </select>
-                
-                <button onclick="resetFilters()" class="reset-filters-btn">
-                    <i class="fas fa-redo"></i> Réinitialiser
-                </button>
-            </div>
-
-            <div id="promisesGrid" class="promises-grid">
-                <div class="loading">Chargement des engagements...</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION ACTUALITÉS AMÉLIORÉE -->
-    <section class="section-news" id="news">
-        <div class="container">
-            <div class="section-header-modern">
-                <h2 class="section-title">
-                    <i class="fas fa-newspaper"></i>
-                    Actualités du Projet
-                </h2>
-                <p class="section-subtitle">Les dernières nouvelles concernant les engagements présidentiels</p>
             </div>
             
-            <div id="newsGrid" class="news-grid-enhanced">
-                <div class="loading">Chargement des actualités...</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- REVUE DE PRESSE -->
-    <section class="section-press" id="press">
-        <div class="container">
-            <div class="section-header-modern">
-                <h2 class="section-title">
-                    <i class="fas fa-newspaper"></i>
-                    Revue de Presse
-                </h2>
-                <p class="section-subtitle">Les Unes des journaux sénégalais</p>
-            </div>
-
-            <div class="newspapers-carousel">
-                <button class="carousel-btn carousel-prev" id="pressPrev">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                
-                <div class="newspapers-wrapper" id="newspapersWrapper">
-                    <div id="newspapersGrid" class="newspapers-grid">
-                        <div class="loading">Chargement des journaux...</div>
+            <div class="filters-section" id="filtersSection">
+                <div class="filters-container">
+                    <div class="filter-group">
+                        <label for="filter-status"><i class="fas fa-tag"></i> Statut</label>
+                        <select class="filter-select" id="filter-status">
+                            <option value="">Tous</option>
+                            <option value="✅ Réalisé">✅ Réalisé</option>
+                            <option value="🔄 En cours">🔄 En cours</option>
+                            <option value="⏳ Non lancé">⏳ Non lancé</option>
+                            <option value="En retard">⚠️ En retard</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filter-domain"><i class="fas fa-building"></i> Domaine</label>
+                        <select class="filter-select" id="filter-domain">
+                            <option value="">Tous les domaines</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filter-search"><i class="fas fa-search"></i> Rechercher</label>
+                        <input type="text" class="filter-input" id="filter-search" placeholder="Rechercher une promesse...">
+                    </div>
+                    <div class="filter-actions">
+                        <button class="btn-reset" id="resetFilters"><i class="fas fa-redo"></i> Réinitialiser</button>
+                        <button class="btn-export" onclick="exportData('csv')"><i class="fas fa-download"></i> Exporter</button>
                     </div>
                 </div>
-                
-                <button class="carousel-btn carousel-next" id="pressNext">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+            </div>
+            
+            <div class="promises-results">
+                <div class="results-info">
+                    <span id="results-count">0 engagement(s) trouvé(s)</span>
+                </div>
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="grid" title="Vue grille"><i class="fas fa-th-large"></i></button>
+                    <button class="view-btn" data-view="list" title="Vue liste"><i class="fas fa-bars"></i></button>
+                </div>
+                <div id="promisesGrid" class="promises-grid">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Chargement des engagements...</p>
+                    </div>
+                </div>
+                <div class="show-more-container">
+                    <button id="showMoreBtn"><i class="fas fa-arrow-down"></i> Afficher plus</button>
+                    <button id="showLessBtn"><i class="fas fa-arrow-up"></i> Afficher moins</button>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION NOTATION DES SERVICES -->
-    <section class="section-rating" id="rating">
+    <section class="news-section" id="news">
         <div class="container">
             <div class="section-header-modern">
-                <h2 class="section-title">
-                    <i class="fas fa-star"></i>
-                    Notez un Service Public
-                </h2>
-                <p class="section-subtitle">Votre voix compte pour améliorer les services publics</p>
+                <h2 class="section-title"><i class="fas fa-bullhorn"></i> Actualités</h2>
+                <a href="#" class="btn-view-all">Voir tout <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div id="newsGrid" class="news-grid">
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Chargement des actualités...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="press-section" id="press">
+        <div class="container">
+            <div class="section-header-modern">
+                <h2 class="section-title"><i class="fas fa-newspaper"></i> Revue de Presse</h2>
+            </div>
+            <div class="section-header-modern">
+                <h3 style="font-size: 1.3rem; margin: 0;"><i class="fas fa-images"></i> Éditions du Jour</h3>
+                <div class="section-actions">
+                    <button id="autoPlayToggle" class="btn-view-all"><i class="fas fa-pause"></i> Pause</button>
+                </div>
+            </div>
+            <div class="press-carousel-container">
+                <div id="pressCarousel" class="press-carousel"></div>
+                <button class="carousel-btn prev" id="prevBtn" title="Précédent"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-btn next" id="nextBtn" title="Suivant"><i class="fas fa-chevron-right"></i></button>
+                <div class="carousel-indicators" id="carouselIndicators"></div>
+            </div>
+            <div class="section-header-modern" style="margin-top: var(--spacing-xl);">
+                <h3 style="font-size: 1.3rem; margin: 0;"><i class="fas fa-th-large"></i> Tous les Quotidiens</h3>
+            </div>
+            <div id="newspapersGrid" class="newspapers-grid"></div>
+        </div>
+    </section>
+
+    <section class="rating-section" id="rating">
+        <div class="container">
+            <div class="section-header-modern">
+                <h2 class="section-title"><i class="fas fa-star-half-alt"></i> Notation des Services Publics</h2>
             </div>
 
-            <div class="rating-container">
-                <div class="rating-form-container">
-                    <form id="ratingForm" class="rating-form">
-                        <div class="form-group">
-                            <label for="service-category"><i class="fas fa-list"></i> Catégorie de service</label>
-                            <select id="service-category" required>
-                                <option value="">Sélectionnez une catégorie</option>
-                                <option value="sante">🏥 Santé</option>
-                                <option value="education">📚 Éducation</option>
-                                <option value="justice">⚖️ Justice & Sécurité</option>
-                                <option value="administration">🏛️ Administration</option>
-                                <option value="transport">🚗 Transport & Mobilité</option>
-                                <option value="eau-energie">💧 Eau & Énergie</option>
-                                <option value="social">🤝 Services Sociaux</option>
-                                <option value="environnement">🌳 Environnement</option>
-                                <option value="culture">🎭 Culture & Sport</option>
-                                <option value="autre">➕ Autre</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="service"><i class="fas fa-building"></i> Service concerné</label>
-                            <select id="service" disabled required>
-                                <option value="">Sélectionnez d'abord une catégorie</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="rating-stars"><i class="fas fa-star"></i> Note globale</label>
-                            <div class="star-rating" id="rating-stars">
-                                <i class="far fa-star" data-rating="1"></i>
-                                <i class="far fa-star" data-rating="2"></i>
-                                <i class="far fa-star" data-rating="3"></i>
-                                <i class="far fa-star" data-rating="4"></i>
-                                <i class="far fa-star" data-rating="5"></i>
-                            </div>
-                            <input type="hidden" id="rating-value" name="rating" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="comment"><i class="fas fa-comment"></i> Votre commentaire (optionnel)</label>
-                            <textarea id="comment" rows="4" placeholder="Décrivez votre expérience..."></textarea>
-                        </div>
-
-                        <button type="submit" class="submit-rating-btn">
-                            <i class="fas fa-paper-plane"></i> Soumettre ma notation
-                        </button>
-                    </form>
+            <div class="rating-form-card" style="margin-bottom: var(--spacing-2xl);">
+                <div class="rating-form-header">
+                    <h3><i class="fas fa-pencil-alt"></i> Donnez votre avis</h3>
+                    <p>Évaluez votre expérience avec un service public sénégalais</p>
                 </div>
+                
+                <form class="rating-form" id="ratingForm">
+                    <div class="form-group">
+                        <label for="service-category"><i class="fas fa-folder"></i> Catégorie de service *</label>
+                        <select class="form-select" id="service-category" required>
+                            <option value="">Choisissez une catégorie</option>
+                            <option value="sante">🏥 Santé & Hôpitaux</option>
+                            <option value="education">🎓 Éducation & Formation</option>
+                            <option value="securite">👮‍♂️ Sécurité & Défense</option>
+                            <option value="justice">⚖️ Justice & Droit</option>
+                            <option value="administration">🏛️ Administration & État Civil</option>
+                            <option value="finances">💰 Finances & Impôts</option>
+                            <option value="transports">🚌 Transports & Mobilité</option>
+                            <option value="energie">⚡ Énergie & Eau</option>
+                            <option value="communication">📞 Communication & Numérique</option>
+                            <option value="social">🤝 Action Sociale & Solidarité</option>
+                            <option value="emploi">💼 Emploi & Formation Pro</option>
+                            <option value="environnement">🌿 Environnement & Cadre de Vie</option>
+                            <option value="culture">🎭 Culture & Tourisme</option>
+                            <option value="autre">📋 Autre Service Public</option>
+                        </select>
+                    </div>
 
-                <!-- RÉSULTATS DES NOTATIONS CITOYENNES -->
-                <div class="rating-results-container">
-                    <h3><i class="fas fa-chart-bar"></i> Résultats des notations citoyennes</h3>
+                    <div class="form-group">
+                        <label for="service"><i class="fas fa-building"></i> Service concerné *</label>
+                        <select class="form-select" id="service" required disabled>
+                            <option value="">Sélectionnez d'abord une catégorie</option>
+                        </select>
+                    </div>
                     
-                    <div class="results-tabs">
-                        <button class="tab-btn active" data-tab="top-rated">
-                            <i class="fas fa-trophy"></i> Meilleurs Services
-                        </button>
-                        <button class="tab-btn" data-tab="low-rated">
-                            <i class="fas fa-exclamation-triangle"></i> À Améliorer
-                        </button>
-                        <button class="tab-btn" data-tab="recent">
-                            <i class="fas fa-clock"></i> Récents
-                        </button>
-                    </div>
-
-                    <div class="tab-content active" id="top-rated">
-                        <div id="topRatedList" class="rating-items">
-                            <div class="loading-small">Chargement...</div>
+                    <div class="rating-criteria-grid">
+                        <div class="criteria-item">
+                            <label><i class="fas fa-wheelchair"></i> Accessibilité</label>
+                            <div class="stars-rating" data-criteria="accessibility">
+                                <i class="far fa-star" data-value="1"></i>
+                                <i class="far fa-star" data-value="2"></i>
+                                <i class="far fa-star" data-value="3"></i>
+                                <i class="far fa-star" data-value="4"></i>
+                                <i class="far fa-star" data-value="5"></i>
+                                <input type="hidden" name="accessibility" id="accessibility" value="3">
+                            </div>
+                            <div class="criteria-description">Facilité d'accès physique et numérique</div>
                         </div>
-                        <button class="view-all-btn" onclick="showAllRatings('top-rated')">
-                            <i class="fas fa-list"></i> Liste complète
-                        </button>
-                    </div>
-
-                    <div class="tab-content" id="low-rated">
-                        <div id="lowRatedList" class="rating-items">
-                            <div class="loading-small">Chargement...</div>
+                        <div class="criteria-item">
+                            <label><i class="fas fa-handshake"></i> Accueil</label>
+                            <div class="stars-rating" data-criteria="welcome">
+                                <i class="far fa-star" data-value="1"></i>
+                                <i class="far fa-star" data-value="2"></i>
+                                <i class="far fa-star" data-value="3"></i>
+                                <i class="far fa-star" data-value="4"></i>
+                                <i class="far fa-star" data-value="5"></i>
+                                <input type="hidden" name="welcome" id="welcome" value="3">
+                            </div>
+                            <div class="criteria-description">Courtoisie et professionnalisme du personnel</div>
                         </div>
-                        <button class="view-all-btn" onclick="showAllRatings('low-rated')">
-                            <i class="fas fa-list"></i> Liste complète
-                        </button>
+                        <div class="criteria-item">
+                            <label><i class="fas fa-bolt"></i> Efficacité</label>
+                            <div class="stars-rating" data-criteria="efficiency">
+                                <i class="far fa-star" data-value="1"></i>
+                                <i class="far fa-star" data-value="2"></i>
+                                <i class="far fa-star" data-value="3"></i>
+                                <i class="far fa-star" data-value="4"></i>
+                                <i class="far fa-star" data-value="5"></i>
+                                <input type="hidden" name="efficiency" id="efficiency" value="3">
+                            </div>
+                            <div class="criteria-description">Rapidité et qualité du traitement</div>
+                        </div>
+                        <div class="criteria-item">
+                            <label><i class="fas fa-eye"></i> Transparence</label>
+                            <div class="stars-rating" data-criteria="transparency">
+                                <i class="far fa-star" data-value="1"></i>
+                                <i class="far fa-star" data-value="2"></i>
+                                <i class="far fa-star" data-value="3"></i>
+                                <i class="far fa-star" data-value="4"></i>
+                                <i class="far fa-star" data-value="5"></i>
+                                <input type="hidden" name="transparency" id="transparency" value="3">
+                            </div>
+                            <div class="criteria-description">Clarté des procédures et informations</div>
+                        </div>
                     </div>
+                    
+                    <div class="form-group">
+                        <label for="comment"><i class="fas fa-comment"></i> Commentaire (optionnel)</label>
+                        <textarea class="form-textarea" id="comment" name="comment" rows="3" placeholder="Partagez votre expérience détaillée avec ce service..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit-rating"><i class="fas fa-paper-plane"></i> Soumettre ma notation</button>
+                </form>
+            </div>
 
-                    <div class="tab-content" id="recent">
-                        <div id="recentList" class="rating-items">
-                            <div class="loading-small">Chargement...</div>
+            <div class="rating-results-card">
+                <div class="rating-results-header">
+                    <h3><i class="fas fa-chart-bar"></i> Résultats des notations citoyennes</h3>
+                </div>
+                
+                <div class="rating-results-grid">
+                    <div class="rating-results-card">
+                        <h4><i class="fas fa-chart-pie"></i> Statistiques Globales</h4>
+                        <div class="stats-overview-grid">
+                            <div class="stat-item-card"><div class="stat-value-card" id="totalVotes">0</div><div class="stat-label-card">Votes totaux</div></div>
+                            <div class="stat-item-card"><div class="stat-value-card" id="totalServices">0</div><div class="stat-label-card">Services évalués</div></div>
+                            <div class="stat-item-card"><div class="stat-value-card" id="avgRating">0.0</div><div class="stat-label-card">Note moyenne</div></div>
+                        </div>
+                    </div>
+                    
+                    <div class="rating-results-card">
+                        <h4><i class="fas fa-history"></i> Dernières Notations</h4>
+                        <div id="recentRatings" class="recent-ratings">
+                            <div class="loading-state"><div class="spinner"></div><p>Chargement...</p></div>
                         </div>
                         <button class="view-all-btn" onclick="showAllRatings('recent')">
                             <i class="fas fa-list"></i> Liste complète
                         </button>
                     </div>
+                    
+                    <div class="rating-results-card">
+                        <h4><i class="fas fa-trophy"></i> Meilleurs Services</h4>
+                        <div id="topServices" class="top-services-grid">
+                            <div class="loading-state"><div class="spinner"></div><p>Chargement...</p></div>
+                        </div>
+                        <button class="view-all-btn" onclick="showAllRatings('top-rated')">
+                            <i class="fas fa-list"></i> Liste complète
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- DONNÉES DES SERVICES (cachées) -->
     <div id="services-data" style="display: none;">
         <div data-category="sante">
-            <option value="Hôpital régional">Hôpital régional</option>
+            <option value="Hôpital public">Hôpital public</option>
+            <option value="Centre hospitalier régional">Centre hospitalier régional</option>
             <option value="Centre de santé">Centre de santé</option>
-            <option value="Poste de santé">Poste de santé</option>
-            <option value="Pharmacie régionale">Pharmacie régionale</option>
-            <option value="District sanitaire">District sanitaire</option>
-            <option value="SAMU / Urgences">SAMU / Urgences</option>
+            <option value="Pharmacie publique (SEN-Pharmacie)">Pharmacie publique (SEN-Pharmacie)</option>
+            <option value="SAMU (Service d'Assistance Médicale Urgente)">SAMU (Service d'Assistance Médicale Urgente)</option>
+            <option value="Centre national de Transfusion sanguine">Centre national de Transfusion sanguine</option>
+            <option value="Centre national d'Oncologie">Centre national d'Oncologie</option>
+            <option value="Laboratoire d'analyses médicales public">Laboratoire d'analyses médicales public</option>
+            <option value="Centre psychiatrique">Centre psychiatrique</option>
+            <option value="Service de Protection maternelle et infantile">Service de Protection maternelle et infantile</option>
         </div>
         <div data-category="education">
-            <option value="École primaire publique">École primaire publique</option>
-            <option value="Collège d'enseignement moyen (CEM)">Collège d'enseignement moyen (CEM)</option>
-            <option value="Lycée">Lycée</option>
+            <option value="École publique (élémentaire)">École publique (élémentaire)</option>
+            <option value="Collège public">Collège public</option>
+            <option value="Lycée public">Lycée public</option>
+            <option value="Université publique (UCAD, UGB, etc.)">Université publique (UCAD, UGB, etc.)</option>
+            <option value="Institut Islamique de Dakar">Institut Islamique de Dakar</option>
+            <option value="École nationale d'Administration (ENA)">École nationale d'Administration (ENA)</option>
+            <option value="Centre de Formation judiciaire">Centre de Formation judiciaire</option>
+            <option value="École nationale de Cybersécurité">École nationale de Cybersécurité</option>
+            <option value="Centre régional des Œuvres universitaires">Centre régional des Œuvres universitaires</option>
             <option value="Inspection d'Académie">Inspection d'Académie</option>
-            <option value="Inspection départementale">Inspection départementale</option>
-            <option value="Centre de formation professionnelle">Centre de formation professionnelle</option>
-            <option value="Université / Institut supérieur">Université / Institut supérieur</option>
+        </div>
+        <div data-category="securite">
+            <option value="Commissariat de police">Commissariat de police</option>
+            <option value="Brigade de gendarmerie">Brigade de gendarmerie</option>
+            <option value="Police judiciaire (PJ)">Police judiciaire (PJ)</option>
+            <option value="Police routière">Police routière</option>
+            <option value="Sapeurs-pompiers / Protection civile">Sapeurs-pompiers / Protection civile</option>
+            <option value="Douanes (poste frontalier)">Douanes (poste frontalier)</option>
+            <option value="Direction de la Surveillance du Territoire">Direction de la Surveillance du Territoire</option>
+            <option value="Centre national de coordination des alertes">Centre national de coordination des alertes</option>
+            <option value="Administration pénitentiaire">Administration pénitentiaire</option>
+            <option value="Brigade nationale des sapeurs-pompiers">Brigade nationale des sapeurs-pompiers</option>
         </div>
         <div data-category="justice">
-            <option value="Tribunal départemental">Tribunal départemental</option>
-            <option value="Tribunal régional">Tribunal régional</option>
-            <option value="Commissariat de police">Commissariat de police</option>
-            <option value="Gendarmerie">Gendarmerie</option>
-            <option value="Prison / Maison d'arrêt">Prison / Maison d'arrêt</option>
-            <option value="Service des Impôts">Service des Impôts</option>
+            <option value="Tribunal (civil, pénal, commerce)">Tribunal (civil, pénal, commerce)</option>
+            <option value="Maison de justice">Maison de justice</option>
+            <option value="Centre national des Archives judiciaires">Centre national des Archives judiciaires</option>
+            <option value="Médiateur de la République">Médiateur de la République</option>
+            <option value="Commission nationale des Droits de l'Homme">Commission nationale des Droits de l'Homme</option>
+            <option value="Commission de Protection des Données Personnelles">Commission de Protection des Données Personnelles</option>
+            <option value="Direction de la Justice de Proximité">Direction de la Justice de Proximité</option>
+            <option value="Service d'aide juridictionnelle">Service d'aide juridictionnelle</option>
         </div>
         <div data-category="administration">
-            <option value="Préfecture">Préfecture</option>
-            <option value="Sous-préfecture">Sous-préfecture</option>
             <option value="Mairie">Mairie</option>
-            <option value="État-civil">État-civil</option>
-            <option value="Service des Affaires sociales">Service des Affaires sociales</option>
-            <option value="Agence Nationale de la Case des Tout-Petits">Agence Nationale de la Case des Tout-Petits</option>
+            <option value="Préfecture / Sous-préfecture">Préfecture / Sous-préfecture</option>
+            <option value="Service d'état civil (naissance, mariage)">Service d'état civil (naissance, mariage)</option>
+            <option value="Agence nationale de l'état civil">Agence nationale de l'état civil</option>
+            <option value="Archives du Sénégal">Archives du Sénégal</option>
+            <option value="Imprimerie nationale">Imprimerie nationale</option>
+            <option value="Direction générale de l'Administration territoriale">Direction générale de l'Administration territoriale</option>
+            <option value="Service du Protocole d'État">Service du Protocole d'État</option>
         </div>
-        <div data-category="transport">
-            <option value="Gare routière">Gare routière</option>
-            <option value="Agence de transport AFTU/DDD">Agence de transport AFTU/DDD</option>
-            <option value="Station de taxis">Station de taxis</option>
-            <option value="Centre de contrôle technique">Centre de contrôle technique</option>
-            <option value="Préfecture (permis de conduire)">Préfecture (permis de conduire)</option>
+        <div data-category="finances">
+            <option value="Trésor public (Trésorerie régionale)">Trésor public (Trésorerie régionale)</option>
+            <option value="Centre des Impôts (DGID)">Centre des Impôts (DGID)</option>
+            <option value="Douanes (dédouanement)">Douanes (dédouanement)</option>
+            <option value="Caisse des Dépôts et Consignations">Caisse des Dépôts et Consignations</option>
+            <option value="Banque agricole">Banque agricole</option>
+            <option value="Banque de l'Habitat du Sénégal">Banque de l'Habitat du Sénégal</option>
+            <option value="Office de recouvrement">Office de recouvrement</option>
+            <option value="Direction générale du Budget">Direction générale du Budget</option>
         </div>
-        <div data-category="eau-energie">
-            <option value="Agence SDE (Eau)">Agence SDE (Eau)</option>
-            <option value="Agence SENELEC (Électricité)">Agence SENELEC (Électricité)</option>
-            <option value="Forage / Point d'eau">Forage / Point d'eau</option>
+        <div data-category="transports">
+            <option value="Transport urbain (Dakar Dem Dikk)">Transport urbain (Dakar Dem Dikk)</option>
+            <option value="Train Express Régional (TER)">Train Express Régional (TER)</option>
+            <option value="Chemins de Fer du Sénégal">Chemins de Fer du Sénégal</option>
+            <option value="Aéroport international Blaise Diagne">Aéroport international Blaise Diagne</option>
+            <option value="Port autonome de Dakar">Port autonome de Dakar</option>
+            <option value="Agence nationale de Sécurité routière">Agence nationale de Sécurité routière</option>
+            <option value="Direction des Transports routiers">Direction des Transports routiers</option>
+            <option value="Société nationale Autoroutes du Sénégal">Société nationale Autoroutes du Sénégal</option>
+        </div>
+        <div data-category="energie">
+            <option value="SENELEC (bureau clientèle)">SENELEC (bureau clientèle)</option>
+            <option value="Société nationale des Eaux du Sénégal">Société nationale des Eaux du Sénégal</option>
+            <option value="SDE (Sénégal des Eaux)">SDE (Sénégal des Eaux)</option>
+            <option value="Agence sénégalaise de l'Électrification rurale">Agence sénégalaise de l'Électrification rurale</option>
+            <option value="Office national des Forages ruraux">Office national des Forages ruraux</option>
+            <option value="Office national de l'Assainissement">Office national de l'Assainissement</option>
+            <option value="Commission de Régulation du Secteur de l'Énergie">Commission de Régulation du Secteur de l'Énergie</option>
+        </div>
+        <div data-category="communication">
+            <option value="SONATEL (agence)">SONATEL (agence)</option>
+            <option value="La Poste (bureau de poste)">La Poste (bureau de poste)</option>
+            <option value="RTS (Radiodiffusion Télévision Sénégalaise)">RTS (Radiodiffusion Télévision Sénégalaise)</option>
+            <option value="Agence de Presse Sénégalaise (APS)">Agence de Presse Sénégalaise (APS)</option>
+            <option value="Maison de la Presse Babacar TOURE">Maison de la Presse Babacar TOURE</option>
+            <option value="Autorité de Régulation des Télécoms (ARTP)">Autorité de Régulation des Télécoms (ARTP)</option>
+            <option value="Sénégal Numérique SA">Sénégal Numérique SA</option>
         </div>
         <div data-category="social">
-            <option value="Centre d'Action Sociale">Centre d'Action Sociale</option>
-            <option value="Caisse de Sécurité Sociale">Caisse de Sécurité Sociale</option>
-            <option value="IPRES / FNR">IPRES / FNR</option>
-            <option value="Agence de la Couverture Maladie Universelle (CMU)">Agence de la Couverture Maladie Universelle (CMU)</option>
+            <option value="Commissariat à la Sécurité alimentaire">Commissariat à la Sécurité alimentaire</option>
+            <option value="Agence de Couverture sanitaire universelle">Agence de Couverture sanitaire universelle</option>
+            <option value="Fonds national de l'Entreprenariat féminin">Fonds national de l'Entreprenariat féminin</option>
+            <option value="Office national des Pupilles de la Nation">Office national des Pupilles de la Nation</option>
+            <option value="Centre d'accueil pour enfants">Centre d'accueil pour enfants</option>
+            <option value="Direction de l'Action sociale">Direction de l'Action sociale</option>
+            <option value="Service national d'Hygiène">Service national d'Hygiène</option>
+        </div>
+        <div data-category="emploi">
+            <option value="ANPEJ (Promotion de l'Emploi des Jeunes)">ANPEJ (Promotion de l'Emploi des Jeunes)</option>
+            <option value="Office national de Formation professionnelle">Office national de Formation professionnelle</option>
+            <option value="Centre de formation professionnelle">Centre de formation professionnelle</option>
+            <option value="Centre national de Qualification professionnelle">Centre national de Qualification professionnelle</option>
+            <option value="Direction de l'Emploi">Direction de l'Emploi</option>
+            <option value="Service d'orientation professionnelle">Service d'orientation professionnelle</option>
         </div>
         <div data-category="environnement">
-            <option value="Service régional de l'Environnement">Service régional de l'Environnement</option>
-            <option value="Service des Eaux et Forêts">Service des Eaux et Forêts</option>
-            <option value="Service d'Assainissement">Service d'Assainissement</option>
+            <option value="Direction des Eaux et Forêts">Direction des Eaux et Forêts</option>
+            <option value="Parc national">Parc national</option>
+            <option value="Agence de la Reforestation et Grande Muraille verte">Agence de la Reforestation et Grande Muraille verte</option>
+            <option value="Centre de Suivi écologique">Centre de Suivi écologique</option>
+            <option value="Service de collecte des ordures (SONAGED)">Service de collecte des ordures (SONAGED)</option>
+            <option value="Direction de la Propreté et Hygiène publique">Direction de la Propreté et Hygiène publique</option>
+            <option value="Commission nationale de Gestion des Produits Chimiques">Commission nationale de Gestion des Produits Chimiques</option>
         </div>
         <div data-category="culture">
+            <option value="Musée des Civilisations Noires">Musée des Civilisations Noires</option>
+            <option value="Bibliothèque nationale du Sénégal">Bibliothèque nationale du Sénégal</option>
+            <option value="Grand Théâtre National">Grand Théâtre National</option>
+            <option value="Agence sénégalaise de Promotion touristique">Agence sénégalaise de Promotion touristique</option>
             <option value="Centre culturel régional">Centre culturel régional</option>
             <option value="Monument de la Renaissance africaine">Monument de la Renaissance africaine</option>
             <option value="Musée Boribana">Musée Boribana</option>
@@ -482,7 +663,6 @@
         </div>
     </div>
 
-    <!-- PIED DE PAGE AMÉLIORÉ -->
     <footer class="footer-enhanced">
         <div class="container">
             <div class="footer-grid-enhanced">
@@ -630,7 +810,7 @@
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="app.js"></script>
     
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -688,7 +868,9 @@
                 }
             });
         }
-    });
-    </script>
-</body>
-</html>
+        
+        // === 3. DATE ACTUELLE ===
+        const currentDateElement = document.getElementById('current-date');
+        if (currentDateElement) {
+            const now = new Date();
+       

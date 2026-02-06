@@ -4275,3 +4275,36 @@ button.social-btn {
         gap: 0.5rem;
     }
 }
+
+/* Bouton "Voir la liste complète" pour notations */
+.btn-view-all {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-top: 1rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(42, 109, 93, 0.2);
+}
+
+.btn-view-all:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(42, 109, 93, 0.3);
+}
+
+.btn-view-all:active {
+    transform: translateY(0);
+}
+
+.btn-view-all i {
+    font-size: 1rem;
+}

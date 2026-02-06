@@ -3700,8 +3700,30 @@ _Transparence & Redevabilité_`;
     
     switch(platform) {
         case 'facebook':
-            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(shareText)}`;
-            break;
+            // Facebook ne supporte plus le paramètre quote
+            // On copie le texte dans le presse-papier et on ouvre Facebook
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    // Afficher notification
+                    showNotification('📋 Texte copié ! Collez-le dans votre publication Facebook', 'success');
+                    // Ouvrir Facebook après 1 seconde
+                    setTimeout(() => {
+                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                        window.open(shareUrl, '_blank', 'width=600,height=400');
+                    }, 1000);
+                }).catch(() => {
+                    // Fallback si clipboard API échoue
+                    alert('📋 Copiez ce texte et collez-le dans votre publication Facebook:\n\n' + shareText);
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                    window.open(shareUrl, '_blank', 'width=600,height=400');
+                });
+            } else {
+                // Fallback pour navigateurs anciens
+                alert('📋 Copiez ce texte et collez-le dans votre publication Facebook:\n\n' + shareText);
+                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+            }
+            return; // Important : sortir ici car on a déjà ouvert la fenêtre
         case 'twitter':
             shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
             break;
@@ -3820,8 +3842,25 @@ _Via LE PROJET SÉNÉGAL_`;
     let url = '';
     switch(platform) {
         case 'facebook':
-            url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
-            break;
+            // Copier le texte dans le presse-papier puis ouvrir Facebook
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    showNotification('📋 Texte copié ! Collez-le dans votre publication Facebook', 'success');
+                    setTimeout(() => {
+                        url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+                        window.open(url, '_blank', 'width=600,height=400');
+                    }, 1000);
+                }).catch(() => {
+                    alert('📋 Copiez ce texte et collez-le dans votre publication Facebook:\n\n' + shareText);
+                    url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+                    window.open(url, '_blank', 'width=600,height=400');
+                });
+            } else {
+                alert('📋 Copiez ce texte et collez-le dans votre publication Facebook:\n\n' + shareText);
+                url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+                window.open(url, '_blank', 'width=600,height=400');
+            }
+            return;
         case 'twitter':
             url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
             break;

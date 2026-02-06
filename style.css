@@ -4652,13 +4652,13 @@ button.social-btn {
 }
 
 .social-btn-enhanced.twitter {
-    background: #1da1f2;
+    background: #000000;
 }
 
 .social-btn-enhanced.twitter:hover {
-    background: #1a8cd8;
+    background: #1a1a1a;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(29, 161, 242, 0.4);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
 .social-btn-enhanced.instagram {

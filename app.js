@@ -1340,7 +1340,11 @@ function updateStatValue(id, value) {
 
 function updateStatPercentage(id, value, total) {
     const el = document.getElementById(id);
-    if (el && total > 0) {
+    if (!el) {
+        console.warn(`Element with id "${id}" not found`);
+        return;
+    }
+    if (total > 0) {
         const percentage = Math.round((value / total) * 100);
         el.textContent = `${percentage}%`;
     } else {
@@ -3690,7 +3694,13 @@ function sharePromise(promiseId) {
 
 function shareToPlatform(promiseId, platform) {
     const promise = CONFIG.promises.find(p => p.id === promiseId);
-    if (!promise) return;
+    if (!promise) {
+        console.error('Promesse non trouvée:', promiseId);
+        showNotification('Impossible de partager : promesse non trouvée', 'error');
+        return;
+    }
+    
+    console.log('Partage de la promesse:', promise); // Debug
     
     // Créer un message enrichi avec toutes les informations importantes
     const statusEmoji = {
@@ -3702,18 +3712,21 @@ function shareToPlatform(promiseId, platform) {
     
     const emoji = statusEmoji[promise.statut] || '📊';
     
+    // Extraction sécurisée des données
+    const engagement = promise.engagement || promise.title || 'Engagement non spécifié';
+    const categorie = promise.categorie || promise.category || promise.domaine || 'Non catégorisé';
+    const statut = promise.statut || promise.status || 'Non défini';
+    const echeance = promise.deadline || promise.echeance || promise.date_limite || '';
+    
     // Message détaillé pour le partage
-    const title = `${emoji} Engagement Présidentiel - ${promise.categorie}`;
-    const description = `"${promise.engagement}"`;
-    const status = `Statut: ${promise.statut}`;
-    const category = `Catégorie: ${promise.categorie}`;
-    const deadline = promise.deadline ? `Échéance: ${promise.deadline}` : '';
+    const title = `${emoji} Engagement Présidentiel - ${categorie}`;
+    const description = engagement.length > 200 ? engagement.substring(0, 197) + '...' : engagement;
+    const status = `Statut: ${statut}`;
+    const category = `Catégorie: ${categorie}`;
+    const deadline = echeance ? `Échéance: ${echeance}` : '';
     
     // URL de la page
     const url = window.location.href;
-    
-    // Image pour les meta tags (logo du site)
-    const imageUrl = 'https://projetbi.org/favicon.png';
     
     let shareUrl = '';
     let shareText = '';
@@ -3727,7 +3740,7 @@ ${description}
 
 ${status}
 ${category}
-${deadline}
+${deadline ? deadline : ''}
 
 📱 Suivez tous les engagements sur LE PROJET SÉNÉGAL`;
             
@@ -3736,25 +3749,27 @@ ${deadline}
             break;
             
         case 'twitter':
-            // Twitter avec hashtags et mention
-            shareText = `${emoji} ${promise.engagement.substring(0, 150)}${promise.engagement.length > 150 ? '...' : ''}
+        case 'x':
+            // Twitter/X avec hashtags
+            const tweetText = engagement.length > 180 ? engagement.substring(0, 177) + '...' : engagement;
+            shareText = `${emoji} ${tweetText}
 
-${status} | ${category}
+${status} | ${categorie}
 
-#ProjetSénégal #Transparence #Gouvernance`;
+#ProjetSénégal #Transparence`;
             
             shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}`;
             break;
             
         case 'whatsapp':
             // WhatsApp avec message complet et formaté
-            shareText = `${emoji} *${promise.categorie.toUpperCase()}*
+            shareText = `${emoji} *${categorie.toUpperCase()}*
 
 📋 *Engagement:*
-${description}
+${engagement}
 
-📊 *Statut:* ${promise.statut}
-${deadline ? `⏰ *Échéance:* ${deadline}` : ''}
+📊 *Statut:* ${statut}
+${deadline ? `⏰ ${deadline}` : ''}
 
 🔗 Voir tous les engagements:
 ${url}
@@ -3771,9 +3786,29 @@ ${description}
 
 ${status}
 ${category}
+${deadline ? deadline : ''}
 
 Plateforme citoyenne de suivi transparent des engagements présidentiels.`;
             
+            shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+            break;
+            
+        default:
+            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}`;
+    }
+    
+    // Ouvrir dans une nouvelle fenêtre
+    window.open(shareUrl, '_blank', 'width=600,height=400');
+    
+    // Log pour debug
+    console.log('Partage:', {
+        platform,
+        promise: engagement.substring(0, 50),
+        shareText: shareText.substring(0, 100)
+    });
+    
+    showNotification(`Partage vers ${platform === 'x' || platform === 'twitter' ? 'X (Twitter)' : platform} ouvert`, 'success');
+}
             shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
             break;
             

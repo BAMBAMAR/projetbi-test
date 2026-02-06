@@ -2049,21 +2049,52 @@ function renderNews(news) {
     const grid = document.getElementById('newsGrid');
     if (!grid) return;
     
-    grid.innerHTML = news.map(item => `
-        <article class="news-card">
-            <div class="news-image">
-                <i class="fas fa-${item.image === 'school' ? 'school' : item.image === 'budget' ? 'coins' : 'flag'} fa-3x"></i>
-            </div>
-            <div class="news-content">
-                <h3>${item.title}</h3>
-                <p>${item.excerpt}</p>
-                <div class="news-footer">
-                    <span><i class="fas fa-calendar"></i> ${item.date}</span>
-                    <span><i class="fas fa-newspaper"></i> ${item.source}</span>
+    grid.innerHTML = news.map(item => {
+        // Limiter le texte à 70 mots
+        const fullText = item.excerpt || item.content || '';
+        const words = fullText.split(' ');
+        const isLong = words.length > 70;
+        const displayText = isLong ? words.slice(0, 70).join(' ') + '...' : fullText;
+        
+        // Déterminer l'icône à afficher
+        const iconMap = {
+            'school': 'school',
+            'budget': 'coins',
+            'money': 'coins',
+            'users': 'users',
+            'road': 'road',
+            'flag': 'flag',
+            'health': 'heartbeat',
+            'infrastructure': 'building',
+            'agriculture': 'seedling',
+            'economy': 'chart-line'
+        };
+        const icon = iconMap[item.image] || 'newspaper';
+        
+        return `
+            <article class="news-card">
+                <div class="news-image">
+                    ${item.imageUrl ? 
+                        `<img src="${item.imageUrl}" alt="${item.title}" onerror="this.style.display='none'">` :
+                        `<i class="fas fa-${icon} fa-3x"></i>`
+                    }
                 </div>
-            </div>
-        </article>
-    `).join('');
+                <div class="news-content">
+                    <h3>${item.title}</h3>
+                    <p>${displayText}</p>
+                    ${isLong ? `
+                        <button class="read-more-btn" onclick="openArticleModal('${item.id || ''}')">
+                            <i class="fas fa-book-open"></i> Lire la suite
+                        </button>
+                    ` : ''}
+                    <div class="news-footer">
+                        <span><i class="fas fa-calendar"></i> ${item.date}</span>
+                        <span><i class="fas fa-newspaper"></i> ${item.source}</span>
+                    </div>
+                </div>
+            </article>
+        `;
+    }).join('');
 }
 
 // ==========================================
@@ -3601,13 +3632,16 @@ function shareToPlatform(promiseId, platform) {
     const categorie = promise.categorie || promise.category || promise.domaine || promise.domain || 'Non catégorisé';
     const statut = promise.statut || promise.status || 'Non défini';
     const echeance = promise.deadline || promise.echeance || promise.date_limite || '';
+    const resultat = promise.resultat || promise.result || promise.description || '';
     
-    // Message détaillé pour le partage
-    const title = `${emoji} Engagement Présidentiel - ${categorie}`;
-    const description = engagement.length > 200 ? engagement.substring(0, 197) + '...' : engagement;
-    const status = `Statut: ${statut}`;
-    const category = `Catégorie: ${categorie}`;
-    const deadline = echeance ? `Échéance: ${echeance}` : '';
+    // Calculer les jours restants
+    let joursRestants = '';
+    if (echeance) {
+        const deadlineDate = new Date(echeance);
+        const today = new Date();
+        const diff = Math.ceil((deadlineDate - today) / (1000 * 60 * 60 * 24));
+        joursRestants = diff > 0 ? `${diff} jours restants` : `Échéance dépassée de ${Math.abs(diff)} jours`;
+    }
     
     // URL de la page
     const url = window.location.href;
@@ -3617,27 +3651,29 @@ function shareToPlatform(promiseId, platform) {
     
     switch(platform) {
         case 'facebook':
-            // Facebook avec informations enrichies
-            shareText = `${title}
+            // Facebook avec format structuré
+            shareText = `🎯 ${engagement}
 
-${description}
+📍 Domaine: ${categorie}
+📅 Délai: ${echeance || 'Non spécifié'}
+🔖 Statut: ${emoji} ${statut}
+${joursRestants ? `⏰ ${joursRestants}` : ''}
+${resultat ? `📝 Description: ${resultat.substring(0, 100)}${resultat.length > 100 ? '...' : ''}` : ''}
 
-${status}
-${category}
-${deadline ? deadline : ''}
-
-📱 Suivez tous les engagements sur LE PROJET SÉNÉGAL`;
+📊 Suivez tous les engagements: ${url}`;
             
             shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(shareText)}`;
             break;
             
         case 'twitter':
         case 'x':
-            // Twitter/X avec hashtags
-            const tweetText = engagement.length > 180 ? engagement.substring(0, 177) + '...' : engagement;
-            shareText = `${emoji} ${tweetText}
+            // Twitter/X format compact
+            const tweetEngagement = engagement.length > 100 ? engagement.substring(0, 97) + '...' : engagement;
+            shareText = `🎯 ${tweetEngagement}
 
-${status} | ${categorie}
+📍 ${categorie}
+🔖 ${emoji} ${statut}
+${joursRestants ? `⏰ ${joursRestants}` : ''}
 
 #ProjetSénégal #Transparence`;
             
@@ -3646,7 +3682,45 @@ ${status} | ${categorie}
             
         case 'whatsapp':
             // WhatsApp avec message complet et formaté
-            shareText = `${emoji} *${categorie.toUpperCase()}*
+            shareText = `🎯 *${engagement}*
+
+📍 *Domaine:* ${categorie}
+📅 *Délai:* ${echeance || 'Non spécifié'}
+🔖 *Statut:* ${emoji} ${statut}
+${joursRestants ? `⏰ *${joursRestants}*` : ''}
+${resultat ? `📝 *Description:* ${resultat}` : ''}
+
+📊 Suivez tous les engagements:
+${url}
+
+_Via LE PROJET SÉNÉGAL - Plateforme citoyenne de suivi des engagements présidentiels_`;
+            
+            shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+            break;
+            
+        case 'linkedin':
+            shareText = `🎯 ${engagement}
+
+📍 Domaine: ${categorie}
+📅 Délai: ${echeance || 'Non spécifié'}
+🔖 Statut: ${emoji} ${statut}
+${joursRestants ? `⏰ ${joursRestants}` : ''}
+${resultat ? `📝 ${resultat}` : ''}
+
+Plateforme citoyenne de suivi transparent des engagements présidentiels.`;
+            
+            shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+            break;
+            
+        default:
+            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}`;
+    }
+    
+    // Ouvrir dans une nouvelle fenêtre
+    window.open(shareUrl, '_blank', 'width=600,height=400');
+    
+    showNotification(`Partage vers ${platform === 'x' || platform === 'twitter' ? 'X' : platform} ouvert`, 'success');
+}
 
 📋 *Engagement:*
 ${engagement}

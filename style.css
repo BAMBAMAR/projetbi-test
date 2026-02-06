@@ -5087,3 +5087,29 @@ button.social-btn {
         transform: translateY(0);
     }
 }
+
+/* Bouton Lire la suite pour les actualités */
+.read-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 15px 0;
+    font-size: 0.9rem;
+}
+
+.read-more-btn:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.read-more-btn i {
+    font-size: 0.9rem;
+}

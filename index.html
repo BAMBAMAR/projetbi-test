@@ -488,9 +488,6 @@
                         <div id="recentRatings" class="recent-ratings">
                             <div class="loading-state"><div class="spinner"></div><p>Chargement...</p></div>
                         </div>
-                        <button class="view-all-btn" onclick="showAllRatings('recent')" style="margin-top: 15px;">
-                            <i class="fas fa-list"></i> Liste complète
-                        </button>
                     </div>
                     
                     <div class="rating-results-card">
@@ -498,9 +495,6 @@
                         <div id="topServices" class="top-services-grid">
                             <div class="loading-state"><div class="spinner"></div><p>Chargement...</p></div>
                         </div>
-                        <button class="view-all-btn" onclick="showAllRatings('top-rated')" style="margin-top: 15px;">
-                            <i class="fas fa-list"></i> Liste complète
-                        </button>
                     </div>
                 </div>
             </div>
@@ -668,7 +662,7 @@
                 <div class="footer-col">
                     <h4>Contact</h4>
                     <div class="footer-links">
-                        <a href="/cdn-cgi/l/email-protection#c2a1adacb6a3a1b682b2b0ada8a7b6a0abecadb0a5" class="footer-link"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="b3d0dcddc7d2d0c7f3c3c1dcd9d6c7d1da9ddcc1d4">[email&#160;protected]</span></a>
+                        <a href="mailto:contact@projetbi.org" class="footer-link"><i class="fas fa-envelope"></i> contact@projetbi.org</a>
                         <a href="tel:+221769455253" class="footer-link"><i class="fas fa-phone"></i> +221 76 945 52 53</a>
                         <a href="#" class="footer-link"><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</a>
                     </div>
@@ -678,7 +672,7 @@
                     <h4>Suivez-nous</h4>
                     <div class="footer-social">
                         <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://x.com/projetbi_sn" class="social-btn" target="_blank" rel="noopener"><i class="fab fa-x-twitter"></i></a>
+                        <a href="#" class="social-btn"><i class="fab fa-x-twitter"></i></a>
                         <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
                         <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
                     </div>
@@ -714,17 +708,17 @@
 
     <div id="notification-container"></div>
 
-    <!-- Modal pour article complet -->
-    <div id="articleModal" class="article-modal" style="display:none;">
+    <!-- Modal pour actualité complète -->
+    <div id="newsModal" class="article-modal" style="display:none;">
         <div class="article-modal-content">
-            <button class="article-modal-close" onclick="closeArticleModal()">
+            <button class="article-modal-close" onclick="closeNewsModal()">
                 <i class="fas fa-times"></i>
             </button>
-            <div id="articleModalBody"></div>
+            <div id="newsModalBody"></div>
         </div>
     </div>
 
-    <!-- Modal pour liste complète notations -->
+    <!-- Modal pour liste complète des notations -->
     <div id="ratingsListModal" class="ratings-modal" style="display:none;">
         <div class="ratings-modal-content">
             <button class="ratings-modal-close" onclick="closeRatingsModal()">
@@ -769,38 +763,19 @@
         const serviceSelect = document.getElementById('service');
         const servicesData = document.getElementById('services-data');
         
-        console.log('Category select:', categorySelect);
-        console.log('Service select:', serviceSelect);
-        console.log('Services data:', servicesData);
-        
         if (categorySelect && serviceSelect && servicesData) {
             categorySelect.addEventListener('change', function() {
                 const selectedCategory = this.value;
-                console.log('Selected category:', selectedCategory);
-                
                 serviceSelect.innerHTML = '<option value="">Sélectionnez un service</option>';
                 serviceSelect.disabled = true;
                 
                 if (selectedCategory) {
                     const categoryServices = servicesData.querySelector(`[data-category="${selectedCategory}"]`);
-                    console.log('Found services:', categoryServices);
-                    
                     if (categoryServices) {
                         serviceSelect.disabled = false;
                         serviceSelect.innerHTML = '<option value="">Choisissez un service</option>' + categoryServices.innerHTML;
-                        console.log('Services loaded successfully');
-                    } else {
-                        console.warn('No services found for category:', selectedCategory);
                     }
                 }
-            });
-            
-            console.log('Service selector initialized successfully');
-        } else {
-            console.error('Missing elements:', {
-                categorySelect: !!categorySelect,
-                serviceSelect: !!serviceSelect,
-                servicesData: !!servicesData
             });
         }
         
@@ -808,4 +783,13 @@
         const currentDateElement = document.getElementById('current-date');
         if (currentDateElement) {
             const now = new Date();
-       
+            currentDateElement.textContent = now.toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).toUpperCase();
+        }
+    });
+    </script>
+</body>
+</html>

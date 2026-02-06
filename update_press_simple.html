@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mise à jour Presse & Actualités - Projet Sénégal</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         * {
             box-sizing: border-box;
@@ -51,68 +50,6 @@
         header .date {
             font-size: 1.1rem;
             opacity: 0.9;
-        }
-        
-        /* FOOTER AMÉLIORÉ */
-        footer {
-            background: linear-gradient(135deg, #263238 0%, #37474f 100%);
-            color: white;
-            padding: 40px 30px 20px;
-            margin-top: 40px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-        
-        .footer-section h3 {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: #4db6ac;
-        }
-        
-        .footer-section p, .footer-section a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            display: block;
-            margin-bottom: 8px;
-            transition: color 0.3s;
-        }
-        
-        .footer-section a:hover {
-            color: #4db6ac;
-        }
-        
-        .footer-social {
-            display: flex;
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .footer-social a {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-        
-        .footer-social a:hover {
-            background: #4db6ac;
-            transform: translateY(-3px);
-        }
-        
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 20px;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.6);
         }
         
         .content {
@@ -167,434 +104,390 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .form-section {
+        .files-section {
             background: #f8f9fa;
-            padding: 25px;
             border-radius: 10px;
+            padding: 25px;
             margin-bottom: 30px;
+            border-left: 4px solid #00695c;
         }
         
-        .form-grid {
+        .files-section h3 {
+            color: #00695c;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .files-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
         }
         
-        .form-group {
-            margin-bottom: 15px;
+        .file-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            border: 1px solid #e0e0e0;
         }
         
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #333;
+        .file-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
         
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: border 0.3s;
+        .file-name {
+            font-family: monospace;
+            color: #00695c;
+            font-weight: 500;
+            font-size: 0.9rem;
+            word-break: break-all;
         }
         
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #00695c;
+        .file-size {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 5px;
         }
         
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f1f8e9;
+            border-radius: 10px;
+            border: 1px solid #c5e1a5;
         }
         
         .btn {
-            padding: 12px 24px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
         
         .btn-primary {
-            background: #00695c;
+            background: #2196F3;
             color: white;
         }
         
         .btn-primary:hover {
-            background: #004d40;
+            background: #1976D2;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 105, 92, 0.3);
         }
         
-        .btn-secondary {
-            background: #546e7a;
+        .btn-success {
+            background: #4CAF50;
             color: white;
         }
         
-        .btn-secondary:hover {
-            background: #37474f;
+        .btn-success:hover {
+            background: #388E3C;
+            transform: translateY(-2px);
         }
         
         .btn-warning {
-            background: #ff9800;
+            background: #FF9800;
             color: white;
         }
         
         .btn-warning:hover {
-            background: #f57c00;
-        }
-        
-        .btn-small {
-            padding: 6px 12px;
-            font-size: 0.9rem;
-        }
-        
-        /* NEWS STYLES AMÉLIORÉS */
-        .news-item {
-            background: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: all 0.3s;
-            display: flex;
-            gap: 20px;
-        }
-        
-        .news-item:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background: #F57C00;
             transform: translateY(-2px);
         }
         
-        .news-image {
-            width: 200px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 8px;
-            flex-shrink: 0;
+        .btn-secondary {
+            background: #757575;
+            color: white;
         }
         
-        .news-content {
+        .btn-secondary:hover {
+            background: #616161;
+            transform: translateY(-2px);
+        }
+        
+        .json-section {
+            background: #f5f5f5;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        .json-section h3 {
+            background: #333;
+            color: white;
+            padding: 15px 20px;
+            margin: 0;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 400px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            padding: 20px;
+            border: none;
+            resize: vertical;
+            background: #1e1e1e;
+            color: #d4d4d4;
+        }
+        
+        .instructions {
+            background: #FFF3CD;
+            border: 1px solid #FFEAA7;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+        
+        .instructions h3 {
+            color: #856404;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .steps {
+            list-style-type: none;
+            counter-reset: step-counter;
+        }
+        
+        .steps li {
+            counter-increment: step-counter;
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        .steps li:before {
+            content: counter(step-counter);
+            background: #00695c;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: bold;
+        }
+        
+        .current-date {
+            background: #E3F2FD;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: inline-block;
+        }
+        
+        /* Formulaire pour les actualités */
+        .news-form {
+            background: #fff;
+            border: 2px dashed #4CAF50;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #00695c;
+        }
+        
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #00695c;
+            box-shadow: 0 0 0 2px rgba(0, 105, 92, 0.1);
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+        }
+        
+        .form-row .form-group {
             flex: 1;
+            margin-bottom: 0;
+        }
+        
+        .file-upload {
+            border: 2px dashed #2196F3;
+            padding: 30px;
+            text-align: center;
+            border-radius: 8px;
+            background: #E3F2FD;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .file-upload:hover {
+            background: #BBDEFB;
+            border-color: #1976D2;
+        }
+        
+        .file-upload input {
+            display: none;
+        }
+        
+        .file-upload label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .file-upload i {
+            font-size: 2rem;
+            color: #2196F3;
+        }
+        
+        .file-preview {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .news-list {
+            margin-top: 30px;
+        }
+        
+        .news-item {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: transform 0.2s;
+        }
+        
+        .news-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         
         .news-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             margin-bottom: 10px;
         }
         
         .news-title {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
+            font-weight: 600;
             color: #00695c;
-            margin-bottom: 8px;
+            margin: 0;
         }
         
         .news-date {
             font-size: 0.9rem;
-            color: #666;
+            color: #757575;
+            background: #f5f5f5;
+            padding: 3px 10px;
+            border-radius: 20px;
         }
         
         .news-excerpt {
-            color: #555;
-            margin-bottom: 12px;
+            color: #616161;
             line-height: 1.6;
-        }
-        
-        .news-excerpt.truncated {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .read-more {
-            color: #00695c;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-block;
-            margin-top: 8px;
-        }
-        
-        .read-more:hover {
-            text-decoration: underline;
+            margin-bottom: 10px;
         }
         
         .news-footer {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding-top: 10px;
-            border-top: 1px solid #f0f0f0;
-        }
-        
-        .news-meta {
-            display: flex;
-            gap: 15px;
-            font-size: 0.9rem;
-            color: #666;
+            font-size: 0.85rem;
+            color: #9e9e9e;
         }
         
         .news-actions {
             display: flex;
-            gap: 8px;
-        }
-        
-        /* PRESS STYLES */
-        .press-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-        }
-        
-        .press-item {
-            background: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-        
-        .press-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-        }
-        
-        .press-item img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-        }
-        
-        .press-info {
-            padding: 15px;
-        }
-        
-        .press-title {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        
-        .press-date {
-            font-size: 0.9rem;
-            color: #666;
-        }
-        
-        .press-actions {
-            display: flex;
-            gap: 8px;
-            padding: 10px 15px;
-            background: #f8f9fa;
-        }
-        
-        /* RATING RESULTS */
-        .rating-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        
-        .rating-card {
-            background: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
-            transition: all 0.3s;
-        }
-        
-        .rating-card:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        
-        .rating-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .rating-title {
-            font-size: 1.2rem;
-            color: #00695c;
-        }
-        
-        .view-all-btn {
-            background: #00695c;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: all 0.3s;
-        }
-        
-        .view-all-btn:hover {
-            background: #004d40;
-        }
-        
-        .rating-stats {
-            display: flex;
-            flex-direction: column;
             gap: 10px;
         }
         
-        .rating-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .btn-small {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            border-radius: 4px;
         }
         
-        .rating-label {
-            color: #666;
-        }
-        
-        .rating-value {
-            font-weight: 600;
-            color: #00695c;
-        }
-        
-        /* MODAL */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal.active {
-            display: flex;
-        }
-        
-        .modal-content {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            max-width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-        }
-        
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #666;
-            background: none;
-            border: none;
-        }
-        
-        .modal-close:hover {
-            color: #000;
-        }
-        
-        /* JSON OUTPUT */
-        .json-output {
-            background: #263238;
-            color: #aed581;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            max-height: 400px;
-            overflow-y: auto;
-            margin-bottom: 15px;
-        }
-        
-        .json-actions {
-            display: flex;
-            gap: 10px;
-        }
-        
-        /* NOTIFICATION */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            border-radius: 8px;
-            color: white;
-            font-weight: 600;
-            z-index: 2000;
-            animation: slideIn 0.3s ease;
-        }
-        
-        @keyframes slideIn {
-            from { transform: translateX(400px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        .notification.success {
-            background: #4caf50;
-        }
-        
-        .notification.error {
-            background: #f44336;
-        }
-        
-        .notification.info {
-            background: #2196f3;
-        }
-        
-        /* IMAGE PREVIEW */
-        .image-preview {
-            margin-top: 10px;
-            max-width: 200px;
-            max-height: 150px;
-            object-fit: cover;
-            border-radius: 8px;
-            border: 2px solid #e0e0e0;
-        }
-        
-        .image-preview.hidden {
-            display: none;
-        }
-        
-        /* RESPONSIVE */
         @media (max-width: 768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
+            .container {
+                margin: 10px;
             }
             
-            .press-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            .content {
+                padding: 20px;
             }
             
-            .news-item {
+            .tabs {
                 flex-direction: column;
             }
             
-            .news-image {
+            .files-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .btn {
                 width: 100%;
+                justify-content: center;
             }
             
-            .rating-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
+            .form-row {
+                flex-direction: column;
             }
         }
     </style>
@@ -602,347 +495,505 @@
 <body>
     <div class="container">
         <header>
-            <h1>🗞️ Gestion Presse & Actualités</h1>
-            <p class="subtitle">Plateforme de mise à jour - Projet Sénégal</p>
-            <p class="date" id="currentDate"></p>
+            <h1>📰 Gestionnaire Presse & Actualités</h1>
+            <p class="subtitle">Projet Sénégal - Suivi des engagements</p>
+            <div class="current-date">Date du jour : <strong id="currentDate"></strong></div>
         </header>
-
+        
         <div class="content">
+            <!-- Onglets -->
             <div class="tabs">
-                <button class="tab-btn active" onclick="switchTab('press')">
-                    <i class="fas fa-newspaper"></i> Revue de Presse
+                <button class="tab-btn active" data-tab="press">
+                    <i class="fas fa-newspaper"></i>
+                    Revue de Presse
                 </button>
-                <button class="tab-btn" onclick="switchTab('news')">
-                    <i class="fas fa-rss"></i> Actualités
-                </button>
-                <button class="tab-btn" onclick="switchTab('ratings')">
-                    <i class="fas fa-star"></i> Notations
+                <button class="tab-btn" data-tab="news">
+                    <i class="fas fa-bullhorn"></i>
+                    Actualités
                 </button>
             </div>
-
-            <!-- ONGLET PRESSE -->
+            
+            <!-- Onglet Revue de Presse -->
             <div id="press-tab" class="tab-content active">
-                <div class="form-section">
-                    <h2><i class="fas fa-plus-circle"></i> Ajouter une Une de Presse</h2>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="pressTitle">Nom du Journal *</label>
-                            <input type="text" id="pressTitle" placeholder="Ex: Le Soleil">
-                        </div>
-                        <div class="form-group">
-                            <label for="pressDate">Date *</label>
-                            <input type="date" id="pressDate">
-                        </div>
-                        <div class="form-group" style="grid-column: 1 / -1;">
-                            <label for="pressImage">URL de l'image *</label>
-                            <input type="url" id="pressImage" placeholder="https://exemple.com/image.jpg" onchange="previewPressImage()">
-                            <img id="pressImagePreview" class="image-preview hidden" alt="Aperçu">
-                        </div>
+                <section class="files-section">
+                    <h3>📁 Votre bibliothèque presse</h3>
+                    <div class="files-grid" id="filesList">
+                        <!-- Les fichiers seront listés ici -->
                     </div>
-                    <button class="btn btn-primary" onclick="addPress()">
-                        <i class="fas fa-plus"></i> Ajouter
+                    
+                    <div class="file-upload" onclick="document.getElementById('pressUpload').click()">
+                        <input type="file" id="pressUpload" accept=".jpg,.jpeg,.png" multiple onchange="handlePressUpload(event)">
+                        <label>
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Glissez-déposez ou cliquez pour ajouter des journaux</span>
+                            <small>Formats acceptés: JPG, PNG</small>
+                        </label>
+                    </div>
+                    <div class="file-preview" id="pressPreview"></div>
+                </section>
+                
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="generatePressJSON()">
+                        <i class="fas fa-code"></i>
+                        Générer JSON Presse
+                    </button>
+                    <button class="btn btn-success" onclick="downloadPressJSON()">
+                        <i class="fas fa-download"></i>
+                        Télécharger press.json
+                    </button>
+                    <button class="btn btn-warning" onclick="copyPressToClipboard()">
+                        <i class="fas fa-copy"></i>
+                        Copier JSON Presse
                     </button>
                 </div>
-
-                <h3>Liste des Unes (<span id="pressCount">0</span>)</h3>
-                <div class="press-grid" id="pressList"></div>
-
-                <div class="form-section" style="margin-top: 30px;">
-                    <h3><i class="fas fa-code"></i> JSON Généré</h3>
-                    <textarea class="json-output" id="pressJsonOutput" readonly></textarea>
-                    <div class="json-actions">
-                        <button class="btn btn-primary" onclick="downloadPressJSON()">
-                            <i class="fas fa-download"></i> Télécharger press.json
-                        </button>
-                        <button class="btn btn-secondary" onclick="copyPressToClipboard()">
-                            <i class="fas fa-copy"></i> Copier
-                        </button>
-                    </div>
-                </div>
+                
+                <section class="json-section">
+                    <h3>
+                        <span><i class="fas fa-file-code"></i> Sortie JSON Presse :</span>
+                        <span id="pressCounter">0 journaux</span>
+                    </h3>
+                    <textarea id="pressJsonOutput" readonly></textarea>
+                </section>
             </div>
-
-            <!-- ONGLET ACTUALITÉS -->
+            
+            <!-- Onglet Actualités -->
             <div id="news-tab" class="tab-content">
-                <div class="form-section">
-                    <h2><i class="fas fa-plus-circle"></i> Ajouter une Actualité</h2>
+                <div class="news-form">
+                    <h3><i class="fas fa-plus-circle"></i> Ajouter une actualité</h3>
+                    
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="newsTitle">Titre *</label>
-                            <input type="text" id="newsTitle" placeholder="Titre de l'actualité">
+                            <label for="newsTitle">
+                                <i class="fas fa-heading"></i>
+                                Titre *
+                            </label>
+                            <input type="text" class="form-input" id="newsTitle" placeholder="Titre de l'actualité" required>
                         </div>
+                        
                         <div class="form-group">
-                            <label for="newsDate">Date *</label>
-                            <input type="date" id="newsDate">
+                            <label for="newsDate">
+                                <i class="fas fa-calendar"></i>
+                                Date *
+                            </label>
+                            <input type="date" class="form-input" id="newsDate" value="" required>
                         </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newsSource">
+                            <i class="fas fa-newspaper"></i>
+                            Source (journal)
+                        </label>
+                        <input type="text" class="form-input" id="newsSource" placeholder="Ex: Le Soleil, Sud Quotidien...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newsExcerpt">
+                            <i class="fas fa-align-left"></i>
+                            Résumé/Description *
+                        </label>
+                        <textarea class="form-textarea" id="newsExcerpt" 
+                                  placeholder="Décrivez brièvement l'actualité..." 
+                                  rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="form-row">
                         <div class="form-group">
-                            <label for="newsSource">Source</label>
-                            <input type="text" id="newsSource" placeholder="Ex: Le Soleil" value="Le Soleil">
-                        </div>
-                        <div class="form-group">
-                            <label for="newsCategory">Catégorie</label>
-                            <select id="newsCategory">
+                            <label for="newsCategory">
+                                <i class="fas fa-tag"></i>
+                                Catégorie
+                            </label>
+                            <select class="form-input" id="newsCategory">
                                 <option value="general">Général</option>
                                 <option value="education">Éducation</option>
                                 <option value="sante">Santé</option>
                                 <option value="economie">Économie</option>
-                                <option value="infrastructure">Infrastructure</option>
-                                <option value="social">Social</option>
-                                <option value="environnement">Environnement</option>
+                                <option value="infrastructures">Infrastructures</option>
+                                <option value="gouvernance">Gouvernance</option>
+                                <option value="transparence">Transparence</option>
+                                <option value="autres">Autres</option>
                             </select>
                         </div>
-                        <div class="form-group" style="grid-column: 1 / -1;">
-                            <label for="newsImageUrl">URL de l'image</label>
-                            <input type="url" id="newsImageUrl" placeholder="https://exemple.com/image.jpg" onchange="previewNewsImage()">
-                            <img id="newsImagePreview" class="image-preview hidden" alt="Aperçu">
-                        </div>
-                        <div class="form-group" style="grid-column: 1 / -1;">
-                            <label for="newsExcerpt">Résumé (extrait court) *</label>
-                            <textarea id="newsExcerpt" placeholder="Résumé court pour la liste..." rows="3"></textarea>
-                        </div>
-                        <div class="form-group" style="grid-column: 1 / -1;">
-                            <label for="newsContent">Contenu complet de l'article *</label>
-                            <textarea id="newsContent" placeholder="Contenu complet de l'article..." rows="6"></textarea>
-                        </div>
-                        <div class="form-group" style="grid-column: 1 / -1;">
-                            <label for="newsLink">Lien externe (optionnel)</label>
-                            <input type="url" id="newsLink" placeholder="https://source.com/article">
+                        
+                        <div class="form-group">
+                            <label for="newsImage">
+                                <i class="fas fa-image"></i>
+                                Icône
+                            </label>
+                            <select class="form-input" id="newsImage">
+                                <option value="school">🏫 École</option>
+                                <option value="hospital">🏥 Hôpital</option>
+                                <option value="money">💰 Budget</option>
+                                <option value="road">🛣️ Infrastructure</option>
+                                <option value="flag">🚩 Politique</option>
+                                <option value="chart">📈 Économie</option>
+                                <option value="users">👥 Société</option>
+                                <option value="graduation">🎓 Formation</option>
+                            </select>
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="addNews()">
-                        <i class="fas fa-plus"></i> Ajouter l'actualité
+                    
+                    <div class="form-group">
+                        <label for="newsLink">
+                            <i class="fas fa-link"></i>
+                            Lien (optionnel)
+                        </label>
+                        <input type="url" class="form-input" id="newsLink" placeholder="https://...">
+                    </div>
+                    // Dans la partie "Ajouter une actualité"
+<div class="form-group">
+    <label for="newsImageUrl">
+        <i class="fas fa-image"></i>
+        Image personnalisée (URL)
+    </label>
+    <input type="url" class="form-input" id="newsImageUrl" 
+           placeholder="https://exemple.com/image.jpg">
+    <small>Laissez vide pour utiliser une icône</small>
+</div>
+
+<div class="form-group">
+    <label for="newsContent">
+        <i class="fas fa-align-left"></i>
+        Contenu détaillé *
+    </label>
+    <textarea class="form-textarea" id="newsContent" 
+              placeholder="Contenu complet de l'article..." 
+              rows="6" required></textarea>
+</div>
+
+<div class="form-group">
+    <label for="newsAuthor">
+        <i class="fas fa-user-edit"></i>
+        Auteur
+    </label>
+    <input type="text" class="form-input" id="newsAuthor" 
+           placeholder="Nom de l'auteur" value="Rédaction">
+</div>
+
+<div class="form-group">
+    <label for="newsReadTime">
+        <i class="fas fa-clock"></i>
+        Temps de lecture
+    </label>
+    <select class="form-input" id="newsReadTime">
+        <option value="1 min">1 minute</option>
+        <option value="2 min">2 minutes</option>
+        <option value="3 min" selected>3 minutes</option>
+        <option value="5 min">5 minutes</option>
+        <option value="10 min">10 minutes</option>
+    </select>
+</div>
+                    <div class="form-row">
+                        <button class="btn btn-primary" onclick="addNews()">
+                            <i class="fas fa-plus"></i>
+                            Ajouter l'actualité
+                        </button>
+                        <button class="btn btn-secondary" onclick="clearNewsForm()">
+                            <i class="fas fa-redo"></i>
+                            Effacer
+                        </button>
+                    </div>
+                    
+                </div>
+                
+                <div class="news-list">
+                    <h3><i class="fas fa-list"></i> Liste des actualités</h3>
+                    <div id="newsList">
+                        <!-- Liste dynamique des actualités -->
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="generateNewsJSON()">
+                        <i class="fas fa-code"></i>
+                        Générer JSON Actualités
+                    </button>
+                    <button class="btn btn-success" onclick="downloadNewsJSON()">
+                        <i class="fas fa-download"></i>
+                        Télécharger news.json
+                    </button>
+                    <button class="btn btn-warning" onclick="copyNewsToClipboard()">
+                        <i class="fas fa-copy"></i>
+                        Copier JSON Actualités
                     </button>
                 </div>
-
-                <h3>Liste des Actualités (<span id="newsCount">0</span>)</h3>
-                <div id="newsList"></div>
-
-                <div class="form-section" style="margin-top: 30px;">
-                    <h3><i class="fas fa-code"></i> JSON Généré</h3>
-                    <textarea class="json-output" id="newsJsonOutput" readonly></textarea>
-                    <div class="json-actions">
-                        <button class="btn btn-primary" onclick="downloadNewsJSON()">
-                            <i class="fas fa-download"></i> Télécharger news.json
-                        </button>
-                        <button class="btn btn-secondary" onclick="copyNewsToClipboard()">
-                            <i class="fas fa-copy"></i> Copier
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ONGLET NOTATIONS -->
-            <div id="ratings-tab" class="tab-content">
-                <h2><i class="fas fa-chart-bar"></i> Résultats des Notations Citoyennes</h2>
-                <p style="margin-bottom: 20px; color: #666;">Aperçu des 5 meilleures et 5 moins bonnes notes par catégorie</p>
                 
-                <div class="rating-grid" id="ratingsList">
-                    <!-- Sera rempli dynamiquement -->
-                </div>
-            </div>
-        </div>
-
-        <!-- FOOTER AMÉLIORÉ -->
-        <footer>
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3><i class="fas fa-info-circle"></i> À propos</h3>
-                    <p>Plateforme citoyenne de suivi des engagements du Projet Sénégal. Transparence, redevabilité et participation citoyenne.</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h3><i class="fas fa-envelope"></i> Contact</h3>
-                    <a href="mailto:contact@projetbi.org"><i class="fas fa-envelope"></i> contact@projetbi.org</a>
-                    <a href="tel:+221769455253"><i class="fas fa-phone"></i> +221 76 945 52 53</a>
-                    <a href="#"><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</a>
-                </div>
-                
-                <div class="footer-section">
-                    <h3><i class="fas fa-share-alt"></i> Suivez-nous</h3>
-                    <div class="footer-social">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-section">
-                    <h3><i class="fas fa-link"></i> Liens utiles</h3>
-                    <a href="index.html">Accueil</a>
-                    <a href="#promises">Engagements</a>
-                    <a href="#rating">Notation</a>
-                    <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf">Programme PDF</a>
-                </div>
+                <section class="json-section">
+                    <h3>
+                        <span><i class="fas fa-file-code"></i> Sortie JSON Actualités :</span>
+                        <span id="newsCounter">0 actualités</span>
+                    </h3>
+                    <textarea id="newsJsonOutput" readonly></textarea>
+                </section>
             </div>
             
-            <div class="footer-bottom">
-                <p>© 2026 LE PROJET SÉNÉGAL - Tous droits réservés | Développé avec passion pour la transparence démocratique</p>
-            </div>
-        </footer>
-    </div>
-
-    <!-- MODAL POUR ARTICLE COMPLET -->
-    <div id="articleModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeArticleModal()">
-                <i class="fas fa-times"></i>
-            </button>
-            <div id="articleContent"></div>
-        </div>
-    </div>
-
-    <!-- MODAL POUR LISTE COMPLÈTE DES NOTATIONS -->
-    <div id="ratingsModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeRatingsModal()">
-                <i class="fas fa-times"></i>
-            </button>
-            <div id="ratingsModalContent"></div>
+            <section class="instructions">
+                <h3>📝 Instructions de mise à jour</h3>
+                <ol class="steps">
+                    <li><strong>Pour la presse :</strong> Téléchargez les journaux du jour en JPG/PNG</li>
+                    <li><strong>Pour les actualités :</strong> Ajoutez les nouvelles actualités via le formulaire</li>
+                    <li><strong>Générez</strong> les fichiers JSON correspondants</li>
+                    <li><strong>Téléchargez</strong> les fichiers press.json et news.json</li>
+                    <li><strong>Remplacez</strong> ces fichiers dans votre site GitHub</li>
+                    <li><strong>Vérifiez</strong> que votre site affiche les nouvelles données</li>
+                </ol>
+                
+                <h4 style="margin-top: 20px; color: #00695c;">📂 Structure des fichiers :</h4>
+                <p><strong>press.json</strong> : Contient la liste des journaux avec images, dates et liens</p>
+                <p><strong>news.json</strong> : Contient les actualités avec titres, dates, sources et descriptions</p>
+            </section>
         </div>
     </div>
 
     <script>
-        // DONNÉES
-        let PRESS_DATA = [];
-        let NEWS_DATA = [];
-        let RATINGS_DATA = {
-            sante: [],
-            education: [],
-            transport: [],
-            justice: [],
-            administration: [],
-            environnement: [],
-            culture: [],
-            autre: []
-        };
+        // Données initiales
+        const PRESS_FILES = [
+            'lesoleil.jpg',
+            'sudquotidien.jpg', 
+            'liberation.jpg',
+            'observateur.jpg',
+            'lequotidien.jpg',
+            'rewmisport.jpg',
+            'soloquotidien.jpg',
+            'yooryoor.jpg',
+            'record.jpg',
+            'enquete.jpg'
+        ];
 
-        // INITIALISATION
-        document.addEventListener('DOMContentLoaded', function() {
-            // Définir la date actuelle
-            const today = new Date();
-            document.getElementById('currentDate').textContent = today.toLocaleDateString('fr-FR', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            
-            // Définir la date par défaut dans les formulaires
-            const dateStr = today.toISOString().split('T')[0];
-            document.getElementById('pressDate').value = dateStr;
-            document.getElementById('newsDate').value = dateStr;
-            
-            // Générer des données de notation exemple
-            generateSampleRatings();
-            displayRatings();
+        // Données d'actualités par défaut
+        let NEWS_DATA = [
+            {
+                id: '1',
+                title: 'Lancement officiel de la plateforme',
+                excerpt: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle.',
+                date: '25/01/2026',
+                source: 'Le Soleil',
+                category: 'gouvernance',
+                image: 'school',
+                link: '#'
+            },
+            {
+                id: '2',
+                title: 'Première école numérique inaugurée',
+                excerpt: 'Le gouvernement a inauguré la première école entièrement numérique à Dakar.',
+                date: '20/01/2026',
+                source: 'Sud Quotidien',
+                category: 'education',
+                image: 'school',
+                link: '#'
+            },
+            {
+                id: '3',
+                title: 'Budget 2026 axé sur la relance économique',
+                excerpt: 'Le budget de l\'État pour 2026 prévoit d\'importants investissements dans les infrastructures.',
+                date: '15/01/2026',
+                source: 'WalFadjri',
+                category: 'economie',
+                image: 'money',
+                link: '#'
+            }
+        ];
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCurrentDate();
+            setupTabs();
+            loadInitialData();
         });
 
-        // GESTION DES ONGLETS
-        function switchTab(tab) {
-            // Masquer tous les onglets
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        // ==================== GÉNÉRAL ====================
+        
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            document.getElementById('currentDate').textContent = 
+                now.toLocaleDateString('fr-FR', options);
             
-            // Afficher l'onglet sélectionné
-            document.getElementById(`${tab}-tab`).classList.add('active');
-            event.target.closest('.tab-btn').classList.add('active');
+            // Définir la date du jour par défaut dans le formulaire
+            const today = now.toISOString().split('T')[0];
+            document.getElementById('newsDate').value = today;
+            
+            return now.toLocaleDateString('fr-FR');
+        }
+
+        function setupTabs() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabId = btn.getAttribute('data-tab');
+                    
+                    // Désactiver tous les onglets
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Activer l'onglet sélectionné
+                    btn.classList.add('active');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+        }
+
+        function showNotification(message, type = 'success') {
+            const types = {
+                success: { icon: '✅', bg: '#4CAF50' },
+                error: { icon: '❌', bg: '#f44336' },
+                info: { icon: 'ℹ️', bg: '#2196F3' },
+                warning: { icon: '⚠️', bg: '#FF9800' }
+            };
+            
+            const notif = document.createElement('div');
+            notif.className = 'notification';
+            notif.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                background: ${types[type].bg};
+                color: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                animation: slideIn 0.3s ease;
+                max-width: 400px;
+            `;
+            
+            notif.innerHTML = `
+                <span style="font-size: 1.2rem;">${types[type].icon}</span>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notif);
+            
+            setTimeout(() => {
+                notif.style.animation = 'slideOut 0.3s ease forwards';
+                setTimeout(() => notif.remove(), 300);
+            }, 3000);
+            
+            // Ajouter les animations CSS
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
         }
 
         // ==================== PRESSE ====================
-        
-        function previewPressImage() {
-            const url = document.getElementById('pressImage').value;
-            const preview = document.getElementById('pressImagePreview');
-            if (url) {
-                preview.src = url;
-                preview.classList.remove('hidden');
-            } else {
-                preview.classList.add('hidden');
-            }
-        }
 
-        function addPress() {
-            const title = document.getElementById('pressTitle').value.trim();
-            const dateInput = document.getElementById('pressDate').value;
-            const image = document.getElementById('pressImage').value.trim();
-            
-            if (!title || !dateInput || !image) {
-                showNotification('Veuillez remplir tous les champs obligatoires', 'error');
-                return;
-            }
-            
-            // Formater la date
-            const dateParts = dateInput.split('-');
-            const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
-            
-            const pressItem = {
-                id: (PRESS_DATA.length + 1).toString(),
-                title: title,
-                date: formattedDate,
-                image: image,
-                logo: '' // Peut être ajouté plus tard
-            };
-            
-            PRESS_DATA.unshift(pressItem);
-            displayPressList();
+        function loadInitialData() {
+            displayPressFiles();
+            displayNewsList();
             generatePressJSON();
-            clearPressForm();
-            
-            showNotification('Une de presse ajoutée avec succès !', 'success');
+            generateNewsJSON();
         }
 
-        function clearPressForm() {
-            document.getElementById('pressTitle').value = '';
-            document.getElementById('pressImage').value = '';
-            document.getElementById('pressImagePreview').classList.add('hidden');
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('pressDate').value = today;
+        function displayPressFiles() {
+            const filesList = document.getElementById('filesList');
+            if (!filesList) return;
+            
+            filesList.innerHTML = PRESS_FILES.map(file => {
+                const fileSize = Math.floor(Math.random() * 500) + 300; // Simuler taille
+                return `
+                    <div class="file-item">
+                        <div class="file-name">${file}</div>
+                        <div class="file-size">${fileSize} KB</div>
+                        <small>revuedepresse/${file}</small>
+                    </div>
+                `;
+            }).join('');
         }
 
-        function displayPressList() {
-            const pressList = document.getElementById('pressList');
-            document.getElementById('pressCount').textContent = PRESS_DATA.length;
+        function handlePressUpload(event) {
+            const files = event.target.files;
+            const preview = document.getElementById('pressPreview');
             
-            if (PRESS_DATA.length === 0) {
-                pressList.innerHTML = '<p style="text-align: center; padding: 40px; color: #999;">Aucune une de presse pour le moment</p>';
-                return;
+            if (files.length === 0) return;
+            
+            let html = `<p><strong>${files.length} fichier(s) sélectionné(s) :</strong></p><ul>`;
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const size = (file.size / 1024).toFixed(1);
+                html += `<li>${file.name} (${size} KB)</li>`;
+                
+                // Ajouter à la liste des fichiers
+                if (!PRESS_FILES.includes(file.name)) {
+                    PRESS_FILES.push(file.name);
+                }
             }
             
-            pressList.innerHTML = PRESS_DATA.map(item => `
-                <div class="press-item">
-                    <img src="${item.image}" alt="${item.title}" onerror="this.src='https://via.placeholder.com/200x280/00695c/ffffff?text=${item.title}'">
-                    <div class="press-info">
-                        <div class="press-title">${item.title}</div>
-                        <div class="press-date">${item.date}</div>
-                    </div>
-                    <div class="press-actions">
-                        <button class="btn btn-small btn-warning" onclick="editPress('${item.id}')">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-small btn-secondary" onclick="deletePress('${item.id}')">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function deletePress(id) {
-            if (confirm('Voulez-vous vraiment supprimer cette une ?')) {
-                PRESS_DATA = PRESS_DATA.filter(item => item.id !== id);
-                displayPressList();
-                generatePressJSON();
-                showNotification('Une supprimée', 'success');
-            }
+            html += '</ul>';
+            preview.innerHTML = html;
+            
+            // Mettre à jour l'affichage
+            displayPressFiles();
+            
+            showNotification(`${files.length} fichier(s) ajouté(s) à la liste`, 'success');
         }
 
         function generatePressJSON() {
-            const json = JSON.stringify(PRESS_DATA, null, 2);
-            document.getElementById('pressJsonOutput').value = json;
+            const today = new Date();
+            const formattedDate = today.toLocaleDateString('fr-FR');
+            
+            const pressData = {
+                last_updated: formattedDate,
+                press: PRESS_FILES.map((file, index) => {
+                    const name = file.replace('.jpg', '').replace('.png', '')
+                        .replace(/_/g, ' ')
+                        .replace(/\b\w/g, l => l.toUpperCase());
+                    
+                    let link = "#";
+                    if (file.includes('lesoleil')) link = 'http://www.lesoleil.sn/';
+                    if (file.includes('sudquotidien')) link = 'http://www.sudonline.sn/';
+                    if (file.includes('liberation')) link = 'http://www.liberation.sn/';
+                    if (file.includes('observateur')) link = 'http://www.observateur.sn/';
+                    if (file.includes('lequotidien')) link = 'http://www.lequotidien.sn/';
+                    
+                    return {
+                        id: (index + 1).toString(),
+                        title: name,
+                        date: formattedDate,
+                        image: `revuedepresse/${file}`,
+                        logo: `images/logos/${file.replace('.jpg', '.png').replace('.png', '.png')}`,
+                        link: link
+                    };
+                })
+            };
+            
+            const jsonOutput = JSON.stringify(pressData, null, 2);
+            document.getElementById('pressJsonOutput').value = jsonOutput;
+            document.getElementById('pressCounter').textContent = `${PRESS_FILES.length} journaux`;
+            
+            return jsonOutput;
         }
 
         function downloadPressJSON() {
             const json = document.getElementById('pressJsonOutput').value;
+            
+            if (!json || json.trim() === '{}') {
+                showNotification('❌ Veuillez d\'abord générer le JSON', 'error');
+                return;
+            }
+            
             const blob = new Blob([json], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -952,44 +1003,46 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+            
             showNotification('📥 Fichier press.json téléchargé !', 'success');
         }
 
         async function copyPressToClipboard() {
             const json = document.getElementById('pressJsonOutput').value;
+            
+            if (!json || json.trim() === '{}') {
+                showNotification('❌ Rien à copier', 'error');
+                return;
+            }
+            
             try {
                 await navigator.clipboard.writeText(json);
-                showNotification('📋 JSON copié !', 'success');
+                showNotification('📋 JSON copié dans le presse-papier !', 'success');
             } catch (err) {
-                showNotification('Erreur lors de la copie', 'error');
+                const textArea = document.createElement('textarea');
+                textArea.value = json;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('📋 JSON copié (méthode ancienne)', 'success');
             }
         }
 
         // ==================== ACTUALITÉS ====================
-        
-        function previewNewsImage() {
-            const url = document.getElementById('newsImageUrl').value;
-            const preview = document.getElementById('newsImagePreview');
-            if (url) {
-                preview.src = url;
-                preview.classList.remove('hidden');
-            } else {
-                preview.classList.add('hidden');
-            }
-        }
 
         function addNews() {
             const title = document.getElementById('newsTitle').value.trim();
             const dateInput = document.getElementById('newsDate').value;
             const source = document.getElementById('newsSource').value.trim();
             const excerpt = document.getElementById('newsExcerpt').value.trim();
-            const content = document.getElementById('newsContent').value.trim();
             const category = document.getElementById('newsCategory').value;
-            const imageUrl = document.getElementById('newsImageUrl').value.trim();
+            const image = document.getElementById('newsImage').value;
             const link = document.getElementById('newsLink').value.trim();
             
-            if (!title || !excerpt || !content || !dateInput) {
-                showNotification('Veuillez remplir tous les champs obligatoires', 'error');
+            // Validation
+            if (!title || !excerpt || !dateInput) {
+                showNotification('Veuillez remplir les champs obligatoires', 'error');
                 return;
             }
             
@@ -997,35 +1050,40 @@
             const dateParts = dateInput.split('-');
             const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
             
+            // Créer l'objet actualité
             const newsItem = {
                 id: (NEWS_DATA.length + 1).toString(),
                 title: title,
                 excerpt: excerpt,
-                content: content,
                 date: formattedDate,
                 source: source || 'Le Soleil',
                 category: category,
-                image: imageUrl || '',
+                image: image,
                 link: link || '#'
             };
             
+            // Ajouter en tête de liste
             NEWS_DATA.unshift(newsItem);
+            
+            // Mettre à jour l'affichage
             displayNewsList();
+            
+            // Générer le JSON
             generateNewsJSON();
+            
+            // Réinitialiser le formulaire
             clearNewsForm();
             
-            showNotification('✅ Actualité ajoutée avec succès !', 'success');
+            showNotification('Actualité ajoutée avec succès !', 'success');
         }
 
         function clearNewsForm() {
             document.getElementById('newsTitle').value = '';
             document.getElementById('newsExcerpt').value = '';
-            document.getElementById('newsContent').value = '';
-            document.getElementById('newsSource').value = 'Le Soleil';
+            document.getElementById('newsSource').value = '';
             document.getElementById('newsLink').value = '';
             document.getElementById('newsCategory').value = 'general';
-            document.getElementById('newsImageUrl').value = '';
-            document.getElementById('newsImagePreview').classList.add('hidden');
+            document.getElementById('newsImage').value = 'school';
             
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('newsDate').value = today;
@@ -1033,159 +1091,264 @@
 
         function displayNewsList() {
             const newsList = document.getElementById('newsList');
-            document.getElementById('newsCount').textContent = NEWS_DATA.length;
+            if (!newsList) return;
             
             if (NEWS_DATA.length === 0) {
-                newsList.innerHTML = '<p style="text-align: center; padding: 40px; color: #999;">Aucune actualité pour le moment</p>';
+                newsList.innerHTML = `
+                    <div class="news-item" style="text-align: center; padding: 40px;">
+                        <i class="fas fa-newspaper" style="font-size: 2rem; color: #ddd; margin-bottom: 10px;"></i>
+                        <p>Aucune actualité pour le moment</p>
+                    </div>
+                `;
                 return;
             }
             
-            newsList.innerHTML = NEWS_DATA.map(item => {
-                const isLongContent = item.content.length > 300;
-                const truncatedExcerpt = isLongContent ? item.excerpt : item.content;
-                
-                return `
-                <div class="news-item">
-                    ${item.image ? `<img src="${item.image}" alt="${item.title}" class="news-image" onerror="this.style.display='none'">` : ''}
-                    <div class="news-content">
-                        <div class="news-header">
-                            <h4 class="news-title">${item.title}</h4>
-                            <span class="news-date">${item.date}</span>
+            newsList.innerHTML = NEWS_DATA.map(item => `
+                <div class="news-item" data-id="${item.id}">
+                    <div class="news-header">
+                        <h4 class="news-title">${item.title}</h4>
+                        <span class="news-date">${item.date}</span>
+                    </div>
+                    <div class="news-excerpt">${item.excerpt}</div>
+                    <div class="news-footer">
+                        <div>
+                            <span><i class="fas fa-newspaper"></i> ${item.source}</span>
+                            <span style="margin-left: 15px;">
+                                <i class="fas fa-tag"></i> ${getCategoryLabel(item.category)}
+                            </span>
                         </div>
-                        <div class="news-excerpt ${isLongContent ? 'truncated' : ''}">${truncatedExcerpt}</div>
-                        ${isLongContent ? `<a href="#" class="read-more" onclick="openArticle('${item.id}'); return false;">Lire l'article complet <i class="fas fa-arrow-right"></i></a>` : ''}
-                        <div class="news-footer">
-                            <div class="news-meta">
-                                <span><i class="fas fa-newspaper"></i> ${item.source}</span>
-                                <span><i class="fas fa-tag"></i> ${getCategoryLabel(item.category)}</span>
-                            </div>
-                            <div class="news-actions">
-                                <button class="btn btn-small btn-primary" onclick="shareNews('${item.id}', 'facebook')" title="Partager sur Facebook">
-                                    <i class="fab fa-facebook-f"></i>
-                                </button>
-                                <button class="btn btn-small btn-primary" onclick="shareNews('${item.id}', 'twitter')" title="Partager sur Twitter">
-                                    <i class="fab fa-twitter"></i>
-                                </button>
-                                <button class="btn btn-small btn-warning" onclick="editNews('${item.id}')">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="btn btn-small btn-secondary" onclick="deleteNews('${item.id}')">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
+                        <div class="news-actions">
+                            <button class="btn btn-small btn-warning" onclick="editNews('${item.id}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-small btn-secondary" onclick="deleteNews('${item.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
-            `}).join('');
+            `).join('');
         }
+// Après la fonction displayNewsList() et avant generateNewsJSON()
 
+// ==================== FONCTIONS ACTUALITÉS ====================
+
+function displayNewsList() {
+    // ... code existant ...
+}
+
+// FONCTION POUR AJOUTER UNE ACTUALITÉ
+function addNews() {
+    const title = document.getElementById('newsTitle').value.trim();
+    const dateInput = document.getElementById('newsDate').value;
+    const source = document.getElementById('newsSource').value.trim();
+    const excerpt = document.getElementById('newsExcerpt').value.trim();
+    const content = document.getElementById('newsContent').value.trim();
+    const category = document.getElementById('newsCategory').value;
+    const image = document.getElementById('newsImage').value;
+    const imageUrl = document.getElementById('newsImageUrl').value.trim();
+    const link = document.getElementById('newsLink').value.trim();
+    const author = document.getElementById('newsAuthor').value.trim() || 'Rédaction';
+    const readTime = document.getElementById('newsReadTime').value;
+    
+    // Validation
+    if (!title || !excerpt || !content || !dateInput) {
+        showNotification('Veuillez remplir les champs obligatoires (*)', 'error');
+        return;
+    }
+    
+    // Formater la date (DD/MM/YYYY)
+    const dateParts = dateInput.split('-');
+    const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+    
+    // Créer l'objet actualité
+    const newsItem = {
+        id: `news_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        title: title,
+        excerpt: excerpt,
+        content: content,
+        date: formattedDate,
+        source: source || 'Le Soleil',
+        category: category,
+        image: image,
+        image_url: imageUrl || null,
+        link: link || '#',
+        author: author,
+        read_time: readTime,
+        created_at: new Date().toISOString()
+    };
+    
+    // Ajouter en tête de liste
+    NEWS_DATA.unshift(newsItem);
+    
+    // Mettre à jour l'affichage
+    displayNewsList();
+    
+    // Générer le JSON
+    generateNewsJSON();
+    
+    // Sauvegarder localement
+    saveNewsToLocal();
+    
+    // Réinitialiser le formulaire
+    clearNewsForm();
+    
+    showNotification('✅ Actualité ajoutée avec succès !', 'success');
+}
+
+function clearNewsForm() {
+    // Réinitialiser tous les champs du formulaire
+    document.getElementById('newsTitle').value = '';
+    document.getElementById('newsExcerpt').value = '';
+    document.getElementById('newsContent').value = '';
+    document.getElementById('newsSource').value = '';
+    document.getElementById('newsLink').value = '';
+    document.getElementById('newsImageUrl').value = '';
+    document.getElementById('newsAuthor').value = 'Rédaction';
+    document.getElementById('newsCategory').value = 'general';
+    document.getElementById('newsImage').value = 'school';
+    document.getElementById('newsReadTime').value = '3 min';
+    
+    // Date du jour par défaut
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('newsDate').value = today;
+}
+
+function editNews(id) {
+    const newsItem = NEWS_DATA.find(item => item.id === id);
+    if (!newsItem) return;
+    
+    // Remplir le formulaire
+    document.getElementById('newsTitle').value = newsItem.title;
+    document.getElementById('newsExcerpt').value = newsItem.excerpt;
+    document.getElementById('newsContent').value = newsItem.content;
+    document.getElementById('newsSource').value = newsItem.source;
+    document.getElementById('newsLink').value = newsItem.link === '#' ? '' : newsItem.link;
+    document.getElementById('newsImageUrl').value = newsItem.image_url || '';
+    document.getElementById('newsAuthor').value = newsItem.author;
+    document.getElementById('newsCategory').value = newsItem.category;
+    document.getElementById('newsImage').value = newsItem.image;
+    document.getElementById('newsReadTime').value = newsItem.read_time;
+    
+    // Formater la date pour l'input (YYYY-MM-DD)
+    const dateParts = newsItem.date.split('/');
+    const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+    document.getElementById('newsDate').value = formattedDate;
+    
+    // Supprimer l'ancien élément
+    deleteNews(id);
+    
+    showNotification('📝 Modifiez l\'actualité et cliquez sur "Ajouter"', 'info');
+}
+
+function deleteNews(id) {
+    NEWS_DATA = NEWS_DATA.filter(item => item.id !== id);
+    displayNewsList();
+    generateNewsJSON();
+    saveNewsToLocal();
+    showNotification('🗑️ Actualité supprimée', 'warning');
+}
+
+function generateNewsJSON() {
+    const newsData = {
+        last_updated: new Date().toISOString().split('T')[0],
+        news: NEWS_DATA
+    };
+    
+    const jsonOutput = JSON.stringify(newsData, null, 2);
+    document.getElementById('newsJsonOutput').value = jsonOutput;
+    document.getElementById('newsCounter').textContent = `${NEWS_DATA.length} actualité(s)`;
+    
+    return jsonOutput;
+}
+
+// Fonctions de sauvegarde locale
+function saveNewsToLocal() {
+    try {
+        localStorage.setItem('news_backup', JSON.stringify(NEWS_DATA));
+    } catch (error) {
+        console.warn('localStorage bloqué - sauvegarde en mémoire');
+        window.newsBackup = NEWS_DATA;
+    }
+}
+
+function loadNewsFromLocal() {
+    try {
+        const saved = localStorage.getItem('news_backup');
+        if (saved) {
+            NEWS_DATA = JSON.parse(saved);
+        }
+    } catch (error) {
+        if (window.newsBackup) {
+            NEWS_DATA = window.newsBackup;
+        }
+    }
+}
         function getCategoryLabel(category) {
             const labels = {
-                general: 'Général',
-                education: 'Éducation',
-                sante: 'Santé',
-                economie: 'Économie',
-                infrastructure: 'Infrastructure',
-                social: 'Social',
-                environnement: 'Environnement'
+                'general': 'Général',
+                'education': 'Éducation',
+                'sante': 'Santé',
+                'economie': 'Économie',
+                'infrastructures': 'Infrastructures',
+                'gouvernance': 'Gouvernance',
+                'transparence': 'Transparence',
+                'autres': 'Autres'
             };
             return labels[category] || category;
         }
 
-        function openArticle(id) {
-            const article = NEWS_DATA.find(item => item.id === id);
-            if (!article) return;
+        function editNews(id) {
+            const newsItem = NEWS_DATA.find(item => item.id === id);
+            if (!newsItem) return;
             
-            const modal = document.getElementById('articleModal');
-            const content = document.getElementById('articleContent');
+            // Remplir le formulaire
+            document.getElementById('newsTitle').value = newsItem.title;
+            document.getElementById('newsExcerpt').value = newsItem.excerpt;
+            document.getElementById('newsSource').value = newsItem.source;
+            document.getElementById('newsLink').value = newsItem.link === '#' ? '' : newsItem.link;
+            document.getElementById('newsCategory').value = newsItem.category;
+            document.getElementById('newsImage').value = newsItem.image;
             
-            content.innerHTML = `
-                <div style="max-width: 800px;">
-                    ${article.image ? `<img src="${article.image}" alt="${article.title}" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">` : ''}
-                    <h2 style="color: #00695c; margin-bottom: 10px;">${article.title}</h2>
-                    <div style="color: #666; margin-bottom: 20px; display: flex; gap: 20px;">
-                        <span><i class="fas fa-calendar"></i> ${article.date}</span>
-                        <span><i class="fas fa-newspaper"></i> ${article.source}</span>
-                        <span><i class="fas fa-tag"></i> ${getCategoryLabel(article.category)}</span>
-                    </div>
-                    <div style="line-height: 1.8; white-space: pre-wrap;">${article.content}</div>
-                    ${article.link && article.link !== '#' ? `
-                        <div style="margin-top: 30px;">
-                            <a href="${article.link}" target="_blank" class="btn btn-primary">
-                                <i class="fas fa-external-link-alt"></i> Lire la source originale
-                            </a>
-                        </div>
-                    ` : ''}
-                    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
-                        <strong>Partager cet article :</strong>
-                        <div style="display: flex; gap: 10px; margin-top: 10px;">
-                            <button class="btn btn-primary" onclick="shareNews('${article.id}', 'facebook')">
-                                <i class="fab fa-facebook-f"></i> Facebook
-                            </button>
-                            <button class="btn btn-primary" onclick="shareNews('${article.id}', 'twitter')">
-                                <i class="fab fa-twitter"></i> Twitter
-                            </button>
-                            <button class="btn btn-secondary" onclick="shareNews('${article.id}', 'whatsapp')">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
+            // Formater la date pour l'input
+            const dateParts = newsItem.date.split('/');
+            const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+            document.getElementById('newsDate').value = formattedDate;
             
-            modal.classList.add('active');
-        }
-
-        function closeArticleModal() {
-            document.getElementById('articleModal').classList.remove('active');
-        }
-
-        function shareNews(id, platform) {
-            const article = NEWS_DATA.find(item => item.id === id);
-            if (!article) return;
+            // Supprimer l'ancien élément
+            deleteNews(id);
             
-            // Créer un texte enrichi pour le partage
-            const shareText = `📰 ${article.title}\n\n${article.excerpt}\n\n📅 ${article.date} | 📰 ${article.source}\n🏷️ ${getCategoryLabel(article.category)}`;
-            const shareUrl = article.link !== '#' ? article.link : window.location.href;
-            
-            let url = '';
-            switch(platform) {
-                case 'facebook':
-                    url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
-                    if (article.image) {
-                        url += `&picture=${encodeURIComponent(article.image)}`;
-                    }
-                    break;
-                case 'twitter':
-                    url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
-                    break;
-                case 'whatsapp':
-                    url = `https://wa.me/?text=${encodeURIComponent(shareText + '\n' + shareUrl)}`;
-                    break;
-            }
-            
-            if (url) {
-                window.open(url, '_blank', 'width=600,height=400');
-                showNotification(`Partage vers ${platform} ouvert !`, 'info');
-            }
+            showNotification('Modifiez l\'actualité et cliquez sur "Ajouter"', 'info');
         }
 
         function deleteNews(id) {
-            if (confirm('Voulez-vous vraiment supprimer cette actualité ?')) {
-                NEWS_DATA = NEWS_DATA.filter(item => item.id !== id);
-                displayNewsList();
-                generateNewsJSON();
-                showNotification('Actualité supprimée', 'success');
-            }
+            NEWS_DATA = NEWS_DATA.filter(item => item.id !== id);
+            displayNewsList();
+            generateNewsJSON();
+            showNotification('Actualité supprimée', 'warning');
         }
 
         function generateNewsJSON() {
-            const json = JSON.stringify(NEWS_DATA, null, 2);
-            document.getElementById('newsJsonOutput').value = json;
+            const newsData = {
+                last_updated: new Date().toISOString().split('T')[0],
+                news: NEWS_DATA
+            };
+            
+            const jsonOutput = JSON.stringify(newsData, null, 2);
+            document.getElementById('newsJsonOutput').value = jsonOutput;
+            document.getElementById('newsCounter').textContent = `${NEWS_DATA.length} actualités`;
+            
+            return jsonOutput;
         }
 
         function downloadNewsJSON() {
             const json = document.getElementById('newsJsonOutput').value;
+            
+            if (!json || json.trim() === '{}') {
+                showNotification('❌ Veuillez d\'abord générer le JSON', 'error');
+                return;
+            }
+            
             const blob = new Blob([json], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -1195,152 +1358,47 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+            
             showNotification('📥 Fichier news.json téléchargé !', 'success');
         }
 
         async function copyNewsToClipboard() {
             const json = document.getElementById('newsJsonOutput').value;
+            
+            if (!json || json.trim() === '{}') {
+                showNotification('❌ Rien à copier', 'error');
+                return;
+            }
+            
             try {
                 await navigator.clipboard.writeText(json);
-                showNotification('📋 JSON copié !', 'success');
+                showNotification('📋 JSON copié dans le presse-papier !', 'success');
             } catch (err) {
-                showNotification('Erreur lors de la copie', 'error');
+                const textArea = document.createElement('textarea');
+                textArea.value = json;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('📋 JSON copié (méthode ancienne)', 'success');
             }
-        }
-
-        // ==================== NOTATIONS ====================
-        
-        function generateSampleRatings() {
-            // Génération de données exemple pour la démonstration
-            const categories = ['sante', 'education', 'transport', 'justice', 'administration', 'environnement', 'culture', 'autre'];
-            const services = {
-                sante: ['Hôpital Principal', 'Centre de Santé', 'Poste de Santé', 'Maternité', 'Service des Urgences'],
-                education: ['École Primaire', 'Collège', 'Lycée', 'Université', 'École Professionnelle'],
-                transport: ['AFTU', 'Gare Routière', 'Station de Taxis', 'Port Autonome', 'Aéroport'],
-                justice: ['Commissariat', 'Gendarmerie', 'Tribunal', 'Cour d\'Appel', 'Maison de Justice'],
-                administration: ['Mairie', 'Préfecture', 'Centre des Impôts', 'Trésor Public', 'ANPEJ'],
-                environnement: ['Service Propreté', 'Direction Environnement', 'Eaux et Forêts', 'Service Hygiène'],
-                culture: ['Musée Civilisations Noires', 'Bibliothèque', 'Grand Théâtre', 'Centre Culturel'],
-                autre: ['Service Agricole', 'Station Piscicole', 'Service Urbanisme', 'HLM']
-            };
-            
-            categories.forEach(cat => {
-                RATINGS_DATA[cat] = services[cat].map((service, index) => ({
-                    service: service,
-                    globalRating: (Math.random() * 2 + 3).toFixed(1), // Entre 3 et 5
-                    totalVotes: Math.floor(Math.random() * 500) + 50,
-                    quality: (Math.random() * 2 + 3).toFixed(1),
-                    speed: (Math.random() * 2 + 3).toFixed(1),
-                    courtesy: (Math.random() * 2 + 3).toFixed(1),
-                    transparency: (Math.random() * 2 + 3).toFixed(1)
-                })).sort((a, b) => parseFloat(b.globalRating) - parseFloat(a.globalRating));
-            });
-        }
-
-        function displayRatings() {
-            const ratingsList = document.getElementById('ratingsList');
-            const categories = {
-                sante: '🏥 Santé',
-                education: '📚 Éducation',
-                transport: '🚗 Transport',
-                justice: '⚖️ Justice / Police',
-                administration: '🏛️ Administration',
-                environnement: '🌱 Environnement',
-                culture: '🎭 Culture',
-                autre: '📋 Autre'
-            };
-            
-            ratingsList.innerHTML = Object.entries(categories).map(([key, label]) => {
-                const ratings = RATINGS_DATA[key] || [];
-                const topRatings = ratings.slice(0, 5);
-                
-                return `
-                    <div class="rating-card">
-                        <div class="rating-header">
-                            <h3 class="rating-title">${label}</h3>
-                            <a href="#" class="view-all-btn" onclick="showAllRatings('${key}', '${label}'); return false;">
-                                <i class="fas fa-list"></i> Liste complète
-                            </a>
-                        </div>
-                        <div class="rating-stats">
-                            ${topRatings.length > 0 ? topRatings.map((rating, index) => `
-                                <div class="rating-row">
-                                    <span class="rating-label">${index + 1}. ${rating.service}</span>
-                                    <span class="rating-value">⭐ ${rating.globalRating}/5 (${rating.totalVotes} votes)</span>
-                                </div>
-                            `).join('') : '<p style="color: #999; text-align: center;">Aucune donnée</p>'}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function showAllRatings(category, label) {
-            const ratings = RATINGS_DATA[category] || [];
-            const modal = document.getElementById('ratingsModal');
-            const content = document.getElementById('ratingsModalContent');
-            
-            content.innerHTML = `
-                <h2 style="color: #00695c; margin-bottom: 20px;">${label} - Liste Complète</h2>
-                <p style="margin-bottom: 20px; color: #666;">Total : ${ratings.length} services notés</p>
-                
-                <table style="width: 100%; border-collapse: collapse;">
-                    <thead>
-                        <tr style="background: #f8f9fa; border-bottom: 2px solid #00695c;">
-                            <th style="padding: 12px; text-align: left;">#</th>
-                            <th style="padding: 12px; text-align: left;">Service</th>
-                            <th style="padding: 12px; text-align: center;">Note Globale</th>
-                            <th style="padding: 12px; text-align: center;">Qualité</th>
-                            <th style="padding: 12px; text-align: center;">Rapidité</th>
-                            <th style="padding: 12px; text-align: center;">Courtoisie</th>
-                            <th style="padding: 12px; text-align: center;">Transparence</th>
-                            <th style="padding: 12px; text-align: center;">Votes</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${ratings.map((rating, index) => `
-                            <tr style="border-bottom: 1px solid #e0e0e0;">
-                                <td style="padding: 12px;">${index + 1}</td>
-                                <td style="padding: 12px; font-weight: 600;">${rating.service}</td>
-                                <td style="padding: 12px; text-align: center;"><strong style="color: #00695c;">⭐ ${rating.globalRating}</strong></td>
-                                <td style="padding: 12px; text-align: center;">${rating.quality}</td>
-                                <td style="padding: 12px; text-align: center;">${rating.speed}</td>
-                                <td style="padding: 12px; text-align: center;">${rating.courtesy}</td>
-                                <td style="padding: 12px; text-align: center;">${rating.transparency}</td>
-                                <td style="padding: 12px; text-align: center;">${rating.totalVotes}</td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            `;
-            
-            modal.classList.add('active');
-        }
-
-        function closeRatingsModal() {
-            document.getElementById('ratingsModal').classList.remove('active');
         }
 
         // ==================== UTILITAIRES ====================
-        
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideIn 0.3s ease reverse';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
-        }
 
-        // Fermer les modales en cliquant en dehors
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.classList.remove('active');
-            }
-        }
+        // Fonctions globales
+        window.handlePressUpload = handlePressUpload;
+        window.addNews = addNews;
+        window.clearNewsForm = clearNewsForm;
+        window.editNews = editNews;
+        window.deleteNews = deleteNews;
+        window.generatePressJSON = generatePressJSON;
+        window.generateNewsJSON = generateNewsJSON;
+        window.downloadPressJSON = downloadPressJSON;
+        window.downloadNewsJSON = downloadNewsJSON;
+        window.copyPressToClipboard = copyPressToClipboard;
+        window.copyNewsToClipboard = copyNewsToClipboard;
+
     </script>
 </body>
 </html>

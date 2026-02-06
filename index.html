@@ -7,13 +7,14 @@
     <meta name="description" content="Plateforme citoyenne indépendante de suivi en temps réel des engagements du Président Bassirou Diomaye Faye">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="https://projetbi.org/favicon.png">
+    <!-- Favicon fallback pour éviter les erreurs 404 -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🇸🇳</text></svg>">
 </head>
 <body>
     <!-- PROGRESS BAR ORIGINAL -->
     <div class="progress-indicator" id="progressIndicator"></div>
 
-    <!-- NAVIGATION MODERNE (design uniquement, liens originaux) -->
+    <!-- NAVIGATION MODERNE (design uniquement) -->
     <nav id="modernNav" class="modern-nav">
         <div class="modern-nav-container">
             <a href="#header" class="modern-logo">
@@ -34,14 +35,21 @@
                 <a href="#news" class="modern-link">Actualités</a>
                 <a href="#press" class="modern-link">Revue de Presse</a>
                 <a href="#rating" class="modern-link">Noter un service</a>
+                <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="modern-link modern-link-cta" target="_blank">
+                    <i class="fas fa-download"></i> Programme PDF
+                </a>
             </div>
         </div>
     </nav>
 
-    <!-- CONTENU ORIGINAL DU HEADER (100% INTACT) -->
-    <section id="hero" class="header">
+    <!-- CONTENU ORIGINAL DU HEADER (100% INTACT AVEC SONKO.JPG) -->
+    <section id="header" class="header">
         <div class="header-container">
             <div class="header-text-side">
+                <div class="header-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Transparence & Vérité</span>
+                </div>
                 <h1 class="header-title">
                     Le projet pour Sénégal Souverain, Juste et Prospère
                     Plateforme citoyenne indépendante de suivi en temps réel des engagements du Président Bassirou Diomaye Faye. La transparence au service de la démocratie.
@@ -87,18 +95,27 @@
             
             <div class="header-visual-side">
                 <div class="sonko-wrapper">
-                    <img src="https://picsum.photos/seed/president/450/600" alt="Président Bassirou Diomaye Faye" class="sonko-img" onerror="this.src='https://picsum.photos/seed/president/450/600'">
+                    <!-- IMAGE ORIGINALE SONKO.JPG PRÉSERVÉE -->
+                    <img src="sonko.jpg" alt="Président Bassirou Diomaye Faye" class="sonko-img" 
+                         onerror="this.onerror=null; this.src='https://picsum.photos/seed/president/450/600'">
                 </div>
             </div>
         </div>
         <div class="current-date" id="current-date"></div>
     </section>
 
-    <!-- SECTION STATS (100% CONTENU ORIGINAL) -->
+    <!-- SECTION STATS (CONTENU ORIGINAL INTACT) -->
     <section id="stats" class="stats-section">
         <div class="container">
             <div class="section-header-modern">
                 <h2 class="section-title"><i class="fas fa-chart-line"></i> Tableau de Bord</h2>
+                <div class="section-actions">
+                    <div class="kpi-carousel-container">
+                        <button id="kpiPrev" class="kpi-nav-btn"><i class="fas fa-chevron-left"></i></button>
+                        <div id="kpiCarousel" class="kpi-carousel"></div>
+                        <button id="kpiNext" class="kpi-nav-btn"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
             </div>
             
             <div class="stats-grid">
@@ -215,8 +232,8 @@
         </div>
     </section>
 
-    <!-- PROMESSE DU JOUR (CONTENU ORIGINAL) -->
-    <section id="daily-promise" class="daily-promise-section">
+    <!-- PROMESSE DU JOUR (CONTENU ORIGINAL INTACT) -->
+    <section id="daily" class="daily-promise-section">
         <div class="container">
             <div class="section-header-modern">
                 <h2 class="section-title"><i class="fas fa-newspaper"></i> Promesse du Jour</h2>
@@ -231,7 +248,7 @@
         </div>
     </section>
 
-    <!-- PROMESSES EN VEDETE (CONTENU ORIGINAL) -->
+    <!-- PROMESSES EN VEDETE (CONTENU ORIGINAL INTACT) -->
     <section id="promises-carousel" class="promises-carousel-section">
         <div class="container">
             <div class="section-header-modern">
@@ -258,7 +275,7 @@
         </div>
     </section>
 
-    <!-- FILTRES ET ENGAGEMENTS (CONTENU ORIGINAL) -->
+    <!-- FILTRES ET ENGAGEMENTS (CONTENU ORIGINAL INTACT) -->
     <section id="promises" class="promises-section">
         <div class="container">
             <div class="section-header-modern">
@@ -326,7 +343,7 @@
         </div>
     </section>
 
-    <!-- ACTUALITÉS (CONTENU ORIGINAL) -->
+    <!-- ACTUALITÉS (CONTENU ORIGINAL INTACT) -->
     <section id="news" class="news-section">
         <div class="container">
             <div class="section-header-modern">
@@ -343,7 +360,7 @@
         </div>
     </section>
 
-    <!-- REVUE DE PRESSE (CONTENU ORIGINAL) -->
+    <!-- REVUE DE PRESSE (CONTENU ORIGINAL INTACT) -->
     <section id="press" class="press-section">
         <div class="container">
             <div class="section-header-modern">
@@ -404,8 +421,8 @@
         </div>
     </section>
 
-    <!-- NOTATION DES SERVICES (CONTENU ORIGINAL) -->
-    <section id="ratings" class="rating-section">
+    <!-- NOTATION DES SERVICES (CONTENU ORIGINAL INTACT) -->
+    <section id="rating" class="rating-section">
         <div class="container">
             <div class="section-header-modern">
                 <h2 class="section-title"><i class="fas fa-star-half-alt"></i> Notation des Services Publics</h2>
@@ -557,7 +574,7 @@
         </div>
     </section>
 
-    <!-- FOOTER MODERNISÉ (CONTENU ORIGINAL) -->
+    <!-- FOOTER MODERNISÉ (CONTENU ORIGINAL INTACT) -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">

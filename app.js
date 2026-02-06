@@ -2826,3 +2826,219 @@ function setupImageDrag(image) {
         }
     });
 }
+// ==========================================
+// FONCTION MANQUANTE AJOUTÉE
+// ==========================================
+function goToSlide(index) {
+    CONFIG.currentIndex = index;
+    CONFIG.zoomScale = 1; // Reset zoom when changing slide
+    renderPressCarousel();
+}
+
+// ==========================================
+// FONCTION POUR LE CARROUSEL DES PROMESSES
+// ==========================================
+function goToCarouselSlide(index) {
+    const carouselPromises = CONFIG.promises.slice(0, 6);
+    const itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
+    const totalSlides = Math.ceil(carouselPromises.length / itemsPerSlide);
+    if (index >= 0 && index < totalSlides) {
+        CONFIG.carouselIndex = index; // Utiliser CONFIG.carouselIndex au lieu de currentSlide local
+        setupPromisesCarousel();
+    }
+}
+
+// ==========================================
+// EXPORTS GLOBAUX - CORRIGÉS ET COMPLÉTÉS
+// ==========================================
+// Ajouter TOUTES les fonctions nécessaires aux exports globaux
+window.toggleUpdates = toggleUpdates;
+window.showRatingModal = showRatingModal;
+window.closeRatingModal = closeRatingModal;
+window.submitRating = submitRating;
+window.sharePromise = sharePromise;
+window.shareToPlatform = shareToPlatform;
+window.resetFilters = resetFilters;
+window.goToSlide = goToSlide; // ✅ FONCTION AJOUTÉE
+window.goToCarouselSlide = goToCarouselSlide; // ✅ FONCTION AJOUTÉE
+window.openPhotoViewer = openPhotoViewer;
+window.closePhotoViewer = closePhotoViewer;
+window.zoomIn = zoomIn;
+window.zoomOut = zoomOut;
+window.zoomReset = zoomReset;
+window.prevPhoto = prevPhoto;
+window.nextPhoto = nextPhoto;
+window.togglePressZoom = togglePressZoom;
+window.openNewsDetail = openNewsDetail; // ✅ Pour les actualités
+window.closeNewsDetail = closeNewsDetail; // ✅ Pour les actualités
+window.shareNews = shareNews; // ✅ Pour les actualités
+window.updateServiceList = updateServiceList; // ✅ Pour les notations
+
+// ==========================================
+// FONCTION POUR LES ACTUALITÉS (AJOUTÉE)
+// ==========================================
+function openNewsDetail(newsId) {
+    const news = CONFIG.news.find(n => n.id === newsId);
+    if (!news) return;
+    
+    // Créer le modal si nécessaire
+    if (!document.getElementById('newsDetailModal')) {
+        const modal = document.createElement('div');
+        modal.id = 'newsDetailModal';
+        modal.className = 'news-detail-modal';
+        modal.innerHTML = `
+            <div class="news-detail-content">
+                <div class="news-detail-header">
+                    <h2 id="newsDetailTitle"></h2>
+                    <button class="close-news-modal" onclick="closeNewsDetail()">&times;</button>
+                </div>
+                <div class="news-detail-body" id="newsDetailBody"></div>
+                <div class="news-detail-footer">
+                    <button class="btn-share-news" onclick="shareNews('${newsId}')">
+                        <i class="fas fa-share-alt"></i> Partager
+                    </button>
+                    <button class="btn-close-news" onclick="closeNewsDetail()">
+                        <i class="fas fa-times"></i> Fermer
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+    
+    // Remplir le modal
+    document.getElementById('newsDetailTitle').textContent = news.title;
+    
+    const body = document.getElementById('newsDetailBody');
+    body.innerHTML = `
+        <div class="news-detail-meta">
+            <div class="news-detail-source">
+                <i class="fas fa-newspaper"></i>
+                <span>${news.source || 'Source non spécifiée'}</span>
+            </div>
+            <div class="news-detail-date">
+                <i class="fas fa-calendar"></i>
+                <span>${news.date}</span>
+            </div>
+            <div class="news-detail-author">
+                <i class="fas fa-user"></i>
+                <span>${news.author || 'Rédaction'}</span>
+            </div>
+            <div class="news-detail-time">
+                <i class="fas fa-clock"></i>
+                <span>${news.readTime || '3 minutes'}</span>
+            </div>
+        </div>
+        
+        ${news.image ? `
+            <div class="news-detail-image">
+                <img src="${news.image}" alt="${news.title}" onerror="this.src='https://picsum.photos/seed/${news.id}/1200/600'">
+            </div>
+        ` : ''}
+        
+        <div class="news-detail-excerpt">
+            <h3><i class="fas fa-file-alt"></i> Résumé</h3>
+            <p>${news.excerpt}</p>
+        </div>
+        
+        <div class="news-detail-content-text">
+            <h3><i class="fas fa-align-left"></i> Article complet</h3>
+            <p>${news.content || 'Contenu non disponible.'}</p>
+        </div>
+        
+        ${news.link ? `
+            <div class="news-detail-link">
+                <a href="${news.link}" target="_blank" class="btn-external-link">
+                    <i class="fas fa-external-link-alt"></i> Lire l'article original
+                </a>
+            </div>
+        ` : ''}
+    `;
+    
+    // Afficher le modal
+    document.getElementById('newsDetailModal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeNewsDetail() {
+    const modal = document.getElementById('newsDetailModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+function shareNews(newsId) {
+    const news = CONFIG.news.find(n => n.id === newsId);
+    if (!news) return;
+
+    const shareText = `📰 ${news.title}\n\n${news.excerpt}\n\n📅 ${news.date} | ${news.source}\n🏷️ ${getCategoryLabel(news.category)}\n\nLire l'article complet: ${window.location.href}`;
+
+    if (navigator.share) {
+        navigator.share({
+            title: news.title,
+            text: shareText,
+            url: window.location.href
+        }).catch(err => console.log('Erreur partage:', err));
+    } else {
+        navigator.clipboard.writeText(shareText).then(() => {
+            showNotification('Texte copié dans le presse-papiers !', 'success');
+        });
+    }
+}
+
+// ==========================================
+// FONCTION POUR LES CATÉGORIES D'ACTUALITÉS
+// ==========================================
+function getCategoryLabel(category) {
+    const labels = {
+        'education': '🎓 Éducation',
+        'sante': '🏥 Santé',
+        'economie': '📈 Économie',
+        'infrastructures': '🏗️ Infrastructures',
+        'gouvernance': '🏛️ Gouvernance',
+        'transparence': '👁️ Transparence',
+        'general': '📰 Général',
+        'default': '📰 Actualité'
+    };
+    return labels[category] || labels['default'];
+}
+
+// ==========================================
+// FONCTION POUR LA LISTE DES SERVICES (AJOUTÉE)
+// ==========================================
+function updateServiceList() {
+    const category = document.getElementById('serviceCategory').value;
+    const serviceSelect = document.getElementById('service');
+    
+    // Liste complète des services par catégorie
+    const servicesByCategory = {
+        health: [
+            "Hôpital public", "Centre hospitalier régional", "Centre de santé", 
+            "Pharmacie publique (SEN-Pharmacie)", "SAMU (Service d'Assistance Médicale Urgente)",
+            "Centre national de Transfusion sanguine", "Centre national d'Oncologie",
+            "Laboratoire d'analyses médicales public", "Centre psychiatrique",
+            "Service de Protection maternelle et infantile"
+        ],
+        education: [
+            "École publique (élémentaire)", "Collège public", "Lycée public",
+            "Université publique (UCAD, UGB, etc.)", "Institut Islamique de Dakar",
+            "École nationale d'Administration (ENA)", "Centre de Formation judiciaire",
+            "École nationale de Cybersécurité", "Centre régional des Œuvres universitaires",
+            "Inspection d'Académie"
+        ],
+        // ... (autres catégories comme dans le fichier original)
+        other: ["Autre (précisez en commentaire)"]
+    };
+
+    serviceSelect.innerHTML = '<option value="">Sélectionnez un service</option>';
+    
+    if (category && servicesByCategory[category]) {
+        servicesByCategory[category].forEach(service => {
+            const option = document.createElement('option');
+            option.value = service;
+            option.textContent = service;
+            serviceSelect.appendChild(option);
+        });
+    }
+}

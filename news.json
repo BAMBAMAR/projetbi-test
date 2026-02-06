@@ -1,84 +1,90 @@
-// DONNÉES DE TEST POUR ACTUALITÉS
-// Ajouter ce script APRÈS app.js dans index.html
-
-// Attendre que la page soit chargée
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('📰 Chargement des données de test pour actualités...');
-    
-    // Vérifier si CONFIG existe
-    if (typeof CONFIG === 'undefined') {
-        console.error('❌ CONFIG n\'existe pas');
-        return;
+{
+  "last_updated": "2026-02-04",
+  "news": [
+    {
+      "id": "1",
+      "title": "Un centre de formation professionnelle des sous-officiers et militaires du rang inauguré à Nioro du Rip",
+      "excerpt": "Le ministre de l'Intérieur et de la Sécurité publique, Mouhamadou Bamba Cissé, a procédé, vendredi, à l'inauguration du centre de formation professionnelle des sous-officiers et militaires du rang, implanté entre les communes de Dabaly et de Nioro du Rip, dans la région de Kaolack (centre), a constaté l'APS.\n\n\"Cette cérémonie d'inauguration va bien au-delà d'un simple acte administratif\", a indiqué le ministre conduisant une forte délégation composée d'autorités administrative, militaire et paramilitaire, en présence de plusieurs personnalités politiques, religieuses et coutumières, entre autres.\n\nElle symbolise \"une étape décisive dans le processus de modernisation et [de] transformation structurelle de la Brigade nationale des sapeurs-pompiers (BNSP)\", a-t-il ajouté.\n\nLe centre de formation professionnelle des sous-officiers et militaires du rang témoigne également du dynamisme qui caractérise l'ambition des pouvoirs publics de doter la BNSP des capacités nécessaires afin de garantir aux populations sénégalaises et aux hôtes résidants au Sénégal d''un outil de sécurité publique et de sécurité civile performantes'', a-t-il souligné.",
+      "date": "31/01/2026",
+      "source": "APS",
+      "category": "infrastructures",
+      "image": "road",
+      "link": "https://aps.sn/un-centre-de-formation-professionnelle-des-sous-officiers-et-militaires-du-rang-inaugure-a-nioro-du-rip/"
+    },
+    {
+      "id": "2",
+      "title": "Finale CAN 2025 : la FSF renonce à faire appel des sanctions de la CAF ‎",
+      "excerpt": "La Fédération sénégalaise de football (FSF) a annoncé samedi, avoir notifié à la Confédération africaine de football(CAF), sa volonté de ne pas interjeter appel des sanctions sportives et financières prononcées à son encontre par l'instance continentale, à la suite des incidents survenus lors de la finale de la Coupe d'Afrique des nations (CAN) Maroc 2025.\n\n‎‎La CAF a publié mercredi nuit, les décisions de son jury disciplinaire relatives aux incidents survenus lors de la finale de la CAN 2025, disputée au Maroc du 21 décembre 2025 au 18 janvier 2026, et ayant opposé le Sénégal au pays hôte.\n\n‎‎Ainsi, des sanctions ont été infligées à la Fédération sénégalaise de football, à la Fédération royale marocaine de football (FRMF), ainsi qu'à plusieurs joueurs et officiels, pour violations du code disciplinaire de la CAF.\n\n‎‎Le sélectionneur des Lions du Sénégal, Pape Bouna Thiaw, a été suspendu pour cinq matchs officiels de la CAF et condamné à une amende de 100 000 dollars américains, soit environ 66 millions de francs CFA. Les joueurs Iliman Ndiaye et Ismaïla Sarr ont, pour leur part, écopé de deux matchs de suspension chacun.\n\n‎‎La FSF a également été condamnée à payer une amende totale de 615 000 dollars US, soit environ 405,9 millions de francs CFA.",
+      "date": "31/01/2026",
+      "source": "Le Soleil",
+      "category": "autres",
+      "image": "money",
+      "link": "https://aps.sn/finale-can-2025-la-fsf-renonce-a-faire-appel-des-sanctions-de-la-caf/"
+    },
+    {
+      "id": "3",
+      "title": "Audience SONKO à L'UMS",
+      "excerpt": "Le Premier ministre Ousmane SONKO a reçu, ce vendredi 30 janvier 2026, le Bureau exécutif de l'Union des Magistrats du Sénégal (UMS), conduit par son Président Cheikh BA. \nLes échanges riches et constructifs ont porté sur des questions d'interêt national, notamment l'amélioration du service public de la Justice.\nLe Premier ministre a réaffirmé l'engagement et la détermination du Gouvernement à oeuvrer pour la modernisation de la Justice et le renforcement des conditions de travail des acteurs judiciaires.",
+      "date": "30/01/2026",
+      "source": "Gouvernement du Sénégal",
+      "category": "general",
+      "image": "users",
+      "link": "<iframe src=\"https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fgouvernementsn%2Fposts%2Fpfbid02xP2r3T1VhAoKUJ7FcQ7ywQuy2aP25vVofnHq8azzsgnUNLpjKGsU4kWzttQik3Z2l&show_text=true&width=500\" width=\"500\" height=\"792\" style=\"border:none;overflow:hidden\" scrolling=\"no\" frameborder=\"0\" allowfullscreen=\"true\" allow=\"autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share\"></iframe>"
+    },
+    {
+      "id": "4",
+      "title": "Pont de Rosso",
+      "excerpt": "Le ministre sénégalais des Infrastructures, Déthié Fall, et son homologue mauritanien, Ely Ould Veirik, ont conjointement appelé l'entreprise en charge de la construction du pont de Rosso à accélérer le rythme des travaux, afin de respecter le calendrier fixé.\nLes deux autorités souhaitent une livraison de l'ouvrage au plus tard le 25 décembre 2026, en vue d'une inauguration prévue en mars 2027, ont-elles indiqué à l'issue d'une visite de chantier conjointe.",
+      "date": "25/01/2026",
+      "source": "APS",
+      "category": "infrastructures",
+      "image": "road",
+      "link": "https://www.facebook.com/share/v/1BikHJS73i/"
+    },
+    {
+      "id": "5",
+      "title": "Starlink au Sénegal",
+      "excerpt": "Le déploiement de Starlink au Sénégal s'inscrit dans le New Deal technologique visant à démocratiser l'accès au haut et très haut débit, notamment dans les zones rurales, enclavées et frontalières. Autorisé comme fournisseur d'accès à Internet, Starlink opérera sous la régulation de l'État. Dans ce cadre, le gouvernement a négocié l'acquisition de 5 000 kits à tarif préférentiel pour connecter gratuitement un million de Sénégalais au premier semestre 2026",
+      "content": "Le déploiement de Starlink au Sénégal s'inscrit dans le New Deal technologique visant à démocratiser l'accès au haut et très haut débit, notamment dans les zones rurales, enclavées et frontalières. Autorisé comme fournisseur d'accès à Internet, Starlink opérera sous la régulation de l'État. Dans ce cadre, le gouvernement a négocié l'acquisition de 5 000 kits à tarif préférentiel pour connecter gratuitement un million de Sénégalais au premier semestre 2026",
+      "date": "04/02/2026",
+      "source": "RTS",
+      "category": "general",
+      "image": "users",
+      "image_url": "https://pbs.twimg.com/media/HARQqB0bQAA3IM6?format=png&name=small",
+      "link": "https://www.rts.sn/actualite/detail/a-la-une/transformation-numerique-le-senegal-renforce-son-maillage-internet-avec-starlink",
+      "author": "RTS",
+      "read_time": "1 min",
+      "created_at": "2026-02-04T23:22:19.686Z"
+    },
+    {
+      "id": "6",
+      "title": "Lancement officiel de la plateforme",
+      "excerpt": "La plateforme citoyenne de suivi des engagements est désormais opérationnelle.",
+      "date": "25/01/2026",
+      "source": "Le Soleil",
+      "category": "gouvernance",
+      "image": "school",
+      "link": "#"
+    },
+    {
+      "id": "7",
+      "title": "Première école numérique inaugurée",
+      "excerpt": "Le gouvernement a inauguré la première école entièrement numérique à Dakar.",
+      "date": "20/01/2026",
+      "source": "Sud Quotidien",
+      "category": "education",
+      "image": "school",
+      "link": "#"
+    },
+    {
+      "id": "8",
+      "title": "Budget 2026 axé sur la relance économique",
+      "excerpt": "Le budget de l'État pour 2026 prévoit d'importants investissements dans les infrastructures.",
+      "date": "15/01/2026",
+      "source": "WalFadjri",
+      "category": "economie",
+      "image": "money",
+      "link": "#"
     }
-    
-    // Ajouter des actualités de test si CONFIG.news est vide
-    if (!CONFIG.news || CONFIG.news.length === 0) {
-        console.log('📝 Ajout d\'actualités de test...');
-        
-        CONFIG.news = [
-            {
-                id: 'news1',
-                title: 'Lancement du programme de gratuité scolaire',
-                excerpt: 'Le gouvernement sénégalais a annoncé le lancement d\'un programme ambitieux visant à garantir la gratuité de l\'enseignement pour tous les élèves du primaire et du secondaire. Cette mesure phare s\'inscrit dans le cadre des engagements présidentiels et vise à assurer l\'accès à l\'éducation pour tous les enfants sans distinction. Les fournitures scolaires seront distribuées gratuitement dès la prochaine rentrée dans toutes les écoles publiques du pays. Le ministre de l\'Éducation nationale a précisé que ce programme concerne plus de 3 millions d\'élèves à travers tout le territoire national et représente un investissement de plusieurs milliards de francs CFA.',
-                content: 'Le gouvernement sénégalais a annoncé le lancement d\'un programme ambitieux visant à garantir la gratuité de l\'enseignement pour tous les élèves du primaire et du secondaire. Cette mesure phare s\'inscrit dans le cadre des engagements présidentiels et vise à assurer l\'accès à l\'éducation pour tous les enfants sans distinction. Les fournitures scolaires seront distribuées gratuitement dès la prochaine rentrée dans toutes les écoles publiques du pays.\n\nLe ministre de l\'Éducation nationale a précisé que ce programme concerne plus de 3 millions d\'élèves à travers tout le territoire national. Des centres de distribution ont été mis en place dans chaque département pour faciliter l\'accès aux fournitures. Cette initiative représente un investissement majeur de plusieurs milliards de francs CFA et démontre la volonté du gouvernement de placer l\'éducation au cœur de ses priorités.\n\nLes syndicats d\'enseignants ont salué cette décision qu\'ils qualifient d\'historique pour le système éducatif sénégalais.',
-                date: '05/02/2026',
-                source: 'Ministère de l\'Éducation',
-                image: 'school'
-            },
-            {
-                id: 'news2',
-                title: 'Augmentation du budget de la santé',
-                excerpt: 'Le budget alloué à la santé publique connaît une augmentation significative de 39%, passant de 180 à 250 milliards de FCFA. Cette décision vise à améliorer la qualité des soins dans les hôpitaux et centres de santé à travers le pays. De nouveaux équipements médicaux modernes seront acquis et le personnel soignant bénéficiera de formations continues pour mieux servir les populations. Le gouvernement prévoit également le recrutement de 2000 nouveaux personnels de santé et la construction de 50 postes de santé dans les zones rurales les plus reculées du pays.',
-                content: 'Le budget alloué à la santé publique connaît une augmentation significative de 39%, passant de 180 à 250 milliards de FCFA. Cette décision vise à améliorer la qualité des soins dans les hôpitaux et centres de santé à travers le pays.\n\nDe nouveaux équipements médicaux modernes seront acquis et le personnel soignant bénéficiera de formations continues pour mieux servir les populations. Le gouvernement prévoit également le recrutement de 2000 nouveaux personnels de santé et la construction de 50 postes de santé dans les zones rurales les plus reculées du pays.\n\nCette enveloppe permettra notamment d\'équiper 15 hôpitaux régionaux en matériel de pointe. La ministre de la Santé a souligné que cette mesure s\'inscrit dans la volonté du gouvernement de garantir l\'accès aux soins de santé de qualité pour tous les Sénégalais, conformément aux engagements du Projet pour un Sénégal Souverain, Juste et Prospère.',
-                date: '04/02/2026',
-                source: 'Ministère de la Santé',
-                image: 'health'
-            },
-            {
-                id: 'news3',
-                title: 'Actualité courte',
-                excerpt: 'Ceci est un exemple d\'actualité courte qui ne dépassera pas les 70 mots et n\'affichera donc pas de bouton "Lire la suite".',
-                content: 'Ceci est un exemple d\'actualité courte qui ne dépassera pas les 70 mots et n\'affichera donc pas de bouton "Lire la suite".',
-                date: '03/02/2026',
-                source: 'Test',
-                image: 'flag'
-            }
-        ];
-        
-        console.log('✅ ' + CONFIG.news.length + ' actualités ajoutées');
-        
-        // Re-rendre les actualités
-        if (typeof renderNews === 'function') {
-            renderNews(CONFIG.news);
-            console.log('✅ Actualités affichées');
-        } else {
-            console.error('❌ La fonction renderNews n\'existe pas');
-        }
-    } else {
-        console.log('✅ CONFIG.news contient déjà ' + CONFIG.news.length + ' actualités');
-    }
-    
-    // Vérifier que les fonctions sont bien définies
-    console.log('🔍 Vérification des fonctions:');
-    console.log('  - openArticleModal:', typeof openArticleModal);
-    console.log('  - closeArticleModal:', typeof closeArticleModal);
-    console.log('  - showAllRatings:', typeof showAllRatings);
-    console.log('  - closeRatingsModal:', typeof closeRatingsModal);
-    console.log('  - shareToPlatform:', typeof shareToPlatform);
-    console.log('  - renderNews:', typeof renderNews);
-    
-    // Vérifier que les modals existent
-    console.log('🔍 Vérification des modals:');
-    console.log('  - articleModal:', document.getElementById('articleModal') ? '✅ Présent' : '❌ Manquant');
-    console.log('  - ratingsListModal:', document.getElementById('ratingsListModal') ? '✅ Présent' : '❌ Manquant');
-    
-    // Vérifier que les styles sont chargés
-    console.log('🔍 Vérification des styles:');
-    const testBtn = document.querySelector('.read-more-btn');
-    if (testBtn) {
-        const styles = window.getComputedStyle(testBtn);
-        console.log('  - .read-more-btn background:', styles.background.includes('gradient') ? '✅ OK' : '❌ Manquant');
-    }
-    
-    console.log('✅ Initialisation terminée');
-});
+  ]
+}

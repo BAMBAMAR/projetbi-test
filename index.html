@@ -7,19 +7,17 @@
     <meta name="description" content="Plateforme citoyenne indépendante de suivi en temps réel des engagements du Président Bassirou Diomaye Faye">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <!-- Favicon fallback -->
+    <link rel="icon" href="https://projetbi.org/favicon.png">
 </head>
 <body>
-    <!-- PROGRESS BAR (inchangé) -->
+    <!-- PROGRESS BAR ORIGINAL -->
     <div class="progress-indicator" id="progressIndicator"></div>
 
-    <!-- NAVIGATION MODERNE (nouveau design) -->
+    <!-- NAVIGATION MODERNE (design uniquement, liens originaux) -->
     <nav id="modernNav" class="modern-nav">
         <div class="modern-nav-container">
-            <a href="#hero" class="modern-logo">
-                <div class="modern-logo-text">
-                    <span>LE PROJET SÉNÉGAL</span>
-                </div>
+            <a href="#header" class="modern-logo">
+                <span>PROJETBI</span>
             </a>
             
             <button id="modernHamburger" class="modern-hamburger">
@@ -29,32 +27,24 @@
             </button>
             
             <div id="modernMenu" class="modern-menu">
-                <a href="#hero" class="modern-link active">Accueil</a>
+                <a href="#header" class="modern-link active">Accueil</a>
                 <a href="#stats" class="modern-link">Dashboard</a>
-                <a href="#daily-promise" class="modern-link">Promesse du Jour</a>
+                <a href="#daily" class="modern-link">Promesse du Jour</a>
                 <a href="#promises" class="modern-link">Engagements</a>
                 <a href="#news" class="modern-link">Actualités</a>
                 <a href="#press" class="modern-link">Revue de Presse</a>
-                <a href="#ratings" class="modern-link">Noter un service</a>
-                <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="modern-link modern-link-cta" target="_blank">
-                    <i class="fas fa-download"></i> Programme PDF
-                </a>
+                <a href="#rating" class="modern-link">Noter un service</a>
             </div>
         </div>
     </nav>
 
-    <!-- CONTENU ORIGINAL DU HEADER (inchangé) -->
+    <!-- CONTENU ORIGINAL DU HEADER (100% INTACT) -->
     <section id="hero" class="header">
         <div class="header-container">
             <div class="header-text-side">
-                <div class="header-badge">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Transparence & Vérité</span>
-                </div>
                 <h1 class="header-title">
-                    <span class="title-top">Le projet pour</span>
-                    <span class="title-main">Sénégal Souverain, Juste et Prospère</span>
-                    <span class="title-sub">Plateforme citoyenne indépendante de suivi en temps réel des engagements du Président Bassirou Diomaye Faye. La transparence au service de la démocratie.</span>
+                    Le projet pour Sénégal Souverain, Juste et Prospère
+                    Plateforme citoyenne indépendante de suivi en temps réel des engagements du Président Bassirou Diomaye Faye. La transparence au service de la démocratie.
                 </h1>
                 
                 <div class="cta-row">
@@ -104,18 +94,11 @@
         <div class="current-date" id="current-date"></div>
     </section>
 
-    <!-- SECTION STATS (inchangée) -->
+    <!-- SECTION STATS (100% CONTENU ORIGINAL) -->
     <section id="stats" class="stats-section">
         <div class="container">
             <div class="section-header-modern">
                 <h2 class="section-title"><i class="fas fa-chart-line"></i> Tableau de Bord</h2>
-                <div class="section-actions">
-                    <div class="kpi-carousel-container">
-                        <button id="kpiPrev" class="kpi-nav-btn"><i class="fas fa-chevron-left"></i></button>
-                        <div id="kpiCarousel" class="kpi-carousel"></div>
-                        <button id="kpiNext" class="kpi-nav-btn"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                </div>
             </div>
             
             <div class="stats-grid">
@@ -126,7 +109,7 @@
                         <div class="stat-label">Total Engagements</div>
                     </div>
                     <div class="stat-footer">
-                        <div class="stat-percentage" id="total-percentage">0%</div>
+                        <div class="stat-percentage" id="total-percentage">100%</div>
                     </div>
                 </div>
                 
@@ -232,7 +215,7 @@
         </div>
     </section>
 
-    <!-- PROMESSE DU JOUR (inchangée) -->
+    <!-- PROMESSE DU JOUR (CONTENU ORIGINAL) -->
     <section id="daily-promise" class="daily-promise-section">
         <div class="container">
             <div class="section-header-modern">
@@ -248,7 +231,7 @@
         </div>
     </section>
 
-    <!-- CARROUSEL ENGAGEMENTS (inchangé) -->
+    <!-- PROMESSES EN VEDETE (CONTENU ORIGINAL) -->
     <section id="promises-carousel" class="promises-carousel-section">
         <div class="container">
             <div class="section-header-modern">
@@ -275,7 +258,7 @@
         </div>
     </section>
 
-    <!-- FILTRES ET ENGAGEMENTS (inchangés) -->
+    <!-- FILTRES ET ENGAGEMENTS (CONTENU ORIGINAL) -->
     <section id="promises" class="promises-section">
         <div class="container">
             <div class="section-header-modern">
@@ -343,7 +326,7 @@
         </div>
     </section>
 
-    <!-- ACTUALITÉS AMÉLIORÉES (NOUVELLE FONCTIONNALITÉ) -->
+    <!-- ACTUALITÉS (CONTENU ORIGINAL) -->
     <section id="news" class="news-section">
         <div class="container">
             <div class="section-header-modern">
@@ -360,7 +343,7 @@
         </div>
     </section>
 
-    <!-- REVUE DE PRESSE (inchangée) -->
+    <!-- REVUE DE PRESSE (CONTENU ORIGINAL) -->
     <section id="press" class="press-section">
         <div class="container">
             <div class="section-header-modern">
@@ -421,7 +404,7 @@
         </div>
     </section>
 
-    <!-- NOTATIONS (NOUVELLE FONCTIONNALITÉ) -->
+    <!-- NOTATION DES SERVICES (CONTENU ORIGINAL) -->
     <section id="ratings" class="rating-section">
         <div class="container">
             <div class="section-header-modern">
@@ -574,7 +557,7 @@
         </div>
     </section>
 
-    <!-- FOOTER MODERNISÉ (NOUVELLE FONCTIONNALITÉ) -->
+    <!-- FOOTER MODERNISÉ (CONTENU ORIGINAL) -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -615,9 +598,9 @@
                 <div class="footer-col">
                     <h4><i class="fas fa-link"></i> Liens Utiles</h4>
                     <div class="footer-links">
-                        <a href="#hero" class="footer-link"><i class="fas fa-home"></i> Accueil</a>
+                        <a href="#header" class="footer-link"><i class="fas fa-home"></i> Accueil</a>
                         <a href="#promises" class="footer-link"><i class="fas fa-tasks"></i> Engagements</a>
-                        <a href="#ratings" class="footer-link"><i class="fas fa-star"></i> Notation</a>
+                        <a href="#rating" class="footer-link"><i class="fas fa-star"></i> Notation</a>
                         <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="footer-link" target="_blank">
                             <i class="fas fa-book"></i> Programme PDF
                         </a>

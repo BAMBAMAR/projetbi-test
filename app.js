@@ -1,11 +1,10 @@
 // ==========================================
-// APP.JS - VERSION COMPLÈTE AVEC TOUTES LES AMÉLIORATIONS
+// CONFIGURATION SUPABASE ET VARIABLES GLOBALES
 // ==========================================
-
-// Configuration Supabase
 const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_joJuW7-vMiQG302_2Mvj5A_sVaD8Wap';
 let supabaseClient = null;
+let DEMO_MODE = false;
 
 // Initialisation Supabase
 try {
@@ -20,37 +19,25 @@ try {
     supabaseClient = null;
 }
 
-// Mode démo - activé si Supabase échoue
-let DEMO_MODE = false;
-
 // Configuration générale
 const CONFIG = {
     START_DATE: new Date('2024-04-02'),
-    END_DATE: new Date('2029-04-02'), // Fin du mandat
+    END_DATE: new Date('2029-04-02'),
     CURRENT_DATE: new Date(),
     promises: [],
     news: [],
     press: [],
-    ratings: [],
     currentIndex: 0,
     carouselInterval: null,
     visibleCount: 6,
     currentVisible: 6,
-    carouselIndex: 0,
     carouselAutoPlay: true,
-    animationDuration: 300,
-    scrollOffset: 80,
     kpiCarouselIndex: 0,
     kpiAutoPlay: true,
     zoomScale: 1,
-    zooming: false,
-    dragStartX: 0,
-    dragStartY: 0,
-    isDragging: false,
     currentRatingPromiseId: null,
     currentRatingValue: 0,
-    filteredPromises: [],
-    currentNewsId: null
+    filteredPromises: []
 };
 
 // Variables pour le visualiseur photo
@@ -161,26 +148,20 @@ function parseDelayToDays(delayText) {
     }
 
     const MANDAT_MAX_DAYS = 1825;
-    const result = Math.min(totalDays, MANDAT_MAX_DAYS);
-    return result;
+    return Math.min(totalDays, MANDAT_MAX_DAYS);
 }
 
 // ==========================================
-// FONCTION POUR CALCULER LES JOURS RESTANTS
+// FONCTIONS UTILITAIRES
 // ==========================================
 function getDaysRemaining(deadline) {
     if (!deadline || !(deadline instanceof Date) || isNaN(deadline.getTime())) {
-        console.warn('Date limite invalide:', deadline);
         return 0;
     }
     const diff = deadline.getTime() - CONFIG.CURRENT_DATE.getTime();
-    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-    return days;
+    return Math.ceil(diff / (1000 * 60 * 60 * 24));
 }
 
-// ==========================================
-// FONCTION POUR FORMATTER LES JOURS RESTANTS/RETARD
-// ==========================================
 function formatDaysRemaining(days) {
     if (days > 0) {
         return `${days} jour${days > 1 ? 's' : ''} restant${days > 1 ? 's' : ''}`;
@@ -192,27 +173,89 @@ function formatDaysRemaining(days) {
     }
 }
 
+function calculateDeadlineFromDays(days) {
+    const daysNum = Math.max(0, parseInt(days, 10) || 0);
+    const deadline = new Date(CONFIG.START_DATE);
+
+    if (daysNum === 0) {
+        return deadline;
+    }
+
+    deadline.setDate(deadline.getDate() + daysNum);
+
+    if (deadline > CONFIG.END_DATE) {
+        return new Date(CONFIG.END_DATE);
+    }
+
+    return deadline;
+}
+
+function checkIfLate(status, deadline) {
+    if (status === 'Réalisé') return false;
+    if (!deadline || !(deadline instanceof Date) || isNaN(deadline.getTime())) {
+        return false;
+    }
+    return CONFIG.CURRENT_DATE > deadline;
+}
+
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// ==========================================
+// FONCTIONS DE MISE À JOUR SÉCURISÉES
+// ==========================================
+function updateStatValue(id, value) {
+    const el = document.getElementById(id);
+    if (el) {
+        el.textContent = value || '0';
+    } else {
+        console.warn(`⚠️ Element #${id} non trouvé - ignoré`);
+    }
+}
+
+function updateStatPercentage(id, value, total) {
+    const el = document.getElementById(id);
+    if (el && total > 0) {
+        const percentage = Math.round((value / total) * 100);
+        el.textContent = `${percentage}%`;
+    } else if (el) {
+        el.textContent = '0%';
+    } else {
+        console.warn(`⚠️ Element #${id} non trouvé - ignoré`);
+    }
+}
+
 // ==========================================
 // INITIALISATION
 // ==========================================
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('🚀 Initialisation...');
     
-    // 1. Initialiser les composants UI
+    // Initialiser les composants UI
     initNavigation();
     initScrollEffects();
     initFilters();
     initDateDisplay();
+    initCountdown();
     initPhotoViewer();
 
-    // 2. Charger les données
+    // Charger les données
     await loadData();
 
-    // 3. Initialiser filteredPromises
+    // Initialiser filteredPromises
     CONFIG.filteredPromises = [...CONFIG.promises];
     CONFIG.currentVisible = Math.min(CONFIG.visibleCount, CONFIG.promises.length);
 
-    // 4. Rendre les données
+    // Rendre les données
     renderAll();
     if (typeof renderNews === 'function') {
         renderNews(CONFIG.news);
@@ -221,17 +264,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderNewspapers();
     }
 
-    // 5. Configurer les composants
+    // Configurer les composants
     setupPressCarousel();
     setupServiceRatings();
     setupDailyPromise();
     setupPromisesCarousel();
     setupKpiCarousel();
 
-    // 6. Initialiser les étoiles
+    // Initialiser les étoiles
     initStarRatings();
 
-    // 7. Initialiser le visualiseur photo
+    // Initialiser le visualiseur photo
     setTimeout(() => {
         if (typeof setupPhotoViewerControls === 'function') {
             setupPhotoViewerControls();
@@ -240,7 +283,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 // ==========================================
-// NAVIGATION - VERSION MODERNE
+// NAVIGATION MODERNE
 // ==========================================
 function initNavigation() {
     const modernHamburger = document.getElementById('modernHamburger');
@@ -315,31 +358,14 @@ function initNavigation() {
     }, 100));
 }
 
-// Fonction debounce
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
 // ==========================================
-// SCROLL EFFECTS
+// SCROLL EFFECTS ET DATE
 // ==========================================
 function initScrollEffects() {
-    const navbar = document.getElementById('navbar');
     const scrollToTop = document.getElementById('scrollToTop');
     const progressIndicator = document.getElementById('progressIndicator');
 
     window.addEventListener('scroll', () => {
-        if (navbar && window.scrollY > 50) navbar.classList.add('scrolled');
-        else if (navbar) navbar.classList.remove('scrolled');
-
         if (scrollToTop) scrollToTop.classList.toggle('visible', window.scrollY > 400);
 
         if (progressIndicator) {
@@ -357,9 +383,6 @@ function initScrollEffects() {
     }
 }
 
-// ==========================================
-// DATE DISPLAY
-// ==========================================
 function initDateDisplay() {
     const currentDateEl = document.getElementById('current-date');
     if (currentDateEl) {
@@ -367,6 +390,39 @@ function initDateDisplay() {
         const today = new Date();
         currentDateEl.textContent = today.toLocaleDateString('fr-FR', options);
     }
+}
+
+// ==========================================
+// COMPTE À REBOURS
+// ==========================================
+function initCountdown() {
+    const countdownDate = new Date('2029-04-02T00:00:00').getTime();
+    
+    const updateCountdown = () => {
+        const now = new Date().getTime();
+        const distance = countdownDate - now;
+        
+        if (distance < 0) {
+            document.getElementById('days').textContent = '000';
+            document.getElementById('hours').textContent = '00';
+            document.getElementById('minutes').textContent = '00';
+            document.getElementById('seconds').textContent = '00';
+            return;
+        }
+        
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        document.getElementById('days').textContent = days.toString().padStart(3, '0');
+        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+    };
+    
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
 }
 
 // ==========================================
@@ -407,10 +463,9 @@ async function loadData() {
     }
 }
 
-// Charger les promesses
 async function loadPromisesData() {
     try {
-        const response = await fetch('promises.json');
+        const response = await fetch('promises.json?v=' + Date.now());
         if (!response.ok) {
             console.warn('Fichier promises.json non trouvé - utilisation des données de test');
             CONFIG.promises = generateTestPromises();
@@ -486,7 +541,6 @@ async function loadPromisesData() {
     }
 }
 
-// Charger la presse
 async function loadPressData() {
     try {
         console.log('📰 Chargement des données presse...');
@@ -521,7 +575,6 @@ async function loadPressData() {
     }
 }
 
-// Charger les actualités
 async function loadNewsData() {
     try {
         console.log('📰 Chargement des actualités...');
@@ -582,35 +635,6 @@ async function loadNewsData() {
 }
 
 // ==========================================
-// CALCULS
-// ==========================================
-function calculateDeadlineFromDays(days) {
-    const daysNum = Math.max(0, parseInt(days, 10) || 0);
-    const deadline = new Date(CONFIG.START_DATE);
-
-    if (daysNum === 0) {
-        return deadline;
-    }
-
-    deadline.setDate(deadline.getDate() + daysNum);
-
-    if (deadline > CONFIG.END_DATE) {
-        return new Date(CONFIG.END_DATE);
-    }
-
-    return deadline;
-}
-
-function checkIfLate(status, deadline) {
-    if (status === 'Réalisé') return false;
-    if (!deadline || !(deadline instanceof Date) || isNaN(deadline.getTime())) {
-        return false;
-    }
-
-    return CONFIG.CURRENT_DATE > deadline;
-}
-
-// ==========================================
 // CORRECTION DES DÉLAIS INVALIDES
 // ==========================================
 function fixInvalidDelays() {
@@ -642,140 +666,7 @@ function fixInvalidDelays() {
 }
 
 // ==========================================
-// PROMESSE DU JOUR - FORMAT JOURNAL
-// ==========================================
-function setupDailyPromise() {
-    const promisesWithDetails = CONFIG.promises.filter(p => p.engagement && p.resultat && p.delai);
-    if (promisesWithDetails.length === 0) return;
-
-    const today = new Date().getDate();
-    const promiseIndex = today % promisesWithDetails.length;
-    const promise = promisesWithDetails[promiseIndex];
-
-    const dailyPromiseCard = document.getElementById('dailyPromise');
-    if (!dailyPromiseCard) return;
-
-    const daysRemaining = getDaysRemaining(promise.deadline);
-    const statusClass = promise.isLate ? 'status-late' : 
-                       promise.status === 'Réalisé' ? 'status-realise' :
-                       promise.status === 'En cours' ? 'status-encours' : 'status-non-lance';
-
-    const statusIcon = promise.isLate ? '⚠️' :
-                      promise.status === 'Réalisé' ? '✅' :
-                      promise.status === 'En cours' ? '🔄' : '⏳';
-
-    dailyPromiseCard.innerHTML = `
-        <div class="daily-newspaper-header">
-            <div class="newspaper-badge">
-                <i class="fas fa-newspaper"></i>
-                PROMESSE DU JOUR
-            </div>
-            <div class="newspaper-date">
-                <i class="fas fa-calendar"></i>
-                ${new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
-            </div>
-        </div>
-        
-        <div class="daily-newspaper-article">
-            <h2 class="article-title">${promise.engagement}</h2>
-            
-            <div class="article-meta">
-                <span class="article-domain"><i class="fas fa-building"></i> ${promise.domain || 'Non spécifié'}</span>
-                <span class="article-status ${statusClass}">
-                    ${statusIcon} ${promise.isLate ? 'En retard' : promise.status}
-                </span>
-            </div>
-            
-            <div class="article-content">
-                <p class="article-lead">
-                    <strong><i class="fas fa-quote-left"></i></strong>
-                    ${promise.engagement}
-                    <strong><i class="fas fa-quote-right"></i></strong>
-                </p>
-                
-                <div class="article-section">
-                    <h3><i class="fas fa-bullseye"></i> Résultats attendus</h3>
-                    <p>${promise.resultat || 'Aucun résultat spécifié'}</p>
-                </div>
-                
-                <div class="article-section">
-                    <h3><i class="fas fa-clock"></i> Délai de réalisation des mesures clés</h3>
-                    <div class="deadline-grid">
-                        <div class="deadline-item">
-                            <span class="deadline-label">Délai initial:</span>
-                            <span class="deadline-value">${promise.delai_texte || promise.delai + ' jours'}</span>
-                        </div>
-                        <div class="deadline-item">
-                            <span class="deadline-label">Date limite:</span>
-                            <span class="deadline-value">${formatDate(promise.deadline)}</span>
-                        </div>
-                        <div class="deadline-item">
-                            <span class="deadline-label">Temps restant:</span>
-                            <span class="deadline-value ${daysRemaining < 0 ? 'late' : ''}">
-                                ${formatDaysRemaining(daysRemaining)}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                
-                ${promise.updates && promise.updates.length > 0 ? `
-                    <div class="article-section updates-section">
-                        <h3><i class="fas fa-history"></i> Dernières mises à jour</h3>
-                        ${promise.updates.slice(0, 3).map(update => `
-                            <div class="update-item-small">
-                                <div class="update-date-small">${formatDateProper(update.date || '')}</div>
-                                <div class="update-text-small">${update.description || 'Mise à jour'}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                ` : ''}
-            </div>
-            
-            <div class="article-footer">
-                <button class="btn-article-primary" onclick="sharePromiseEnriched('${promise.id}')">
-                    <i class="fas fa-share-alt"></i> Partager cette promesse
-                </button>
-                <button class="btn-article-secondary" onclick="showRatingModal('${promise.id}')">
-                    <i class="fas fa-star"></i> Noter
-                </button>
-            </div>
-        </div>
-    `;
-}
-
-// ==========================================
-// RENDER ALL
-// ==========================================
-function renderAll() {
-    console.log('renderAll: Rendering', CONFIG.promises.length, 'promises');
-    
-    if (!CONFIG.filteredPromises || CONFIG.filteredPromises.length === 0) {
-        CONFIG.filteredPromises = [...CONFIG.promises];
-    }
-
-    updateStats();
-
-    const initialCount = Math.min(CONFIG.visibleCount, CONFIG.filteredPromises.length);
-    renderPromises(CONFIG.filteredPromises.slice(0, initialCount));
-
-    updateResultsCount(CONFIG.filteredPromises.length);
-
-    const showMoreBtn = document.getElementById('showMoreBtn');
-    const showLessBtn = document.getElementById('showLessBtn');
-
-    if (CONFIG.filteredPromises.length > CONFIG.visibleCount) {
-        if (showMoreBtn) showMoreBtn.style.display = 'inline-flex';
-        if (showLessBtn) showLessBtn.style.display = 'none';
-    } else {
-        if (showMoreBtn) showMoreBtn.style.display = 'none';
-        if (showLessBtn) showLessBtn.style.display = 'none';
-    }
-
-    populateDomainFilter();
-}
-
-// ==========================================
-// UPDATE STATS
+// MISE À JOUR DES STATISTIQUES
 // ==========================================
 function updateStats() {
     const total = CONFIG.promises.length;
@@ -888,24 +779,37 @@ function updateStats() {
     }
 }
 
-function updateStatValue(id, value) {
-    const el = document.getElementById(id);
-    if (el) el.textContent = value || '0';
-}
-
-function updateStatPercentage(id, value, total) {
-    const el = document.getElementById(id);
-    if (el && total > 0) {
-        const percentage = Math.round((value / total) * 100);
-        el.textContent = `${percentage}%`;
-    } else {
-        el.textContent = '0%';
+// ==========================================
+// RENDER ALL ET FILTRES
+// ==========================================
+function renderAll() {
+    console.log('renderAll: Rendering', CONFIG.promises.length, 'promises');
+    
+    if (!CONFIG.filteredPromises || CONFIG.filteredPromises.length === 0) {
+        CONFIG.filteredPromises = [...CONFIG.promises];
     }
+
+    updateStats();
+
+    const initialCount = Math.min(CONFIG.visibleCount, CONFIG.filteredPromises.length);
+    renderPromises(CONFIG.filteredPromises.slice(0, initialCount));
+
+    updateResultsCount(CONFIG.filteredPromises.length);
+
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const showLessBtn = document.getElementById('showLessBtn');
+
+    if (CONFIG.filteredPromises.length > CONFIG.visibleCount) {
+        if (showMoreBtn) showMoreBtn.style.display = 'inline-flex';
+        if (showLessBtn) showLessBtn.style.display = 'none';
+    } else {
+        if (showMoreBtn) showMoreBtn.style.display = 'none';
+        if (showLessBtn) showLessBtn.style.display = 'none';
+    }
+
+    populateDomainFilter();
 }
 
-// ==========================================
-// FILTRES
-// ==========================================
 function initFilters() {
     const filterToggleBtn = document.getElementById('filterToggleBtn');
     const filtersSection = document.getElementById('filtersSection');
@@ -1230,522 +1134,109 @@ function generateStars(rating) {
 }
 
 // ==========================================
-// MODAL DE NOTATION DES PROMESSES
+// PROMESSE DU JOUR
 // ==========================================
-function showRatingModal(promiseId) {
-    const promise = CONFIG.promises.find(p => p.id === promiseId);
-    if (!promise) return;
-    
-    CONFIG.currentRatingPromiseId = promiseId;
-    CONFIG.currentRatingValue = 0;
+function setupDailyPromise() {
+    const promisesWithDetails = CONFIG.promises.filter(p => p.engagement && p.resultat && p.delai);
+    if (promisesWithDetails.length === 0) return;
 
-    const modal = document.createElement('div');
-    modal.className = 'rating-modal';
-    modal.id = 'ratingModal';
-    modal.innerHTML = `
-        <div class="rating-modal-content">
-            <div class="rating-modal-header">
-                <h3>
-                    <i class="fas fa-star"></i>
-                    Noter cet engagement
-                </h3>
-                <button class="close-modal" onclick="closeRatingModal()">&times;</button>
-            </div>
-            <div class="rating-modal-body">
-                <p class="promise-preview">"${promise.engagement.substring(0, 100)}${promise.engagement.length > 100 ? '...' : ''}"</p>
-                
-                <div class="stars-rating-container">
-                    <div class="stars-large" id="ratingStars">
-                        <i class="far fa-star" data-value="1"></i>
-                        <i class="far fa-star" data-value="2"></i>
-                        <i class="far fa-star" data-value="3"></i>
-                        <i class="far fa-star" data-value="4"></i>
-                        <i class="far fa-star" data-value="5"></i>
-                    </div>
-                    <div class="rating-label" id="ratingLabel">
-                        Sélectionnez une note (1-5 étoiles)
-                    </div>
-                </div>
-                
-                <div class="rating-feedback">
-                    <label for="ratingComment">
-                        <i class="fas fa-comment"></i>
-                        Commentaire (optionnel)
-                    </label>
-                    <textarea id="ratingComment" placeholder="Partagez votre avis sur cet engagement..." rows="3"></textarea>
-                </div>
-            </div>
-            <div class="rating-modal-footer">
-                <button class="btn-cancel" onclick="closeRatingModal()">
-                    Annuler
-                </button>
-                <button class="btn-submit-rating" onclick="submitRating()" disabled>
-                    <i class="fas fa-paper-plane"></i>
-                    Soumettre ma note
-                </button>
-            </div>
-        </div>
-    `;
+    const today = new Date().getDate();
+    const promiseIndex = today % promisesWithDetails.length;
+    const promise = promisesWithDetails[promiseIndex];
 
-    document.body.appendChild(modal);
+    const dailyPromiseCard = document.getElementById('dailyPromise');
+    if (!dailyPromiseCard) return;
 
-    const stars = modal.querySelectorAll('#ratingStars i');
-    stars.forEach(star => {
-        star.addEventListener('click', () => {
-            const value = parseInt(star.getAttribute('data-value'));
-            CONFIG.currentRatingValue = value;
-            updateStars(stars, value);
-            modal.querySelector('.btn-submit-rating').disabled = false;
-            
-            const labels = ['Mauvais', 'Passable', 'Bon', 'Très bon', 'Excellent'];
-            modal.querySelector('#ratingLabel').textContent = labels[value - 1];
-        });
-        
-        star.addEventListener('mouseenter', () => {
-            const value = parseInt(star.getAttribute('data-value'));
-            updateStars(stars, value, true);
-        });
-    });
-
-    modal.querySelector('#ratingStars').addEventListener('mouseleave', () => {
-        updateStars(stars, CONFIG.currentRatingValue);
-    });
-
-    modal.style.display = 'flex';
-}
-
-function closeRatingModal() {
-    const modal = document.getElementById('ratingModal');
-    if (modal) {
-        modal.style.animation = 'fadeOut 0.3s ease forwards';
-        setTimeout(() => {
-            modal.remove();
-        }, 300);
-    }
-}
-
-function updateStars(stars, value, isHover = false) {
-    stars.forEach((star, index) => {
-        if (index < value) {
-            star.classList.remove('far');
-            star.classList.add('fas', 'active');
-        } else {
-            star.classList.remove('fas', 'active');
-            star.classList.add('far');
-        }
-        if (isHover) {
-            star.style.transform = 'scale(1.1)';
-        } else {
-            star.style.transform = 'scale(1)';
-        }
-    });
-}
-
-function submitRating() {
-    if (!CONFIG.currentRatingPromiseId || CONFIG.currentRatingValue === 0) {
-        showNotification('Veuillez sélectionner une note', 'error');
-        return;
-    }
-    const comment = document.getElementById('ratingComment')?.value.trim() || '';
-    saveVoteToSupabase(CONFIG.currentRatingPromiseId, CONFIG.currentRatingValue, comment);
-    closeRatingModal();
-}
-
-// ==========================================
-// PARTAGE DE PROMESSES ENRICHI
-// ==========================================
-function sharePromiseEnriched(promiseId) {
-    const promise = CONFIG.promises.find(p => p.id === promiseId);
-    if (!promise) return;
+    const daysRemaining = getDaysRemaining(promise.deadline);
+    const statusClass = promise.isLate ? 'status-late' : 
+                       promise.status === 'Réalisé' ? 'status-realise' :
+                       promise.status === 'En cours' ? 'status-encours' : 'status-non-lance';
 
     const statusIcon = promise.isLate ? '⚠️' :
                       promise.status === 'Réalisé' ? '✅' :
                       promise.status === 'En cours' ? '🔄' : '⏳';
 
-    const statusText = promise.isLate ? 'En retard' : promise.status;
-
-    const daysRemaining = getDaysRemaining(promise.deadline);
-    const timeText = formatDaysRemaining(daysRemaining);
-
-    const latestUpdate = promise.updates && promise.updates.length > 0 
-        ? promise.updates[0].description 
-        : 'Aucune mise à jour récente';
-
-    const shareText = `🎯 ${promise.engagement}\n\n` +
-                     `📍 Domaine: ${promise.domain || 'Non spécifié'}\n` +
-                     `📅 Délai: ${promise.delai_texte}\n` +
-                     `🔖 Statut: ${statusIcon} ${statusText}\n` +
-                     `⏰ ${timeText}\n\n` +
-                     `📝 Description: ${promise.resultat || 'Non spécifié'}\n\n` +
-                     `🔄 Dernière mise à jour: ${latestUpdate}\n\n` +
-                     `📊 Suivez tous les engagements sur: ${window.location.href}`;
-
-    if (navigator.share) {
-        navigator.share({
-            title: 'Engagement du Projet Sénégal',
-            text: shareText,
-            url: window.location.href
-        }).catch(err => console.log('Erreur partage:', err));
-    } else {
-        navigator.clipboard.writeText(shareText).then(() => {
-            showNotification('Texte copié dans le presse-papiers !', 'success');
-        });
-    }
-}
-
-// ==========================================
-// RENDER NEWS - VERSION AMÉLIORÉE
-// ==========================================
-function renderNews(news) {
-    const grid = document.getElementById('newsGrid');
-    if (!grid) return;
-    
-    grid.innerHTML = news.map(item => {
-        const categoryIcon = getCategoryIcon(item.category);
-        const categoryClass = getCategoryClass(item.category);
+    dailyPromiseCard.innerHTML = `
+        <div class="daily-newspaper-header">
+            <div class="newspaper-badge">
+                <i class="fas fa-newspaper"></i>
+                PROMESSE DU JOUR
+            </div>
+            <div class="newspaper-date">
+                <i class="fas fa-calendar"></i>
+                ${new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+            </div>
+        </div>
         
-        return `
-            <article class="news-card">
-                ${item.image ? `
-                    <div class="news-image-real">
-                        <img src="${item.image}" alt="${item.title}" onerror="this.src='https://picsum.photos/seed/${item.id}/800/450'">
-                    </div>
-                ` : `
-                    <div class="news-icon">
-                        <i class="fas fa-${categoryIcon} fa-3x"></i>
-                    </div>
-                `}
-                <div class="news-content">
-                    <div class="news-meta">
-                        <span class="news-category ${categoryClass}">
-                            ${getCategoryLabel(item.category)}
-                        </span>
-                        <span class="news-date">
-                            <i class="fas fa-calendar"></i> ${item.date}
-                        </span>
-                    </div>
-                    <h3>${item.title}</h3>
-                    <p class="news-excerpt">${item.excerpt}</p>
-                    <div class="news-footer">
-                        <span>
-                            <i class="fas fa-newspaper"></i> ${item.source}
-                        </span>
-                        <button class="news-read-more" onclick="openNewsDetail('${item.id}')">
-                            Lire l'article <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </div>
-            </article>
-        `;
-    }).join('');
-}
-
-function getCategoryIcon(category) {
-    const icons = {
-        'education': 'school',
-        'sante': 'hospital',
-        'economie': 'chart-line',
-        'infrastructures': 'road',
-        'gouvernance': 'landmark',
-        'transparence': 'eye',
-        'general': 'newspaper',
-        'default': 'newspaper'
-    };
-    return icons[category] || icons['default'];
-}
-
-function getCategoryClass(category) {
-    const classes = {
-        'education': 'cat-education',
-        'sante': 'cat-sante',
-        'economie': 'cat-economie',
-        'infrastructures': 'cat-infra',
-        'gouvernance': 'cat-gouv',
-        'transparence': 'cat-transp',
-        'default': 'cat-general'
-    };
-    return classes[category] || classes['default'];
-}
-
-function getCategoryLabel(category) {
-    const labels = {
-        'education': '🎓 Éducation',
-        'sante': '🏥 Santé',
-        'economie': '📈 Économie',
-        'infrastructures': '🏗️ Infrastructures',
-        'gouvernance': '🏛️ Gouvernance',
-        'transparence': '👁️ Transparence',
-        'general': '📰 Général',
-        'default': '📰 Actualité'
-    };
-    return labels[category] || labels['default'];
-}
-
-// ==========================================
-// MODAL DÉTAIL ACTUALITÉ
-// ==========================================
-function openNewsDetail(newsId) {
-    const news = CONFIG.news.find(n => n.id === newsId);
-    if (!news) return;
-    
-    CONFIG.currentNewsId = newsId;
-
-    const modal = document.createElement('div');
-    modal.className = 'news-detail-modal';
-    modal.id = 'newsDetailModal';
-    modal.innerHTML = `
-        <div class="news-detail-content">
-            <div class="news-detail-header">
-                <h2>${news.title}</h2>
-                <button class="close-news-modal" onclick="closeNewsDetail()">&times;</button>
+        <div class="daily-newspaper-article">
+            <h2 class="article-title">${promise.engagement}</h2>
+            
+            <div class="article-meta">
+                <span class="article-domain"><i class="fas fa-building"></i> ${promise.domain || 'Non spécifié'}</span>
+                <span class="article-status ${statusClass}">
+                    ${statusIcon} ${promise.isLate ? 'En retard' : promise.status}
+                </span>
             </div>
             
-            <div class="news-detail-body">
-                <div class="news-detail-meta">
-                    <div class="news-detail-source">
-                        <i class="fas fa-newspaper"></i>
-                        <span>${news.source}</span>
-                    </div>
-                    <div class="news-detail-date">
-                        <i class="fas fa-calendar"></i>
-                        <span>${news.date}</span>
-                    </div>
-                    <div class="news-detail-author">
-                        <i class="fas fa-user"></i>
-                        <span>${news.author || 'Rédaction'}</span>
-                    </div>
-                    <div class="news-detail-time">
-                        <i class="fas fa-clock"></i>
-                        <span>${news.readTime || '3 minutes'}</span>
+            <div class="article-content">
+                <p class="article-lead">
+                    <strong><i class="fas fa-quote-left"></i></strong>
+                    ${promise.engagement}
+                    <strong><i class="fas fa-quote-right"></i></strong>
+                </p>
+                
+                <div class="article-section">
+                    <h3><i class="fas fa-bullseye"></i> Résultats attendus</h3>
+                    <p>${promise.resultat || 'Aucun résultat spécifié'}</p>
+                </div>
+                
+                <div class="article-section">
+                    <h3><i class="fas fa-clock"></i> Délai de réalisation des mesures clés</h3>
+                    <div class="deadline-grid">
+                        <div class="deadline-item">
+                            <span class="deadline-label">Délai initial:</span>
+                            <span class="deadline-value">${promise.delai_texte || promise.delai + ' jours'}</span>
+                        </div>
+                        <div class="deadline-item">
+                            <span class="deadline-label">Date limite:</span>
+                            <span class="deadline-value">${formatDate(promise.deadline)}</span>
+                        </div>
+                        <div class="deadline-item">
+                            <span class="deadline-label">Temps restant:</span>
+                            <span class="deadline-value ${daysRemaining < 0 ? 'late' : ''}">
+                                ${formatDaysRemaining(daysRemaining)}
+                            </span>
+                        </div>
                     </div>
                 </div>
                 
-                ${news.image ? `
-                    <div class="news-detail-image">
-                        <img src="${news.image}" alt="${news.title}" onerror="this.src='https://picsum.photos/seed/${news.id}/1200/600'">
+                ${promise.updates && promise.updates.length > 0 ? `
+                    <div class="article-section updates-section">
+                        <h3><i class="fas fa-history"></i> Dernières mises à jour</h3>
+                        ${promise.updates.slice(0, 3).map(update => `
+                            <div class="update-item-small">
+                                <div class="update-date-small">${formatDateProper(update.date || '')}</div>
+                                <div class="update-text-small">${update.description || 'Mise à jour'}</div>
+                            </div>
+                        `).join('')}
                     </div>
                 ` : ''}
-                
-                <div class="news-detail-excerpt">
-                    <h3>📋 Résumé</h3>
-                    <p>${news.excerpt}</p>
-                </div>
-                
-                <div class="news-detail-content-text">
-                    <h3>📖 Article complet</h3>
-                    <p>${news.content || 'Contenu non disponible.'}</p>
-                </div>
-                
-                <div class="news-detail-link">
-                    ${news.link ? `
-                        <a href="${news.link}" target="_blank" class="btn-external-link">
-                            <i class="fas fa-external-link-alt"></i>
-                            Lire l'article original
-                        </a>
-                    ` : ''}
-                </div>
             </div>
             
-            <div class="news-detail-footer">
-                <button class="btn-share-news" onclick="shareNews('${newsId}')">
-                    <i class="fas fa-share-alt"></i> Partager
+            <div class="article-footer">
+                <button class="btn-article-primary" onclick="sharePromise('${promise.id}')">
+                    <i class="fas fa-share-alt"></i> Partager cette promesse
                 </button>
-                <button class="btn-close-news" onclick="closeNewsDetail()">
-                    <i class="fas fa-times"></i> Fermer
+                <button class="btn-article-secondary" onclick="showRatingModal('${promise.id}')">
+                    <i class="fas fa-star"></i> Noter
                 </button>
             </div>
         </div>
     `;
-
-    document.body.appendChild(modal);
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-}
-
-function closeNewsDetail() {
-    const modal = document.getElementById('newsDetailModal');
-    if (modal) {
-        modal.style.animation = 'fadeOut 0.3s ease forwards';
-        setTimeout(() => {
-            modal.remove();
-            document.body.style.overflow = 'auto';
-        }, 300);
-    }
-}
-
-function shareNews(newsId) {
-    const news = CONFIG.news.find(n => n.id === newsId);
-    if (!news) return;
-
-    const shareText = `📰 ${news.title}\n\n` +
-                     `${news.excerpt}\n\n` +
-                     `📅 ${news.date} | ${news.source}\n` +
-                     `🏷️ ${getCategoryLabel(news.category)}\n\n` +
-                     `Lire l'article complet: ${window.location.href}`;
-
-    if (navigator.share) {
-        navigator.share({
-            title: news.title,
-            text: shareText,
-            url: window.location.href
-        }).catch(err => console.log('Erreur partage:', err));
-    } else {
-        navigator.clipboard.writeText(shareText).then(() => {
-            showNotification('Texte copié dans le presse-papiers !', 'success');
-        });
-    }
 }
 
 // ==========================================
-// RENDER NEWSPAPERS
-// ==========================================
-async function renderNewspapers() {
-    const grid = document.getElementById('newspapersGrid');
-    if (!grid) return;
-    
-    const availablePress = await checkAvailableNewspapers();
-
-    if (availablePress.length === 0) {
-        grid.innerHTML = `
-            <div class="loading-state">
-                <p><i class="fas fa-newspaper"></i> Aucun journal disponible pour le moment</p>
-            </div>
-        `;
-        return;
-    }
-
-    grid.innerHTML = availablePress.map(paper => {
-        return `
-            <div class="newspaper-card" onclick="openPhotoViewer('${paper.id}')">
-                <div class="newspaper-preview">
-                    <img src="${paper.image}" alt="${paper.title}" 
-                        onerror="this.onerror=null; this.src='https://picsum.photos/400/533?random=${paper.id}'">
-                </div>
-                <h4>${paper.title}</h4>
-                <p class="newspaper-date">${paper.date}</p>
-            </div>
-        `;
-    }).join('');
-}
-
-// ==========================================
-// CONFIGURATION PRESSE
-// ==========================================
-const DEFAULT_PRESS = [
-    {
-        id: '1',
-        title: 'Le Soleil',
-        date: '31/01/2024',
-        image: 'revuedepresse/lesoleil.jpg',
-        logo: 'images/logos/le_soleil.png',
-        link: 'http://www.lesoleil.sn/'
-    },
-    {
-        id: '2',
-        title: 'Sud Quotidien',
-        date: '31/01/2024',
-        image: 'revuedepresse/sudquotidien.jpg',
-        logo: 'images/logos/sud_quotidien.png',
-        link: 'http://www.sudonline.sn/'
-    },
-    {
-        id: '3',
-        title: 'Libération',
-        date: '31/01/2024',
-        image: 'revuedepresse/liberation.jpg',
-        logo: 'images/logos/liberation.png',
-        link: 'http://www.liberation.sn/'
-    },
-    {
-        id: '4',
-        title: 'L\'Observateur',
-        date: '31/01/2024',
-        image: 'revuedepresse/observateur.jpg',
-        logo: 'images/logos/observateur.png',
-        link: 'http://www.observateur.sn/'
-    },
-    {
-        id: '5',
-        title: 'Le Quotidien',
-        date: '31/01/2024',
-        image: 'revuedepresse/lequotidien.jpg',
-        logo: 'images/logos/le_quotidien.png',
-        link: 'http://www.lequotidien.sn/'
-    },
-    {
-        id: '6',
-        title: 'Rewmi Sport',
-        date: '31/01/2024',
-        image: 'revuedepresse/rewmisport.jpg',
-        logo: 'images/logos/rewmi_sport.png',
-        link: '#'
-    }
-];
-
-let PRESS_DATA = [...DEFAULT_PRESS];
-
-async function loadPressData() {
-    console.log('📰 Chargement des données presse depuis revuedepresse/...');
-    try {
-        const response = await fetch('press.json?v=' + Date.now());
-        
-        if (!response.ok) {
-            console.warn('Fichier press.json non trouvé - utilisation des chemins par défaut');
-            PRESS_DATA = DEFAULT_PRESS;
-            return;
-        }
-        
-        const data = await response.json();
-        
-        if (data && Array.isArray(data.press)) {
-            PRESS_DATA = data.press;
-            console.log(`✅ ${PRESS_DATA.length} journaux chargés depuis press.json`);
-        } else {
-            console.warn('Format press.json invalide - utilisation chemins par défaut');
-            PRESS_DATA = DEFAULT_PRESS;
-        }
-        
-    } catch (error) {
-        console.error('❌ Erreur chargement presse:', error);
-        PRESS_DATA = DEFAULT_PRESS;
-    }
-}
-
-async function checkAvailableNewspapers() {
-    const availablePapers = [];
-    const existingFiles = [
-        'revuedepresse/lesoleil.jpg',
-        'revuedepresse/sudquotidien.jpg',
-        'revuedepresse/liberation.jpg',
-        'revuedepresse/observateur.jpg',
-        'revuedepresse/lequotidien.jpg',
-        'revuedepresse/rewmisport.jpg'
-    ];
-
-    for (const paper of PRESS_DATA) {
-        try {
-            const response = await fetch(paper.image, { method: 'HEAD' });
-            if (response.ok) {
-                availablePapers.push(paper);
-            } else {
-                console.warn(`Image non trouvée: ${paper.image}`);
-            }
-        } catch (error) {
-            console.warn(`Erreur vérification: ${paper.image}`);
-        }
-    }
-
-    if (availablePapers.length === 0) {
-        console.log('⚠️ Aucune image vérifiée, utilisation de toutes les données');
-        return PRESS_DATA;
-    }
-
-    console.log(`📊 ${availablePapers.length}/${PRESS_DATA.length} images disponibles`);
-    return availablePapers;
-}
-
-// ==========================================
-// SETUP PRESSE CAROUSEL
+// CAROUSELS ET PRESSE
 // ==========================================
 async function setupPressCarousel() {
     const prevBtn = document.getElementById('prevBtn');
@@ -1834,25 +1325,16 @@ function renderPressCarousel() {
 
     carousel.innerHTML = `
         <div class="carousel-item active">
-            <div class="carousel-image-container">
-                <img src="${imageUrl}" alt="${currentPaper.title}" 
-                    onerror="this.onerror=null; this.src='https://picsum.photos/700/933?random=${CONFIG.currentIndex}'"
-                    id="pressImage"
-                    style="transform: scale(${CONFIG.zoomScale})">
-            </div>
-            <div class="carousel-overlay">
-                <div class="carousel-info">
-                    <h3 class="carousel-title">${currentPaper.title}</h3>
-                    <div class="carousel-date">${currentPaper.date}</div>
-                    ${currentPaper.link ? `
-                        <a href="${currentPaper.link}" target="_blank" class="carousel-link">
-                            <i class="fas fa-external-link-alt"></i> Lire l'article
-                        </a>
-                    ` : ''}
-                </div>
-            </div>
+            <img src="${imageUrl}" alt="${currentPaper.title}" 
+                onerror="this.onerror=null; this.src='https://picsum.photos/700/933?random=${CONFIG.currentIndex}'"
+                id="pressImage"
+                style="transform: scale(${CONFIG.zoomScale})">
         </div>
     `;
+
+    document.getElementById('carouselTitle').textContent = currentPaper.title;
+    document.getElementById('carouselDate').textContent = currentPaper.date;
+    document.getElementById('carouselLink').href = currentPaper.link || '#';
 
     const indicatorBtns = indicators.querySelectorAll('.indicator');
     indicatorBtns.forEach((btn, index) => {
@@ -1860,63 +1342,8 @@ function renderPressCarousel() {
     });
 
     const pressImage = document.getElementById('pressImage');
-    const imageContainer = carousel.querySelector('.carousel-image-container');
-
-    if (pressImage && imageContainer) {
-        let isDragging = false;
-        let startX, startY, translateX = 0, translateY = 0;
-        
-        imageContainer.addEventListener('mousedown', (e) => {
-            if (CONFIG.zoomScale > 1) {
-                isDragging = true;
-                startX = e.clientX - translateX;
-                startY = e.clientY - translateY;
-                pressImage.style.cursor = 'grabbing';
-            }
-        });
-        
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging || CONFIG.zoomScale <= 1) return;
-            e.preventDefault();
-            
-            translateX = e.clientX - startX;
-            translateY = e.clientY - startY;
-            
-            const maxX = (pressImage.clientWidth * CONFIG.zoomScale - imageContainer.clientWidth) / 2;
-            const maxY = (pressImage.clientHeight * CONFIG.zoomScale - imageContainer.clientHeight) / 2;
-            
-            translateX = Math.max(-maxX, Math.min(maxX, translateX));
-            translateY = Math.max(-maxY, Math.min(maxY, translateY));
-            
-            pressImage.style.transform = `scale(${CONFIG.zoomScale}) translate(${translateX}px, ${translateY}px)`;
-        });
-        
-        document.addEventListener('mouseup', () => {
-            isDragging = false;
-            if (CONFIG.zoomScale > 1) {
-                pressImage.style.cursor = 'grab';
-            } else {
-                pressImage.style.cursor = 'default';
-            }
-        });
-        
-        pressImage.addEventListener('mouseenter', () => {
-            if (CONFIG.zoomScale > 1) {
-                pressImage.style.cursor = 'grab';
-            }
-        });
-        
-        pressImage.addEventListener('mouseleave', () => {
-            if (!isDragging) {
-                pressImage.style.cursor = 'default';
-            }
-        });
-        
-        if (CONFIG.zoomScale === 1) {
-            translateX = 0;
-            translateY = 0;
-            pressImage.style.transform = 'scale(1)';
-        }
+    if (pressImage && CONFIG.zoomScale === 1) {
+        pressImage.style.cursor = 'default';
     }
 }
 
@@ -1944,216 +1371,94 @@ function togglePressZoom(action) {
     }
 }
 
-function goToSlide(index) {
-    CONFIG.currentIndex = index;
-    CONFIG.zoomScale = 1;
-    renderPressCarousel();
-}
+async function checkAvailableNewspapers() {
+    const availablePapers = [];
+    const existingFiles = [
+        'revuedepresse/lesoleil.jpg',
+        'revuedepresse/sudquotidien.jpg',
+        'revuedepresse/liberation.jpg',
+        'revuedepresse/observateur.jpg',
+        'revuedepresse/lequotidien.jpg',
+        'revuedepresse/rewmisport.jpg'
+    ];
 
-// ==========================================
-// CAROUSEL PROMESSES VEDETTE
-// ==========================================
-function setupPromisesCarousel() {
-    const carouselGrid = document.getElementById('promisesCarouselGrid');
-    const prevBtn = document.getElementById('carouselPrevBtn');
-    const nextBtn = document.getElementById('carouselNextBtn');
-    const autoPlayToggle = document.getElementById('carouselAutoPlayToggle');
-    const dotsContainer = document.getElementById('carouselDots');
-    
-    if (!carouselGrid) return;
-
-    const carouselPromises = CONFIG.promises.slice(0, 6);
-    let currentSlide = 0;
-
-    function renderCarousel() {
-        const itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
-        const totalSlides = Math.ceil(carouselPromises.length / itemsPerSlide);
-        
-        const startIdx = currentSlide * itemsPerSlide;
-        const visiblePromises = carouselPromises.slice(startIdx, startIdx + itemsPerSlide);
-        
-        carouselGrid.innerHTML = visiblePromises.map((promise, index) => {
-            const statusClass = getStatusClass(promise);
-            const statusIcon = getStatusIcon(promise);
-            const daysRemaining = getDaysRemaining(promise.deadline);
-             
-            return `
-                <div class="carousel-promise-card ${statusClass}" onclick="goToPromiseSection('${promise.id}')">
-                    <div class="promise-card-header">
-                        <span class="promise-status">${statusIcon} ${promise.isLate ? 'En retard' : promise.status}</span>
-                        <span class="promise-domain">${promise.domain || 'Non spécifié'}</span>
-                    </div>
-                    <h4 class="promise-card-title">${promise.engagement.substring(0, 80)}${promise.engagement.length > 80 ? '...' : ''}</h4>
-                    <div class="promise-card-meta">
-                        <span><i class="fas fa-calendar"></i> ${formatDate(promise.deadline)}</span>
-                        <span><i class="fas fa-clock"></i> ${formatDaysRemaining(daysRemaining)}</span>
-                    </div>
-                    ${promise.publicCount > 0 ? `
-                        <div class="promise-card-rating">
-                            <i class="fas fa-star"></i> ${promise.publicAvg.toFixed(1)} (${promise.publicCount})
-                        </div>
-                    ` : ''}
-                </div>
-            `;
-        }).join('');
-        
-        if (dotsContainer) {
-            dotsContainer.innerHTML = Array.from({length: totalSlides}, (_, i) => 
-                `<button class="carousel-dot ${i === currentSlide ? 'active' : ''}" onclick="goToCarouselSlide(${i})"></button>`
-            ).join('');
+    for (const paper of DEFAULT_PRESS) {
+        try {
+            const response = await fetch(paper.image, { method: 'HEAD' });
+            if (response.ok) {
+                availablePapers.push(paper);
+            }
+        } catch (error) {
+            console.warn(`Erreur vérification: ${paper.image}`);
         }
     }
 
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            const itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
-            const totalSlides = Math.ceil(carouselPromises.length / itemsPerSlide);
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            renderCarousel();
-        });
+    if (availablePapers.length === 0) {
+        console.log('⚠️ Aucune image vérifiée, utilisation de toutes les données');
+        return DEFAULT_PRESS;
     }
 
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            const itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
-            const totalSlides = Math.ceil(carouselPromises.length / itemsPerSlide);
-            currentSlide = (currentSlide + 1) % totalSlides;
-            renderCarousel();
-        });
-    }
-
-    if (autoPlayToggle) {
-        autoPlayToggle.addEventListener('click', () => {
-            CONFIG.carouselAutoPlay = !CONFIG.carouselAutoPlay;
-            autoPlayToggle.innerHTML = CONFIG.carouselAutoPlay ? 
-                '<i class="fas fa-pause"></i> Pause' : 
-                '<i class="fas fa-play"></i> Lecture auto';
-        });
-    }
-
-    let carouselInterval;
-    function startCarousel() {
-        if (carouselInterval) clearInterval(carouselInterval);
-        carouselInterval = setInterval(() => {
-            if (CONFIG.carouselAutoPlay) {
-                const itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
-                const totalSlides = Math.ceil(carouselPromises.length / itemsPerSlide);
-                currentSlide = (currentSlide + 1) % totalSlides;
-                renderCarousel();
-            }
-        }, 5000);
-    }
-
-    startCarousel();
-    renderCarousel();
-
-    window.addEventListener('resize', () => {
-        renderCarousel();
-    });
+    console.log(`📊 ${availablePapers.length}/${DEFAULT_PRESS.length} images disponibles`);
+    return availablePapers;
 }
 
-function goToCarouselSlide(index) {
-    const carouselPromises = CONFIG.promises.slice(0, 6);
-    const itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
-    const totalSlides = Math.ceil(carouselPromises.length / itemsPerSlide);
-    if (index >= 0 && index < totalSlides) {
-        const currentSlide = index;
-        setupPromisesCarousel();
+const DEFAULT_PRESS = [
+    {
+        id: '1',
+        title: 'Le Soleil',
+        date: '31/01/2024',
+        image: 'revuedepresse/lesoleil.jpg',
+        logo: 'images/logos/le_soleil.png',
+        link: 'http://www.lesoleil.sn/'
+    },
+    {
+        id: '2',
+        title: 'Sud Quotidien',
+        date: '31/01/2024',
+        image: 'revuedepresse/sudquotidien.jpg',
+        logo: 'images/logos/sud_quotidien.png',
+        link: 'http://www.sudonline.sn/'
+    },
+    {
+        id: '3',
+        title: 'Libération',
+        date: '31/01/2024',
+        image: 'revuedepresse/liberation.jpg',
+        logo: 'images/logos/liberation.png',
+        link: 'http://www.liberation.sn/'
+    },
+    {
+        id: '4',
+        title: 'L\'Observateur',
+        date: '31/01/2024',
+        image: 'revuedepresse/observateur.jpg',
+        logo: 'images/logos/observateur.png',
+        link: 'http://www.observateur.sn/'
+    },
+    {
+        id: '5',
+        title: 'Le Quotidien',
+        date: '31/01/2024',
+        image: 'revuedepresse/lequotidien.jpg',
+        logo: 'images/logos/le_quotidien.png',
+        link: 'http://www.lequotidien.sn/'
+    },
+    {
+        id: '6',
+        title: 'Rewmi Sport',
+        date: '31/01/2024',
+        image: 'revuedepresse/rewmisport.jpg',
+        logo: 'images/logos/rewmi_sport.png',
+        link: '#'
     }
-}
+];
 
-function goToPromiseSection(promiseId) {
-    const promisesSection = document.getElementById('promises');
-    if (promisesSection) {
-        const offset = CONFIG.scrollOffset;
-        const targetPosition = promisesSection.offsetTop - offset;
-        
-        window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-        });
-        
-        setTimeout(() => {
-            const card = document.querySelector(`.promise-card[data-id="${promiseId}"]`);
-            if (card) {
-                card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                card.style.boxShadow = '0 0 0 3px var(--primary)';
-                setTimeout(() => { card.style.boxShadow = ''; }, 3000);
-            }
-        }, 500);
-    }
+function getDefaultPressData() {
+    return DEFAULT_PRESS;
 }
 
 // ==========================================
-// CAROUSEL KPI
-// ==========================================
-function setupKpiCarousel() {
-    const kpiCarousel = document.getElementById('kpiCarousel');
-    const kpiPrev = document.getElementById('kpiPrev');
-    const kpiNext = document.getElementById('kpiNext');
-    const kpiAutoPlayToggle = document.getElementById('kpiAutoPlayToggle');
-    
-    if (!kpiCarousel) return;
-
-    renderKpiItem();
-
-    if (kpiPrev) {
-        kpiPrev.addEventListener('click', () => {
-            CONFIG.kpiCarouselIndex = (CONFIG.kpiCarouselIndex - 1 + KPI_ITEMS.length) % KPI_ITEMS.length;
-            renderKpiItem();
-        });
-    }
-
-    if (kpiNext) {
-        kpiNext.addEventListener('click', () => {
-            CONFIG.kpiCarouselIndex = (CONFIG.kpiCarouselIndex + 1) % KPI_ITEMS.length;
-            renderKpiItem();
-        });
-    }
-
-    if (kpiAutoPlayToggle) {
-        kpiAutoPlayToggle.addEventListener('click', () => {
-            CONFIG.kpiAutoPlay = !CONFIG.kpiAutoPlay;
-            kpiAutoPlayToggle.innerHTML = CONFIG.kpiAutoPlay ? 
-                '<i class="fas fa-pause"></i>' : 
-                '<i class="fas fa-play"></i>';
-        });
-    }
-
-    startKpiAutoPlay();
-}
-
-function renderKpiItem() {
-    const kpiCarousel = document.getElementById('kpiCarousel');
-    if (!kpiCarousel) return;
-    
-    const currentItem = KPI_ITEMS[CONFIG.kpiCarouselIndex];
-    kpiCarousel.innerHTML = `
-        <div class="kpi-item">
-            <span class="kpi-icon">${currentItem.icon}</span>
-            <div class="kpi-content">
-                <span class="kpi-value">${currentItem.value}</span>
-                <span class="kpi-label">${currentItem.label}</span>
-            </div>
-        </div>
-    `;
-}
-
-function startKpiAutoPlay() {
-    setInterval(() => {
-        if (CONFIG.kpiAutoPlay) {
-            CONFIG.kpiCarouselIndex = (CONFIG.kpiCarouselIndex + 1) % KPI_ITEMS.length;
-            renderKpiItem();
-        }
-    }, 3000);
-}
-
-function updateKpiCarousel() {
-    renderKpiItem();
-}
-
-// ==========================================
-// NOTATIONS DES SERVICES
+// NOTATIONS ET SERVICES
 // ==========================================
 function initStarRatings() {
     console.log('⭐ Initialisation des étoiles de notation...');
@@ -2191,14 +1496,14 @@ function initStarRatings() {
             });
             
             star.addEventListener('mouseenter', () => {
-                const hoverValue = parseInt(star.getAttribute('data-value'));
-                updateStars(container, hoverValue);
+                const value = parseInt(star.getAttribute('data-value'));
+                updateStars(container, value, true);
             });
-            
-            star.addEventListener('mouseleave', () => {
-                const currentValue = parseInt(input.value) || 3;
-                updateStars(container, currentValue);
-            });
+        });
+
+        container.addEventListener('mouseleave', () => {
+            const currentValue = parseInt(input.value) || 3;
+            updateStars(container, currentValue);
         });
     });
 }
@@ -2394,9 +1699,6 @@ async function updateServiceStats(serviceName) {
     }
 }
 
-// ==========================================
-// AFFICHAGE DES RÉSULTATS DE NOTATION
-// ==========================================
 async function fetchAndDisplayServiceRatings() {
     console.log('📊 Chargement des notations service...');
     
@@ -2443,13 +1745,9 @@ function displayRatingResults(ratings, stats = null) {
             ? (stats.reduce((sum, stat) => sum + parseFloat(stat.overall_rating || 0), 0) / stats.length).toFixed(1)
             : '0.0';
         
-        const totalVotesEl = document.getElementById('totalVotes');
-        const totalServicesEl = document.getElementById('totalServices');
-        const avgRatingEl = document.getElementById('avgRating');
-        
-        if (totalVotesEl) totalVotesEl.textContent = totalVotesFromStats;
-        if (totalServicesEl) totalServicesEl.textContent = stats.length;
-        if (avgRatingEl) avgRatingEl.textContent = overallAvg;
+        updateStatValue('totalVotes', totalVotesFromStats);
+        updateStatValue('totalServices', stats.length);
+        updateStatValue('avgRating', overallAvg);
         
         const topServicesEl = document.getElementById('topServices');
         if (topServicesEl) {
@@ -2483,13 +1781,9 @@ function displayRatingResults(ratings, stats = null) {
             return sum + avg;
         }, 0) / totalVotes).toFixed(1);
 
-        const totalVotesEl = document.getElementById('totalVotes');
-        const totalServicesEl = document.getElementById('totalServices');
-        const avgRatingEl = document.getElementById('avgRating');
-        
-        if (totalVotesEl) totalVotesEl.textContent = totalVotes;
-        if (totalServicesEl) totalServicesEl.textContent = uniqueServices.length;
-        if (avgRatingEl) avgRatingEl.textContent = avgRating;
+        updateStatValue('totalVotes', totalVotes);
+        updateStatValue('totalServices', uniqueServices.length);
+        updateStatValue('avgRating', avgRating);
 
         const serviceStats = {};
         ratings.forEach(item => {
@@ -2586,13 +1880,9 @@ function displayEmptyRatingResults() {
 }
 
 function displayDemoRatingResults() {
-    const totalVotesEl = document.getElementById('totalVotes');
-    const totalServicesEl = document.getElementById('totalServices');
-    const avgRatingEl = document.getElementById('avgRating');
-    
-    if (totalVotesEl) totalVotesEl.textContent = '310';
-    if (totalServicesEl) totalServicesEl.textContent = '8';
-    if (avgRatingEl) avgRatingEl.textContent = '4.3';
+    updateStatValue('totalVotes', '310');
+    updateStatValue('totalServices', '8');
+    updateStatValue('avgRating', '4.3');
 
     const recentRatings = document.getElementById('recentRatings');
     if (recentRatings) {
@@ -2662,7 +1952,216 @@ function displayDemoRatingResults() {
 }
 
 // ==========================================
-// VOTES PUBLICS POUR LES PROMESSES
+// NOTIFICATIONS ET ACTIONS
+// ==========================================
+function showNotification(message, type = 'success') {
+    const container = document.getElementById('notification-container');
+    if (!container) return;
+    
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+
+    const icons = { success: 'check-circle', error: 'exclamation-circle', info: 'info-circle' };
+
+    notification.innerHTML = `
+        <i class="fas fa-${icons[type] || icons.success}"></i>
+        <span>${message}</span>
+    `;
+
+    container.appendChild(notification);
+
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease forwards';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+function toggleUpdates(promiseId) {
+    const updatesList = document.getElementById(`updates-${promiseId}`);
+    if (updatesList) {
+        updatesList.style.display = updatesList.style.display === 'none' ? 'block' : 'none';
+    }
+}
+
+function sharePromise(promiseId) {
+    const promise = CONFIG.promises.find(p => p.id === promiseId);
+    if (!promise) return;
+    
+    const text = `📊 "${promise.engagement.substring(0, 100)}..." - Suivi des engagements du Projet Sénégal`;
+    const url = window.location.href;
+
+    if (navigator.share) {
+        navigator.share({ title: 'Engagement du Projet Sénégal', text: text, url: url })
+            .catch(err => console.log('Erreur partage:', err));
+    } else {
+        const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+        window.open(shareUrl, '_blank');
+    }
+}
+
+function shareToPlatform(promiseId, platform) {
+    const promise = CONFIG.promises.find(p => p.id === promiseId);
+    if (!promise) return;
+    
+    const statusIcon = promise.isLate ? '⚠️' :
+                      promise.status === 'Réalisé' ? '✅' :
+                      promise.status === 'En cours' ? '🔄' : '⏳';
+
+    const statusText = promise.isLate ? 'En retard' : promise.status;
+    const daysRemaining = getDaysRemaining(promise.deadline);
+    const timeText = formatDaysRemaining(daysRemaining);
+
+    const shareText = `🎯 ${promise.engagement}\n\n` +
+                     `📍 Domaine: ${promise.domain || 'Non spécifié'}\n` +
+                     `📅 Délai: ${promise.delai_texte}\n` +
+                     `🔖 Statut: ${statusIcon} ${statusText}\n` +
+                     `⏰ ${timeText}\n\n` +
+                     `📝 Description: ${promise.resultat || 'Non spécifié'}\n\n` +
+                     `📊 Suivez tous les engagements sur: ${window.location.href}`;
+
+    let shareUrl = '';
+
+    switch(platform) {
+        case 'facebook':
+            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(shareText)}`;
+            break;
+        case 'twitter':
+            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(window.location.href)}`;
+            break;
+        case 'whatsapp':
+            shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + ' ' + window.location.href)}`;
+            break;
+        default:
+            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(window.location.href)}`;
+    }
+
+    window.open(shareUrl, '_blank', 'width=600,height=400');
+}
+
+// ==========================================
+// MODAL DE NOTATION
+// ==========================================
+function showRatingModal(promiseId) {
+    const promise = CONFIG.promises.find(p => p.id === promiseId);
+    if (!promise) return;
+    
+    CONFIG.currentRatingPromiseId = promiseId;
+    CONFIG.currentRatingValue = 0;
+
+    const modal = document.createElement('div');
+    modal.className = 'rating-modal';
+    modal.id = 'ratingModal';
+    modal.innerHTML = `
+        <div class="rating-modal-content">
+            <div class="rating-modal-header">
+                <h3>
+                    <i class="fas fa-star"></i>
+                    Noter cet engagement
+                </h3>
+                <button class="close-modal" onclick="closeRatingModal()">&times;</button>
+            </div>
+            <div class="rating-modal-body">
+                <p class="promise-preview">"${promise.engagement.substring(0, 100)}${promise.engagement.length > 100 ? '...' : ''}"</p>
+                
+                <div class="stars-rating-container">
+                    <div class="stars-large" id="ratingStars">
+                        <i class="far fa-star" data-value="1"></i>
+                        <i class="far fa-star" data-value="2"></i>
+                        <i class="far fa-star" data-value="3"></i>
+                        <i class="far fa-star" data-value="4"></i>
+                        <i class="far fa-star" data-value="5"></i>
+                    </div>
+                    <div class="rating-label" id="ratingLabel">
+                        Sélectionnez une note (1-5 étoiles)
+                    </div>
+                </div>
+                
+                <div class="rating-feedback">
+                    <label for="ratingComment">
+                        <i class="fas fa-comment"></i>
+                        Commentaire (optionnel)
+                    </label>
+                    <textarea id="ratingComment" placeholder="Partagez votre avis sur cet engagement..." rows="3"></textarea>
+                </div>
+            </div>
+            <div class="rating-modal-footer">
+                <button class="btn-cancel" onclick="closeRatingModal()">
+                    Annuler
+                </button>
+                <button class="btn-submit-rating" onclick="submitRating()" disabled>
+                    <i class="fas fa-paper-plane"></i>
+                    Soumettre ma note
+                </button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    const stars = modal.querySelectorAll('#ratingStars i');
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const value = parseInt(star.getAttribute('data-value'));
+            CONFIG.currentRatingValue = value;
+            updateStars(stars, value);
+            modal.querySelector('.btn-submit-rating').disabled = false;
+            
+            const labels = ['Mauvais', 'Passable', 'Bon', 'Très bon', 'Excellent'];
+            modal.querySelector('#ratingLabel').textContent = labels[value - 1];
+        });
+        
+        star.addEventListener('mouseenter', () => {
+            const value = parseInt(star.getAttribute('data-value'));
+            updateStars(stars, value, true);
+        });
+    });
+
+    modal.querySelector('#ratingStars').addEventListener('mouseleave', () => {
+        updateStars(stars, CONFIG.currentRatingValue);
+    });
+
+    modal.style.display = 'flex';
+}
+
+function closeRatingModal() {
+    const modal = document.getElementById('ratingModal');
+    if (modal) {
+        modal.style.animation = 'fadeOut 0.3s ease forwards';
+        setTimeout(() => {
+            modal.remove();
+        }, 300);
+    }
+}
+
+function updateStars(stars, value, isHover = false) {
+    stars.forEach((star, index) => {
+        if (index < value) {
+            star.classList.remove('far');
+            star.classList.add('fas', 'active');
+        } else {
+            star.classList.remove('fas', 'active');
+            star.classList.add('far');
+        }
+        if (isHover) {
+            star.style.transform = 'scale(1.1)';
+        } else {
+            star.style.transform = 'scale(1)';
+        }
+    });
+}
+
+function submitRating() {
+    if (!CONFIG.currentRatingPromiseId || CONFIG.currentRatingValue === 0) {
+        showNotification('Veuillez sélectionner une note', 'error');
+        return;
+    }
+    const comment = document.getElementById('ratingComment')?.value.trim() || '';
+    saveVoteToSupabase(CONFIG.currentRatingPromiseId, CONFIG.currentRatingValue, comment);
+    closeRatingModal();
+}
+
+// ==========================================
+// VOTES PUBLICS
 // ==========================================
 async function fetchAndDisplayPublicVotes() {
     console.log('📊 Chargement des votes...');
@@ -2709,8 +2208,453 @@ function processVotes(votes) {
     updateStats();
 }
 
+async function saveVoteToSupabase(promiseId, rating, comment = '') {
+    if (!supabaseClient) {
+        showNotification('Mode démo : Vote enregistré localement', 'info');
+        const votes = JSON.parse(localStorage.getItem('promise_votes') || '[]');
+        votes.push({
+            id: Date.now().toString(),
+            promise_id: promiseId,
+            rating: rating,
+            comment: comment,
+            created_at: new Date().toISOString()
+        });
+        localStorage.setItem('promise_votes', JSON.stringify(votes));
+        return;
+    }
+    
+    try {
+        const voteData = { 
+            promise_id: promiseId, 
+            rating: rating,
+            comment: comment,
+            created_at: new Date().toISOString()
+        };
+        
+        console.log('Envoi du vote:', voteData);
+        
+        const { error } = await supabaseClient
+            .from('votes')
+            .insert([voteData]);
+        
+        if (error) {
+            console.error('Erreur Supabase:', error);
+            
+            const votes = JSON.parse(localStorage.getItem('promise_votes') || '[]');
+            votes.push({
+                id: Date.now().toString(),
+                promise_id: promiseId,
+                rating: rating,
+                comment: comment,
+                created_at: new Date().toISOString()
+            });
+            localStorage.setItem('promise_votes', JSON.stringify(votes));
+            
+            showNotification('Vote enregistré localement (mode démo)', 'info');
+        } else {
+            showNotification('Merci pour votre vote !', 'success');
+        }
+        
+        setTimeout(() => fetchAndDisplayPublicVotes(), 500);
+        
+    } catch (error) {
+        console.error('❌ Erreur sauvegarde vote:', error);
+        showNotification('Mode démo : Vote enregistré localement', 'info');
+    }
+}
+
 // ==========================================
-// VISUALISATION PHOTO
+// FONCTIONS MANQUANTES
+// ==========================================
+function generateTestPromises() {
+    return [
+        {
+            id: 'promise_19',
+            domaine: 'Lutte Corruption',
+            engagement: 'Loi de protection des lanceurs d\'alerte',
+            resultat: 'Encouragement dénonciation civique',
+            delai: '3 premières années',
+            status: 'realise',
+            mises_a_jour: [
+                {
+                    date: '26/08/2025',
+                    text: 'Au Sénégal, la protection des lanceurs d\'alerte est désormais régie par la Loi n° 2025-14, adoptée par l\'Assemblée nationale le 26 août 2025 et promulguée en septembre 2025.'
+                }
+            ]
+        },
+        {
+            id: 'promise_20',
+            domaine: 'Éducation',
+            engagement: 'Construction de 100 nouvelles écoles',
+            resultat: 'Amélioration accès éducation',
+            delai: '5 ans',
+            status: 'en cours',
+            mises_a_jour: [
+                {
+                    date: '15/10/2025',
+                    text: '30 écoles déjà construites, 50 en construction'
+                }
+            ]
+        },
+        {
+            id: 'promise_21',
+            domaine: 'Santé',
+            engagement: 'Couverture Santé Universelle',
+            resultat: 'Soins accessibles à tous',
+            delai: '2 premières années',
+            status: 'en retard',
+            mises_a_jour: []
+        }
+    ].map(p => {
+        const delayDays = parseDelayToDays(p.delai);
+        const deadline = calculateDeadlineFromDays(delayDays);
+        const status = p.status === 'realise' ? 'Réalisé' :
+                      p.status === 'en cours' ? 'En cours' :
+                      p.status === 'en retard' ? 'En retard' : 'Non lancé';
+        const isLate = checkIfLate(status, deadline);
+        
+        const updates = (p.mises_a_jour || []).map(update => ({
+            date: update.date || '',
+            description: update.text || update.description || 'Mise à jour'
+        }));
+        
+        return {
+            id: p.id,
+            engagement: p.engagement,
+            domain: p.domaine || p.domain || 'Autre',
+            status: status,
+            delai: delayDays.toString(),
+            delai_texte: p.delai,
+            resultat: p.resultat,
+            updates: updates,
+            deadline: deadline,
+            isLate: isLate,
+            publicAvg: 0,
+            publicCount: 0
+        };
+    });
+}
+
+// ==========================================
+// EXPORTS GLOBAUX
+// ==========================================
+window.toggleUpdates = toggleUpdates;
+window.showRatingModal = showRatingModal;
+window.closeRatingModal = closeRatingModal;
+window.submitRating = submitRating;
+window.sharePromise = sharePromise;
+window.resetFilters = resetFilters;
+window.goToSlide = goToSlide;
+window.togglePressZoom = togglePressZoom;
+window.shareToPlatform = shareToPlatform;
+
+// ==========================================
+// CAROUSELS SUPPLÉMENTAIRES
+// ==========================================
+function setupPromisesCarousel() {
+    const carouselGrid = document.getElementById('promisesCarouselGrid');
+    const prevBtn = document.getElementById('carouselPrevBtn');
+    const nextBtn = document.getElementById('carouselNextBtn');
+    const autoPlayToggle = document.getElementById('carouselAutoPlayToggle');
+    const dotsContainer = document.getElementById('carouselDots');
+    
+    if (!carouselGrid) return;
+
+    const carouselPromises = CONFIG.promises.slice(0, 6);
+    let currentSlide = 0;
+
+    function renderCarousel() {
+        const itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
+        const totalSlides = Math.ceil(carouselPromises.length / itemsPerSlide);
+        
+        const startIdx = currentSlide * itemsPerSlide;
+        const visiblePromises = carouselPromises.slice(startIdx, startIdx + itemsPerSlide);
+        
+        carouselGrid.innerHTML = visiblePromises.map((promise, index) => {
+            const statusClass = getStatusClass(promise);
+            const statusIcon = getStatusIcon(promise);
+            const daysRemaining = getDaysRemaining(promise.deadline);
+             
+            return `
+                <div class="carousel-promise-card ${statusClass}" onclick="goToPromiseSection('${promise.id}')">
+                    <div class="promise-card-header">
+                        <span class="promise-status">${statusIcon} ${promise.isLate ? 'En retard' : promise.status}</span>
+                        <span class="promise-domain">${promise.domain || 'Non spécifié'}</span>
+                    </div>
+                    <h4 class="promise-card-title">${promise.engagement.substring(0, 80)}${promise.engagement.length > 80 ? '...' : ''}</h4>
+                    <div class="promise-card-meta">
+                        <span><i class="fas fa-calendar"></i> ${formatDate(promise.deadline)}</span>
+                        <span><i class="fas fa-clock"></i> ${formatDaysRemaining(daysRemaining)}</span>
+                    </div>
+                    ${promise.publicCount > 0 ? `
+                        <div class="promise-card-rating">
+                            <i class="fas fa-star"></i> ${promise.publicAvg.toFixed(1)} (${promise.publicCount})
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }).join('');
+        
+        if (dotsContainer) {
+            dotsContainer.innerHTML = Array.from({length: totalSlides}, (_, i) => 
+                `<button class="carousel-dot ${i === currentSlide ? 'active' : ''}" onclick="goToCarouselSlide(${i})"></button>`
+            ).join('');
+        }
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            const itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
+            const totalSlides = Math.ceil(carouselPromises.length / itemsPerSlide);
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            renderCarousel();
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            const itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
+            const totalSlides = Math.ceil(carouselPromises.length / itemsPerSlide);
+            currentSlide = (currentSlide + 1) % totalSlides;
+            renderCarousel();
+        });
+    }
+
+    if (autoPlayToggle) {
+        autoPlayToggle.addEventListener('click', () => {
+            CONFIG.carouselAutoPlay = !CONFIG.carouselAutoPlay;
+            autoPlayToggle.innerHTML = CONFIG.carouselAutoPlay ? 
+                '<i class="fas fa-pause"></i> Pause' : 
+                '<i class="fas fa-play"></i> Lecture auto';
+        });
+    }
+
+    let carouselInterval;
+    function startCarousel() {
+        if (carouselInterval) clearInterval(carouselInterval);
+        carouselInterval = setInterval(() => {
+            if (CONFIG.carouselAutoPlay) {
+                const itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
+                const totalSlides = Math.ceil(carouselPromises.length / itemsPerSlide);
+                currentSlide = (currentSlide + 1) % totalSlides;
+                renderCarousel();
+            }
+        }, 5000);
+    }
+
+    startCarousel();
+    renderCarousel();
+
+    window.addEventListener('resize', () => {
+        renderCarousel();
+    });
+}
+
+function goToCarouselSlide(index) {
+    const carouselPromises = CONFIG.promises.slice(0, 6);
+    const itemsPerSlide = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
+    const totalSlides = Math.ceil(carouselPromises.length / itemsPerSlide);
+    if (index >= 0 && index < totalSlides) {
+        const currentSlide = index;
+        setupPromisesCarousel();
+    }
+}
+
+function goToPromiseSection(promiseId) {
+    const promisesSection = document.getElementById('promises');
+    if (promisesSection) {
+        const offset = 80;
+        const targetPosition = promisesSection.offsetTop - offset;
+        
+        window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+        });
+        
+        setTimeout(() => {
+            const card = document.querySelector(`.promise-card[data-id="${promiseId}"]`);
+            if (card) {
+                card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                card.style.boxShadow = '0 0 0 3px var(--primary)';
+                setTimeout(() => { card.style.boxShadow = ''; }, 3000);
+            }
+        }, 500);
+    }
+}
+
+function setupKpiCarousel() {
+    const kpiCarousel = document.getElementById('kpiCarousel');
+    const kpiPrev = document.getElementById('kpiPrev');
+    const kpiNext = document.getElementById('kpiNext');
+    const kpiAutoPlayToggle = document.getElementById('kpiAutoPlayToggle');
+    
+    if (!kpiCarousel) return;
+
+    renderKpiItem();
+
+    if (kpiPrev) {
+        kpiPrev.addEventListener('click', () => {
+            CONFIG.kpiCarouselIndex = (CONFIG.kpiCarouselIndex - 1 + KPI_ITEMS.length) % KPI_ITEMS.length;
+            renderKpiItem();
+        });
+    }
+
+    if (kpiNext) {
+        kpiNext.addEventListener('click', () => {
+            CONFIG.kpiCarouselIndex = (CONFIG.kpiCarouselIndex + 1) % KPI_ITEMS.length;
+            renderKpiItem();
+        });
+    }
+
+    if (kpiAutoPlayToggle) {
+        kpiAutoPlayToggle.addEventListener('click', () => {
+            CONFIG.kpiAutoPlay = !CONFIG.kpiAutoPlay;
+            kpiAutoPlayToggle.innerHTML = CONFIG.kpiAutoPlay ? 
+                '<i class="fas fa-pause"></i>' : 
+                '<i class="fas fa-play"></i>';
+        });
+    }
+
+    startKpiAutoPlay();
+}
+
+function renderKpiItem() {
+    const kpiCarousel = document.getElementById('kpiCarousel');
+    if (!kpiCarousel) return;
+    
+    const currentItem = KPI_ITEMS[CONFIG.kpiCarouselIndex];
+    kpiCarousel.innerHTML = `
+        <div class="kpi-item">
+            <span class="kpi-icon">${currentItem.icon}</span>
+            <div class="kpi-content">
+                <span class="kpi-value">${currentItem.value}</span>
+                <span class="kpi-label">${currentItem.label}</span>
+            </div>
+        </div>
+    `;
+}
+
+function startKpiAutoPlay() {
+    setInterval(() => {
+        if (CONFIG.kpiAutoPlay) {
+            CONFIG.kpiCarouselIndex = (CONFIG.kpiCarouselIndex + 1) % KPI_ITEMS.length;
+            renderKpiItem();
+        }
+    }, 3000);
+}
+
+function updateKpiCarousel() {
+    renderKpiItem();
+}
+
+// ==========================================
+// FONCTIONS DE SERVICE
+// ==========================================
+function updateServiceList() {
+    const category = document.getElementById('serviceCategory').value;
+    const serviceSelect = document.getElementById('service');
+    
+    // Liste complète des services par catégorie
+    const servicesByCategory = {
+        health: [
+            "Hôpital public", "Centre hospitalier régional", "Centre de santé", 
+            "Pharmacie publique (SEN-Pharmacie)", "SAMU (Service d'Assistance Médicale Urgente)",
+            "Centre national de Transfusion sanguine", "Centre national d'Oncologie",
+            "Laboratoire d'analyses médicales public", "Centre psychiatrique",
+            "Service de Protection maternelle et infantile"
+        ],
+        education: [
+            "École publique (élémentaire)", "Collège public", "Lycée public",
+            "Université publique (UCAD, UGB, etc.)", "Institut Islamique de Dakar",
+            "École nationale d'Administration (ENA)", "Centre de Formation judiciaire",
+            "École nationale de Cybersécurité", "Centre régional des Œuvres universitaires",
+            "Inspection d'Académie"
+        ],
+        security: [
+            "Commissariat de police", "Brigade de gendarmerie", "Police judiciaire (PJ)",
+            "Police routière", "Sapeurs-pompiers / Protection civile", "Douanes (poste frontalier)",
+            "Direction de la Surveillance du Territoire", "Centre national de coordination des alertes",
+            "Administration pénitentiaire", "Brigade nationale des sapeurs-pompiers"
+        ],
+        justice: [
+            "Tribunal (civil, pénal, commerce)", "Maison de justice",
+            "Centre national des Archives judiciaires", "Médiateur de la République",
+            "Commission nationale des Droits de l'Homme",
+            "Commission de Protection des Données Personnelles",
+            "Direction de la Justice de Proximité", "Service d'aide juridictionnelle"
+        ],
+        administration: [
+            "Mairie", "Préfecture / Sous-préfecture", "Service d'état civil (naissance, mariage)",
+            "Agence nationale de l'état civil", "Archives du Sénégal", "Imprimerie nationale",
+            "Direction générale de l'Administration territoriale", "Service du Protocole d'État"
+        ],
+        finance: [
+            "Trésor public (Trésorerie régionale)", "Centre des Impôts (DGID)",
+            "Douanes (dédouanement)", "Caisse des Dépôts et Consignations",
+            "Banque agricole", "Banque de l'Habitat du Sénégal", "Office de recouvrement",
+            "Direction générale du Budget"
+        ],
+        transport: [
+            "Transport urbain (Dakar Dem Dikk)", "Train Express Régional (TER)",
+            "Chemins de Fer du Sénégal", "Aéroport international Blaise Diagne",
+            "Port autonome de Dakar", "Agence nationale de Sécurité routière",
+            "Direction des Transports routiers", "Société nationale Autoroutes du Sénégal"
+        ],
+        energy: [
+            "SENELEC (bureau clientèle)", "Société nationale des Eaux du Sénégal",
+            "SDE (Sénégal des Eaux)", "Agence sénégalaise de l'Électrification rurale",
+            "Office national des Forages ruraux", "Office national de l'Assainissement",
+            "Commission de Régulation du Secteur de l'Énergie"
+        ],
+        communication: [
+            "SONATEL (agence)", "La Poste (bureau de poste)",
+            "RTS (Radiodiffusion Télévision Sénégalaise)",
+            "Agence de Presse Sénégalaise (APS)", "Maison de la Presse Babacar TOURE",
+            "Autorité de Régulation des Télécoms (ARTP)", "Sénégal Numérique SA"
+        ],
+        social: [
+            "Commissariat à la Sécurité alimentaire", "Agence de Couverture sanitaire universelle",
+            "Fonds national de l'Entreprenariat féminin", "Office national des Pupilles de la Nation",
+            "Centre d'accueil pour enfants", "Direction de l'Action sociale",
+            "Service national d'Hygiène", "ANPEJ (Promotion de l'Emploi des Jeunes)"
+        ],
+        employment: [
+            "Office national de Formation professionnelle",
+            "Centre de formation professionnelle", "Centre national de Qualification professionnelle",
+            "Direction de l'Emploi", "Service d'orientation professionnelle"
+        ],
+        environment: [
+            "Direction des Eaux et Forêts", "Parc national",
+            "Agence de la Reforestation et Grande Muraille verte",
+            "Centre de Suivi écologique", "Service de collecte des ordures (SONAGED)",
+            "Direction de la Propreté et Hygiène publique",
+            "Commission nationale de Gestion des Produits Chimiques"
+        ],
+        culture: [
+            "Musée des Civilisations Noires", "Bibliothèque nationale du Sénégal",
+            "Grand Théâtre National", "Agence sénégalaise de Promotion touristique",
+            "Centre culturel régional", "Monument de la Renaissance africaine",
+            "Musée Boribana", "Service agricole / vétérinaire", "Haras national",
+            "Station piscicole", "Institut de Recherches agricoles", "Service de l'Urbanisme",
+            "Société nationale des HLM", "Service des Sports et Jeunesse"
+        ],
+        other: ["Autre (précisez en commentaire)"]
+    };
+
+    serviceSelect.innerHTML = '<option value="">Sélectionnez un service</option>';
+    
+    if (category && servicesByCategory[category]) {
+        servicesByCategory[category].forEach(service => {
+            const option = document.createElement('option');
+            option.value = service;
+            option.textContent = service;
+            serviceSelect.appendChild(option);
+        });
+    }
+}
+
+// ==========================================
+// INITIALISATION PHOTO VIEWER
 // ==========================================
 function initPhotoViewer() {
     console.log('📸 Initialisation du visualiseur photo');
@@ -2882,584 +2826,3 @@ function setupImageDrag(image) {
         }
     });
 }
-
-// ==========================================
-// ACTIONS
-// ==========================================
-function toggleUpdates(promiseId) {
-    const updatesList = document.getElementById(`updates-${promiseId}`);
-    if (updatesList) {
-        updatesList.style.display = updatesList.style.display === 'none' ? 'block' : 'none';
-    }
-}
-
-function sharePromise(promiseId) {
-    const promise = CONFIG.promises.find(p => p.id === promiseId);
-    if (!promise) return;
-    
-    const text = `📊 "${promise.engagement.substring(0, 100)}..." - Suivi des engagements du Projet Sénégal`;
-    const url = window.location.href;
-
-    if (navigator.share) {
-        navigator.share({ title: 'Engagement du Projet Sénégal', text: text, url: url })
-            .catch(err => console.log('Erreur partage:', err));
-    } else {
-        const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-        window.open(shareUrl, '_blank');
-    }
-}
-
-function shareToPlatform(promiseId, platform) {
-    const promise = CONFIG.promises.find(p => p.id === promiseId);
-    if (!promise) return;
-    
-    const statusIcon = promise.isLate ? '⚠️' :
-                      promise.status === 'Réalisé' ? '✅' :
-                      promise.status === 'En cours' ? '🔄' : '⏳';
-
-    const statusText = promise.isLate ? 'En retard' : promise.status;
-    const daysRemaining = getDaysRemaining(promise.deadline);
-    const timeText = formatDaysRemaining(daysRemaining);
-
-    const shareText = `🎯 ${promise.engagement}\n\n` +
-                     `📍 Domaine: ${promise.domain || 'Non spécifié'}\n` +
-                     `📅 Délai: ${promise.delai_texte}\n` +
-                     `🔖 Statut: ${statusIcon} ${statusText}\n` +
-                     `⏰ ${timeText}\n\n` +
-                     `📝 Description: ${promise.resultat || 'Non spécifié'}\n\n` +
-                     `📊 Suivez tous les engagements: ${window.location.href}`;
-
-    let shareUrl = '';
-
-    switch(platform) {
-        case 'facebook':
-            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(shareText)}`;
-            break;
-        case 'twitter':
-            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(window.location.href)}`;
-            break;
-        case 'whatsapp':
-            shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + ' ' + window.location.href)}`;
-            break;
-        default:
-            shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(window.location.href)}`;
-    }
-
-    window.open(shareUrl, '_blank', 'width=600,height=400');
-}
-
-// ==========================================
-// NOTIFICATIONS
-// ==========================================
-function showNotification(message, type = 'success') {
-    const container = document.getElementById('notification-container');
-    if (!container) return;
-    
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-
-    const icons = { success: 'check-circle', error: 'exclamation-circle', info: 'info-circle' };
-
-    notification.innerHTML = `
-        <i class="fas fa-${icons[type] || icons.success}"></i>
-        <span>${message}</span>
-    `;
-
-    container.appendChild(notification);
-
-    setTimeout(() => {
-        notification.style.animation = 'slideOutRight 0.3s ease forwards';
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
-}
-
-// ==========================================
-// FONCTIONS MANQUANTES
-// ==========================================
-function getDefaultPressData() {
-    return DEFAULT_PRESS;
-}
-
-function generateTestPromises() {
-    return [
-        {
-            id: 'promise_19',
-            domaine: 'Lutte Corruption',
-            engagement: 'Loi de protection des lanceurs d\'alerte',
-            resultat: 'Encouragement dénonciation civique',
-            delai: '3 premières années',
-            status: 'realise',
-            mises_a_jour: [
-                {
-                    date: '26/08/2025',
-                    text: 'Au Sénégal, la protection des lanceurs d\'alerte est désormais régie par la Loi n° 2025-14, adoptée par l\'Assemblée nationale le 26 août 2025 et promulguée en septembre 2025.'
-                }
-            ]
-        },
-        {
-            id: 'promise_20',
-            domaine: 'Éducation',
-            engagement: 'Construction de 100 nouvelles écoles',
-            resultat: 'Amélioration accès éducation',
-            delai: '5 ans',
-            status: 'en cours',
-            mises_a_jour: [
-                {
-                    date: '15/10/2025',
-                    text: '30 écoles déjà construites, 50 en construction'
-                }
-            ]
-        },
-        {
-            id: 'promise_21',
-            domaine: 'Santé',
-            engagement: 'Couverture Santé Universelle',
-            resultat: 'Soins accessibles à tous',
-            delai: '2 premières années',
-            status: 'en retard',
-            mises_a_jour: []
-        }
-    ].map(p => {
-        const delayDays = parseDelayToDays(p.delai);
-        const deadline = calculateDeadlineFromDays(delayDays);
-        const status = p.status === 'realise' ? 'Réalisé' :
-                      p.status === 'en cours' ? 'En cours' :
-                      p.status === 'en retard' ? 'En retard' : 'Non lancé';
-        const isLate = checkIfLate(status, deadline);
-        
-        const updates = (p.mises_a_jour || []).map(update => ({
-            date: update.date || '',
-            description: update.text || update.description || 'Mise à jour'
-        }));
-        
-        return {
-            id: p.id,
-            engagement: p.engagement,
-            domain: p.domaine || p.domain || 'Autre',
-            status: status,
-            delai: delayDays.toString(),
-            delai_texte: p.delai,
-            resultat: p.resultat,
-            updates: updates,
-            deadline: deadline,
-            isLate: isLate,
-            publicAvg: 0,
-            publicCount: 0
-        };
-    });
-}
-
-// ==========================================
-// EXPORTS GLOBAUX
-// ==========================================
-window.toggleUpdates = toggleUpdates;
-window.showRatingModal = showRatingModal;
-window.closeRatingModal = closeRatingModal;
-window.submitRating = submitRating;
-window.sharePromise = sharePromise;
-window.sharePromiseEnriched = sharePromiseEnriched;
-window.resetFilters = resetFilters;
-window.goToSlide = goToSlide;
-window.openPhotoViewer = openPhotoViewer;
-window.closePhotoViewer = closePhotoViewer;
-window.zoomIn = zoomIn;
-window.zoomOut = zoomOut;
-window.zoomReset = zoomReset;
-window.prevPhoto = prevPhoto;
-window.nextPhoto = nextPhoto;
-window.togglePressZoom = togglePressZoom;
-window.goToCarouselSlide = goToCarouselSlide;
-window.shareToPlatform = shareToPlatform;
-window.openNewsDetail = openNewsDetail;
-window.closeNewsDetail = closeNewsDetail;
-window.shareNews = shareNews;
-
-// ==========================================
-// FONCTIONS SUPABASE SÉCURISÉES
-// ==========================================
-async function safeSupabaseInsert(table, data, retryCount = 2) {
-    if (!supabaseClient) {
-        console.log(`⚠️ Supabase non disponible - stockage local pour ${table}`);
-        return { success: false, data: null, error: 'Supabase non disponible' };
-    }
-    
-    for (let i = 0; i <= retryCount; i++) {
-        try {
-            console.log(`🔄 Tentative ${i + 1} d'insertion dans ${table}...`);
-            
-            const { data: result, error } = await supabaseClient
-                .from(table)
-                .insert([data])
-                .select();
-            
-            if (!error) {
-                console.log(`✅ Insertion réussie dans ${table}:`, result);
-                return { success: true, data: result, error: null };
-            }
-            
-            if (error.code === 'PGRST301' || error.code === '42501' || error.message.includes('row-level security')) {
-                console.warn(`⚠️ Erreur RLS pour ${table}:`, error.message);
-                
-                const localStorageKey = `supabase_fallback_${table}`;
-                const fallbackData = JSON.parse(localStorage.getItem(localStorageKey) || '[]');
-                fallbackData.push({
-                    ...data,
-                    id: Date.now().toString(),
-                    _synced: false,
-                    _timestamp: new Date().toISOString()
-                });
-                localStorage.setItem(localStorageKey, JSON.stringify(fallbackData));
-                
-                return { 
-                    success: false, 
-                    data: null, 
-                    error: error.message,
-                    fallback: true 
-                };
-            }
-            
-            console.error(`❌ Erreur insertion ${table}:`, error);
-            
-        } catch (error) {
-            console.error(`❌ Exception insertion ${table}:`, error);
-        }
-        
-        if (i < retryCount) {
-            await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
-        }
-    }
-
-    return { success: false, data: null, error: 'Toutes les tentatives ont échoué' };
-}
-
-async function saveVoteToSupabase(promiseId, rating, comment = '') {
-    if (!supabaseClient) {
-        showNotification('Mode démo : Vote enregistré localement', 'info');
-        const votes = JSON.parse(localStorage.getItem('promise_votes') || '[]');
-        votes.push({
-            id: Date.now().toString(),
-            promise_id: promiseId,
-            rating: rating,
-            comment: comment,
-            created_at: new Date().toISOString()
-        });
-        localStorage.setItem('promise_votes', JSON.stringify(votes));
-        return;
-    }
-    
-    try {
-        const voteData = { 
-            promise_id: promiseId, 
-            rating: rating,
-            comment: comment,
-            created_at: new Date().toISOString()
-        };
-        
-        console.log('Envoi du vote:', voteData);
-        
-        const result = await safeSupabaseInsert('votes', voteData);
-        
-        if (result.fallback) {
-            showNotification('Vote enregistré localement (problème serveur)', 'info');
-        } else if (result.success) {
-            showNotification('Merci pour votre vote !', 'success');
-        } else {
-            showNotification('Vote enregistré localement (mode démo)', 'info');
-        }
-        
-        setTimeout(() => fetchAndDisplayPublicVotes(), 500);
-        
-    } catch (error) {
-        console.error('❌ Erreur sauvegarde vote:', error);
-        showNotification('Mode démo : Vote enregistré localement', 'info');
-    }
-}
-
-// ==========================================
-// DEBUG MOBILE
-// ==========================================
-function debugMobileMenu() {
-    console.log('📱 DEBUG MOBILE MENU');
-    const mobileBtn = document.getElementById('mobileMenuBtn');
-    const navMenu = document.getElementById('navMenu');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    console.log('Bouton mobile:', mobileBtn ? '✅ trouvé' : '❌ non trouvé');
-    console.log('Menu navigation:', navMenu ? '✅ trouvé' : '❌ non trouvé');
-    console.log('Liens de navigation:', navLinks.length, 'trouvés');
-
-    if (mobileBtn && navMenu) {
-        console.log('État initial du menu:', navMenu.classList.contains('show') ? 'ouvert' : 'fermé');
-        
-        const hasClickHandler = mobileBtn.onclick || mobileBtn._hasClickHandler;
-        console.log('Écouteur bouton mobile:', hasClickHandler ? '✅ actif' : '❌ absent');
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    debugMobileMenu();
-    
-    if (window.innerWidth <= 768) {
-        console.log('📱 Mode mobile détecté - largeur:', window.innerWidth);
-    }
-});
-
-document.addEventListener('click', (e) => {
-    if (e.target.closest('#mobileMenuBtn')) {
-        console.log('🍔 Menu mobile cliqué');
-        const navMenu = document.getElementById('navMenu');
-        if (navMenu) {
-            console.log('État après clic:', navMenu.classList.contains('show') ? 'ouvert' : 'fermé');
-        }
-    }
-    
-    if (e.target.closest('.nav-link')) {
-        console.log('🔗 Lien de navigation cliqué:', e.target.getAttribute('href'));
-        e.preventDefault();
-    }
-});
-// ==========================================
-// FONCTIONS MANQUANTES (SUITE)
-// ==========================================
-function getDefaultPressData() {
-    return DEFAULT_PRESS;
-}
-
-function generateTestPromises() {
-    return [
-        {
-            id: 'promise_19',
-            domaine: 'Lutte Corruption',
-            engagement: 'Loi de protection des lanceurs d\'alerte',
-            resultat: 'Encouragement dénonciation civique',
-            delai: '3 premières années',
-            status: 'realise',
-            mises_a_jour: [
-                {
-                    date: '26/08/2025',
-                    text: 'Au Sénégal, la protection des lanceurs d\'alerte est désormais régie par la Loi n° 2025-14, adoptée par l\'Assemblée nationale le 26 août 2025 et promulguée en septembre 2025.'
-                }
-            ]
-        },
-        {
-            id: 'promise_20',
-            domaine: 'Éducation',
-            engagement: 'Construction de 100 nouvelles écoles',
-            resultat: 'Amélioration accès éducation',
-            delai: '5 ans',
-            status: 'en cours',
-            mises_a_jour: [
-                {
-                    date: '15/10/2025',
-                    text: '30 écoles déjà construites, 50 en construction'
-                }
-            ]
-        },
-        {
-            id: 'promise_21',
-            domaine: 'Santé',
-            engagement: 'Couverture Santé Universelle',
-            resultat: 'Soins accessibles à tous',
-            delai: '2 premières années',
-            status: 'en retard',
-            mises_a_jour: []
-        }
-    ].map(p => {
-        const delayDays = parseDelayToDays(p.delai);
-        const deadline = calculateDeadlineFromDays(delayDays);
-        const status = p.status === 'realise' ? 'Réalisé' :
-                      p.status === 'en cours' ? 'En cours' :
-                      p.status === 'en retard' ? 'En retard' : 'Non lancé';
-        const isLate = checkIfLate(status, deadline);
-        
-        const updates = (p.mises_a_jour || []).map(update => ({
-            date: update.date || '',
-            description: update.text || update.description || 'Mise à jour'
-        }));
-        
-        return {
-            id: p.id,
-            engagement: p.engagement,
-            domain: p.domaine || p.domain || 'Autre',
-            status: status,
-            delai: delayDays.toString(),
-            delai_texte: p.delai,
-            resultat: p.resultat,
-            updates: updates,
-            deadline: deadline,
-            isLate: isLate,
-            publicAvg: 0,
-            publicCount: 0
-        };
-    });
-}
-
-// ==========================================
-// EXPORTS GLOBAUX
-// ==========================================
-window.toggleUpdates = toggleUpdates;
-window.showRatingModal = showRatingModal;
-window.closeRatingModal = closeRatingModal;
-window.submitRating = submitRating;
-window.sharePromise = sharePromise;
-window.sharePromiseEnriched = sharePromiseEnriched;
-window.resetFilters = resetFilters;
-window.goToSlide = goToSlide;
-window.openPhotoViewer = openPhotoViewer;
-window.closePhotoViewer = closePhotoViewer;
-window.zoomIn = zoomIn;
-window.zoomOut = zoomOut;
-window.zoomReset = zoomReset;
-window.prevPhoto = prevPhoto;
-window.nextPhoto = nextPhoto;
-window.togglePressZoom = togglePressZoom;
-window.goToCarouselSlide = goToCarouselSlide;
-window.shareToPlatform = shareToPlatform;
-window.openNewsDetail = openNewsDetail;
-window.closeNewsDetail = closeNewsDetail;
-window.shareNews = shareNews;
-
-// ==========================================
-// FONCTIONS SUPABASE SÉCURISÉES
-// ==========================================
-async function safeSupabaseInsert(table, data, retryCount = 2) {
-    if (!supabaseClient) {
-        console.log(`⚠️ Supabase non disponible - stockage local pour ${table}`);
-        return { success: false, data: null, error: 'Supabase non disponible' };
-    }
-    
-    for (let i = 0; i <= retryCount; i++) {
-        try {
-            console.log(`🔄 Tentative ${i + 1} d'insertion dans ${table}...`);
-            
-            const { data: result, error } = await supabaseClient
-                .from(table)
-                .insert([data])
-                .select();
-            
-            if (!error) {
-                console.log(`✅ Insertion réussie dans ${table}:`, result);
-                return { success: true, data: result, error: null };
-            }
-            
-            if (error.code === 'PGRST301' || error.code === '42501' || error.message.includes('row-level security')) {
-                console.warn(`⚠️ Erreur RLS pour ${table}:`, error.message);
-                
-                const localStorageKey = `supabase_fallback_${table}`;
-                const fallbackData = JSON.parse(localStorage.getItem(localStorageKey) || '[]');
-                fallbackData.push({
-                    ...data,
-                    id: Date.now().toString(),
-                    _synced: false,
-                    _timestamp: new Date().toISOString()
-                });
-                localStorage.setItem(localStorageKey, JSON.stringify(fallbackData));
-                
-                return { 
-                    success: false, 
-                    data: null, 
-                    error: error.message,
-                    fallback: true 
-                };
-            }
-            
-            console.error(`❌ Erreur insertion ${table}:`, error);
-            
-        } catch (error) {
-            console.error(`❌ Exception insertion ${table}:`, error);
-        }
-        
-        if (i < retryCount) {
-            await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
-        }
-    }
-
-    return { success: false, data: null, error: 'Toutes les tentatives ont échoué' };
-}
-
-async function saveVoteToSupabase(promiseId, rating, comment = '') {
-    if (!supabaseClient) {
-        showNotification('Mode démo : Vote enregistré localement', 'info');
-        const votes = JSON.parse(localStorage.getItem('promise_votes') || '[]');
-        votes.push({
-            id: Date.now().toString(),
-            promise_id: promiseId,
-            rating: rating,
-            comment: comment,
-            created_at: new Date().toISOString()
-        });
-        localStorage.setItem('promise_votes', JSON.stringify(votes));
-        return;
-    }
-    
-    try {
-        const voteData = { 
-            promise_id: promiseId, 
-            rating: rating,
-            comment: comment,
-            created_at: new Date().toISOString()
-        };
-        
-        console.log('Envoi du vote:', voteData);
-        
-        const result = await safeSupabaseInsert('votes', voteData);
-        
-        if (result.fallback) {
-            showNotification('Vote enregistré localement (problème serveur)', 'info');
-        } else if (result.success) {
-            showNotification('Merci pour votre vote !', 'success');
-        } else {
-            showNotification('Vote enregistré localement (mode démo)', 'info');
-        }
-        
-        setTimeout(() => fetchAndDisplayPublicVotes(), 500);
-        
-    } catch (error) {
-        console.error('❌ Erreur sauvegarde vote:', error);
-        showNotification('Mode démo : Vote enregistré localement', 'info');
-    }
-}
-
-// ==========================================
-// DEBUG MOBILE
-// ==========================================
-function debugMobileMenu() {
-    console.log('📱 DEBUG MOBILE MENU');
-    const mobileBtn = document.getElementById('mobileMenuBtn');
-    const navMenu = document.getElementById('navMenu');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    console.log('Bouton mobile:', mobileBtn ? '✅ trouvé' : '❌ non trouvé');
-    console.log('Menu navigation:', navMenu ? '✅ trouvé' : '❌ non trouvé');
-    console.log('Liens de navigation:', navLinks.length, 'trouvés');
-
-    if (mobileBtn && navMenu) {
-        console.log('État initial du menu:', navMenu.classList.contains('show') ? 'ouvert' : 'fermé');
-        
-        const hasClickHandler = mobileBtn.onclick || mobileBtn._hasClickHandler;
-        console.log('Écouteur bouton mobile:', hasClickHandler ? '✅ actif' : '❌ absent');
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    debugMobileMenu();
-    
-    if (window.innerWidth <= 768) {
-        console.log('📱 Mode mobile détecté - largeur:', window.innerWidth);
-    }
-});
-
-document.addEventListener('click', (e) => {
-    if (e.target.closest('#mobileMenuBtn')) {
-        console.log('🍔 Menu mobile cliqué');
-        const navMenu = document.getElementById('navMenu');
-        if (navMenu) {
-            console.log('État après clic:', navMenu.classList.contains('show') ? 'ouvert' : 'fermé');
-        }
-    }
-    
-    if (e.target.closest('.nav-link')) {
-        console.log('🔗 Lien de navigation cliqué:', e.target.getAttribute('href'));
-        e.preventDefault();
-    }
-});

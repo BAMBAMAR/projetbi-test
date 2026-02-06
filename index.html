@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LE PROJET SÉNÉGAL | Suivi des Engagements Présidentiels</title>
     <meta name="description" content="Plateforme citoyenne indépendante de suivi en temps réel des engagements du Président Bassirou Diomaye Faye. La transparence au service de la démocratie.">
+    <title>LE PROJET SÉNÉGAL | Suivi des Engagements Présidentiels</title>
     <link rel="icon" href="https://projetbi.org/favicon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -641,18 +641,16 @@
     <!-- Footer Modernisé -->
     <footer class="footer">
         <div class="footer-grid">
-            <div class="footer-col">
+            <div class="footer-col footer-about">
                 <h4>À propos</h4>
-                <div class="footer-about">
-                    <p>
-                        <i class="fas fa-info-circle"></i> 
-                        Plateforme citoyenne indépendante dédiée au suivi transparent des engagements du Projet pour un Sénégal Souverain, Juste et Prospère.
-                    </p>
-                    <p>
-                        <strong>LE PROJET SÉNÉGAL</strong><br>
-                        Transparence & Redevabilité
-                    </p>
-                </div>
+                <p>
+                    <i class="fas fa-info-circle"></i> 
+                    Plateforme citoyenne indépendante dédiée au suivi transparent des engagements du Projet pour un Sénégal Souverain, Juste et Prospère.
+                </p>
+                <p>
+                    <strong>LE PROJET SÉNÉGAL</strong><br>
+                    Transparence & Redevabilité
+                </p>
             </div>
             
             <div class="footer-col">
@@ -676,13 +674,82 @@
             <div class="footer-col">
                 <h4>Suivez-nous</h4>
                 <div class="footer-social">
-                    <a href="#" aria-label="Facebook">
+                    <a href="#" aria-label="Facebook" class="social-btn">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="#" aria-label="Twitter">
+                    <a href="#" aria-label="Twitter" class="social-btn">
                         <i class="fab fa-twitter"></i>
                     </a>
-                    <a href="#" aria-label="Instagram">
+                    <a href="#" aria-label="Instagram" class="social-btn">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="#" aria-label="YouTube">
+                    <a href="#" aria-label="YouTube" class="social-btn">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+                <div class="footer-newsletter">
+                    <p>Recevez les mises à jour</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Votre email" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Liens utiles</h4>
+                <div class="footer-links">
+                    <a href="#stats" class="footer-link">
+                        <i class="fas fa-chart-line"></i>
+                        Dashboard
+                    </a>
+                    <a href="#daily" class="footer-link">
+                        <i class="fas fa-star"></i>
+                        Promesse du Jour
+                    </a>
+                    <a href="#promises" class="footer-link">
+                        <i class="fas fa-tasks"></i>
+                        Tous les Engagements
+                    </a>
+                    <a href="#news" class="footer-link">
+                        <i class="fas fa-newspaper"></i>
+                        Actualités
+                    </a>
+                    <a href="#press" class="footer-link">
+                        <i class="fas fa-book"></i>
+                        Revue de Presse
+                    </a>
+                    <a href="#rating" class="footer-link">
+                        <i class="fas fa-star"></i>
+                        Noter un Service
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p class="footer-disclaimer">
+                <strong>LE PROJET SÉNÉGAL</strong> est une plateforme citoyenne indépendante de suivi des engagements présidentiels. 
+                Nous ne sommes pas affiliés au gouvernement. Toutes les données sont issues de sources publiques et vérifiées par notre équipe.
+            </p>
+            <p class="footer-copyright">
+                &copy; 2024-2026 LE PROJET SÉNÉGAL. Tous droits réservés. | 
+                <a href="#" style="color: var(--primary-color); text-decoration: underline;">Mentions légales</a> | 
+                <a href="#" style="color: var(--primary-color); text-decoration: underline;">Politique de confidentialité</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

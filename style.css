@@ -4138,7 +4138,7 @@ button.social-btn {
     position: absolute;
     top: 1rem;
     right: 1rem;
-    background: var(--danger-color);
+    background: #e74c3c;
     color: white;
     border: none;
     width: 40px;
@@ -4150,13 +4150,16 @@ button.social-btn {
     justify-content: center;
     font-size: 1.2rem;
     transition: all 0.2s ease;
-    z-index: 10;
+    z-index: 10001; /* Au-dessus de tout */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    opacity: 1 !important; /* Forcer la visibilité */
 }
 
 .article-modal-close:hover,
 .ratings-modal-close:hover {
     background: #c0392b;
-    transform: rotate(90deg);
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .article-full h2 {

@@ -3879,11 +3879,13 @@ _Via LE PROJET SÉNÉGAL_`;
 // ==========================================
 
 function showAllRatings(category) {
+    console.log('🔍 showAllRatings appelé - Catégorie:', category);
+    
     const modal = document.getElementById('ratingsListModal');
     const title = document.getElementById('ratingsModalTitle');
     const body = document.getElementById('ratingsModalBody');
     if (!modal || !title || !body) {
-        console.error('Modal elements not found');
+        console.error('❌ Éléments modal non trouvés:', {modal: !!modal, title: !!title, body: !!body});
         return;
     }
     
@@ -3899,17 +3901,22 @@ function showAllRatings(category) {
     // Charger les données
     setTimeout(() => {
         const ratings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
+        console.log('📊 Notations chargées:', ratings.length);
+        console.log('📋 Données:', ratings);
         
         if (ratings.length === 0) {
             body.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>Aucune notation disponible pour le moment</p></div>';
+            console.log('⚠️ Aucune notation trouvée');
             return;
         }
         
         if (category === 'top-rated') {
+            console.log('🏆 Traitement meilleurs services...');
             // Calculer les statistiques par service
             const serviceStats = {};
             ratings.forEach(rating => {
                 const service = rating.service || rating.service_name;
+                console.log('Service:', service);
                 if (!serviceStats[service]) {
                     serviceStats[service] = { ratings: [], count: 0 };
                 }
@@ -3920,10 +3927,13 @@ function showAllRatings(category) {
                 const efficiency = parseInt(rating.efficiency) || 0;
                 const transparency = parseInt(rating.transparency) || 0;
                 const avg = (accessibility + welcome + efficiency + transparency) / 4;
+                console.log(`  - Note calculée: ${avg.toFixed(1)} (${accessibility}, ${welcome}, ${efficiency}, ${transparency})`);
                 
                 serviceStats[service].ratings.push(avg);
                 serviceStats[service].count++;
             });
+            
+            console.log('📊 Stats:', serviceStats);
             
             // Calculer la moyenne pour chaque service
             const topServices = Object.entries(serviceStats)
@@ -3935,8 +3945,11 @@ function showAllRatings(category) {
                 .filter(s => s.avg >= 4) // Seulement les services avec moyenne >= 4
                 .sort((a, b) => b.avg - a.avg); // Trier par moyenne décroissante
             
+            console.log('🌟 Services >= 4:', topServices);
+            
             if (topServices.length === 0) {
                 body.innerHTML = '<div class="empty-state"><i class="fas fa-trophy"></i><p>Aucun service avec note ≥ 4 étoiles</p></div>';
+                console.log('⚠️ Aucun service >= 4 étoiles');
                 return;
             }
             
@@ -3963,14 +3976,18 @@ function showAllRatings(category) {
                     }).join('')}
                 </div>
             `;
+            console.log('✅ Meilleurs services affichés');
             
         } else if (category === 'recent') {
+            console.log('🕒 Traitement notations récentes...');
             // Trier par date (plus récent en premier)
             const sortedRatings = [...ratings].sort((a, b) => {
                 const dateA = new Date(a.created_at || a.date);
                 const dateB = new Date(b.created_at || b.date);
                 return dateB - dateA;
             });
+            
+            console.log('📋 Notations triées:', sortedRatings.length);
             
             // Afficher avec le même format que la page principale
             body.innerHTML = `
@@ -4008,6 +4025,7 @@ function showAllRatings(category) {
                     }).join('')}
                 </div>
             `;
+            console.log('✅ Notations récentes affichées');
         }
     }, 100);
 }

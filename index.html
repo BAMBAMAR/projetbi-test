@@ -905,38 +905,9 @@
     })();
     </script>
     
- <script>
-document.addEventListener('DOMContentLoaded', function() {
-        // === 1. COMPTE À REBOURS ===
-        // Date cible: 02 Avril 2029 à minuit
-        const targetDate = new Date(2029, 3, 2, 0, 0, 0).getTime(); // Mois: 0=Jan, 3=Avril
-        const daysEl = document.getElementById('days');
-        const hoursEl = document.getElementById('hours');
-        const minutesEl = document.getElementById('minutes');
-        const secondsEl = document.getElementById('seconds');
-        
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const timeLeft = targetDate - now;
-            
-            // Calculer jours, heures, minutes, secondes
-            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-            
-            // Mettre à jour l'affichage
-            if(daysEl) daysEl.textContent = days.toString().padStart(3, '0');
-            if(hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
-            if(minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
-            if(secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
-        }
-        
-        // Mise à jour immédiate puis toutes les secondes
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-        
-        // === 2. SÉLECTION CONTEXTUELLE DES SERVICES ===
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // === SÉLECTION CONTEXTUELLE DES SERVICES ===
         const categorySelect = document.getElementById('service-category');
         const serviceSelect = document.getElementById('service');
         const servicesData = document.getElementById('services-data');

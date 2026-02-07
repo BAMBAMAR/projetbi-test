@@ -796,35 +796,3 @@
                     if (categoryServices) {
                         serviceSelect.disabled = false;
                         serviceSelect.innerHTML = '<option value="">Choisissez un service</option>' + categoryServices.innerHTML;
-                    }
-                }
-            });
-        }
-        
-        // === 3. DATE ACTUELLE ===
-        const currentDateElement = document.getElementById('current-date');
-        if (currentDateElement) {
-            const now = new Date();
-            currentDateElement.textContent = now.toLocaleDateString('fr-FR', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-            }).toUpperCase();
-        }
-    });
-        // === 2. SÉLECTION CONTEXTUELLE DES SERVICES ===
-        const categorySelect = document.getElementById('service-category');
-        const serviceSelect = document.getElementById('service');
-        const servicesData = document.getElementById('services-data');
-        
-        if (categorySelect && serviceSelect && servicesData) {
-            categorySelect.addEventListener('change', function() {
-                const selectedCategory = this.value;
-                serviceSelect.innerHTML = '<option value="">Sélectionnez un service</option>';
-                serviceSelect.disabled = true;
-                
-                if (selectedCategory) {
-                    const categoryServices = servicesData.querySelector(`[data-category="${selectedCategory}"]`);
-                    if (categoryServices) {
-                        serviceSelect.disabled = false;
-                        serviceSelect.innerHTML = '<option value="">Choisissez un service</option>' + categoryServices.innerHTML;

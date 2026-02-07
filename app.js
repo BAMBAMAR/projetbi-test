@@ -3785,7 +3785,7 @@ _#ProjetPastef #sonko #pasteflespatriotes_`;
                     
                     // Ouvrir Facebook après 2 secondes
                     setTimeout(() => {
-                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(facebookText)}`;
+                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(shareText)}`;
                         window.open(shareUrl, '_blank', 'width=600,height=600');
                     }, 2000);
                 }).catch(() => {

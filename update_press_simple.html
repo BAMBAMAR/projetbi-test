@@ -642,13 +642,16 @@
                     </div>
                     // Dans la partie "Ajouter une actualité"
 <div class="form-group">
-    <label for="newsImageUrl">
+    <label for="newsImageFile">
         <i class="fas fa-image"></i>
-        Image personnalisée (URL)
+        Image personnalisée (Upload)
     </label>
-    <input type="url" class="form-input" id="newsImageUrl" 
-           placeholder="https://exemple.com/image.jpg">
-    <small>Laissez vide pour utiliser une icône</small>
+    <input type="file" class="form-input" id="newsImageFile" 
+           accept="image/*" onchange="previewNewsImage(this)">
+    <small>Formats acceptés: JPG, PNG, GIF, WebP</small>
+    <div id="newsImagePreview" style="margin-top: 1rem; display: none;">
+        <img id="newsImagePreviewImg" style="max-width: 300px; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    </div>
 </div>
 
 <div class="form-group">
@@ -1146,7 +1149,7 @@ function addNews() {
     const content = document.getElementById('newsContent').value.trim();
     const category = document.getElementById('newsCategory').value;
     const image = document.getElementById('newsImage').value;
-    const imageUrl = document.getElementById('newsImageUrl').value.trim();
+    const imageFile = document.getElementById('newsImageFile').files[0];
     const link = document.getElementById('newsLink').value.trim();
     const author = document.getElementById('newsAuthor').value.trim() || 'Rédaction';
     const readTime = document.getElementById('newsReadTime').value;
@@ -1161,39 +1164,72 @@ function addNews() {
     const dateParts = dateInput.split('-');
     const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
     
-    // Créer l'objet actualité
-    const newsItem = {
-        id: `news_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-        title: title,
-        excerpt: excerpt,
-        content: content,
-        date: formattedDate,
-        source: source || 'Le Soleil',
-        category: category,
-        image: image,
-        image_url: imageUrl || null,
-        link: link || '#',
-        author: author,
-        read_time: readTime,
-        created_at: new Date().toISOString()
-    };
-    
-    // Ajouter en tête de liste
-    NEWS_DATA.unshift(newsItem);
-    
-    // Mettre à jour l'affichage
-    displayNewsList();
-    
-    // Générer le JSON
-    generateNewsJSON();
-    
-    // Sauvegarder localement
-    saveNewsToLocal();
-    
-    // Réinitialiser le formulaire
-    clearNewsForm();
-    
-    showNotification('✅ Actualité ajoutée avec succès !', 'success');
+    // Si une image a été uploadée, la convertir en base64
+    if (imageFile) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            // Créer l'objet actualité avec l'image en base64
+            const newsItem = {
+                id: `news_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                title: title,
+                excerpt: excerpt,
+                content: content,
+                date: formattedDate,
+                source: source || 'Le Soleil',
+                category: category,
+                image: image,
+                image_url: e.target.result, // Base64 de l'image
+                link: link || '#',
+                author: author,
+                read_time: readTime,
+                created_at: new Date().toISOString()
+            };
+            
+            // Ajouter et sauvegarder
+            NEWS_DATA.unshift(newsItem);
+            displayNewsList();
+            generateNewsJSON();
+            saveNewsToLocal();
+            clearNewsForm();
+            showNotification('✅ Actualité ajoutée avec image !', 'success');
+        };
+        reader.readAsDataURL(imageFile);
+    } else {
+        // Pas d'image uploadée
+        const newsItem = {
+            id: `news_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+            title: title,
+            excerpt: excerpt,
+            content: content,
+            date: formattedDate,
+            source: source || 'Le Soleil',
+            category: category,
+            image: image,
+            image_url: null,
+            link: link || '#',
+            author: author,
+            read_time: readTime,
+            created_at: new Date().toISOString()
+        };
+        
+        // Ajouter en tête de liste
+        NEWS_DATA.unshift(newsItem);
+        
+        // Mettre à jour l'affichage
+        displayNewsList();
+        
+        // Générer le JSON
+        generateNewsJSON();
+        
+        // Sauvegarder localement
+        saveNewsToLocal();
+        
+        // Réinitialiser le formulaire
+        clearNewsForm();
+        
+        showNotification('✅ Actualité ajoutée avec succès !', 'success');
+    }
+}
 }
 
 function clearNewsForm() {
@@ -1386,6 +1422,25 @@ function loadNewsFromLocal() {
 
         // ==================== UTILITAIRES ====================
 
+        // Prévisualiser l'image uploadée
+        function previewNewsImage(input) {
+            const preview = document.getElementById('newsImagePreview');
+            const previewImg = document.getElementById('newsImagePreviewImg');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+
         // Fonctions globales
         window.handlePressUpload = handlePressUpload;
         window.addNews = addNews;
@@ -1398,6 +1453,7 @@ function loadNewsFromLocal() {
         window.downloadNewsJSON = downloadNewsJSON;
         window.copyPressToClipboard = copyPressToClipboard;
         window.copyNewsToClipboard = copyNewsToClipboard;
+        window.previewNewsImage = previewNewsImage;
 
     </script>
 </body>

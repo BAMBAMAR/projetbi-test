@@ -3879,156 +3879,82 @@ _Via LE PROJET SÉNÉGAL_`;
 // ==========================================
 
 function showAllRatings(category) {
-    console.log('🔍 showAllRatings appelé - Catégorie:', category);
+    console.log('🔍 showAllRatings - Catégorie:', category);
     
     const modal = document.getElementById('ratingsListModal');
     const title = document.getElementById('ratingsModalTitle');
     const body = document.getElementById('ratingsModalBody');
+    
     if (!modal || !title || !body) {
-        console.error('❌ Éléments modal non trouvés:', {modal: !!modal, title: !!title, body: !!body});
+        console.error('❌ Modal non trouvé');
         return;
     }
     
     const titles = {
-        'top-rated': '<i class="fas fa-trophy"></i> Liste complète - Meilleurs Services',
-        'recent': '<i class="fas fa-clock"></i> Liste complète - Notations Récentes'
+        'top-rated': '<i class="fas fa-trophy"></i> Liste complète - Par Note',
+        'recent': '<i class="fas fa-clock"></i> Liste complète - Par Date'
     };
     title.innerHTML = titles[category] || 'Liste complète';
     
     body.innerHTML = '<div class="loading"><div class="spinner"></div><p>Chargement...</p></div>';
     modal.style.display = 'flex';
     
-    // Charger les données
     setTimeout(() => {
         const ratings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
-        console.log('📊 Notations chargées:', ratings.length);
-        console.log('📋 Données:', ratings);
+        console.log('📊 Notations:', ratings.length);
         
         if (ratings.length === 0) {
-            body.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>Aucune notation disponible pour le moment</p></div>';
-            console.log('⚠️ Aucune notation trouvée');
+            body.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>Aucune notation</p></div>';
             return;
         }
         
-        if (category === 'top-rated') {
-            console.log('🏆 Traitement meilleurs services...');
-            // Calculer les statistiques par service
-            const serviceStats = {};
-            ratings.forEach(rating => {
-                const service = rating.service || rating.service_name;
-                console.log('Service:', service);
-                if (!serviceStats[service]) {
-                    serviceStats[service] = { ratings: [], count: 0 };
-                }
-                
-                // Calculer la moyenne des 4 critères
-                const accessibility = parseInt(rating.accessibility) || 0;
-                const welcome = parseInt(rating.welcome) || 0;
-                const efficiency = parseInt(rating.efficiency) || 0;
-                const transparency = parseInt(rating.transparency) || 0;
-                const avg = (accessibility + welcome + efficiency + transparency) / 4;
-                console.log(`  - Note calculée: ${avg.toFixed(1)} (${accessibility}, ${welcome}, ${efficiency}, ${transparency})`);
-                
-                serviceStats[service].ratings.push(avg);
-                serviceStats[service].count++;
-            });
-            
-            console.log('📊 Stats:', serviceStats);
-            
-            // Calculer la moyenne pour chaque service
-            const topServices = Object.entries(serviceStats)
-                .map(([service, data]) => ({
-                    service,
-                    avg: data.ratings.reduce((a, b) => a + b, 0) / data.ratings.length,
-                    count: data.count
-                }))
-                .filter(s => s.avg >= 4) // Seulement les services avec moyenne >= 4
-                .sort((a, b) => b.avg - a.avg); // Trier par moyenne décroissante
-            
-            console.log('🌟 Services >= 4:', topServices);
-            
-            if (topServices.length === 0) {
-                body.innerHTML = '<div class="empty-state"><i class="fas fa-trophy"></i><p>Aucun service avec note ≥ 4 étoiles</p></div>';
-                console.log('⚠️ Aucun service >= 4 étoiles');
-                return;
-            }
-            
-            // Afficher avec le même format que la page principale
-            body.innerHTML = `
-                <div class="top-services-grid">
-                    ${topServices.map((service, index) => {
-                        const badges = ['gold', 'silver', 'bronze'];
-                        const badgeClass = index < 3 ? badges[index] : '';
-                        return `
-                            <div class="service-item-card ${badgeClass}">
-                                <div class="service-rank-badge ${badgeClass}">${index + 1}</div>
-                                <div class="service-info-card">
-                                    <div class="service-name-card">${service.service}</div>
-                                    <div class="service-stats-card">
-                                        <span class="service-score-card">
-                                            <i class="fas fa-star"></i> ${service.avg.toFixed(1)}/5
-                                        </span>
-                                        <span class="service-count-card">${service.count} vote${service.count > 1 ? 's' : ''}</span>
-                                    </div>
-                                </div>
+        // Calculer la note pour chaque notation
+        const withAvg = ratings.map(r => ({
+            ...r,
+            avg: (parseInt(r.accessibility||0) + parseInt(r.welcome||0) + parseInt(r.efficiency||0) + parseInt(r.transparency||0)) / 4
+        }));
+        
+        // Trier
+        const sorted = category === 'top-rated' 
+            ? withAvg.sort((a, b) => b.avg - a.avg)  // Par note décroissante
+            : withAvg.sort((a, b) => new Date(b.created_at||b.date||0) - new Date(a.created_at||a.date||0)); // Par date
+        
+        console.log('✅ Affichage de', sorted.length, 'notations');
+        
+        // Afficher TOUTES les notations
+        body.innerHTML = `
+            <div class="recent-ratings">
+                ${sorted.map((item, index) => {
+                    const date = new Date(item.created_at || item.date || new Date());
+                    const formattedDate = date.toLocaleDateString('fr-FR');
+                    
+                    let badge = '';
+                    if (category === 'top-rated' && index < 3) {
+                        const badges = ['🥇', '🥈', '🥉'];
+                        badge = `<span class="rank-badge">${badges[index]} #${index+1}</span>`;
+                    }
+                    
+                    return `
+                        <div class="recent-item">
+                            <div class="recent-header">
+                                <span class="recent-service">${item.service || 'Service inconnu'}</span>
+                                ${badge}
+                                <span class="recent-date">${formattedDate}</span>
                             </div>
-                        `;
-                    }).join('')}
-                </div>
-            `;
-            console.log('✅ Meilleurs services affichés');
-            
-        } else if (category === 'recent') {
-            console.log('🕒 Traitement notations récentes...');
-            // Trier par date (plus récent en premier)
-            const sortedRatings = [...ratings].sort((a, b) => {
-                const dateA = new Date(a.created_at || a.date);
-                const dateB = new Date(b.created_at || b.date);
-                return dateB - dateA;
-            });
-            
-            console.log('📋 Notations triées:', sortedRatings.length);
-            
-            // Afficher avec le même format que la page principale
-            body.innerHTML = `
-                <div class="recent-ratings">
-                    ${sortedRatings.map(item => {
-                        // Calculer la moyenne des 4 critères
-                        const accessibility = parseInt(item.accessibility) || 0;
-                        const welcome = parseInt(item.welcome) || 0;
-                        const efficiency = parseInt(item.efficiency) || 0;
-                        const transparency = parseInt(item.transparency) || 0;
-                        const avg = (accessibility + welcome + efficiency + transparency) / 4;
-                        
-                        const date = new Date(item.created_at || item.date);
-                        const formattedDate = date.toLocaleDateString('fr-FR', {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric'
-                        });
-                        
-                        return `
-                            <div class="recent-item">
-                                <div class="recent-header">
-                                    <span class="recent-service">${item.service || item.service_name}</span>
-                                    <span class="recent-date">${formattedDate}</span>
-                                </div>
-                                <div class="recent-score">
-                                    <i class="fas fa-star"></i> 
-                                    ${avg.toFixed(1)}/5
-                                </div>
-                                ${item.comment ? `
-                                    <div class="recent-comment">"${item.comment.substring(0, 100)}${item.comment.length > 100 ? '...' : ''}"</div>
-                                ` : ''}
+                            <div class="recent-score">
+                                <i class="fas fa-star"></i> ${item.avg.toFixed(1)}/5
                             </div>
-                        `;
-                    }).join('')}
-                </div>
-            `;
-            console.log('✅ Notations récentes affichées');
-        }
+                            ${item.comment ? `
+                                <div class="recent-comment">"${item.comment.substring(0, 100)}"</div>
+                            ` : ''}
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        `;
     }, 100);
 }
+
 
 function closeRatingsModal() {
     const modal = document.getElementById('ratingsListModal');

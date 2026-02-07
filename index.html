@@ -756,7 +756,8 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // === 1. COMPTE À REBOURS ===
-        const targetDate = new Date('April 02, 2029 00:00:00').getTime();
+        // Date cible: 02 Avril 2029 à minuit
+        const targetDate = new Date(2029, 3, 2, 0, 0, 0).getTime(); // Mois: 0=Jan, 3=Avril
         const daysEl = document.getElementById('days');
         const hoursEl = document.getElementById('hours');
         const minutesEl = document.getElementById('minutes');
@@ -766,17 +767,20 @@
             const now = new Date().getTime();
             const timeLeft = targetDate - now;
             
+            // Calculer jours, heures, minutes, secondes
             const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
             
+            // Mettre à jour l'affichage
             if(daysEl) daysEl.textContent = days.toString().padStart(3, '0');
             if(hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
             if(minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
             if(secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
         }
         
+        // Mise à jour immédiate puis toutes les secondes
         updateCountdown();
         setInterval(updateCountdown, 1000);
         
@@ -796,4 +800,3 @@
                     if (categoryServices) {
                         serviceSelect.disabled = false;
                         serviceSelect.innerHTML = '<option value="">Choisissez un service</option>' + categoryServices.innerHTML;
-           

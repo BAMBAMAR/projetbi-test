@@ -3618,18 +3618,44 @@ function shareToPlatform(promiseId, platform) {
     
     const engagement = promise.engagement || '';
     const domaine = promise.domain || promise.domaine || 'Non spécifié';
-    const statut = promise.status || 'Non défini';
+    const status = promise.status || 'Non défini';
     const deadline = promise.deadline || '';
     const resultat = promise.resultat || '';
     const priorite = promise.priorite || '';
     const responsable = promise.responsable || '';
+    const budget = promise.budget || '';
+    const indicateurs = promise.indicateurs || '';
     
-    // Calcul jours restants
-    let joursRestants = '';
+    // Calcul jours restants ou retard
+    let joursInfo = '';
+    let joursInfoShort = '';
     if (deadline) {
         const d = new Date(deadline);
-        const diff = Math.ceil((d - new Date()) / 86400000);
-        joursRestants = diff > 0 ? `${diff} jours restants` : `Échéance dépassée`;
+        const today = new Date();
+        const diff = Math.ceil((d - today) / 86400000);
+        
+        if (diff > 0) {
+            joursInfo = `⏰ ${diff} jour${diff > 1 ? 's' : ''} restant${diff > 1 ? 's' : ''}`;
+            joursInfoShort = `⏰ ${diff}j restants`;
+        } else if (diff < 0) {
+            const retard = Math.abs(diff);
+            joursInfo = `🚨 EN RETARD de ${retard} jour${retard > 1 ? 's' : ''}`;
+            joursInfoShort = `🚨 Retard: ${retard}j`;
+        } else {
+            joursInfo = `📅 Échéance AUJOURD'HUI`;
+            joursInfoShort = `📅 Aujourd'hui`;
+        }
+    }
+    
+    // Date de deadline formatée
+    let deadlineFormatted = '';
+    if (deadline) {
+        const d = new Date(deadline);
+        deadlineFormatted = d.toLocaleDateString('fr-FR', { 
+            day: 'numeric', 
+            month: 'long', 
+            year: 'numeric' 
+        });
     }
     
     // Dernière mise à jour
@@ -3640,90 +3666,167 @@ function shareToPlatform(promiseId, platform) {
     }
     
     const url = window.location.href;
+    
+    // TEXTE OPTIMISÉ POUR FACEBOOK - VERSION COMPLÈTE
+    const facebookText = `🎯 ENGAGEMENT PRÉSIDENTIEL - LE PROJET SÉNÉGAL
+
+━━━━━━━━━━━━━━━━━━━━━━
+📋 PROMESSE
+━━━━━━━━━━━━━━━━━━━━━━
+${engagement}
+
+━━━━━━━━━━━━━━━━━━━━━━
+📊 INFORMATIONS CLÉS
+━━━━━━━━━━━━━━━━━━━━━━
+📍 Domaine: ${domaine}
+🔖 Statut: ${emoji} ${status.toUpperCase()}
+${priorite ? `🔥 Priorité: ${priorite}` : ''}
+${responsable ? `👤 Responsable: ${responsable}` : ''}
+${budget ? `💰 Budget: ${budget}` : ''}
+
+━━━━━━━━━━━━━━━━━━━━━━
+📅 DÉLAI & ÉCHÉANCE
+━━━━━━━━━━━━━━━━━━━━━━
+${deadline ? `📆 Date limite: ${deadlineFormatted}` : '⚠️ Pas de délai défini'}
+${joursInfo}
+
+${resultat ? `━━━━━━━━━━━━━━━━━━━━━━
+📝 RÉSULTAT ATTENDU
+━━━━━━━━━━━━━━━━━━━━━━
+${resultat.substring(0, 250)}${resultat.length > 250 ? '...' : ''}
+
+` : ''}${indicateurs ? `━━━━━━━━━━━━━━━━━━━━━━
+📈 INDICATEURS DE SUCCÈS
+━━━━━━━━━━━━━━━━━━━━━━
+${indicateurs.substring(0, 200)}${indicateurs.length > 200 ? '...' : ''}
+
+` : ''}${derniereUpdate ? `━━━━━━━━━━━━━━━━━━━━━━
+🔄 DERNIÈRE MISE À JOUR
+━━━━━━━━━━━━━━━━━━━━━━
+${derniereUpdate.substring(0, 180)}${derniereUpdate.length > 180 ? '...' : ''}
+
+` : ''}━━━━━━━━━━━━━━━━━━━━━━
+📊 SUIVI EN TEMPS RÉEL
+━━━━━━━━━━━━━━━━━━━━━━
+Suivez tous les engagements présidentiels sur:
+${url}
+
+#ProjetSénégal #BDF2024 #Transparence #Redevabilité #Gouvernance
+#${domaine.replace(/\s+/g, '')} #${status.replace(/\s+/g, '')}`;
+    
     let shareText = '';
     
     if (platform === 'facebook') {
-        shareText = `🎯 ENGAGEMENT PRÉSIDENTIEL
-
-📋 ${engagement}
-
-📍 Domaine: ${domaine}
-${priorite ? `🔥 Priorité: ${priorite}` : ''}
-${responsable ? `👤 Responsable: ${responsable}` : ''}
-📅 Délai: ${deadline || 'Non spécifié'}
-🔖 Statut: ${emoji} ${statut}
-${joursRestants ? `⏰ ${joursRestants}` : ''}
-
-${resultat ? `📝 Résultat attendu:\n${resultat.substring(0, 150)}${resultat.length > 150 ? '...' : ''}` : ''}
-
-${derniereUpdate ? `🔄 Dernière mise à jour:\n${derniereUpdate.substring(0, 100)}${derniereUpdate.length > 100 ? '...' : ''}` : ''}
-
-📊 Suivez tous les engagements:
-${url}
-
-#ProjetSénégal #Transparence #BDF2024`;
+        shareText = facebookText;
     } else if (platform === 'twitter') {
-        const short = engagement.substring(0, 80);
-        shareText = `🎯 ${short}${engagement.length > 80 ? '...' : ''}
+        // Twitter - Version condensée
+        const short = engagement.substring(0, 100);
+        shareText = `🎯 ENGAGEMENT: ${short}${engagement.length > 100 ? '...' : ''}
 
 📍 ${domaine}
-🔖 ${emoji} ${statut}
-${joursRestants ? `⏰ ${joursRestants}` : ''}
+🔖 ${emoji} ${status}
+${deadline ? `📅 ${deadlineFormatted}` : ''}
+${joursInfoShort}
 
-📊 ${url}
+📊 Suivi en temps réel: ${url}
 
-#ProjetSénégal #BDF2024`;
+#ProjetSénégal #BDF2024 #Transparence`;
     } else if (platform === 'whatsapp') {
+        // WhatsApp - Format avec emphase
         shareText = `🎯 *ENGAGEMENT PRÉSIDENTIEL*
+_Le Projet Sénégal - Transparence & Redevabilité_
 
-📋 *${engagement}*
+━━━━━━━━━━━━━━━━━━
+📋 *PROMESSE*
+━━━━━━━━━━━━━━━━━━
+${engagement}
 
+━━━━━━━━━━━━━━━━━━
+📊 *INFORMATIONS*
+━━━━━━━━━━━━━━━━━━
 📍 *Domaine:* ${domaine}
+🔖 *Statut:* ${emoji} *${status.toUpperCase()}*
 ${priorite ? `🔥 *Priorité:* ${priorite}` : ''}
 ${responsable ? `👤 *Responsable:* ${responsable}` : ''}
-📅 *Délai:* ${deadline || 'Non spécifié'}
-🔖 *Statut:* ${emoji} ${statut}
-${joursRestants ? `⏰ *${joursRestants}*` : ''}
+${budget ? `💰 *Budget:* ${budget}` : ''}
 
-${resultat ? `📝 *Résultat attendu:*\n${resultat}` : ''}
+━━━━━━━━━━━━━━━━━━
+📅 *DÉLAI & ÉCHÉANCE*
+━━━━━━━━━━━━━━━━━━
+${deadline ? `📆 *Date limite:* ${deadlineFormatted}` : '⚠️ Pas de délai défini'}
+${joursInfo}
 
-${derniereUpdate ? `🔄 *Dernière mise à jour:*\n${derniereUpdate}` : ''}
+${resultat ? `━━━━━━━━━━━━━━━━━━
+📝 *RÉSULTAT ATTENDU*
+━━━━━━━━━━━━━━━━━━
+${resultat.substring(0, 200)}${resultat.length > 200 ? '...' : ''}
 
-📊 *Suivez tous les engagements:*
+` : ''}${derniereUpdate ? `━━━━━━━━━━━━━━━━━━
+🔄 *DERNIÈRE MISE À JOUR*
+━━━━━━━━━━━━━━━━━━
+${derniereUpdate.substring(0, 150)}${derniereUpdate.length > 150 ? '...' : ''}
+
+` : ''}━━━━━━━━━━━━━━━━━━
+📊 *SUIVI COMPLET SUR:*
 ${url}
 
-_Via LE PROJET SÉNÉGAL_
-_Transparence & Redevabilité_`;
+_#ProjetSénégal #BDF2024 #Transparence_`;
     }
     
     let shareUrl = '';
     
     switch(platform) {
         case 'facebook':
-            // Facebook ne supporte plus le paramètre quote
-            // On copie le texte dans le presse-papier et on ouvre Facebook
+            // Pour Facebook: copier le texte complet + ouvrir la fenêtre de partage
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(shareText).then(() => {
-                    // Afficher notification
-                    showNotification('📋 Texte copié ! Collez-le dans votre publication Facebook', 'success');
-                    // Ouvrir Facebook après 1 seconde
+                    // Notification très explicite
+                    showNotification('📋 TEXTE COPIÉ ! 👉 Dans Facebook qui va s\'ouvrir, COLLEZ (Ctrl+V ou Cmd+V) le texte dans votre publication', 'info');
+                    
+                    // Deuxième notification après 3 secondes
                     setTimeout(() => {
-                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-                        window.open(shareUrl, '_blank', 'width=600,height=400');
-                    }, 1000);
+                        showNotification('💡 RAPPEL: Faites Ctrl+V (ou Cmd+V sur Mac) pour coller le texte complet dans Facebook', 'info');
+                    }, 3000);
+                    
+                    // Ouvrir Facebook après 4 secondes (laisser temps de lire)
+                    setTimeout(() => {
+                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(shareText)}`;
+                        window.open(shareUrl, '_blank', 'width=600,height=600');
+                    }, 4000);
                 }).catch(() => {
                     // Fallback si clipboard API échoue
-                    alert('📋 Copiez ce texte et collez-le dans votre publication Facebook:\n\n' + shareText);
-                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-                    window.open(shareUrl, '_blank', 'width=600,height=400');
+                    const textArea = document.createElement('textarea');
+                    textArea.value = shareText;
+                    textArea.style.position = 'fixed';
+                    textArea.style.left = '-9999px';
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    
+                    try {
+                        document.execCommand('copy');
+                        showNotification('📋 Texte copié ! COLLEZ-LE (Ctrl+V) dans Facebook qui va s\'ouvrir', 'info');
+                        setTimeout(() => {
+                            showNotification('💡 N\'oubliez pas: Ctrl+V pour coller !', 'info');
+                        }, 2000);
+                    } catch (err) {
+                        // Dernier fallback: afficher dans une alert
+                        alert('📋 IMPORTANT:\n\n1. Copiez le texte ci-dessous\n2. Facebook va s\'ouvrir\n3. COLLEZ (Ctrl+V) dans votre publication\n\n' + shareText);
+                    }
+                    
+                    document.body.removeChild(textArea);
+                    
+                    setTimeout(() => {
+                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+                        window.open(shareUrl, '_blank', 'width=600,height=600');
+                    }, 4000);
                 });
             } else {
-                // Fallback pour navigateurs anciens
-                alert('📋 Copiez ce texte et collez-le dans votre publication Facebook:\n\n' + shareText);
+                // Fallback pour navigateurs très anciens
+                alert('📋 INSTRUCTIONS:\n\n1. Copiez le texte ci-dessous\n2. Facebook va s\'ouvrir\n3. Collez (Ctrl+V ou clic droit > Coller)\n\n' + shareText);
                 shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-                window.open(shareUrl, '_blank', 'width=600,height=400');
+                window.open(shareUrl, '_blank', 'width=600,height=600');
             }
-            return; // Important : sortir ici car on a déjà ouvert la fenêtre
+            return;
         case 'twitter':
             shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
             break;
@@ -3878,44 +3981,249 @@ _Via LE PROJET SÉNÉGAL_`;
 // MODALS POUR LISTE COMPLÈTE DES NOTATIONS
 // ==========================================
 
-function showAllRatings(category) {
+async function showAllRatings(category) {
+    console.log('🔍 showAllRatings - Catégorie:', category);
+    
     const modal = document.getElementById('ratingsListModal');
     const title = document.getElementById('ratingsModalTitle');
     const body = document.getElementById('ratingsModalBody');
-    if (!modal || !title || !body) return;
+    
+    if (!modal || !title || !body) {
+        console.error('❌ Modal non trouvé');
+        return;
+    }
     
     const titles = {
-        'top-rated': '<i class="fas fa-trophy"></i> Liste complète - Meilleurs Services',
-        'recent': '<i class="fas fa-clock"></i> Liste complète - Notations Récentes'
+        'top-rated': '<i class="fas fa-trophy"></i> Classement Complet des Services',
+        'recent': '<i class="fas fa-clock"></i> Toutes les Notations de la Semaine'
     };
     title.innerHTML = titles[category] || 'Liste complète';
     
-    body.innerHTML = '<div class="loading">Chargement...</div>';
+    body.innerHTML = '<div class="loading"><div class="spinner"></div><p>Chargement...</p></div>';
     modal.style.display = 'flex';
     
-    // Charger les données
-    setTimeout(() => {
-        const ratings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
+    try {
+        let ratings = [];
+        
+        // Charger depuis Supabase si disponible
+        if (supabaseClient && !DEMO_MODE) {
+            const { data, error } = await supabaseClient
+                .from('service_ratings')
+                .select('*')
+                .order('created_at', { ascending: false });
+            
+            if (error) {
+                console.error('❌ Erreur Supabase:', error);
+                // Fallback sur localStorage
+                ratings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
+            } else {
+                ratings = data || [];
+                console.log('✅ Chargé depuis Supabase:', ratings.length, 'notations');
+            }
+        } else {
+            // Mode local
+            ratings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
+            console.log('📂 Chargé depuis localStorage:', ratings.length, 'notations');
+        }
+        
         if (ratings.length === 0) {
-            body.innerHTML = '<div class="empty-state">Aucune notation disponible</div>';
+            body.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>Aucune notation disponible</p></div>';
             return;
         }
         
-        let filtered = [...ratings];
         if (category === 'top-rated') {
-            filtered = filtered.filter(r => r.rating >= 4).sort((a, b) => b.rating - a.rating);
-        } else if (category === 'recent') {
-            filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            // CLASSEMENT COMPLET PAR SERVICE
+            const serviceStats = {};
+            
+            // Regrouper par service
+            ratings.forEach(item => {
+                if (!serviceStats[item.service]) {
+                    serviceStats[item.service] = { 
+                        sum: 0, 
+                        count: 0, 
+                        comments: 0,
+                        accessibility: 0,
+                        welcome: 0,
+                        efficiency: 0,
+                        transparency: 0
+                    };
+                }
+                const acc = parseInt(item.accessibility) || 0;
+                const wel = parseInt(item.welcome) || 0;
+                const eff = parseInt(item.efficiency) || 0;
+                const tra = parseInt(item.transparency) || 0;
+                const avg = (acc + wel + eff + tra) / 4;
+                
+                serviceStats[item.service].sum += avg;
+                serviceStats[item.service].count += 1;
+                serviceStats[item.service].accessibility += acc;
+                serviceStats[item.service].welcome += wel;
+                serviceStats[item.service].efficiency += eff;
+                serviceStats[item.service].transparency += tra;
+                
+                if (item.comment && item.comment.trim() !== '') {
+                    serviceStats[item.service].comments += 1;
+                }
+            });
+            
+            // Créer le tableau trié
+            const sortedServices = Object.entries(serviceStats)
+                .map(([service, stats]) => ({
+                    service,
+                    avg: stats.sum / stats.count,
+                    count: stats.count,
+                    comments: stats.comments,
+                    accessibility: (stats.accessibility / stats.count).toFixed(1),
+                    welcome: (stats.welcome / stats.count).toFixed(1),
+                    efficiency: (stats.efficiency / stats.count).toFixed(1),
+                    transparency: (stats.transparency / stats.count).toFixed(1)
+                }))
+                .sort((a, b) => b.avg - a.avg);
+            
+            console.log('✅ Affichage de', sortedServices.length, 'services classés');
+            
+            // Afficher le classement complet
+            body.innerHTML = `
+                <div class="full-ranking">
+                    ${sortedServices.map((item, index) => {
+                        const medals = ['🥇', '🥈', '🥉'];
+                        const medal = index < 3 ? medals[index] : '';
+                        const rankClass = index < 3 ? `rank-${index + 1}` : '';
+                        
+                        return `
+                            <div class="ranking-item ${rankClass}">
+                                <div class="ranking-header">
+                                    <div class="ranking-position">
+                                        ${medal ? `<span class="medal">${medal}</span>` : `<span class="rank-number">#${index + 1}</span>`}
+                                    </div>
+                                    <div class="ranking-service">
+                                        <div class="service-name">${item.service}</div>
+                                        <div class="service-meta">${item.count} vote${item.count > 1 ? 's' : ''} • ${item.comments} commentaire${item.comments > 1 ? 's' : ''}</div>
+                                    </div>
+                                    <div class="ranking-score">
+                                        <div class="score-main">
+                                            <i class="fas fa-star"></i> ${item.avg.toFixed(1)}/5
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ranking-details">
+                                    <div class="detail-item">
+                                        <i class="fas fa-wheelchair"></i>
+                                        <span>Accessibilité</span>
+                                        <strong>${item.accessibility}/5</strong>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-handshake"></i>
+                                        <span>Accueil</span>
+                                        <strong>${item.welcome}/5</strong>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-bolt"></i>
+                                        <span>Efficacité</span>
+                                        <strong>${item.efficiency}/5</strong>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-eye"></i>
+                                        <span>Transparence</span>
+                                        <strong>${item.transparency}/5</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        } else {
+            // TOUTES LES NOTATIONS PAR DATE (dernière semaine)
+            const now = new Date();
+            const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+            
+            // Filtrer les notations de la semaine
+            const weekRatings = ratings.filter(item => {
+                const itemDate = new Date(item.created_at || item.date || 0);
+                return itemDate >= oneWeekAgo;
+            });
+            
+            // Calculer la note moyenne pour chaque notation
+            const withAvg = weekRatings.map(r => ({
+                ...r,
+                avg: (parseInt(r.accessibility||0) + parseInt(r.welcome||0) + parseInt(r.efficiency||0) + parseInt(r.transparency||0)) / 4
+            }));
+            
+            // Trier par date (plus récent en premier)
+            const sorted = withAvg.sort((a, b) => 
+                new Date(b.created_at || b.date || 0) - new Date(a.created_at || a.date || 0)
+            );
+            
+            console.log('✅ Affichage de', sorted.length, 'notations de la semaine');
+            
+            if (sorted.length === 0) {
+                body.innerHTML = '<div class="empty-state"><i class="fas fa-calendar-times"></i><p>Aucune notation cette semaine</p></div>';
+                return;
+            }
+            
+            // Afficher toutes les notations de la semaine
+            body.innerHTML = `
+                <div class="week-header">
+                    <i class="fas fa-calendar-week"></i>
+                    <span>${sorted.length} notation${sorted.length > 1 ? 's' : ''} des 7 derniers jours</span>
+                </div>
+                <div class="recent-ratings">
+                    ${sorted.map((item, index) => {
+                        const date = new Date(item.created_at || item.date || new Date());
+                        const formattedDate = date.toLocaleDateString('fr-FR', {
+                            weekday: 'short',
+                            day: 'numeric',
+                            month: 'short',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                        
+                        return `
+                            <div class="recent-item-expanded">
+                                <div class="recent-header">
+                                    <span class="recent-service">${item.service || 'Service inconnu'}</span>
+                                    <span class="recent-date">${formattedDate}</span>
+                                </div>
+                                <div class="recent-scores-grid">
+                                    <div class="score-badge">
+                                        <i class="fas fa-star"></i>
+                                        <div>
+                                            <strong>${item.avg.toFixed(1)}/5</strong>
+                                            <span>Global</span>
+                                        </div>
+                                    </div>
+                                    <div class="criteria-scores">
+                                        <div><i class="fas fa-wheelchair"></i> ${item.accessibility}/5</div>
+                                        <div><i class="fas fa-handshake"></i> ${item.welcome}/5</div>
+                                        <div><i class="fas fa-bolt"></i> ${item.efficiency}/5</div>
+                                        <div><i class="fas fa-eye"></i> ${item.transparency}/5</div>
+                                    </div>
+                                </div>
+                                ${item.comment ? `
+                                    <div class="recent-comment-full">
+                                        <i class="fas fa-quote-left"></i>
+                                        <p>${item.comment}</p>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
         }
-        
-        body.innerHTML = `<div class="ratings-full-list">${filtered.map(r => {
-            const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
-            const date = new Date(r.created_at).toLocaleDateString('fr-FR');
-            const color = r.rating >= 4 ? 'rating-good' : r.rating >= 3 ? 'rating-average' : 'rating-poor';
-            return `<div class="rating-full-item"><div class="rating-full-header"><h4>${r.service_name || r.service}</h4><div class="rating-full-stars ${color}">${stars}</div></div>${r.comment ? `<div class="rating-full-comment"><i class="fas fa-comment"></i> "${r.comment}"</div>` : ''}<div class="rating-full-footer"><span><i class="fas fa-calendar"></i> ${date}</span></div></div>`;
-        }).join('')}</div>`;
-    }, 100);
+    } catch (error) {
+        console.error('❌ Erreur:', error);
+        body.innerHTML = `
+            <div class="error-state">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Erreur lors du chargement des notations</p>
+                <small>${error.message}</small>
+            </div>
+        `;
+    }
 }
+
 
 function closeRatingsModal() {
     const modal = document.getElementById('ratingsListModal');
@@ -3948,6 +4256,115 @@ function showNotification(message, type = 'success') {
 }
 
 // ==========================================
+// FONCTION D'EXPORT DES DONNÉES
+// ==========================================
+function exportData(format = 'csv') {
+    const promises = CONFIG.filteredPromises.length > 0 ? CONFIG.filteredPromises : CONFIG.promises;
+    
+    if (promises.length === 0) {
+        showNotification('Aucune donnée à exporter', 'error');
+        return;
+    }
+    
+    if (format === 'csv') {
+        // En-têtes CSV
+        const headers = [
+            'ID',
+            'Engagement',
+            'Domaine',
+            'Statut',
+            'Priorité',
+            'Délai',
+            'Jours Restants',
+            'Responsable',
+            'Budget',
+            'Résultat Attendu',
+            'Indicateurs',
+            'Dernière Mise à Jour'
+        ];
+        
+        // Données CSV
+        const rows = promises.map(p => {
+            const deadline = p.deadline ? new Date(p.deadline) : null;
+            const joursRestants = deadline ? Math.ceil((deadline - new Date()) / 86400000) : 'N/A';
+            const lastUpdate = p.updates && p.updates.length > 0 
+                ? p.updates[p.updates.length - 1].description 
+                : '';
+            
+            return [
+                p.id || '',
+                `"${(p.engagement || '').replace(/"/g, '""')}"`,
+                p.domain || p.domaine || '',
+                p.statut || '',
+                p.priorite || '',
+                p.deadline || '',
+                joursRestants,
+                p.responsable || '',
+                p.budget || '',
+                `"${(p.resultat || '').replace(/"/g, '""')}"`,
+                `"${(p.indicateurs || '').replace(/"/g, '""')}"`,
+                `"${lastUpdate.replace(/"/g, '""')}"`
+            ].join(',');
+        });
+        
+        // Créer le fichier CSV
+        const csvContent = [headers.join(','), ...rows].join('\n');
+        const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        
+        link.setAttribute('href', url);
+        link.setAttribute('download', `engagements_${new Date().toISOString().split('T')[0]}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        showNotification(`✅ ${promises.length} engagement(s) exporté(s) en CSV`, 'success');
+    }
+}
+
+// ==========================================
+// GESTION VUE LISTE / GRILLE
+// ==========================================
+function initializeViewToggle() {
+    const viewButtons = document.querySelectorAll('.view-btn');
+    const promisesGrid = document.getElementById('promisesGrid');
+    
+    viewButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const view = this.getAttribute('data-view');
+            
+            // Mise à jour des boutons actifs
+            viewButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Mise à jour de la vue
+            if (view === 'list') {
+                promisesGrid.classList.add('list-view');
+                promisesGrid.classList.remove('promises-grid');
+            } else {
+                promisesGrid.classList.remove('list-view');
+                promisesGrid.classList.add('promises-grid');
+            }
+            
+            // Sauvegarder la préférence
+            localStorage.setItem('preferredView', view);
+        });
+    });
+    
+    // Charger la préférence sauvegardée
+    const savedView = localStorage.getItem('preferredView');
+    if (savedView === 'list') {
+        const listBtn = document.querySelector('[data-view="list"]');
+        if (listBtn) listBtn.click();
+    }
+}
+
+// Initialiser au chargement
+document.addEventListener('DOMContentLoaded', initializeViewToggle);
+
+// ==========================================
 // EXPORTS GLOBAUX
 // ==========================================
 window.toggleUpdates = toggleUpdates;
@@ -3972,6 +4389,7 @@ window.closeNewsModal = closeNewsModal;
 window.shareNews = shareNews;
 window.showAllRatings = showAllRatings;
 window.closeRatingsModal = closeRatingsModal;
+window.exportData = exportData;
 
 // ==========================================
 // FONCTIONS MANQUANTES (pour éviter les erreurs)

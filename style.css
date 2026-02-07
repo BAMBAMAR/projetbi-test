@@ -1213,6 +1213,75 @@ body {
     gap: var(--spacing-lg);
 }
 
+/* Vue liste */
+.promises-grid.list-view {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+}
+
+.list-view .promise-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--spacing-lg);
+    align-items: center;
+    padding: var(--spacing-md);
+}
+
+.list-view .promise-header {
+    order: 2;
+    flex: 1;
+}
+
+.list-view .promise-content {
+    order: 2;
+    display: none; /* Masquer le contenu détaillé en vue liste */
+}
+
+.list-view .promise-footer {
+    order: 3;
+    flex-shrink: 0;
+}
+
+.list-view .promise-status-badge {
+    order: 1;
+    margin: 0;
+}
+
+/* Boutons de vue */
+.view-toggle {
+    display: flex;
+    gap: 0.5rem;
+    background: var(--bg-light);
+    padding: 0.25rem;
+    border-radius: var(--radius-md);
+}
+
+.view-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    font-size: 1rem;
+}
+
+.view-btn:hover {
+    background: white;
+    color: var(--primary-color);
+}
+
+.view-btn.active {
+    background: white;
+    color: var(--primary-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.view-btn i {
+    display: block;
+}
+
 /* ===== PROMISE CARDS ===== */
 .promise-card {
     background: var(--bg-card);
@@ -4713,3 +4782,4 @@ button.social-btn {
         width: 100%;
     }
 }
+

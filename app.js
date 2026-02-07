@@ -3623,13 +3623,39 @@ function shareToPlatform(promiseId, platform) {
     const resultat = promise.resultat || '';
     const priorite = promise.priorite || '';
     const responsable = promise.responsable || '';
+    const budget = promise.budget || '';
+    const indicateurs = promise.indicateurs || '';
     
-    // Calcul jours restants
-    let joursRestants = '';
+    // Calcul jours restants ou retard
+    let joursInfo = '';
+    let joursInfoShort = '';
     if (deadline) {
         const d = new Date(deadline);
-        const diff = Math.ceil((d - new Date()) / 86400000);
-        joursRestants = diff > 0 ? `${diff} jours restants` : `Échéance dépassée`;
+        const today = new Date();
+        const diff = Math.ceil((d - today) / 86400000);
+        
+        if (diff > 0) {
+            joursInfo = `⏰ ${diff} jour${diff > 1 ? 's' : ''} restant${diff > 1 ? 's' : ''}`;
+            joursInfoShort = `⏰ ${diff}j restants`;
+        } else if (diff < 0) {
+            const retard = Math.abs(diff);
+            joursInfo = `🚨 EN RETARD de ${retard} jour${retard > 1 ? 's' : ''}`;
+            joursInfoShort = `🚨 Retard: ${retard}j`;
+        } else {
+            joursInfo = `📅 Échéance AUJOURD'HUI`;
+            joursInfoShort = `📅 Aujourd'hui`;
+        }
+    }
+    
+    // Date de deadline formatée
+    let deadlineFormatted = '';
+    if (deadline) {
+        const d = new Date(deadline);
+        deadlineFormatted = d.toLocaleDateString('fr-FR', { 
+            day: 'numeric', 
+            month: 'long', 
+            year: 'numeric' 
+        });
     }
     
     // Dernière mise à jour
@@ -3641,69 +3667,110 @@ function shareToPlatform(promiseId, platform) {
     
     const url = window.location.href;
     
-    // TEXTE OPTIMISÉ POUR FACEBOOK avec toutes les informations
-    const facebookText = `🎯 ENGAGEMENT PRÉSIDENTIEL - PROJET SÉNÉGAL
-
-📋 ${engagement}
+    // TEXTE OPTIMISÉ POUR FACEBOOK - VERSION COMPLÈTE
+    const facebookText = `🎯 ENGAGEMENT PRÉSIDENTIEL - LE PROJET SÉNÉGAL
 
 ━━━━━━━━━━━━━━━━━━━━━━
-📍 DOMAINE: ${domaine}
-🔖 STATUT: ${emoji} ${statut}
-${priorite ? `🔥 PRIORITÉ: ${priorite}` : ''}
-${responsable ? `👤 RESPONSABLE: ${responsable}` : ''}
-${deadline ? `📅 DÉLAI: ${deadline}` : ''}
-${joursRestants ? `⏰ ${joursRestants}` : ''}
+📋 PROMESSE
 ━━━━━━━━━━━━━━━━━━━━━━
+${engagement}
 
-${resultat ? `📝 RÉSULTAT ATTENDU:
-${resultat.substring(0, 200)}${resultat.length > 200 ? '...' : ''}
+━━━━━━━━━━━━━━━━━━━━━━
+📊 INFORMATIONS CLÉS
+━━━━━━━━━━━━━━━━━━━━━━
+📍 Domaine: ${domaine}
+🔖 Statut: ${emoji} ${statut.toUpperCase()}
+${priorite ? `🔥 Priorité: ${priorite}` : ''}
+${responsable ? `👤 Responsable: ${responsable}` : ''}
+${budget ? `💰 Budget: ${budget}` : ''}
 
-` : ''}${derniereUpdate ? `🔄 DERNIÈRE MISE À JOUR:
-${derniereUpdate.substring(0, 150)}${derniereUpdate.length > 150 ? '...' : ''}
+━━━━━━━━━━━━━━━━━━━━━━
+📅 DÉLAI & ÉCHÉANCE
+━━━━━━━━━━━━━━━━━━━━━━
+${deadline ? `📆 Date limite: ${deadlineFormatted}` : '⚠️ Pas de délai défini'}
+${joursInfo}
 
-` : ''}📊 Suivez tous les engagements en temps réel sur:
+${resultat ? `━━━━━━━━━━━━━━━━━━━━━━
+📝 RÉSULTAT ATTENDU
+━━━━━━━━━━━━━━━━━━━━━━
+${resultat.substring(0, 250)}${resultat.length > 250 ? '...' : ''}
+
+` : ''}${indicateurs ? `━━━━━━━━━━━━━━━━━━━━━━
+📈 INDICATEURS DE SUCCÈS
+━━━━━━━━━━━━━━━━━━━━━━
+${indicateurs.substring(0, 200)}${indicateurs.length > 200 ? '...' : ''}
+
+` : ''}${derniereUpdate ? `━━━━━━━━━━━━━━━━━━━━━━
+🔄 DERNIÈRE MISE À JOUR
+━━━━━━━━━━━━━━━━━━━━━━
+${derniereUpdate.substring(0, 180)}${derniereUpdate.length > 180 ? '...' : ''}
+
+` : ''}━━━━━━━━━━━━━━━━━━━━━━
+📊 SUIVI EN TEMPS RÉEL
+━━━━━━━━━━━━━━━━━━━━━━
+Suivez tous les engagements présidentiels sur:
 ${url}
 
-#ProjetSénégal #BDF2024 #Transparence #Redevabilité #Gouvernance #${domaine.replace(/\s+/g, '')}`;
+#ProjetSénégal #BDF2024 #Transparence #Redevabilité #Gouvernance
+#${domaine.replace(/\s+/g, '')} #${statut.replace(/\s+/g, '')}`;
     
     let shareText = '';
     
     if (platform === 'facebook') {
         shareText = facebookText;
     } else if (platform === 'twitter') {
-        const short = engagement.substring(0, 80);
-        shareText = `🎯 ${short}${engagement.length > 80 ? '...' : ''}
+        // Twitter - Version condensée
+        const short = engagement.substring(0, 100);
+        shareText = `🎯 ENGAGEMENT: ${short}${engagement.length > 100 ? '...' : ''}
 
 📍 ${domaine}
 🔖 ${emoji} ${statut}
-${joursRestants ? `⏰ ${joursRestants}` : ''}
+${deadline ? `📅 ${deadlineFormatted}` : ''}
+${joursInfoShort}
 
-📊 ${url}
+📊 Suivi en temps réel: ${url}
 
-#ProjetSénégal #BDF2024`;
+#ProjetSénégal #BDF2024 #Transparence`;
     } else if (platform === 'whatsapp') {
+        // WhatsApp - Format avec emphase
         shareText = `🎯 *ENGAGEMENT PRÉSIDENTIEL*
+_Le Projet Sénégal - Transparence & Redevabilité_
 
-📋 *${engagement}*
+━━━━━━━━━━━━━━━━━━
+📋 *PROMESSE*
+━━━━━━━━━━━━━━━━━━
+${engagement}
 
+━━━━━━━━━━━━━━━━━━
+📊 *INFORMATIONS*
+━━━━━━━━━━━━━━━━━━
 📍 *Domaine:* ${domaine}
+🔖 *Statut:* ${emoji} *${statut.toUpperCase()}*
 ${priorite ? `🔥 *Priorité:* ${priorite}` : ''}
 ${responsable ? `👤 *Responsable:* ${responsable}` : ''}
-📅 *Délai:* ${deadline || 'Non spécifié'}
-🔖 *Statut:* ${emoji} ${statut}
-${joursRestants ? `⏰ *${joursRestants}*` : ''}
+${budget ? `💰 *Budget:* ${budget}` : ''}
 
-${resultat ? `📝 *Résultat attendu:*
-${resultat}` : ''}
+━━━━━━━━━━━━━━━━━━
+📅 *DÉLAI & ÉCHÉANCE*
+━━━━━━━━━━━━━━━━━━
+${deadline ? `📆 *Date limite:* ${deadlineFormatted}` : '⚠️ Pas de délai défini'}
+${joursInfo}
 
-${derniereUpdate ? `🔄 *Dernière mise à jour:*
-${derniereUpdate}` : ''}
+${resultat ? `━━━━━━━━━━━━━━━━━━
+📝 *RÉSULTAT ATTENDU*
+━━━━━━━━━━━━━━━━━━
+${resultat.substring(0, 200)}${resultat.length > 200 ? '...' : ''}
 
-📊 *Suivez tous les engagements:*
+` : ''}${derniereUpdate ? `━━━━━━━━━━━━━━━━━━
+🔄 *DERNIÈRE MISE À JOUR*
+━━━━━━━━━━━━━━━━━━
+${derniereUpdate.substring(0, 150)}${derniereUpdate.length > 150 ? '...' : ''}
+
+` : ''}━━━━━━━━━━━━━━━━━━
+📊 *SUIVI COMPLET SUR:*
 ${url}
 
-_Via LE PROJET SÉNÉGAL_
-_Transparence & Redevabilité_`;
+_#ProjetSénégal #BDF2024 #Transparence_`;
     }
     
     let shareUrl = '';
@@ -3713,23 +3780,14 @@ _Transparence & Redevabilité_`;
             // Pour Facebook: copier le texte complet + ouvrir la fenêtre de partage
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(shareText).then(() => {
-                    // Notification améliorée
-                    showNotification('✅ Texte complet copié ! Collez-le dans votre publication Facebook', 'success');
+                    // Notification détaillée
+                    showNotification('✅ Texte complet copié ! Collez-le dans Facebook. Contient: Promesse, Statut, Délai, et ' + (joursInfo ? 'Jours restants/retard' : 'Échéance'), 'success');
                     
-                    // Créer un meta tag dynamique pour Open Graph
-                    const metaTitle = document.createElement('meta');
-                    metaTitle.setAttribute('property', 'og:title');
-                    metaTitle.content = engagement.substring(0, 100);
-                    
-                    const metaDesc = document.createElement('meta');
-                    metaDesc.setAttribute('property', 'og:description');
-                    metaDesc.content = `${domaine} • ${statut} • ${resultat ? resultat.substring(0, 100) : 'Engagement présidentiel'}`;
-                    
-                    // Ouvrir Facebook après 1.5 secondes
+                    // Ouvrir Facebook après 2 secondes
                     setTimeout(() => {
                         shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(shareText)}`;
-                        window.open(shareUrl, '_blank', 'width=600,height=400');
-                    }, 1500);
+                        window.open(shareUrl, '_blank', 'width=600,height=600');
+                    }, 2000);
                 }).catch(() => {
                     // Fallback si clipboard API échoue
                     const textArea = document.createElement('textarea');
@@ -3743,21 +3801,22 @@ _Transparence & Redevabilité_`;
                         document.execCommand('copy');
                         showNotification('✅ Texte copié ! Collez-le dans Facebook', 'success');
                     } catch (err) {
-                        alert('📋 Copiez ce texte et collez-le dans votre publication Facebook:\n\n' + shareText);
+                        // Dernier fallback: afficher dans une alert
+                        alert('📋 COPIEZ CE TEXTE ET COLLEZ-LE DANS FACEBOOK:\n\n' + shareText);
                     }
                     
                     document.body.removeChild(textArea);
                     
                     setTimeout(() => {
                         shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-                        window.open(shareUrl, '_blank', 'width=600,height=400');
-                    }, 1500);
+                        window.open(shareUrl, '_blank', 'width=600,height=600');
+                    }, 2000);
                 });
             } else {
-                // Fallback pour navigateurs anciens
-                alert('📋 Copiez ce texte et collez-le dans votre publication Facebook:\n\n' + shareText);
+                // Fallback pour navigateurs très anciens
+                alert('📋 COPIEZ CE TEXTE ET COLLEZ-LE DANS FACEBOOK:\n\n' + shareText);
                 shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-                window.open(shareUrl, '_blank', 'width=600,height=400');
+                window.open(shareUrl, '_blank', 'width=600,height=600');
             }
             return;
         case 'twitter':
@@ -4189,6 +4248,115 @@ function showNotification(message, type = 'success') {
 }
 
 // ==========================================
+// FONCTION D'EXPORT DES DONNÉES
+// ==========================================
+function exportData(format = 'csv') {
+    const promises = CONFIG.filteredPromises.length > 0 ? CONFIG.filteredPromises : CONFIG.promises;
+    
+    if (promises.length === 0) {
+        showNotification('Aucune donnée à exporter', 'error');
+        return;
+    }
+    
+    if (format === 'csv') {
+        // En-têtes CSV
+        const headers = [
+            'ID',
+            'Engagement',
+            'Domaine',
+            'Statut',
+            'Priorité',
+            'Délai',
+            'Jours Restants',
+            'Responsable',
+            'Budget',
+            'Résultat Attendu',
+            'Indicateurs',
+            'Dernière Mise à Jour'
+        ];
+        
+        // Données CSV
+        const rows = promises.map(p => {
+            const deadline = p.deadline ? new Date(p.deadline) : null;
+            const joursRestants = deadline ? Math.ceil((deadline - new Date()) / 86400000) : 'N/A';
+            const lastUpdate = p.updates && p.updates.length > 0 
+                ? p.updates[p.updates.length - 1].description 
+                : '';
+            
+            return [
+                p.id || '',
+                `"${(p.engagement || '').replace(/"/g, '""')}"`,
+                p.domain || p.domaine || '',
+                p.statut || '',
+                p.priorite || '',
+                p.deadline || '',
+                joursRestants,
+                p.responsable || '',
+                p.budget || '',
+                `"${(p.resultat || '').replace(/"/g, '""')}"`,
+                `"${(p.indicateurs || '').replace(/"/g, '""')}"`,
+                `"${lastUpdate.replace(/"/g, '""')}"`
+            ].join(',');
+        });
+        
+        // Créer le fichier CSV
+        const csvContent = [headers.join(','), ...rows].join('\n');
+        const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        
+        link.setAttribute('href', url);
+        link.setAttribute('download', `engagements_${new Date().toISOString().split('T')[0]}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        showNotification(`✅ ${promises.length} engagement(s) exporté(s) en CSV`, 'success');
+    }
+}
+
+// ==========================================
+// GESTION VUE LISTE / GRILLE
+// ==========================================
+function initializeViewToggle() {
+    const viewButtons = document.querySelectorAll('.view-btn');
+    const promisesGrid = document.getElementById('promisesGrid');
+    
+    viewButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const view = this.getAttribute('data-view');
+            
+            // Mise à jour des boutons actifs
+            viewButtons.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Mise à jour de la vue
+            if (view === 'list') {
+                promisesGrid.classList.add('list-view');
+                promisesGrid.classList.remove('promises-grid');
+            } else {
+                promisesGrid.classList.remove('list-view');
+                promisesGrid.classList.add('promises-grid');
+            }
+            
+            // Sauvegarder la préférence
+            localStorage.setItem('preferredView', view);
+        });
+    });
+    
+    // Charger la préférence sauvegardée
+    const savedView = localStorage.getItem('preferredView');
+    if (savedView === 'list') {
+        const listBtn = document.querySelector('[data-view="list"]');
+        if (listBtn) listBtn.click();
+    }
+}
+
+// Initialiser au chargement
+document.addEventListener('DOMContentLoaded', initializeViewToggle);
+
+// ==========================================
 // EXPORTS GLOBAUX
 // ==========================================
 window.toggleUpdates = toggleUpdates;
@@ -4213,6 +4381,7 @@ window.closeNewsModal = closeNewsModal;
 window.shareNews = shareNews;
 window.showAllRatings = showAllRatings;
 window.closeRatingsModal = closeRatingsModal;
+window.exportData = exportData;
 
 // ==========================================
 // FONCTIONS MANQUANTES (pour éviter les erreurs)

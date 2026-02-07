@@ -40,7 +40,7 @@
 <nav class="modern-nav" id="modernNav">
   <div class="modern-nav-container">
     <!-- Logo -->
-    <a href="/" class="modern-logo">
+    <a href="#header" class="modern-logo">
       <img src="https://projetbi.org/favicon.png" alt="Logo PROJETBI">
       <div class="modern-logo-text">
         <span>PROJETBI</span>
@@ -684,7 +684,7 @@
                 <div class="footer-col">
                     <h4>Contact</h4>
                     <div class="footer-links">
-                        <a href="/cdn-cgi/l/email-protection#60030f0e140103142010120f0a051402094e0f1207" class="footer-link"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="0b6864657f6a687f4b7b7964616e7f69622564796c">[email&#160;protected]</span></a>
+                        <a href="mailto:pastefprojetbi@gmail.com" class="footer-link"><i class="fas fa-envelope"></i> pastefprojetbi@gmail.com</a>
                         <a href="tel:+221769455253" class="footer-link"><i class="fas fa-phone"></i> +221 76 945 52 53</a>
                         <a href="#" class="footer-link"><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</a>
                     </div>
@@ -756,7 +756,7 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // === 1. COMPTE À REBOURS ===
-        const targetDate = new Date('April 02, 2029 00:00:00').getTime();
+        const targetDate = new Date('2029-04-02T00:00:00').getTime();
         const daysEl = document.getElementById('days');
         const hoursEl = document.getElementById('hours');
         const minutesEl = document.getElementById('minutes');
@@ -765,6 +765,15 @@
         function updateCountdown() {
             const now = new Date().getTime();
             const timeLeft = targetDate - now;
+            
+            if (timeLeft < 0) {
+                // Si la date est dépassée
+                if(daysEl) daysEl.textContent = '000';
+                if(hoursEl) hoursEl.textContent = '00';
+                if(minutesEl) minutesEl.textContent = '00';
+                if(secondsEl) secondsEl.textContent = '00';
+                return;
+            }
             
             const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -777,8 +786,10 @@
             if(secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
         }
         
-        setInterval(updateCountdown, 1000);
+        // Mettre à jour immédiatement
         updateCountdown();
+        // Puis toutes les secondes
+        setInterval(updateCountdown, 1000);
         
         // === 2. SÉLECTION CONTEXTUELLE DES SERVICES ===
         const categorySelect = document.getElementById('service-category');

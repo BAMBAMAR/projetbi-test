@@ -9,22 +9,6 @@
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#2a6d5d">
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://projetbi.org/">
-    <meta property="og:title" content="LE PROJET SÉNÉGAL | Suivi des Engagements Présidentiels">
-    <meta property="og:description" content="Plateforme citoyenne indépendante pour suivre en temps réel l'avancement des engagements du Président Bassirou Diomaye Faye.">
-    <meta property="og:image" content="https://projetbi.org/sonko.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://projetbi.org/">
-    <meta property="twitter:title" content="LE PROJET SÉNÉGAL | Suivi des Engagements Présidentiels">
-    <meta property="twitter:description" content="Plateforme citoyenne indépendante pour suivre en temps réel l'avancement des engagements du Président Bassirou Diomaye Faye.">
-    <meta property="twitter:image" content="https://projetbi.org/sonko.jpg">
-    
     <title>LE PROJET SÉNÉGAL | Suivi des Engagements Présidentiels</title>
     
     <link rel="icon" href="https://projetbi.org/favicon.png" type="image/png">
@@ -40,7 +24,7 @@
 <nav class="modern-nav" id="modernNav">
   <div class="modern-nav-container">
     <!-- Logo -->
-    <a href="#header" class="modern-logo">
+    <a href="/" class="modern-logo">
       <img src="https://projetbi.org/favicon.png" alt="Logo PROJETBI">
       <div class="modern-logo-text">
         <span>PROJETBI</span>
@@ -684,7 +668,7 @@
                 <div class="footer-col">
                     <h4>Contact</h4>
                     <div class="footer-links">
-                        <a href="mailto:pastefprojetbi@gmail.com" class="footer-link"><i class="fas fa-envelope"></i> pastefprojetbi@gmail.com</a>
+                        <a href="mailto:contact@projetbi.org" class="footer-link"><i class="fas fa-envelope"></i> contact@projetbi.org</a>
                         <a href="tel:+221769455253" class="footer-link"><i class="fas fa-phone"></i> +221 76 945 52 53</a>
                         <a href="#" class="footer-link"><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</a>
                     </div>
@@ -756,7 +740,7 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // === 1. COMPTE À REBOURS ===
-        const targetDate = new Date('2029-04-02T00:00:00').getTime();
+        const targetDate = new Date('April 02, 2029 00:00:00').getTime();
         const daysEl = document.getElementById('days');
         const hoursEl = document.getElementById('hours');
         const minutesEl = document.getElementById('minutes');
@@ -765,15 +749,6 @@
         function updateCountdown() {
             const now = new Date().getTime();
             const timeLeft = targetDate - now;
-            
-            if (timeLeft < 0) {
-                // Si la date est dépassée
-                if(daysEl) daysEl.textContent = '000';
-                if(hoursEl) hoursEl.textContent = '00';
-                if(minutesEl) minutesEl.textContent = '00';
-                if(secondsEl) secondsEl.textContent = '00';
-                return;
-            }
             
             const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
             const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -786,10 +761,8 @@
             if(secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
         }
         
-        // Mettre à jour immédiatement
-        updateCountdown();
-        // Puis toutes les secondes
         setInterval(updateCountdown, 1000);
+        updateCountdown();
         
         // === 2. SÉLECTION CONTEXTUELLE DES SERVICES ===
         const categorySelect = document.getElementById('service-category');
@@ -816,4 +789,13 @@
         const currentDateElement = document.getElementById('current-date');
         if (currentDateElement) {
             const now = new Date();
-       
+            currentDateElement.textContent = now.toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).toUpperCase();
+        }
+    });
+    </script>
+</body>
+</html>

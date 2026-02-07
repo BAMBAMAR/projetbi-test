@@ -3770,7 +3770,7 @@ ${derniereUpdate.substring(0, 150)}${derniereUpdate.length > 150 ? '...' : ''}
 📊 *SUIVI COMPLET SUR:*
 ${url}
 
-_#ProjetSénégal #BDF2024 #Transparence_`;
+_#ProjetPastef #sonko #pasteflespatriotes_`;
     }
     
     let shareUrl = '';
@@ -3781,7 +3781,7 @@ _#ProjetSénégal #BDF2024 #Transparence_`;
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(shareText).then(() => {
                     // Notification détaillée
-                    showNotification('✅ Texte complet copié ! Collez-le dans Facebook. Contient: Promesse, Statut, Délai, et ' + (joursInfo ? 'Jours restants/retard' : 'Échéance'), 'success');
+                    showNotification('Préparation des données en cours');
                     
                     // Ouvrir Facebook après 2 secondes
                     setTimeout(() => {

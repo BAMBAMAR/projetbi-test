@@ -904,8 +904,7 @@
         
     })();
     </script>
-    
-    <script>
+        <script>
     document.addEventListener('DOMContentLoaded', function() {
         // === SÉLECTION CONTEXTUELLE DES SERVICES ===
         const categorySelect = document.getElementById('service-category');
@@ -923,3 +922,12 @@
                     if (categoryServices) {
                         serviceSelect.disabled = false;
                         serviceSelect.innerHTML = '<option value="">Choisissez un service</option>' + categoryServices.innerHTML;
+                    }
+                }
+            });
+            
+            // Initialiser l'état initial
+            serviceSelect.disabled = true;
+        }
+    });
+    </script>

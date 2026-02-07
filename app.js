@@ -3614,11 +3614,11 @@ function shareToPlatform(promiseId, platform) {
     if (!promise) return;
     
     const statusEmoji = {'Réalisé': '✅', 'En cours': '🔄', 'Non lancé': '⏳', 'En retard': '⚠️'};
-    const emoji = statusEmoji[promise.statut] || '📊';
+    const emoji = statusEmoji[promise.status] || '📊';
     
     const engagement = promise.engagement || '';
     const domaine = promise.domain || promise.domaine || 'Non spécifié';
-    const statut = promise.statut || 'Non défini';
+    const statut = promise.status || 'Non défini';
     const deadline = promise.deadline || '';
     const resultat = promise.resultat || '';
     const priorite = promise.priorite || '';

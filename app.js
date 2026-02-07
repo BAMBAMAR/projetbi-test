@@ -3882,7 +3882,10 @@ function showAllRatings(category) {
     const modal = document.getElementById('ratingsListModal');
     const title = document.getElementById('ratingsModalTitle');
     const body = document.getElementById('ratingsModalBody');
-    if (!modal || !title || !body) return;
+    if (!modal || !title || !body) {
+        console.error('Modal elements not found');
+        return;
+    }
     
     const titles = {
         'top-rated': '<i class="fas fa-trophy"></i> Liste complète - Meilleurs Services',
@@ -3890,30 +3893,122 @@ function showAllRatings(category) {
     };
     title.innerHTML = titles[category] || 'Liste complète';
     
-    body.innerHTML = '<div class="loading">Chargement...</div>';
+    body.innerHTML = '<div class="loading"><div class="spinner"></div><p>Chargement...</p></div>';
     modal.style.display = 'flex';
     
     // Charger les données
     setTimeout(() => {
         const ratings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
+        
         if (ratings.length === 0) {
-            body.innerHTML = '<div class="empty-state">Aucune notation disponible</div>';
+            body.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>Aucune notation disponible pour le moment</p></div>';
             return;
         }
         
-        let filtered = [...ratings];
         if (category === 'top-rated') {
-            filtered = filtered.filter(r => r.rating >= 4).sort((a, b) => b.rating - a.rating);
+            // Calculer les statistiques par service
+            const serviceStats = {};
+            ratings.forEach(rating => {
+                const service = rating.service || rating.service_name;
+                if (!serviceStats[service]) {
+                    serviceStats[service] = { ratings: [], count: 0 };
+                }
+                
+                // Calculer la moyenne des 4 critères
+                const accessibility = parseInt(rating.accessibility) || 0;
+                const welcome = parseInt(rating.welcome) || 0;
+                const efficiency = parseInt(rating.efficiency) || 0;
+                const transparency = parseInt(rating.transparency) || 0;
+                const avg = (accessibility + welcome + efficiency + transparency) / 4;
+                
+                serviceStats[service].ratings.push(avg);
+                serviceStats[service].count++;
+            });
+            
+            // Calculer la moyenne pour chaque service
+            const topServices = Object.entries(serviceStats)
+                .map(([service, data]) => ({
+                    service,
+                    avg: data.ratings.reduce((a, b) => a + b, 0) / data.ratings.length,
+                    count: data.count
+                }))
+                .filter(s => s.avg >= 4) // Seulement les services avec moyenne >= 4
+                .sort((a, b) => b.avg - a.avg); // Trier par moyenne décroissante
+            
+            if (topServices.length === 0) {
+                body.innerHTML = '<div class="empty-state"><i class="fas fa-trophy"></i><p>Aucun service avec note ≥ 4 étoiles</p></div>';
+                return;
+            }
+            
+            // Afficher avec le même format que la page principale
+            body.innerHTML = `
+                <div class="top-services-grid">
+                    ${topServices.map((service, index) => {
+                        const badges = ['gold', 'silver', 'bronze'];
+                        const badgeClass = index < 3 ? badges[index] : '';
+                        return `
+                            <div class="service-item-card ${badgeClass}">
+                                <div class="service-rank-badge ${badgeClass}">${index + 1}</div>
+                                <div class="service-info-card">
+                                    <div class="service-name-card">${service.service}</div>
+                                    <div class="service-stats-card">
+                                        <span class="service-score-card">
+                                            <i class="fas fa-star"></i> ${service.avg.toFixed(1)}/5
+                                        </span>
+                                        <span class="service-count-card">${service.count} vote${service.count > 1 ? 's' : ''}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+            
         } else if (category === 'recent') {
-            filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            // Trier par date (plus récent en premier)
+            const sortedRatings = [...ratings].sort((a, b) => {
+                const dateA = new Date(a.created_at || a.date);
+                const dateB = new Date(b.created_at || b.date);
+                return dateB - dateA;
+            });
+            
+            // Afficher avec le même format que la page principale
+            body.innerHTML = `
+                <div class="recent-ratings">
+                    ${sortedRatings.map(item => {
+                        // Calculer la moyenne des 4 critères
+                        const accessibility = parseInt(item.accessibility) || 0;
+                        const welcome = parseInt(item.welcome) || 0;
+                        const efficiency = parseInt(item.efficiency) || 0;
+                        const transparency = parseInt(item.transparency) || 0;
+                        const avg = (accessibility + welcome + efficiency + transparency) / 4;
+                        
+                        const date = new Date(item.created_at || item.date);
+                        const formattedDate = date.toLocaleDateString('fr-FR', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric'
+                        });
+                        
+                        return `
+                            <div class="recent-item">
+                                <div class="recent-header">
+                                    <span class="recent-service">${item.service || item.service_name}</span>
+                                    <span class="recent-date">${formattedDate}</span>
+                                </div>
+                                <div class="recent-score">
+                                    <i class="fas fa-star"></i> 
+                                    ${avg.toFixed(1)}/5
+                                </div>
+                                ${item.comment ? `
+                                    <div class="recent-comment">"${item.comment.substring(0, 100)}${item.comment.length > 100 ? '...' : ''}"</div>
+                                ` : ''}
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
         }
-        
-        body.innerHTML = `<div class="ratings-full-list">${filtered.map(r => {
-            const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
-            const date = new Date(r.created_at).toLocaleDateString('fr-FR');
-            const color = r.rating >= 4 ? 'rating-good' : r.rating >= 3 ? 'rating-average' : 'rating-poor';
-            return `<div class="rating-full-item"><div class="rating-full-header"><h4>${r.service_name || r.service}</h4><div class="rating-full-stars ${color}">${stars}</div></div>${r.comment ? `<div class="rating-full-comment"><i class="fas fa-comment"></i> "${r.comment}"</div>` : ''}<div class="rating-full-footer"><span><i class="fas fa-calendar"></i> ${date}</span></div></div>`;
-        }).join('')}</div>`;
     }, 100);
 }
 

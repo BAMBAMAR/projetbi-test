@@ -753,37 +753,82 @@
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="app.js"></script>
     
+    <!-- NOUVEAU COMPTE À REBOURS - CODE RECONSTRUIT -->
     <script>
-    // Compte à rebours isolé - exécution immédiate
     (function() {
         'use strict';
         
-        function initCountdown() {
-            console.log('🕐 Initialisation du compte à rebours');
-            
-            const targetDate = new Date('2029-04-02T00:00:00').getTime();
-            const daysEl = document.getElementById('days');
-            const hoursEl = document.getElementById('hours');
-            const minutesEl = document.getElementById('minutes');
-            const secondsEl = document.getElementById('seconds');
-            
-            if (!daysEl || !hoursEl || !minutesEl || !secondsEl) {
-                console.error('❌ Éléments du compte à rebours non trouvés');
-                return;
+        // Configuration
+        const COUNTDOWN_CONFIG = {
+            targetYear: 2029,
+            targetMonth: 3,  // Avril = 3 (les mois commencent à 0)
+            targetDay: 2,
+            targetHour: 0,
+            targetMinute: 0,
+            targetSecond: 0
+        };
+        
+        // Classe pour gérer le compte à rebours
+        class CountdownTimer {
+            constructor(config) {
+                this.targetDate = new Date(
+                    config.targetYear,
+                    config.targetMonth,
+                    config.targetDay,
+                    config.targetHour,
+                    config.targetMinute,
+                    config.targetSecond
+                ).getTime();
+                
+                this.elements = {
+                    days: null,
+                    hours: null,
+                    minutes: null,
+                    seconds: null
+                };
+                
+                this.intervalId = null;
+                this.initialized = false;
             }
             
-            console.log('✅ Tous les éléments trouvés');
-            
-            function updateCountdown() {
-                const now = new Date().getTime();
-                const timeLeft = targetDate - now;
+            // Initialiser les références aux éléments DOM
+            init() {
+                this.elements.days = document.getElementById('days');
+                this.elements.hours = document.getElementById('hours');
+                this.elements.minutes = document.getElementById('minutes');
+                this.elements.seconds = document.getElementById('seconds');
                 
-                if (timeLeft < 0) {
-                    daysEl.textContent = '000';
-                    hoursEl.textContent = '00';
-                    minutesEl.textContent = '00';
-                    secondsEl.textContent = '00';
-                    return;
+                // Vérifier que tous les éléments existent
+                const allElementsFound = Object.values(this.elements).every(el => el !== null);
+                
+                if (!allElementsFound) {
+                    console.error('❌ Compte à rebours: Certains éléments sont manquants', {
+                        days: this.elements.days ? '✓' : '✗',
+                        hours: this.elements.hours ? '✓' : '✗',
+                        minutes: this.elements.minutes ? '✓' : '✗',
+                        seconds: this.elements.seconds ? '✓' : '✗'
+                    });
+                    return false;
+                }
+                
+                console.log('✅ Compte à rebours: Tous les éléments trouvés');
+                this.initialized = true;
+                return true;
+            }
+            
+            // Calculer le temps restant
+            calculateTimeLeft() {
+                const now = new Date().getTime();
+                const timeLeft = this.targetDate - now;
+                
+                if (timeLeft <= 0) {
+                    return {
+                        days: 0,
+                        hours: 0,
+                        minutes: 0,
+                        seconds: 0,
+                        expired: true
+                    };
                 }
                 
                 const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
@@ -791,30 +836,92 @@
                 const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
                 
-                daysEl.textContent = days.toString().padStart(3, '0');
-                hoursEl.textContent = hours.toString().padStart(2, '0');
-                minutesEl.textContent = minutes.toString().padStart(2, '0');
-                secondsEl.textContent = seconds.toString().padStart(2, '0');
+                return {
+                    days: days,
+                    hours: hours,
+                    minutes: minutes,
+                    seconds: seconds,
+                    expired: false
+                };
             }
             
-            // Mise à jour immédiate
-            updateCountdown();
-            // Puis toutes les secondes
-            setInterval(updateCountdown, 1000);
-            console.log('✅ Compte à rebours démarré');
+            // Formater un nombre avec des zéros devant
+            formatNumber(num, length) {
+                return num.toString().padStart(length, '0');
+            }
+            
+            // Mettre à jour l'affichage
+            updateDisplay() {
+                if (!this.initialized) return;
+                
+                const timeLeft = this.calculateTimeLeft();
+                
+                this.elements.days.textContent = this.formatNumber(timeLeft.days, 3);
+                this.elements.hours.textContent = this.formatNumber(timeLeft.hours, 2);
+                this.elements.minutes.textContent = this.formatNumber(timeLeft.minutes, 2);
+                this.elements.seconds.textContent = this.formatNumber(timeLeft.seconds, 2);
+                
+                // Si le compte à rebours est terminé, arrêter l'intervalle
+                if (timeLeft.expired && this.intervalId) {
+                    clearInterval(this.intervalId);
+                    console.log('⏰ Compte à rebours terminé');
+                }
+            }
+            
+            // Démarrer le compte à rebours
+            start() {
+                if (!this.initialized) {
+                    console.error('❌ Impossible de démarrer: compte à rebours non initialisé');
+                    return;
+                }
+                
+                // Première mise à jour immédiate
+                this.updateDisplay();
+                
+                // Puis mise à jour toutes les secondes
+                this.intervalId = setInterval(() => {
+                    this.updateDisplay();
+                }, 1000);
+                
+                console.log('✅ Compte à rebours démarré');
+                console.log('📅 Date cible:', new Date(this.targetDate).toLocaleDateString('fr-FR'));
+            }
+            
+            // Arrêter le compte à rebours
+            stop() {
+                if (this.intervalId) {
+                    clearInterval(this.intervalId);
+                    this.intervalId = null;
+                    console.log('⏹️ Compte à rebours arrêté');
+                }
+            }
         }
         
-        // Exécuter dès que le DOM est prêt
+        // Fonction d'initialisation
+        function initCountdown() {
+            const countdown = new CountdownTimer(COUNTDOWN_CONFIG);
+            
+            if (countdown.init()) {
+                countdown.start();
+            } else {
+                console.error('❌ Échec de l\'initialisation du compte à rebours');
+            }
+        }
+        
+        // Attendre que le DOM soit prêt
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initCountdown);
         } else {
-            // DOM déjà chargé
-            initCountdown();
+            // Le DOM est déjà chargé
+            setTimeout(initCountdown, 0);
         }
+        
     })();
+    </script>
     
-    // Le reste du code
+    <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // === SÉLECTION CONTEXTUELLE DES SERVICES ===
         const categorySelect = document.getElementById('service-category');
         const serviceSelect = document.getElementById('service');
         const servicesData = document.getElementById('services-data');

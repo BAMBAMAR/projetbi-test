@@ -3618,7 +3618,7 @@ function shareToPlatform(promiseId, platform) {
     
     const engagement = promise.engagement || '';
     const domaine = promise.domain || promise.domaine || 'Non spécifié';
-    const statut = promise.status || 'Non défini';
+    const status = promise.status || 'Non défini';
     const deadline = promise.deadline || '';
     const resultat = promise.resultat || '';
     const priorite = promise.priorite || '';
@@ -3668,7 +3668,7 @@ function shareToPlatform(promiseId, platform) {
     const url = window.location.href;
     
     // TEXTE OPTIMISÉ POUR FACEBOOK - VERSION COMPLÈTE
-    const facebookText = `🎯 ENGAGEMENT PRÉSIDENTIEL - Le Projet Pastef
+    const facebookText = `🎯 ENGAGEMENT PRÉSIDENTIEL - LE PROJET SÉNÉGAL
 
 ━━━━━━━━━━━━━━━━━━━━━━
 📋 PROMESSE
@@ -3679,7 +3679,7 @@ ${engagement}
 📊 INFORMATIONS CLÉS
 ━━━━━━━━━━━━━━━━━━━━━━
 📍 Domaine: ${domaine}
-🔖 Statut: ${emoji} ${statut.toUpperCase()}
+🔖 Statut: ${emoji} ${status.toUpperCase()}
 ${priorite ? `🔥 Priorité: ${priorite}` : ''}
 ${responsable ? `👤 Responsable: ${responsable}` : ''}
 ${budget ? `💰 Budget: ${budget}` : ''}
@@ -3711,8 +3711,8 @@ ${derniereUpdate.substring(0, 180)}${derniereUpdate.length > 180 ? '...' : ''}
 Suivez tous les engagements présidentiels sur:
 ${url}
 
-#ProjetPastef #Sonko #Transparence #Redevabilité #Gouvernance
-#${domaine.replace(/\s+/g, '')} #${statut.replace(/\s+/g, '')}`;
+#ProjetSénégal #BDF2024 #Transparence #Redevabilité #Gouvernance
+#${domaine.replace(/\s+/g, '')} #${status.replace(/\s+/g, '')}`;
     
     let shareText = '';
     
@@ -3724,17 +3724,17 @@ ${url}
         shareText = `🎯 ENGAGEMENT: ${short}${engagement.length > 100 ? '...' : ''}
 
 📍 ${domaine}
-🔖 ${emoji} ${statut}
+🔖 ${emoji} ${status}
 ${deadline ? `📅 ${deadlineFormatted}` : ''}
 ${joursInfoShort}
 
 📊 Suivi en temps réel: ${url}
 
-#ProjetPastef #Sonko #Transparence`;
+#ProjetSénégal #BDF2024 #Transparence`;
     } else if (platform === 'whatsapp') {
         // WhatsApp - Format avec emphase
         shareText = `🎯 *ENGAGEMENT PRÉSIDENTIEL*
-_Le Projet Pastef - Transparence & Redevabilité_
+_Le Projet Sénégal - Transparence & Redevabilité_
 
 ━━━━━━━━━━━━━━━━━━
 📋 *PROMESSE*
@@ -3745,7 +3745,7 @@ ${engagement}
 📊 *INFORMATIONS*
 ━━━━━━━━━━━━━━━━━━
 📍 *Domaine:* ${domaine}
-🔖 *Statut:* ${emoji} *${statut.toUpperCase()}*
+🔖 *Statut:* ${emoji} *${status.toUpperCase()}*
 ${priorite ? `🔥 *Priorité:* ${priorite}` : ''}
 ${responsable ? `👤 *Responsable:* ${responsable}` : ''}
 ${budget ? `💰 *Budget:* ${budget}` : ''}
@@ -3770,7 +3770,7 @@ ${derniereUpdate.substring(0, 150)}${derniereUpdate.length > 150 ? '...' : ''}
 📊 *SUIVI COMPLET SUR:*
 ${url}
 
-_#ProjetPastef #sonko #pasteflespatriotes_`;
+_#ProjetSénégal #BDF2024 #Transparence_`;
     }
     
     let shareUrl = '';
@@ -3780,14 +3780,19 @@ _#ProjetPastef #sonko #pasteflespatriotes_`;
             // Pour Facebook: copier le texte complet + ouvrir la fenêtre de partage
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(shareText).then(() => {
-                    // Notification détaillée
-                    showNotification('Préparation des données en cours');
+                    // Notification très explicite
+                    showNotification('📋 TEXTE COPIÉ ! 👉 Dans Facebook qui va s\'ouvrir, COLLEZ (Ctrl+V ou Cmd+V) le texte dans votre publication', 'info');
                     
-                    // Ouvrir Facebook après 2 secondes
+                    // Deuxième notification après 3 secondes
+                    setTimeout(() => {
+                        showNotification('💡 RAPPEL: Faites Ctrl+V (ou Cmd+V sur Mac) pour coller le texte complet dans Facebook', 'info');
+                    }, 3000);
+                    
+                    // Ouvrir Facebook après 4 secondes (laisser temps de lire)
                     setTimeout(() => {
                         shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(shareText)}`;
                         window.open(shareUrl, '_blank', 'width=600,height=600');
-                    }, 2000);
+                    }, 4000);
                 }).catch(() => {
                     // Fallback si clipboard API échoue
                     const textArea = document.createElement('textarea');
@@ -3799,10 +3804,13 @@ _#ProjetPastef #sonko #pasteflespatriotes_`;
                     
                     try {
                         document.execCommand('copy');
-                        showNotification('✅ Texte copié ! Collez-le dans Facebook', 'success');
+                        showNotification('📋 Texte copié ! COLLEZ-LE (Ctrl+V) dans Facebook qui va s\'ouvrir', 'info');
+                        setTimeout(() => {
+                            showNotification('💡 N\'oubliez pas: Ctrl+V pour coller !', 'info');
+                        }, 2000);
                     } catch (err) {
                         // Dernier fallback: afficher dans une alert
-                        alert('📋 COPIEZ CE TEXTE ET COLLEZ-LE DANS FACEBOOK:\n\n' + shareText);
+                        alert('📋 IMPORTANT:\n\n1. Copiez le texte ci-dessous\n2. Facebook va s\'ouvrir\n3. COLLEZ (Ctrl+V) dans votre publication\n\n' + shareText);
                     }
                     
                     document.body.removeChild(textArea);
@@ -3810,11 +3818,11 @@ _#ProjetPastef #sonko #pasteflespatriotes_`;
                     setTimeout(() => {
                         shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
                         window.open(shareUrl, '_blank', 'width=600,height=600');
-                    }, 2000);
+                    }, 4000);
                 });
             } else {
                 // Fallback pour navigateurs très anciens
-                alert('📋 COPIEZ CE TEXTE ET COLLEZ-LE DANS FACEBOOK:\n\n' + shareText);
+                alert('📋 INSTRUCTIONS:\n\n1. Copiez le texte ci-dessous\n2. Facebook va s\'ouvrir\n3. Collez (Ctrl+V ou clic droit > Coller)\n\n' + shareText);
                 shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
                 window.open(shareUrl, '_blank', 'width=600,height=600');
             }
@@ -3903,7 +3911,7 @@ ${news.excerpt || ''}
 📊 Restez informé sur:
 ${shareUrl}
 
-#ProjetPastef #Actualités`;
+#ProjetSénégal #Actualités`;
     } else if (platform === 'twitter') {
         const maxLength = 180;
         const content = news.excerpt || '';
@@ -3917,7 +3925,7 @@ ${truncated}
 
 ${shareUrl}
 
-#ProjetPastef`;
+#ProjetSénégal`;
     } else if (platform === 'whatsapp') {
         shareText = `📰 *ACTUALITÉ*
 
@@ -3931,7 +3939,7 @@ ${news.excerpt || ''}
 📊 *Lire plus:*
 ${shareUrl}
 
-_Via Le Projet Pastef_`;
+_Via LE PROJET SÉNÉGAL_`;
     }
     
     let url = '';

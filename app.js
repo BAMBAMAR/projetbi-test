@@ -3717,7 +3717,20 @@ ${url}
     let shareText = '';
     
     if (platform === 'facebook') {
-        shareText = facebookText;
+        shareText =  shareText = `🎯 ENGAGEMENT: ${short}${engagement.length > 100 ? '...' : ''}
+
+📍 ${domaine}
+🔖 ${emoji} ${statut}
+${deadline ? `📅 ${deadlineFormatted}` : ''}
+${joursInfoShort}
+
+📊 Suivi en temps réel: ${url}
+
+#ProjetPastef #Sonko #Transparence`;
+    } else if (platform === 'whatsapp') {
+        // WhatsApp - Format avec emphase
+        shareText = `🎯 *ENGAGEMENT PRÉSIDENTIEL*
+_Le Projet Pastef - Transparence & Redevabilité_;
     } else if (platform === 'twitter') {
         // Twitter - Version condensée
         const short = engagement.substring(0, 100);

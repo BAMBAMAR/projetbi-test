@@ -684,7 +684,7 @@
                 <div class="footer-col">
                     <h4>Contact</h4>
                     <div class="footer-links">
-                        <a href="/cdn-cgi/l/email-protection#6111001215040711130e0b0415030821060c00080d4f020e0c" class="footer-link"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="6b1b0a181f0e0d1b1904010e1f09022b0c060a020745080406">[email&#160;protected]</span></a>
+                        <a href="/cdn-cgi/l/email-protection#0171607275646771736e6b6475636841666c60686d2f626e6c" class="footer-link"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="b2c2d3c1c6d7d4c2c0ddd8d7c6d0dbf2d5dfd3dbde9cd1dddf">[email&#160;protected]</span></a>
                         <a href="tel:+221769455253" class="footer-link"><i class="fas fa-phone"></i> +221 76 945 52 53</a>
                         <a href="#" class="footer-link"><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</a>
                     </div>
@@ -754,33 +754,67 @@
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="app.js"></script>
     
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // === 1. COMPTE À REBOURS ===
-        const targetDate = new Date('2029-04-02T00:00:00').getTime();
-        const daysEl = document.getElementById('days');
-        const hoursEl = document.getElementById('hours');
-        const minutesEl = document.getElementById('minutes');
-        const secondsEl = document.getElementById('seconds');
+    // Compte à rebours isolé - exécution immédiate
+    (function() {
+        'use strict';
         
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const timeLeft = targetDate - now;
+        function initCountdown() {
+            console.log('🕐 Initialisation du compte à rebours');
             
-            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            const targetDate = new Date('2029-04-02T00:00:00').getTime();
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
             
-            if(daysEl) daysEl.textContent = days.toString().padStart(3, '0');
-            if(hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
-            if(minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
-            if(secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
+            if (!daysEl || !hoursEl || !minutesEl || !secondsEl) {
+                console.error('❌ Éléments du compte à rebours non trouvés');
+                return;
+            }
+            
+            console.log('✅ Tous les éléments trouvés');
+            
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const timeLeft = targetDate - now;
+                
+                if (timeLeft < 0) {
+                    daysEl.textContent = '000';
+                    hoursEl.textContent = '00';
+                    minutesEl.textContent = '00';
+                    secondsEl.textContent = '00';
+                    return;
+                }
+                
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                daysEl.textContent = days.toString().padStart(3, '0');
+                hoursEl.textContent = hours.toString().padStart(2, '0');
+                minutesEl.textContent = minutes.toString().padStart(2, '0');
+                secondsEl.textContent = seconds.toString().padStart(2, '0');
+            }
+            
+            // Mise à jour immédiate
+            updateCountdown();
+            // Puis toutes les secondes
+            setInterval(updateCountdown, 1000);
+            console.log('✅ Compte à rebours démarré');
         }
         
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-        
-        // === 2. SÉLECTION CONTEXTUELLE DES SERVICES ===
+        // Exécuter dès que le DOM est prêt
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCountdown);
+        } else {
+            // DOM déjà chargé
+            initCountdown();
+        }
+    })();
+    
+    // Le reste du code
+    document.addEventListener('DOMContentLoaded', function() {
         const categorySelect = document.getElementById('service-category');
         const serviceSelect = document.getElementById('service');
         const servicesData = document.getElementById('services-data');

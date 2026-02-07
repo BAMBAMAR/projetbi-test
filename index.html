@@ -906,20 +906,27 @@
     </script>
     
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // === SÉLECTION CONTEXTUELLE DES SERVICES ===
-        const categorySelect = document.getElementById('service-category');
-        const serviceSelect = document.getElementById('service');
-        const servicesData = document.getElementById('services-data');
-        
-        if (categorySelect && serviceSelect && servicesData) {
-            categorySelect.addEventListener('change', function() {
-                const selectedCategory = this.value;
-                serviceSelect.innerHTML = '<option value="">Sélectionnez un service</option>';
+  document.addEventListener('DOMContentLoaded', function() {
+    // === SÉLECTION CONTEXTUELLE DES SERVICES ===
+    const categorySelect = document.getElementById('service-category');
+    const serviceSelect = document.getElementById('service');
+    const servicesData = document.getElementById('services-data');
+    
+    if (categorySelect && serviceSelect && servicesData) {
+        categorySelect.addEventListener('change', function() {
+            const selectedCategory = this.value;
+            serviceSelect.innerHTML = '<option value="">Sélectionnez un service</option>';
+            
+            if (selectedCategory) {
+                const categoryServices = servicesData.querySelector(`[data-category="${selectedCategory}"]`);
+                if (categoryServices) {
+                    serviceSelect.disabled = false;
+                    serviceSelect.innerHTML = '<option value="">Choisissez un service</option>' + categoryServices.innerHTML;
+                }
+            } else {
                 serviceSelect.disabled = true;
-                
-                if (selectedCategory) {
-                    const categoryServices = servicesData.querySelector(`[data-category="${selectedCategory}"]`);
-                    if (categoryServices) {
-                        serviceSelect.disabled = false;
-                        serviceSelect.innerHTML = '<option value="">Choisissez un service</option>' + categoryServices.innerHTML;
+                serviceSelect.innerHTML = '<option value="">Sélectionnez d\'abord une catégorie</option>';
+            }
+        });
+    }
+});

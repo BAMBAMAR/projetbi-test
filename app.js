@@ -3618,7 +3618,7 @@ function shareToPlatform(promiseId, platform) {
     
     const engagement = promise.engagement || '';
     const domaine = promise.domain || promise.domaine || 'Non spécifié';
-    const statut = promise.statut || 'Non défini';
+    const statut = promise.status || 'Non défini';
     const deadline = promise.deadline || '';
     const resultat = promise.resultat || '';
     const priorite = promise.priorite || '';
@@ -3668,7 +3668,7 @@ function shareToPlatform(promiseId, platform) {
     const url = window.location.href;
     
     // TEXTE OPTIMISÉ POUR FACEBOOK - VERSION COMPLÈTE
-    const facebookText = `🎯 ENGAGEMENT PRÉSIDENTIEL - LE PROJET SÉNÉGAL
+    const facebookText = `🎯 ENGAGEMENT PRÉSIDENTIEL - Le Projet Pastef
 
 ━━━━━━━━━━━━━━━━━━━━━━
 📋 PROMESSE
@@ -3711,7 +3711,7 @@ ${derniereUpdate.substring(0, 180)}${derniereUpdate.length > 180 ? '...' : ''}
 Suivez tous les engagements présidentiels sur:
 ${url}
 
-#ProjetSénégal #BDF2024 #Transparence #Redevabilité #Gouvernance
+#ProjetPastef #Sonko #Transparence #Redevabilité #Gouvernance
 #${domaine.replace(/\s+/g, '')} #${statut.replace(/\s+/g, '')}`;
     
     let shareText = '';
@@ -3730,11 +3730,11 @@ ${joursInfoShort}
 
 📊 Suivi en temps réel: ${url}
 
-#ProjetSénégal #BDF2024 #Transparence`;
+#ProjetPastef #Sonko #Transparence`;
     } else if (platform === 'whatsapp') {
         // WhatsApp - Format avec emphase
         shareText = `🎯 *ENGAGEMENT PRÉSIDENTIEL*
-_Le Projet Sénégal - Transparence & Redevabilité_
+_Le Projet Pastef - Transparence & Redevabilité_
 
 ━━━━━━━━━━━━━━━━━━
 📋 *PROMESSE*
@@ -3903,7 +3903,7 @@ ${news.excerpt || ''}
 📊 Restez informé sur:
 ${shareUrl}
 
-#ProjetSénégal #Actualités`;
+#ProjetPastef #Actualités`;
     } else if (platform === 'twitter') {
         const maxLength = 180;
         const content = news.excerpt || '';
@@ -3917,7 +3917,7 @@ ${truncated}
 
 ${shareUrl}
 
-#ProjetSénégal`;
+#ProjetPastef`;
     } else if (platform === 'whatsapp') {
         shareText = `📰 *ACTUALITÉ*
 
@@ -3931,7 +3931,7 @@ ${news.excerpt || ''}
 📊 *Lire plus:*
 ${shareUrl}
 
-_Via LE PROJET SÉNÉGAL_`;
+_Via Le Projet Pastef_`;
     }
     
     let url = '';

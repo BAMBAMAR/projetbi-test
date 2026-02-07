@@ -684,7 +684,7 @@
                 <div class="footer-col">
                     <h4>Contact</h4>
                     <div class="footer-links">
-                        <a href="/cdn-cgi/l/email-protection#0171607275646771736e6b6475636841666c60686d2f626e6c" class="footer-link"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="b2c2d3c1c6d7d4c2c0ddd8d7c6d0dbf2d5dfd3dbde9cd1dddf">[email&#160;protected]</span></a>
+                        <a href="/cdn-cgi/l/email-protection#85f5e4f6f1e0e3f5f7eaefe0f1e7ecc5e2e8e4ece9abe6eae8" class="footer-link"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="a8d8c9dbdccdced8dac7c2cddccac1e8cfc5c9c1c486cbc7c5">[email&#160;protected]</span></a>
                         <a href="tel:+221769455253" class="footer-link"><i class="fas fa-phone"></i> +221 76 945 52 53</a>
                         <a href="#" class="footer-link"><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</a>
                     </div>
@@ -802,16 +802,10 @@
                 const allElementsFound = Object.values(this.elements).every(el => el !== null);
                 
                 if (!allElementsFound) {
-                    console.error('❌ Compte à rebours: Certains éléments sont manquants', {
-                        days: this.elements.days ? '✓' : '✗',
-                        hours: this.elements.hours ? '✓' : '✗',
-                        minutes: this.elements.minutes ? '✓' : '✗',
-                        seconds: this.elements.seconds ? '✓' : '✗'
-                    });
+                    console.error('❌ Compte à rebours: Certains éléments sont manquants');
                     return false;
                 }
                 
-                console.log('✅ Compte à rebours: Tous les éléments trouvés');
                 this.initialized = true;
                 return true;
             }
@@ -864,14 +858,12 @@
                 // Si le compte à rebours est terminé, arrêter l'intervalle
                 if (timeLeft.expired && this.intervalId) {
                     clearInterval(this.intervalId);
-                    console.log('⏰ Compte à rebours terminé');
                 }
             }
             
             // Démarrer le compte à rebours
             start() {
                 if (!this.initialized) {
-                    console.error('❌ Impossible de démarrer: compte à rebours non initialisé');
                     return;
                 }
                 
@@ -882,9 +874,6 @@
                 this.intervalId = setInterval(() => {
                     this.updateDisplay();
                 }, 1000);
-                
-                console.log('✅ Compte à rebours démarré');
-                console.log('📅 Date cible:', new Date(this.targetDate).toLocaleDateString('fr-FR'));
             }
             
             // Arrêter le compte à rebours
@@ -892,7 +881,6 @@
                 if (this.intervalId) {
                     clearInterval(this.intervalId);
                     this.intervalId = null;
-                    console.log('⏹️ Compte à rebours arrêté');
                 }
             }
         }
@@ -903,8 +891,6 @@
             
             if (countdown.init()) {
                 countdown.start();
-            } else {
-                console.error('❌ Échec de l\'initialisation du compte à rebours');
             }
         }
         

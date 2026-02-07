@@ -3640,28 +3640,36 @@ function shareToPlatform(promiseId, platform) {
     }
     
     const url = window.location.href;
-    let shareText = '';
     
-    if (platform === 'facebook') {
-        shareText = `🎯 ENGAGEMENT PRÉSIDENTIEL
+    // TEXTE OPTIMISÉ POUR FACEBOOK avec toutes les informations
+    const facebookText = `🎯 ENGAGEMENT PRÉSIDENTIEL - PROJET SÉNÉGAL
 
 📋 ${engagement}
 
-📍 Domaine: ${domaine}
-${priorite ? `🔥 Priorité: ${priorite}` : ''}
-${responsable ? `👤 Responsable: ${responsable}` : ''}
-📅 Délai: ${deadline || 'Non spécifié'}
-🔖 Statut: ${emoji} ${statut}
+━━━━━━━━━━━━━━━━━━━━━━
+📍 DOMAINE: ${domaine}
+🔖 STATUT: ${emoji} ${statut}
+${priorite ? `🔥 PRIORITÉ: ${priorite}` : ''}
+${responsable ? `👤 RESPONSABLE: ${responsable}` : ''}
+${deadline ? `📅 DÉLAI: ${deadline}` : ''}
 ${joursRestants ? `⏰ ${joursRestants}` : ''}
+━━━━━━━━━━━━━━━━━━━━━━
 
-${resultat ? `📝 Résultat attendu:\n${resultat.substring(0, 150)}${resultat.length > 150 ? '...' : ''}` : ''}
+${resultat ? `📝 RÉSULTAT ATTENDU:
+${resultat.substring(0, 200)}${resultat.length > 200 ? '...' : ''}
 
-${derniereUpdate ? `🔄 Dernière mise à jour:\n${derniereUpdate.substring(0, 100)}${derniereUpdate.length > 100 ? '...' : ''}` : ''}
+` : ''}${derniereUpdate ? `🔄 DERNIÈRE MISE À JOUR:
+${derniereUpdate.substring(0, 150)}${derniereUpdate.length > 150 ? '...' : ''}
 
-📊 Suivez tous les engagements:
+` : ''}📊 Suivez tous les engagements en temps réel sur:
 ${url}
 
-#ProjetSénégal #Transparence #BDF2024`;
+#ProjetSénégal #BDF2024 #Transparence #Redevabilité #Gouvernance #${domaine.replace(/\s+/g, '')}`;
+    
+    let shareText = '';
+    
+    if (platform === 'facebook') {
+        shareText = facebookText;
     } else if (platform === 'twitter') {
         const short = engagement.substring(0, 80);
         shareText = `🎯 ${short}${engagement.length > 80 ? '...' : ''}
@@ -3685,9 +3693,11 @@ ${responsable ? `👤 *Responsable:* ${responsable}` : ''}
 🔖 *Statut:* ${emoji} ${statut}
 ${joursRestants ? `⏰ *${joursRestants}*` : ''}
 
-${resultat ? `📝 *Résultat attendu:*\n${resultat}` : ''}
+${resultat ? `📝 *Résultat attendu:*
+${resultat}` : ''}
 
-${derniereUpdate ? `🔄 *Dernière mise à jour:*\n${derniereUpdate}` : ''}
+${derniereUpdate ? `🔄 *Dernière mise à jour:*
+${derniereUpdate}` : ''}
 
 📊 *Suivez tous les engagements:*
 ${url}
@@ -3700,22 +3710,48 @@ _Transparence & Redevabilité_`;
     
     switch(platform) {
         case 'facebook':
-            // Facebook ne supporte plus le paramètre quote
-            // On copie le texte dans le presse-papier et on ouvre Facebook
+            // Pour Facebook: copier le texte complet + ouvrir la fenêtre de partage
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(shareText).then(() => {
-                    // Afficher notification
-                    showNotification('📋 Texte copié ! Collez-le dans votre publication Facebook', 'success');
-                    // Ouvrir Facebook après 1 seconde
+                    // Notification améliorée
+                    showNotification('✅ Texte complet copié ! Collez-le dans votre publication Facebook', 'success');
+                    
+                    // Créer un meta tag dynamique pour Open Graph
+                    const metaTitle = document.createElement('meta');
+                    metaTitle.setAttribute('property', 'og:title');
+                    metaTitle.content = engagement.substring(0, 100);
+                    
+                    const metaDesc = document.createElement('meta');
+                    metaDesc.setAttribute('property', 'og:description');
+                    metaDesc.content = `${domaine} • ${statut} • ${resultat ? resultat.substring(0, 100) : 'Engagement présidentiel'}`;
+                    
+                    // Ouvrir Facebook après 1.5 secondes
+                    setTimeout(() => {
+                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(shareText)}`;
+                        window.open(shareUrl, '_blank', 'width=600,height=400');
+                    }, 1500);
+                }).catch(() => {
+                    // Fallback si clipboard API échoue
+                    const textArea = document.createElement('textarea');
+                    textArea.value = shareText;
+                    textArea.style.position = 'fixed';
+                    textArea.style.left = '-9999px';
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    
+                    try {
+                        document.execCommand('copy');
+                        showNotification('✅ Texte copié ! Collez-le dans Facebook', 'success');
+                    } catch (err) {
+                        alert('📋 Copiez ce texte et collez-le dans votre publication Facebook:\n\n' + shareText);
+                    }
+                    
+                    document.body.removeChild(textArea);
+                    
                     setTimeout(() => {
                         shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
                         window.open(shareUrl, '_blank', 'width=600,height=400');
-                    }, 1000);
-                }).catch(() => {
-                    // Fallback si clipboard API échoue
-                    alert('📋 Copiez ce texte et collez-le dans votre publication Facebook:\n\n' + shareText);
-                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-                    window.open(shareUrl, '_blank', 'width=600,height=400');
+                    }, 1500);
                 });
             } else {
                 // Fallback pour navigateurs anciens
@@ -3723,7 +3759,7 @@ _Transparence & Redevabilité_`;
                 shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
                 window.open(shareUrl, '_blank', 'width=600,height=400');
             }
-            return; // Important : sortir ici car on a déjà ouvert la fenêtre
+            return;
         case 'twitter':
             shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
             break;
@@ -3878,7 +3914,7 @@ _Via LE PROJET SÉNÉGAL_`;
 // MODALS POUR LISTE COMPLÈTE DES NOTATIONS
 // ==========================================
 
-function showAllRatings(category) {
+async function showAllRatings(category) {
     console.log('🔍 showAllRatings - Catégorie:', category);
     
     const modal = document.getElementById('ratingsListModal');
@@ -3891,68 +3927,234 @@ function showAllRatings(category) {
     }
     
     const titles = {
-        'top-rated': '<i class="fas fa-trophy"></i> Liste complète - Par Note',
-        'recent': '<i class="fas fa-clock"></i> Liste complète - Par Date'
+        'top-rated': '<i class="fas fa-trophy"></i> Classement Complet des Services',
+        'recent': '<i class="fas fa-clock"></i> Toutes les Notations de la Semaine'
     };
     title.innerHTML = titles[category] || 'Liste complète';
     
     body.innerHTML = '<div class="loading"><div class="spinner"></div><p>Chargement...</p></div>';
     modal.style.display = 'flex';
     
-    setTimeout(() => {
-        const ratings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
-        console.log('📊 Notations:', ratings.length);
+    try {
+        let ratings = [];
+        
+        // Charger depuis Supabase si disponible
+        if (supabaseClient && !DEMO_MODE) {
+            const { data, error } = await supabaseClient
+                .from('service_ratings')
+                .select('*')
+                .order('created_at', { ascending: false });
+            
+            if (error) {
+                console.error('❌ Erreur Supabase:', error);
+                // Fallback sur localStorage
+                ratings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
+            } else {
+                ratings = data || [];
+                console.log('✅ Chargé depuis Supabase:', ratings.length, 'notations');
+            }
+        } else {
+            // Mode local
+            ratings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
+            console.log('📂 Chargé depuis localStorage:', ratings.length, 'notations');
+        }
         
         if (ratings.length === 0) {
-            body.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>Aucune notation</p></div>';
+            body.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>Aucune notation disponible</p></div>';
             return;
         }
         
-        // Calculer la note pour chaque notation
-        const withAvg = ratings.map(r => ({
-            ...r,
-            avg: (parseInt(r.accessibility||0) + parseInt(r.welcome||0) + parseInt(r.efficiency||0) + parseInt(r.transparency||0)) / 4
-        }));
-        
-        // Trier
-        const sorted = category === 'top-rated' 
-            ? withAvg.sort((a, b) => b.avg - a.avg)  // Par note décroissante
-            : withAvg.sort((a, b) => new Date(b.created_at||b.date||0) - new Date(a.created_at||a.date||0)); // Par date
-        
-        console.log('✅ Affichage de', sorted.length, 'notations');
-        
-        // Afficher TOUTES les notations
+        if (category === 'top-rated') {
+            // CLASSEMENT COMPLET PAR SERVICE
+            const serviceStats = {};
+            
+            // Regrouper par service
+            ratings.forEach(item => {
+                if (!serviceStats[item.service]) {
+                    serviceStats[item.service] = { 
+                        sum: 0, 
+                        count: 0, 
+                        comments: 0,
+                        accessibility: 0,
+                        welcome: 0,
+                        efficiency: 0,
+                        transparency: 0
+                    };
+                }
+                const acc = parseInt(item.accessibility) || 0;
+                const wel = parseInt(item.welcome) || 0;
+                const eff = parseInt(item.efficiency) || 0;
+                const tra = parseInt(item.transparency) || 0;
+                const avg = (acc + wel + eff + tra) / 4;
+                
+                serviceStats[item.service].sum += avg;
+                serviceStats[item.service].count += 1;
+                serviceStats[item.service].accessibility += acc;
+                serviceStats[item.service].welcome += wel;
+                serviceStats[item.service].efficiency += eff;
+                serviceStats[item.service].transparency += tra;
+                
+                if (item.comment && item.comment.trim() !== '') {
+                    serviceStats[item.service].comments += 1;
+                }
+            });
+            
+            // Créer le tableau trié
+            const sortedServices = Object.entries(serviceStats)
+                .map(([service, stats]) => ({
+                    service,
+                    avg: stats.sum / stats.count,
+                    count: stats.count,
+                    comments: stats.comments,
+                    accessibility: (stats.accessibility / stats.count).toFixed(1),
+                    welcome: (stats.welcome / stats.count).toFixed(1),
+                    efficiency: (stats.efficiency / stats.count).toFixed(1),
+                    transparency: (stats.transparency / stats.count).toFixed(1)
+                }))
+                .sort((a, b) => b.avg - a.avg);
+            
+            console.log('✅ Affichage de', sortedServices.length, 'services classés');
+            
+            // Afficher le classement complet
+            body.innerHTML = `
+                <div class="full-ranking">
+                    ${sortedServices.map((item, index) => {
+                        const medals = ['🥇', '🥈', '🥉'];
+                        const medal = index < 3 ? medals[index] : '';
+                        const rankClass = index < 3 ? `rank-${index + 1}` : '';
+                        
+                        return `
+                            <div class="ranking-item ${rankClass}">
+                                <div class="ranking-header">
+                                    <div class="ranking-position">
+                                        ${medal ? `<span class="medal">${medal}</span>` : `<span class="rank-number">#${index + 1}</span>`}
+                                    </div>
+                                    <div class="ranking-service">
+                                        <div class="service-name">${item.service}</div>
+                                        <div class="service-meta">${item.count} vote${item.count > 1 ? 's' : ''} • ${item.comments} commentaire${item.comments > 1 ? 's' : ''}</div>
+                                    </div>
+                                    <div class="ranking-score">
+                                        <div class="score-main">
+                                            <i class="fas fa-star"></i> ${item.avg.toFixed(1)}/5
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ranking-details">
+                                    <div class="detail-item">
+                                        <i class="fas fa-wheelchair"></i>
+                                        <span>Accessibilité</span>
+                                        <strong>${item.accessibility}/5</strong>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-handshake"></i>
+                                        <span>Accueil</span>
+                                        <strong>${item.welcome}/5</strong>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-bolt"></i>
+                                        <span>Efficacité</span>
+                                        <strong>${item.efficiency}/5</strong>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-eye"></i>
+                                        <span>Transparence</span>
+                                        <strong>${item.transparency}/5</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        } else {
+            // TOUTES LES NOTATIONS PAR DATE (dernière semaine)
+            const now = new Date();
+            const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+            
+            // Filtrer les notations de la semaine
+            const weekRatings = ratings.filter(item => {
+                const itemDate = new Date(item.created_at || item.date || 0);
+                return itemDate >= oneWeekAgo;
+            });
+            
+            // Calculer la note moyenne pour chaque notation
+            const withAvg = weekRatings.map(r => ({
+                ...r,
+                avg: (parseInt(r.accessibility||0) + parseInt(r.welcome||0) + parseInt(r.efficiency||0) + parseInt(r.transparency||0)) / 4
+            }));
+            
+            // Trier par date (plus récent en premier)
+            const sorted = withAvg.sort((a, b) => 
+                new Date(b.created_at || b.date || 0) - new Date(a.created_at || a.date || 0)
+            );
+            
+            console.log('✅ Affichage de', sorted.length, 'notations de la semaine');
+            
+            if (sorted.length === 0) {
+                body.innerHTML = '<div class="empty-state"><i class="fas fa-calendar-times"></i><p>Aucune notation cette semaine</p></div>';
+                return;
+            }
+            
+            // Afficher toutes les notations de la semaine
+            body.innerHTML = `
+                <div class="week-header">
+                    <i class="fas fa-calendar-week"></i>
+                    <span>${sorted.length} notation${sorted.length > 1 ? 's' : ''} des 7 derniers jours</span>
+                </div>
+                <div class="recent-ratings">
+                    ${sorted.map((item, index) => {
+                        const date = new Date(item.created_at || item.date || new Date());
+                        const formattedDate = date.toLocaleDateString('fr-FR', {
+                            weekday: 'short',
+                            day: 'numeric',
+                            month: 'short',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                        
+                        return `
+                            <div class="recent-item-expanded">
+                                <div class="recent-header">
+                                    <span class="recent-service">${item.service || 'Service inconnu'}</span>
+                                    <span class="recent-date">${formattedDate}</span>
+                                </div>
+                                <div class="recent-scores-grid">
+                                    <div class="score-badge">
+                                        <i class="fas fa-star"></i>
+                                        <div>
+                                            <strong>${item.avg.toFixed(1)}/5</strong>
+                                            <span>Global</span>
+                                        </div>
+                                    </div>
+                                    <div class="criteria-scores">
+                                        <div><i class="fas fa-wheelchair"></i> ${item.accessibility}/5</div>
+                                        <div><i class="fas fa-handshake"></i> ${item.welcome}/5</div>
+                                        <div><i class="fas fa-bolt"></i> ${item.efficiency}/5</div>
+                                        <div><i class="fas fa-eye"></i> ${item.transparency}/5</div>
+                                    </div>
+                                </div>
+                                ${item.comment ? `
+                                    <div class="recent-comment-full">
+                                        <i class="fas fa-quote-left"></i>
+                                        <p>${item.comment}</p>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+    } catch (error) {
+        console.error('❌ Erreur:', error);
         body.innerHTML = `
-            <div class="recent-ratings">
-                ${sorted.map((item, index) => {
-                    const date = new Date(item.created_at || item.date || new Date());
-                    const formattedDate = date.toLocaleDateString('fr-FR');
-                    
-                    let badge = '';
-                    if (category === 'top-rated' && index < 3) {
-                        const badges = ['🥇', '🥈', '🥉'];
-                        badge = `<span class="rank-badge">${badges[index]} #${index+1}</span>`;
-                    }
-                    
-                    return `
-                        <div class="recent-item">
-                            <div class="recent-header">
-                                <span class="recent-service">${item.service || 'Service inconnu'}</span>
-                                ${badge}
-                                <span class="recent-date">${formattedDate}</span>
-                            </div>
-                            <div class="recent-score">
-                                <i class="fas fa-star"></i> ${item.avg.toFixed(1)}/5
-                            </div>
-                            ${item.comment ? `
-                                <div class="recent-comment">"${item.comment.substring(0, 100)}"</div>
-                            ` : ''}
-                        </div>
-                    `;
-                }).join('')}
+            <div class="error-state">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Erreur lors du chargement des notations</p>
+                <small>${error.message}</small>
             </div>
         `;
-    }, 100);
+    }
 }
 
 

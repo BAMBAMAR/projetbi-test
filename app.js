@@ -3821,14 +3821,14 @@ _#ProjetPastef #sonko #pasteflespatriotes_`;
                     document.body.removeChild(textArea);
                     
                     setTimeout(() => {
-                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareText)}`;
+                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
                         window.open(shareUrl, '_blank', 'width=600,height=600');
                     }, 2000);
                 });
             } else {
                 // Fallback pour navigateurs très anciens
                 alert('📋 COPIEZ CE TEXTE ET COLLEZ-LE DANS FACEBOOK:\n\n' + shareText);
-                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareText)}`;
+                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
                 window.open(shareUrl, '_blank', 'width=600,height=600');
             }
             return;

@@ -1,14 +1,14 @@
 /* ===== VARIABLES CSS - COULEURS PASTEF ===== */
 :root {
-    /* Couleurs PASTEF */
-    --pastef-red: #B23A3A;
-    --pastef-red-light: #C85050;
-    --pastef-red-dark: #8B2C2C;
+    /* Couleurs PASTEF Officielles */
     --pastef-green: #2D5F3F;
     --pastef-green-light: #3E7F55;
     --pastef-green-dark: #1F4530;
+    --pastef-red: #B23A3A;
+    --pastef-red-light: #C85050;
+    --pastef-red-dark: #8B2C2C;
     
-    /* Palette de couleurs principale - Adaptée PASTEF */
+    /* Palette de couleurs principale */
     --primary-color: #2D5F3F;
     --primary: #2D5F3F;
     --primary-light: #3E7F55;
@@ -16,11 +16,13 @@
     --secondary: #B23A3A;
     --accent-color: #B23A3A;
     --accent: #C85050;
+    --teal: #2D5F3F;
+    --purple: #6a1b9a;
     
     /* Couleurs de statut */
     --success: #2e7d32;
     --warning: #f57c00;
-    --danger: #B23A3A;
+    --danger: #c62828;
     --info: #0277bd;
     
     /* Backgrounds */
@@ -34,10 +36,12 @@
     --text-primary: #1a1a1a;
     --text-secondary: #5a5a5a;
     --text-muted: #8a8a8a;
+    --text-dark: #1a1a1a;
     
     /* Bordures */
     --border: #e0e0e0;
     --border-light: #f0f0f0;
+    --border-color: #e0e0e0;
     
     /* Ombres */
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -66,7 +70,7 @@
 }
 
 /* ===== RESET & BASE ===== */
-*, *::before, *::after {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -75,8 +79,6 @@
 html {
     font-size: 16px;
     scroll-behavior: smooth;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -94,6 +96,18 @@ body {
     padding: 0 var(--spacing-lg);
     width: 100%;
 }
+
+/* ===== PROGRESS INDICATOR ===== */
+.progress-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    z-index: 10000;
+    transition: width 0.1s ease;
+}
+
 /* ========================================
    NOUVEAU MENU MODERNE
    ======================================== */
@@ -5024,4 +5038,132 @@ button.social-btn {
         grid-template-columns: 1fr;
         width: 100%;
     }
+}
+
+/* ========================================
+   CORRECTIONS MOBILE - PASTEF
+   ======================================== */
+
+/* Correction: Flèches carousel qui se superposent sur mobile */
+@media (max-width: 768px) {
+    .press-carousel .carousel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    .press-carousel .carousel-btn.prev {
+        left: 10px;
+    }
+    
+    .press-carousel .carousel-btn.next {
+        right: 10px;
+    }
+    
+    /* Assurer que les flèches ne se superposent pas au contenu */
+    .press-carousel-container {
+        padding: 0 50px;
+    }
+    
+    /* Correction: Icônes de partage qui débordent */
+    .promise-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 100%;
+        overflow: hidden;
+    }
+    
+    .promise-actions .social-share {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px !important;
+        max-width: 100%;
+    }
+    
+    .promise-actions .social-btn {
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 1rem !important;
+        flex-shrink: 0;
+    }
+    
+    .promise-actions .btn-stars {
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 1rem !important;
+        flex-shrink: 0;
+    }
+}
+
+/* Alignement cohérent des conteneurs */
+.section {
+    padding: var(--spacing-xl) 0;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    width: 100%;
+}
+
+/* Assurer que tous les conteneurs principaux ont le même alignement */
+.stats-section .container,
+.daily-promise-section .container,
+.promises-section .container,
+.news-section .container,
+.press-section .container,
+.rating-section .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+/* Correction des marges internes pour cohérence */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .stats-section .container,
+    .daily-promise-section .container,
+    .promises-section .container,
+    .news-section .container,
+    .press-section .container,
+    .rating-section .container {
+        padding: 0 var(--spacing-md);
+    }
+}
+
+/* Correction supplémentaire pour petits écrans */
+@media (max-width: 480px) {
+    .press-carousel .carousel-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+    
+    .press-carousel .carousel-btn.prev {
+        left: 5px;
+    }
+    
+    .press-carousel .carousel-btn.next {
+        right: 5px;
+    }
+    
+    .press-carousel-container {
+        padding: 0 45px;
+    }
+    
+    .promise-actions .social-btn,
+    .promise-actions .btn-stars {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 0.9rem !important;
+    }
+}
+
+/* Assurer que le thème-color reflète les couleurs PASTEF */
+meta[name="theme-color"] {
+    content: "#2D5F3F";
 }

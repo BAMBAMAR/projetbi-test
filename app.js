@@ -3597,11 +3597,11 @@ function sharePromise(promiseId) {
     const promise = CONFIG.promises.find(p => p.id === promiseId);
     if (!promise) return;
     
-    const text = `📊 "${promise.engagement.substring(0, 100)}..." - Suivi des engagements du Projet Sénégal`;
+    const text = `📊 "${promise.engagement.substring(0, 100)}..." - Suivi des engagements du Projet PASTEF`;
     const url = window.location.href;
     
     if (navigator.share) {
-        navigator.share({ title: 'Engagement du Projet Sénégal', text: text, url: url })
+        navigator.share({ title: 'Engagement du Projet PASTEF', text: text, url: url })
             .catch(err => console.log('Erreur partage:', err));
     } else {
         const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
@@ -3668,7 +3668,7 @@ function shareToPlatform(promiseId, platform) {
     const url = window.location.href;
     
     // TEXTE OPTIMISÉ POUR FACEBOOK - VERSION COMPLÈTE
-    const facebookText = `🎯 ENGAGEMENT PRÉSIDENTIEL - LE PROJET SÉNÉGAL
+    const facebookText = `🎯 ENGAGEMENT PRÉSIDENTIEL - LE PROJET
 
 ━━━━━━━━━━━━━━━━━━━━━━
 📋 PROMESSE
@@ -3711,7 +3711,7 @@ ${derniereUpdate.substring(0, 180)}${derniereUpdate.length > 180 ? '...' : ''}
 Suivez tous les engagements présidentiels sur:
 ${url}
 
-#ProjetSénégal #BDF2024 #Transparence #Redevabilité #Gouvernance
+#Pastef#Sonko #Transparence #Redevabilité #Gouvernance
 #${domaine.replace(/\s+/g, '')} #${status.replace(/\s+/g, '')}`;
     
     let shareText = '';
@@ -3730,11 +3730,11 @@ ${joursInfoShort}
 
 📊 Suivi en temps réel: ${url}
 
-#ProjetSénégal #BDF2024 #Transparence`;
+#Pastef#Sonko #Transparence`;
     } else if (platform === 'whatsapp') {
         // WhatsApp - Format avec emphase
         shareText = `🎯 *ENGAGEMENT PRÉSIDENTIEL*
-_Le Projet Sénégal - Transparence & Redevabilité_
+_LE PROJET - Transparence & Redevabilité_
 
 ━━━━━━━━━━━━━━━━━━
 📋 *PROMESSE*
@@ -3770,7 +3770,7 @@ ${derniereUpdate.substring(0, 150)}${derniereUpdate.length > 150 ? '...' : ''}
 📊 *SUIVI COMPLET SUR:*
 ${url}
 
-_#ProjetSénégal #BDF2024 #Transparence_`;
+_#Pastef#Sonko #Transparence_`;
     }
     
     let shareUrl = '';
@@ -3911,7 +3911,7 @@ ${news.excerpt || ''}
 📊 Restez informé sur:
 ${shareUrl}
 
-#ProjetSénégal #Actualités`;
+#Pastef #Actualités`;
     } else if (platform === 'twitter') {
         const maxLength = 180;
         const content = news.excerpt || '';
@@ -3925,7 +3925,7 @@ ${truncated}
 
 ${shareUrl}
 
-#ProjetSénégal`;
+#Pastef`;
     } else if (platform === 'whatsapp') {
         shareText = `📰 *ACTUALITÉ*
 
@@ -3939,7 +3939,7 @@ ${news.excerpt || ''}
 📊 *Lire plus:*
 ${shareUrl}
 
-_Via LE PROJET SÉNÉGAL_`;
+_Via LE PROJET_`;
     }
     
     let url = '';

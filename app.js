@@ -2066,7 +2066,10 @@ function renderNews(news) {
         return `
         <article class="news-card">
             <div class="news-image">
-                <i class="fas fa-${item.image === 'school' ? 'school' : item.image === 'budget' ? 'coins' : 'flag'} fa-3x"></i>
+                ${item.image_url ? 
+                    `<img src="${item.image_url}" alt="${item.title}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px 12px 0 0;">` :
+                    `<i class="fas fa-${item.image === 'school' ? 'school' : item.image === 'budget' ? 'coins' : 'flag'} fa-3x"></i>`
+                }
             </div>
             <div class="news-content">
                 <h3>${item.title}</h3>

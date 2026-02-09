@@ -35,37 +35,38 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     
     <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-<!-- NOUVEAU MENU MODERNE -->
-<nav class="modern-nav" id="modernNav">
-  <div class="modern-nav-container">
-    <!-- Logo -->
-    <a href="#header" class="modern-logo">
-      <img src="https://projetbi.org/favicon.png" alt="Logo PROJETBI">
-      <div class="modern-logo-text">
-        <span>PROJETBI</span>
-      </div>
-    </a>
+<!-- ========== MENU SIMPLE ET FONCTIONNEL ========== -->
+<nav class="main-nav">
+    <div class="nav-wrapper">
+        <!-- Logo -->
+        <a href="#header" class="logo">
+            <img src="https://projetbi.org/favicon.png" alt="PROJETBI">
+            <span>PROJETBI</span>
+        </a>
 
-    <!-- Menu Desktop -->
-    <div class="modern-menu" id="modernMenu">
-      <a href="#header" class="modern-link">Accueil</a>
-      <a href="#stats" class="modern-link">Dashboard</a>
-      <a href="#daily" class="modern-link">Promesse du Jour</a>
-      <a href="#promises" class="modern-link">Engagements</a>
-      <a href="#news" class="modern-link">Actualités</a>
-      <a href="#press" class="modern-link">Revue de Presse</a>
-      <a href="#rating" class="modern-link modern-link-cta">Noter un service</a>
+        <!-- Menu -->
+        <ul class="menu" id="menu">
+            <li><a href="#header" class="menu-item">Accueil</a></li>
+            <li><a href="#stats" class="menu-item">Dashboard</a></li>
+            <li><a href="#daily" class="menu-item">Promesse du Jour</a></li>
+            <li><a href="#promises" class="menu-item">Engagements</a></li>
+            <li><a href="#news" class="menu-item">Actualités</a></li>
+            <li><a href="#press" class="menu-item">Revue de Presse</a></li>
+            <li><a href="#rating" class="menu-item menu-cta">Noter un service</a></li>
+        </ul>
+
+        <!-- Hamburger -->
+        <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </div>
-
-    <!-- Bouton Hamburger -->
-    <button class="modern-hamburger" id="modernHamburger" aria-label="Menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </div>
 </nav>
+
     <header class="header" id="header">
         <div class="header-container">
             <div class="header-text-side">                           
@@ -683,7 +684,7 @@
                 <div class="footer-col">
                     <h4>Contact</h4>
                     <div class="footer-links">
-                        <a href="/cdn-cgi/l/email-protection#dfafbeacabbab9afadb0b5baabbdb69fb8b2beb6b3f1bcb0b2" class="footer-link"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="1060716364757660627f7a7564727950777d71797c3e737f7d">[email&#160;protected]</span></a>
+                        <a href="/cdn-cgi/l/email-protection#f989988a8d9c9f898b96939c8d9b90b99e94989095d79a9694" class="footer-link"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="e898899b9c8d8e989a87828d9c8a81a88f85898184c68b8785">[email&#160;protected]</span></a>
                         <a href="tel:+221769455253" class="footer-link"><i class="fas fa-phone"></i> +221 76 945 52 53</a>
                         <a href="#" class="footer-link"><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</a>
                     </div>
@@ -751,6 +752,40 @@
             <div id="ratingsModalBody"></div>
         </div>
     </div>
+
+<!-- SCRIPT DU NOUVEAU MENU -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const hamburger = document.getElementById("hamburger");
+    const menu = document.getElementById("menu");
+    const menuItems = document.querySelectorAll(".menu-item");
+    
+    // Toggle menu
+    hamburger.addEventListener("click", function() {
+        hamburger.classList.toggle("active");
+        menu.classList.toggle("active");
+        document.body.classList.toggle("menu-open");
+    });
+    
+    // Fermer au clic sur lien
+    menuItems.forEach(item => {
+        item.addEventListener("click", function() {
+            hamburger.classList.remove("active");
+            menu.classList.remove("active");
+            document.body.classList.remove("menu-open");
+        });
+    });
+    
+    // Fermer au clic dehors
+    document.addEventListener("click", function(e) {
+        if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+            hamburger.classList.remove("active");
+            menu.classList.remove("active");
+            document.body.classList.remove("menu-open");
+        }
+    });
+});
+</script>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="app.js"></script>
     

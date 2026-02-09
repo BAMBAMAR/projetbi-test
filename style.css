@@ -69,6 +69,7 @@
     --radius-full: 9999px;
 }
 
+/* ==================== NOUVEAU MENU ==================== */
 /* ===== RESET & BASE ===== */
 * {
     margin: 0;
@@ -5409,24 +5410,195 @@ html, body {
         font-size: 0.85rem !important;
     }
 }
-/* =============================================
-   PATCH MENU MOBILE - À AJOUTER À LA FIN DU FICHIER style.css
-   ============================================= */
+/* ==========================================
+   NOUVEAU MENU - SIMPLE ET FONCTIONNEL
+   ========================================== */
 
+/* Supprimer l'ancien menu */
+.modern-nav,
+.modern-nav-container,
+.modern-menu,
+.modern-hamburger,
+.modern-logo,
+.modern-link {
+    display: none !important;
+}
+
+/* Navigation principale */
+.main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 9999;
+}
+
+.nav-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    z-index: 10001;
+}
+
+.logo img {
+    height: 45px;
+    border-radius: 8px;
+}
+
+.logo span {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #2D5F3F;
+}
+
+/* Menu desktop */
+.menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0.5rem;
+}
+
+.menu-item {
+    padding: 0.7rem 1.2rem;
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.menu-item:hover {
+    background: rgba(45, 95, 63, 0.1);
+    color: #2D5F3F;
+}
+
+.menu-cta {
+    background: linear-gradient(135deg, #2D5F3F, #3E7F55);
+    color: white !important;
+    border-radius: 25px;
+    padding: 0.7rem 1.5rem;
+}
+
+.menu-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(45, 95, 63, 0.3);
+}
+
+/* Hamburger */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 10001;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: #2D5F3F;
+    border-radius: 3px;
+    transition: all 0.3s;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Mobile */
 @media (max-width: 768px) {
-    /* Forcer l'affichage du menu mobile */
-    .modern-menu.active {
-        max-height: 100vh !important;
-        height: auto !important;
-        display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        overflow-y: auto !important;
+    .main-nav {
+        height: 65px;
     }
     
-    /* S'assurer que le hamburger est visible et cliquable */
-    .modern-hamburger {
-        display: flex !important;
-        z-index: 1002 !important;
+    .nav-wrapper {
+        padding: 0 1.5rem;
     }
+    
+    .logo img {
+        height: 38px;
+    }
+    
+    .logo span {
+        font-size: 1.1rem;
+    }
+    
+    /* Afficher hamburger */
+    .hamburger {
+        display: flex;
+    }
+    
+    /* Menu mobile */
+    .menu {
+        position: fixed;
+        top: 65px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 65px);
+        background: white;
+        flex-direction: column;
+        padding: 2rem 0;
+        gap: 0;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        overflow-y: auto;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+    }
+    
+    .menu.active {
+        transform: translateX(0);
+    }
+    
+    .menu li {
+        width: 100%;
+    }
+    
+    .menu-item {
+        display: block;
+        width: 100%;
+        padding: 1.2rem 2rem;
+        border-radius: 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .menu-cta {
+        margin: 1rem 2rem;
+        width: calc(100% - 4rem);
+        text-align: center;
+        border-radius: 12px;
+    }
+}
+
+body.menu-open {
+    overflow: hidden;
 }

@@ -1,36 +1,3 @@
-// Mode démo - activé si Supabase échoue
-let DEMO_MODE = false;
-// AJOUTER AVEC LES AUTRES VARIABLES GLOBALES
-
-// Vérifier la connexion Supabase
-async function checkSupabaseConnection() {
-    if (!supabaseClient) {
-        DEMO_MODE = true;
-        console.log('🎭 MODE DÉMO - Supabase non disponible');
-        return;
-    }
-    
-    try {
-        const { error } = await supabaseClient
-            .from('service_ratings')
-            .select('count', { count: 'exact', head: true });
-        
-        if (error) {
-            DEMO_MODE = true;
-            console.log('🎭 MODE DÉMO - Erreur Supabase:', error.message);
-            showNotification('Mode démo activé - données locales', 'info');
-        } else {
-            DEMO_MODE = false;
-            console.log('✅ Mode Supabase activé');
-        }
-    } catch (error) {
-        DEMO_MODE = true;
-        console.log('🎭 MODE DÉMO - Exception:', error.message);
-    }
-}
-
-// Appelez cette fonction après l'initialisation
-setTimeout(checkSupabaseConnection, 1000);
 // ==========================================
 // APP.JS - VERSION CORRIGÉE POUR LES DÉLAIS
 // ==========================================
@@ -4615,57 +4582,41 @@ async function syncLocalDataWithSupabase() {
         // Logique similaire pour les votes...
     }
 }
-// ==========================================
-// DEBUG MOBILE - AJOUTER DANS app.js
-// ==========================================
-function debugMobileMenu() {
-    console.log('📱 DEBUG MOBILE MENU');
-    const mobileBtn = document.getElementById('mobileMenuBtn');
-    const navMenu = document.getElementById('navMenu');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    console.log('Bouton mobile:', mobileBtn ? '✅ trouvé' : '❌ non trouvé');
-    console.log('Menu navigation:', navMenu ? '✅ trouvé' : '❌ non trouvé');
-    console.log('Liens de navigation:', navLinks.length, 'trouvés');
-    
-    if (mobileBtn && navMenu) {
-        console.log('État initial du menu:', navMenu.classList.contains('show') ? 'ouvert' : 'fermé');
-        
-        // Vérifier les écouteurs d'événements
-        const hasClickHandler = mobileBtn.onclick || mobileBtn._hasClickHandler;
-        console.log('Écouteur bouton mobile:', hasClickHandler ? '✅ actif' : '❌ absent');
-    }
-}
 
-// Appeler le debug au chargement
-document.addEventListener('DOMContentLoaded', () => {
-    // Votre code existant...
-    debugMobileMenu();
-    
-    // Vérifier si c'est mobile
-    if (window.innerWidth <= 768) {
-        console.log('📱 Mode mobile détecté - largeur:', window.innerWidth);
-    }
-});
-
-// Debug lors du clic sur le menu mobile
-document.addEventListener('click', (e) => {
-    if (e.target.closest('#mobileMenuBtn')) {
-        console.log('🍔 Menu mobile cliqué');
-        const navMenu = document.getElementById('navMenu');
-        if (navMenu) {
-            console.log('État après clic:', navMenu.classList.contains('show') ? 'ouvert' : 'fermé');
-        }
-    }
-    
-    // Debug clic sur les liens
-    if (e.target.closest('.nav-link')) {
-        console.log('🔗 Lien de navigation cliqué:', e.target.getAttribute('href'));
-        e.preventDefault();
-        // Votre logique de navigation ici
-    }
-});
 function getStatusText(promise) {
     if (promise.isLate) return 'En retard';
     return promise.status;
 }
+
+// Mode démo - activé si Supabase échoue
+let DEMO_MODE = false;
+
+// Vérifier la connexion Supabase
+async function checkSupabaseConnection() {
+    if (!supabaseClient) {
+        DEMO_MODE = true;
+        console.log('🎭 MODE DÉMO - Supabase non disponible');
+        return;
+    }
+    
+    try {
+        const { error } = await supabaseClient
+            .from('service_ratings')
+            .select('count', { count: 'exact', head: true });
+        
+        if (error) {
+            DEMO_MODE = true;
+            console.log('🎭 MODE DÉMO - Erreur Supabase:', error.message);
+            showNotification('Mode démo activé - données locales', 'info');
+        } else {
+            DEMO_MODE = false;
+            console.log('✅ Mode Supabase activé');
+        }
+    } catch (error) {
+        DEMO_MODE = true;
+        console.log('🎭 MODE DÉMO - Exception:', error.message);
+    }
+}
+
+// Appelez cette fonction après l'initialisation
+setTimeout(checkSupabaseConnection, 1000);

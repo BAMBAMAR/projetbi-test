@@ -4616,54 +4616,51 @@ async function syncLocalDataWithSupabase() {
     }
 }
 // ==========================================
-// DEBUG MOBILE - AJOUTER DANS app.js
+// MENU MOBILE - VERSION CORRIGÉE
 // ==========================================
-function debugMobileMenu() {
-    console.log('📱 DEBUG MOBILE MENU');
-    const mobileBtn = document.getElementById('mobileMenuBtn');
-    const navMenu = document.getElementById('navMenu');
-    const navLinks = document.querySelectorAll('.nav-link');
+function initMobileMenu() {
+    const hamburger = document.getElementById('modernHamburger');
+    const menu = document.getElementById('modernMenu');
+    const menuLinks = document.querySelectorAll('.modern-link');
     
-    console.log('Bouton mobile:', mobileBtn ? '✅ trouvé' : '❌ non trouvé');
-    console.log('Menu navigation:', navMenu ? '✅ trouvé' : '❌ non trouvé');
-    console.log('Liens de navigation:', navLinks.length, 'trouvés');
-    
-    if (mobileBtn && navMenu) {
-        console.log('État initial du menu:', navMenu.classList.contains('show') ? 'ouvert' : 'fermé');
-        
-        // Vérifier les écouteurs d'événements
-        const hasClickHandler = mobileBtn.onclick || mobileBtn._hasClickHandler;
-        console.log('Écouteur bouton mobile:', hasClickHandler ? '✅ actif' : '❌ absent');
+    if (!hamburger || !menu) {
+        console.warn('⚠️ Éléments du menu mobile non trouvés');
+        return;
     }
+    
+    console.log('✅ Menu mobile initialisé');
+    
+    // Toggle du menu hamburger
+    hamburger.addEventListener('click', (e) => {
+        e.stopPropagation(); // Empêcher la propagation
+        hamburger.classList.toggle('active');
+        menu.classList.toggle('active');
+        console.log('🍔 Menu mobile:', menu.classList.contains('active') ? 'ouvert' : 'fermé');
+    });
+    
+    // Fermer le menu quand on clique sur un lien
+    menuLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            // Laisser le comportement par défaut des liens ancres
+            hamburger.classList.remove('active');
+            menu.classList.remove('active');
+            console.log('🔗 Lien cliqué, menu fermé');
+        });
+    });
+    
+    // Fermer le menu si on clique en dehors
+    document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !menu.contains(e.target)) {
+            hamburger.classList.remove('active');
+            menu.classList.remove('active');
+        }
+    });
 }
 
-// Appeler le debug au chargement
+// Initialiser au chargement du DOM
 document.addEventListener('DOMContentLoaded', () => {
-    // Votre code existant...
-    debugMobileMenu();
-    
-    // Vérifier si c'est mobile
-    if (window.innerWidth <= 768) {
-        console.log('📱 Mode mobile détecté - largeur:', window.innerWidth);
-    }
-});
-
-// Debug lors du clic sur le menu mobile
-document.addEventListener('click', (e) => {
-    if (e.target.closest('#mobileMenuBtn')) {
-        console.log('🍔 Menu mobile cliqué');
-        const navMenu = document.getElementById('navMenu');
-        if (navMenu) {
-            console.log('État après clic:', navMenu.classList.contains('show') ? 'ouvert' : 'fermé');
-        }
-    }
-    
-    // Debug clic sur les liens
-    if (e.target.closest('.nav-link')) {
-        console.log('🔗 Lien de navigation cliqué:', e.target.getAttribute('href'));
-        e.preventDefault();
-        // Votre logique de navigation ici
-    }
+    initMobileMenu();
+    console.log('📱 Mode:', window.innerWidth <= 768 ? 'Mobile' : 'Desktop');
 });
 function getStatusText(promise) {
     if (promise.isLate) return 'En retard';

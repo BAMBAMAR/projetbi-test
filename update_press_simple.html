@@ -1161,9 +1161,18 @@ function addNews() {
     const dateParts = dateInput.split('-');
     const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
     
-    // Créer l'objet actualité
+    // Créer l'objet actualité avec ID séquentiel
+    const maxId = NEWS_DATA.reduce((max, item) => {
+        const match = item.id.match(/^(\d+)$/);
+        if (match) {
+            const num = parseInt(match[1], 10);
+            return num > max ? num : max;
+        }
+        return max;
+    }, 0);
+    
     const newsItem = {
-        id: `news_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        id: String(maxId + 1),
         title: title,
         excerpt: excerpt,
         content: content,

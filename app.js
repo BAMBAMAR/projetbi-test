@@ -2049,7 +2049,16 @@ function renderNews(news) {
     const grid = document.getElementById('newsGrid');
     if (!grid) return;
     
-    grid.innerHTML = news.map(item => {
+    // Trier par date (plus récent en premier) et limiter à 6
+    const sortedNews = [...news].sort((a, b) => {
+        const dateA = parseDate(a.date);
+        const dateB = parseDate(b.date);
+        return dateB - dateA;
+    });
+    
+    const recentNews = sortedNews.slice(0, 6);
+    
+    grid.innerHTML = recentNews.map(item => {
         // Limitation intelligente à 70 mots
         const wordLimit = 70;
         const fullText = item.excerpt || '';
@@ -2098,6 +2107,15 @@ function renderNews(news) {
         </article>
     `;
     }).join('');
+}
+
+// Fonction helper pour parser les dates DD/MM/YYYY
+function parseDate(dateStr) {
+    if (!dateStr) return new Date(0);
+    const parts = dateStr.split('/');
+    if (parts.length !== 3) return new Date(0);
+    // Format: DD/MM/YYYY
+    return new Date(parts[2], parts[1] - 1, parts[0]);
 }
 
 // ==========================================

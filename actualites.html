@@ -714,6 +714,27 @@
                 <button class="filter-btn" data-category="gouvernance">
                     <i class="fas fa-balance-scale"></i> Gouvernance
                 </button>
+                <button class="filter-btn" data-category="agriculture">
+                    <i class="fas fa-seedling"></i> Agriculture
+                </button>
+                <button class="filter-btn" data-category="energie">
+                    <i class="fas fa-bolt"></i> Énergie
+                </button>
+                <button class="filter-btn" data-category="environnement">
+                    <i class="fas fa-leaf"></i> Environnement
+                </button>
+                <button class="filter-btn" data-category="emploi">
+                    <i class="fas fa-briefcase"></i> Emploi
+                </button>
+                <button class="filter-btn" data-category="jeunesse">
+                    <i class="fas fa-running"></i> Jeunesse
+                </button>
+                <button class="filter-btn" data-category="transport">
+                    <i class="fas fa-car"></i> Transport
+                </button>
+                <button class="filter-btn" data-category="numerique">
+                    <i class="fas fa-laptop"></i> Numérique
+                </button>
             </div>
         </div>
     </div>
@@ -877,18 +898,54 @@
             
             const featured = allNews[0];
             const iconMap = {
-                'school': 'fa-school',
-                'flag': 'fa-flag',
-                'money': 'fa-money-bill-wave',
-                'hospital': 'fa-hospital',
-                'road': 'fa-road',
-                'users': 'fa-users',
-                'chart': 'fa-chart-line',
-                'graduation': 'fa-graduation-cap',
-                'home': 'fa-home',
                 'news': 'fa-newspaper',
-                'inauguration': 'fa-building',
-                'budget': 'fa-coins'
+                'school': 'fa-school',
+                'graduation': 'fa-graduation-cap',
+                'hospital': 'fa-hospital',
+                'heartbeat': 'fa-heartbeat',
+                'money': 'fa-money-bill-wave',
+                'coins': 'fa-coins',
+                'chart': 'fa-chart-line',
+                'road': 'fa-road',
+                'building': 'fa-building',
+                'home': 'fa-home',
+                'flag': 'fa-flag',
+                'balance': 'fa-balance-scale',
+                'gavel': 'fa-gavel',
+                'users': 'fa-users',
+                'handshake': 'fa-handshake',
+                'seedling': 'fa-seedling',
+                'tractor': 'fa-tractor',
+                'bolt': 'fa-bolt',
+                'leaf': 'fa-leaf',
+                'recycle': 'fa-recycle',
+                'briefcase': 'fa-briefcase',
+                'user-tie': 'fa-user-tie',
+                'futbol': 'fa-futbol',
+                'running': 'fa-running',
+                'theater': 'fa-theater-masks',
+                'music': 'fa-music',
+                'shield': 'fa-shield-alt',
+                'lock': 'fa-lock',
+                'laptop': 'fa-laptop',
+                'wifi': 'fa-wifi',
+                'car': 'fa-car',
+                'bus': 'fa-bus',
+                'plane': 'fa-plane',
+                'ship': 'fa-ship',
+                'globe': 'fa-globe',
+                'map': 'fa-map',
+                'award': 'fa-award',
+                'star': 'fa-star',
+                'rocket': 'fa-rocket',
+                'lightbulb': 'fa-lightbulb',
+                'megaphone': 'fa-bullhorn',
+                'calendar': 'fa-calendar',
+                'check': 'fa-check-circle',
+                'tools': 'fa-tools',
+                'cog': 'fa-cog',
+                'eye': 'fa-eye',
+                'search': 'fa-search'
             };
             
             const categoryMap = {
@@ -899,6 +956,19 @@
                 'infrastructures': 'Infrastructures',
                 'gouvernance': 'Gouvernance',
                 'transparence': 'Transparence',
+                'agriculture': 'Agriculture',
+                'energie': 'Énergie',
+                'environnement': 'Environnement',
+                'emploi': 'Emploi',
+                'jeunesse': 'Jeunesse & Sports',
+                'culture': 'Culture',
+                'securite': 'Sécurité',
+                'justice': 'Justice',
+                'numerique': 'Numérique',
+                'transport': 'Transport',
+                'logement': 'Logement',
+                'social': 'Affaires Sociales',
+                'international': 'Relations Internationales',
                 'autres': 'Autres'
             };
             
@@ -973,18 +1043,54 @@
             }
             
             const iconMap = {
-                'school': 'fa-school',
-                'flag': 'fa-flag',
-                'money': 'fa-money-bill-wave',
-                'hospital': 'fa-hospital',
-                'road': 'fa-road',
-                'users': 'fa-users',
-                'chart': 'fa-chart-line',
-                'graduation': 'fa-graduation-cap',
-                'home': 'fa-home',
                 'news': 'fa-newspaper',
-                'inauguration': 'fa-building',
-                'budget': 'fa-coins'
+                'school': 'fa-school',
+                'graduation': 'fa-graduation-cap',
+                'hospital': 'fa-hospital',
+                'heartbeat': 'fa-heartbeat',
+                'money': 'fa-money-bill-wave',
+                'coins': 'fa-coins',
+                'chart': 'fa-chart-line',
+                'road': 'fa-road',
+                'building': 'fa-building',
+                'home': 'fa-home',
+                'flag': 'fa-flag',
+                'balance': 'fa-balance-scale',
+                'gavel': 'fa-gavel',
+                'users': 'fa-users',
+                'handshake': 'fa-handshake',
+                'seedling': 'fa-seedling',
+                'tractor': 'fa-tractor',
+                'bolt': 'fa-bolt',
+                'leaf': 'fa-leaf',
+                'recycle': 'fa-recycle',
+                'briefcase': 'fa-briefcase',
+                'user-tie': 'fa-user-tie',
+                'futbol': 'fa-futbol',
+                'running': 'fa-running',
+                'theater': 'fa-theater-masks',
+                'music': 'fa-music',
+                'shield': 'fa-shield-alt',
+                'lock': 'fa-lock',
+                'laptop': 'fa-laptop',
+                'wifi': 'fa-wifi',
+                'car': 'fa-car',
+                'bus': 'fa-bus',
+                'plane': 'fa-plane',
+                'ship': 'fa-ship',
+                'globe': 'fa-globe',
+                'map': 'fa-map',
+                'award': 'fa-award',
+                'star': 'fa-star',
+                'rocket': 'fa-rocket',
+                'lightbulb': 'fa-lightbulb',
+                'megaphone': 'fa-bullhorn',
+                'calendar': 'fa-calendar',
+                'check': 'fa-check-circle',
+                'tools': 'fa-tools',
+                'cog': 'fa-cog',
+                'eye': 'fa-eye',
+                'search': 'fa-search'
             };
             
             const categoryMap = {
@@ -995,6 +1101,19 @@
                 'infrastructures': 'Infrastructures',
                 'gouvernance': 'Gouvernance',
                 'transparence': 'Transparence',
+                'agriculture': 'Agriculture',
+                'energie': 'Énergie',
+                'environnement': 'Environnement',
+                'emploi': 'Emploi',
+                'jeunesse': 'Jeunesse & Sports',
+                'culture': 'Culture',
+                'securite': 'Sécurité',
+                'justice': 'Justice',
+                'numerique': 'Numérique',
+                'transport': 'Transport',
+                'logement': 'Logement',
+                'social': 'Affaires Sociales',
+                'international': 'Relations Internationales',
                 'autres': 'Autres'
             };
             

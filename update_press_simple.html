@@ -604,27 +604,14 @@
                                 Catégorie
                             </label>
                             <select class="form-input" id="newsCategory">
-                                <option value="general">⭐ Général</option>
-                                <option value="education">🎓 Éducation</option>
-                                <option value="sante">🏥 Santé</option>
-                                <option value="economie">💰 Économie</option>
-                                <option value="infrastructures">🏗️ Infrastructures</option>
-                                <option value="gouvernance">⚖️ Gouvernance</option>
-                                <option value="transparence">🔍 Transparence</option>
-                                <option value="agriculture">🌾 Agriculture</option>
-                                <option value="energie">⚡ Énergie</option>
-                                <option value="environnement">🌍 Environnement</option>
-                                <option value="emploi">💼 Emploi</option>
-                                <option value="jeunesse">👨‍🎓 Jeunesse & Sports</option>
-                                <option value="culture">🎭 Culture</option>
-                                <option value="securite">🛡️ Sécurité</option>
-                                <option value="justice">⚖️ Justice</option>
-                                <option value="numerique">💻 Numérique</option>
-                                <option value="transport">🚗 Transport</option>
-                                <option value="logement">🏘️ Logement</option>
-                                <option value="social">🤝 Affaires Sociales</option>
-                                <option value="international">🌐 Relations Internationales</option>
-                                <option value="autres">📋 Autres</option>
+                                <option value="general">Général</option>
+                                <option value="education">Éducation</option>
+                                <option value="sante">Santé</option>
+                                <option value="economie">Économie</option>
+                                <option value="infrastructures">Infrastructures</option>
+                                <option value="gouvernance">Gouvernance</option>
+                                <option value="transparence">Transparence</option>
+                                <option value="autres">Autres</option>
                             </select>
                         </div>
                         
@@ -634,54 +621,14 @@
                                 Icône
                             </label>
                             <select class="form-input" id="newsImage">
-                                <option value="news">📰 Actualité générale</option>
-                                <option value="school">🏫 École/Éducation</option>
-                                <option value="graduation">🎓 Diplôme/Formation</option>
-                                <option value="hospital">🏥 Hôpital/Santé</option>
-                                <option value="heartbeat">❤️ Santé publique</option>
-                                <option value="money">💰 Budget/Finance</option>
-                                <option value="coins">💵 Économie</option>
-                                <option value="chart">📈 Croissance</option>
-                                <option value="road">🛣️ Route/Infrastructure</option>
-                                <option value="building">🏢 Bâtiment/Construction</option>
-                                <option value="home">🏠 Logement</option>
+                                <option value="school">🏫 École</option>
+                                <option value="hospital">🏥 Hôpital</option>
+                                <option value="money">💰 Budget</option>
+                                <option value="road">🛣️ Infrastructure</option>
                                 <option value="flag">🚩 Politique</option>
-                                <option value="balance">⚖️ Justice/Droit</option>
-                                <option value="gavel">🔨 Loi/Réglementation</option>
-                                <option value="users">👥 Société/Population</option>
-                                <option value="handshake">🤝 Partenariat</option>
-                                <option value="seedling">🌱 Agriculture</option>
-                                <option value="tractor">🚜 Agriculture moderne</option>
-                                <option value="bolt">⚡ Énergie/Électricité</option>
-                                <option value="leaf">🍃 Environnement</option>
-                                <option value="recycle">♻️ Écologie</option>
-                                <option value="briefcase">💼 Emploi/Travail</option>
-                                <option value="user-tie">👔 Fonction publique</option>
-                                <option value="futbol">⚽ Sports</option>
-                                <option value="running">🏃 Jeunesse</option>
-                                <option value="theater">🎭 Culture</option>
-                                <option value="music">🎵 Arts</option>
-                                <option value="shield">🛡️ Sécurité</option>
-                                <option value="lock">🔒 Cybersécurité</option>
-                                <option value="laptop">💻 Numérique/Tech</option>
-                                <option value="wifi">📡 Télécommunication</option>
-                                <option value="car">🚗 Transport</option>
-                                <option value="bus">🚌 Transport public</option>
-                                <option value="plane">✈️ Aérien</option>
-                                <option value="ship">🚢 Maritime</option>
-                                <option value="globe">🌍 International</option>
-                                <option value="map">🗺️ Territoire</option>
-                                <option value="award">🏆 Récompense/Succès</option>
-                                <option value="star">⭐ Excellence</option>
-                                <option value="rocket">🚀 Innovation</option>
-                                <option value="lightbulb">💡 Idée/Projet</option>
-                                <option value="megaphone">📣 Communication</option>
-                                <option value="calendar">📅 Événement</option>
-                                <option value="check">✅ Validation/Réalisé</option>
-                                <option value="tools">🔧 Maintenance</option>
-                                <option value="cog">⚙️ Système</option>
-                                <option value="eye">👁️ Transparence</option>
-                                <option value="search">🔍 Enquête</option>
+                                <option value="chart">📈 Économie</option>
+                                <option value="users">👥 Société</option>
+                                <option value="graduation">🎓 Formation</option>
                             </select>
                         </div>
                     </div>
@@ -1214,18 +1161,9 @@ function addNews() {
     const dateParts = dateInput.split('-');
     const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
     
-    // Créer l'objet actualité avec ID séquentiel
-    const maxId = NEWS_DATA.reduce((max, item) => {
-        const match = item.id.match(/^(\d+)$/);
-        if (match) {
-            const num = parseInt(match[1], 10);
-            return num > max ? num : max;
-        }
-        return max;
-    }, 0);
-    
+    // Créer l'objet actualité
     const newsItem = {
-        id: String(maxId + 1),
+        id: `news_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         title: title,
         excerpt: excerpt,
         content: content,
@@ -1355,19 +1293,6 @@ function loadNewsFromLocal() {
                 'infrastructures': 'Infrastructures',
                 'gouvernance': 'Gouvernance',
                 'transparence': 'Transparence',
-                'agriculture': 'Agriculture',
-                'energie': 'Énergie',
-                'environnement': 'Environnement',
-                'emploi': 'Emploi',
-                'jeunesse': 'Jeunesse & Sports',
-                'culture': 'Culture',
-                'securite': 'Sécurité',
-                'justice': 'Justice',
-                'numerique': 'Numérique',
-                'transport': 'Transport',
-                'logement': 'Logement',
-                'social': 'Affaires Sociales',
-                'international': 'Relations Internationales',
                 'autres': 'Autres'
             };
             return labels[category] || category;

@@ -2049,6 +2049,14 @@ function renderNews(news) {
     const grid = document.getElementById('newsGrid');
     if (!grid) return;
     
+    // Helper pour parser les dates DD/MM/YYYY
+    const parseDate = (dateStr) => {
+        if (!dateStr) return new Date(0);
+        const parts = dateStr.split('/');
+        if (parts.length !== 3) return new Date(0);
+        return new Date(parts[2], parts[1] - 1, parts[0]);
+    };
+    
     // Trier par date (plus récent en premier) et limiter à 6
     const sortedNews = [...news].sort((a, b) => {
         const dateA = parseDate(a.date);
@@ -2107,15 +2115,6 @@ function renderNews(news) {
         </article>
     `;
     }).join('');
-}
-
-// Fonction helper pour parser les dates DD/MM/YYYY
-function parseDate(dateStr) {
-    if (!dateStr) return new Date(0);
-    const parts = dateStr.split('/');
-    if (parts.length !== 3) return new Date(0);
-    // Format: DD/MM/YYYY
-    return new Date(parts[2], parts[1] - 1, parts[0]);
 }
 
 // ==========================================

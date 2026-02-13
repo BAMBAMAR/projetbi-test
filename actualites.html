@@ -1,27 +1,150 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <!-- Même entête que index.html -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="description" content="Toutes les actualités du Projet Sénégal - Suivi des engagements présidentiels">
     <meta name="keywords" content="actualités Sénégal, news, presse, informations, gouvernance, démocratie">
     <meta name="author" content="ProjetBI">
     <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2D5F3F">
     
     <title>Toutes les Actualités | LE PROJET SÉNÉGAL</title>
     
-    <!-- Mêmes liens CSS que index.html -->
+    <link rel="icon" href="https://projetbi.org/favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Crimson+Pro:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     
     <style>
         /* Styles spécifiques à la page actualités */
+        :root {
+            --primary-color: #2D5F3F;
+            --primary-color-dark: #1F4530;
+            --secondary-color: #B23A3A;
+            --text-primary: #2c3e50;
+            --text-secondary: #7f8c8d;
+            --bg-light: #f8f9fa;
+            --border-color: #e0e0e0;
+        }
+        
+        body {
+            font-family: 'Manrope', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Navigation moderne */
+        .modern-nav {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .modern-nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modern-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        
+        .modern-logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
+        
+        .modern-logo-text span {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+        
+        .modern-menu {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .modern-link {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .modern-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .modern-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary-color);
+            transition: width 0.3s;
+        }
+        
+        .modern-link:hover::after {
+            width: 100%;
+        }
+        
+        .modern-link-cta {
+            background: var(--primary-color);
+            color: white !important;
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+        
+        .modern-link-cta:hover {
+            background: var(--primary-color-dark);
+            transform: translateY(-2px);
+        }
+        
+        .modern-link-cta::after {
+            display: none;
+        }
+        
+        .modern-hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+        
+        .modern-hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            transition: all 0.3s;
+        }
+        
+        /* En-tête de page */
         .page-header {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark));
             color: white;
-            padding: 80px 0 60px;
+            padding: 80px 20px 60px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -42,21 +165,19 @@
         .page-header-content {
             position: relative;
             z-index: 1;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 0 20px;
         }
         
         .page-title {
-            font-size: 3rem;
+            font-size: 2.8rem;
             font-weight: 800;
             margin-bottom: 15px;
-            font-family: 'Manrope', sans-serif;
         }
         
         .page-subtitle {
-            font-size: 1.3rem;
-            opacity: 0.9;
+            font-size: 1.2rem;
+            opacity: 0.95;
             margin-bottom: 30px;
         }
         
@@ -64,8 +185,8 @@
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-bottom: 30px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            flex-wrap: wrap;
         }
         
         .breadcrumb a {
@@ -83,21 +204,68 @@
             opacity: 0.6;
         }
         
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Filtres */
         .news-filters {
             background: white;
-            border-radius: 12px;
-            padding: 25px;
-            margin: -30px auto 40px;
+            border-radius: 16px;
+            padding: 30px;
+            margin: -40px auto 40px;
             max-width: 1200px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
             position: relative;
             z-index: 2;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(45, 95, 63, 0.1);
+        }
+        
+        .search-btn {
+            padding: 14px 30px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .search-btn:hover {
+            background: var(--primary-color-dark);
+            transform: translateY(-2px);
         }
         
         .filter-buttons {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             justify-content: center;
         }
         
@@ -105,51 +273,64 @@
             background: var(--bg-light);
             border: 2px solid var(--border-color);
             color: var(--text-primary);
-            padding: 10px 20px;
-            border-radius: 25px;
+            padding: 12px 24px;
+            border-radius: 30px;
             font-weight: 600;
+            font-size: 0.95rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
         
-        .filter-btn:hover,
+        .filter-btn:hover {
+            background: rgba(45, 95, 63, 0.1);
+            border-color: var(--primary-color);
+        }
+        
         .filter-btn.active {
             background: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
         }
         
+        /* Grille d'actualités */
         .news-grid-page {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px 80px;
         }
         
+        /* Actualité à la une */
         .featured-news {
-            grid-column: 1 / -1;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: 0;
             margin-bottom: 60px;
             background: white;
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
         
         .featured-image {
             height: 100%;
             min-height: 400px;
+            position: relative;
+            overflow: hidden;
         }
         
         .featured-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .featured-news:hover .featured-image img {
+            transform: scale(1.05);
         }
         
         .featured-content {
-            padding: 40px;
+            padding: 50px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -158,334 +339,473 @@
         .featured-badge {
             background: var(--secondary-color);
             color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
+            padding: 10px 24px;
+            border-radius: 25px;
             display: inline-block;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 0.9rem;
             margin-bottom: 20px;
             align-self: flex-start;
         }
         
         .featured-title {
-            font-size: 2rem;
+            font-size: 2.2rem;
             margin: 0 0 20px 0;
             color: var(--text-primary);
             line-height: 1.3;
+            font-weight: 800;
         }
         
         .featured-excerpt {
-            font-size: 1.1rem;
-            line-height: 1.6;
+            font-size: 1.15rem;
+            line-height: 1.7;
             color: var(--text-secondary);
             margin-bottom: 30px;
         }
         
         .featured-meta {
             display: flex;
-            gap: 20px;
+            gap: 25px;
             margin-bottom: 30px;
             color: var(--text-secondary);
+            flex-wrap: wrap;
+        }
+        
+        .featured-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .btn-read-featured {
             background: var(--primary-color);
             color: white;
-            padding: 15px 30px;
-            border-radius: 8px;
+            padding: 16px 35px;
+            border-radius: 30px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             display: inline-flex;
             align-items: center;
             gap: 10px;
             align-self: flex-start;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
         
         .btn-read-featured:hover {
             background: var(--primary-color-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 105, 92, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(45, 95, 63, 0.3);
         }
         
+        /* Grille de toutes les actualités */
         .all-news-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
         }
         
-        .load-more-container {
-            text-align: center;
-            margin-top: 60px;
-            grid-column: 1 / -1;
+        .news-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
         }
         
-        .btn-load-more {
+        .news-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .news-image-real {
+            height: 220px;
+            overflow: hidden;
+        }
+        
+        .news-image-real img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .news-card:hover .news-image-real img {
+            transform: scale(1.1);
+        }
+        
+        .news-icon {
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark));
+            color: white;
+            font-size: 4rem;
+        }
+        
+        .news-content {
+            padding: 25px;
+        }
+        
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .news-category {
+            background: var(--primary-color);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+        
+        .news-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .news-content h3 {
+            font-size: 1.35rem;
+            margin: 0 0 15px 0;
+            color: var(--text-primary);
+            line-height: 1.4;
+            font-weight: 700;
+        }
+        
+        .news-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .news-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .news-footer span {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .news-read-more {
             background: var(--primary-color);
             color: white;
             border: none;
-            padding: 15px 40px;
-            border-radius: 8px;
-            font-size: 1.1rem;
+            padding: 10px 20px;
+            border-radius: 25px;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .news-read-more:hover {
+            background: var(--primary-color-dark);
+            transform: translateX(5px);
+        }
+        
+        /* Bouton charger plus */
+        .load-more-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .load-more-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            transition: all 0.3s ease;
         }
         
-        .btn-load-more:hover {
+        .load-more-btn:hover {
             background: var(--primary-color-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 105, 92, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(45, 95, 63, 0.3);
         }
         
         .no-results {
-            grid-column: 1 / -1;
             text-align: center;
             padding: 60px 20px;
             color: var(--text-secondary);
+            grid-column: 1 / -1;
+        }
+        
+        .no-results i {
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--primary-color-dark);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+        
+        footer a {
+            color: white;
+            text-decoration: underline;
         }
         
         /* Responsive */
-        @media (max-width: 992px) {
-            .featured-news {
-                grid-template-columns: 1fr;
+        @media (max-width: 968px) {
+            .modern-menu {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 8px 20px rgba(0,0,0,0.1);
             }
             
-            .featured-image {
-                min-height: 300px;
-                height: 300px;
+            .modern-menu.active {
+                display: flex;
+            }
+            
+            .modern-hamburger {
+                display: flex;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .featured-news {
+                grid-template-columns: 1fr;
             }
             
             .featured-content {
                 padding: 30px;
             }
             
-            .page-title {
-                font-size: 2.5rem;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .page-title {
-                font-size: 2rem;
-            }
-            
-            .page-subtitle {
-                font-size: 1.1rem;
+            .featured-title {
+                font-size: 1.8rem;
             }
             
             .all-news-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .news-filters {
-                padding: 20px;
-                margin: -20px auto 30px;
+        }
+        
+        @media (max-width: 640px) {
+            .page-title {
+                font-size: 1.6rem;
             }
             
-            .filter-buttons {
-                justify-content: flex-start;
-                overflow-x: auto;
-                padding-bottom: 10px;
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .featured-image {
+                min-height: 250px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation (identique à index.html) -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-                <img src="https://projetbi.org/favicon.png" alt="Logo JJJ" style="height: 38px; width: auto; border-radius: 5px;">
-                <span style="color: #2a6d5d; font-weight: 700; font-size: 1rem; letter-spacing: -0.5px;">LE PROJET : SUIVI DES PROMESSES</span>
+    <!-- Navigation -->
+    <nav class="modern-nav" id="modernNav">
+        <div class="modern-nav-container">
+            <a href="index.html" class="modern-logo">
+                <img src="https://projetbi.org/favicon.png" alt="Logo PROJETBI">
+                <div class="modern-logo-text">
+                    <span>PROJETBI</span>
+                </div>
             </a>
             
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <div class="modern-menu" id="modernMenu">
+                <a href="index.html#header" class="modern-link">Accueil</a>
+                <a href="index.html#stats" class="modern-link">Dashboard</a>
+                <a href="index.html#daily" class="modern-link">Promesse du Jour</a>
+                <a href="index.html#promises" class="modern-link">Engagements</a>
+                <a href="actualites.html" class="modern-link">Actualités</a>
+                <a href="index.html#press" class="modern-link">Revue de Presse</a>
+                <a href="index.html#rating" class="modern-link modern-link-cta">Noter un service</a>
+            </div>
+            
+            <button class="modern-hamburger" id="modernHamburger" aria-label="Menu">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-            
-            <div class="nav-menu" id="navMenu">
-                <a href="index.html" class="nav-link">
-                    <i class="fas fa-home"></i>
-                    Accueil
-                </a>
-                <a href="index.html#stats" class="nav-link">
-                    <i class="fas fa-chart-line"></i>
-                    Dashboard
-                </a>
-                <a href="index.html#promises" class="nav-link">
-                    <i class="fas fa-tasks"></i>
-                    Engagements
-                </a>
-                <a href="#header" class="nav-link active">
-                    <i class="fas fa-newspaper"></i>
-                    Actualités
-                </a>
-                <a href="index.html#press" class="nav-link">
-                    <i class="fas fa-book-open"></i>
-                    Presse
-                </a>
-                <a href="index.html#rating" class="nav-link">
-                    <i class="fas fa-star-half-alt"></i>
-                    Notation
-                </a>
-            </div>
         </div>
     </nav>
-
+    
     <!-- En-tête de page -->
-    <header class="page-header" id="header">
+    <header class="page-header">
         <div class="page-header-content">
+            <h1 class="page-title">Toutes les Actualités</h1>
+            <p class="page-subtitle">Suivez en temps réel l'avancement du Projet Sénégal</p>
             <div class="breadcrumb">
-                <a href="index.html">Accueil</a>
+                <a href="index.html"><i class="fas fa-home"></i> Accueil</a>
                 <span>/</span>
                 <span>Actualités</span>
             </div>
-            
-            <h1 class="page-title">
-                <i class="fas fa-newspaper"></i>
-                Toutes les Actualités
-            </h1>
-            <p class="page-subtitle">
-                Restez informé des dernières avancées et nouvelles du Projet Sénégal
-            </p>
-            
+        </div>
+    </header>
+    
+    <!-- Filtres et recherche -->
+    <div class="container">
+        <div class="news-filters">
             <div class="search-box">
-                <input type="text" id="newsSearch" placeholder="Rechercher une actualité...">
-                <button id="searchBtn">
-                    <i class="fas fa-search"></i>
+                <input type="text" id="newsSearch" class="search-input" placeholder="Rechercher une actualité...">
+                <button id="searchBtn" class="search-btn">
+                    <i class="fas fa-search"></i> Rechercher
+                </button>
+            </div>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-category="all">
+                    <i class="fas fa-globe"></i> Toutes
+                </button>
+                <button class="filter-btn" data-category="general">
+                    <i class="fas fa-star"></i> Général
+                </button>
+                <button class="filter-btn" data-category="education">
+                    <i class="fas fa-graduation-cap"></i> Éducation
+                </button>
+                <button class="filter-btn" data-category="sante">
+                    <i class="fas fa-heartbeat"></i> Santé
+                </button>
+                <button class="filter-btn" data-category="economie">
+                    <i class="fas fa-chart-line"></i> Économie
+                </button>
+                <button class="filter-btn" data-category="infrastructures">
+                    <i class="fas fa-road"></i> Infrastructures
+                </button>
+                <button class="filter-btn" data-category="gouvernance">
+                    <i class="fas fa-balance-scale"></i> Gouvernance
+                </button>
+                <button class="filter-btn" data-category="agriculture">
+                    <i class="fas fa-seedling"></i> Agriculture
+                </button>
+                <button class="filter-btn" data-category="energie">
+                    <i class="fas fa-bolt"></i> Énergie
+                </button>
+                <button class="filter-btn" data-category="environnement">
+                    <i class="fas fa-leaf"></i> Environnement
+                </button>
+                <button class="filter-btn" data-category="emploi">
+                    <i class="fas fa-briefcase"></i> Emploi
+                </button>
+                <button class="filter-btn" data-category="jeunesse">
+                    <i class="fas fa-running"></i> Jeunesse
+                </button>
+                <button class="filter-btn" data-category="transport">
+                    <i class="fas fa-car"></i> Transport
+                </button>
+                <button class="filter-btn" data-category="numerique">
+                    <i class="fas fa-laptop"></i> Numérique
                 </button>
             </div>
         </div>
-    </header>
-
-    <!-- Filtres -->
-    <div class="news-filters">
-        <div class="filter-buttons">
-            <button class="filter-btn active" data-category="all">
-                <i class="fas fa-th-large"></i>
-                Toutes
-            </button>
-            <button class="filter-btn" data-category="gouvernance">
-                <i class="fas fa-flag"></i>
-                Gouvernance
-            </button>
-            <button class="filter-btn" data-category="education">
-                <i class="fas fa-school"></i>
-                Éducation
-            </button>
-            <button class="filter-btn" data-category="sante">
-                <i class="fas fa-hospital"></i>
-                Santé
-            </button>
-            <button class="filter-btn" data-category="economie">
-                <i class="fas fa-chart-line"></i>
-                Économie
-            </button>
-            <button class="filter-btn" data-category="infrastructures">
-                <i class="fas fa-road"></i>
-                Infrastructures
-            </button>
-            <button class="filter-btn" data-category="transparence">
-                <i class="fas fa-eye"></i>
-                Transparence
-            </button>
-        </div>
     </div>
-
-    <!-- Contenu principal -->
-    <main class="news-grid-page">
+    
+    <!-- Actualités -->
+    <div class="news-grid-page">
         <!-- Actualité à la une -->
         <div id="featuredNews" class="featured-news">
-            <!-- Chargé dynamiquement -->
+            <!-- Sera rempli par JavaScript -->
         </div>
-
-        <!-- Grille de toutes les actualités -->
-        <div class="all-news-grid" id="allNewsGrid">
-            <!-- Chargé dynamiquement -->
+        
+        <!-- Toutes les autres actualités -->
+        <div id="allNewsGrid" class="all-news-grid">
+            <!-- Sera rempli par JavaScript -->
         </div>
-
-        <!-- Bouton Charger plus -->
+        
+        <!-- Bouton charger plus -->
         <div class="load-more-container">
-            <button class="btn-load-more" id="loadMoreBtn">
-                <i class="fas fa-sync-alt"></i>
+            <button id="loadMoreBtn" class="load-more-btn" style="display: none;">
+                <i class="fas fa-chevron-down"></i>
                 Charger plus d'actualités
             </button>
         </div>
-    </main>
-
-    <!-- Footer (identique à index.html) -->
+    </div>
+    
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
                     <div class="footer-logo">
-                        <div class="footer-logo-icon">
-                            <i class="fas fa-flag"></i>
-                        </div>
+                        <div class="footer-logo-icon"><i class="fas fa-flag"></i></div>
                         <div>
-                            <h4>LE PROJET SÉNÉGAL</h4>
+                            <h4>LE PROJET PASTEF</h4>
                             <p>Transparence & Redevabilité</p>
                         </div>
                     </div>
                     <p class="footer-description">
-                        Plateforme citoyenne indépendante dédiée au suivi transparent des engagements 
-                        du Projet pour un Sénégal Souverain, Juste et Prospère.
+                        Plateforme citoyenne indépendante dédiée au suivi transparent des engagements du Projet pour un Sénégal Souverain, Juste et Prospère.
                     </p>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Navigation</h4>
-                    <div class="footer-links">
-                        <a href="index.html" class="footer-link">
-                            <i class="fas fa-home"></i>
-                            Accueil
-                        </a>
-                        <a href="index.html#promises" class="footer-link">
-                            <i class="fas fa-tasks"></i>
-                            Engagements
-                        </a>
-                        <a href="actualites.html" class="footer-link">
-                            <i class="fas fa-newspaper"></i>
-                            Actualités
-                        </a>
-                        <a href="index.html#rating" class="footer-link">
-                            <i class="fas fa-star"></i>
-                            Notation
-                        </a>
-                    </div>
                 </div>
                 
                 <div class="footer-col">
                     <h4>Contact</h4>
                     <div class="footer-links">
-                        <a href="/cdn-cgi/l/email-protection#c4a7abaab0a5a7b084b4b6abaea1b0a6adeaabb6a3" class="footer-link">
-                            <i class="fas fa-envelope"></i>
-                            <span class="__cf_email__" data-cfemail="13707c7d677270675363617c797667717a3d7c6174">[email&#160;protected]</span>
-                        </a>
-                        <a href="tel:+221769455253" class="footer-link">
-                            <i class="fas fa-phone"></i>
-                            +221 76 945 52 53
-                        </a>
+                        <a href="/cdn-cgi/l/email-protection#7b0b1a080f1e1d0b0914111e0f19123b1c161a121755181416" class="footer-link"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="e292839196878492908d888796808ba2858f838b8ecc818d8f">[email&#160;protected]</span></a>
+                        <a href="tel:+221769455253" class="footer-link"><i class="fas fa-phone"></i> +221 76 945 52 53</a>
+                        <a href="#" class="footer-link"><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</a>
                     </div>
                 </div>
                 
                 <div class="footer-col">
                     <h4>Suivez-nous</h4>
                     <div class="footer-social">
-                        <a href="#" class="social-btn">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-btn">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-btn">
-                            <i class="fab fa-instagram"></i>
-                        </a>
+                        <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-btn"><i class="fab fa-x-twitter"></i></a>
+                        <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <div class="footer-links">
+                        <a href="index.html#header" class="footer-link"><i class="fas fa-home"></i> Accueil</a>
+                        <a href="index.html#stats" class="footer-link"><i class="fas fa-chart-bar"></i> Dashboard</a>
+                        <a href="index.html#daily" class="footer-link"><i class="fas fa-star"></i> Promesse du Jour</a>
+                        <a href="index.html#promises" class="footer-link"><i class="fas fa-tasks"></i> Engagements</a>
+                        <a href="index.html#news" class="footer-link"><i class="fas fa-newspaper"></i> Actualités</a>
+                        <a href="index.html#press" class="footer-link"><i class="fas fa-image"></i> Revue de Presse</a>
+                        <a href="index.html#rating" class="footer-link"><i class="fas fa-star-half-alt"></i> Noter un Service</a>
                     </div>
                 </div>
             </div>
@@ -493,73 +813,168 @@
             <div class="footer-divider"></div>
             
             <div class="footer-bottom">
+                <div class="footer-about">
+                    <h5><i class="fas fa-exclamation-triangle"></i> Disclaimer</h5>
+                    <p>Cette plateforme est indépendante et à but informatif. Les évaluations sont basées sur des données publiques vérifiables.</p>
+                </div>
                 <p class="footer-copyright">
-                    © 2026 LE PROJET SÉNÉGAL - Tous droits réservés
+                    Développé avec passion pour la transparence démocratique<br>
+                    © 2026 LE PROJET PASTEF - Tous droits réservés
                 </p>
             </div>
         </div>
     </footer>
-
-    <!-- Script -->
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <button class="scroll-to-top" id="scrollToTop"><i class="fas fa-arrow-up"></i></button>
+    
+    <script>
+        // Variables globales
         let allNews = [];
         let currentCategory = 'all';
-        let visibleCount = 6;
-        let currentVisible = 6;
+        let currentVisible = 9; // Nombre d'actualités visibles initialement (sans compter la une)
         
         // Initialisation
-        document.addEventListener('DOMContentLoaded', async () => {
-            await loadNewsData();
+        document.addEventListener('DOMContentLoaded', function() {
+            loadNews();
             setupFilters();
             setupSearch();
             setupNavigation();
-            renderFeaturedNews();
-            renderAllNews();
         });
         
-        // Charger les données
-        async function loadNewsData() {
+        // Charger les actualités depuis news.json
+        async function loadNews() {
             try {
                 const response = await fetch('news.json?v=' + Date.now());
-                if (response.ok) {
-                    const data = await response.json();
-                    allNews = data.news || [];
+                
+                // Vérifier si la réponse est bien du JSON
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    console.warn('⚠️ news.json non trouvé ou format incorrect');
+                    // Utiliser des données de secours
+                    loadFallbackData();
+                    return;
+                }
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data && data.news && Array.isArray(data.news)) {
+                    // Trier par date (plus récent en premier)
+                    allNews = data.news.sort((a, b) => {
+                        const dateA = parseDate(a.date);
+                        const dateB = parseDate(b.date);
+                        return dateB - dateA;
+                    });
+                    
+                    console.log(`✅ ${allNews.length} actualités chargées depuis news.json`);
+                    renderFeaturedNews();
+                    renderAllNews();
                 } else {
-                    allNews = getDefaultNews();
+                    throw new Error('Format de données invalide');
                 }
             } catch (error) {
-                console.error('Erreur chargement news:', error);
-                allNews = getDefaultNews();
+                console.error('Erreur lors du chargement des actualités:', error);
+                // Utiliser des données de secours
+                loadFallbackData();
             }
         }
         
-        function getDefaultNews() {
-            return [
+        // Données de secours si news.json n'est pas disponible
+        function loadFallbackData() {
+            console.log('📦 Utilisation des données de secours');
+            allNews = [
                 {
                     id: '1',
-                    title: 'Lancement officiel de la plateforme',
-                    excerpt: 'La plateforme citoyenne de suivi des engagements est désormais opérationnelle.',
-                    date: '25/01/2026',
-                    source: 'Le Soleil',
-                    category: 'gouvernance',
-                    image: 'flag',
+                    title: 'Bienvenue sur la plateforme',
+                    excerpt: 'Cette page affiche normalement les actualités depuis news.json. Assurez-vous que le fichier news.json est présent dans le même dossier que actualites.html.',
+                    date: new Date().toLocaleDateString('fr-FR', {day: '2-digit', month: '2-digit', year: 'numeric'}).split('/').join('/'),
+                    source: 'ProjetBI',
+                    category: 'general',
+                    image: 'news',
                     image_url: null,
-                    content: 'Contenu détaillé...',
-                    author: 'Rédaction',
-                    read_time: '3 min'
+                    link: '#',
+                    author: 'Système',
+                    read_time: '1 min'
                 }
             ];
+            
+            renderFeaturedNews();
+            renderAllNews();
+            
+            // Afficher un message d'information
+            const grid = document.getElementById('allNewsGrid');
+            if (grid) {
+                const infoBox = document.createElement('div');
+                infoBox.style.cssText = `
+                    grid-column: 1 / -1;
+                    background: #fff3cd;
+                    border: 2px solid #ffc107;
+                    border-radius: 10px;
+                    padding: 20px;
+                    margin-bottom: 20px;
+                    text-align: center;
+                `;
+                infoBox.innerHTML = `
+                    <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: #ff9800; margin-bottom: 10px;"></i>
+                    <h3 style="color: #856404; margin-bottom: 10px;">Fichier news.json non trouvé</h3>
+                    <p style="color: #856404;">
+                        Pour afficher les actualités, assurez-vous que le fichier <strong>news.json</strong> 
+                        est présent dans le même dossier que cette page HTML.
+                    </p>
+                    <p style="color: #856404; margin-top: 10px;">
+                        <strong>📂 Structure attendue :</strong><br>
+                        actualites.html<br>
+                        news.json<br>
+                        style.css
+                    </p>
+                `;
+                grid.prepend(infoBox);
+            }
+        }
+        
+        // Parser une date au format DD/MM/YYYY
+        function parseDate(dateStr) {
+            if (!dateStr) return new Date(0);
+            const parts = dateStr.split('/');
+            if (parts.length !== 3) return new Date(0);
+            return new Date(parts[2], parts[1] - 1, parts[0]);
+        }
+        
+        // Afficher erreur de chargement
+        function showError() {
+            const featuredContainer = document.getElementById('featuredNews');
+            const grid = document.getElementById('allNewsGrid');
+            
+            const errorHTML = `
+                <div class="no-results">
+                    <i class="fas fa-exclamation-triangle fa-3x"></i>
+                    <h3>Erreur de chargement</h3>
+                    <p>Impossible de charger les actualités. Veuillez réessayer plus tard.</p>
+                </div>
+            `;
+            
+            if (featuredContainer) featuredContainer.innerHTML = errorHTML;
+            if (grid) grid.innerHTML = '';
         }
         
         // Configuration des filtres
         function setupFilters() {
             const filterBtns = document.querySelectorAll('.filter-btn');
+            
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
+                    // Retirer la classe active de tous les boutons
                     filterBtns.forEach(b => b.classList.remove('active'));
+                    // Ajouter la classe active au bouton cliqué
                     btn.classList.add('active');
+                    
+                    // Mettre à jour la catégorie
                     currentCategory = btn.dataset.category;
-                    currentVisible = 6;
+                    currentVisible = 9;
+                    
+                    // Réafficher les actualités
                     renderAllNews();
                 });
             });
@@ -571,13 +986,13 @@
             const searchBtn = document.getElementById('searchBtn');
             
             searchBtn.addEventListener('click', () => {
-                currentVisible = 6;
+                currentVisible = 9;
                 renderAllNews();
             });
             
             searchInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
-                    currentVisible = 6;
+                    currentVisible = 9;
                     renderAllNews();
                 }
             });
@@ -585,13 +1000,13 @@
         
         // Navigation
         function setupNavigation() {
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const navMenu = document.getElementById('navMenu');
+            const hamburger = document.getElementById('modernHamburger');
+            const menu = document.getElementById('modernMenu');
             
-            if (mobileMenuBtn && navMenu) {
-                mobileMenuBtn.addEventListener('click', () => {
-                    navMenu.classList.toggle('show');
-                    mobileMenuBtn.classList.toggle('active');
+            if (hamburger && menu) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    menu.classList.toggle('active');
                 });
             }
             
@@ -599,7 +1014,7 @@
             const loadMoreBtn = document.getElementById('loadMoreBtn');
             if (loadMoreBtn) {
                 loadMoreBtn.addEventListener('click', () => {
-                    currentVisible += 6;
+                    currentVisible += 9;
                     renderAllNews();
                 });
             }
@@ -612,18 +1027,54 @@
             
             const featured = allNews[0];
             const iconMap = {
-                'school': 'fa-school',
-                'flag': 'fa-flag',
-                'money': 'fa-money-bill-wave',
-                'hospital': 'fa-hospital',
-                'road': 'fa-road',
-                'users': 'fa-users',
-                'chart': 'fa-chart-line',
-                'graduation': 'fa-graduation-cap',
-                'home': 'fa-home',
                 'news': 'fa-newspaper',
-                'inauguration': 'fa-building',
-                'budget': 'fa-coins'
+                'school': 'fa-school',
+                'graduation': 'fa-graduation-cap',
+                'hospital': 'fa-hospital',
+                'heartbeat': 'fa-heartbeat',
+                'money': 'fa-money-bill-wave',
+                'coins': 'fa-coins',
+                'chart': 'fa-chart-line',
+                'road': 'fa-road',
+                'building': 'fa-building',
+                'home': 'fa-home',
+                'flag': 'fa-flag',
+                'balance': 'fa-balance-scale',
+                'gavel': 'fa-gavel',
+                'users': 'fa-users',
+                'handshake': 'fa-handshake',
+                'seedling': 'fa-seedling',
+                'tractor': 'fa-tractor',
+                'bolt': 'fa-bolt',
+                'leaf': 'fa-leaf',
+                'recycle': 'fa-recycle',
+                'briefcase': 'fa-briefcase',
+                'user-tie': 'fa-user-tie',
+                'futbol': 'fa-futbol',
+                'running': 'fa-running',
+                'theater': 'fa-theater-masks',
+                'music': 'fa-music',
+                'shield': 'fa-shield-alt',
+                'lock': 'fa-lock',
+                'laptop': 'fa-laptop',
+                'wifi': 'fa-wifi',
+                'car': 'fa-car',
+                'bus': 'fa-bus',
+                'plane': 'fa-plane',
+                'ship': 'fa-ship',
+                'globe': 'fa-globe',
+                'map': 'fa-map',
+                'award': 'fa-award',
+                'star': 'fa-star',
+                'rocket': 'fa-rocket',
+                'lightbulb': 'fa-lightbulb',
+                'megaphone': 'fa-bullhorn',
+                'calendar': 'fa-calendar',
+                'check': 'fa-check-circle',
+                'tools': 'fa-tools',
+                'cog': 'fa-cog',
+                'eye': 'fa-eye',
+                'search': 'fa-search'
             };
             
             const categoryMap = {
@@ -634,6 +1085,19 @@
                 'infrastructures': 'Infrastructures',
                 'gouvernance': 'Gouvernance',
                 'transparence': 'Transparence',
+                'agriculture': 'Agriculture',
+                'energie': 'Énergie',
+                'environnement': 'Environnement',
+                'emploi': 'Emploi',
+                'jeunesse': 'Jeunesse & Sports',
+                'culture': 'Culture',
+                'securite': 'Sécurité',
+                'justice': 'Justice',
+                'numerique': 'Numérique',
+                'transport': 'Transport',
+                'logement': 'Logement',
+                'social': 'Affaires Sociales',
+                'international': 'Relations Internationales',
                 'autres': 'Autres'
             };
             
@@ -658,7 +1122,9 @@
                         <span><i class="fas fa-newspaper"></i> ${featured.source}</span>
                         <span><i class="fas fa-tag"></i> ${categoryLabel}</span>
                     </div>
-                    <a href="#" class="btn-read-featured" onclick="openNewsDetail('${featured.id}', event)">
+                    <a href="${featured.link && featured.link !== '#' ? featured.link : '#'}" 
+                       class="btn-read-featured" 
+                       ${featured.link && featured.link !== '#' ? 'target="_blank"' : 'onclick="alert(\'Lien non disponible\'); return false;"'}>
                         <i class="fas fa-book-open"></i>
                         Lire l'article complet
                     </a>
@@ -696,7 +1162,7 @@
             if (visibleNews.length === 0) {
                 grid.innerHTML = `
                     <div class="no-results">
-                        <i class="fas fa-search fa-3x" style="color: #ddd; margin-bottom: 20px;"></i>
+                        <i class="fas fa-search fa-3x"></i>
                         <h3>Aucune actualité trouvée</h3>
                         <p>Essayez avec d'autres critères de recherche</p>
                     </div>
@@ -706,18 +1172,54 @@
             }
             
             const iconMap = {
-                'school': 'fa-school',
-                'flag': 'fa-flag',
-                'money': 'fa-money-bill-wave',
-                'hospital': 'fa-hospital',
-                'road': 'fa-road',
-                'users': 'fa-users',
-                'chart': 'fa-chart-line',
-                'graduation': 'fa-graduation-cap',
-                'home': 'fa-home',
                 'news': 'fa-newspaper',
-                'inauguration': 'fa-building',
-                'budget': 'fa-coins'
+                'school': 'fa-school',
+                'graduation': 'fa-graduation-cap',
+                'hospital': 'fa-hospital',
+                'heartbeat': 'fa-heartbeat',
+                'money': 'fa-money-bill-wave',
+                'coins': 'fa-coins',
+                'chart': 'fa-chart-line',
+                'road': 'fa-road',
+                'building': 'fa-building',
+                'home': 'fa-home',
+                'flag': 'fa-flag',
+                'balance': 'fa-balance-scale',
+                'gavel': 'fa-gavel',
+                'users': 'fa-users',
+                'handshake': 'fa-handshake',
+                'seedling': 'fa-seedling',
+                'tractor': 'fa-tractor',
+                'bolt': 'fa-bolt',
+                'leaf': 'fa-leaf',
+                'recycle': 'fa-recycle',
+                'briefcase': 'fa-briefcase',
+                'user-tie': 'fa-user-tie',
+                'futbol': 'fa-futbol',
+                'running': 'fa-running',
+                'theater': 'fa-theater-masks',
+                'music': 'fa-music',
+                'shield': 'fa-shield-alt',
+                'lock': 'fa-lock',
+                'laptop': 'fa-laptop',
+                'wifi': 'fa-wifi',
+                'car': 'fa-car',
+                'bus': 'fa-bus',
+                'plane': 'fa-plane',
+                'ship': 'fa-ship',
+                'globe': 'fa-globe',
+                'map': 'fa-map',
+                'award': 'fa-award',
+                'star': 'fa-star',
+                'rocket': 'fa-rocket',
+                'lightbulb': 'fa-lightbulb',
+                'megaphone': 'fa-bullhorn',
+                'calendar': 'fa-calendar',
+                'check': 'fa-check-circle',
+                'tools': 'fa-tools',
+                'cog': 'fa-cog',
+                'eye': 'fa-eye',
+                'search': 'fa-search'
             };
             
             const categoryMap = {
@@ -728,6 +1230,19 @@
                 'infrastructures': 'Infrastructures',
                 'gouvernance': 'Gouvernance',
                 'transparence': 'Transparence',
+                'agriculture': 'Agriculture',
+                'energie': 'Énergie',
+                'environnement': 'Environnement',
+                'emploi': 'Emploi',
+                'jeunesse': 'Jeunesse & Sports',
+                'culture': 'Culture',
+                'securite': 'Sécurité',
+                'justice': 'Justice',
+                'numerique': 'Numérique',
+                'transport': 'Transport',
+                'logement': 'Logement',
+                'social': 'Affaires Sociales',
+                'international': 'Relations Internationales',
                 'autres': 'Autres'
             };
             
@@ -743,7 +1258,7 @@
                             </div>
                         ` : `
                             <div class="news-icon">
-                                <i class="fas ${icon} fa-3x"></i>
+                                <i class="fas ${icon}"></i>
                             </div>
                         `}
                         <div class="news-content">
@@ -755,11 +1270,11 @@
                             <p class="news-excerpt">${news.excerpt}</p>
                             <div class="news-footer">
                                 <span><i class="fas fa-newspaper"></i> ${news.source}</span>
-                                <span><i class="fas fa-clock"></i> ${news.read_time}</span>
-                                <button class="news-read-more" onclick="openNewsDetail('${news.id}', event)">
-                                    <i class="fas fa-book-open"></i> Lire la suite
-                                </button>
+                                <span><i class="fas fa-clock"></i> ${news.read_time || '3 min'}</span>
                             </div>
+                            <button class="news-read-more" onclick="window.open('${news.link && news.link !== '#' ? news.link : '#'}', '${news.link && news.link !== '#' ? '_blank' : '_self'}')">
+                                <i class="fas fa-book-open"></i> Lire la suite
+                            </button>
                         </div>
                     </article>
                 `;
@@ -774,10 +1289,27 @@
                 }
             }
         }
-        
-        // Fonction pour ouvrir le détail (à copier depuis app.js)
-        function openNewsDetail(newsId, event) {
-            if (event) event.preventDefault();
-            // Implémentation identique à celle dans app.js
-            console.log('Ouvrir actualité:', newsId);
-          
+    </script>
+    
+    <script>
+        // Scroll to top button
+        const scrollToTop = document.getElementById('scrollToTop');
+        if (scrollToTop) {
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollToTop.classList.add('visible');
+                } else {
+                    scrollToTop.classList.remove('visible');
+                }
+            });
+            
+            scrollToTop.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    </script>
+</body>
+</html>

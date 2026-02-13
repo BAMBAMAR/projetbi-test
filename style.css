@@ -69,6 +69,66 @@
     --radius-full: 9999px;
 }
 
+/* ===== RÈGLES ANTI-OVERFLOW MOBILE ===== */
+@media (max-width: 768px) {
+    * {
+        max-width: 100%;
+    }
+    
+    body, html {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        position: relative;
+    }
+    
+    /* Toutes les sections */
+    section,
+    .section,
+    .stats-section,
+    .promises-section,
+    .news-section,
+    .press-section,
+    .rating-section {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    
+    /* Tous les grids et flex containers */
+    .grid,
+    .flex,
+    [class*="-grid"],
+    [class*="-container"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Tous les éléments qui pourraient déborder */
+    img,
+    video,
+    iframe,
+    table {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* Containers principaux */
+    .container,
+    .header-container,
+    .modern-nav-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}
+
 /* ===== RESET & BASE ===== */
 * {
     margin: 0;
@@ -79,6 +139,8 @@
 html {
     font-size: 16px;
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    max-width: 100%;
 }
 
 body {
@@ -88,6 +150,9 @@ body {
     line-height: 1.6;
     min-height: 100vh;
     padding-top: 70px;
+    overflow-x: hidden;
+    max-width: 100%;
+    position: relative;
 }
 
 .container {
@@ -95,6 +160,7 @@ body {
     margin: 0 auto;
     padding: 0 var(--spacing-lg);
     width: 100%;
+    overflow-x: hidden;
 }
 
 /* ===== PROGRESS INDICATOR ===== */
@@ -375,6 +441,8 @@ body {
     grid-template-columns: 1.1fr 0.9fr; 
     gap: 50px; 
     align-items: center;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .header-text-side {
@@ -484,7 +552,12 @@ body {
     transition: all 0.3s ease; 
     border: 1px solid rgba(0,0,0,0.05);
     flex-shrink: 0;
-    min-width: 280px;
+}
+
+@media (min-width: 769px) {
+    .btn-pdf-modern {
+        min-width: 280px;
+    }
 }
 
 .btn-pdf-modern:hover { 
@@ -531,8 +604,13 @@ body {
     box-shadow: 0 10px 25px rgba(42, 109, 93, 0.25);
     border: 2px solid rgba(255,255,255,0.2);
     backdrop-filter: blur(5px);
-    min-width: 260px;
     flex: 1;
+}
+
+@media (min-width: 769px) {
+    .mini-countdown {
+        min-width: 260px;
+    }
 }
 
 .countdown-header { 
@@ -3722,35 +3800,49 @@ body {
     .header-container { 
         grid-template-columns: 1fr; 
         text-align: center; 
-        padding-top: 40px; 
+        padding: 40px 1rem 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
     
     .header-text-side { 
         order: 2; 
-        margin-top: 50px; 
+        margin-top: 50px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .header-visual-side { 
         order: 1; 
-        justify-content: center; 
+        justify-content: center;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .sonko-wrapper { 
         max-width: 350px; 
-        margin: 0 auto; 
+        margin: 0 auto;
+        width: 100%;
     }
     
     .cta-row {
         flex-direction: column;
         align-items: center;
         gap: 15px;
+        width: 100%;
+        max-width: 100%;
     }
     
     .btn-pdf-modern,
     .mini-countdown {
         width: 100%;
-        max-width: 400px;
+        max-width: 100%;
         min-width: unset;
+        box-sizing: border-box;
     }
     
     .stats-grid {
@@ -3822,16 +3914,43 @@ body {
     
     .header {
         padding: 120px 0 60px 0;
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .header-container {
+        padding: 0 1rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .header-text-side,
+    .header-visual-side,
+    .cta-row,
+    .btn-pdf-modern,
+    .mini-countdown {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     /* PROMESSE DU JOUR - RESPONSIVE MOBILE */
     .daily-promise-card {
         padding: var(--spacing-lg);
-        margin: 0 var(--spacing-sm);
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .daily-newspaper-header {
@@ -3888,11 +4007,17 @@ body {
     .promises-grid {
         grid-template-columns: 1fr;
         gap: var(--spacing-md);
-        padding: 0 var(--spacing-sm);
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .promise-card {
         padding: var(--spacing-md);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .promise-header {
@@ -4024,22 +4149,48 @@ body {
     /* En-tête */
     .header {
         padding: 100px 0 40px 0;
+        overflow-x: hidden;
+    }
+    
+    .header-container {
+        padding: 0 0.75rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .header-text-side,
+    .header-visual-side {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        padding: 0;
     }
     
     /* Stats */
     .stats-grid {
         grid-template-columns: 1fr;
         gap: var(--spacing-sm);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        padding: 0;
     }
     
     .stat-card {
         padding: var(--spacing-md);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     /* Promesse du jour */
     .daily-promise-card {
         padding: var(--spacing-md);
         margin: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .article-title {
@@ -4167,6 +4318,10 @@ body {
     .btn-pdf-modern {
         flex-direction: column;
         text-align: center;
+        width: 100%;
+        max-width: 100%;
+        min-width: unset;
+        box-sizing: border-box;
     }
     
     .btn-icon {
@@ -4176,6 +4331,10 @@ body {
     
     .mini-countdown {
         padding: 15px;
+        width: 100%;
+        max-width: 100%;
+        min-width: unset;
+        box-sizing: border-box;
     }
     
     .c-item span {
@@ -5407,5 +5566,39 @@ html, body {
         min-height: 38px !important;
         padding: 0 14px !important;
         font-size: 0.85rem !important;
+    }
+}
+
+/* ===== RÈGLES ANTI-OVERFLOW POUR PETITS ÉCRANS (480px) ===== */
+@media (max-width: 480px) {
+    body, html {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+    }
+    
+    .container,
+    .header-container,
+    section,
+    [class*="-section"] {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+    
+    /* Forcer tous les éléments larges à rester dans les limites */
+    * {
+        max-width: 100vw !important;
+    }
+    
+    /* Éléments flexibles */
+    .cta-row,
+    .btn-pdf-modern,
+    .mini-countdown,
+    .stat-card,
+    .promise-card,
+    .news-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
     }
 }

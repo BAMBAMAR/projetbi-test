@@ -2049,24 +2049,11 @@ function renderNews(news) {
     const grid = document.getElementById('newsGrid');
     if (!grid) return;
     
-    // Helper pour parser les dates DD/MM/YYYY
-    const parseDate = (dateStr) => {
-        if (!dateStr) return new Date(0);
-        const parts = dateStr.split('/');
-        if (parts.length !== 3) return new Date(0);
-        return new Date(parts[2], parts[1] - 1, parts[0]);
-    };
+    // Tri par date (plus récentes en premier) et limitation à 6 actualités
+    const parseDate = (d) => { const p = d.split('/'); return new Date(p[2], p[1] - 1, p[0]); };
+    const sortedNews = [...news].sort((a, b) => parseDate(b.date) - parseDate(a.date)).slice(0, 6);
     
-    // Trier par date (plus récent en premier) et limiter à 6
-    const sortedNews = [...news].sort((a, b) => {
-        const dateA = parseDate(a.date);
-        const dateB = parseDate(b.date);
-        return dateB - dateA;
-    });
-    
-    const recentNews = sortedNews.slice(0, 6);
-    
-    grid.innerHTML = recentNews.map(item => {
+    grid.innerHTML = sortedNews.map(item => {
         // Limitation intelligente à 70 mots
         const wordLimit = 70;
         const fullText = item.excerpt || '';

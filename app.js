@@ -2049,7 +2049,7 @@ function renderNews(news) {
     const grid = document.getElementById('newsGrid');
     if (!grid) return;
     
-    // Tri par date (plus récentes en premier) et limitation à 6 actualités
+    // Tri par date (plus récent en premier) et limite à 6
     const parseDate = (d) => { const p = d.split('/'); return new Date(p[2], p[1] - 1, p[0]); };
     const sortedNews = [...news].sort((a, b) => parseDate(b.date) - parseDate(a.date)).slice(0, 6);
     

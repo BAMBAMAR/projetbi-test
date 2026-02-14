@@ -4,930 +4,748 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="description" content="Plateforme citoyenne indépendante pour suivre en temps réel l'avancement des engagements du Président Bassirou Diomaye Faye.">
-    <meta name="keywords" content="Sénégal, Pastef, Ousmane SONKO, promesses électorales, Bassirou Diomaye Faye, transparence, gouvernance, suivi engagements">
+    <meta name="keywords" content="Sénégal, Pastef,Ousmane SONKO,promesses électorales, Bassirou Diomaye Faye, transparence, gouvernance, suivi engagements">
     <meta name="author" content="ProjetBI">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#2D5F3F">
+    
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://projetbi.org/">
     <meta property="og:title" content="LE PROJET PASTEF | Suivi des Engagements Présidentiels">
-    <meta property="og:description" content="Plateforme citoyenne indépendante pour suivre en temps réel l'avancement des engagements du projet PASTEF.">
+    <meta property="og:description" content="Plateforme citoyenne indépendante pour suivre en temps réel l'avancement des engagements du projet PASTEF décliné dans le programme du Président Bassirou Diomaye Faye.">
     <meta property="og:image" content="https://projetbi.org/sonko.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://projetbi.org/">
+    <meta property="twitter:title" content="LE PROJET PASTEF | Suivi des Engagements Présidentiels">
+    <meta property="twitter:description" content="Plateforme citoyenne indépendante pour suivre en temps réel l'avancement des engagements de PASTEF tiré du livre programme du Président  Bassirou Diomaye Faye.">
+    <meta property="twitter:image" content="https://projetbi.org/sonko.jpg">
+    
     <title>LE PROJET PASTEF | Suivi des Engagements Présidentiels</title>
+    
     <link rel="icon" href="https://projetbi.org/favicon.png" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Fonts - Version moderne -->
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <link rel="stylesheet" href="style.css">
-
-    <style>
-    /* ── Corrections ciblées qui ne remplacent PAS style.css ── */
-
-    /* Prévenir le scroll horizontal sur mobile */
-    html, body { overflow-x: hidden; max-width: 100%; }
-
-    /* ── NAV MOBILE CORRIGÉ ── */
-    @media (max-width: 768px) {
-        .nav-links {
-            display: none !important;
-            position: fixed !important;
-            top: var(--nav-height, 72px) !important;
-            left: 0 !important; right: 0 !important;
-            height: calc(100dvh - var(--nav-height, 72px)) !important;
-            background: white !important;
-            flex-direction: column !important;
-            padding: 1.5rem !important;
-            gap: .25rem !important;
-            overflow-y: auto !important;
-            z-index: 998 !important;
-            border-top: 3px solid var(--primary-color, #2D5F3F) !important;
-            box-shadow: 0 8px 40px rgba(0,0,0,.18) !important;
-        }
-        .nav-links.active,
-        .nav-links.open,
-        .nav-links.show {
-            display: flex !important;
-        }
-        .modernMenu.active {
-            display: flex !important;
-        }
-
-        /* Liens dans menu mobile lisibles */
-        .nav-links a,
-        .modern-link {
-            font-size: 1.05rem !important;
-            padding: .85rem 1.1rem !important;
-            border-radius: 10px !important;
-            color: #0D1B14 !important;
-            font-weight: 600 !important;
-            border-bottom: 1px solid #eee !important;
-            display: block !important;
-            width: 100% !important;
-        }
-        .nav-links a:hover, .modern-link:hover {
-            background: #f0f7f3 !important;
-            color: var(--primary-color, #2D5F3F) !important;
-        }
-
-        /* Promises grid sans débordement */
-        .promises-grid,
-        #promisesGrid {
-            grid-template-columns: 1fr !important;
-            overflow-x: hidden !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            box-sizing: border-box !important;
-        }
-        .promise-card,
-        .promise-item {
-            width: 100% !important;
-            max-width: 100% !important;
-            box-sizing: border-box !important;
-            overflow: hidden !important;
-        }
-        /* Container no overflow */
-        .container, .section-content {
-            overflow-x: hidden !important;
-            max-width: 100% !important;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .promises-grid, #promisesGrid {
-            grid-template-columns: 1fr !important;
-        }
-    }
-
-    /* ── BOUTON AFFICHER PLUS — toujours visible ── */
-    #showMoreBtn, #showLessBtn {
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: .5rem !important;
-    }
-    /* Quand app.js le cache explicitement via style.display='none', on respecte */
-    #showMoreBtn[style*="display: none"],
-    #showLessBtn[style*="display: none"] {
-        display: none !important;
-    }
-
-    /* ── SECTION wrapper pour éviter overflow mobile ── */
-    section, .section {
-        overflow-x: hidden !important;
-        max-width: 100vw !important;
-    }
-
-    /* ── Notifications container ── */
-    #notification-container {
-        position: fixed;
-        top: 80px; right: 1.5rem;
-        z-index: 10000;
-        display: flex; flex-direction: column; gap: .75rem;
-    }
-    </style>
+    
+    <link rel="stylesheet" href="style-new.css">
 </head>
 <body>
 
-<!-- ════════════════════════════════════════════
-     NAVBAR — IDs: modernNav, modernMenu, modernHamburger
-     (+ navbar, progressIndicator pour app.js scroll)
-     ════════════════════════════════════════════ -->
-<div id="progressIndicator" style="position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,#2D5F3F,#C9A84C);z-index:9999;transition:width .1s;"></div>
-
-<nav class="navbar" id="navbar" id="modernNav">
-    <div class="container">
-        <div class="nav-content">
-            <a href="#" class="nav-logo">
-                <img src="https://projetbi.org/favicon.png" alt="PROJETBI" class="nav-logo-img" onerror="this.style.display='none'">
-                <span class="nav-logo-text">PROJETBI</span>
-            </a>
-
-            <!-- KPI Carousel (app.js) -->
-            <div class="kpi-carousel-wrapper" style="flex:1;display:flex;align-items:center;justify-content:center;">
-                <div id="kpiCarousel" class="kpi-carousel" style="min-width:160px;text-align:center;"></div>
-                <button id="kpiPrev" class="kpi-btn" title="Précédent" style="background:none;border:none;cursor:pointer;color:#fff;padding:.25rem .5rem;"><i class="fas fa-chevron-left"></i></button>
-                <button id="kpiNext" class="kpi-btn" title="Suivant" style="background:none;border:none;cursor:pointer;color:#fff;padding:.25rem .5rem;"><i class="fas fa-chevron-right"></i></button>
-                <button id="kpiAutoPlayToggle" class="kpi-btn" title="Pause/Play" style="background:none;border:none;cursor:pointer;color:#fff;padding:.25rem .5rem;"><i class="fas fa-pause"></i></button>
-            </div>
-
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#accueil" class="modern-link active">🏠 Accueil</a></li>
-                <li><a href="#statistiques" class="modern-link">📊 Tableau de bord</a></li>
-                <li><a href="#promesse-du-jour" class="modern-link">📰 Promesse du Jour</a></li>
-                <li><a href="#promises" class="modern-link">📋 Engagements</a></li>
-                <li><a href="#actualites" class="modern-link">📰 Actualités</a></li>
-                <li><a href="#presse" class="modern-link">🗞️ Revue de Presse</a></li>
-                <li><a href="#notation" class="modern-link">⭐ Évaluer</a></li>
-                <li><a href="actualites.html" class="modern-link">🔗 Toutes Actualités</a></li>
-            </ul>
-
-            <button class="hamburger" id="modernHamburger" aria-label="Menu" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </div>
-</nav>
-
-<!-- Menu mobile overlay (app.js attend id=modernMenu) -->
-<div id="modernMenu" class="mobile-menu-overlay" style="display:none;position:fixed;top:72px;left:0;right:0;height:calc(100vh - 72px);background:white;z-index:997;overflow-y:auto;padding:1.5rem;border-top:3px solid #2D5F3F;">
-    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.25rem;">
-        <li><a href="#accueil" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">🏠 Accueil</a></li>
-        <li><a href="#statistiques" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📊 Tableau de bord</a></li>
-        <li><a href="#promesse-du-jour" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📰 Promesse du Jour</a></li>
-        <li><a href="#promises" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📋 Engagements</a></li>
-        <li><a href="#actualites" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📰 Actualités</a></li>
-        <li><a href="#presse" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">🗞️ Revue de Presse</a></li>
-        <li><a href="#notation" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#2D5F3F;font-weight:700;text-decoration:none;background:#eef6f1;border-radius:100px;text-align:center;margin-top:.75rem;">⭐ Évaluer un service</a></li>
-        <li><a href="actualites.html" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#B23A3A;font-weight:700;text-decoration:none;border-bottom:1px solid #eee;">🔗 Toutes les Actualités →</a></li>
-    </ul>
-</div>
-
-<!-- ════════════════════════════════════════════
-     HERO
-     ════════════════════════════════════════════ -->
-<section class="hero-section" id="accueil">
-    <div class="hero-content">
-        <div class="hero-badge">
-            <span class="live-dot"></span>
-            Plateforme citoyenne indépendante
-        </div>
-        <h1 class="hero-title">
-            Le Projet pour un Sénégal<br>
-            <span class="highlight">Souverain, Juste &amp; Prospère</span>
-        </h1>
-        <p class="hero-subtitle">
-            Suivi en temps réel des engagements de PASTEF issus du programme du Président
-            <strong>Bassirou Diomaye Faye</strong>.
-            La transparence au service de la démocratie.
-        </p>
-        <div class="hero-actions">
-            <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="btn btn-primary" download target="_blank">
-                <i class="fas fa-file-pdf"></i> Télécharger le Programme
-            </a>
-            <a href="#statistiques" class="btn btn-secondary">
-                <i class="fas fa-chart-bar"></i> Voir le Dashboard
+    <!-- Sidebar Navigation (Desktop) -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="#hero" class="sidebar-logo">
+                <img src="https://projetbi.org/favicon.png" alt="Logo PROJETBI">
+                <span>PROJETBI</span>
             </a>
         </div>
-        <div class="hero-countdown">
-            <div class="countdown-label">
-                <i class="fas fa-hourglass-half"></i>
-                <span>TEMPS RESTANT DU MANDAT</span>
-            </div>
-            <div class="countdown-grid">
-                <div class="countdown-item">
-                    <span class="countdown-number" id="days">000</span>
-                    <span class="countdown-unit">Jours</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="countdown-number" id="hours">00</span>
-                    <span class="countdown-unit">Heures</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="countdown-number" id="minutes">00</span>
-                    <span class="countdown-unit">Min</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="countdown-number" id="seconds">00</span>
-                    <span class="countdown-unit">Sec</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="hero-image">
-        <div class="hero-image-frame">
-            <img src="sonko.jpg" alt="Ousmane SONKO" onerror="this.parentElement.style.background='linear-gradient(135deg,#2D5F3F,#1A3D28)'">
-            <div class="hero-image-badge">PASTEF 2024–2029</div>
-            <div class="hero-image-ref"><i class="fas fa-calendar-check"></i> Réf : 02 AVRIL 2024</div>
-        </div>
-    </div>
-</section>
-
-<!-- ════════════════════════════════════════════
-     STATS / KPIs
-     IDs attendus par app.js: total, realise, encours, non-lance, retard,
-     avec-maj, taux-realisation, moyenne-notes, votes-total, delai-moyen,
-     domaine-principal, domaine-count, total-percentage, realise-percentage,
-     encours-percentage, non-lance-percentage, retard-percentage, avec-maj-percentage
-     ════════════════════════════════════════════ -->
-<section class="stats-section" id="statistiques">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">
-                <i class="fas fa-chart-bar"></i>
-                Tableau de Bord
-            </h2>
-            <p class="section-subtitle">État d'avancement des engagements — <span id="current-date"></span></p>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-card stat-total">
-                <div class="stat-icon"><i class="fas fa-tasks"></i></div>
-                <div class="stat-content">
-                    <div class="stat-value" id="total">—</div>
-                    <div class="stat-label">Total Engagements</div>
-                    <div class="stat-percentage" id="total-percentage">100%</div>
-                </div>
-            </div>
-            <div class="stat-card stat-success">
-                <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
-                <div class="stat-content">
-                    <div class="stat-value" id="realise">—</div>
-                    <div class="stat-label">✅ Réalisés</div>
-                    <div class="stat-percentage" id="realise-percentage">0%</div>
-                </div>
-            </div>
-            <div class="stat-card stat-progress">
-                <div class="stat-icon"><i class="fas fa-sync-alt"></i></div>
-                <div class="stat-content">
-                    <div class="stat-value" id="encours">—</div>
-                    <div class="stat-label">🔄 En Cours</div>
-                    <div class="stat-percentage" id="encours-percentage">0%</div>
-                </div>
-            </div>
-            <div class="stat-card stat-pending">
-                <div class="stat-icon"><i class="fas fa-clock"></i></div>
-                <div class="stat-content">
-                    <div class="stat-value" id="non-lance">—</div>
-                    <div class="stat-label">⏳ Non Lancés</div>
-                    <div class="stat-percentage" id="non-lance-percentage">0%</div>
-                </div>
-            </div>
-            <div class="stat-card stat-warning">
-                <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
-                <div class="stat-content">
-                    <div class="stat-value" id="retard">—</div>
-                    <div class="stat-label">⚠️ En Retard</div>
-                    <div class="stat-percentage" id="retard-percentage">0%</div>
-                </div>
-            </div>
-            <div class="stat-card stat-rate">
-                <div class="stat-icon"><i class="fas fa-percentage"></i></div>
-                <div class="stat-content">
-                    <div class="stat-value" id="taux-realisation">—</div>
-                    <div class="stat-label">📈 Taux Réalisation</div>
-                </div>
-            </div>
-            <div class="stat-card stat-time">
-                <div class="stat-icon"><i class="fas fa-hourglass-half"></i></div>
-                <div class="stat-content">
-                    <div class="stat-value" id="delai-moyen">—</div>
-                    <div class="stat-label">⏱️ Retard Moyen</div>
-                </div>
-            </div>
-            <div class="stat-card stat-rating">
-                <div class="stat-icon"><i class="fas fa-star"></i></div>
-                <div class="stat-content">
-                    <div class="stat-value" id="moyenne-notes">—</div>
-                    <div class="stat-label">⭐ Note Citoyenne</div>
-                    <div class="stat-percentage" id="votes-total">0 votes</div>
-                </div>
-            </div>
-            <div class="stat-card stat-update">
-                <div class="stat-icon"><i class="fas fa-history"></i></div>
-                <div class="stat-content">
-                    <div class="stat-value" id="avec-maj">—</div>
-                    <div class="stat-label">📋 Avec MAJ</div>
-                    <div class="stat-percentage" id="avec-maj-percentage">0%</div>
-                </div>
-            </div>
-            <div class="stat-card stat-domain">
-                <div class="stat-icon"><i class="fas fa-layer-group"></i></div>
-                <div class="stat-content">
-                    <div class="stat-value" style="font-size:1.1rem" id="domaine-principal">—</div>
-                    <div class="stat-label">🏛️ Domaine Principal</div>
-                    <div class="stat-percentage" id="domaine-count">0 engagements</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ════════════════════════════════════════════
-     PROMESSE DU JOUR
-     ID attendu: dailyPromise
-     ════════════════════════════════════════════ -->
-<section class="daily-promise-section" id="promesse-du-jour">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">
-                <i class="fas fa-newspaper"></i>
-                Promesse du Jour
-            </h2>
-            <p class="section-subtitle">Chaque jour, découvrez un engagement présidentiel</p>
-        </div>
-        <div id="dailyPromise">
-            <div class="loading-state">
-                <div class="spinner"></div>
-                <p>Chargement de la promesse du jour…</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ════════════════════════════════════════════
-     CAROUSEL DES PROMESSES EN VEDETTE
-     IDs: promisesCarouselGrid, carouselPrevBtn, carouselNextBtn,
-          carouselAutoPlayToggle, carouselDots
-     ════════════════════════════════════════════ -->
-<section class="promises-carousel-section" id="promesses-vedette">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">
+        
+        <nav class="sidebar-nav">
+            <a href="#hero" class="sidebar-link active" data-section="hero">
+                <i class="fas fa-home"></i>
+                <span>Accueil</span>
+            </a>
+            <a href="#stats" class="sidebar-link" data-section="stats">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#daily" class="sidebar-link" data-section="daily">
                 <i class="fas fa-star"></i>
-                Promesses en Vedette
-            </h2>
-            <div class="section-controls">
-                <button id="carouselPrevBtn" class="control-btn" title="Précédent">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button id="carouselAutoPlayToggle" class="control-btn" title="Pause/Play">
-                    <i class="fas fa-pause"></i>
-                </button>
-                <button id="carouselNextBtn" class="control-btn" title="Suivant">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
-        <div id="promisesCarouselGrid" class="promises-carousel-grid">
-            <div class="loading-state">
-                <div class="spinner"></div>
-                <p>Chargement…</p>
-            </div>
-        </div>
-        <div id="carouselDots" class="carousel-dots"></div>
-    </div>
-</section>
-
-<!-- ════════════════════════════════════════════
-     TOUS LES ENGAGEMENTS
-     IDs: promisesGrid, filterToggleBtn, filtersSection,
-          filter-search, filter-status, filter-domain,
-          results-count, showMoreBtn, showLessBtn, resetFilters
-     ════════════════════════════════════════════ -->
-<section class="promises-section" id="promises">
-    <div class="container">
-        <div class="section-header">
-            <div>
-                <h2 class="section-title">
-                    <i class="fas fa-list-check"></i>
-                    Tous les Engagements
-                </h2>
-                <p class="section-subtitle" id="results-count">Chargement…</p>
-            </div>
-            <div class="section-controls">
-                <button id="filterToggleBtn" class="btn btn-outline-sm">
-                    <i class="fas fa-filter"></i> Filtres
-                </button>
-            </div>
-        </div>
-
-        <div id="filtersSection" class="filters-section" style="display:none;">
-            <div class="filter-bar">
-                <div class="filter-search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="filter-search" placeholder="Rechercher un engagement…">
-                </div>
-                <select id="filter-status" class="filter-select">
-                    <option value="">Tous les statuts</option>
-                    <option value="Réalisé">✅ Réalisé</option>
-                    <option value="En cours">🔄 En cours</option>
-                    <option value="Non lancé">⏳ Non lancé</option>
-                    <option value="En retard">⚠️ En retard</option>
-                </select>
-                <select id="filter-domain" class="filter-select">
-                    <option value="">Tous les domaines</option>
-                </select>
-                <button id="resetFilters" class="btn btn-outline-sm">
-                    <i class="fas fa-undo"></i> Réinitialiser
-                </button>
-            </div>
-        </div>
-
-        <div id="promisesGrid" class="promises-grid">
-            <div class="loading-state" style="grid-column:1/-1">
-                <div class="spinner"></div>
-                <p>Chargement des engagements…</p>
-            </div>
-        </div>
-
-        <div class="promises-actions" style="display:flex;gap:1rem;justify-content:center;margin-top:2rem;flex-wrap:wrap;">
-            <button id="showMoreBtn" class="btn btn-primary" style="display:none;">
-                <i class="fas fa-plus"></i> Voir plus d'engagements
-            </button>
-            <button id="showLessBtn" class="btn btn-secondary" style="display:none;">
-                <i class="fas fa-minus"></i> Réduire
-            </button>
-        </div>
-    </div>
-</section>
-
-<!-- ════════════════════════════════════════════
-     ACTUALITÉS
-     ID attendu: newsGrid (app.js écrit dans getElementById('newsGrid'))
-     ════════════════════════════════════════════ -->
-<section class="news-section" id="actualites">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">
-                <i class="fas fa-newspaper"></i>
-                Actualités
-            </h2>
-            <a href="actualites.html" class="btn btn-outline-sm">
-                Voir tout <i class="fas fa-arrow-right"></i>
+                <span>Promesse du Jour</span>
             </a>
-        </div>
-        <!-- ID = newsGrid (exact ID app.js uses) -->
-        <div id="newsGrid" class="news-grid">
-            <div class="loading-state" style="grid-column:1/-1">
-                <div class="spinner"></div>
-                <p>Chargement des actualités…</p>
-            </div>
-        </div>
-
-        <!-- Modal actualité -->
-        <div id="newsModal" class="news-detail-modal" style="display:none;">
-            <div id="newsModalBody" class="news-detail-content"></div>
-        </div>
-    </div>
-</section>
-
-<!-- ════════════════════════════════════════════
-     REVUE DE PRESSE
-     IDs: pressCarousel, prevBtn, nextBtn, autoPlayToggle,
-          carouselIndicators, newspapersGrid
-     ════════════════════════════════════════════ -->
-<section class="press-section" id="presse">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">
+            <a href="#promises" class="sidebar-link" data-section="promises">
+                <i class="fas fa-tasks"></i>
+                <span>Engagements</span>
+            </a>
+            <a href="#news" class="sidebar-link" data-section="news">
                 <i class="fas fa-newspaper"></i>
-                Revue de Presse
-            </h2>
-            <div class="section-controls">
-                <button id="prevBtn" class="control-btn"><i class="fas fa-chevron-left"></i></button>
-                <button id="autoPlayToggle" class="control-btn"><i class="fas fa-pause"></i></button>
-                <button id="nextBtn" class="control-btn"><i class="fas fa-chevron-right"></i></button>
+                <span>Actualités</span>
+            </a>
+            <a href="#press" class="sidebar-link" data-section="press">
+                <i class="fas fa-file-alt"></i>
+                <span>Revue de Presse</span>
+            </a>
+            <a href="#rating" class="sidebar-link sidebar-link-cta" data-section="rating">
+                <i class="fas fa-star-half-alt"></i>
+                <span>Noter un service</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="sidebar-social">
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
             </div>
         </div>
+    </aside>
 
-        <div id="pressCarousel" class="press-carousel">
-            <div class="loading-state">
-                <div class="spinner"></div>
-                <p>Chargement de la presse…</p>
-            </div>
+    <!-- Mobile Header -->
+    <header class="mobile-header" id="mobileHeader">
+        <button class="mobile-menu-toggle" id="mobileMenuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="mobile-logo">
+            <img src="https://projetbi.org/favicon.png" alt="Logo">
+            <span>PROJETBI</span>
         </div>
-        <div id="carouselIndicators" class="carousel-indicators"></div>
-
-        <div class="section-header" style="margin-top:3rem">
-            <h3 class="section-title" style="font-size:1.3rem">
-                <i class="fas fa-th-large"></i> Tous les Quotidiens
-            </h3>
+        <div class="mobile-actions">
+            <button class="mobile-search-btn"><i class="fas fa-search"></i></button>
         </div>
-        <div id="newspapersGrid" class="newspapers-grid">
-            <div class="loading-state" style="grid-column:1/-1">
-                <div class="spinner"></div>
-            </div>
-        </div>
-    </div>
-</section>
+    </header>
 
-<!-- ════════════════════════════════════════════
-     NOTATION DES SERVICES
-     IDs: ratingForm, service, service-category,
-          accessibility, welcome, efficiency, transparency, comment,
-          totalVotes, totalServices, avgRating, topServices, recentRatings
-     ════════════════════════════════════════════ -->
-<section class="rating-section" id="notation">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">
-                <i class="fas fa-star"></i>
-                Évaluation des Services Publics
-            </h2>
-            <p class="section-subtitle">Votre avis compte pour améliorer les services</p>
-        </div>
-
-        <div class="rating-layout">
-
-            <!-- Formulaire de notation -->
-            <div class="rating-form-card">
-                <div class="rating-form-header">
-                    <h3><i class="fas fa-pencil-alt"></i> Donnez votre avis</h3>
-                    <p>Évaluez votre expérience avec un service public sénégalais</p>
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- Hero Section -->
+        <section class="hero-section" id="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-tag">
+                        <span class="tag-dot"></span>
+                        Plateforme Citoyenne Indépendante
+                    </div>
+                    
+                    <h1 class="hero-title">
+                        Le projet pour un Sénégal
+                        <span class="title-highlight">Souverain, Juste et Prospère</span>
+                    </h1>
+                    
+                    <p class="hero-description">
+                        Suivi en temps réel des engagements de Pastef issus du programme  
+                        du Président <strong>Bassirou Diomaye Faye</strong>. 
+                        La transparence au service de la démocratie.
+                    </p>
+                    
+                    <div class="hero-actions">
+                        <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="btn-primary" download target="_blank">
+                            <i class="fas fa-download"></i>
+                            <span>Télécharger le Programme (PDF)</span>
+                        </a>
+                        <a href="#stats" class="btn-secondary">
+                            <span>Explorer le Dashboard</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Countdown Compact -->
+                    <div class="hero-countdown">
+                        <div class="countdown-label">
+                            <i class="fas fa-clock"></i>
+                            Temps restant du mandat
+                        </div>
+                        <div class="countdown-grid">
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="days">000</span>
+                                <span class="countdown-unit">Jours</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="hours">00</span>
+                                <span class="countdown-unit">H</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="minutes">00</span>
+                                <span class="countdown-unit">M</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="seconds">00</span>
+                                <span class="countdown-unit">S</span>
+                            </div>
+                        </div>
+                        <div class="countdown-ref">
+                            <i class="fas fa-calendar-check"></i>
+                            Début du mandat : 02 Avril 2024
+                        </div>
+                    </div>
                 </div>
-                <div class="rating-form-body">
-                    <form id="ratingForm">
-                        <div class="form-group">
-                            <label class="form-label">
-                                <i class="fas fa-folder"></i> Catégorie de service *
-                            </label>
-                            <select class="form-select" id="service-category" name="service-category" required>
-                                <option value="">Choisissez une catégorie</option>
-                                <option value="sante">🏥 Santé &amp; Hôpitaux</option>
-                                <option value="education">🎓 Éducation &amp; Formation</option>
-                                <option value="securite">👮 Sécurité &amp; Défense</option>
-                                <option value="justice">⚖️ Justice &amp; Droit</option>
-                                <option value="administration">🏛️ Administration &amp; État Civil</option>
-                                <option value="finances">💰 Finances &amp; Impôts</option>
-                                <option value="transports">🚌 Transports &amp; Mobilité</option>
-                                <option value="energie">⚡ Énergie &amp; Eau</option>
-                                <option value="communication">📞 Communication &amp; Numérique</option>
-                                <option value="social">🤝 Action Sociale</option>
-                                <option value="emploi">💼 Emploi &amp; Formation Pro</option>
-                                <option value="environnement">🌿 Environnement</option>
-                                <option value="culture">🎭 Culture &amp; Tourisme</option>
-                                <option value="autre">📋 Autre</option>
-                            </select>
-                        </div>
+                
+                <div class="hero-visual">
+                    <div class="visual-card">
+                        <img src="sonko.jpg" alt="Ousmane SONKO" class="visual-image">
+                        <div class="visual-gradient"></div>
+                    </div>
+                    <div class="visual-decoration"></div>
+                </div>
+            </div>
+        </section>
 
-                        <div class="form-group">
-                            <label class="form-label">
-                                <i class="fas fa-building"></i> Service concerné *
-                            </label>
-                            <select class="form-select" id="service" name="service" required disabled>
-                                <option value="">Sélectionnez d'abord une catégorie</option>
-                            </select>
-                        </div>
-
-                        <div class="rating-criteria-grid">
-                            <div class="criteria-item">
-                                <label class="form-label"><i class="fas fa-wheelchair"></i> Accessibilité</label>
-                                <div class="stars-rating" data-criteria="accessibility">
-                                    <i class="fas fa-star star-active" data-value="1"></i>
-                                    <i class="fas fa-star star-active" data-value="2"></i>
-                                    <i class="fas fa-star star-active" data-value="3"></i>
-                                    <i class="far fa-star" data-value="4"></i>
-                                    <i class="far fa-star" data-value="5"></i>
-                                    <input type="hidden" name="accessibility" id="accessibility" value="3">
-                                </div>
-                            </div>
-                            <div class="criteria-item">
-                                <label class="form-label"><i class="fas fa-handshake"></i> Accueil</label>
-                                <div class="stars-rating" data-criteria="welcome">
-                                    <i class="fas fa-star star-active" data-value="1"></i>
-                                    <i class="fas fa-star star-active" data-value="2"></i>
-                                    <i class="fas fa-star star-active" data-value="3"></i>
-                                    <i class="far fa-star" data-value="4"></i>
-                                    <i class="far fa-star" data-value="5"></i>
-                                    <input type="hidden" name="welcome" id="welcome" value="3">
-                                </div>
-                            </div>
-                            <div class="criteria-item">
-                                <label class="form-label"><i class="fas fa-bolt"></i> Efficacité</label>
-                                <div class="stars-rating" data-criteria="efficiency">
-                                    <i class="fas fa-star star-active" data-value="1"></i>
-                                    <i class="fas fa-star star-active" data-value="2"></i>
-                                    <i class="fas fa-star star-active" data-value="3"></i>
-                                    <i class="far fa-star" data-value="4"></i>
-                                    <i class="far fa-star" data-value="5"></i>
-                                    <input type="hidden" name="efficiency" id="efficiency" value="3">
-                                </div>
-                            </div>
-                            <div class="criteria-item">
-                                <label class="form-label"><i class="fas fa-eye"></i> Transparence</label>
-                                <div class="stars-rating" data-criteria="transparency">
-                                    <i class="fas fa-star star-active" data-value="1"></i>
-                                    <i class="fas fa-star star-active" data-value="2"></i>
-                                    <i class="fas fa-star star-active" data-value="3"></i>
-                                    <i class="far fa-star" data-value="4"></i>
-                                    <i class="far fa-star" data-value="5"></i>
-                                    <input type="hidden" name="transparency" id="transparency" value="3">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">
-                                <i class="fas fa-comment"></i> Commentaire (optionnel)
-                            </label>
-                            <textarea class="form-textarea" id="comment" name="comment" rows="3"
-                                placeholder="Partagez votre expérience…"></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary" style="width:100%">
-                            <i class="fas fa-paper-plane"></i> Soumettre ma notation
+        <!-- Stats Dashboard -->
+        <section class="stats-section" id="stats">
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="section-header-content">
+                        <h2 class="section-title">Tableau de Bord</h2>
+                        <p class="section-subtitle">Vue d'ensemble des engagements présidentiels</p>
+                    </div>
+                    <div class="section-header-actions">
+                        <button class="btn-filter" id="filterBtn">
+                            <i class="fas fa-filter"></i>
+                            <span>Filtrer</span>
                         </button>
-                    </form>
+                    </div>
+                </div>
+                
+                <div class="stats-grid-modern">
+                    <!-- Total Card (Large) -->
+                    <div class="stat-card-modern stat-total-modern">
+                        <div class="stat-card-header">
+                            <div class="stat-icon-wrapper">
+                                <i class="fas fa-list-check"></i>
+                            </div>
+                            <div class="stat-badge">Vue globale</div>
+                        </div>
+                        <div class="stat-card-body">
+                            <div class="stat-value-large" id="total">0</div>
+                            <div class="stat-label-main">Total Engagements</div>
+                            <div class="stat-progress-bar">
+                                <div class="stat-progress-fill" id="total-progress" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Success Card -->
+                    <div class="stat-card-modern stat-success-modern">
+                        <div class="stat-card-mini-header">
+                            <i class="fas fa-check-circle"></i>
+                            <span class="stat-trend-badge positive">
+                                <i class="fas fa-arrow-up"></i>
+                            </span>
+                        </div>
+                        <div class="stat-value-medium" id="realise">0</div>
+                        <div class="stat-label-sub">Réalisés</div>
+                        <div class="stat-percentage-display" id="realise-percentage">0%</div>
+                    </div>
+                    
+                    <!-- Progress Card -->
+                    <div class="stat-card-modern stat-progress-modern">
+                        <div class="stat-card-mini-header">
+                            <i class="fas fa-spinner"></i>
+                            <span class="stat-trend-badge neutral">
+                                <i class="fas fa-minus"></i>
+                            </span>
+                        </div>
+                        <div class="stat-value-medium" id="encours">0</div>
+                        <div class="stat-label-sub">En Cours</div>
+                        <div class="stat-percentage-display" id="encours-percentage">0%</div>
+                    </div>
+                    
+                    <!-- Pending Card -->
+                    <div class="stat-card-modern stat-pending-modern">
+                        <div class="stat-card-mini-header">
+                            <i class="fas fa-hourglass-half"></i>
+                            <span class="stat-trend-badge negative">
+                                <i class="fas fa-arrow-down"></i>
+                            </span>
+                        </div>
+                        <div class="stat-value-medium" id="non-lance">0</div>
+                        <div class="stat-label-sub">Non Lancés</div>
+                        <div class="stat-percentage-display" id="non-lance-percentage">0%</div>
+                    </div>
+                    
+                    <!-- Warning Card -->
+                    <div class="stat-card-modern stat-warning-modern">
+                        <div class="stat-card-mini-header">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span class="stat-trend-badge warning">
+                                <i class="fas fa-exclamation"></i>
+                            </span>
+                        </div>
+                        <div class="stat-value-medium" id="retard">0</div>
+                        <div class="stat-label-sub">En Retard</div>
+                        <div class="stat-percentage-display" id="retard-percentage">0%</div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Résultats de notation -->
-            <div class="rating-results-card">
-                <div class="rating-results-header">
-                    <h3><i class="fas fa-chart-pie"></i> Résultats Citoyens</h3>
-                </div>
-
-                <div class="stats-overview-grid">
-                    <div class="stat-item-card">
-                        <div class="stat-value-card" id="totalVotes">0</div>
-                        <div class="stat-label-card">Votes</div>
-                    </div>
-                    <div class="stat-item-card">
-                        <div class="stat-value-card" id="totalServices">0</div>
-                        <div class="stat-label-card">Services évalués</div>
-                    </div>
-                    <div class="stat-item-card">
-                        <div class="stat-value-card" id="avgRating">0.0</div>
-                        <div class="stat-label-card">Note /5</div>
+        <!-- Daily Promise -->
+        <section class="daily-section" id="daily">
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="section-header-content">
+                        <h2 class="section-title">Promesse du Jour</h2>
+                        <p class="section-subtitle">Mise en avant quotidienne d'un engagement clé</p>
                     </div>
                 </div>
+                
+                <div class="daily-card-wrapper" id="dailyCardWrapper">
+                    <div class="daily-loading">
+                        <div class="spinner"></div>
+                        <p>Chargement de la promesse du jour...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                <div class="rating-results-subsection">
-                    <h4><i class="fas fa-trophy"></i> Classement des Services</h4>
-                    <div id="topServices">
-                        <div class="loading-state" style="padding:1rem">
-                            <div class="spinner"></div>
+        <!-- Promises Section -->
+        <section class="promises-section" id="promises">
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="section-header-content">
+                        <h2 class="section-title">Liste des Engagements</h2>
+                        <p class="section-subtitle">Tous les engagements présidentiels suivis en détail</p>
+                    </div>
+                    <div class="section-header-actions">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" placeholder="Rechercher un engagement...">
+                        </div>
+                        <select id="filterSelect" class="filter-select">
+                            <option value="">Tous les statuts</option>
+                            <option value="Réalisé">✅ Réalisés</option>
+                            <option value="En cours">🔄 En cours</option>
+                            <option value="Non lancé">⏳ Non lancés</option>
+                            <option value="En retard">⚠️ En retard</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="promisesList" class="promises-grid">
+                    <div class="promises-loading">
+                        <div class="spinner"></div>
+                        <p>Chargement des engagements...</p>
+                    </div>
+                </div>
+                
+                <div id="pagination" class="pagination-wrapper"></div>
+            </div>
+        </section>
+
+        <!-- News Section -->
+        <section class="news-section" id="news">
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="section-header-content">
+                        <h2 class="section-title">Actualités</h2>
+                        <p class="section-subtitle">Les dernières nouvelles du projet</p>
+                    </div>
+                    <div class="section-header-actions">
+                        <a href="actualites.html" class="btn-link">
+                            <span>Voir toutes les actualités</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div id="newsList" class="news-grid">
+                    <div class="news-loading">
+                        <div class="spinner"></div>
+                        <p>Chargement des actualités...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Press Section -->
+        <section class="press-section" id="press">
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="section-header-content">
+                        <h2 class="section-title">Revue de Presse</h2>
+                        <p class="section-subtitle">Ce que disent les médias</p>
+                    </div>
+                    <div class="section-header-actions">
+                        <select id="filterPress" class="filter-select">
+                            <option value="">Toutes les sources</option>
+                            <option value="Le Soleil">Le Soleil</option>
+                            <option value="L'Observateur">L'Observateur</option>
+                            <option value="Sud Quotidien">Sud Quotidien</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="pressList" class="press-grid">
+                    <div class="press-loading">
+                        <div class="spinner"></div>
+                        <p>Chargement de la revue de presse...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rating Section -->
+        <section class="rating-section" id="rating">
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="section-header-content">
+                        <h2 class="section-title">Évaluation des Services Publics</h2>
+                        <p class="section-subtitle">Partagez votre expérience avec les services de l'État</p>
+                    </div>
+                </div>
+                
+                <div class="rating-content">
+                    <div class="rating-form-card">
+                        <form id="ratingForm" class="rating-form">
+                            <div class="form-group">
+                                <label for="service-category">Catégorie de service</label>
+                                <select id="service-category" required>
+                                    <option value="">Sélectionnez une catégorie</option>
+                                    <option value="sante">🏥 Santé</option>
+                                    <option value="education">🎓 Éducation</option>
+                                    <option value="transport">🚌 Transport</option>
+                                    <option value="administration">🏛️ Administration</option>
+                                    <option value="justice">⚖️ Justice</option>
+                                    <option value="securite">👮 Sécurité</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="service">Service spécifique</label>
+                                <select id="service" disabled required>
+                                    <option value="">Sélectionnez un service</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Votre évaluation</label>
+                                <div class="star-rating" id="starRating">
+                                    <i class="fas fa-star" data-rating="1"></i>
+                                    <i class="fas fa-star" data-rating="2"></i>
+                                    <i class="fas fa-star" data-rating="3"></i>
+                                    <i class="fas fa-star" data-rating="4"></i>
+                                    <i class="fas fa-star" data-rating="5"></i>
+                                </div>
+                                <input type="hidden" id="rating" name="rating" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="comment">Votre commentaire</label>
+                                <textarea id="comment" rows="4" placeholder="Partagez votre expérience..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn-submit">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>Envoyer mon évaluation</span>
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div class="rating-stats-card">
+                        <h3>Statistiques des évaluations</h3>
+                        <div id="ratingStats" class="rating-stats-content">
+                            <div class="stats-loading">
+                                <div class="spinner"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="rating-results-subsection">
-                    <h4><i class="fas fa-history"></i> Dernières Notations</h4>
-                    <div id="recentRatings">
-                        <div class="loading-state" style="padding:1rem">
-                            <div class="spinner"></div>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <div class="footer-logo">
+                            <img src="https://projetbi.org/favicon.png" alt="Logo">
+                            <span>PROJETBI</span>
+                        </div>
+                        <p class="footer-desc">
+                            Plateforme citoyenne indépendante pour le suivi transparent des engagements présidentiels.
+                        </p>
+                        <div class="footer-social">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
+                    
+                    <div class="footer-col">
+                        <h4>Navigation</h4>
+                        <ul class="footer-links">
+                            <li><a href="#hero">Accueil</a></li>
+                            <li><a href="#stats">Dashboard</a></li>
+                            <li><a href="#promises">Engagements</a></li>
+                            <li><a href="#news">Actualités</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col">
+                        <h4>Ressources</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">À propos</a></li>
+                            <li><a href="#">Méthodologie</a></li>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col">
+                        <h4>Légal</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Mentions légales</a></li>
+                            <li><a href="#">Politique de confidentialité</a></li>
+                            <li><a href="#">Conditions d'utilisation</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>&copy; 2024 PROJETBI. Tous droits réservés.</p>
+                    <p>Fait avec <i class="fas fa-heart"></i> pour la transparence démocratique</p>
                 </div>
             </div>
+        </footer>
+    </main>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Services Data (Hidden) -->
+    <div id="services-data" style="display: none;">
+        <div data-category="sante">
+            <option value="hopital">Hôpital régional</option>
+            <option value="centre-sante">Centre de santé</option>
+            <option value="pharmacie">Pharmacie nationale</option>
+        </div>
+        <div data-category="education">
+            <option value="ecole">École primaire</option>
+            <option value="college">Collège</option>
+            <option value="lycee">Lycée</option>
+            <option value="universite">Université</option>
+        </div>
+        <div data-category="transport">
+            <option value="aftu">AFTU</option>
+            <option value="dakar-dem-dikk">Dakar Dem Dikk</option>
+            <option value="ter">TER</option>
+        </div>
+        <div data-category="administration">
+            <option value="mairie">Mairie</option>
+            <option value="prefecture">Préfecture</option>
+            <option value="etat-civil">État civil</option>
+        </div>
+        <div data-category="justice">
+            <option value="tribunal">Tribunal</option>
+            <option value="parquet">Parquet</option>
+        </div>
+        <div data-category="securite">
+            <option value="police">Police</option>
+            <option value="gendarmerie">Gendarmerie</option>
         </div>
     </div>
-</section>
 
-<!-- ════════════════════════════════════════════
-     FOOTER — couleur originale var(--secondary) = #B23A3A PASTEF rouge
-     ════════════════════════════════════════════ -->
-<footer class="footer">
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h4><i class="fas fa-flag"></i> PROJETBI</h4>
-                <p style="color:rgba(255,255,255,.75);font-size:.9rem;line-height:1.7;margin-bottom:1rem">
-                    Plateforme citoyenne indépendante pour le suivi en temps réel des engagements présidentiels du Sénégal 2024–2029.
-                </p>
-                <div class="footer-social">
-                    <a href="#" class="social-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-btn" title="Twitter/X"><i class="fab fa-x-twitter"></i></a>
-                    <a href="#" class="social-btn" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                </div>
-            </div>
-            <div class="footer-col">
-                <h4>Navigation</h4>
-                <div class="footer-links">
-                    <a href="#accueil" class="footer-link"><i class="fas fa-home"></i> Accueil</a>
-                    <a href="#statistiques" class="footer-link"><i class="fas fa-chart-bar"></i> Tableau de Bord</a>
-                    <a href="#promesse-du-jour" class="footer-link"><i class="fas fa-newspaper"></i> Promesse du Jour</a>
-                    <a href="#promises" class="footer-link"><i class="fas fa-list"></i> Engagements</a>
-                    <a href="#actualites" class="footer-link"><i class="fas fa-rss"></i> Actualités</a>
-                    <a href="#presse" class="footer-link"><i class="fas fa-newspaper"></i> Revue de Presse</a>
-                </div>
-            </div>
-            <div class="footer-col">
-                <h4>Ressources</h4>
-                <div class="footer-links">
-                    <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="footer-link" download>
-                        <i class="fas fa-file-pdf"></i> Programme PDF
-                    </a>
-                    <a href="actualites.html" class="footer-link">
-                        <i class="fas fa-external-link-alt"></i> Toutes les Actualités
-                    </a>
-                    <a href="#notation" class="footer-link">
-                        <i class="fas fa-star"></i> Évaluer un Service
-                    </a>
-                </div>
-            </div>
-        </div>
+    <script src="app.js"></script>
+    <script>
+    // Countdown Timer
+    (function() {
+        const COUNTDOWN_CONFIG = {
+            targetDate: new Date('2029-04-02T00:00:00').getTime()
+        };
+        
+        class CountdownTimer {
+            constructor(config) {
+                this.targetDate = config.targetDate;
+                this.elements = {};
+                this.intervalId = null;
+                this.initialized = false;
+            }
+            
+            init() {
+                this.elements.days = document.getElementById('days');
+                this.elements.hours = document.getElementById('hours');
+                this.elements.minutes = document.getElementById('minutes');
+                this.elements.seconds = document.getElementById('seconds');
+                
+                const allElementsFound = Object.values(this.elements).every(el => el !== null);
+                
+                if (!allElementsFound) {
+                    console.error('❌ Compte à rebours: Certains éléments sont manquants');
+                    return false;
+                }
+                
+                this.initialized = true;
+                return true;
+            }
+            
+            calculateTimeLeft() {
+                const now = new Date().getTime();
+                const timeLeft = this.targetDate - now;
+                
+                if (timeLeft <= 0) {
+                    return {
+                        days: 0,
+                        hours: 0,
+                        minutes: 0,
+                        seconds: 0,
+                        expired: true
+                    };
+                }
+                
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                return { days, hours, minutes, seconds, expired: false };
+            }
+            
+            formatNumber(num, length) {
+                return num.toString().padStart(length, '0');
+            }
+            
+            updateDisplay() {
+                if (!this.initialized) return;
+                
+                const timeLeft = this.calculateTimeLeft();
+                
+                this.elements.days.textContent = this.formatNumber(timeLeft.days, 3);
+                this.elements.hours.textContent = this.formatNumber(timeLeft.hours, 2);
+                this.elements.minutes.textContent = this.formatNumber(timeLeft.minutes, 2);
+                this.elements.seconds.textContent = this.formatNumber(timeLeft.seconds, 2);
+                
+                if (timeLeft.expired && this.intervalId) {
+                    clearInterval(this.intervalId);
+                }
+            }
+            
+            start() {
+                if (!this.initialized) return;
+                
+                this.updateDisplay();
+                this.intervalId = setInterval(() => {
+                    this.updateDisplay();
+                }, 1000);
+            }
+        }
+        
+        function initCountdown() {
+            const countdown = new CountdownTimer(COUNTDOWN_CONFIG);
+            if (countdown.init()) {
+                countdown.start();
+            }
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCountdown);
+        } else {
+            setTimeout(initCountdown, 0);
+        }
+    })();
 
-        <div class="footer-divider"></div>
-
-        <div class="footer-bottom">
-            <div class="footer-about">
-                <h5><i class="fas fa-shield-alt"></i> Plateforme Citoyenne Indépendante</h5>
-                <p class="footer-copyright">
-                    © 2026 PROJETBI — Suivi des engagements présidentiels.
-                    Date de référence : <strong>02 AVRIL 2024</strong>
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- Services data (pour le formulaire de notation) -->
-<div id="topServicesList" style="display:none"></div>
-
-<!-- Scroll to top — ID=scrollToTop (app.js) -->
-<button id="scrollToTop" class="scroll-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Retour en haut">
-    <i class="fas fa-arrow-up"></i>
-</button>
-
-<!-- Notifications container — ID=notification-container (app.js) -->
-<div id="notification-container"></div>
-
-<!-- ════════════════════════════════════════════
-     SCRIPTS INLINE
-     ════════════════════════════════════════════ -->
-<script>
-// ── Services data pour le formulaire ──
-const SERVICES_DATA = {
-    sante: ['Hôpital Général','Hôpital Régional','Centre de Santé','Clinique','Pharmacie','MSAS'],
-    education: ['École Primaire','Collège','Lycée','Université','Formation Pro','FASTEF'],
-    securite: ['Police','Gendarmerie','Douanes','Armée'],
-    justice: ['Tribunal','Cour d\'Appel','Notaire','Avocat'],
-    administration: ['Mairie','Préfecture','Sous-Préfecture','État Civil','DGE'],
-    finances: ['DGID','Trésor','DGTCP','Douanes','DER/FJ'],
-    transports: ['Dakar Dem Dikk','TER','BRT','Taxi','Port','Aéroport AIBD'],
-    energie: ['SENELEC','SDE/Onas','PETROSEN'],
-    communication: ['SONATEL/Orange','Expresso','Free','ANPTIC'],
-    social: ['DGAS','SNCS','Programme XEYU NDAW ŶI'],
-    emploi: ['ANPEJ','FONSIS','3FPT','ONFP'],
-    environnement: ['DEEC','DPV','DGPRE'],
-    culture: ['MCAT','Cinéma','Tourisme'],
-    autre: ['Autre service public']
-};
-
-const catSel = document.getElementById('service-category');
-const srvSel = document.getElementById('service');
-if (catSel && srvSel) {
-    catSel.addEventListener('change', function() {
-        const cat = this.value;
-        srvSel.innerHTML = '<option value="">Sélectionnez un service</option>';
-        srvSel.disabled = !cat;
-        if (cat && SERVICES_DATA[cat]) {
-            SERVICES_DATA[cat].forEach(s => {
-                const opt = document.createElement('option');
-                opt.value = s.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,'');
-                opt.textContent = s;
-                srvSel.appendChild(opt);
+    // Mobile Menu Toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileToggle = document.getElementById('mobileMenuToggle');
+        const sidebar = document.getElementById('sidebar');
+        
+        if (mobileToggle && sidebar) {
+            mobileToggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+                sidebar.classList.toggle('active');
+                document.body.classList.toggle('sidebar-open');
             });
         }
-    });
-}
-
-// ── Scroll progress ──
-window.addEventListener('scroll', function() {
-    const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-    const prog = document.getElementById('progressIndicator');
-    if (prog) prog.style.width = pct + '%';
-    const top = document.getElementById('scrollToTop');
-    if (top) top.classList.toggle('visible', window.scrollY > 400);
-    const nav = document.getElementById('navbar');
-    if (nav) nav.classList.toggle('scrolled', window.scrollY > 50);
-});
-
-// ── Hamburger mobile ──
-const burger = document.getElementById('modernHamburger');
-const mobileMenu = document.getElementById('modernMenu');
-const navLinks = document.getElementById('navLinks');
-
-if (burger) {
-    burger.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const open = burger.classList.toggle('active');
-        burger.setAttribute('aria-expanded', open);
-        // On ouvre le modernMenu (attendu par app.js) ET navLinks
-        if (mobileMenu) {
-            mobileMenu.style.display = open ? 'block' : 'none';
-            mobileMenu.classList.toggle('active', open);
+        
+        // Service Category Selection
+        const categorySelect = document.getElementById('service-category');
+        const serviceSelect = document.getElementById('service');
+        const servicesData = document.getElementById('services-data');
+        
+        if (categorySelect && serviceSelect && servicesData) {
+            categorySelect.addEventListener('change', function() {
+                const selectedCategory = this.value;
+                serviceSelect.innerHTML = '<option value="">Sélectionnez un service</option>';
+                serviceSelect.disabled = true;
+                
+                if (selectedCategory) {
+                    const categoryServices = servicesData.querySelector(`[data-category="${selectedCategory}"]`);
+                    if (categoryServices) {
+                        serviceSelect.disabled = false;
+                        serviceSelect.innerHTML = '<option value="">Sélectionnez un service</option>' + categoryServices.innerHTML;
+                    }
+                }
+            });
         }
-        if (navLinks) navLinks.classList.toggle('open', open);
-    });
-
-    // Fermer en cliquant dehors
-    document.addEventListener('click', function(e) {
-        if (!burger.contains(e.target) && mobileMenu && !mobileMenu.contains(e.target)) {
-            burger.classList.remove('active');
-            burger.setAttribute('aria-expanded', 'false');
-            if (mobileMenu) { mobileMenu.style.display='none'; mobileMenu.classList.remove('active'); }
-            if (navLinks) navLinks.classList.remove('open');
+        
+        // Star Rating
+        const starRating = document.getElementById('starRating');
+        const ratingInput = document.getElementById('rating');
+        
+        if (starRating && ratingInput) {
+            const stars = starRating.querySelectorAll('i');
+            
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = this.getAttribute('data-rating');
+                    ratingInput.value = rating;
+                    
+                    stars.forEach((s, index) => {
+                        if (index < rating) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+                
+                star.addEventListener('mouseenter', function() {
+                    const rating = this.getAttribute('data-rating');
+                    stars.forEach((s, index) => {
+                        if (index < rating) {
+                            s.classList.add('hover');
+                        } else {
+                            s.classList.remove('hover');
+                        }
+                    });
+                });
+            });
+            
+            starRating.addEventListener('mouseleave', function() {
+                stars.forEach(s => s.classList.remove('hover'));
+            });
         }
+        
+        // Scroll to Top
+        const scrollToTop = document.getElementById('scrollToTop');
+        if (scrollToTop) {
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollToTop.classList.add('visible');
+                } else {
+                    scrollToTop.classList.remove('visible');
+                }
+            });
+            
+            scrollToTop.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+        
+        // Active Sidebar Link on Scroll
+        const sidebarLinks = document.querySelectorAll('.sidebar-link');
+        const sections = document.querySelectorAll('section[id]');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            sidebarLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
     });
-}
-
-// Fermer menu quand on clique un lien
-document.querySelectorAll('.modern-link').forEach(a => {
-    a.addEventListener('click', function() {
-        if (burger) { burger.classList.remove('active'); burger.setAttribute('aria-expanded','false'); }
-        if (mobileMenu) { mobileMenu.style.display='none'; mobileMenu.classList.remove('active'); }
-        if (navLinks) navLinks.classList.remove('open');
-    });
-});
-
-// ── Countdown mandat ──
-(function() {
-    const target = new Date('2029-04-02T00:00:00');
-    function update() {
-        const diff = target - Date.now();
-        if (diff <= 0) return;
-        const d = Math.floor(diff / 86400000);
-        const h = Math.floor((diff % 86400000) / 3600000);
-        const m = Math.floor((diff % 3600000) / 60000);
-        const s = Math.floor((diff % 60000) / 1000);
-        const el = (id) => document.getElementById(id);
-        if(el('days'))    el('days').textContent    = String(d).padStart(3,'0');
-        if(el('hours'))   el('hours').textContent   = String(h).padStart(2,'0');
-        if(el('minutes')) el('minutes').textContent = String(m).padStart(2,'0');
-        if(el('seconds')) el('seconds').textContent = String(s).padStart(2,'0');
-    }
-    update();
-    setInterval(update, 1000);
-})();
-
-// ── Date affichée ──
-const dateEl = document.getElementById('current-date');
-if (dateEl) {
-    dateEl.textContent = new Date().toLocaleDateString('fr-FR',
-        { weekday:'long', year:'numeric', month:'long', day:'numeric' });
-}
-
-// ── Photo modal global (app.js peut appeler openPhotoViewer) ──
-window.openPhotoViewer = function(id) {
-    // app.js setupPhotoViewerControls crée sa propre modale — on la laisse faire
-    // Mais si elle n'existe pas encore, on crée un fallback
-    let modal = document.getElementById('photoViewerModal');
-    if (!modal) {
-        modal = document.createElement('div');
-        modal.id = 'photoViewerModal';
-        modal.className = 'photo-viewer-modal';
-        modal.innerHTML = `
-            <div class="photo-viewer-content">
-                <div class="photo-viewer-header">
-                    <h3><i class="fas fa-newspaper"></i> Visualiseur</h3>
-                    <button id="closeViewerBtn" onclick="closePhotoViewer()">&times;</button>
-                </div>
-                <div class="photo-viewer-body">
-                    <div class="photo-container">
-                        <img id="photoViewerImage" src="" alt="">
-                    </div>
-                </div>
-                <div class="photo-viewer-footer">
-                    <span id="photoViewerInfo"></span>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(modal);
-    }
-    modal.style.display = 'flex';
-};
-window.closePhotoViewer = function() {
-    const m = document.getElementById('photoViewerModal');
-    if (m) m.style.display = 'none';
-};
-
-// ── News modal global ──
-window.openNewsModal = function(id, e) {
-    if (e) e.preventDefault();
-    // app.js gère le contenu
-};
-
-// ── Filter toggle ──
-const filterBtn = document.getElementById('filterToggleBtn');
-const filterSec = document.getElementById('filtersSection');
-if (filterBtn && filterSec) {
-    filterBtn.addEventListener('click', function() {
-        filterSec.style.display = filterSec.style.display === 'none' ? 'block' : 'none';
-    });
-}
-</script>
-
-<script src="app.js"></script>
+    </script>
 </body>
 </html>

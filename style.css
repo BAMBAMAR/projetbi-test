@@ -5956,3 +5956,65 @@ body { padding-top: 92px !important; }
     .footer-nav { gap: .15rem; }
     .footer-nav-link { font-size: .76rem; padding: .2rem .35rem; }
 }
+
+/* ══ KPI WIDGET DANS LE HERO (à côté de "Voir le Dashboard") ══ */
+.hero-actions {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    flex-wrap: nowrap;
+    margin-bottom: 2rem;
+}
+/* Boutons hero un peu plus compacts pour laisser la place au KPI */
+.hero-actions .btn {
+    padding: .7rem 1.3rem !important;
+    font-size: .85rem !important;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.hero-kpi-widget {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: 100px;
+    padding: .45rem .75rem;
+    backdrop-filter: blur(8px);
+}
+
+.hero-kpi-btn {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.3);
+    background: rgba(255,255,255,.1);
+    color: white; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .7rem; flex-shrink: 0;
+    transition: all .2s;
+}
+.hero-kpi-btn:hover { background: rgba(255,255,255,.25); border-color: rgba(255,255,255,.6); }
+
+.hero-kpi-display { min-width: 140px; text-align: center; }
+.hero-kpi-display .kpi-item {
+    display: flex; align-items: center; gap: .5rem; justify-content: center;
+}
+.hero-kpi-display .kpi-icon { font-size: 1.1rem; flex-shrink: 0; }
+.hero-kpi-display .kpi-content { display: flex; flex-direction: column; line-height: 1.1; text-align: left; }
+.hero-kpi-display .kpi-value {
+    font-size: 1.25rem; font-weight: 800; color: white; line-height: 1;
+    font-family: 'DM Mono', 'Courier New', monospace;
+}
+.hero-kpi-display .kpi-label {
+    font-size: .65rem; color: rgba(255,255,255,.65);
+    font-weight: 600; text-transform: uppercase; letter-spacing: .06em;
+    white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+    .hero-kpi-widget { width: 100%; justify-content: center; border-radius: 12px; }
+    .hero-kpi-display { min-width: 120px; }
+    .hero-actions { flex-wrap: wrap !important; }
+    .hero-actions .btn { flex: 1; min-width: 140px; justify-content: center; }
+}

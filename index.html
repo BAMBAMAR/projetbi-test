@@ -211,18 +211,20 @@
             </a>
             <a href="#statistiques" class="btn btn-secondary">
                 <i class="fas fa-chart-bar"></i> Voir le Dashboard
-            </a> <div class="kpi-dashboard-widget">
-                <button id="kpiPrev2" class="kpi-dash-btn" onclick="document.getElementById('kpiPrev').click()"><i class="fas fa-chevron-left"></i></button>
-                <div id="kpiCarousel" class="kpi-dash-display">
+            </a>
+            <!-- KPI carousel — affiché à droite du bouton Dashboard -->
+            <div class="hero-kpi-widget">
+                <button class="hero-kpi-btn" onclick="document.getElementById('kpiPrev').click()"><i class="fas fa-chevron-left"></i></button>
+                <div id="kpiCarousel" class="hero-kpi-display">
                     <div class="kpi-item">
                         <span class="kpi-icon">📊</span>
                         <div class="kpi-content">
-                            <span class="kpi-value" style="font-size:1.6rem;font-weight:800;color:#2D5F3F">—</span>
+                            <span class="kpi-value">—</span>
                             <span class="kpi-label">Chargement…</span>
                         </div>
                     </div>
                 </div>
-                <button id="kpiNext2" class="kpi-dash-btn" onclick="document.getElementById('kpiNext').click()"><i class="fas fa-chevron-right"></i></button>
+                <button class="hero-kpi-btn" onclick="document.getElementById('kpiNext').click()"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
         <div class="hero-countdown">
@@ -276,8 +278,6 @@
                 </h2>
                 <p class="section-subtitle">État d'avancement — <span id="current-date"></span></p>
             </div>
-            <!-- KPI Carousel à côté du titre -->
-          
         </div>
 
         <div class="stats-grid">

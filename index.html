@@ -134,50 +134,56 @@
 <div id="progressIndicator" style="position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,#2D5F3F,#C9A84C);z-index:9999;transition:width .1s;"></div>
 
 <nav class="navbar" id="navbar" id="modernNav">
-    <div class="container">
-        <div class="nav-content">
-            <a href="#" class="nav-logo">
+    <!-- LIGNE 1 : Logo + Tagline + Hamburger mobile -->
+    <div class="nav-row-1">
+        <div class="nav-row-inner">
+            <a href="#accueil" class="nav-logo">
                 <img src="https://projetbi.org/favicon.png" alt="PROJETBI" class="nav-logo-img" onerror="this.style.display='none'">
-                <span class="nav-logo-text">PROJETBI</span>
+                <div class="nav-logo-block">
+                    <span class="nav-logo-text">PROJETBI</span>
+                    <span class="nav-logo-sub">Sénégal 2024–2029</span>
+                </div>
             </a>
-
-            <!-- KPI Carousel (app.js) -->
-            <div class="kpi-carousel-wrapper" style="flex:1;display:flex;align-items:center;justify-content:center;">
-                <div id="kpiCarousel" class="kpi-carousel" style="min-width:160px;text-align:center;"></div>
-                <button id="kpiPrev" class="kpi-btn" title="Précédent" style="background:none;border:none;cursor:pointer;color:#fff;padding:.25rem .5rem;"><i class="fas fa-chevron-left"></i></button>
-                <button id="kpiNext" class="kpi-btn" title="Suivant" style="background:none;border:none;cursor:pointer;color:#fff;padding:.25rem .5rem;"><i class="fas fa-chevron-right"></i></button>
-                <button id="kpiAutoPlayToggle" class="kpi-btn" title="Pause/Play" style="background:none;border:none;cursor:pointer;color:#fff;padding:.25rem .5rem;"><i class="fas fa-pause"></i></button>
+            <div class="nav-row-center">
+                <span class="nav-tagline"><i class="fas fa-shield-alt"></i> Plateforme citoyenne indépendante de suivi des engagements présidentiels</span>
             </div>
-
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#accueil" class="modern-link active">🏠 Accueil</a></li>
-                <li><a href="#statistiques" class="modern-link">📊 Tableau de bord</a></li>
-                <li><a href="#promesse-du-jour" class="modern-link">📰 Promesse du Jour</a></li>
-                <li><a href="#promises" class="modern-link">📋 Engagements</a></li>
-                <li><a href="#actualites" class="modern-link">📰 Actualités</a></li>
-                <li><a href="#presse" class="modern-link">🗞️ Revue de Presse</a></li>
-                <li><a href="#notation" class="modern-link">⭐ Évaluer</a></li>
-                <li><a href="actualites.html" class="modern-link">🔗 Toutes Actualités</a></li>
-            </ul>
-
             <button class="hamburger" id="modernHamburger" aria-label="Menu" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
         </div>
     </div>
+    <!-- LIGNE 2 : Menu horizontal + Évaluer CTA (desktop uniquement) -->
+    <div class="nav-row-2" id="navRow2">
+        <div class="nav-row-inner">
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#accueil" class="modern-link active">🏠 Accueil</a></li>
+                <li><a href="#statistiques" class="modern-link">📊 Dashboard</a></li>
+                <li><a href="#promesse-du-jour" class="modern-link">📰 Promesse du Jour</a></li>
+                <li><a href="#promises" class="modern-link">📋 Engagements</a></li>
+                <li><a href="#actualites" class="modern-link">📰 Actualités</a></li>
+                <li><a href="#presse" class="modern-link">🗞️ Revue de Presse</a></li>
+                <li><a href="actualites.html" class="modern-link">🔗 Toutes Actualités</a></li>
+            </ul>
+            <a href="#notation" class="nav-cta-btn">⭐ Évaluer un service</a>
+        </div>
+    </div>
+    <!-- IDs requis par app.js -->
+    <button id="kpiPrev" style="display:none"></button>
+    <button id="kpiNext" style="display:none"></button>
+    <button id="kpiAutoPlayToggle" style="display:none"></button>
 </nav>
 
 <!-- Menu mobile overlay (app.js attend id=modernMenu) -->
-<div id="modernMenu" class="mobile-menu-overlay" style="display:none;position:fixed;top:72px;left:0;right:0;height:calc(100vh - 72px);background:white;z-index:997;overflow-y:auto;padding:1.5rem;border-top:3px solid #2D5F3F;">
+<div id="modernMenu" class="mobile-menu-overlay" style="display:none;position:fixed;top:56px;left:0;right:0;height:calc(100vh - 56px);background:white;z-index:997;overflow-y:auto;padding:1.5rem;border-top:3px solid #2D5F3F;">
     <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.25rem;">
         <li><a href="#accueil" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">🏠 Accueil</a></li>
-        <li><a href="#statistiques" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📊 Tableau de bord</a></li>
+        <li><a href="#statistiques" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📊 Dashboard</a></li>
         <li><a href="#promesse-du-jour" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📰 Promesse du Jour</a></li>
         <li><a href="#promises" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📋 Engagements</a></li>
         <li><a href="#actualites" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📰 Actualités</a></li>
         <li><a href="#presse" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">🗞️ Revue de Presse</a></li>
-        <li><a href="#notation" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#2D5F3F;font-weight:700;text-decoration:none;background:#eef6f1;border-radius:100px;text-align:center;margin-top:.75rem;">⭐ Évaluer un service</a></li>
-        <li><a href="actualites.html" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#B23A3A;font-weight:700;text-decoration:none;border-bottom:1px solid #eee;">🔗 Toutes les Actualités →</a></li>
+        <li><a href="#notation" class="modern-link" style="display:flex;padding:.85rem 1rem;border-radius:100px;background:#2D5F3F;color:white;font-weight:700;text-decoration:none;justify-content:center;margin-top:.75rem;">⭐ Évaluer un service</a></li>
+        <li><a href="actualites.html" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#B23A3A;font-weight:700;text-decoration:none;">🔗 Toutes les Actualités →</a></li>
     </ul>
 </div>
 
@@ -251,11 +257,27 @@
 <section class="stats-section" id="statistiques">
     <div class="container">
         <div class="section-header">
-            <h2 class="section-title">
-                <i class="fas fa-chart-bar"></i>
-                Tableau de Bord
-            </h2>
-            <p class="section-subtitle">État d'avancement des engagements — <span id="current-date"></span></p>
+            <div class="section-header-left">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-bar"></i>
+                    Tableau de Bord
+                </h2>
+                <p class="section-subtitle">État d'avancement — <span id="current-date"></span></p>
+            </div>
+            <!-- KPI Carousel à côté du titre -->
+            <div class="kpi-dashboard-widget">
+                <button id="kpiPrev2" class="kpi-dash-btn" onclick="document.getElementById('kpiPrev').click()"><i class="fas fa-chevron-left"></i></button>
+                <div id="kpiCarousel" class="kpi-dash-display">
+                    <div class="kpi-item">
+                        <span class="kpi-icon">📊</span>
+                        <div class="kpi-content">
+                            <span class="kpi-value" style="font-size:1.6rem;font-weight:800;color:#2D5F3F">—</span>
+                            <span class="kpi-label">Chargement…</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="kpiNext2" class="kpi-dash-btn" onclick="document.getElementById('kpiNext').click()"><i class="fas fa-chevron-right"></i></button>
+            </div>
         </div>
 
         <div class="stats-grid">
@@ -694,60 +716,57 @@
 </section>
 
 <!-- ════════════════════════════════════════════
-     FOOTER — couleur originale var(--secondary) = #B23A3A PASTEF rouge
+     FOOTER — compact, couleur var(--secondary) = #B23A3A PASTEF rouge
      ════════════════════════════════════════════ -->
 <footer class="footer">
     <div class="container">
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h4><i class="fas fa-flag"></i> PROJETBI</h4>
-                <p style="color:rgba(255,255,255,.75);font-size:.9rem;line-height:1.7;margin-bottom:1rem">
-                    Plateforme citoyenne indépendante pour le suivi en temps réel des engagements présidentiels du Sénégal 2024–2029.
-                </p>
+
+        <!-- LIGNE 1 : Logo + Description + Réseaux sociaux -->
+        <div class="footer-top">
+            <div class="footer-brand-row">
+                <div class="footer-brand-info">
+                    <h3 class="footer-brand-name"><i class="fas fa-flag"></i> PROJETBI</h3>
+                    <p class="footer-brand-desc">Suivi citoyen des engagements présidentiels · Sénégal 2024–2029</p>
+                </div>
                 <div class="footer-social">
                     <a href="#" class="social-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="social-btn" title="Twitter/X"><i class="fab fa-x-twitter"></i></a>
                     <a href="#" class="social-btn" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
-            <div class="footer-col">
-                <h4>Navigation</h4>
-                <div class="footer-links">
-                    <a href="#accueil" class="footer-link"><i class="fas fa-home"></i> Accueil</a>
-                    <a href="#statistiques" class="footer-link"><i class="fas fa-chart-bar"></i> Tableau de Bord</a>
-                    <a href="#promesse-du-jour" class="footer-link"><i class="fas fa-newspaper"></i> Promesse du Jour</a>
-                    <a href="#promises" class="footer-link"><i class="fas fa-list"></i> Engagements</a>
-                    <a href="#actualites" class="footer-link"><i class="fas fa-rss"></i> Actualités</a>
-                    <a href="#presse" class="footer-link"><i class="fas fa-newspaper"></i> Revue de Presse</a>
-                </div>
-            </div>
-            <div class="footer-col">
-                <h4>Ressources</h4>
-                <div class="footer-links">
-                    <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="footer-link" download>
-                        <i class="fas fa-file-pdf"></i> Programme PDF
-                    </a>
-                    <a href="actualites.html" class="footer-link">
-                        <i class="fas fa-external-link-alt"></i> Toutes les Actualités
-                    </a>
-                    <a href="#notation" class="footer-link">
-                        <i class="fas fa-star"></i> Évaluer un Service
-                    </a>
-                </div>
-            </div>
         </div>
 
         <div class="footer-divider"></div>
 
-        <div class="footer-bottom">
-            <div class="footer-about">
-                <h5><i class="fas fa-shield-alt"></i> Plateforme Citoyenne Indépendante</h5>
-                <p class="footer-copyright">
-                    © 2026 PROJETBI — Suivi des engagements présidentiels.
-                    Date de référence : <strong>02 AVRIL 2024</strong>
-                </p>
-            </div>
+        <!-- LIGNE 2 : Navigation horizontale -->
+        <nav class="footer-nav">
+            <a href="#accueil" class="footer-nav-link"><i class="fas fa-home"></i> Accueil</a>
+            <span class="footer-sep">·</span>
+            <a href="#statistiques" class="footer-nav-link"><i class="fas fa-chart-bar"></i> Dashboard</a>
+            <span class="footer-sep">·</span>
+            <a href="#promesse-du-jour" class="footer-nav-link"><i class="fas fa-newspaper"></i> Promesse du Jour</a>
+            <span class="footer-sep">·</span>
+            <a href="#promises" class="footer-nav-link"><i class="fas fa-list"></i> Engagements</a>
+            <span class="footer-sep">·</span>
+            <a href="#actualites" class="footer-nav-link"><i class="fas fa-rss"></i> Actualités</a>
+            <span class="footer-sep">·</span>
+            <a href="#presse" class="footer-nav-link"><i class="fas fa-newspaper"></i> Revue de Presse</a>
+            <span class="footer-sep">·</span>
+            <a href="actualites.html" class="footer-nav-link"><i class="fas fa-external-link-alt"></i> Toutes Actualités</a>
+            <span class="footer-sep">·</span>
+            <a href="#notation" class="footer-nav-link"><i class="fas fa-star"></i> Évaluer</a>
+            <span class="footer-sep">·</span>
+            <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="footer-nav-link" download><i class="fas fa-file-pdf"></i> Programme PDF</a>
+        </nav>
+
+        <div class="footer-divider"></div>
+
+        <!-- LIGNE 3 : Copyright -->
+        <div class="footer-bottom-compact">
+            <span class="footer-copy">© 2026 PROJETBI · Plateforme citoyenne indépendante · Réf : <strong>02 AVRIL 2024</strong></span>
+            <span class="footer-disclaimer">Site non affilié à un parti politique. Données publiques.</span>
         </div>
+
     </div>
 </footer>
 
@@ -818,37 +837,37 @@ const burger = document.getElementById('modernHamburger');
 const mobileMenu = document.getElementById('modernMenu');
 const navLinks = document.getElementById('navLinks');
 
+function isMobile() { return window.innerWidth <= 768; }
+
+function closeNav() {
+    if (burger) { burger.classList.remove('active'); burger.setAttribute('aria-expanded','false'); }
+    if (mobileMenu) { mobileMenu.style.display = 'none'; mobileMenu.classList.remove('active'); }
+    if (navLinks) navLinks.classList.remove('open');
+}
+
 if (burger) {
     burger.addEventListener('click', function(e) {
         e.stopPropagation();
-        const open = burger.classList.toggle('active');
-        burger.setAttribute('aria-expanded', open);
-        // On ouvre le modernMenu (attendu par app.js) ET navLinks
+        const isOpen = burger.classList.toggle('active');
+        burger.setAttribute('aria-expanded', isOpen);
         if (mobileMenu) {
-            mobileMenu.style.display = open ? 'block' : 'none';
-            mobileMenu.classList.toggle('active', open);
+            mobileMenu.style.display = isOpen ? 'block' : 'none';
+            mobileMenu.classList.toggle('active', isOpen);
         }
-        if (navLinks) navLinks.classList.toggle('open', open);
+        if (navLinks) navLinks.classList.toggle('open', isOpen);
     });
 
     // Fermer en cliquant dehors
     document.addEventListener('click', function(e) {
-        if (!burger.contains(e.target) && mobileMenu && !mobileMenu.contains(e.target)) {
-            burger.classList.remove('active');
-            burger.setAttribute('aria-expanded', 'false');
-            if (mobileMenu) { mobileMenu.style.display='none'; mobileMenu.classList.remove('active'); }
-            if (navLinks) navLinks.classList.remove('open');
+        if (!burger.contains(e.target) && (!mobileMenu || !mobileMenu.contains(e.target))) {
+            closeNav();
         }
     });
 }
 
 // Fermer menu quand on clique un lien
 document.querySelectorAll('.modern-link').forEach(a => {
-    a.addEventListener('click', function() {
-        if (burger) { burger.classList.remove('active'); burger.setAttribute('aria-expanded','false'); }
-        if (mobileMenu) { mobileMenu.style.display='none'; mobileMenu.classList.remove('active'); }
-        if (navLinks) navLinks.classList.remove('open');
-    });
+    a.addEventListener('click', closeNav);
 });
 
 // ── Countdown mandat ──

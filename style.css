@@ -5740,3 +5740,219 @@ section, .section { overflow-x: hidden; }
 #showLessBtn:not([style*="display: none"]) {
     display: inline-flex !important;
 }
+
+/* ================================================================
+   PROJETBI — NAVBAR 2 LIGNES + KPI DASHBOARD + FOOTER COMPACT
+   ================================================================ */
+
+/* ══ NAVBAR 2 LIGNES ══ */
+.navbar {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: var(--primary-color, #2D5F3F);
+    box-shadow: 0 2px 20px rgba(0,0,0,.25);
+    z-index: 1000;
+    height: auto !important;  /* 2 lignes → hauteur auto */
+}
+
+/* Ligne partagée : max-width + padding */
+.nav-row-inner {
+    max-width: 1440px; margin: 0 auto;
+    padding: 0 2rem;
+    display: flex; align-items: center;
+}
+
+/* — LIGNE 1 : Logo + Tagline + Hamburger — */
+.nav-row-1 { border-bottom: 1px solid rgba(255,255,255,.12); }
+.nav-row-1 .nav-row-inner { height: 52px; gap: 1rem; }
+
+.nav-logo { display: flex; align-items: center; gap: .6rem; text-decoration: none; flex-shrink: 0; }
+.nav-logo-img { width: 32px; height: 32px; border-radius: 7px; }
+.nav-logo-block { display: flex; flex-direction: column; line-height: 1.1; }
+.nav-logo-text { font-weight: 900; font-size: 1rem; color: white; letter-spacing: -.01em; }
+.nav-logo-sub  { font-size: .6rem; color: rgba(255,255,255,.55); letter-spacing: .08em; text-transform: uppercase; }
+
+.nav-row-center { flex: 1; display: flex; justify-content: center; padding: 0 1rem; }
+.nav-tagline {
+    font-size: .72rem; color: rgba(255,255,255,.7);
+    font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    display: flex; align-items: center; gap: .4rem;
+}
+.nav-tagline i { color: rgba(255,255,255,.5); font-size: .65rem; }
+
+/* Hamburger → visible seulement mobile */
+.hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 6px;
+    margin-left: auto; flex-shrink: 0;
+}
+.hamburger span { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; transition: all .3s; }
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4px,4px); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(4px,-4px); }
+
+/* — LIGNE 2 : Menu horizontal + CTA — */
+.nav-row-2 { background: rgba(0,0,0,.12); }
+.nav-row-2 .nav-row-inner { height: 40px; gap: 0; }
+
+.nav-links {
+    display: flex; align-items: center; gap: 0;
+    list-style: none; flex: 1; margin: 0; padding: 0;
+    overflow-x: auto; scrollbar-width: none;
+}
+.nav-links::-webkit-scrollbar { display: none; }
+
+.nav-links a, .modern-link {
+    text-decoration: none; color: rgba(255,255,255,.82);
+    font-size: .78rem; font-weight: 500; padding: .35rem .7rem;
+    border-radius: 6px; transition: all .18s;
+    white-space: nowrap; display: inline-block;
+}
+.nav-links a:hover, .modern-link:hover,
+.nav-links a.active, .modern-link.active {
+    color: white; background: rgba(255,255,255,.14);
+}
+
+.nav-cta-btn {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: white; color: var(--primary-dark, #1A3D28);
+    font-size: .78rem; font-weight: 700;
+    padding: .3rem 1rem; border-radius: 100px;
+    text-decoration: none; flex-shrink: 0; margin-left: .75rem;
+    transition: all .2s; white-space: nowrap;
+}
+.nav-cta-btn:hover { background: rgba(255,255,255,.9); transform: translateY(-1px); }
+
+/* Body padding = hauteur totale nav (52 + 40 = 92px) */
+body { padding-top: 92px !important; }
+--nav-height: 92px;
+
+/* ══ KPI WIDGET à côté du dashboard ══ */
+.section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2rem;
+}
+.section-header-left { display: flex; flex-direction: column; gap: .2rem; }
+
+.kpi-dashboard-widget {
+    display: flex; align-items: center; gap: .5rem;
+    background: white;
+    border: 1.5px solid #d6e8dc;
+    border-radius: 14px;
+    padding: .6rem 1rem;
+    box-shadow: 0 2px 12px rgba(45,95,63,.08);
+    min-width: 220px;
+}
+.kpi-dash-btn {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 1.5px solid #d6e8dc; background: white;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    color: var(--primary-color, #2D5F3F); font-size: .75rem;
+    flex-shrink: 0; transition: all .2s;
+}
+.kpi-dash-btn:hover { background: var(--primary-color, #2D5F3F); color: white; border-color: var(--primary-color, #2D5F3F); }
+
+.kpi-dash-display {
+    flex: 1; text-align: center; min-width: 0;
+}
+/* Contenu rendu par app.js dans #kpiCarousel */
+.kpi-dash-display .kpi-item {
+    display: flex; align-items: center; gap: .6rem; justify-content: center;
+}
+.kpi-dash-display .kpi-icon { font-size: 1.3rem; flex-shrink: 0; }
+.kpi-dash-display .kpi-content { display: flex; flex-direction: column; gap: 0; text-align: left; }
+.kpi-dash-display .kpi-value {
+    font-size: 1.6rem; font-weight: 800;
+    color: var(--primary-color, #2D5F3F); line-height: 1;
+    font-family: 'DM Mono', 'Courier New', monospace;
+}
+.kpi-dash-display .kpi-label {
+    font-size: .7rem; color: #8a9e93; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .06em; white-space: nowrap;
+}
+
+/* ══ FOOTER COMPACT ══ */
+.footer {
+    background: var(--secondary, #B23A3A) !important;
+    color: rgba(255,255,255,.85) !important;
+    padding: 1.5rem 0 1rem !important;  /* compact */
+}
+
+.footer-top { padding: .75rem 0; }
+.footer-brand-row {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+}
+.footer-brand-info { display: flex; flex-direction: column; gap: .2rem; }
+.footer-brand-name {
+    font-size: 1.05rem; font-weight: 900; color: white;
+    display: flex; align-items: center; gap: .4rem; margin: 0;
+}
+.footer-brand-name i { font-size: .9rem; }
+.footer-brand-desc { font-size: .82rem; color: rgba(255,255,255,.7); margin: 0; }
+
+/* Social btns dans footer */
+.footer .footer-social { display: flex; gap: .5rem; }
+.footer .social-btn {
+    width: 34px; height: 34px;
+    background: rgba(255,255,255,.15); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white; text-decoration: none; font-size: .85rem;
+    transition: all .2s;
+}
+.footer .social-btn:hover { background: rgba(255,255,255,.3); transform: translateY(-2px); }
+
+/* Divider dans footer */
+.footer .footer-divider { height: 1px; background: rgba(255,255,255,.15); margin: .75rem 0; }
+
+/* Nav footer horizontal */
+.footer-nav {
+    display: flex; align-items: center; flex-wrap: wrap;
+    gap: .4rem .2rem; padding: .3rem 0;
+}
+.footer-nav-link {
+    color: rgba(255,255,255,.8); text-decoration: none;
+    font-size: .8rem; font-weight: 500;
+    display: inline-flex; align-items: center; gap: .3rem;
+    padding: .2rem .5rem; border-radius: 5px;
+    transition: all .2s; white-space: nowrap;
+}
+.footer-nav-link:hover { color: white; background: rgba(255,255,255,.1); }
+.footer-nav-link i { font-size: .72rem; opacity: .8; }
+.footer-sep { color: rgba(255,255,255,.3); font-size: .9rem; }
+
+/* Bas du footer */
+.footer-bottom-compact {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: .5rem;
+    padding: .4rem 0;
+}
+.footer-copy { font-size: .78rem; color: rgba(255,255,255,.75); }
+.footer-copy strong { color: white; }
+.footer-disclaimer { font-size: .72rem; color: rgba(255,255,255,.5); font-style: italic; }
+
+/* ══ RESPONSIVE NAVBAR + KPI + FOOTER ══ */
+@media (max-width: 768px) {
+    /* Navbar mobile : masquer ligne 2 par défaut */
+    .nav-row-2 { display: none; }
+    .nav-row-1 .nav-row-inner { height: 56px; }
+    .hamburger { display: flex; }
+    .nav-row-center .nav-tagline { display: none; }
+    body { padding-top: 56px !important; }
+
+    /* KPI widget en mobile : plus petit */
+    .kpi-dashboard-widget { min-width: 180px; padding: .5rem .75rem; }
+    .kpi-dash-display .kpi-value { font-size: 1.3rem; }
+
+    /* Footer mobile : nav en colonne */
+    .footer-nav { flex-direction: column; align-items: flex-start; gap: .2rem; }
+    .footer-sep { display: none; }
+    .footer-bottom-compact { flex-direction: column; align-items: flex-start; }
+    .footer-brand-row { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 480px) {
+    .section-header { flex-direction: column; align-items: flex-start; }
+    .kpi-dashboard-widget { width: 100%; }
+    .footer-nav { gap: .15rem; }
+    .footer-nav-link { font-size: .76rem; padding: .2rem .35rem; }
+}

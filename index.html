@@ -35,7 +35,7 @@
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-new.css">
 </head>
 <body>
 
@@ -81,7 +81,7 @@
         
         <div class="sidebar-footer">
             <div class="sidebar-social">
-                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
                 <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
                 <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
             </div>
@@ -455,7 +455,7 @@
                             Plateforme citoyenne indépendante pour le suivi transparent des engagements présidentiels.
                         </p>
                         <div class="footer-social">
-                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-x-twitter"></i></a>
                             <a href="#"><i class="fab fa-facebook"></i></a>
                             <a href="#"><i class="fab fa-linkedin"></i></a>
                             <a href="#"><i class="fab fa-instagram"></i></a>
@@ -539,7 +539,36 @@
     </div>
 
     <script src="app.js"></script>
+    <script src="app-patch.js"></script>
     <script>
+    // ==========================================
+    // PATCH INLINE POUR CORRIGER LES ERREURS
+    // ==========================================
+    
+    // Override des fonctions problématiques avec vérification null
+    if (typeof window.updateStatPercentage === 'undefined') {
+        window.updateStatPercentage = function(id, value, total) {
+            const el = document.getElementById(id);
+            if (el) {
+                if (total > 0) {
+                    const percentage = Math.round((value / total) * 100);
+                    el.textContent = `${percentage}%`;
+                } else {
+                    el.textContent = '0%';
+                }
+            }
+        };
+    }
+    
+    if (typeof window.updateStatValue === 'undefined') {
+        window.updateStatValue = function(id, value) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.textContent = value || '0';
+            }
+        };
+    }
+    
     // Countdown Timer
     (function() {
         const COUNTDOWN_CONFIG = {

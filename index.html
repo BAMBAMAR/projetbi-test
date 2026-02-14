@@ -35,7 +35,7 @@
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-new.css">
 </head>
 <body>
 
@@ -355,19 +355,47 @@
                         <p class="section-subtitle">Ce que disent les médias</p>
                     </div>
                     <div class="section-header-actions">
-                        <select id="filterPress" class="filter-select">
-                            <option value="">Toutes les sources</option>
-                            <option value="Le Soleil">Le Soleil</option>
-                            <option value="L'Observateur">L'Observateur</option>
-                            <option value="Sud Quotidien">Sud Quotidien</option>
-                        </select>
+                        <button class="btn-filter" id="autoPlayToggle">
+                            <i class="fas fa-play"></i>
+                            <span>Lecture auto</span>
+                        </button>
                     </div>
                 </div>
                 
-                <div id="pressList" class="press-grid">
-                    <div class="press-loading">
-                        <div class="spinner"></div>
-                        <p>Chargement de la revue de presse...</p>
+                <!-- Carousel Container -->
+                <div class="press-carousel-wrapper">
+                    <button class="carousel-btn carousel-btn-prev" id="prevBtn">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <div class="press-carousel" id="pressCarousel">
+                        <div class="press-loading">
+                            <div class="spinner"></div>
+                            <p>Chargement de la revue de presse...</p>
+                        </div>
+                    </div>
+                    
+                    <button class="carousel-btn carousel-btn-next" id="nextBtn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                
+                <!-- Carousel Indicators -->
+                <div class="carousel-indicators" id="carouselIndicators"></div>
+                
+                <!-- Carousel Info -->
+                <div class="carousel-info" id="carouselInfo">
+                    <div class="carousel-info-item">
+                        <i class="fas fa-newspaper"></i>
+                        <span id="currentPressName">-</span>
+                    </div>
+                    <div class="carousel-info-item">
+                        <i class="fas fa-calendar"></i>
+                        <span id="currentPressDate">-</span>
+                    </div>
+                    <div class="carousel-info-item">
+                        <i class="fas fa-image"></i>
+                        <span id="currentPressCount">0/0</span>
                     </div>
                 </div>
             </div>

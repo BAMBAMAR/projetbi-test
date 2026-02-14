@@ -53,6 +53,16 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.log('✅ Tous les éléments requis sont présents');
     }
+    
+    // Vérifier les éléments du carousel
+    const carouselElements = ['prevBtn', 'nextBtn', 'carouselIndicators', 'pressCarousel'];
+    const missingCarousel = carouselElements.filter(id => !document.getElementById(id));
+    
+    if (missingCarousel.length === 0) {
+        console.log('✅ Tous les éléments du carousel sont présents');
+    } else {
+        console.warn('⚠️ Éléments carousel manquants:', missingCarousel);
+    }
 });
 
 console.log('✅ Patch app.js chargé avec succès');

@@ -144,21 +144,7 @@
                     <span class="nav-logo-sub">Sénégal 2024–2029</span>
                 </div>
             </a>
-          
             <div class="nav-row-center">
-                 <<div class="hero-kpi-widget">
-                <button class="hero-kpi-btn" onclick="document.getElementById('kpiPrev').click()"><i class="fas fa-chevron-left"></i></button>
-                <div id="kpiCarousel" class="hero-kpi-display">
-                    <div class="kpi-item">
-                        <span class="kpi-icon">📊</span>
-                        <div class="kpi-content">
-                            <span class="kpi-value">—</span>
-                            <span class="kpi-label">Chargement…</span>
-                        </div>
-                    </div>
-                </div>
-                <button class="hero-kpi-btn" onclick="document.getElementById('kpiNext').click()"><i class="fas fa-chevron-right"></i></button>
-            </div> 
                 <span class="nav-tagline"><i class="fas fa-shield-alt"></i> Plateforme citoyenne indépendante de suivi des engagements présidentiels</span>
             </div>
             <button class="hamburger" id="modernHamburger" aria-label="Menu" aria-expanded="false">
@@ -168,15 +154,15 @@
     </div>
     <!-- LIGNE 2 : Menu horizontal + Évaluer CTA (desktop uniquement) -->
     <div class="nav-row-2" id="navRow2">
-     
         <div class="nav-row-inner">
-                         <ul class="nav-links" id="navLinks">
+            <ul class="nav-links" id="navLinks">
                 <li><a href="#accueil" class="modern-link active">🏠 Accueil</a></li>
                 <li><a href="#statistiques" class="modern-link">📊 Dashboard</a></li>
                 <li><a href="#promesse-du-jour" class="modern-link">📰 Promesse du Jour</a></li>
                 <li><a href="#promises" class="modern-link">📋 Engagements</a></li>
                 <li><a href="#actualites" class="modern-link">📰 Actualités</a></li>
                 <li><a href="#presse" class="modern-link">🗞️ Revue de Presse</a></li>
+                <li><a href="actualites.html" class="modern-link">🔗 Toutes Actualités</a></li>
             </ul>
             <a href="#notation" class="nav-cta-btn">⭐ Évaluer un service</a>
         </div>
@@ -197,6 +183,7 @@
         <li><a href="#actualites" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📰 Actualités</a></li>
         <li><a href="#presse" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">🗞️ Revue de Presse</a></li>
         <li><a href="#notation" class="modern-link" style="display:flex;padding:.85rem 1rem;border-radius:100px;background:#2D5F3F;color:white;font-weight:700;text-decoration:none;justify-content:center;margin-top:.75rem;">⭐ Évaluer un service</a></li>
+        <li><a href="actualites.html" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#B23A3A;font-weight:700;text-decoration:none;">🔗 Toutes les Actualités →</a></li>
     </ul>
 </div>
 
@@ -226,7 +213,7 @@
                 <i class="fas fa-chart-bar"></i> Voir le Dashboard
             </a>
             <!-- KPI carousel — affiché à droite du bouton Dashboard -->
-                <div class="hero-kpi-widget">
+            <div class="hero-kpi-widget">
                 <button class="hero-kpi-btn" onclick="document.getElementById('kpiPrev').click()"><i class="fas fa-chevron-left"></i></button>
                 <div id="kpiCarousel" class="hero-kpi-display">
                     <div class="kpi-item">

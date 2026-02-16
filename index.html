@@ -207,6 +207,7 @@
         <li><a href="#statistiques" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📊 Dashboard</a></li>
         <li><a href="#promesse-du-jour" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📰 Promesse du Jour</a></li>
         <li><a href="#promises" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📋 Engagements</a></li>
+        <li><a href="#actualites" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📰 Actualités</a></li>
         <li><a href="#presse" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">🗞️ Revue de Presse</a></li>
         <li><a href="#notation" class="modern-link" style="display:flex;padding:.85rem 1rem;border-radius:100px;background:#2D5F3F;color:white;font-weight:700;text-decoration:none;justify-content:center;margin-top:.75rem;">⭐ Évaluer un service</a></li>
     </ul>
@@ -496,7 +497,7 @@
             </div>
         </div>
 
-        <div class="promises-actions" style="display:flex;gap:1rem;justify-content:center;margin-top:2rem;flex-wrap:wrap;">
+        <div id="promises-actions-bar">
             <button id="showMoreBtn" class="btn btn-primary" style="display:none;">
                 <i class="fas fa-plus"></i> Voir plus d'engagements
             </button>
@@ -739,39 +740,46 @@
 
             <!-- COLONNE DROITE : Résultats -->
             <div class="rating-results-card">
-                <div class="rating-results-header">
-                    <h3><i class="fas fa-chart-bar"></i> Résultats des notations citoyennes</h3>
+                <div class="rr-header">
+                    <h3><i class="fas fa-chart-pie"></i> Résultats Citoyens</h3>
                 </div>
 
-                <div class="rating-results-grid">
-                    <div class="rating-results-card">
-                        <h4><i class="fas fa-chart-pie"></i> Statistiques Globales</h4>
-                        <div class="stats-overview-grid">
-                            <div class="stat-item-card"><div class="stat-value-card" id="totalVotes">0</div><div class="stat-label-card">Votes totaux</div></div>
-                            <div class="stat-item-card"><div class="stat-value-card" id="totalServices">0</div><div class="stat-label-card">Services évalués</div></div>
-                            <div class="stat-item-card"><div class="stat-value-card" id="avgRating">0.0</div><div class="stat-label-card">Note moyenne</div></div>
-                        </div>
+                <!-- Stats globales -->
+                <div class="rr-stats-row">
+                    <div class="rr-stat">
+                        <span class="rr-stat-value" id="totalVotes">0</span>
+                        <span class="rr-stat-label">VOTES</span>
                     </div>
+                    <div class="rr-stat">
+                        <span class="rr-stat-value" id="totalServices">0</span>
+                        <span class="rr-stat-label">SERVICES ÉVALUÉS</span>
+                    </div>
+                    <div class="rr-stat">
+                        <span class="rr-stat-value" id="avgRating">0.0</span>
+                        <span class="rr-stat-label">NOTE /5</span>
+                    </div>
+                </div>
 
-                    <div class="rating-results-card">
-                        <h4><i class="fas fa-history"></i> Dernières Notations</h4>
-                        <div id="recentRatings" class="recent-ratings">
-                            <div class="loading-state"><div class="spinner"></div><p>Chargement...</p></div>
-                        </div>
-                        <button class="btn-view-all" onclick="showAllRatings('recent')">
-                            <i class="fas fa-list"></i> Voir la liste complète
-                        </button>
+                <!-- Classement des services -->
+                <div class="rr-section">
+                    <h4 class="rr-section-title"><i class="fas fa-trophy"></i> Classement des Services</h4>
+                    <div id="topServices" class="rr-ranking-list">
+                        <div class="loading-state"><div class="spinner"></div><p>Chargement...</p></div>
                     </div>
+                    <button class="rr-btn-view-all rr-btn-gold" onclick="showAllRatings('top-rated')">
+                        <i class="fas fa-trophy"></i> Voir la liste complète
+                    </button>
+                </div>
 
-                    <div class="rating-results-card">
-                        <h4><i class="fas fa-trophy"></i> Meilleurs Services</h4>
-                        <div id="topServices" class="top-services-grid">
-                            <div class="loading-state"><div class="spinner"></div><p>Chargement...</p></div>
-                        </div>
-                        <button class="btn-view-all" onclick="showAllRatings('top-rated')">
-                            <i class="fas fa-trophy"></i> Voir la liste complète
-                        </button>
+                <!-- Dernières notations -->
+                <div class="rr-section">
+                    <h4 class="rr-section-title"><i class="fas fa-history"></i> Dernières Notations</h4>
+                    <div id="recentRatings" class="rr-recent-list">
+                        <div class="loading-state"><div class="spinner"></div><p>Chargement...</p></div>
                     </div>
+                    <button class="rr-btn-view-all rr-btn-green" onclick="showAllRatings('recent')">
+                        <i class="fas fa-list"></i> Voir la liste complète
+                    </button>
                 </div>
             </div>
 

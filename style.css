@@ -6119,3 +6119,76 @@ body { padding-top: 92px !important; }
     color: #0D1B14;
     margin-bottom: .1rem;
 }
+
+/* ══ KPI SOUS LOGO DESKTOP (nav-row-1) ══ */
+.nav-logo-kpi {
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+    flex-shrink: 0;
+}
+.nav-kpi-under-logo {
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 100px;
+    padding: .2rem .5rem;
+}
+.nav-kpi-mini-btn {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.3);
+    background: rgba(255,255,255,.1);
+    color: white; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .6rem; flex-shrink: 0; transition: all .2s;
+}
+.nav-kpi-mini-btn:hover { background: rgba(255,255,255,.25); }
+.nav-kpi-mini-display {
+    min-width: 130px; text-align: center;
+}
+.nav-kpi-mini-display .kpi-item {
+    display: flex; align-items: center; gap: .35rem; justify-content: center;
+}
+.nav-kpi-mini-display .kpi-icon { font-size: .9rem; }
+.nav-kpi-mini-display .kpi-content { display: flex; flex-direction: column; text-align: left; }
+.nav-kpi-mini-display .kpi-value {
+    font-size: .95rem; font-weight: 800; color: white; line-height: 1;
+}
+.nav-kpi-mini-display .kpi-label {
+    font-size: .58rem; color: rgba(255,255,255,.6);
+    text-transform: uppercase; letter-spacing: .06em; white-space: nowrap;
+}
+
+/* Ajuster ligne 1 pour accueillir le logo+KPI plus haut */
+.nav-row-1 .nav-row-inner { height: auto !important; min-height: 56px; padding: .5rem 2rem; }
+
+/* Mobile : cacher le KPI sous logo */
+@media (max-width: 768px) {
+    .nav-kpi-under-logo { display: none; }
+    .nav-row-1 .nav-row-inner { padding: 0 1.25rem; min-height: 56px; height: 56px !important; }
+}
+
+/* ══ RATING LAYOUT UNIFIÉ (remplace rating-layout) ══ */
+.rating-unified {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+    width: 100%;          /* pleine largeur du container */
+    box-sizing: border-box;
+}
+
+/* Les deux colonnes ont exactement la même largeur — pas de décalage */
+.rating-unified > .rating-form-card,
+.rating-unified > .rating-results-card {
+    width: 100% !important;
+    min-width: 0 !important;  /* empêche le débordement flex/grid */
+    box-sizing: border-box !important;
+}
+
+@media (max-width: 1100px) {
+    .rating-unified { grid-template-columns: 1fr; }
+}

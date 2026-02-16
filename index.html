@@ -26,92 +26,85 @@
     /* Prévenir le scroll horizontal sur mobile */
     html, body { overflow-x: hidden; max-width: 100%; }
 
-    /* ── NAV MOBILE CORRIGÉ ── */
+    /* ══ ANTI-OVERFLOW MOBILE — règle unique et définitive ══ */
+    html, body { overflow-x: hidden; }
+
     @media (max-width: 768px) {
+        /* Racine : rien ne dépasse */
+        * { max-width: 100%; box-sizing: border-box; }
+
+        /* Nav mobile */
         .nav-links {
             display: none !important;
             position: fixed !important;
-            top: var(--nav-height, 72px) !important;
-            left: 0 !important; right: 0 !important;
-            height: calc(100dvh - var(--nav-height, 72px)) !important;
+            top: 56px !important; left: 0 !important; right: 0 !important;
+            height: calc(100dvh - 56px) !important;
             background: white !important;
             flex-direction: column !important;
             padding: 1.5rem !important;
             gap: .25rem !important;
             overflow-y: auto !important;
             z-index: 998 !important;
-            border-top: 3px solid var(--primary-color, #2D5F3F) !important;
+            border-top: 3px solid #2D5F3F !important;
             box-shadow: 0 8px 40px rgba(0,0,0,.18) !important;
         }
-        .nav-links.active,
-        .nav-links.open,
-        .nav-links.show {
+        .nav-links.open, .nav-links.active, .nav-links.show {
             display: flex !important;
         }
-        .modernMenu.active {
-            display: flex !important;
+        .nav-links a, .modern-link {
+            font-size: 1.05rem !important; padding: .85rem 1.1rem !important;
+            border-radius: 10px !important; color: #0D1B14 !important;
+            font-weight: 600 !important; border-bottom: 1px solid #eee !important;
+            display: block !important; width: 100% !important;
         }
 
-        /* Liens dans menu mobile lisibles */
-        .nav-links a,
-        .modern-link {
-            font-size: 1.05rem !important;
-            padding: .85rem 1.1rem !important;
-            border-radius: 10px !important;
-            color: #0D1B14 !important;
-            font-weight: 600 !important;
-            border-bottom: 1px solid #eee !important;
-            display: block !important;
-            width: 100% !important;
-        }
-        .nav-links a:hover, .modern-link:hover {
-            background: #f0f7f3 !important;
-            color: var(--primary-color, #2D5F3F) !important;
-        }
-
-        /* Promises grid sans débordement */
-        .promises-grid,
-        #promisesGrid {
+        /* Grille promesses : 1 colonne, pas de débordement */
+        #promisesGrid,
+        .promises-grid {
+            display: grid !important;
             grid-template-columns: 1fr !important;
-            overflow-x: hidden !important;
             width: 100% !important;
-            max-width: 100% !important;
-            box-sizing: border-box !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow: hidden !important;
         }
+
+        /* Chaque carte : pleine largeur, pas de margin lateral */
         .promise-card,
         .promise-item {
             width: 100% !important;
             max-width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
             box-sizing: border-box !important;
             overflow: hidden !important;
         }
-        /* Container no overflow */
-        .container, .section-content {
+
+        /* Container sections : padding uniforme */
+        .container {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: 100% !important;
             overflow-x: hidden !important;
-            max-width: 100% !important;
         }
+
+        section { overflow-x: hidden !important; }
     }
 
     @media (max-width: 480px) {
-        .promises-grid, #promisesGrid {
-            grid-template-columns: 1fr !important;
-        }
+        .container { padding-left: .75rem !important; padding-right: .75rem !important; }
     }
 
-    /* ── BOUTON AFFICHER PLUS — géré par .promises-grid-actions ── */
+    /* Bouton afficher plus — respecte display:none de app.js */
+    #showMoreBtn[style*="display: none"],
+    #showLessBtn[style*="display: none"] { display: none !important; }
 
-    /* ── SECTION wrapper pour éviter overflow mobile ── */
-    section, .section {
-        overflow-x: hidden !important;
-        max-width: 100vw !important;
-    }
-
-    /* ── Notifications container ── */
+    /* Notifications */
     #notification-container {
-        position: fixed;
-        top: 80px; right: 1.5rem;
-        z-index: 10000;
-        display: flex; flex-direction: column; gap: .75rem;
+        position: fixed; top: 80px; right: 1.5rem;
+        z-index: 10000; display: flex; flex-direction: column; gap: .75rem;
     }
     </style>
 </head>
@@ -485,15 +478,14 @@
                 <div class="spinner"></div>
                 <p>Chargement des engagements…</p>
             </div>
-            <!-- Boutons Voir plus / Réduire : items de la grille → jamais de décalage -->
-            <div class="promises-grid-actions">
-                <button id="showMoreBtn" class="btn btn-primary" style="display:none;">
-                    <i class="fas fa-plus"></i> Voir plus d'engagements
-                </button>
-                <button id="showLessBtn" class="btn btn-secondary" style="display:none;">
-                    <i class="fas fa-minus"></i> Réduire
-                </button>
-            </div>
+        </div>
+        <div class="prom-btn-row">
+            <button id="showMoreBtn" class="btn btn-primary" style="display:none;">
+                <i class="fas fa-plus"></i> Voir plus d'engagements
+            </button>
+            <button id="showLessBtn" class="btn btn-secondary" style="display:none;">
+                <i class="fas fa-minus"></i> Réduire
+            </button>
         </div>
     </div>
 </section>

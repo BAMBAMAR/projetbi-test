@@ -6316,3 +6316,23 @@ body { padding-top: 92px !important; }
 /* Les boutons eux-mêmes — override inline-flex injecté par app.js */
 #showMoreBtn[style*="display: none"],
 #showLessBtn[style*="display: none"] { display: none !important; }
+
+/* ══ PROM-BTN-ROW — boutons Voir plus / Réduire, frère de #promisesGrid ══ */
+.prom-btn-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    /* Même padding que le container parent pour s'aligner */
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+    /* Empêcher tout débordement */
+    overflow: hidden;
+}
+
+/* Éteindre les anciennes classes conflictuelles */
+.promises-actions     { display: none !important; }
+.promises-grid-actions { display: none !important; }
+#promises-actions-bar  { display: none !important; }

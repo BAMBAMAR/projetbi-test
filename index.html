@@ -98,17 +98,7 @@
         }
     }
 
-    /* ── BOUTON AFFICHER PLUS — toujours visible ── */
-    #showMoreBtn, #showLessBtn {
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: .5rem !important;
-    }
-    /* Quand app.js le cache explicitement via style.display='none', on respecte */
-    #showMoreBtn[style*="display: none"],
-    #showLessBtn[style*="display: none"] {
-        display: none !important;
-    }
+    /* ── BOUTON AFFICHER PLUS — géré par .promises-grid-actions ── */
 
     /* ── SECTION wrapper pour éviter overflow mobile ── */
     section, .section {
@@ -495,15 +485,15 @@
                 <div class="spinner"></div>
                 <p>Chargement des engagements…</p>
             </div>
-        </div>
-
-        <div id="promises-actions-bar">
-            <button id="showMoreBtn" class="btn btn-primary" style="display:none;">
-                <i class="fas fa-plus"></i> Voir plus d'engagements
-            </button>
-            <button id="showLessBtn" class="btn btn-secondary" style="display:none;">
-                <i class="fas fa-minus"></i> Réduire
-            </button>
+            <!-- Boutons Voir plus / Réduire : items de la grille → jamais de décalage -->
+            <div class="promises-grid-actions">
+                <button id="showMoreBtn" class="btn btn-primary" style="display:none;">
+                    <i class="fas fa-plus"></i> Voir plus d'engagements
+                </button>
+                <button id="showLessBtn" class="btn btn-secondary" style="display:none;">
+                    <i class="fas fa-minus"></i> Réduire
+                </button>
+            </div>
         </div>
     </div>
 </section>

@@ -6192,3 +6192,107 @@ body { padding-top: 92px !important; }
 @media (max-width: 1100px) {
     .rating-unified { grid-template-columns: 1fr; }
 }
+
+/* ══ RÉSULTATS CITOYENS — affichage compact carte unique ══ */
+.rating-results-card {
+    background: white;
+    border: 1px solid #e0ece4;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.rr-header {
+    padding: 1.25rem 1.5rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid #f0f5f2;
+}
+.rr-header h3 {
+    font-size: 1.15rem; font-weight: 800;
+    color: #0D1B14; margin: 0;
+    display: flex; align-items: center; gap: .5rem; justify-content: center;
+}
+.rr-header h3 i { color: #2D5F3F; }
+
+/* Stats row : 3 colonnes fond vert clair */
+.rr-stats-row {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    background: #eef6f1;
+    margin: 0 1.5rem 1rem;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.rr-stat {
+    display: flex; flex-direction: column; align-items: center;
+    padding: .9rem .5rem;
+    border-right: 1px solid rgba(45,95,63,.1);
+}
+.rr-stat:last-child { border-right: none; }
+.rr-stat-value {
+    font-size: 1.6rem; font-weight: 800;
+    color: #2D5F3F; line-height: 1;
+}
+.rr-stat-label {
+    font-size: .62rem; font-weight: 700;
+    color: #8a9e93; text-transform: uppercase;
+    letter-spacing: .06em; margin-top: .2rem; text-align: center;
+}
+
+/* Sections internes */
+.rr-section {
+    padding: 0 1.5rem 1.25rem;
+    display: flex; flex-direction: column; gap: .6rem;
+}
+.rr-section-title {
+    font-size: .92rem; font-weight: 700;
+    color: #0D1B14; margin: 0;
+    display: flex; align-items: center; gap: .4rem;
+}
+.rr-section-title i { color: #C9A84C; font-size: .85rem; }
+.rr-section:last-child .rr-section-title i { color: #2D5F3F; }
+
+/* Ranking list — app.js écrit dans #topServices */
+.rr-ranking-list,
+.rr-recent-list { display: flex; flex-direction: column; gap: .4rem; }
+
+/* Boutons pleine largeur style screenshot */
+.rr-btn-view-all {
+    display: flex; align-items: center; justify-content: center;
+    gap: .5rem; width: 100%;
+    padding: .75rem 1rem; border: none; border-radius: 10px;
+    font-size: .88rem; font-weight: 700; cursor: pointer;
+    transition: all .2s; margin-top: .25rem;
+}
+.rr-btn-gold {
+    background: #2D5F3F; color: white;
+}
+.rr-btn-gold:hover { background: #1A3D28; }
+.rr-btn-green {
+    background: #2D5F3F; color: white;
+}
+.rr-btn-green:hover { background: #1A3D28; }
+
+/* Séparateur entre les deux sections */
+.rr-section + .rr-section {
+    border-top: 1px solid #f0f5f2;
+    padding-top: 1.25rem;
+}
+
+/* ══ PROMISES ACTIONS — boutons centrés sans décalage ══ */
+#promises-actions-bar {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1.5rem;
+    /* Pas de width/float — centré dans le flux normal */
+    width: 100%;
+    box-sizing: border-box;
+}
+/* Respecter display:none injecté par app.js */
+#showMoreBtn[style*="display: none"],
+#showLessBtn[style*="display: none"] { display: none !important; }
+#showMoreBtn:not([style*="display: none"]),
+#showLessBtn:not([style*="display: none"]) { display: inline-flex !important; }

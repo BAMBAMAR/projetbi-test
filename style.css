@@ -6296,3 +6296,23 @@ body { padding-top: 92px !important; }
 #showLessBtn[style*="display: none"] { display: none !important; }
 #showMoreBtn:not([style*="display: none"]),
 #showLessBtn:not([style*="display: none"]) { display: inline-flex !important; }
+
+/* ══ PROMISES GRID ACTIONS — items natifs de la grille, zéro décalage ══ */
+.promises-grid-actions {
+    grid-column: 1 / -1;   /* span toute la largeur de la grille */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: .5rem 0 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Supprimer tous les anciens styles conflictuels */
+#promises-actions-bar { display: none !important; }
+.promises-actions      { display: none !important; }
+
+/* Les boutons eux-mêmes — override inline-flex injecté par app.js */
+#showMoreBtn[style*="display: none"],
+#showLessBtn[style*="display: none"] { display: none !important; }

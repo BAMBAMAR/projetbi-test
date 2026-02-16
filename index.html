@@ -134,16 +134,24 @@
 <div id="progressIndicator" style="position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,#2D5F3F,#C9A84C);z-index:9999;transition:width .1s;"></div>
 
 <nav class="navbar" id="navbar" id="modernNav">
-    <!-- LIGNE 1 : Logo + Tagline + Hamburger mobile -->
+    <!-- LIGNE 1 : Logo + KPI sous logo + Tagline + Hamburger mobile -->
     <div class="nav-row-1">
         <div class="nav-row-inner">
-            <a href="#accueil" class="nav-logo">
-                <img src="https://projetbi.org/favicon.png" alt="PROJETBI" class="nav-logo-img" onerror="this.style.display='none'">
-                <div class="nav-logo-block">
-                    <span class="nav-logo-text">PROJETBI</span>
-                    <span class="nav-logo-sub">Sénégal 2024–2029</span>
+            <div class="nav-logo-kpi">
+                <a href="#accueil" class="nav-logo">
+                    <img src="https://projetbi.org/favicon.png" alt="PROJETBI" class="nav-logo-img" onerror="this.style.display='none'">
+                    <div class="nav-logo-block">
+                        <span class="nav-logo-text">PROJETBI</span>
+                        <span class="nav-logo-sub">Sénégal 2024–2029</span>
+                    </div>
+                </a>
+                <!-- KPI carousel desktop — sous le logo -->
+                <div class="nav-kpi-under-logo">
+                    <button class="nav-kpi-mini-btn" onclick="document.getElementById('kpiPrev').click()"><i class="fas fa-chevron-left"></i></button>
+                    <div id="navKpiDesktop" class="nav-kpi-mini-display"></div>
+                    <button class="nav-kpi-mini-btn" onclick="document.getElementById('kpiNext').click()"><i class="fas fa-chevron-right"></i></button>
                 </div>
-            </a>
+            </div>
             <div class="nav-row-center">
                 <span class="nav-tagline"><i class="fas fa-shield-alt"></i> Plateforme citoyenne indépendante de suivi des engagements présidentiels</span>
             </div>
@@ -162,7 +170,6 @@
                 <li><a href="#promises" class="modern-link">📋 Engagements</a></li>
                 <li><a href="#actualites" class="modern-link">📰 Actualités</a></li>
                 <li><a href="#presse" class="modern-link">🗞️ Revue de Presse</a></li>
-                <li><a href="actualites.html" class="modern-link">🔗 Toutes Actualités</a></li>
             </ul>
             <a href="#notation" class="nav-cta-btn">⭐ Évaluer un service</a>
         </div>
@@ -586,9 +593,9 @@
             <p class="section-subtitle">Votre avis compte pour améliorer les services</p>
         </div>
 
-        <div class="rating-layout">
+        <div class="rating-unified">
 
-            <!-- Formulaire de notation -->
+            <!-- COLONNE GAUCHE : Formulaire -->
             <div class="rating-form-card">
                 <div class="rating-form-header">
                     <h3><i class="fas fa-pencil-alt"></i> Donnez votre avis</h3>
@@ -730,7 +737,7 @@
                 </div>
             </div>
 
-            <!-- Résultats de notation -->
+            <!-- COLONNE DROITE : Résultats -->
             <div class="rating-results-card">
                 <div class="rating-results-header">
                     <h3><i class="fas fa-chart-bar"></i> Résultats des notations citoyennes</h3>
@@ -767,7 +774,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+
+        </div><!-- /.rating-unified -->
     </div>
 </section>
 
@@ -982,17 +990,19 @@
      SCRIPTS INLINE
      ════════════════════════════════════════════ -->
 <script>
-// ── Sync KPI menu mobile avec #kpiCarousel (app.js écrit dedans) ──
+// ── Sync KPI menu mobile + desktop sous logo avec #kpiCarousel ──
 (function() {
     const source = document.getElementById('kpiCarousel');
-    const target = document.getElementById('menuKpiDisplay');
-    if (!source || !target) return;
+    const targets = [
+        document.getElementById('menuKpiDisplay'),
+        document.getElementById('navKpiDesktop')
+    ].filter(Boolean);
+    if (!source || !targets.length) return;
 
     function syncKpi() {
-        target.innerHTML = source.innerHTML;
+        targets.forEach(t => { t.innerHTML = source.innerHTML; });
     }
 
-    // Copie initiale puis observe les changements
     syncKpi();
     const obs = new MutationObserver(syncKpi);
     obs.observe(source, { childList: true, subtree: true, characterData: true });

@@ -36,6 +36,11 @@
     @media(max-width:768px){ .container{padding:0 1rem!important;} }
     @media(max-width:480px){ .container{padding:0 .75rem!important;} }
 
+    @keyframes slideIn {
+        from { opacity:0; transform:translateY(-20px); }
+        to   { opacity:1; transform:translateY(0); }
+    }
+
     #progressIndicator {
         position:fixed;top:0;left:0;height:3px;width:0%;
         background:linear-gradient(90deg,#2D5F3F,#C9A84C);
@@ -605,14 +610,83 @@ function filtered() {
     return list;
 }
 
+// Store des articles indexés par position pour éviter JSON-in-onclick
+const _articleStore = new Map();
+
+function _ensureModal() {
+    let modal = document.getElementById('actuModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'actuModal';
+        modal.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:99999;align-items:center;justify-content:center;padding:1rem;overflow-y:auto;';
+        modal.innerHTML = `
+            <div id="actuModalContent" style="background:white;border-radius:16px;max-width:760px;width:100%;max-height:90vh;overflow-y:auto;position:relative;padding:2rem;animation:slideIn .3s ease;">
+                <button id="actuModalCloseBtn" style="position:absolute;top:1rem;right:1rem;width:40px;height:40px;border-radius:50%;background:#2D5F3F;color:white;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,.3);transition:all .2s;" title="Fermer">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div id="actuModalBody"></div>
+            </div>`;
+        modal.addEventListener('click', e => { if (e.target === modal) closeActuModal(); });
+        document.body.appendChild(modal);
+        document.getElementById('actuModalCloseBtn').addEventListener('click', closeActuModal);
+    }
+    return modal;
+}
+
+function openArticleById(key) {
+    const news = _articleStore.get(key);
+    if (!news) return;
+    const modal = _ensureModal();
+    const body = document.getElementById('actuModalBody');
+    const fullText = news.content || news.excerpt || '';
+    const link = (news.link && !news.link.startsWith('<iframe') && news.link !== '#') ? news.link : null;
+
+    // Escape helper local
+    const esc = s => {
+        const d = document.createElement('div');
+        d.appendChild(document.createTextNode(String(s || '')));
+        return d.innerHTML;
+    };
+
+    body.innerHTML = `
+        <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-bottom:1rem;">
+            <span style="background:#eef6f1;color:#2D5F3F;border:1px solid #c5dbc0;padding:.2rem .75rem;border-radius:20px;font-size:.78rem;font-weight:700">${esc(getCat(news.category))}</span>
+            <span style="color:#999;font-size:.78rem;margin-left:auto">${esc(news.date)}</span>
+        </div>
+        <h2 style="font-size:1.4rem;font-weight:800;color:#1A3D28;margin-bottom:1rem;line-height:1.35;padding-right:2.5rem">${esc(news.title)}</h2>
+        ${news.image_url ? `<img src="${esc(news.image_url)}" alt="${esc(news.title)}" style="width:100%;max-height:260px;object-fit:cover;border-radius:10px;margin-bottom:1rem" onerror="this.style.display='none'">` : ''}
+        <div style="display:flex;gap:1rem;font-size:.8rem;color:#8a9e93;margin-bottom:1.2rem;flex-wrap:wrap">
+            <span><i class="fas fa-newspaper" style="color:#2D5F3F;margin-right:.3rem"></i>${esc(news.source)}</span>
+            ${news.read_time ? `<span><i class="fas fa-clock" style="color:#2D5F3F;margin-right:.3rem"></i>${esc(news.read_time)}</span>` : ''}
+        </div>
+        <div style="line-height:1.8;color:#333;font-size:.95rem">${fullText.split('\n').filter(l=>l.trim()).map(l=>`<p style="margin-bottom:.85rem">${esc(l)}</p>`).join('')}</div>
+        ${link ? `<div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid #e5ede6">
+            <a href="${esc(link)}" target="_blank" rel="noopener noreferrer" style="color:#2D5F3F;font-weight:700;font-size:.88rem;display:inline-flex;align-items:center;gap:.4rem">
+                <i class="fas fa-external-link-alt"></i> Lire l'article original
+            </a>
+        </div>` : ''}`;
+
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+window.closeActuModal = function() {
+    const modal = document.getElementById('actuModal');
+    if (modal) modal.style.display = 'none';
+    document.body.style.overflow = '';
+};
+
+// Escape clavier
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeActuModal(); });
+
 function renderFeatured() {
     const container = document.getElementById('featuredContainer');
     if (!allNews.length) { container.innerHTML=''; return; }
     const f    = allNews[0];
     const icon = getIcon(f.image);
-    const link = (f.link && !f.link.startsWith('<iframe') && f.link !== '#') ? f.link : null;
+    _articleStore.set('featured', f);
     container.innerHTML = `
-        <div class="featured-article" onclick="${link ? `window.open('${link}','_blank')` : ''}">
+        <div class="featured-article" style="cursor:pointer" onclick="openArticleById('featured')">
             <div class="featured-img">
                 ${f.image_url
                     ? `<img src="${f.image_url}" alt="${f.title}"><div class="featured-img-overlay"></div>`
@@ -628,7 +702,7 @@ function renderFeatured() {
                     <span><i class="fas fa-newspaper"></i>${f.source||'Source'}</span>
                     ${f.read_time ? `<span><i class="fas fa-clock"></i>${f.read_time}</span>` : ''}
                 </div>
-                ${link ? `<a href="${link}" target="_blank" rel="noopener" class="btn-read"><i class="fas fa-book-open"></i> Lire l'article</a>` : ''}
+                <button class="btn-read" onclick="event.stopPropagation();openArticleById('featured')"><i class="fas fa-book-open"></i> Lire l'article</button>
             </div>
         </div>`;
 }
@@ -644,11 +718,12 @@ function renderGrid() {
         loadBtn.classList.add('hidden');
         return;
     }
-    grid.innerHTML = visible.map(n => {
+    grid.innerHTML = visible.map((n, i) => {
         const icon = getIcon(n.image);
-        const link = (n.link && !n.link.startsWith('<iframe') && n.link !== '#') ? n.link : null;
+        const key  = 'art_' + i;
+        _articleStore.set(key, n);
         return `
-        <article class="news-item" onclick="${link ? `window.open('${link}','_blank')` : ''}">
+        <article class="news-item" onclick="openArticleById('${key}')">
             <div class="news-item-img">
                 ${n.image_url ? `<img src="${n.image_url}" alt="${n.title}" loading="lazy">` : `<i class="fas ${icon}"></i>`}
             </div>
@@ -661,7 +736,7 @@ function renderGrid() {
                 <p class="news-item-excerpt">${(n.excerpt||'').substring(0,160)}…</p>
                 <div class="news-item-foot">
                     <span><i class="fas fa-newspaper"></i>${n.source||''}</span>
-                    <button class="news-read"><i class="fas fa-arrow-right"></i> Lire</button>
+                    <button class="news-read" onclick="event.stopPropagation();openArticleById('${key}')"><i class="fas fa-arrow-right"></i> Lire</button>
                 </div>
             </div>
         </article>`;

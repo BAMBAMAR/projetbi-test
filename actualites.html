@@ -373,14 +373,7 @@
         </div>
         <div class="cat-pills" id="catPills">
             <button class="pill active" data-cat="all">Tout</button>
-            <button class="pill" data-cat="general">Général</button>
-            <button class="pill" data-cat="education">Éducation</button>
-            <button class="pill" data-cat="sante">Santé</button>
-            <button class="pill" data-cat="economie">Économie</button>
-            <button class="pill" data-cat="infrastructures">Infrastructures</button>
-            <button class="pill" data-cat="gouvernance">Gouvernance</button>
-            <button class="pill" data-cat="numerique">Numérique</button>
-            <button class="pill" data-cat="energie">Énergie</button>
+            <!-- Pills générées dynamiquement après chargement des données -->
         </div>
         <select class="sort-sel" id="newsSort">
             <option value="date_desc">Plus récent</option>
@@ -540,16 +533,40 @@ function getDomaine(news) {
     return getCat(news.category);
 }
 
-// Construit les items KPI (stats par catégorie) et lance le carousel
+// Construit les pills de filtre dynamiquement selon les domaines réels des articles
+function buildFilterPills() {
+    const pills = document.getElementById('catPills');
+    // Compter les articles par domaine
+    const counts = new Map();
+    allNews.forEach(n => {
+        const d = getDomaine(n);
+        counts.set(d, (counts.get(d) || 0) + 1);
+    });
+    // Trier par nombre décroissant, garder les 12 premiers
+    const top = [...counts.entries()]
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 12);
+
+    // Reconstruire les pills (garder "Tout" en premier)
+    pills.innerHTML = '<button class="pill active" data-cat="all">Tout</button>' +
+        top.map(([domaine]) =>
+            `<button class="pill" data-cat="${domaine}">${domaine}</button>`
+        ).join('');
+}
+
+// Construit les items KPI (stats par domaine) et lance le carousel
 function buildKpiItems(news) {
     const total = news.length;
-    const counts = {};
-    news.forEach(n => { counts[n.category] = (counts[n.category]||0) + 1; });
+    const counts = new Map();
+    news.forEach(n => {
+        const d = getDomaine(n);
+        counts.set(d, (counts.get(d) || 0) + 1);
+    });
     kpiItems = [
         { icon:'📰', value: total, label: 'Articles' },
-        ...Object.entries(counts)
+        ...[...counts.entries()]
             .sort((a,b) => b[1]-a[1]).slice(0,6)
-            .map(([cat, count]) => ({ icon:'📁', value: count, label: getCat(cat) }))
+            .map(([domaine, count]) => ({ icon:'📁', value: count, label: domaine }))
     ];
     renderKpi();
     setInterval(() => { kpiIndex = (kpiIndex+1) % kpiItems.length; renderKpi(); }, 3000);
@@ -609,6 +626,7 @@ async function loadNews() {
         }
 
         buildKpiItems(allNews);
+        buildFilterPills();
         renderFeatured();
         renderGrid();
     } catch(e) {
@@ -621,7 +639,7 @@ async function loadNews() {
 function filtered() {
     const term = document.getElementById('newsSearch').value.toLowerCase();
     const sort = document.getElementById('newsSort').value;
-    let list = currentCategory === 'all' ? allNews.slice(1) : allNews.filter(n => n.category === currentCategory);
+    let list = currentCategory === 'all' ? allNews.slice(1) : allNews.filter(n => getDomaine(n) === currentCategory);
     if (term) list = list.filter(n =>
         n.title.toLowerCase().includes(term) ||
         (n.excerpt||'').toLowerCase().includes(term) ||

@@ -3,6 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <!-- ══ EN-TÊTES DE SÉCURITÉ (via balises meta) ══ -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
+    <!--
+      Content Security Policy :
+      - frame-ancestors est RETIRÉ de la meta (invalide ici, géré dans _headers HTTP)
+      - Cloudflare Analytics (static.cloudflareinsights.com) autorisé
+      - Source maps CDN autorisées dans connect-src
+    -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com static.cloudflareinsights.com;
+        style-src 'self' 'unsafe-inline' fonts.googleapis.com cdnjs.cloudflare.com;
+        font-src 'self' fonts.gstatic.com cdnjs.cloudflare.com;
+        img-src 'self' data: https: blob:;
+        connect-src 'self' https://jwsdxttjjbfnoufiidkd.supabase.co https://*.supabase.co
+            cdn.jsdelivr.net cdnjs.cloudflare.com static.cloudflareinsights.com;
+        object-src 'none';
+        base-uri 'self';
+    ">
     <meta name="description" content="Plateforme citoyenne indépendante pour suivre en temps réel l'avancement des engagements du Président Bassirou Diomaye Faye.">
     <meta name="keywords" content="Sénégal, Pastef, Ousmane SONKO, promesses électorales, Bassirou Diomaye Faye, transparence, gouvernance, suivi engagements">
     <meta name="author" content="ProjetBI">
@@ -16,18 +37,26 @@
     <title>LE PROJET PASTEF | Suivi des Engagements Présidentiels</title>
     <link rel="icon" href="https://projetbi.org/favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <!-- Font Awesome — crossorigin pour compatibilité SRI -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer">
+    <!-- DOMPurify — nettoyage XSS des données avant injection dans le DOM -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+            crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
 
     <style>
     /* ── Corrections ciblées qui ne remplacent PAS style.css ── */
 
-    /* Prévenir le scroll horizontal sur mobile */
-    html, body { overflow-x: hidden; max-width: 100%; }
-
-    /* ══ ANTI-OVERFLOW MOBILE — règle unique et définitive ══ */
-    html, body { overflow-x: hidden; }
+    /* Anti-overflow + scroll-padding pour ancres sous navbar fixe */
+    html { overflow-x: hidden; scroll-padding-top: 100px; }
+    body { overflow-x: hidden; max-width: 100%; }
+    @media (max-width: 768px) { html { scroll-padding-top: 60px; } }
 
     @media (max-width: 768px) {
         /* Racine : rien ne dépasse */
@@ -107,6 +136,96 @@
         z-index: 10000; display: flex; flex-direction: column; gap: .75rem;
     }
     </style>
+    <!-- ══ PWA Manifest ══ -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ProjetBI">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- ══ Twitter Card enrichie ══ -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@ProjetBI">
+    <meta name="twitter:title" content="ProjetBI — Suivi des Engagements Présidentiels Sénégal">
+    <meta name="twitter:description" content="Plateforme citoyenne indépendante. Suivez en temps réel les 300 engagements de Bassirou Diomaye Faye.">
+    <meta name="twitter:image" content="https://projetbi.org/twitter-card.jpg">
+
+    <!-- ══ Données Structurées JSON-LD (Google Rich Snippets) ══ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "ProjetBI — Suivi des Engagements Présidentiels",
+      "alternateName": "Projet BI Sénégal",
+      "url": "https://projetbi.org",
+      "description": "Plateforme citoyenne indépendante pour suivre en temps réel les 300 engagements du Président Bassirou Diomaye Faye. Sénégal 2024-2029.",
+      "inLanguage": "fr",
+      "keywords": "Sénégal, PASTEF, Bassirou Diomaye Faye, promesses électorales, suivi engagements, transparence, gouvernance, Ousmane Sonko",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://projetbi.org/#promises?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ProjetBI",
+        "url": "https://projetbi.org",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://projetbi.org/favicon.png"
+        }
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Dataset",
+      "name": "Engagements Présidentiels Sénégal 2024-2029",
+      "description": "Base de données de 300 engagements du programme PASTEF du Président Bassirou Diomaye Faye avec suivi en temps réel.",
+      "url": "https://projetbi.org",
+      "creator": { "@type": "Organization", "name": "ProjetBI" },
+      "temporalCoverage": "2024/2029",
+      "spatialCoverage": { "@type": "Place", "name": "Sénégal" },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "isAccessibleForFree": true
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Combien de promesses Bassirou Diomaye Faye a-t-il faites ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le programme PASTEF de Bassirou Diomaye Faye contient plus de 300 engagements présidentiels couvrant les domaines de la santé, l'éducation, l'économie, la justice et la sécurité. Tous sont suivis en temps réel sur ProjetBI.org."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment suivre les promesses électorales de PASTEF ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ProjetBI.org est la plateforme citoyenne indépendante dédiée au suivi en temps réel des engagements de Bassirou Diomaye Faye. Chaque engagement est classifié : Réalisé, En cours, Non lancé ou En retard."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quand se termine le mandat de Bassirou Diomaye Faye ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le mandat présidentiel de Bassirou Diomaye Faye, élu le 24 mars 2024, se termine le 2 avril 2029. ProjetBI affiche un compte à rebours en temps réel."
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
 
@@ -116,7 +235,7 @@
      ════════════════════════════════════════════ -->
 <div id="progressIndicator" style="position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,#2D5F3F,#C9A84C);z-index:9999;transition:width .1s;"></div>
 
-<nav class="navbar" id="navbar" id="modernNav">
+<nav class="navbar" id="modernNav">
     <!-- LIGNE 1 : Logo + KPI sous logo + Tagline + Hamburger mobile -->
     <div class="nav-row-1">
         <div class="nav-row-inner">
@@ -125,19 +244,20 @@
                     <img src="https://projetbi.org/favicon.png" alt="PROJETBI" class="nav-logo-img" onerror="this.style.display='none'">
                     <div class="nav-logo-block">
                         <span class="nav-logo-text">PROJETBI</span>
-                        <span class="nav-logo-sub">Sénégal 2024–2029</span>
+                        <span class="nav-logo-sub">PASTEF</span>
                     </div>
                 </a>
                 <!-- KPI carousel desktop — sous le logo -->
-                <div class="nav-kpi-under-logo">
+             
+            </div>
+            <div class="nav-row-center">
+              <div class="nav-kpi-under-logo">
                     <button class="nav-kpi-mini-btn" onclick="document.getElementById('kpiPrev').click()"><i class="fas fa-chevron-left"></i></button>
                     <div id="navKpiDesktop" class="nav-kpi-mini-display"></div>
                     <button class="nav-kpi-mini-btn" onclick="document.getElementById('kpiNext').click()"><i class="fas fa-chevron-right"></i></button>
-                </div>
-            </div>
-            <div class="nav-row-center">
+                </div> 
                 <span class="nav-tagline"><i class="fas fa-shield-alt"></i> Plateforme citoyenne indépendante de suivi des engagements présidentiels</span>
-            </div>
+              </div>
             <button class="hamburger" id="modernHamburger" aria-label="Menu" aria-expanded="false">
                 <span></span><span></span><span></span>
             </button>
@@ -164,7 +284,7 @@
 </nav>
 
 <!-- Menu mobile overlay (app.js attend id=modernMenu) -->
-<div id="modernMenu" class="mobile-menu-overlay" style="display:none;position:fixed;top:56px;left:0;right:0;height:calc(100vh - 56px);background:white;z-index:997;overflow-y:auto;padding:1.5rem;border-top:3px solid #2D5F3F;">
+<div id="modernMenu" class="mobile-menu-overlay">
 
     <!-- KPI carousel dans le menu mobile -->
     <div class="menu-kpi-widget">
@@ -459,9 +579,9 @@
                 </div>
                 <select id="filter-status" class="filter-select">
                     <option value="">Tous les statuts</option>
-                    <option value="Réalisé">✅ Réalisé</option>
-                    <option value="En cours">🔄 En cours</option>
-                    <option value="Non lancé">⏳ Non lancé</option>
+                    <option value="✅ Réalisé">✅ Réalisé</option>
+                    <option value="🔄 En cours">🔄 En cours</option>
+                    <option value="⏳ Non lancé">⏳ Non lancé</option>
                     <option value="En retard">⚠️ En retard</option>
                 </select>
                 <select id="filter-domain" class="filter-select">
@@ -775,12 +895,20 @@
 <footer class="footer">
     <div class="container">
 
-        <!-- LIGNE 1 : Logo + Description + Réseaux sociaux -->
+        <!-- LIGNE 1 : Logo + Description + Contact + Réseaux sociaux -->
         <div class="footer-top">
             <div class="footer-brand-row">
                 <div class="footer-brand-info">
                     <h3 class="footer-brand-name"><i class="fas fa-flag"></i> PROJETBI</h3>
                     <p class="footer-brand-desc">Suivi citoyen des engagements présidentiels · Sénégal 2024–2029</p>
+                </div>
+                <div class="footer-contact">
+                    <h4 class="footer-contact-title"><i class="fas fa-envelope-open-text"></i> Contact</h4>
+                    <ul class="footer-contact-list">
+                        <li><a href="#contact" class="footer-contact-link" id="contactEmailLink"><i class="fas fa-envelope"></i> <span id="contactEmail">Contact par email</span></a></li>
+                        <li><span class="footer-contact-link footer-contact-static" id="contactPhone"><i class="fas fa-phone"></i> Disponible sur demande</span></li>
+                        <li class="footer-contact-link footer-contact-static"><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</li>
+                    </ul>
                 </div>
                 <div class="footer-social">
                     <a href="#" class="social-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -1019,54 +1147,65 @@
     }
 })();
 
-// ── Scroll progress ──
-window.addEventListener('scroll', function() {
-    const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-    const prog = document.getElementById('progressIndicator');
-    if (prog) prog.style.width = pct + '%';
-    const top = document.getElementById('scrollToTop');
-    if (top) top.classList.toggle('visible', window.scrollY > 400);
-    const nav = document.getElementById('navbar');
-    if (nav) nav.classList.toggle('scrolled', window.scrollY > 50);
-});
+// ── Proxy getElementById('navbar') → modernNav (app.js scroll effects) ──
+(function() {
+    const origGet = Document.prototype.getElementById;
+    Document.prototype.getElementById = function(id) {
+        if (id === 'navbar') return origGet.call(this, 'modernNav') || origGet.call(this, id);
+        return origGet.call(this, id);
+    };
+})();
 
-// ── Hamburger mobile ──
-const burger = document.getElementById('modernHamburger');
-const mobileMenu = document.getElementById('modernMenu');
-const navLinks = document.getElementById('navLinks');
+// ── Hamburger mobile — compatible app.js (classList.active) ──
+(function() {
+    const burger    = document.getElementById('modernHamburger');
+    const mobMenu   = document.getElementById('modernMenu');
+    const navLinks  = document.getElementById('navLinks');
 
-function isMobile() { return window.innerWidth <= 768; }
+    function closeNav() {
+        if (burger)   { burger.classList.remove('active'); burger.setAttribute('aria-expanded','false'); }
+        if (mobMenu)  { mobMenu.classList.remove('active'); }
+        if (navLinks) navLinks.classList.remove('open','active');
+    }
 
-function closeNav() {
-    if (burger) { burger.classList.remove('active'); burger.setAttribute('aria-expanded','false'); }
-    if (mobileMenu) { mobileMenu.style.display = 'none'; mobileMenu.classList.remove('active'); }
-    if (navLinks) navLinks.classList.remove('open');
-}
+    if (burger) {
+        burger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isOpen = burger.classList.toggle('active');
+            burger.setAttribute('aria-expanded', isOpen);
+            if (mobMenu)  mobMenu.classList.toggle('active', isOpen);
+            if (navLinks) navLinks.classList.toggle('open', isOpen);
+        });
+        document.addEventListener('click', function(e) {
+            const nav = document.getElementById('modernNav');
+            if (nav && !nav.contains(e.target)) closeNav();
+        });
+    }
+    document.querySelectorAll('.modern-link').forEach(a => a.addEventListener('click', closeNav));
+})();
 
-if (burger) {
-    burger.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const isOpen = burger.classList.toggle('active');
-        burger.setAttribute('aria-expanded', isOpen);
-        if (mobileMenu) {
-            mobileMenu.style.display = isOpen ? 'block' : 'none';
-            mobileMenu.classList.toggle('active', isOpen);
-        }
-        if (navLinks) navLinks.classList.toggle('open', isOpen);
-    });
-
-    // Fermer en cliquant dehors
-    document.addEventListener('click', function(e) {
-        if (!burger.contains(e.target) && (!mobileMenu || !mobileMenu.contains(e.target))) {
-            closeNav();
-        }
-    });
-}
-
-// Fermer menu quand on clique un lien
-document.querySelectorAll('.modern-link').forEach(a => {
-    a.addEventListener('click', closeNav);
-});
+// ── Obfuscation email/téléphone (anti-bots) ──
+(function() {
+    // Reconstruit l'adresse email côté JS uniquement (les bots ne l'exécutent pas)
+    const u = 'pastefprojetbi';
+    const d = 'gmail.com';
+    const email = u + '@' + d;
+    const linkEl = document.getElementById('contactEmailLink');
+    const textEl = document.getElementById('contactEmail');
+    if (linkEl) linkEl.href = 'mailto:' + email;
+    if (textEl) textEl.textContent = email;
+    // Téléphone reconstruit (affiché uniquement sur clic)
+    const phoneEl = document.getElementById('contactPhone');
+    if (phoneEl) {
+        const parts = ['+221', '76', '945', '52', '53'];
+        phoneEl.style.cursor = 'pointer';
+        phoneEl.title = 'Cliquer pour afficher le numéro';
+        phoneEl.addEventListener('click', function() {
+            this.innerHTML = '<i class="fas fa-phone"></i> ' + parts.join(' ');
+            this.style.cursor = 'default';
+        }, { once: true });
+    }
+})();
 
 // ── Countdown mandat ──
 (function() {
@@ -1157,5 +1296,57 @@ if (filterBtn && filterSec) {
 </div>
 
 <script src="app.js"></script>
+
+<!-- ══ PWA Service Worker ══ -->
+<script>
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('✅ Service Worker enregistré:', reg.scope))
+            .catch(err => console.warn('⚠️ SW non enregistré:', err));
+    });
+}
+
+// ── Bannière "Installer l'app" ──
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+
+    // Afficher une bannière discrète après 30 secondes
+    setTimeout(() => {
+        const banner = document.createElement('div');
+        banner.id = 'installBanner';
+        banner.innerHTML = `
+            <div style="position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);
+                background:#2D5F3F;color:white;padding:.85rem 1.5rem;border-radius:50px;
+                box-shadow:0 4px 20px rgba(0,0,0,.3);display:flex;align-items:center;
+                gap:.75rem;z-index:99999;font-family:Arial,sans-serif;font-size:.9rem;
+                cursor:pointer;animation:slideUp .4s ease;">
+                <span>📱</span>
+                <span><strong>Installer ProjetBI</strong> comme application</span>
+                <button onclick="installApp()" style="background:#C9A84C;border:none;color:white;
+                    padding:.4rem 1rem;border-radius:20px;cursor:pointer;font-weight:700;">
+                    Installer
+                </button>
+                <button onclick="this.closest('#installBanner').remove()" style="background:none;
+                    border:none;color:rgba(255,255,255,.7);cursor:pointer;font-size:1.2rem;">×</button>
+            </div>
+        `;
+        document.body.appendChild(banner);
+    }, 30000);
+});
+
+window.installApp = async function() {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log('Installation:', outcome);
+        deferredPrompt = null;
+        const banner = document.getElementById('installBanner');
+        if (banner) banner.remove();
+    }
+};
+</script>
 </body>
 </html>

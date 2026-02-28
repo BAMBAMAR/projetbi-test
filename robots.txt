@@ -1,0 +1,23 @@
+# robots.txt pour ProjetBI.org
+# Suivi transparent des promesses électorales
+
+# Autoriser tous les robots de recherche
+User-agent: *
+Allow: /
+# Bloquer l'indexation de la page d'administration
+Disallow: /update_press_simple.html
+Disallow: /kit-communication.html
+Disallow: /admin.html
+
+# Sitemap XML (très important pour le SEO)
+Sitemap: https://projetbi.org/sitemap.xml
+
+# Délai d'exploration pour certains robots (optionnel)
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Crawl-delay: 10

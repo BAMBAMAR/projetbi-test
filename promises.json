@@ -1,7 +1,7 @@
 {
   "start_date": "2024-04-02",
   "end_date": "2029-04-02",
-  "last_updated": "2026-01-28",
+  "last_updated": "2026-02-05",
   "promises": [
     {
       "id": "promise_1",
@@ -10,7 +10,12 @@
       "resultat": "Exécutif resserré et équilibre des pouvoirs",
       "delai": "2024-10-02",
       "status": "non-lance",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-04-02",
+          "text": "Nomination d'Ousmane Sonko comme Premier Ministre, confirmant le maintien du poste pour le début du mandat."
+        }
+      ]
     },
     {
       "id": "promise_2",
@@ -28,7 +33,12 @@
       "resultat": "Organe au sommet de l'organisation judiciaire",
       "delai": "2025-04-02",
       "status": "encours",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-06-04",
+          "text": "Recommandation forte des Assises de la Justice pour la création d'une Cour Constitutionnelle."
+        }
+      ]
     },
     {
       "id": "promise_4",
@@ -37,7 +47,16 @@
       "resultat": "Indépendance statutaire des juges",
       "delai": "2025-04-02",
       "status": "encours",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-05-28",
+          "text": "Ouverture des Assises de la Justice au CICAD pour débattre de la réforme."
+        },
+        {
+          "date": "2024-07-05",
+          "text": "Remise du rapport des Assises au Président, préconisant l'ouverture du CSM à des personnalités extérieures et le départ de l'Exécutif."
+        }
+      ]
     },
     {
       "id": "promise_5",
@@ -46,7 +65,12 @@
       "resultat": "Protection contre la détention arbitraire",
       "delai": "2026-04-02",
       "status": "encours",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-07-05",
+          "text": "Intégré dans les recommandations prioritaires du rapport final des Assises de la Justice."
+        }
+      ]
     },
     {
       "id": "promise_6",
@@ -64,7 +88,12 @@
       "resultat": "Respect de la garde à vue légale",
       "delai": "2024-04-02",
       "status": "encours",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-06-04",
+          "text": "Consensus lors des Assises de la Justice pour l'encadrement strict ou la suppression de cette pratique."
+        }
+      ]
     },
     {
       "id": "promise_8",
@@ -73,7 +102,12 @@
       "resultat": "Fin des instructions politiques",
       "delai": "2025-04-02",
       "status": "encours",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-07-05",
+          "text": "Le rapport des Assises propose que le Ministre de la Justice ne puisse plus donner d'instructions aux procureurs dans les dossiers individuels."
+        }
+      ]
     },
     {
       "id": "promise_9",
@@ -99,8 +133,13 @@
       "engagement": "Augmenter substantiellement le budget Justice",
       "resultat": "Modernisation et digitalisation",
       "delai": "2029-04-02",
-      "status": "non-lance",
-      "mises_a_jour": []
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2025-01-01",
+          "text": "Hausse notée du budget du Ministère de la Justice dans la Loi de Finances Initiale 2025 pour la modernisation des infrastructures."
+        }
+      ]
     },
     {
       "id": "promise_12",
@@ -156,8 +195,12 @@
       "status": "realise",
       "mises_a_jour": [
         {
+          "date": "2024-08-08",
+          "text": "Adoption du projet de loi créant le Pool Judiciaire Financier (PJF) en Conseil des Ministres."
+        },
+        {
           "date": "2024-09-17",
-          "text": "Installation du pole judiciaire financier."
+          "text": "Installation effective des magistrats du Pôle Judiciaire Financier, remplaçant la CREI."
         }
       ]
     },
@@ -170,8 +213,12 @@
       "status": "realise",
       "mises_a_jour": [
         {
+          "date": "2024-04-20",
+          "text": "Instruction présidentielle pour la publication immédiate des rapports de l'OFNAC (2019-2023)."
+        },
+        {
           "date": "2025-12-22",
-          "text": " prestation de serment le 22 décembre 2025 devant le Premier Président de la Cour d'appel de Dakar."
+          "text": "Prestation de serment des nouveaux membres devant le Premier Président de la Cour d'appel de Dakar."
         }
       ]
     },
@@ -185,7 +232,7 @@
       "mises_a_jour": [
         {
           "date": "2025-08-26",
-          "text": "Au Sénégal, la protection des lanceurs d'alerte est désormais régie par la Loi n° 2025-14, adoptée par l'Assemblée nationale le 26 août 2025 et promulguée en septembre 2025[...]"
+          "text": "Adoption de la Loi n° 2025-14 par l'Assemblée nationale et promulgation en septembre 2025."
         }
       ]
     },
@@ -195,8 +242,13 @@
       "engagement": "Banque Publique d'Investissement Unique",
       "resultat": "Fusion FONGIP/FONSIS/BNDE",
       "delai": "2029-04-02",
-      "status": "non-lance",
-      "mises_a_jour": []
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-10-14",
+          "text": "Le référentiel 'Sénégal 2050' confirme la restructuration des instruments de financement publics."
+        }
+      ]
     },
     {
       "id": "promise_21",
@@ -204,8 +256,13 @@
       "engagement": "Bureau d'Intelligence Économique (BIE) à la Présidence",
       "resultat": "Prospective souveraine",
       "delai": "2024-04-02",
-      "status": "non-lance",
-      "mises_a_jour": []
+      "status": "realise",
+      "mises_a_jour": [
+        {
+          "date": "2024-04-05",
+          "text": "Création du Bureau de Prospective et d'Intelligence Économique rattaché à la Présidence."
+        }
+      ]
     },
     {
       "id": "promise_22",
@@ -214,7 +271,12 @@
       "resultat": "Souveraineté monétaire",
       "delai": "2029-04-02",
       "status": "non-lance",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-10-14",
+          "text": "Sénégal 2050 évoque la souveraineté monétaire comme un objectif de long terme dans le cadre de l'intégration régionale."
+        }
+      ]
     },
     {
       "id": "promise_23",
@@ -241,7 +303,12 @@
       "resultat": "Optimisation recettes",
       "delai": "2027-12-31",
       "status": "encours",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-06-01",
+          "text": "Lancement de la plateforme 'Manko' pour la digitalisation des paiements administratifs."
+        }
+      ]
     },
     {
       "id": "promise_26",
@@ -267,8 +334,13 @@
       "engagement": "Indexer l'IR sur l'inflation",
       "resultat": "Protection pouvoir d'achat",
       "delai": "2026-04-02",
-      "status": "non-lance",
-      "mises_a_jour": []
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-06-13",
+          "text": "Annonce d'une baisse significative des prix (Riz, Huile, Pain, Ciment) et renoncement de l'État à certaines taxes douanières (40 milliards FCFA)."
+        }
+      ]
     },
     {
       "id": "promise_29",
@@ -277,7 +349,12 @@
       "resultat": "Gestion dette saine",
       "delai": "2026-04-02",
       "status": "non-lance",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-09-26",
+          "text": "Point de presse du Gouvernement révélant les chiffres réels de la dette publique et du déficit budgétaire (audit des finances publiques)."
+        }
+      ]
     },
     {
       "id": "promise_30",
@@ -304,7 +381,12 @@
       "resultat": "Soutien secteur privé",
       "delai": "2024-04-02",
       "status": "encours",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-04-18",
+          "text": "Circulaire du Premier Ministre ordonnant aux administrations de privilégier les entreprises locales et communautaires dans les marchés publics."
+        }
+      ]
     },
     {
       "id": "promise_33",
@@ -322,7 +404,12 @@
       "resultat": "Substitution importations",
       "delai": "2025-04-02",
       "status": "encours",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-10-14",
+          "text": "Intégration du volet industrialisation dans l'axe 'Économie compétitive' de l'agenda Sénégal 2050."
+        }
+      ]
     },
     {
       "id": "promise_35",
@@ -333,8 +420,12 @@
       "status": "encours",
       "mises_a_jour": [
         {
+          "date": "2024-05-01",
+          "text": "Suspension provisoire de toutes les opérations foncières sur les zones litigieuses (Mbour 4, etc.) en attendant la réforme."
+        },
+        {
           "date": "2025-10-23",
-          "text": " Adoption imminente : En janvier 2026, le Chef de l'État a exigé l'adoption de la version révisée de la loi avant la fin du mois."
+          "text": "Adoption imminente : En janvier 2026, le Chef de l'État a exigé l'adoption de la version révisée de la loi avant la fin du mois."
         }
       ]
     },
@@ -345,7 +436,12 @@
       "resultat": "Accords Maputo",
       "delai": "2027-12-31",
       "status": "encours",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-05-02",
+          "text": "Allocation de 120 milliards FCFA pour la campagne agricole 2024 (engrais et semences subventionnés)."
+        }
+      ]
     },
     {
       "id": "promise_37",
@@ -401,8 +497,12 @@
       "status": "realise",
       "mises_a_jour": [
         {
+          "date": "2024-05-06",
+          "text": "Publication de la liste des navires autorisés à pêcher dans les eaux sénégalaises (audit)."
+        },
+        {
           "date": "2024-12-31",
-          "text": " Les navires de l'UE (principalement espagnols et français) n'ont plus l'autorisation de pêcher dans la Zone Économique Exclusive (ZEE) du Sénégal depuis la fin de l'année 202[...]"
+          "text": "Fin des accords de pêche avec l'UE : les navires européens n'ont plus l'autorisation de pêcher dans la ZEE sénégalaise depuis fin 2024."
         }
       ]
     },
@@ -440,7 +540,12 @@
       "resultat": "Autonomie aliment bétail",
       "delai": "2027-12-31",
       "status": "encours",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-06-05",
+          "text": "Préparation de la fête de Tabaski avec subvention de l'aliment de bétail pour les opérateurs."
+        }
+      ]
     },
     {
       "id": "promise_46",
@@ -458,7 +563,12 @@
       "resultat": "Transformation 50% production",
       "delai": "2029-12-31",
       "status": "encours",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-08-01",
+          "text": "Relance des projets d'Agropoles Sud, Centre et Ouest avec revue des financements."
+        }
+      ]
     },
     {
       "id": "promise_48",
@@ -479,7 +589,7 @@
       "mises_a_jour": [
         {
           "date": "2025-12-31",
-          "text": "Le projet est officiellement inscrit dans la LFI 2026 avec une enveloppe de 137 milliards FCFA pour cette année."
+          "text": "Projet officiellement inscrit dans la LFI 2026 avec une enveloppe de 137 milliards FCFA."
         }
       ]
     },
@@ -490,7 +600,12 @@
       "resultat": "Soins pour tous",
       "delai": "2026-04-02",
       "status": "encours",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-06-14",
+          "text": "Allocation budgétaire spéciale de 53,4 milliards FCFA pour la réduction du coût de la vie et le soutien à la santé."
+        }
+      ]
     },
     {
       "id": "promise_51",
@@ -544,7 +659,12 @@
       "resultat": "Fin évacuations",
       "delai": "2029-04-02",
       "status": "non-lance",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-06-25",
+          "text": "Visite du Chef de l'État à l'Hôpital Le Dantec (chantier) et instructions pour l'accélération de la reconstruction."
+        }
+      ]
     },
     {
       "id": "promise_57",
@@ -553,7 +673,12 @@
       "resultat": "Souveraineté médicamenteuse",
       "delai": "2029-12-31",
       "status": "non-lance",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-07-16",
+          "text": "L'Institut Pasteur de Dakar inaugure MADIBA, usine de production de vaccins, étape clé vers la souveraineté."
+        }
+      ]
     },
     {
       "id": "promise_58",
@@ -619,7 +744,7 @@
       "mises_a_jour": [
         {
           "date": "2025-12-31",
-          "text": "Budget et constructions 2026 : Dans son message à la Nation du 31 décembre 2025, le Président Bassirou Diomaye Faye a annoncé une enveloppe de 29 milliards FCFA pour l'année 2026 dédiée spécifiquement à l'accélération de l'éradication de ces abris."
+          "text": "Enveloppe de 29 milliards FCFA dédiée à l'accélération de l'éradication des abris en 2026."
         }
       ]
     },
@@ -633,11 +758,11 @@
       "mises_a_jour": [
         {
           "date": "2024-12-13",
-          "text": "Lancement institutionnel : La réforme a été officiellement lancée le 13 décembre 2024 par le ministère de l'Éducation nationale."
+          "text": "Lancement institutionnel par le ministère de l'Éducation nationale."
         },
         {
           "date": "2025-01-14",
-          "text": "Début effectif des cours : L'enseignement de l'anglais a commencé concrètement dans les classes du préscolaire et de l'élémentaire le mardi 14 janvier 2025."
+          "text": "Début effectif des cours dans les classes du préscolaire et de l'élémentaire."
         }
       ]
     },
@@ -655,11 +780,11 @@
         },
         {
           "date": "2025-08-30",
-          "text": "Août 2025 : Le gouvernement valide le recrutement de 500 enseignants-chercheurs pour les universités publiques afin de renforcer l'enseignement supérieur."
+          "text": "Recrutement de 500 enseignants-chercheurs pour universités publiques."
         },
         {
           "date": "2025-07-31",
-          "text": "Juillet 2025 : Le gouvernement sénégalais annonce officiellement un recrutement exceptionnel de 200 formateurs pour l'enseignement technique et la formation professionnelle (ETFP)[...]"
+          "text": "Recrutement exceptionnel de 200 formateurs pour ETFP."
         }
       ]
     },
@@ -709,7 +834,7 @@
       "mises_a_jour": [
         {
           "date": "2026-01-05",
-          "text": "le Premier ministre, Ousmane Sonko, a procédé à la pose de la première pierre du lycée moderne de Passy, marquant le démarrage d’un projet éducatif majeur d'un coût global de 3 537 267 820 FCFA."
+          "text": "Pose première pierre du lycée moderne de Passy (coût 3 537 267 820 FCFA)."
         }
       ]
     },
@@ -768,7 +893,11 @@
       "mises_a_jour": [
         {
           "date": "2025-08-06",
-          "text": "Le Gazoduc de 85 KM du Segment Nord, reliant le Hub de GTA à la Centrale électrique de Gandon de 250 MW lancé officiellement en août 2025 par le Réseau Gazier du Sénégal."
+          "text": "Lancement officiel du Gazoduc de 85 KM reliant le Hub de GTA à la Centrale électrique de Gandon (250 MW)."
+        },
+        {
+          "date": "2024-06-11",
+          "text": "First Oil du champ Sangomar, permettant à terme l'utilisation du gaz associé pour les centrales Senelec."
         }
       ]
     },
@@ -787,6 +916,10 @@
         {
           "date": "2024-07-10",
           "text": "Augmentation de 15% des royalties."
+        },
+        {
+          "date": "2024-08-19",
+          "text": "Installation officielle par le Premier Ministre de la Commission de réexamen des contrats stratégiques (pétroliers, miniers, fiscaux)."
         }
       ]
     },
@@ -808,8 +941,12 @@
       "status": "encours",
       "mises_a_jour": [
         {
+          "date": "2024-10-21",
+          "text": "Ouverture des États Généraux des Transports Publics, incluant un atelier spécifique sur la relance du chemin de fer."
+        },
+        {
           "date": "2025-12-31",
-          "text": "Fin de la phase préparatoire : Le gouvernement a confirmé que les études et travaux préparatoires pour la nouvelle ligne à écartement standard (SGR) seront bouclés au cours de l'année 2026"
+          "text": "Fin de la phase préparatoire : études et travaux préparatoires bouclés en 2026."
         }
       ]
     },
@@ -895,7 +1032,7 @@
       "mises_a_jour": [
         {
           "date": "2025-12-31",
-          "text": "En 2026, le montant de 30 milliards FCFA est une enveloppe clé mobilisée par l'État du Sénégal pour accélérer le programme des 100 000 logements, désormais intégré dans la vision de souveraineté résidentielle du nouveau."
+          "text": "Enveloppe de 30 milliards FCFA mobilisée en 2026 pour accélérer le programme des 100 000 logements."
         }
       ]
     },
@@ -933,7 +1070,12 @@
       "resultat": "Surveillance technologique",
       "delai": "2026-04-02",
       "status": "non-lance",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-08-16",
+          "text": "Lancement réussi du premier satellite sénégalais GAINDESAT-1 depuis la Californie, marquant l'entrée du Sénégal dans l'ère spatiale."
+        }
+      ]
     },
     {
       "id": "promise_94",
@@ -951,7 +1093,12 @@
       "resultat": "Gestion déchets",
       "delai": "2026-04-02",
       "status": "encours",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-06-01",
+          "text": "Lancement de l'initiative nationale 'Setal Sunu Rew' avec une première journée dédiée au nettoiement et à la gestion des déchets, y compris Mbeubeuss."
+        }
+      ]
     },
     {
       "id": "promise_96",
@@ -960,7 +1107,12 @@
       "resultat": "Baisse spéculation",
       "delai": "2025-04-02",
       "status": "encours",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2024-06-20",
+          "text": "Mise en place d'une Commission nationale de régulation des loyers pour faire appliquer les baisses."
+        }
+      ]
     },
     {
       "id": "promise_97",
@@ -978,23 +1130,10 @@
       "resultat": "Souveraineté numérique",
       "delai": "2026-04-02",
       "status": "non-lance",
-      "mises_a_jour": []
-    },
-    {
-      "id": "promise_100",
-      "domaine": "Gouvernance",
-      "engagement": "Consacrer l'appel à candidature pour certains emplois de la haute fonction publique et normaliser les recrutements par concours",
-      "resultat": "Amélioration de la transparence et de l'efficience de l'administration publique",
-      "delai": "2029-04-02",
-      "status": "encours",
       "mises_a_jour": [
         {
-          "date": "2024-06-15",
-          "text": "Lancement des consultations pour la réforme des normes administratives"
-        },
-        {
-          "date": "2024-05-30",
-          "text": "Création d'un comité de pilotage pour l'élaboration des standards"
+          "date": "2024-10-14",
+          "text": "La stratégie Sénégal 2050 met l'accent sur la souveraineté numérique et la protection des données (CDP)."
         }
       ]
     },
@@ -1008,9 +1147,2099 @@
       "mises_a_jour": [
         {
           "date": "2024-04-05",
-          "text": "Fusion effective Gouvernement Sonko 1"
+          "text": "Fusion effective dans le Gouvernement Sonko 1."
         }
       ]
+    },
+    {
+      "id": "promise_100",
+      "domaine": "Gouvernance",
+      "engagement": "Consacrer l'appel à candidature pour certains emplois de la haute fonction publique et normaliser les recrutements par concours",
+      "resultat": "Amélioration de la transparence et de l'efficience de l'administration publique",
+      "delai": "2029-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-04-17",
+          "text": "Lancement des appels à candidatures pour les directions générales stratégiques (ex: ANAM, Agence Construction Bâtiments)."
+        },
+        {
+          "date": "2024-06-15",
+          "text": "Lancement des consultations pour la réforme des normes administratives."
+        }
+      ]
+    },
+     {
+      "id": "promise_101",
+      "domaine": "Justice",
+      "engagement": "Transformer le code pénal (suppression vagabondage, mendicité, peine emprisonnement pour infractions de presse)",
+      "resultat": "Code pénal moderne centré sur l'humain",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-06-04",
+          "text": "Les Assises de la Justice recommandent la dépénalisation des délits de presse et la révision des articles sur le vagabondage."
+        }
+      ]
+    },
+    {
+      "id": "promise_102",
+      "domaine": "Justice",
+      "engagement": "Limiter la garde à vue à 24h renouvelable une fois (48h max)",
+      "resultat": "Fin des humiliations pré-jugement",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+          "date": "2024-07-05",
+          "text": "Rapport final des Assises : Consensus sur la nécessité de réduire les délais de garde à vue et la présence de l'avocat dès la première heure."
+        }
+      ]
+    },
+    {
+      "id": "promise_103",
+      "domaine": "Justice",
+      "engagement": "Réformer la désignation des juges d'instruction (critères objectifs)",
+      "resultat": "Fin du forum shopping judiciaire",
+      "delai": "2025-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_104",
+      "domaine": "Justice",
+      "engagement": "Encadrer les mandats de dépôt obligatoires (articles 55-100 et 255 CP)",
+      "resultat": "Fin instrumentalisation justice contre opposants",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+          "date": "2024-06-04",
+          "text": "Proposition forte des Assises pour limiter le recours systématique au mandat de dépôt."
+        }
+      ]
+    },
+    {
+      "id": "promise_105",
+      "domaine": "Justice",
+      "engagement": "Inamovibilité temporaire de 5 ans pour le parquet",
+      "resultat": "Indépendance fonctionnelle ministère public",
+      "delai": "2025-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_106",
+      "domaine": "Justice",
+      "engagement": "Supprimer l'immunité des magistrats",
+      "resultat": "Responsabilisation professionnelle",
+      "delai": "2025-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_107",
+      "domaine": "Justice",
+      "engagement": "Accès magistrature pour avocats expérimentés et professeurs agrégés",
+      "resultat": "Diversification profils judiciaires",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+          "date": "2024-07-05",
+          "text": "Le rapport des Assises valide le principe d'ouverture du recrutement des magistrats aux professionnels du droit expérimentés."
+        }
+      ]
+    },
+    {
+      "id": "promise_108",
+      "domaine": "Gouvernance",
+      "engagement": "Interdiction cumul mandats électifs pour responsables exécutif/législatif",
+      "resultat": "Professionnalisation politique",
+      "delai": "2024-10-02",
+      "status": "realise",
+      "mises_a_jour": [
+        {
+          "date": "2024-04-05",
+          "text": "Démission collective des Ministres détenant des mandats de Maires ou Présidents de Conseil Départemental (ex: Birame Soulèye Diop, Maïmouna Dieye)."
+        }
+      ]
+    },
+    {
+      "id": "promise_109",
+      "domaine": "Gouvernance",
+      "engagement": "Révision Constitution inspirée Assises Nationales et CNRI",
+      "resultat": "Constitution sacrée avec procédures rigides amendement",
+      "delai": "2025-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_110",
+      "domaine": "Gouvernance",
+      "engagement": "Adoption Charte des libertés et de la Démocratie",
+      "resultat": "Cadre juridique droits fondamentaux",
+      "delai": "2025-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_111",
+      "domaine": "Lutte Corruption",
+      "engagement": "Nommer Procureur financier indépendant de l'exécutif",
+      "resultat": "Lutte efficace crimes financiers",
+      "delai": "2025-04-02",
+      "status": "realise",
+      "mises_a_jour": [
+        {
+          "date": "2024-09-17",
+          "text": "Installation officielle du Pool Judiciaire Financier (PJF) et nomination des magistrats spécialisés."
+        }
+      ]
+    },
+    {
+      "id": "promise_112",
+      "domaine": "Lutte Corruption",
+      "engagement": "Détacher Corps de Contrôle de tutelle exécutif",
+      "resultat": "Indépendance organes contrôle",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_113",
+      "domaine": "Lutte Corruption",
+      "engagement": "Supprimer rattachement OFNAC à présidence",
+      "resultat": "Indépendance organisme lutte corruption",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_114",
+      "domaine": "Lutte Corruption",
+      "engagement": "Augmenter mandat membres OFNAC de 3 à 6 ans",
+      "resultat": "Renforcement indépendance membres",
+      "delai": "2025-04-02",
+      "status": "realise",
+      "mises_a_jour": [
+         {
+          "date": "2024-07-24",
+          "text": "Adoption en Conseil des Ministres du projet de loi renforçant les prérogatives et le mandat des membres de l'OFNAC."
+        }
+      ]
+    },
+    {
+      "id": "promise_115",
+      "domaine": "Lutte Corruption",
+      "engagement": "Transmission automatique rapports OFNAC au Procureur",
+      "resultat": "Obligation poursuites judiciaires",
+      "delai": "2025-04-02",
+      "status": "realise",
+      "mises_a_jour": [
+        {
+          "date": "2024-04-20",
+          "text": "Sur instruction du Président Faye, les rapports 2019-2023 ont été transmis aux autorités judiciaires compétentes."
+        }
+      ]
+    },
+    {
+      "id": "promise_116",
+      "domaine": "Lutte Corruption",
+      "engagement": "Publication obligatoire rapport annuel OFNAC sur site internet",
+      "resultat": "Transparence actions lutte corruption",
+      "delai": "2025-04-02",
+      "status": "realise",
+      "mises_a_jour": [
+        {
+          "date": "2024-04-25",
+          "text": "Publication en ligne de l'intégralité des rapports d'activités de l'OFNAC en retard."
+        }
+      ]
+    },
+    {
+      "id": "promise_117",
+      "domaine": "Lutte Corruption",
+      "engagement": "Durcir peines corruption avec saisie biens condamnés",
+      "resultat": "Dissuasion efficace délinquance financière",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_118",
+      "domaine": "Lutte Corruption",
+      "engagement": "Réduire transactions espèces et digitaliser paiements administratifs",
+      "resultat": "Lutte contre petite corruption",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-06-01",
+          "text": "Lancement de la plateforme 'Manko' pour la digitalisation des paiements de services publics."
+        }
+      ]
+    },
+    {
+      "id": "promise_119",
+      "domaine": "Lutte Corruption",
+      "engagement": "Dématérialiser actes administratifs (cadastre, déclaration, impôts, état civil)",
+      "resultat": "Transparence procédures administratives",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-05-15",
+          "text": "Accélération du programme de digitalisation de l'État Civil (NEOC)."
+        }
+      ]
+    },
+    {
+      "id": "promise_120",
+      "domaine": "Lutte Corruption",
+      "engagement": "Créer brigades anticorruption avec caméras cachées",
+      "resultat": "Constatation flagrants délits corruption",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_121",
+      "domaine": "Intégration Régionale",
+      "engagement": "Réformer CEDEAO (renforcement Parlement et Cour de justice)",
+      "resultat": "Équilibre institutions régionales",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-05-30",
+          "text": "Visites du Président Faye au Mali et au Burkina Faso pour plaider le dialogue et la réforme de l'institution."
+        }
+      ]
+    },
+    {
+      "id": "promise_122",
+      "domaine": "Intégration Régionale",
+      "engagement": "Sécuriser frontières et interconnecter infrastructures sous-régionales",
+      "resultat": "Libre circulation biens et personnes",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_123",
+      "domaine": "Intégration Régionale",
+      "engagement": "Programme coopération décentralisée ouest-africaine (foires commerciales, jumelages villes)",
+      "resultat": "Dynamique économique transfrontalière",
+      "delai": "2027-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_124",
+      "domaine": "Administration",
+      "engagement": "Valider conventions collectives et accords syndicaux",
+      "resultat": "Respect dialogue social",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-05-01",
+          "text": "Rencontre Président-Syndicats au Palais : engagement à apurer le passif social."
+        }
+      ]
+    },
+    {
+      "id": "promise_125",
+      "domaine": "Administration",
+      "engagement": "Manuel de procédure et code déontologie pour chaque administration (délai 2 ans)",
+      "resultat": "Standardisation pratiques administratives",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_126",
+      "domaine": "Administration",
+      "engagement": "Audit effectifs et profilage ressources humaines",
+      "resultat": "Rationalisation administration publique",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-04-10",
+          "text": "Lancement de l'audit général des recrutements de la dernière année du mandat précédent."
+        }
+      ]
+    },
+    {
+      "id": "promise_127",
+      "domaine": "Administration",
+      "engagement": "Créer Office de l'ombudsman",
+      "resultat": "Médiation conflits administration-citoyens",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_128",
+      "domaine": "Administration",
+      "engagement": "Recrutement par concours/appel candidature systématique",
+      "resultat": "Méritocratie administration publique",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-04-17",
+          "text": "Lancement officiel des appels à candidatures pour les postes de Directeurs Généraux (ex: Société des Eaux, ANAM)."
+        }
+      ]
+    },
+    {
+      "id": "promise_129",
+      "domaine": "Administration",
+      "engagement": "Rationaliser structures étatiques (fusion ministères, réduction mille-feuille administratif)",
+      "resultat": "Administration moins coûteuse et plus efficace",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-09-04",
+          "text": "Le projet de loi de suppression du HCCT et du CESE est rejeté par l'Assemblée (ancienne majorité)."
+        },
+        {
+          "date": "2024-09-12",
+          "text": "Dissolution de l'Assemblée nationale."
+        },
+        {
+           "date": "2025-01-15",
+           "text": "Suppression effective des institutions budgétivores suite à l'installation de la nouvelle législature."
+        }
+      ]
+    },
+    {
+      "id": "promise_130",
+      "domaine": "Administration",
+      "engagement": "Renforcer ASN (Association Sénégalaise de Normalisation)",
+      "resultat": "Encadrement qualité tous secteurs",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_131",
+      "domaine": "Administration",
+      "engagement": "Instituer contrats de performance administrations",
+      "resultat": "Reddition comptes et efficacité",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_132",
+      "domaine": "Administration",
+      "engagement": "Interdire militantisme politique responsables techniques (régies financières, sociétés État)",
+      "resultat": "Neutralité administration publique",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-04-08",
+          "text": "Lettre circulaire du Premier Ministre rappelant l'obligation de neutralité et de réserve des agents de l'État."
+        }
+      ]
+    },
+    {
+      "id": "promise_133",
+      "domaine": "Administration",
+      "engagement": "Loi accès information publique",
+      "resultat": "Transparence gouvernementale",
+      "delai": "2026-04-02",
+      "status": "realise",
+      "mises_a_jour": [
+        {
+          "date": "2025-08-26",
+          "text": "Au Sénégal, la loi historique sur l'accès à l'information a été officiellement votée en août 2025 par l'Assemblée nationale"
+        }
+      ]
+    },
+    {
+      "id": "promise_134",
+      "domaine": "Économie",
+      "engagement": "Modèle économique endogène par substitution importations",
+      "resultat": "Développement par industrialisation",
+      "delai": "2029-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-10-14",
+          "text": "Présentation du référentiel 'Sénégal 2050' qui consacre le modèle endogène comme pilier central."
+        }
+      ]
+    },
+    {
+      "id": "promise_135",
+      "domaine": "Économie",
+      "engagement": "Créer Bureau Intelligence Économique (BIE) à la Présidence",
+      "resultat": "Prospective économique stratégique",
+      "delai": "2024-10-02",
+      "status": "realise",
+      "mises_a_jour": [
+        {
+          "date": "2024-04-05",
+          "text": "Création effective du Bureau de Prospective et d'Intelligence Économique."
+        }
+      ]
+    },
+    {
+      "id": "promise_136",
+      "domaine": "Économie",
+      "engagement": "Fusion BNDE/FONSIS/FONGIP/DER en banque publique unique",
+      "resultat": "Rationalisation dispositifs financement",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_137",
+      "domaine": "Économie",
+      "engagement": "Créer Livret épargne patriotisme économique populaire",
+      "resultat": "Financement PME locales/régionales",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_138",
+      "domaine": "Finances",
+      "engagement": "Créer Banque Postale inspirée modèle allemand",
+      "resultat": "Bancarisation massive population",
+      "delai": "2027-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_139",
+      "domaine": "Finances",
+      "engagement": "Établir consensus national priorités pays court/moyen/long terme",
+      "resultat": "Cohérence politiques publiques",
+      "delai": "2025-04-02",
+      "status": "realise",
+      "mises_a_jour": [
+        {
+          "date": "2024-10-14",
+          "text": "Lancement de la Vision Sénégal 2050 validée comme cadre de référence unique."
+        }
+      ]
+    },
+    {
+      "id": "promise_140",
+      "domaine": "Finances",
+      "engagement": "Chaîne dépenses publiques simplifiée avec paiement dématérialisé",
+      "resultat": "Transparence gestion financière",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_141",
+      "domaine": "Finances",
+      "engagement": "Créer Conseil Finances Publiques rattaché Cour des Comptes",
+      "resultat": "Réalisme prévisions économiques",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_142",
+      "domaine": "Finances",
+      "engagement": "Simplifier/rationaliser dépenses fiscales code investissements",
+      "resultat": "Efficacité incitations fiscales",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+          "date": "2024-09-26",
+          "text": "Le Gouvernement annonce une revue des exonérations fiscales suite à l'audit des finances publiques."
+        }
+      ]
+    },
+    {
+      "id": "promise_143",
+      "domaine": "Finances",
+      "engagement": "Politique subvention plus intelligente et mieux ciblée",
+      "resultat": "Optimisation dépenses publiques",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-06-13",
+          "text": "Réorientation des subventions vers les produits de première nécessité (pain, riz, huile) pour soulager les ménages."
+        }
+      ]
+    },
+    {
+      "id": "promise_144",
+      "domaine": "Finances",
+      "engagement": "Créer Haut Conseil de l'Impôt (HCI)",
+      "resultat": "Définition participative politique fiscale",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_145",
+      "domaine": "Finances",
+      "engagement": "Créer École Nationale Régies Financières (ENRF)",
+      "resultat": "Formation agents administrations financières",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_146",
+      "domaine": "Finances Locales",
+      "engagement": "Créer fonds compensation pertes recettes collectivités",
+      "resultat": "Atténuation impact dégrèvements/exonérations",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_147",
+      "domaine": "Finances Locales",
+      "engagement": "Renonciation État taxe plus-value foncière au profit collectivités",
+      "resultat": "Augmentation ressources locales",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_148",
+      "domaine": "Finances Locales",
+      "engagement": "Versement effectif collectivités part fonds miniers, autoroutes, TER, BRT",
+      "resultat": "Équité territoriale ressources",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_149",
+      "domaine": "Finances Locales",
+      "engagement": "Réformer taxe touristique journalière (partagée État/collectivités)",
+      "resultat": "Financement développement local touristique",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_150",
+      "domaine": "Économie",
+      "engagement": "Développer 8 pôles régionaux développement économique",
+      "resultat": "Correction déséquilibre territorial",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+          "date": "2024-10-14",
+          "text": "Le modèle 'Sénégal 2050' découpe le pays en pôles économiques régionaux avec des vocations spécifiques."
+        }
+      ]
+    },
+    {
+      "id": "promise_151",
+      "domaine": "Économie",
+      "engagement": "État interventionniste pour développement chaînes valeurs agricoles",
+      "resultat": "Souveraineté alimentaire",
+      "delai": "2029-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_152",
+      "domaine": "Commerce",
+      "engagement": "Développer/professionnaliser/moderniser commerce proximité",
+      "resultat": "Dynamisme commerce intérieur",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-06-20",
+          "text": "Lancement du réseau de 'Boutiques Témoin' pour assurer l'effectivité de la baisse des prix."
+        }
+      ]
+    },
+    {
+      "id": "promise_153",
+      "domaine": "Commerce",
+      "engagement": "Valoriser identité culinaire et labelliser produits locaux (AOC)",
+      "resultat": "Promotion consommation locale",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-04-18",
+          "text": "Instruction donnée aux services de l'État de privilégier les produits locaux dans la restauration et l'ameublement administratifs."
+        }
+      ]
+    },
+    {
+      "id": "promise_154",
+      "domaine": "Commerce Extérieur",
+      "engagement": "Refonder ASEPEX en APDEX (Agence Promotion Développement Échanges Extérieurs)",
+      "resultat": "Compétitivité exportations nationales",
+      "delai": "2027-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_155",
+      "domaine": "Commerce Extérieur",
+      "engagement": "Renforcer exigences qualité et traçabilité produits (normes internationales, codes-barres)",
+      "resultat": "Accès marchés internationaux",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_156",
+      "domaine": "Secteur Informel",
+      "engagement": "Créer statut intermédiaire entre formel et informel (3 ans max)",
+      "resultat": "Transition progressive vers formalité",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_157",
+      "domaine": "Secteur Informel",
+      "engagement": "Aménager sites recasement acteurs secteur informel",
+      "resultat": "Fin occupation irrégulière voie publique",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+           "date": "2024-06-15",
+           "text": "Opérations de désencombrement de la voie publique à Dakar et banlieue, avec promesse de recasement."
+         }
+      ]
+    },
+    {
+      "id": "promise_158",
+      "domaine": "Emploi",
+      "engagement": "Créer GAGET (Grande Agence Gouvernementale Emploi et Travail)",
+      "resultat": "Coordination politiques emploi",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+          "date": "2024-08-23",
+          "text": "Signature d'une convention 'Primature-Secteur Privé' pour favoriser le premier emploi des jeunes."
+        }
+      ]
+    },
+    {
+      "id": "promise_159",
+      "domaine": "Emploi",
+      "engagement": "Programme 'Goungué' accompagnement jeunes diplômés ETFP",
+      "resultat": "Insertion professionnelle et auto-emploi",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_160",
+      "domaine": "Emploi",
+      "engagement": "Promouvoir apprentissage/alternance dès collège",
+      "resultat": "Employabilité jeunes améliorée",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_161",
+      "domaine": "Emploi Handicap",
+      "engagement": "Obligation employeurs recruter personnes handicapées + mesures incitatives/coercitives",
+      "resultat": "Insertion professionnelle handicapés",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_162",
+      "domaine": "Emploi Handicap",
+      "engagement": "Créer RQTH (Reconnaissance Qualité Travailleur Handicapé)",
+      "resultat": "Accès mesures insertion professionnelle",
+      "delai": "2025-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_163",
+      "domaine": "Social",
+      "engagement": "Créer Programme National Solidarité et Fonds National Solidarité",
+      "resultat": "Lutte contre pauvreté et exclusion",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_164",
+      "domaine": "ESS",
+      "engagement": "Créer PRECOSOL (Programme développement ESS création richesses immédiates)",
+      "resultat": "3 millions d'emplois indirects",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_165",
+      "domaine": "ESS",
+      "engagement": "Créer PROMES (Programme Mutualisation Équipement Solidaire)",
+      "resultat": "Accès facteurs production communautaire",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_166",
+      "domaine": "ESS",
+      "engagement": "Créer VULAVERT (Vulgarisation Agriculture Verticale)",
+      "resultat": "Accès alimentation saine en milieu urbain/rural",
+      "delai": "2027-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_167",
+      "domaine": "ESS",
+      "engagement": "Créer VAQUARU (Vulgarisation Aquaculture intégrée)",
+      "resultat": "Création emploi et sécurité alimentaire",
+      "delai": "2027-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_168",
+      "domaine": "Développement Local",
+      "engagement": "Renforcer PUDC (Programme Urgence Développement Communautaire)",
+      "resultat": "Développement initiatives base",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+          "date": "2024-06-01",
+          "text": "Lancement de l'initiative 'Setal Sunu Rew' mobilisant les communautés locales pour l'assainissement et le cadre de vie."
+        }
+      ]
+    },
+    {
+      "id": "promise_169",
+      "domaine": "Développement Local",
+      "engagement": "Créer PUCIS (Projet Unifié Cartographie Infrastructures Socioéconomiques Base)",
+      "resultat": "Rationalisation interventions développement local",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_170",
+      "domaine": "Microfinance",
+      "engagement": "Créer Fonds appui production acteurs base (mécanisme revolving État)",
+      "resultat": "Financement ciblé 3 millions Sénégalais",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_171",
+      "domaine": "Microfinance",
+      "engagement": "Créer coopératives crédit communautaire dans 8 pôles développement",
+      "resultat": "Inclusion financière populations rurales",
+      "delai": "2027-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_172",
+      "domaine": "Agriculture",
+      "engagement": "Recentrer activités ministère agriculture sur service public avec décentralisation",
+      "resultat": "Efficacité intervention État rural",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_173",
+      "domaine": "Agriculture",
+      "engagement": "Décentraliser services administratifs niveau régional",
+      "resultat": "Réactivité problèmes locaux",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_174",
+      "domaine": "Agriculture",
+      "engagement": "Redynamiser structures coopératives et organisations professionnelles rurales",
+      "resultat": "Renforcement tissu organisationnel agricole",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-05-02",
+          "text": "Dialogue direct avec les organisations paysannes pour la distribution des semences et intrants (Campagne agricole 2024)."
+        }
+      ]
+    },
+    {
+      "id": "promise_175",
+      "domaine": "Agriculture",
+      "engagement": "Créer Observatoire Monde Rural",
+      "resultat": "Veille et alerte rapide risques alimentaires/climatiques",
+      "delai": "2025-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_176",
+      "domaine": "Agriculture",
+      "engagement": "Recentrer rôle SAED dans vallée fleuve Sénégal",
+      "resultat": "Efficacité aménagements hydro-agricoles",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_177",
+      "domaine": "Agriculture",
+      "engagement": "Modèle paysage agricole autour petites/moyennes exploitations familiales modernisées",
+      "resultat": "Agriculture résiliente et diversifiée",
+      "delai": "2029-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_178",
+      "domaine": "Agriculture",
+      "engagement": "Réforme agraire sécurisation droits fonciers (baux ruraux familles, coopératives 50ha)",
+      "resultat": "Investissement privé national et développement rural",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-04-20",
+          "text": "Suspension des procédures domaniales et foncières dans certaines zones sensibles (littoral, Mbour 4)."
+        },
+        {
+          "date": "2025-10-23",
+          "text": "Lancement imminent de la Commission de réforme foncière pour l'attribution de titres aux paysans."
+        }
+      ]
+    },
+    {
+      "id": "promise_179",
+      "domaine": "Agriculture",
+      "engagement": "Développer coopératives producteurs avec plateaux techniques partagés",
+      "resultat": "Émergence entrepreneurs-agriculteurs",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_180",
+      "domaine": "Agriculture",
+      "engagement": "Programme spécial renouvellement semences et reconstitution capital semencier",
+      "resultat": "Autonomie semences nationales",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-05-02",
+          "text": "Campagne agricole : Mise à disposition de semences certifiées avec un budget record."
+        }
+      ]
+    },
+    {
+      "id": "promise_181",
+      "domaine": "Agriculture",
+      "engagement": "Programme spécial fertilisation (phosphatage fond à grande échelle)",
+      "resultat": "Amélioration productivité agricole",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+          "date": "2024-05-15",
+          "text": "Réduction significative du prix de l'engrais pour la campagne hivernale 2024."
+        }
+      ]
+    },
+    {
+      "id": "promise_182",
+      "domaine": "Agriculture",
+      "engagement": "Programme ambitieux mécanisation agriculture",
+      "resultat": "Modernisation exploitations agricoles",
+      "delai": "2029-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_183",
+      "domaine": "Agriculture",
+      "engagement": "Garantir disponibilité eau (Canal Cayor, Canal Baol, vallées fossiles)",
+      "resultat": "Production agricole toute l'année",
+      "delai": "2029-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+          "date": "2024-11-20",
+          "text": "Priorisation de la maîtrise de l'eau dans le budget 2025 (projets de transfert d'eau)."
+        }
+      ]
+    },
+    {
+      "id": "promise_184",
+      "domaine": "Agriculture",
+      "engagement": "Construire barrages anti-sel embouchure fleuve Casamance",
+      "resultat": "Dessalement fleuve et développement riziculture",
+      "delai": "2028-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_185",
+      "domaine": "Agriculture",
+      "engagement": "Créer FARVAR (Fonds Appui Recherche Vulgarisation Acquis Recherche agricole)",
+      "resultat": "Dissémination innovations agricoles",
+      "delai": "2025-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_186",
+      "domaine": "Agriculture",
+      "engagement": "Rétablir système encadrement rapproché agriculteurs",
+      "resultat": "Formation paysans et vulgarisation techniques",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_187",
+      "domaine": "Agriculture",
+      "engagement": "Affecter 10% budget national ministère agriculture",
+      "resultat": "Respect engagements Maputo/Malabo",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-12-15",
+          "text": "Augmentation notable du budget du Ministère de l'Agriculture dans la LFI 2025."
+        }
+      ]
+    },
+    {
+      "id": "promise_188",
+      "domaine": "Agriculture",
+      "engagement": "Renforcer ISRA (infrastructures, financement, ressources humaines)",
+      "resultat": "Recherche agricole performante",
+      "delai": "2029-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_189",
+      "domaine": "Élevage",
+      "engagement": "Programme national production fourragère",
+      "resultat": "Autosuffisance aliment cheptel national",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_190",
+      "domaine": "Élevage",
+      "engagement": "Programme national développement chaîne valeur laitière",
+      "resultat": "Autosuffisance lait et produits laitiers",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_191",
+      "domaine": "Élevage",
+      "engagement": "Programme national appui chaîne valeur avicole",
+      "resultat": "Autonomie OAC et autosuffisance volailles/œufs",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_192",
+      "domaine": "Élevage",
+      "engagement": "Créer jonction coopératives agricoles et coopératives élevage",
+      "resultat": "Synergie agriculture-élevage",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_193",
+      "domaine": "Élevage",
+      "engagement": "Protéger foncier destiné à l'élevage",
+      "resultat": "Préservation espaces pastoraux",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_194",
+      "domaine": "Élevage",
+      "engagement": "Programme national sécurisation systèmes élevage (identification animaux, déclaration obligatoire)",
+      "resultat": "Lutte contre vol bétail et traçabilité",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_195",
+      "domaine": "Élevage",
+      "engagement": "Programme restauration pâturages et lutte feux brousse",
+      "resultat": "Résilience producteurs pastoraux",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_196",
+      "domaine": "Élevage",
+      "engagement": "Développer assurance bétail",
+      "resultat": "Protection moyens subsistance éleveurs",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_197",
+      "domaine": "Pêche",
+      "engagement": "Réorganiser institutionnellement ministère pêche (fusion-regroupement directions)",
+      "resultat": "Efficacité administration pêche",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+          "date": "2024-04-05",
+          "text": "Création du Ministère des Pêches, des Infrastructures Maritimes et Portuaires dans le Gouvernement Sonko 1."
+        }
+      ]
+    },
+    {
+      "id": "promise_198",
+      "domaine": "Pêche",
+      "engagement": "Transformer CRODT en ISROHA (Institut Recherches Océanographiques Halieutiques Aquacoles)",
+      "resultat": "Recherche halieutique cohérente",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_199",
+      "domaine": "Pêche",
+      "engagement": "Élaborer/mettre en œuvre plans aménagement pêcheries capitales",
+      "resultat": "Gestion durable ressources halieutiques",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_200",
+      "domaine": "Pêche",
+      "engagement": "Élaborer/mettre en œuvre PLAN RECIFS (immersion gestion récifs artificiels)",
+      "resultat": "Reconstitution habitats marins dégradés",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_201",
+      "domaine": "Pêche",
+      "engagement": "Renforcer dispositif surveillance maritime ZEE",
+      "resultat": "Lutte efficace pêche INN (illicite, non réglementée, non déclarée)",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-05-06",
+          "text": "Renforcement des moyens de la Direction de la Protection et de la Surveillance des Pêches (DPSP)."
+        }
+      ]
+    },
+    {
+      "id": "promise_202",
+      "domaine": "Pêche",
+      "engagement": "Appliquer rigoureusement réglementation pêche maritime",
+      "resultat": "Fin gestion politicienne secteur",
+      "delai": "2024-10-02",
+      "status": "realise",
+      "mises_a_jour": [
+        {
+          "date": "2024-05-06",
+          "text": "Publication de la liste officielle des navires autorisés à pêcher au Sénégal (audit transparence)."
+        }
+      ]
+    },
+    {
+      "id": "promise_203",
+      "domaine": "Pêche",
+      "engagement": "Développer aquaculture (cadre juridique, fonds promotion, encadrement technique)",
+      "resultat": "Contribution satisfaction demande marché national",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_204",
+      "domaine": "Industrie",
+      "engagement": "Industrialisation par pôle (8 grands pôles développement économique)",
+      "resultat": "Développement équilibré territoire",
+      "delai": "2029-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-10-14",
+          "text": "Adoption du plan Sénégal 2050 qui structure l'industrialisation autour de 8 pôles régionaux."
+        }
+      ]
+    },
+    {
+      "id": "promise_205",
+      "domaine": "Industrie",
+      "engagement": "Cartographie dynamique chaque pôle (zones industrielles, superficies, lots disponibles)",
+      "resultat": "Transparence implantation entreprises",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_206",
+      "domaine": "Industrie",
+      "engagement": "Développer infrastructures transport inter-pôles (routier, ferroviaire)",
+      "resultat": "Facilitation échanges inter-régionaux",
+      "delai": "2029-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_207",
+      "domaine": "Industrie",
+      "engagement": "Créer grandes écoles ingénieurs et écoles formations professionnelles dans chaque pôle",
+      "resultat": "Adéquation formation-besoins industriels",
+      "delai": "2029-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_208",
+      "domaine": "Industrie",
+      "engagement": "Faire du Sénégal Hub technologique sous-région",
+      "resultat": "Prolifération entreprises électronique/mécanique/informatique industrielle",
+      "delai": "2029-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_209",
+      "domaine": "Industrie",
+      "engagement": "Créer Grande Banque Industrielle Sénégalaise (GBIS)",
+      "resultat": "Financement crédits moyen/long terme industries",
+      "delai": "2027-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_210",
+      "domaine": "Industrie",
+      "engagement": "Utiliser partie Fonds Souverain hydrocarbures pour industrialisation pôles régionaux",
+      "resultat": "Financement développement industriel territorial",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_211",
+      "domaine": "Industrie",
+      "engagement": "Renégocier contrats miniers",
+      "resultat": "Meilleure répartition revenus exploitation",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+        {
+          "date": "2024-08-19",
+          "text": "Mise en place de la Commission de réexamen des contrats stratégiques (mines, pétrole, fiscalité)."
+        }
+      ]
+    },
+    {
+      "id": "promise_212",
+      "domaine": "Industrie",
+      "engagement": "Créer Comité National Industrialisation (CNI) sous autorité vice-président",
+      "resultat": "Coordination politique industrielle nationale",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_213",
+      "domaine": "Industrie",
+      "engagement": "Créer comités pilotage industrialisation (COPINDUS) par pôle",
+      "resultat": "Attractivité investisseurs régionaux",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_214",
+      "domaine": "Industrie",
+      "engagement": "Créer conseils inter-communaux industrialisation (CICUNDUS)",
+      "resultat": "Promotion zones industrielles communales",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_215",
+      "domaine": "Industrie",
+      "engagement": "Réduire atomisation sectorielle (écosystèmes industriels)",
+      "resultat": "Intégration grandes entreprises et PME",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_216",
+      "domaine": "Industrie",
+      "engagement": "Optimiser retombées commande publique via compensation industrielle (>49%)",
+      "resultat": "Développement tissu industriel local",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+          "date": "2024-04-18",
+          "text": "Circulaire 'Consommer Local' obligeant l'administration à s'approvisionner auprès des industries locales."
+        }
+      ]
+    },
+    {
+      "id": "promise_217",
+      "domaine": "Industrie",
+      "engagement": "Accompagner informel vers formel (statut auto-entrepreneur, volet fiscal adapté)",
+      "resultat": "Formalisation TPE",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_218",
+      "domaine": "Industrie",
+      "engagement": "Créer Fonds Développement Industriel (FDI)",
+      "resultat": "Consolidation et modernisation tissu industriel",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_219",
+      "domaine": "Industrie",
+      "engagement": "Mobiliser 1000 hectares pour parcs industriels locatifs clé en main",
+      "resultat": "Offre foncière industrielle attractive",
+      "delai": "2027-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_220",
+      "domaine": "Agro-industrie",
+      "engagement": "Territorialiser développement agroalimentaire (Niayes=végétaux, Casamance=mangue, Sine Saloum=arachide, Ferlo=produits animaux, Petite Côte=halieutique)",
+      "resultat": "Maillage territorial industrie agroalimentaire",
+      "delai": "2029-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_221",
+      "domaine": "Agro-industrie",
+      "engagement": "Renforcer agropoles existantes et en créer de nouvelles",
+      "resultat": "Liaison petits exploitants et grandes chaînes valeur",
+      "delai": "2029-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+          "date": "2024-08-01",
+          "text": "Révision et relance des projets d'Agropoles Sud (Casamance) et Centre."
+        }
+      ]
+    },
+    {
+      "id": "promise_222",
+      "domaine": "Agro-industrie",
+      "engagement": "Implanter incubateurs départementaux connectés modules régionaux agropoles",
+      "resultat": "Valorisation productions communales rurales",
+      "delai": "2029-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_223",
+      "domaine": "Agro-industrie",
+      "engagement": "Promouvoir concept 'consommer sénégalais'",
+      "resultat": "Préférence produits nationaux",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+          "date": "2024-05-15",
+          "text": "Campagne de communication gouvernementale et directives administratives pour le consommer local."
+        }
+      ]
+    },
+    {
+      "id": "promise_224",
+      "domaine": "Éducation",
+      "engagement": "Diversifier sources financement école sénégalaise (RSE entreprises)",
+      "resultat": "Autonomie financière système éducatif",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_225",
+      "domaine": "Éducation",
+      "engagement": "Programme ambitieux recrutement enseignants (fin gap 2029)",
+      "resultat": "Fin classes multigrades et double flux (2027)",
+      "delai": "2029-04-02",
+      "status": "realise",
+      "mises_a_jour": [
+        {
+          "date": "2024-08-30",
+          "text": "Lancement d'un concours de recrutement d'enseignants pour combler le déficit."
+        }
+      ]
+    },
+    {
+      "id": "promise_226",
+      "domaine": "Éducation",
+      "engagement": "Programme construction infrastructures pédagogiques UBM (zéro abri provisoire 2029)",
+      "resultat": "Écoles aux standards internationaux",
+      "delai": "2029-12-31",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+           "date": "2025-01-01",
+           "text": "Budget 2025 allouant une part significative à la résorption des abris provisoires."
+         }
+      ]
+    },
+    {
+      "id": "promise_227",
+      "domaine": "Éducation",
+      "engagement": "Équiper écoles/collèges/lycées laboratoires et matériels technologiques",
+      "resultat": "Amélioration conditions pédagogiques",
+      "delai": "2029-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_228",
+      "domaine": "Éducation",
+      "engagement": "Développer filières apprentissage pratique dès collège",
+      "resultat": "Réponse besoins main-d'œuvre qualifiée",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_229",
+      "domaine": "Éducation",
+      "engagement": "Relancer politique blocs scientifiques en réseau avec lycées",
+      "resultat": "Renforcement enseignement sciences",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_230",
+      "domaine": "Éducation",
+      "engagement": "Généraliser langues nationales comme objet et medium d'enseignement",
+      "resultat": "Valorisation cultures locales",
+      "delai": "2027-12-31",
+      "status": "realise",
+      "mises_a_jour": [
+        {
+          "date": "2024-12-13",
+          "text": "Officialisation de l'introduction des langues nationales à l'école élémentaire."
+        }
+      ]
+    },
+    {
+      "id": "promise_231",
+      "domaine": "Éducation",
+      "engagement": "Renforcer PAMOD et cartographier daaras/écoles coraniques",
+      "resultat": "Connaissance exhaustive écosystème daaras",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_232",
+      "domaine": "Éducation",
+      "engagement": "Créer Centre formation maîtres coraniques",
+      "resultat": "Renforcement capacités pédagogiques",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_233",
+      "domaine": "Éducation",
+      "engagement": "Introduire formation professionnelle dans daaras modernes",
+      "resultat": "Insertion professionnelle talibés",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_234",
+      "domaine": "Éducation Handicap",
+      "engagement": "Construire instituts spécialisés pour enfants handicapés ne pouvant fréquenter milieu ordinaire",
+      "resultat": "Éducation inclusive complète",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_235",
+      "domaine": "Éducation Handicap",
+      "engagement": "Renforcer système AVS (Assistants Vie Scolaire)",
+      "resultat": "Accompagnement enfants handicapés",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_236",
+      "domaine": "Éducation Handicap",
+      "engagement": "Faciliter obtention Carte Égalité Chances (CEC)",
+      "resultat": "Accès services adaptés",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_237",
+      "domaine": "Éducation Handicap",
+      "engagement": "Codifier/harmoniser langue des signes et intégrer formation instituteurs",
+      "resultat": "Accessibilité communication sourds",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_238",
+      "domaine": "Éducation Handicap",
+      "engagement": "Créer imprimeries brailles et bibliothèques sonores",
+      "resultat": "Accès information non-voyants/malvoyants",
+      "delai": "2027-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_239",
+      "domaine": "Enseignement Supérieur",
+      "engagement": "Élaborer politique nationale enseignement supérieur avec loi orientation spécifique",
+      "resultat": "Stratégie décennale cohérente",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_240",
+      "domaine": "Enseignement Supérieur",
+      "engagement": "Redéfinir portefeuille formation universités (besoins secteurs primaire/secondaire)",
+      "resultat": "Adéquation formation-emploi",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_241",
+      "domaine": "Enseignement Supérieur",
+      "engagement": "Établir pont universités-entreprises pour stages",
+      "resultat": "Qualification étudiants",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_242",
+      "domaine": "Enseignement Supérieur",
+      "engagement": "Renforcer ANAQ-Sup (assurance qualité, certification, labellisation)",
+      "resultat": "Amélioration qualité enseignement",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_243",
+      "domaine": "Enseignement Supérieur",
+      "engagement": "Promouvoir fonction service communauté universités publiques",
+      "resultat": "Ancrage territorial institutions",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_244",
+      "domaine": "Enseignement Supérieur",
+      "engagement": "Réformer système agréments et suivi établissements privés",
+      "resultat": "Qualité offre privée",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_245",
+      "domaine": "Enseignement Supérieur",
+      "engagement": "Développer Université Numérique Cheikh Amidou Kane",
+      "resultat": "Accessibilité formations à distance",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_246",
+      "domaine": "Enseignement Supérieur",
+      "engagement": "Créer universités technologiques selon 8 pôles développement",
+      "resultat": "Formation adaptée spécificités régionales",
+      "delai": "2029-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_247",
+      "domaine": "Enseignement Supérieur",
+      "engagement": "Diagnostic budgets établissements publics pour équilibrage",
+      "resultat": "Santé financière universités",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+          "date": "2024-05-30",
+          "text": "Audit des finances des universités publiques lancé par le Ministère de l'Enseignement Supérieur."
+        }
+      ]
+    },
+    {
+      "id": "promise_248",
+      "domaine": "Enseignement Supérieur",
+      "engagement": "Modèle financement par performances et par étudiant",
+      "resultat": "Efficacité allocation ressources",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_249",
+      "domaine": "Enseignement Supérieur",
+      "engagement": "Plan réaliste résorption gap infrastructures universitaires",
+      "resultat": "Campus aux normes internationales",
+      "delai": "2029-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+           "date": "2024-10-01",
+           "text": "Reprise effective des travaux dans les universités en chantier (Amadou Mahtar Mbow, etc.)."
+         }
+      ]
+    },
+    {
+      "id": "promise_250",
+      "domaine": "Enseignement Supérieur",
+      "engagement": "Résorber déficit personnel (taux encadrement 1/30 horizon 2029)",
+      "resultat": "Qualité enseignement supérieur",
+      "delai": "2029-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_251",
+      "domaine": "Enseignement Supérieur",
+      "engagement": "Plan désengorgement UCAD (augmentation capacité autres universités)",
+      "resultat": "Équilibre spatial étudiants",
+      "delai": "2029-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_252",
+      "domaine": "Enseignement Supérieur",
+      "engagement": "Diversifier établissements paiement bourses et créer mécanismes prêts",
+      "resultat": "Amélioration conditions étudiants",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": [
+         {
+          "date": "2024-06-01",
+          "text": "Apurement des arriérés de bourses d'étudiants pour stabiliser l'année universitaire."
+        }
+      ]
+    },
+    {
+      "id": "promise_253",
+      "domaine": "Formation Pro",
+      "engagement": "Développer filières professionnelles ressources pays (pétrole, gaz, tourisme, artisanat)",
+      "resultat": "Adéquation formation-ressources nationales",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_254",
+      "domaine": "Formation Pro",
+      "engagement": "Renforcer carte nationale établissements ETFP",
+      "resultat": "Réduction disparités territoriales",
+      "delai": "2028-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_255",
+      "domaine": "Formation Pro",
+      "engagement": "Diversifier offres formation et doter équipements pédagogiques",
+      "resultat": "Qualité enseignement professionnel",
+      "delai": "2028-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_256",
+      "domaine": "Formation Pro",
+      "engagement": "Créer lycées professionnels et CAP dans 46 chefs-lieux département",
+      "resultat": "Accessibilité formation professionnelle",
+      "delai": "2028-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_257",
+      "domaine": "Formation Pro",
+      "engagement": "Promouvoir formation duale (3/5 temps entreprise, 2/5 école)",
+      "resultat": "Compétences opérationnelles diplômés",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_258",
+      "domaine": "Formation Pro",
+      "engagement": "Développer VAE (Validation Acquis Expérience)",
+      "resultat": "Reconnaissance compétences informelles",
+      "delai": "2027-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_259",
+      "domaine": "Formation Pro",
+      "engagement": "Décentraliser CSFP-BTP de Diamniadio au niveau départemental",
+      "resultat": "Formation proximité jeunes/adultes",
+      "delai": "2027-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_260",
+      "domaine": "Formation Pro",
+      "engagement": "Élargir maillage ISEP dans tous chefs-lieux département",
+      "resultat": "Formation supérieure professionnelle territorialisée",
+      "delai": "2028-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_261",
+      "domaine": "Santé",
+      "engagement": "Mettre en place numéros verts département Santé Sociale",
+      "resultat": "Accès premiers soins vulnérables sans paiement préalable",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_262",
+      "domaine": "Santé",
+      "engagement": "Remonter rapidement chaîne information urgences",
+      "resultat": "Prise charge rapide situations critiques",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_263",
+      "domaine": "Santé",
+      "engagement": "Implication acteurs sociaux pour accès soins spécialisés tarif subventionné",
+      "resultat": "Soins spécialisés accessibles démunis",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+          "date": "2024-06-15",
+          "text": "Réduction du coût de la dialyse et augmentation du budget pour les maladies chroniques."
+        }
+      ]
+    },
+    {
+      "id": "promise_264",
+      "domaine": "Santé",
+      "engagement": "CSU financée par ministère Santé, PPP, subventions internationales, cotisations sociales",
+      "resultat": "Protection sociale santé universelle",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_265",
+      "domaine": "Santé",
+      "engagement": "Créer Numéro Identification Sanitaire (NIS) biométrique",
+      "resultat": "Identification patients et dossier médical partagé",
+      "delai": "2027-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_266",
+      "domaine": "Santé",
+      "engagement": "Généraliser assurance maladie personnes handicapées titulaires CEC",
+      "resultat": "Protection sociale renforcée handicapés",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_267",
+      "domaine": "Santé",
+      "engagement": "Promouvoir mutuelles santé communautaires articulées coopératives agricoles/élevage",
+      "resultat": "Mutualisation risques santé ruraux",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_268",
+      "domaine": "Santé",
+      "engagement": "Accès soins prénatals qualité/proximité femmes enceintes",
+      "resultat": "Réduction mortalité maternelle",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_269",
+      "domaine": "Santé",
+      "engagement": "Gratuité soins femmes enceintes et enfants 0-15 ans (selon enquête sociale)",
+      "resultat": "Protection catégories vulnérables",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_270",
+      "domaine": "Santé",
+      "engagement": "Réformer politique gratuité césariennes (kits disponibles tous EPS niveau 1)",
+      "resultat": "Accès équitable soins obstétricaux",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_271",
+      "domaine": "Santé",
+      "engagement": "Former professionnels santé gestion complications accouchement",
+      "resultat": "Réduction mortalité néonatale",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_272",
+      "domaine": "Santé",
+      "engagement": "Mettre à disposition matériel/médicaments gestion situations urgence",
+      "resultat": "Réactivité face complications",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_273",
+      "domaine": "Santé",
+      "engagement": "Mettre en place systèmes surveillance/suivi données accouchements/complications",
+      "resultat": "Amélioration continue qualité soins maternels",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_274",
+      "domaine": "Santé",
+      "engagement": "Promouvoir éducation déterminants santé et conseils santé durable",
+      "resultat": "Prévention primaire santé maternelle/enfant",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_275",
+      "domaine": "Santé",
+      "engagement": "Matérialiser gratuité soins personnes handicapées titulaires CEC",
+      "resultat": "Respect droit santé handicapés",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_276",
+      "domaine": "Santé",
+      "engagement": "Prendre en compte handicap conception/construction édifices soins",
+      "resultat": "Accessibilité structures santé",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_277",
+      "domaine": "Santé",
+      "engagement": "Augmenter/diversifier personnel soins et administratif",
+      "resultat": "Renforcement capacités système santé",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+          "date": "2024-05-01",
+          "text": "Recrutement spécial de personnel de santé pour renforcer les zones déficitaires."
+        }
+      ]
+    },
+    {
+      "id": "promise_278",
+      "domaine": "Santé",
+      "engagement": "Renforcer formation personnel santé (passerelles LMD, révision formation initiale)",
+      "resultat": "Qualité ressources humaines santé",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_279",
+      "domaine": "Santé",
+      "engagement": "Accréditation ANAQ-SUP écoles privées formation paramédicaux",
+      "resultat": "Standardisation qualité formations",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_280",
+      "domaine": "Santé",
+      "engagement": "Offrir bourses spécialisation ciblée pour pourvoir structures santé",
+      "resultat": "Disponibilité spécialistes",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_281",
+      "domaine": "Santé",
+      "engagement": "Augmenter quota sénégalais école militaire santé",
+      "resultat": "Renforcement effectifs médecins militaires",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_282",
+      "domaine": "Santé",
+      "engagement": "Définir quota personnel paramédical formé à l'ENDSS",
+      "resultat": "Planification formation adéquate",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_283",
+      "domaine": "Santé",
+      "engagement": "Évaluation formation personnel médical/paramédical",
+      "resultat": "Amélioration continue qualité formations",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_284",
+      "domaine": "Santé",
+      "engagement": "Planification formation personnel santé besoins/priorités",
+      "resultat": "Adéquation formation-besoins système",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_285",
+      "domaine": "Santé",
+      "engagement": "Promotion formation personnel non opérationnel (statisticiens, biostatisticiens, psychologues)",
+      "resultat": "Renforcement support système santé",
+      "delai": "2027-12-31",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_286",
+      "domaine": "Santé",
+      "engagement": "Institutionnaliser formation continue personnel santé",
+      "resultat": "Mise à jour compétences continues",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_287",
+      "domaine": "Santé",
+      "engagement": "Faciliter échanges partages expérience pays émergents/développés",
+      "resultat": "Transfert bonnes pratiques internationales",
+      "delai": "2027-12-31",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_288",
+      "domaine": "Santé",
+      "engagement": "Audit annuel personnel santé opérationnel établissements",
+      "resultat": "Connaissance précise effectifs",
+      "delai": "2025-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_289",
+      "domaine": "Santé",
+      "engagement": "Accréditation chaque catégorie soignants",
+      "resultat": "Attestation compétence professionnelle",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_290",
+      "domaine": "Santé",
+      "engagement": "Renforcement ressources quantité/qualité (médecins, pharmaciens, dentistes)",
+      "resultat": "Couverture soins complète territoire",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_291",
+      "domaine": "Santé",
+      "engagement": "Implication pharmaciens tous niveaux pyramide sanitaire",
+      "resultat": "Optimisation prescription et prise charge",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_292",
+      "domaine": "Santé",
+      "engagement": "Effectivité soins odonto-stomatologiques à partir centres santé et EPS1",
+      "resultat": "Accès soins dentaires population",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_293",
+      "domaine": "Santé",
+      "engagement": "Recrutement TSO, TLPD et dentistes à partir EPS1",
+      "resultat": "Renforcement spécialités dentaires",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_294",
+      "domaine": "Santé",
+      "engagement": "Signature contrat engagement durée déterminée personnel santé",
+      "resultat": "Stabilité effectifs zones reculées",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_295",
+      "domaine": "Santé",
+      "engagement": "Répartition/déploiement effectifs sur étendue pyramide sanitaire",
+      "resultat": "Équité géographique accès soins",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_296",
+      "domaine": "Santé",
+      "engagement": "Mesures incitatives motivation/fidélisation agents zones reculées",
+      "resultat": "Maintien effectifs zones défavorisées",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_297",
+      "domaine": "Santé",
+      "engagement": "Proposition rémunération suffisante personnel santé",
+      "resultat": "Motivation et rétention professionnels",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": [
+         {
+          "date": "2024-05-01",
+          "text": "Engagement de l'État à respecter les accords financiers signés avec les syndicats de la santé (And Gueusseum)."
+        }
+      ]
+    },
+    {
+      "id": "promise_298",
+      "domaine": "Santé",
+      "engagement": "Mettre en place système compétition accès fonctions structures sanitaires",
+      "resultat": "Méritocratie gestion ressources humaines",
+      "delai": "2026-04-02",
+      "status": "non-lance",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_299",
+      "domaine": "Santé",
+      "engagement": "Services accueil/information/orientation fonctionnels avec personnel formé",
+      "resultat": "Amélioration expérience patient",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
+    },
+    {
+      "id": "promise_300",
+      "domaine": "Santé",
+      "engagement": "Créer/fonctionnalité SAU dans tous EPS1",
+      "resultat": "Urgences accessibles proximité",
+      "delai": "2026-04-02",
+      "status": "encours",
+      "mises_a_jour": []
     }
   ]
 }

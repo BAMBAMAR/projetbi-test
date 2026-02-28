@@ -1,3 +1,26 @@
+// ==========================================
+// SÉCURITÉ — Fonctions d'échappement XSS
+// ==========================================
+/**
+ * Échappe les caractères HTML spéciaux pour prévenir les injections XSS.
+ * À utiliser systématiquement avant toute insertion de donnée externe dans le DOM.
+ */
+function escapeHTML(str) {
+    if (str === null || str === undefined) return '';
+    const d = document.createElement('div');
+    d.appendChild(document.createTextNode(String(str)));
+    return d.innerHTML;
+}
+
+/**
+ * Tronque un texte et l'échappe de façon sécurisée.
+ */
+function escapeAndTruncate(str, maxLength = 80) {
+    if (!str) return '';
+    const truncated = String(str).substring(0, maxLength) + (String(str).length > maxLength ? '...' : '');
+    return escapeHTML(truncated);
+}
+
 // Mode démo - activé si Supabase échoue
 let DEMO_MODE = false;
 // AJOUTER AVEC LES AUTRES VARIABLES GLOBALES
@@ -35,6 +58,10 @@ setTimeout(checkSupabaseConnection, 1000);
 // APP.JS - VERSION CORRIGÉE POUR LES DÉLAIS
 // ==========================================
 // Configuration Supabase
+// ⚠️  SÉCURITÉ : Cette clé "anon/publishable" est conçue pour être publique.
+//    CEPENDANT, les politiques Row Level Security (RLS) DOIVENT être activées
+//    sur toutes les tables Supabase pour limiter les accès non autorisés.
+//    Ne jamais mettre la clé "service_role" ici.
 const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_joJuW7-vMiQG302_2Mvj5A_sVaD8Wap';
 let supabaseClient = null;
@@ -2054,35 +2081,30 @@ function renderNews(news) {
     const sortedNews = [...news].sort((a, b) => parseDate(b.date) - parseDate(a.date)).slice(0, 6);
     
     grid.innerHTML = sortedNews.map(item => {
-        // Limitation intelligente à 70 mots
-        const wordLimit = 70;
+        const wordLimit = 55;
         const fullText = item.excerpt || '';
         const words = fullText.split(/\s+/);
-        const hasLongContent = words.length > wordLimit;
-        
-        let displayText = '';
-        if (hasLongContent) {
-            displayText = words.slice(0, wordLimit).join(' ') + '...';
-        } else {
-            displayText = fullText;
-        }
-        
+        const displayText = words.length > wordLimit ? words.slice(0, wordLimit).join(' ') + '...' : fullText;
+        const categoryBadge = item.is_promise_update && item.category
+            ? '<span style="display:inline-block;background:#F0F4F1;color:#2D5F3F;border:1px solid #C5DBC0;padding:.15rem .6rem;border-radius:20px;font-size:.68rem;font-weight:600;margin-bottom:.4rem">' + escapeHTML(item.category) + '</span>'
+            : '';
+
         return `
-        <article class="news-card">
+        <article class="news-card" style="cursor:pointer">
             <div class="news-image">
                 ${item.image_url ? 
-                    `<img src="${item.image_url}" alt="${item.title}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px 12px 0 0;">` :
+                    `<img src="${item.image_url}" alt="${escapeHTML(item.title)}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px 12px 0 0;"
+                         onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:200px;background:linear-gradient(135deg,#1A3D28,#2D5F3F);border-radius:12px 12px 0 0\'><i class=\'fas fa-newspaper\' style=\'font-size:2.5rem;color:rgba(255,255,255,.3)\'></i></div>';">` :
                     `<i class="fas fa-${item.image === 'school' ? 'school' : item.image === 'budget' ? 'coins' : 'flag'} fa-3x"></i>`
                 }
             </div>
             <div class="news-content">
+                ${categoryBadge}
                 <h3>${item.title}</h3>
                 <p>${displayText}</p>
-                ${hasLongContent ? `
-                    <a href="#" class="news-read-more" onclick="openNewsModal('${item.id || ''}', event); return false;">
-                        Lire la suite <i class="fas fa-arrow-right"></i>
-                    </a>
-                ` : ''}
+                <a href="#" class="news-read-more" onclick="openNewsModal('${item.id || ''}', event); return false;">
+                    Lire la suite <i class="fas fa-arrow-right"></i>
+                </a>
                 <div class="news-footer">
                     <span><i class="fas fa-calendar"></i> ${item.date}</span>
                     <span><i class="fas fa-newspaper"></i> ${item.source}</span>
@@ -3065,12 +3087,12 @@ function displayRatingResults(ratings, stats = null) {
                     <div class="service-item-card ${badges[index]}">
                         <div class="service-rank-badge ${badges[index]}">${index + 1}</div>
                         <div class="service-info-card">
-                            <div class="service-name-card">${service.service}</div>
+                            <div class="service-name-card">${escapeHTML(service.service)}</div>
                             <div class="service-stats-card">
                                 <span class="service-score-card">
                                     <i class="fas fa-star"></i> ${parseFloat(service.overall_rating).toFixed(1)}/5
                                 </span>
-                                <span class="service-count-card">${service.total_ratings} votes</span>
+                                <span class="service-count-card">${parseInt(service.total_ratings) || 0} votes</span>
                             </div>
                         </div>
                     </div>
@@ -3131,12 +3153,12 @@ function displayRatingResults(ratings, stats = null) {
                     <div class="service-item-card ${badges[index]}">
                         <div class="service-rank-badge ${badges[index]}">${index + 1}</div>
                         <div class="service-info-card">
-                            <div class="service-name-card">${service.service}</div>
+                            <div class="service-name-card">${escapeHTML(service.service)}</div>
                             <div class="service-stats-card">
                                 <span class="service-score-card">
                                     <i class="fas fa-star"></i> ${service.avg.toFixed(1)}/5
                                 </span>
-                                <span class="service-count-card">${service.count} votes</span>
+                                <span class="service-count-card">${parseInt(service.count) || 0} votes</span>
                             </div>
                         </div>
                     </div>
@@ -3151,7 +3173,7 @@ function displayRatingResults(ratings, stats = null) {
         recentRatings.innerHTML = ratings.slice(0, 3).map(item => `
             <div class="recent-item">
                 <div class="recent-header">
-                    <span class="recent-service">${item.service}</span>
+                    <span class="recent-service">${escapeHTML(item.service)}</span>
                     <span class="recent-date">${formatDate(new Date(item.created_at || item.date))}</span>
                 </div>
                 <div class="recent-score">
@@ -3159,7 +3181,7 @@ function displayRatingResults(ratings, stats = null) {
                     ${calculateAverageRating(item).toFixed(1)}/5
                 </div>
                 ${item.comment ? `
-                    <div class="recent-comment">"${item.comment.substring(0, 80)}${item.comment.length > 80 ? '...' : ''}"</div>
+                    <div class="recent-comment">"${escapeAndTruncate(item.comment, 80)}"</div>
                 ` : ''}
             </div>
         `).join('');
@@ -3854,11 +3876,10 @@ _#Pastef#Sonko #Transparence_`;
 // Fonction pour ouvrir le modal de lecture complète d'une actualité
 function openNewsModal(newsId, event) {
     if (event) event.preventDefault();
-    
+
     const news = CONFIG.news.find(n => n.id === newsId);
     if (!news) return;
-    
-    // Créer le modal s'il n'existe pas
+
     let modal = document.getElementById('newsModal');
     if (!modal) {
         modal = document.createElement('div');
@@ -3872,28 +3893,138 @@ function openNewsModal(newsId, event) {
                 <div id="newsModalBody"></div>
             </div>
         `;
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) closeNewsModal();
+        });
         document.body.appendChild(modal);
     }
-    
+
+    const isPromiseUpdate = news.is_promise_update === true;
     const modalBody = document.getElementById('newsModalBody');
-    modalBody.innerHTML = `
-        <div class="article-full">
-            <h2>${news.title}</h2>
-            <div class="article-meta">
-                <span><i class="fas fa-calendar"></i> ${news.date}</span>
-                <span><i class="fas fa-newspaper"></i> ${news.source}</span>
-            </div>
-            <div class="article-content">${news.excerpt || news.content || ''}</div>
-        </div>
-    `;
-    
+
+    if (isPromiseUpdate) {
+        // Statuts
+        const statusMap = {
+            'realise':   ['Realise',   '#27AE60'],
+            'encours':   ['En cours',  '#2563A8'],
+            'non-lance': ['Non lance', '#888888'],
+            'retard':    ['En retard', '#E74C3C'],
+        };
+        const [sLabel, sColor] = statusMap[news.promise_status] || ['', '#888'];
+        const statusEmoji = {'realise':'OK','encours':'->','non-lance':'...','retard':'!'}[news.promise_status] || '';
+
+        // Engagement complet depuis promises
+        const promise = (CONFIG.promises || []).find(p => p.id === news.promise_id);
+        const engagementFull = promise ? promise.engagement : '';
+
+        // Extraire le texte de la mise a jour (apres "Details :")
+        const fullText = news.content || news.excerpt || '';
+        const detailMarker = fullText.indexOf('Details :');
+        const detailsRaw = detailMarker >= 0 ? fullText.slice(detailMarker + 9) : fullText;
+        const detailsClean = detailsRaw
+            .split('\n')
+            .filter(function(l) { return l.trim() && !l.includes('projetbi.org') && l.indexOf('---') === -1; })
+            .join('\n').trim();
+
+        modalBody.innerHTML =
+            '<div class="article-full promise-update-article">' +
+            // Badges haut
+            '<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:1.1rem;flex-wrap:wrap">' +
+            '<span style="background:' + sColor + '22;color:' + sColor + ';border:1px solid ' + sColor + '44;' +
+            'padding:.2rem .75rem;border-radius:20px;font-size:.78rem;font-weight:700">' + sLabel + '</span>' +
+            '<span style="background:#F0F4F1;color:#2D5F3F;border:1px solid #C5DBC0;' +
+            'padding:.2rem .75rem;border-radius:20px;font-size:.78rem;font-weight:600">' + escapeHTML(news.category) + '</span>' +
+            '<span style="color:#888;font-size:.78rem;margin-left:auto">' + news.date + '</span>' +
+            '</div>' +
+            // Titre
+            '<h2 style="font-size:1.25rem;margin-bottom:1rem;line-height:1.45;color:#1A3D28">' +
+            escapeHTML(news.title) + '</h2>' +
+            // Engagement d origine
+            (engagementFull ?
+                '<div style="background:#F0F7F2;border-left:4px solid #2D5F3F;padding:.9rem 1.1rem;' +
+                'border-radius:0 8px 8px 0;margin-bottom:1.1rem">' +
+                '<div style="font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;' +
+                'color:#5C7A58;font-weight:700;margin-bottom:.35rem">Engagement</div>' +
+                '<p style="color:#1A3D28;font-size:.88rem;line-height:1.6;margin:0">' +
+                escapeHTML(engagementFull) + '</p></div>' : '') +
+            // Corps de la mise a jour
+            '<div style="background:#fff;border:1px solid #E5EDE6;border-radius:8px;' +
+            'padding:1rem 1.1rem;margin-bottom:1rem">' +
+            '<div style="font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;' +
+            'color:#5C7A58;font-weight:700;margin-bottom:.5rem">Mise a jour</div>' +
+            '<p style="color:#333;font-size:.92rem;line-height:1.75;margin:0;white-space:pre-line">' +
+            escapeHTML(detailsClean) + '</p></div>' +
+            // Source
+            '<div style="font-size:.78rem;color:#999;padding-top:.6rem;border-top:1px solid #E5EDE6;margin-bottom:.9rem">' +
+            'Source : ' + escapeHTML(news.source || 'ProjetBI') +
+            (news.promise_id ? ' &nbsp;|&nbsp; <a href="/#' + news.promise_id + '" style="color:#2D5F3F">Voir l\'engagement</a>' : '') +
+            '</div>' +
+            // Boutons partage
+            '<div style="display:flex;gap:.45rem;flex-wrap:wrap">' +
+            '<button onclick="shareNews(\'' + news.id + '\',\'facebook\')" ' +
+            'style="background:#1877F2;color:white;border:none;padding:.4rem .85rem;border-radius:6px;cursor:pointer;font-size:.78rem">' +
+            '<i class="fab fa-facebook-f"></i> Partager</button>' +
+            '<button onclick="shareNews(\'' + news.id + '\',\'whatsapp\')" ' +
+            'style="background:#25D366;color:white;border:none;padding:.4rem .85rem;border-radius:6px;cursor:pointer;font-size:.78rem">' +
+            '<i class="fab fa-whatsapp"></i> WhatsApp</button>' +
+            '<button onclick="shareNews(\'' + news.id + '\',\'twitter\')" ' +
+            'style="background:#000;color:white;border:none;padding:.4rem .85rem;border-radius:6px;cursor:pointer;font-size:.78rem">' +
+            '<i class="fab fa-x-twitter"></i> X</button>' +
+            '</div>' +
+            '</div>';
+
+    } else {
+        // Actualite manuelle classique
+        const fullText = news.content || news.excerpt || '';
+        const paragraphs = fullText.split('\n').filter(function(l) { return l.trim(); })
+            .map(function(l) { return '<p style="margin-bottom:.85rem;line-height:1.8">' + escapeHTML(l) + '</p>'; })
+            .join('');
+
+        modalBody.innerHTML =
+            '<div class="article-full">' +
+            '<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap">' +
+            (news.category ? '<span style="background:#F0F4F1;color:#2D5F3F;border:1px solid #C5DBC0;' +
+            'padding:.2rem .75rem;border-radius:20px;font-size:.78rem;font-weight:600">' + escapeHTML(news.category) + '</span>' : '') +
+            '<span style="color:#888;font-size:.78rem;margin-left:auto">' + news.date + '</span>' +
+            '</div>' +
+            '<h2>' + escapeHTML(news.title) + '</h2>' +
+            '<div class="article-meta">' +
+            '<span><i class="fas fa-newspaper"></i> ' + escapeHTML(news.source || '') + '</span>' +
+            (news.author ? '<span><i class="fas fa-user"></i> ' + escapeHTML(news.author) + '</span>' : '') +
+            (news.read_time ? '<span><i class="fas fa-clock"></i> ' + escapeHTML(news.read_time) + '</span>' : '') +
+            '</div>' +
+            (news.image_url ? '<img src="' + escapeHTML(news.image_url) + '" alt="' + escapeHTML(news.title) + '" ' +
+            'style="width:100%;max-height:280px;object-fit:cover;border-radius:8px;margin-bottom:1.1rem" ' +
+            'onerror="this.style.display=\'none\'">' : '') +
+            '<div class="article-content">' + paragraphs + '</div>' +
+            (news.link && news.link.indexOf('projetbi.org/#promise_') === -1 ?
+            '<div style="margin-top:1rem;padding-top:.9rem;border-top:1px solid #eee">' +
+            '<a href="' + escapeHTML(news.link) + '" target="_blank" rel="noopener" ' +
+            'style="color:#2D5F3F;font-weight:600;font-size:.86rem">' +
+            '<i class="fas fa-external-link-alt"></i> Lire l\'article original</a></div>' : '') +
+            '<div style="display:flex;gap:.45rem;margin-top:1rem;flex-wrap:wrap">' +
+            '<button onclick="shareNews(\'' + news.id + '\',\'facebook\')" ' +
+            'style="background:#1877F2;color:white;border:none;padding:.4rem .85rem;border-radius:6px;cursor:pointer;font-size:.78rem">' +
+            '<i class="fab fa-facebook-f"></i> Partager</button>' +
+            '<button onclick="shareNews(\'' + news.id + '\',\'whatsapp\')" ' +
+            'style="background:#25D366;color:white;border:none;padding:.4rem .85rem;border-radius:6px;cursor:pointer;font-size:.78rem">' +
+            '<i class="fab fa-whatsapp"></i> WhatsApp</button>' +
+            '<button onclick="shareNews(\'' + news.id + '\',\'twitter\')" ' +
+            'style="background:#000;color:white;border:none;padding:.4rem .85rem;border-radius:6px;cursor:pointer;font-size:.78rem">' +
+            '<i class="fab fa-x-twitter"></i> X</button>' +
+            '</div></div>';
+    }
+
     modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
 }
 
 function closeNewsModal() {
     const modal = document.getElementById('newsModal');
     if (modal) modal.style.display = 'none';
+    document.body.style.overflow = '';
 }
+
 
 // Fonction de partage enrichi pour les actualités
 function shareNews(newsId, platform) {
@@ -4104,8 +4235,8 @@ async function showAllRatings(category) {
                                         ${medal ? `<span class="medal">${medal}</span>` : `<span class="rank-number">#${index + 1}</span>`}
                                     </div>
                                     <div class="ranking-service">
-                                        <div class="service-name">${item.service}</div>
-                                        <div class="service-meta">${item.count} vote${item.count > 1 ? 's' : ''} • ${item.comments} commentaire${item.comments > 1 ? 's' : ''}</div>
+                                        <div class="service-name">${escapeHTML(item.service)}</div>
+                                        <div class="service-meta">${parseInt(item.count) || 0} vote${item.count > 1 ? 's' : ''} • ${parseInt(item.comments) || 0} commentaire${item.comments > 1 ? 's' : ''}</div>
                                     </div>
                                     <div class="ranking-score">
                                         <div class="score-main">
@@ -4189,7 +4320,7 @@ async function showAllRatings(category) {
                         return `
                             <div class="recent-item-expanded">
                                 <div class="recent-header">
-                                    <span class="recent-service">${item.service || 'Service inconnu'}</span>
+                                    <span class="recent-service">${escapeHTML(item.service) || 'Service inconnu'}</span>
                                     <span class="recent-date">${formattedDate}</span>
                                 </div>
                                 <div class="recent-scores-grid">
@@ -4201,16 +4332,16 @@ async function showAllRatings(category) {
                                         </div>
                                     </div>
                                     <div class="criteria-scores">
-                                        <div><i class="fas fa-wheelchair"></i> ${item.accessibility}/5</div>
-                                        <div><i class="fas fa-handshake"></i> ${item.welcome}/5</div>
-                                        <div><i class="fas fa-bolt"></i> ${item.efficiency}/5</div>
-                                        <div><i class="fas fa-eye"></i> ${item.transparency}/5</div>
+                                        <div><i class="fas fa-wheelchair"></i> ${parseInt(item.accessibility) || 0}/5</div>
+                                        <div><i class="fas fa-handshake"></i> ${parseInt(item.welcome) || 0}/5</div>
+                                        <div><i class="fas fa-bolt"></i> ${parseInt(item.efficiency) || 0}/5</div>
+                                        <div><i class="fas fa-eye"></i> ${parseInt(item.transparency) || 0}/5</div>
                                     </div>
                                 </div>
                                 ${item.comment ? `
                                     <div class="recent-comment-full">
                                         <i class="fas fa-quote-left"></i>
-                                        <p>${item.comment}</p>
+                                        <p>${escapeAndTruncate(item.comment, 300)}</p>
                                     </div>
                                 ` : ''}
                             </div>

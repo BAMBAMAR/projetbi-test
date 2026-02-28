@@ -3,6 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Robots-Tag" content="noindex, nofollow">
+    <!-- ══ PROTECTION ADMIN — Accès restreint ══ -->
+    <script>
+    (function() {
+        // Mot de passe haché (SHA-256 de votre mot de passe admin).
+        // Pour générer un nouveau hash : https://emn178.github.io/online-tools/sha256.html
+        // Hash actuel = SHA-256("ProjetBI@Admin2026") — CHANGEZ-LE IMMÉDIATEMENT
+        const ADMIN_HASH = '03eb6856c640072257980d6125e3082905e07a23b3a50f2efe5256bc9898a380';
+
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function checkAccess() {
+            // Vérifier si déjà authentifié dans cette session
+            if (sessionStorage.getItem('admin_auth') === ADMIN_HASH) return;
+
+            // Bloquer le contenu
+            document.documentElement.style.display = 'none';
+
+            const pwd = prompt('🔐 Accès restreint — Mot de passe administrateur requis :');
+            if (!pwd) {
+                document.write('<h1 style="font-family:sans-serif;text-align:center;margin-top:20vh;color:#C0392B">Accès refusé</h1>');
+                return;
+            }
+
+            const hash = await sha256(pwd);
+            if (hash === ADMIN_HASH) {
+                sessionStorage.setItem('admin_auth', ADMIN_HASH);
+                document.documentElement.style.display = '';
+            } else {
+                document.write('<h1 style="font-family:sans-serif;text-align:center;margin-top:20vh;color:#C0392B">⛔ Mot de passe incorrect — Accès refusé</h1>');
+            }
+        }
+
+        checkAccess();
+    })();
+    </script>
     <title>Mise à jour Presse & Actualités - Projet Sénégal</title>
     <style>
         * {
@@ -604,14 +645,27 @@
                                 Catégorie
                             </label>
                             <select class="form-input" id="newsCategory">
-                                <option value="general">Général</option>
-                                <option value="education">Éducation</option>
-                                <option value="sante">Santé</option>
-                                <option value="economie">Économie</option>
-                                <option value="infrastructures">Infrastructures</option>
-                                <option value="gouvernance">Gouvernance</option>
-                                <option value="transparence">Transparence</option>
-                                <option value="autres">Autres</option>
+                                <option value="general">⭐ Général</option>
+                                <option value="education">🎓 Éducation</option>
+                                <option value="sante">🏥 Santé</option>
+                                <option value="economie">💰 Économie</option>
+                                <option value="infrastructures">🏗️ Infrastructures</option>
+                                <option value="gouvernance">⚖️ Gouvernance</option>
+                                <option value="transparence">🔍 Transparence</option>
+                                <option value="agriculture">🌾 Agriculture</option>
+                                <option value="energie">⚡ Énergie</option>
+                                <option value="environnement">🌍 Environnement</option>
+                                <option value="emploi">💼 Emploi</option>
+                                <option value="jeunesse">👨‍🎓 Jeunesse & Sports</option>
+                                <option value="culture">🎭 Culture</option>
+                                <option value="securite">🛡️ Sécurité</option>
+                                <option value="justice">⚖️ Justice</option>
+                                <option value="numerique">💻 Numérique</option>
+                                <option value="transport">🚗 Transport</option>
+                                <option value="logement">🏘️ Logement</option>
+                                <option value="social">🤝 Affaires Sociales</option>
+                                <option value="international">🌐 Relations Internationales</option>
+                                <option value="autres">📋 Autres</option>
                             </select>
                         </div>
                         
@@ -621,14 +675,54 @@
                                 Icône
                             </label>
                             <select class="form-input" id="newsImage">
-                                <option value="school">🏫 École</option>
-                                <option value="hospital">🏥 Hôpital</option>
-                                <option value="money">💰 Budget</option>
-                                <option value="road">🛣️ Infrastructure</option>
+                                <option value="news">📰 Actualité générale</option>
+                                <option value="school">🏫 École/Éducation</option>
+                                <option value="graduation">🎓 Diplôme/Formation</option>
+                                <option value="hospital">🏥 Hôpital/Santé</option>
+                                <option value="heartbeat">❤️ Santé publique</option>
+                                <option value="money">💰 Budget/Finance</option>
+                                <option value="coins">💵 Économie</option>
+                                <option value="chart">📈 Croissance</option>
+                                <option value="road">🛣️ Route/Infrastructure</option>
+                                <option value="building">🏢 Bâtiment/Construction</option>
+                                <option value="home">🏠 Logement</option>
                                 <option value="flag">🚩 Politique</option>
-                                <option value="chart">📈 Économie</option>
-                                <option value="users">👥 Société</option>
-                                <option value="graduation">🎓 Formation</option>
+                                <option value="balance">⚖️ Justice/Droit</option>
+                                <option value="gavel">🔨 Loi/Réglementation</option>
+                                <option value="users">👥 Société/Population</option>
+                                <option value="handshake">🤝 Partenariat</option>
+                                <option value="seedling">🌱 Agriculture</option>
+                                <option value="tractor">🚜 Agriculture moderne</option>
+                                <option value="bolt">⚡ Énergie/Électricité</option>
+                                <option value="leaf">🍃 Environnement</option>
+                                <option value="recycle">♻️ Écologie</option>
+                                <option value="briefcase">💼 Emploi/Travail</option>
+                                <option value="user-tie">👔 Fonction publique</option>
+                                <option value="futbol">⚽ Sports</option>
+                                <option value="running">🏃 Jeunesse</option>
+                                <option value="theater">🎭 Culture</option>
+                                <option value="music">🎵 Arts</option>
+                                <option value="shield">🛡️ Sécurité</option>
+                                <option value="lock">🔒 Cybersécurité</option>
+                                <option value="laptop">💻 Numérique/Tech</option>
+                                <option value="wifi">📡 Télécommunication</option>
+                                <option value="car">🚗 Transport</option>
+                                <option value="bus">🚌 Transport public</option>
+                                <option value="plane">✈️ Aérien</option>
+                                <option value="ship">🚢 Maritime</option>
+                                <option value="globe">🌍 International</option>
+                                <option value="map">🗺️ Territoire</option>
+                                <option value="award">🏆 Récompense/Succès</option>
+                                <option value="star">⭐ Excellence</option>
+                                <option value="rocket">🚀 Innovation</option>
+                                <option value="lightbulb">💡 Idée/Projet</option>
+                                <option value="megaphone">📣 Communication</option>
+                                <option value="calendar">📅 Événement</option>
+                                <option value="check">✅ Validation/Réalisé</option>
+                                <option value="tools">🔧 Maintenance</option>
+                                <option value="cog">⚙️ Système</option>
+                                <option value="eye">👁️ Transparence</option>
+                                <option value="search">🔍 Enquête</option>
                             </select>
                         </div>
                     </div>
@@ -899,11 +993,62 @@
 
         // ==================== PRESSE ====================
 
-        function loadInitialData() {
+        async function loadInitialData() {
+            // Essayer de charger les données depuis les fichiers JSON
+            await loadExistingData();
+            
             displayPressFiles();
             displayNewsList();
             generatePressJSON();
             generateNewsJSON();
+        }
+        
+        async function loadExistingData() {
+            // Charger press.json si disponible
+            try {
+                const pressResponse = await fetch('press.json?v=' + Date.now());
+                if (pressResponse.ok) {
+                    const pressData = await pressResponse.json();
+                    if (pressData && pressData.press && Array.isArray(pressData.press)) {
+                        // Extraire les noms de fichiers depuis press.json
+                        const existingFiles = pressData.press.map(item => {
+                            // Extraire le nom du fichier depuis le chemin image
+                            const imagePath = item.image || '';
+                            const fileName = imagePath.split('/').pop();
+                            return fileName;
+                        }).filter(f => f && f.length > 0);
+                        
+                        // Fusionner avec les fichiers existants sans doublons
+                        existingFiles.forEach(file => {
+                            if (!PRESS_FILES.includes(file)) {
+                                PRESS_FILES.push(file);
+                            }
+                        });
+                        
+                        console.log(`✅ ${existingFiles.length} journaux chargés depuis press.json`);
+                    }
+                }
+            } catch (error) {
+                console.log('ℹ️ press.json non trouvé ou erreur de chargement:', error.message);
+            }
+            
+            // Charger news.json si disponible
+            try {
+                const newsResponse = await fetch('news.json?v=' + Date.now());
+                if (newsResponse.ok) {
+                    const newsData = await newsResponse.json();
+                    if (newsData && newsData.news && Array.isArray(newsData.news)) {
+                        // Remplacer NEWS_DATA par les données chargées
+                        NEWS_DATA = newsData.news;
+                        console.log(`✅ ${NEWS_DATA.length} actualités chargées depuis news.json`);
+                    }
+                }
+            } catch (error) {
+                console.log('ℹ️ news.json non trouvé ou erreur de chargement:', error.message);
+            }
+            
+            // Charger depuis localStorage comme backup
+            loadNewsFromLocal();
         }
 
         function displayPressFiles() {
@@ -1050,9 +1195,15 @@
             const dateParts = dateInput.split('-');
             const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
             
-            // Créer l'objet actualité
+            // Trouver le plus grand ID existant
+            const maxId = NEWS_DATA.reduce((max, item) => {
+                const numId = parseInt(item.id, 10);
+                return isNaN(numId) ? max : Math.max(max, numId);
+            }, 0);
+            
+            // Créer l'objet actualité avec ID séquentiel
             const newsItem = {
-                id: (NEWS_DATA.length + 1).toString(),
+                id: (maxId + 1).toString(),
                 title: title,
                 excerpt: excerpt,
                 date: formattedDate,
@@ -1070,6 +1221,9 @@
             
             // Générer le JSON
             generateNewsJSON();
+            
+            // Sauvegarder localement
+            saveNewsToLocal();
             
             // Réinitialiser le formulaire
             clearNewsForm();
@@ -1161,9 +1315,18 @@ function addNews() {
     const dateParts = dateInput.split('-');
     const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
     
-    // Créer l'objet actualité
+    // Créer l'objet actualité avec ID séquentiel
+    const maxId = NEWS_DATA.reduce((max, item) => {
+        const match = item.id.match(/^(\d+)$/);
+        if (match) {
+            const num = parseInt(match[1], 10);
+            return num > max ? num : max;
+        }
+        return max;
+    }, 0);
+    
     const newsItem = {
-        id: `news_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        id: String(maxId + 1),
         title: title,
         excerpt: excerpt,
         content: content,
@@ -1273,13 +1436,24 @@ function saveNewsToLocal() {
 }
 
 function loadNewsFromLocal() {
+    // Ne charger depuis localStorage que si NEWS_DATA est vide ou contient seulement les données par défaut
+    if (NEWS_DATA.length > 3) {
+        // On a déjà des données (probablement depuis news.json)
+        return;
+    }
+    
     try {
         const saved = localStorage.getItem('news_backup');
         if (saved) {
-            NEWS_DATA = JSON.parse(saved);
+            const savedData = JSON.parse(saved);
+            // Fusionner les données sauvegardées avec les données actuelles
+            if (savedData && savedData.length > NEWS_DATA.length) {
+                NEWS_DATA = savedData;
+                console.log('✅ Données restaurées depuis localStorage');
+            }
         }
     } catch (error) {
-        if (window.newsBackup) {
+        if (window.newsBackup && window.newsBackup.length > NEWS_DATA.length) {
             NEWS_DATA = window.newsBackup;
         }
     }
@@ -1293,6 +1467,19 @@ function loadNewsFromLocal() {
                 'infrastructures': 'Infrastructures',
                 'gouvernance': 'Gouvernance',
                 'transparence': 'Transparence',
+                'agriculture': 'Agriculture',
+                'energie': 'Énergie',
+                'environnement': 'Environnement',
+                'emploi': 'Emploi',
+                'jeunesse': 'Jeunesse & Sports',
+                'culture': 'Culture',
+                'securite': 'Sécurité',
+                'justice': 'Justice',
+                'numerique': 'Numérique',
+                'transport': 'Transport',
+                'logement': 'Logement',
+                'social': 'Affaires Sociales',
+                'international': 'Relations Internationales',
                 'autres': 'Autres'
             };
             return labels[category] || category;

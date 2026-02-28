@@ -528,7 +528,17 @@ const iconMap = {
     tools:'fa-tools', eye:'fa-eye', star:'fa-star'
 };
 function getIcon(img) { return iconMap[img] || 'fa-newspaper'; }
-function getCat(cat)  { return categoryMap[cat] || 'Général'; }
+function getCat(cat)  { return categoryMap[cat] || cat || 'Général'; }
+
+// Map promise_id → domaine, chargée en parallèle avec news.json
+const _promiseDomaines = new Map();
+
+function getDomaine(news) {
+    if (news.promise_id && _promiseDomaines.has(news.promise_id)) {
+        return _promiseDomaines.get(news.promise_id);
+    }
+    return getCat(news.category);
+}
 
 // Construit les items KPI (stats par catégorie) et lance le carousel
 function buildKpiItems(news) {
@@ -583,9 +593,21 @@ document.getElementById('menuKpiNext').addEventListener('click', () => {
 
 async function loadNews() {
     try {
-        const res  = await fetch('news.json');
-        const data = await res.json();
+        const [newsRes, promisesRes] = await Promise.all([
+            fetch('news.json'),
+            fetch('promises.json').catch(() => null)
+        ]);
+        const data = await newsRes.json();
         allNews = data.news || [];
+
+        // Construire le map promise_id → domaine
+        if (promisesRes && promisesRes.ok) {
+            const pData = await promisesRes.json();
+            (pData.promises || []).forEach(p => {
+                if (p.id && p.domaine) _promiseDomaines.set(p.id, p.domaine);
+            });
+        }
+
         buildKpiItems(allNews);
         renderFeatured();
         renderGrid();
@@ -650,7 +672,7 @@ function openArticleById(key) {
 
     body.innerHTML = `
         <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-bottom:1rem;">
-            <span style="background:#eef6f1;color:#2D5F3F;border:1px solid #c5dbc0;padding:.2rem .75rem;border-radius:20px;font-size:.78rem;font-weight:700">${esc(getCat(news.category))}</span>
+            <span style="background:#eef6f1;color:#2D5F3F;border:1px solid #c5dbc0;padding:.2rem .75rem;border-radius:20px;font-size:.78rem;font-weight:700">${esc(getDomaine(news))}</span>
             <span style="color:#999;font-size:.78rem;margin-left:auto">${esc(news.date)}</span>
         </div>
         <h2 style="font-size:1.4rem;font-weight:800;color:#1A3D28;margin-bottom:1rem;line-height:1.35;padding-right:2.5rem">${esc(news.title)}</h2>
@@ -694,7 +716,7 @@ function renderFeatured() {
                 <div class="feat-badge">À la une</div>
             </div>
             <div class="featured-body">
-                <div class="featured-cat">${getCat(f.category)}</div>
+                <div class="featured-cat">${getDomaine(f)}</div>
                 <h2 class="featured-title">${f.title}</h2>
                 <p class="featured-excerpt">${(f.excerpt||'').substring(0,280)}${(f.excerpt||'').length>280?'…':''}</p>
                 <div class="featured-meta">
@@ -729,7 +751,7 @@ function renderGrid() {
             </div>
             <div class="news-item-body">
                 <div class="news-item-head">
-                    <span class="news-item-cat">${getCat(n.category)}</span>
+                    <span class="news-item-cat">${getDomaine(n)}</span>
                     <span class="news-item-date">${n.date}</span>
                 </div>
                 <h3 class="news-item-title">${n.title}</h3>

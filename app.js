@@ -29,7 +29,6 @@ let DEMO_MODE = false;
 async function checkSupabaseConnection() {
     if (!supabaseClient) {
         DEMO_MODE = true;
-        console.log('🎭 MODE DÉMO - Supabase non disponible');
         return;
     }
     
@@ -40,15 +39,12 @@ async function checkSupabaseConnection() {
         
         if (error) {
             DEMO_MODE = true;
-            console.log('🎭 MODE DÉMO - Erreur Supabase:', error.message);
             showNotification('Mode démo activé - données locales', 'info');
         } else {
             DEMO_MODE = false;
-            console.log('✅ Mode Supabase activé');
         }
     } catch (error) {
         DEMO_MODE = true;
-        console.log('🎭 MODE DÉMO - Exception:', error.message);
     }
 }
 
@@ -57,11 +53,7 @@ setTimeout(checkSupabaseConnection, 1000);
 // ==========================================
 // APP.JS - VERSION CORRIGÉE POUR LES DÉLAIS
 // ==========================================
-// Configuration Supabase
-// ⚠️  SÉCURITÉ : Cette clé "anon/publishable" est conçue pour être publique.
-//    CEPENDANT, les politiques Row Level Security (RLS) DOIVENT être activées
-//    sur toutes les tables Supabase pour limiter les accès non autorisés.
-//    Ne jamais mettre la clé "service_role" ici.
+// Configuration Supabase (clé anon publique — RLS activé côté serveur)
 const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_joJuW7-vMiQG302_2Mvj5A_sVaD8Wap';
 let supabaseClient = null;
@@ -70,12 +62,10 @@ let supabaseClient = null;
 try {
     if (typeof supabase !== 'undefined' && supabase.createClient) {
         supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        console.log('✅ Supabase initialisé avec succès');
     } else {
-        console.warn('⚠️ SDK Supabase non disponible - fonctionnalités limitées');
     }
 } catch (error) {
-    console.error('❌ Erreur initialisation Supabase:', error);
+    console.error(error);
     supabaseClient = null;
 }
 
@@ -251,7 +241,6 @@ function parseDelayToDays(delayText) {
             totalDays = Math.min(totalDays, 1825);
             
         } catch (e) {
-            console.warn('Erreur conversion date:', dateMatch[0]);
         }
     }
     
@@ -270,7 +259,6 @@ function parseDelayToDays(delayText) {
     const MANDAT_MAX_DAYS = 1825;
     const result = Math.min(totalDays, MANDAT_MAX_DAYS);
     
-    console.log(`parseDelayToDays: "${delayText}" → ${result} jours`);
     return result;
 }
 
@@ -279,7 +267,6 @@ function parseDelayToDays(delayText) {
 // ==========================================
 function getDaysRemaining(deadline) {
     if (!deadline || !(deadline instanceof Date) || isNaN(deadline.getTime())) {
-        console.warn('Date limite invalide pour getDaysRemaining:', deadline);
         return 0;
     }
     
@@ -314,7 +301,6 @@ function formatDaysRemaining(days) {
 // INITIALISATION
 // ==========================================
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('🚀 Initialisation...');
     
     // 1. Initialiser les composants UI
     initNavigation();
@@ -501,7 +487,6 @@ function safeSetItem(key, value) {
         localStorage.setItem(key, JSON.stringify(value));
         return true;
     } catch (error) {
-        console.warn('⚠️ localStorage bloqué - stockage temporaire en mémoire:', error.message);
         window.tempStorage = window.tempStorage || {};
         window.tempStorage[key] = value;
         return false;
@@ -513,7 +498,6 @@ function safeGetItem(key, defaultValue = null) {
         const item = localStorage.getItem(key);
         return item ? JSON.parse(item) : defaultValue;
     } catch (error) {
-        console.warn('⚠️ localStorage bloqué - récupération depuis mémoire:', error.message);
         if (window.tempStorage && window.tempStorage[key]) {
             return window.tempStorage[key];
         }
@@ -527,7 +511,6 @@ function safeGetItem(key, defaultValue = null) {
 
 async function loadData() {
     try {
-        console.log('📥 Début du chargement des données...');
         
         // Charger les promesses
         await loadPromisesData();
@@ -541,7 +524,6 @@ async function loadData() {
         // Charger les votes publics (avec délai)
         setTimeout(() => {
             fetchAndDisplayPublicVotes().catch(error => {
-                console.warn('⚠️ Impossible de charger les votes:', error.message);
             });
         }, 1000);
         
@@ -554,10 +536,9 @@ async function loadData() {
             renderNewspapers();
         }
         
-        console.log('✅ Toutes les données chargées avec succès');
         
     } catch (error) {
-        console.error('❌ Erreur chargement général:', error);
+        console.error(error);
         showNotification('Erreur de chargement des données', 'error');
         CONFIG.promises = generateTestPromises();
         CONFIG.press = getDefaultPressData();
@@ -573,7 +554,6 @@ async function loadPromisesData() {
         const response = await fetch('promises.json');
         
         if (!response.ok) {
-            console.warn('Fichier promises.json non trouvé - utilisation des données de test');
             CONFIG.promises = generateTestPromises();
             return;
         }
@@ -655,7 +635,7 @@ async function loadPromisesData() {
         });
         
     } catch (error) {
-        console.error('❌ Erreur chargement promesses:', error);
+        console.error(error);
         CONFIG.promises = generateTestPromises();
     }
 }
@@ -663,11 +643,9 @@ async function loadPromisesData() {
 // Fonction séparée pour charger la presse
 async function loadPressData() {
     try {
-        console.log('📰 Chargement des données presse...');
         const pressResponse = await fetch('press.json?v=' + Date.now());
         
         if (!pressResponse.ok) {
-            console.warn('Fichier press.json non trouvé - données de presse par défaut');
             CONFIG.press = getDefaultPressData();
             return;
         }
@@ -686,14 +664,12 @@ async function loadPressData() {
                 }
             });
             
-            console.log(`✅ ${CONFIG.press.length} journaux chargés depuis press.json`);
         } else {
-            console.warn('Format press.json invalide - données par défaut');
             CONFIG.press = getDefaultPressData();
         }
         
     } catch (pressError) {
-        console.error('❌ Erreur chargement presse:', pressError);
+        console.error(pressError);
         CONFIG.press = getDefaultPressData();
     }
 }
@@ -701,11 +677,9 @@ async function loadPressData() {
 // Fonction séparée pour charger les actualités
 async function loadNewsData() {
     try {
-        console.log('📰 Chargement des actualités...');
         const newsResponse = await fetch('news.json?v=' + Date.now());
         
         if (!newsResponse.ok) {
-            console.warn('Fichier news.json non trouvé - données de démonstration');
             CONFIG.news = [
                 { 
                     id: '1', 
@@ -739,9 +713,7 @@ async function loadNewsData() {
         
         if (newsData && Array.isArray(newsData.news)) {
             CONFIG.news = newsData.news;
-            console.log(`✅ ${CONFIG.news.length} actualités chargées depuis news.json`);
         } else {
-            console.warn('Format news.json invalide - données par défaut');
             CONFIG.news = [
                 { 
                     id: '1', 
@@ -755,7 +727,7 @@ async function loadNewsData() {
         }
         
     } catch (newsError) {
-        console.error('❌ Erreur chargement actualités:', newsError);
+        console.error(newsError);
         CONFIG.news = [
             { 
                 id: '1', 
@@ -798,14 +770,13 @@ async function saveVoteToSupabase(promiseId, rating, comment = '') {
             created_at: new Date().toISOString()
         };
         
-        console.log('Envoi du vote:', voteData);
         
         const { error } = await supabaseClient
             .from('votes')
             .insert([voteData]);
         
         if (error) {
-            console.error('Erreur Supabase:', error);
+            console.error(error);
             
             // Mode fallback - stocker localement
             const votes = safeGetItem('promise_votes', []);
@@ -827,7 +798,7 @@ async function saveVoteToSupabase(promiseId, rating, comment = '') {
         setTimeout(() => fetchAndDisplayPublicVotes(), 500);
         
     } catch (error) {
-        console.error('❌ Erreur sauvegarde vote:', error);
+        console.error(error);
         showNotification('Mode démo : Vote enregistré localement', 'info');
     }
 }
@@ -846,7 +817,6 @@ function saveRatingLocally(ratingData) {
         created_at: new Date().toISOString()
     });
     safeSetItem('service_ratings', ratings);
-    console.log('💾 Notation sauvegardée localement');
 }
 
 // Dans fetchAndDisplayPublicVotes() ou processVotes()
@@ -999,7 +969,6 @@ function checkIfLate(status, deadline) {
 // FONCTION POUR CORRIGER LES DÉLAIS INVALIDES
 // ==========================================
 function fixInvalidDelays() {
-    console.log('🔧 Correction des délais invalides...');
     let corrections = 0;
     
     CONFIG.promises.forEach(promise => {
@@ -1007,8 +976,6 @@ function fixInvalidDelays() {
         
         // Si délai > 5 ans (1825 jours), le corriger
         if (currentDelay > 1825) {
-            console.log(`Correction: ${promise.id} - ${promise.engagement.substring(0, 50)}...`);
-            console.log(`  Ancien délai: ${currentDelay} jours (${Math.round(currentDelay/365)} années)`);
             
             // Nouveau délai = max 5 ans (durée du mandat)
             promise.delai = '1825';
@@ -1020,16 +987,12 @@ function fixInvalidDelays() {
             // Recalculer si en retard
             promise.isLate = checkIfLate(promise.status, promise.deadline);
             
-            console.log(`  Nouveau délai: 1825 jours (5 années)`);
-            console.log(`  Nouvelle date limite: ${formatDate(promise.deadline)}`);
             corrections++;
         }
     });
     
     if (corrections > 0) {
-        console.log(`✅ ${corrections} délais corrigés`);
     } else {
-        console.log('✅ Aucun délai invalide trouvé');
     }
 }
 
@@ -1070,7 +1033,7 @@ function setupDailyPromise() {
         </div>
         
         <div class="daily-newspaper-article">
-            <h2 class="article-title">${promise.engagement}</h2>
+            <h2 class="article-title">${escapeHTML(promise.engagement)}</h2>
             
             <div class="article-meta">
                 <span class="article-domain"><i class="fas fa-building"></i> ${promise.domain || 'Non spécifié'}</span>
@@ -1082,7 +1045,7 @@ function setupDailyPromise() {
             <div class="article-content">
                 <p class="article-lead">
                     <strong><i class="fas fa-quote-left"></i></strong>
-                    ${promise.engagement}
+                    ${escapeHTML(promise.engagement)}
                     <strong><i class="fas fa-quote-right"></i></strong>
                 </p>
                 
@@ -1140,7 +1103,6 @@ function setupDailyPromise() {
 // RENDER ALL
 // ==========================================
 function renderAll() {
-    console.log('renderAll: Rendering', CONFIG.promises.length, 'promises');
     
     // Initialiser filteredPromises si vide
     if (!CONFIG.filteredPromises || CONFIG.filteredPromises.length === 0) {
@@ -1377,7 +1339,6 @@ function initFilters() {
     // BOUTONS AFFICHER PLUS/MOINS
     if (showMoreBtn) {
         showMoreBtn.addEventListener('click', () => {
-            console.log('Afficher plus cliqué');
             CONFIG.currentVisible = CONFIG.filteredPromises.length;
             renderPromises(CONFIG.filteredPromises);
             showMoreBtn.style.display = 'none';
@@ -1387,7 +1348,6 @@ function initFilters() {
 
     if (showLessBtn) {
         showLessBtn.addEventListener('click', () => {
-            console.log('Afficher moins cliqué');
             CONFIG.currentVisible = CONFIG.visibleCount;
             renderPromises(CONFIG.filteredPromises.slice(0, CONFIG.currentVisible));
             showLessBtn.style.display = 'none';
@@ -1402,7 +1362,6 @@ function initFilters() {
 }
 
 function resetFilters() {
-    console.log('Réinitialisation des filtres');
     
     document.getElementById('filter-status').value = '';
     document.getElementById('filter-domain').value = '';
@@ -1472,14 +1431,12 @@ function applyFilters() {
     const filterDomain = document.getElementById('filter-domain')?.value || '';
     const filterSearch = document.getElementById('filter-search')?.value.toLowerCase() || '';
     
-    console.log('Filtrage avec:', { filterStatus, filterDomain, filterSearch });
     
     // Utiliser toutes les promesses comme base
     let filtered = CONFIG.promises;
     
     // 1. FILTRAGE PAR STATUT - LOGIQUE CORRIGÉE
     if (filterStatus) {
-        console.log('Filtre statut:', filterStatus);
         
         if (filterStatus === 'En retard') {
             // Seulement les promesses EN RETARD
@@ -1507,13 +1464,11 @@ function applyFilters() {
     
     // 2. FILTRAGE PAR DOMAINE
     if (filterDomain && filterDomain !== '') {
-        console.log('Filtre domaine:', filterDomain);
         filtered = filtered.filter(promise => promise.domain === filterDomain);
     }
     
     // 3. FILTRAGE PAR RECHERCHE
     if (filterSearch) {
-        console.log('Filtre recherche:', filterSearch);
         filtered = filtered.filter(promise => 
             promise.engagement.toLowerCase().includes(filterSearch) ||
             (promise.domain || '').toLowerCase().includes(filterSearch) ||
@@ -1521,7 +1476,6 @@ function applyFilters() {
         );
     }
     
-    console.log('Résultat filtre:', filtered.length, 'promesses');
     
     // Stocker le résultat
     CONFIG.filteredPromises = filtered;
@@ -1533,7 +1487,6 @@ function updateFilteredDisplay() {
     const showMoreBtn = document.getElementById('showMoreBtn');
     const showLessBtn = document.getElementById('showLessBtn');
     
-    console.log('updateFilteredDisplay:', CONFIG.filteredPromises.length, 'promesses');
     
     // Toujours montrer "Afficher plus" s'il y a plus d'éléments
     if (CONFIG.filteredPromises.length > CONFIG.visibleCount) {
@@ -1634,7 +1587,6 @@ function renderPromises(promises) {
     const grid = document.getElementById('promisesGrid');
     if (!grid) return;
     
-    console.log('renderPromises: Rendering', promises.length, 'promises');
     
     if (!promises || promises.length === 0) {
         grid.innerHTML = `
@@ -1662,7 +1614,7 @@ function renderPromises(promises) {
                     <span class="promise-domain">${promise.domain || 'Non spécifié'}</span>
                 </div>
                
-                <h3 class="promise-title">${promise.engagement}</h3>
+                <h3 class="promise-title">${escapeHTML(promise.engagement)}</h3>
                 
                 <div class="promise-result">
                     <strong><i class="fas fa-bullseye"></i> Résultat attendu :</strong>
@@ -2035,14 +1987,13 @@ async function saveVoteToSupabase(promiseId, rating, comment = '') {
             created_at: new Date().toISOString()
         };
         
-        console.log('Envoi du vote:', voteData);
         
         const { error } = await supabaseClient
             .from('votes')
             .insert([voteData]);
         
         if (error) {
-            console.error('Erreur Supabase:', error);
+            console.error(error);
             
             // Mode fallback - stocker localement
             const votes = JSON.parse(localStorage.getItem('promise_votes') || '[]');
@@ -2064,7 +2015,7 @@ async function saveVoteToSupabase(promiseId, rating, comment = '') {
         setTimeout(() => fetchAndDisplayPublicVotes(), 500);
         
     } catch (error) {
-        console.error('❌ Erreur sauvegarde vote:', error);
+        console.error(error);
         showNotification('Mode démo : Vote enregistré localement', 'info');
     }
 }
@@ -2100,14 +2051,14 @@ function renderNews(news) {
             </div>
             <div class="news-content">
                 ${categoryBadge}
-                <h3>${item.title}</h3>
+                <h3>${escapeHTML(item.title)}</h3>
                 <p>${displayText}</p>
                 <a href="#" class="news-read-more" onclick="openNewsModal('${item.id || ''}', event); return false;">
                     Lire la suite <i class="fas fa-arrow-right"></i>
                 </a>
                 <div class="news-footer">
                     <span><i class="fas fa-calendar"></i> ${item.date}</span>
-                    <span><i class="fas fa-newspaper"></i> ${item.source}</span>
+                    <span><i class="fas fa-newspaper"></i> ${escapeHTML(item.source || "")}</span>
                 </div>
                 <div class="news-share">
                     <button class="social-btn-small fb" onclick="shareNews('${item.id || ''}', 'facebook')" title="Partager sur Facebook">
@@ -2255,14 +2206,12 @@ let PRESS_DATA = [...DEFAULT_PRESS];
 // ==========================================
 
 async function loadPressData() {
-    console.log('📰 Chargement des données presse depuis revuedepresse/...');
     
     try {
         // Essayer de charger depuis press.json
         const response = await fetch('press.json?v=' + Date.now());
         
         if (!response.ok) {
-            console.warn('Fichier press.json non trouvé - utilisation des chemins par défaut');
             PRESS_DATA = DEFAULT_PRESS;
             return;
         }
@@ -2272,14 +2221,12 @@ async function loadPressData() {
         // Vérifier et utiliser les données
         if (data && Array.isArray(data.press)) {
             PRESS_DATA = data.press;
-            console.log(`✅ ${PRESS_DATA.length} journaux chargés depuis press.json`);
         } else {
-            console.warn('Format press.json invalide - utilisation chemins par défaut');
             PRESS_DATA = DEFAULT_PRESS;
         }
         
     } catch (error) {
-        console.error('❌ Erreur chargement presse:', error);
+        console.error(error);
         PRESS_DATA = DEFAULT_PRESS;
     }
 }
@@ -2312,20 +2259,16 @@ async function checkAvailableNewspapers() {
             if (response.ok) {
                 availablePapers.push(paper);
             } else {
-                console.warn(`Image non trouvée: ${paper.image}`);
             }
         } catch (error) {
-            console.warn(`Erreur vérification: ${paper.image}`);
         }
     }
     
     // Si aucune image n'est trouvée, utiliser toutes les données
     if (availablePapers.length === 0) {
-        console.log('⚠️ Aucune image vérifiée, utilisation de toutes les données');
         return PRESS_DATA;
     }
     
-    console.log(`📊 ${availablePapers.length}/${PRESS_DATA.length} images disponibles`);
     return availablePapers;
 }
 
@@ -2340,7 +2283,7 @@ async function setupPressCarousel() {
     const indicators = document.getElementById('carouselIndicators');
     
     if (!prevBtn || !nextBtn || !indicators) {
-        console.error('Éléments carousel non trouvés');
+        console.error();
         return;
     }
 
@@ -2348,7 +2291,7 @@ async function setupPressCarousel() {
     const availablePress = await checkAvailableNewspapers();
     
     if (availablePress.length === 0) {
-        console.error('Aucun journal disponible');
+        console.error();
         document.getElementById('pressCarousel').innerHTML = `
             <div class="loading-state">
                 <p><i class="fas fa-newspaper"></i> Aucun journal disponible pour le moment</p>
@@ -2748,7 +2691,6 @@ function updateKpiCarousel() {
 // INITIALISATION DES ÉTOILES DE NOTATION DES SERVICES
 // ==========================================
 function initStarRatings() {
-    console.log('⭐ Initialisation des étoiles de notation...');
     
     // Fonction pour mettre à jour l'affichage des étoiles
     function updateStars(container, rating) {
@@ -2807,11 +2749,10 @@ function setupServiceRatings() {
     const form = document.getElementById('ratingForm');
     
     if (!form) {
-        console.error('❌ Formulaire de notation non trouvé');
+        console.error();
         return;
     }
     
-    console.log('✅ Formulaire de notation trouvé');
     
     // Initialiser les étoiles
     initStarRatings();
@@ -2844,7 +2785,6 @@ function setupServiceRatings() {
             date: new Date().toISOString()
         };
         
-        console.log('📝 Données à envoyer:', ratingData);
         
         // Sauvegarder localement
         saveRatingLocally(ratingData);
@@ -2903,17 +2843,14 @@ function saveRatingLocally(ratingData) {
         created_at: new Date().toISOString()
     });
     localStorage.setItem('service_ratings', JSON.stringify(ratings));
-    console.log('💾 Notation sauvegardée localement');
 }
 
 async function saveRatingToSupabase(ratingData) {
     if (!supabaseClient) {
-        console.log('⚠️ Supabase non disponible - mode local seulement');
         return false;
     }
     
     try {
-        console.log('🚀 Envoi à Supabase...');
         
         // Structure des données POUR VOTRE TABLE
         const supabaseData = {
@@ -2928,18 +2865,16 @@ async function saveRatingToSupabase(ratingData) {
             created_at: new Date().toISOString()
         };
         
-        console.log('📤 Données Supabase adaptées:', supabaseData);
         
         const { data, error } = await supabaseClient
             .from('service_ratings')
             .insert([supabaseData]);
         
         if (error) {
-            console.error('❌ Erreur Supabase:', error);
+            console.error(error);
             return false;
         }
         
-        console.log('✅ Notation envoyée à Supabase avec succès:', data);
         
         // Mettre à jour les statistiques
         await updateServiceStats(ratingData.service);
@@ -2947,7 +2882,7 @@ async function saveRatingToSupabase(ratingData) {
         return true;
         
     } catch (error) {
-        console.error('❌ Erreur envoi Supabase:', error);
+        console.error(error);
         return false;
     }
 }
@@ -3002,14 +2937,13 @@ async function updateServiceStats(serviceName) {
                 .upsert(stats, { onConflict: 'service' });
             
             if (statsError) {
-                console.error('❌ Erreur mise à jour stats:', statsError);
+                console.error(statsError);
             } else {
-                console.log('📊 Statistiques mises à jour:', stats);
             }
         }
         
     } catch (error) {
-        console.error('❌ Erreur calcul stats:', error);
+        console.error(error);
     }
 }
 
@@ -3017,7 +2951,6 @@ async function updateServiceStats(serviceName) {
 // AFFICHAGE DES RÉSULTATS DE NOTATION DES SERVICES
 // ==========================================
 async function fetchAndDisplayServiceRatings() {
-    console.log('📊 Chargement des notations service...');
     
     // D'abord, récupérer les notations locales
     const localRatings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
@@ -3044,7 +2977,6 @@ async function fetchAndDisplayServiceRatings() {
                 return;
             }
         } catch (error) {
-            console.warn('⚠️ Erreur chargement Supabase:', error.message);
         }
     }
     
@@ -3300,7 +3232,6 @@ function displayDemoRatingResults() {
 // VOTES PUBLICS POUR LES PROMESSES
 // ==========================================
 async function fetchAndDisplayPublicVotes() {
-    console.log('📊 Chargement des votes...');
     
     // D'abord, récupérer les votes locaux
     const localVotes = JSON.parse(localStorage.getItem('promise_votes') || '[]');
@@ -3319,7 +3250,6 @@ async function fetchAndDisplayPublicVotes() {
                 return;
             }
         } catch (error) {
-            console.warn('⚠️ Erreur chargement votes Supabase:', error.message);
         }
     }
     
@@ -3352,12 +3282,10 @@ function processVotes(votes) {
 // FONCTIONS POUR LA VISUALISATION PHOTO
 // ==========================================
 function initPhotoViewer() {
-    console.log('📸 Initialisation du visualiseur photo');
     // Cette fonction est appelée au chargement
 }
 
 function setupPhotoViewerControls() {
-    console.log('🎯 Configuration des contrôles du visualiseur photo');
     
     // Créer le modal si nécessaire
     if (!document.getElementById('photoViewerModal')) {
@@ -3396,7 +3324,6 @@ function setupPhotoViewerControls() {
 }
 
 function openPhotoViewer(pressId) {
-    console.log('📰 Ouvrir visualiseur pour:', pressId);
     
     const index = CONFIG.press.findIndex(p => p.id === pressId);
     if (index === -1) return;
@@ -3536,15 +3463,12 @@ function setupImageDrag(image) {
 // FORCER LA VISIBILITÉ DES BOUTONS
 // ==========================================
 function forceButtonVisibility() {
-    console.log('🎨 Forçage de la visibilité des boutons...');
     
     // Attendre que le DOM soit complètement chargé
     setTimeout(() => {
         const shareButtons = document.querySelectorAll('.promise-actions .social-btn');
         const starButtons = document.querySelectorAll('.promise-actions .btn-stars');
         
-        console.log(`🎯 ${shareButtons.length} boutons de partage trouvés`);
-        console.log(`🎯 ${starButtons.length} boutons étoiles trouvés`);
         
         // Appliquer des styles inline (priorité maximale)
         shareButtons.forEach(btn => {
@@ -3631,7 +3555,6 @@ function sharePromise(promiseId) {
     
     if (navigator.share) {
         navigator.share({ title: 'Engagement du Projet PASTEF', text: text, url: url })
-            .catch(err => console.log('Erreur partage:', err));
     } else {
         const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
         window.open(shareUrl, '_blank');
@@ -4025,7 +3948,6 @@ function closeNewsModal() {
     document.body.style.overflow = '';
 }
 
-
 // Fonction de partage enrichi pour les actualités
 function shareNews(newsId, platform) {
     const news = CONFIG.news.find(n => n.id === newsId);
@@ -4120,14 +4042,13 @@ _Via LE PROJET_`;
 // ==========================================
 
 async function showAllRatings(category) {
-    console.log('🔍 showAllRatings - Catégorie:', category);
     
     const modal = document.getElementById('ratingsListModal');
     const title = document.getElementById('ratingsModalTitle');
     const body = document.getElementById('ratingsModalBody');
     
     if (!modal || !title || !body) {
-        console.error('❌ Modal non trouvé');
+        console.error();
         return;
     }
     
@@ -4151,17 +4072,15 @@ async function showAllRatings(category) {
                 .order('created_at', { ascending: false });
             
             if (error) {
-                console.error('❌ Erreur Supabase:', error);
+                console.error(error);
                 // Fallback sur localStorage
                 ratings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
             } else {
                 ratings = data || [];
-                console.log('✅ Chargé depuis Supabase:', ratings.length, 'notations');
             }
         } else {
             // Mode local
             ratings = JSON.parse(localStorage.getItem('service_ratings') || '[]');
-            console.log('📂 Chargé depuis localStorage:', ratings.length, 'notations');
         }
         
         if (ratings.length === 0) {
@@ -4218,7 +4137,6 @@ async function showAllRatings(category) {
                 }))
                 .sort((a, b) => b.avg - a.avg);
             
-            console.log('✅ Affichage de', sortedServices.length, 'services classés');
             
             // Afficher le classement complet
             body.innerHTML = `
@@ -4293,7 +4211,6 @@ async function showAllRatings(category) {
                 new Date(b.created_at || b.date || 0) - new Date(a.created_at || a.date || 0)
             );
             
-            console.log('✅ Affichage de', sorted.length, 'notations de la semaine');
             
             if (sorted.length === 0) {
                 body.innerHTML = '<div class="empty-state"><i class="fas fa-calendar-times"></i><p>Aucune notation cette semaine</p></div>';
@@ -4351,7 +4268,7 @@ async function showAllRatings(category) {
             `;
         }
     } catch (error) {
-        console.error('❌ Erreur:', error);
+        console.error(error);
         body.innerHTML = `
             <div class="error-state">
                 <i class="fas fa-exclamation-triangle"></i>
@@ -4361,7 +4278,6 @@ async function showAllRatings(category) {
         `;
     }
 }
-
 
 function closeRatingsModal() {
     const modal = document.getElementById('ratingsListModal');
@@ -4551,13 +4467,11 @@ function getDefaultPressData() {
 // Fonction pour insérer avec retry et fallback
 async function safeSupabaseInsert(table, data, retryCount = 2) {
     if (!supabaseClient) {
-        console.log(`⚠️ Supabase non disponible - stockage local pour ${table}`);
         return { success: false, data: null, error: 'Supabase non disponible' };
     }
     
     for (let i = 0; i <= retryCount; i++) {
         try {
-            console.log(`🔄 Tentative ${i + 1} d'insertion dans ${table}...`);
             
             const { data: result, error } = await supabaseClient
                 .from(table)
@@ -4565,13 +4479,11 @@ async function safeSupabaseInsert(table, data, retryCount = 2) {
                 .select();
             
             if (!error) {
-                console.log(`✅ Insertion réussie dans ${table}:`, result);
                 return { success: true, data: result, error: null };
             }
             
             // Si erreur 401 (RLS), essayez avec une méthode différente
             if (error.code === 'PGRST301' || error.code === '42501' || error.message.includes('row-level security')) {
-                console.warn(`⚠️ Erreur RLS pour ${table}:`, error.message);
                 
                 // Mode fallback : stockage local
                 const localStorageKey = `supabase_fallback_${table}`;
@@ -4611,12 +4523,10 @@ async function safeSupabaseInsert(table, data, retryCount = 2) {
 // Version corrigée de saveRatingToSupabase
 async function saveRatingToSupabase(ratingData) {
     if (!supabaseClient) {
-        console.log('⚠️ Supabase non disponible - mode local seulement');
         return false;
     }
     
     try {
-        console.log('🚀 Envoi de notation à Supabase...');
         
         // Structure des données
         const supabaseData = {
@@ -4631,7 +4541,6 @@ async function saveRatingToSupabase(ratingData) {
             created_at: new Date().toISOString()
         };
         
-        console.log('📤 Données à envoyer:', supabaseData);
         
         // Utiliser la fonction safe insert
         const result = await safeSupabaseInsert('service_ratings', supabaseData);
@@ -4642,12 +4551,11 @@ async function saveRatingToSupabase(ratingData) {
         }
         
         if (!result.success) {
-            console.error('❌ Échec insertion Supabase');
+            console.error();
             showNotification('Mode démo : Notation enregistrée localement', 'info');
             return false;
         }
         
-        console.log('✅ Notation envoyée avec succès');
         showNotification('Merci pour votre notation !', 'success');
         
         // Mettre à jour les stats (en arrière-plan)
@@ -4656,7 +4564,7 @@ async function saveRatingToSupabase(ratingData) {
         return true;
         
     } catch (error) {
-        console.error('❌ Erreur envoi Supabase:', error);
+        console.error(error);
         showNotification('Mode démo : Notation enregistrée localement', 'info');
         return false;
     }
@@ -4686,7 +4594,6 @@ async function saveVoteToSupabase(promiseId, rating, comment = '') {
             created_at: new Date().toISOString()
         };
         
-        console.log('Envoi du vote:', voteData);
         
         const result = await safeSupabaseInsert('votes', voteData);
         
@@ -4702,19 +4609,17 @@ async function saveVoteToSupabase(promiseId, rating, comment = '') {
         setTimeout(() => fetchAndDisplayPublicVotes(), 500);
         
     } catch (error) {
-        console.error('❌ Erreur sauvegarde vote:', error);
+        console.error(error);
         showNotification('Mode démo : Vote enregistré localement', 'info');
     }
 }
 
 // Fonction pour synchroniser les données locales
 async function syncLocalDataWithSupabase() {
-    console.log('🔄 Synchronisation des données locales...');
     
     // Synchroniser service_ratings
     const serviceRatingsLocal = JSON.parse(localStorage.getItem('supabase_fallback_service_ratings') || '[]');
     if (serviceRatingsLocal.length > 0) {
-        console.log(`📊 ${serviceRatingsLocal.length} notations locales à synchroniser`);
         
         for (const rating of serviceRatingsLocal.filter(r => !r._synced)) {
             try {
@@ -4734,7 +4639,7 @@ async function syncLocalDataWithSupabase() {
                     rating._synced = true;
                 }
             } catch (error) {
-                console.error('❌ Erreur synchronisation:', error);
+                console.error(error);
             }
         }
         
@@ -4745,7 +4650,6 @@ async function syncLocalDataWithSupabase() {
     // Synchroniser votes
     const votesLocal = JSON.parse(localStorage.getItem('promise_votes') || '[]');
     if (votesLocal.length > 0) {
-        console.log(`📊 ${votesLocal.length} votes locaux à synchroniser`);
         
         // Logique similaire pour les votes...
     }
@@ -4759,18 +4663,15 @@ function initMobileMenu() {
     const menuLinks = document.querySelectorAll('.modern-link');
     
     if (!hamburger || !menu) {
-        console.warn('⚠️ Éléments du menu mobile non trouvés');
         return;
     }
     
-    console.log('✅ Menu mobile initialisé');
     
     // Toggle du menu hamburger
     hamburger.addEventListener('click', (e) => {
         e.stopPropagation(); // Empêcher la propagation
         hamburger.classList.toggle('active');
         menu.classList.toggle('active');
-        console.log('🍔 Menu mobile:', menu.classList.contains('active') ? 'ouvert' : 'fermé');
     });
     
     // Fermer le menu quand on clique sur un lien
@@ -4779,7 +4680,6 @@ function initMobileMenu() {
             // Laisser le comportement par défaut des liens ancres
             hamburger.classList.remove('active');
             menu.classList.remove('active');
-            console.log('🔗 Lien cliqué, menu fermé');
         });
     });
     
@@ -4795,7 +4695,6 @@ function initMobileMenu() {
 // Initialiser au chargement du DOM
 document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
-    console.log('📱 Mode:', window.innerWidth <= 768 ? 'Mobile' : 'Desktop');
 });
 function getStatusText(promise) {
     if (promise.isLate) return 'En retard';

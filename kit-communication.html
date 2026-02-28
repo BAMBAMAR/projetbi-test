@@ -7,8 +7,7 @@
     <!-- ══ PROTECTION ADMIN — Accès restreint ══ -->
     <script>
     (function() {
-        // Même hash SHA-256 que update_press_simple.html
-        // Changez-le sur : https://emn178.github.io/online-tools/sha256.html
+        // Authentification par hash SHA-256
         const ADMIN_HASH = '03eb6856c640072257980d6125e3082905e07a23b3a50f2efe5256bc9898a380';
 
         async function sha256(message) {
@@ -20,18 +19,36 @@
 
         async function checkAccess() {
             if (sessionStorage.getItem('admin_auth') === ADMIN_HASH) return;
+
+            // Protection anti-brute force
+            const attempts = parseInt(sessionStorage.getItem('auth_attempts') || '0');
+            const lockUntil = parseInt(sessionStorage.getItem('auth_lock_until') || '0');
+            if (Date.now() < lockUntil) {
+                const wait = Math.ceil((lockUntil - Date.now()) / 1000);
+                document.body.innerHTML = `<h1 style="font-family:sans-serif;text-align:center;margin-top:20vh;color:#C0392B">⛔ Trop de tentatives. Réessayez dans ${wait}s.</h1>`;
+                return;
+            }
+
             document.documentElement.style.display = 'none';
             const pwd = prompt('🔐 Kit de Communication — Mot de passe requis :');
-            if (!pwd) {
-                document.write('<h1 style="font-family:sans-serif;text-align:center;margin-top:20vh;color:#C0392B">Accès refusé</h1>');
+            if (!pwd || pwd.length > 128) {
+                document.body.innerHTML = '<h1 style="font-family:sans-serif;text-align:center;margin-top:20vh;color:#C0392B">Accès refusé</h1>';
                 return;
             }
             const hash = await sha256(pwd);
             if (hash === ADMIN_HASH) {
+                sessionStorage.removeItem('auth_attempts');
+                sessionStorage.removeItem('auth_lock_until');
                 sessionStorage.setItem('admin_auth', ADMIN_HASH);
                 document.documentElement.style.display = '';
             } else {
-                document.write('<h1 style="font-family:sans-serif;text-align:center;margin-top:20vh;color:#C0392B">⛔ Mot de passe incorrect — Accès refusé</h1>');
+                const newAttempts = attempts + 1;
+                sessionStorage.setItem('auth_attempts', newAttempts);
+                if (newAttempts >= 5) {
+                    const lock = Math.min(30000 * Math.pow(2, newAttempts - 5), 300000);
+                    sessionStorage.setItem('auth_lock_until', Date.now() + lock);
+                }
+                document.body.innerHTML = '<h1 style="font-family:sans-serif;text-align:center;margin-top:20vh;color:#C0392B">⛔ Accès refusé</h1>';
             }
         }
 

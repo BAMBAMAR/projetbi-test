@@ -335,7 +335,7 @@
             La transparence au service de la démocratie.
         </p>
         <div class="hero-actions">
-            <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="btn btn-primary" download target="_blank">
+            <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="btn btn-primary" download target="_blank" rel="noopener noreferrer">
                 <i class="fas fa-file-pdf"></i> Télécharger le Programme
             </a>
             <a href="#statistiques" class="btn btn-secondary">
@@ -621,8 +621,8 @@
                 <i class="fas fa-newspaper"></i>
                 Actualités
             </h2>
-            <a href="actualites.html" class="btn btn-outline-sm">
-                Voir tout <i class="fas fa-arrow-right"></i>
+            <a href="actualites.html" class="btn btn-voir-tout">
+                <i class="fas fa-rss"></i> Voir tout <i class="fas fa-arrow-right"></i>
             </a>
         </div>
         <!-- ID = newsGrid (exact ID app.js uses) -->
@@ -633,10 +633,7 @@
             </div>
         </div>
 
-        <!-- Modal actualité -->
-        <div id="newsModal" class="news-detail-modal" style="display:none;">
-            <div id="newsModalBody" class="news-detail-content"></div>
-        </div>
+        <!-- Modal actualité — créé dynamiquement par app.js (openNewsModal) -->
     </div>
 </section>
 
@@ -1302,8 +1299,6 @@ if (filterBtn && filterSec) {
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
-            .then(reg => console.log('✅ Service Worker enregistré:', reg.scope))
-            .catch(err => console.warn('⚠️ SW non enregistré:', err));
     });
 }
 
@@ -1341,7 +1336,6 @@ window.installApp = async function() {
     if (deferredPrompt) {
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
-        console.log('Installation:', outcome);
         deferredPrompt = null;
         const banner = document.getElementById('installBanner');
         if (banner) banner.remove();

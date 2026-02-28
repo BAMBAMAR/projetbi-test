@@ -375,7 +375,7 @@ textarea.form-control{resize:vertical;min-height:90px}
     <div class="auth-logo"><i class="fas fa-shield-halved"></i></div>
     <h1 class="auth-title">ProjetBI Admin</h1>
     <p class="auth-sub">Accès restreint — Panneau d'administration</p>
-    <input type="password" class="auth-input" id="authInput" placeholder="••••••••••••" maxlength="50">
+    <input type="password" class="auth-input" id="authInput" autocomplete="off" spellcheck="false" placeholder="••••••••••••" maxlength="50">
     <button class="auth-btn" id="authBtn"><i class="fas fa-key"></i> Entrer</button>
     <p class="auth-error" id="authError">Mot de passe incorrect</p>
   </div>
@@ -419,7 +419,7 @@ textarea.form-control{resize:vertical;min-height:90px}
     <button class="topbar-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
     <span class="page-title" id="pageTitle">Tableau de bord</span>
     <div class="topbar-right">
-      <a href="/" target="_blank" class="topbar-btn"><i class="fas fa-external-link-alt"></i> Voir le site</a>
+      <a href="/" target="_blank" rel="noopener noreferrer" class="topbar-btn"><i class="fas fa-external-link-alt"></i> Voir le site</a>
       <button class="topbar-btn danger" onclick="logout()"><i class="fas fa-right-from-bracket"></i> Déconnexion</button>
     </div>
   </div>
@@ -855,21 +855,45 @@ async function checkAuth() {
   }
 }
 
+// Protection anti-brute force : verrouillage temporaire après 5 tentatives
+let authAttempts = parseInt(sessionStorage.getItem('auth_attempts') || '0');
+let authLockUntil = parseInt(sessionStorage.getItem('auth_lock_until') || '0');
+
 document.getElementById('authBtn').addEventListener('click', async () => {
+  const now = Date.now();
+  if (now < authLockUntil) {
+    const wait = Math.ceil((authLockUntil - now) / 1000);
+    document.getElementById('authError').textContent = `Trop de tentatives. Réessayez dans ${wait}s.`;
+    document.getElementById('authError').style.display = 'block';
+    return;
+  }
   const pwd = document.getElementById('authInput').value;
-  if (!pwd) return;
+  if (!pwd || pwd.length > 128) return;
   const hash = await sha256(pwd);
   if (hash === ADMIN_HASH) {
+    sessionStorage.removeItem('auth_attempts');
+    sessionStorage.removeItem('auth_lock_until');
     sessionStorage.setItem('admin_auth', ADMIN_HASH);
     document.getElementById('authScreen').style.display = 'none';
     init();
   } else {
+    authAttempts++;
+    sessionStorage.setItem('auth_attempts', authAttempts);
+    if (authAttempts >= 5) {
+      const lockDuration = Math.min(30000 * Math.pow(2, authAttempts - 5), 300000); // max 5min
+      authLockUntil = now + lockDuration;
+      sessionStorage.setItem('auth_lock_until', authLockUntil);
+      document.getElementById('authError').textContent = `Compte verrouillé. Réessayez dans ${Math.ceil(lockDuration/1000)}s.`;
+    } else {
+      document.getElementById('authError').textContent = 'Mot de passe incorrect.';
+    }
     document.getElementById('authError').style.display = 'block';
+    document.getElementById('authInput').value = '';
     document.getElementById('authInput').style.borderColor = 'var(--red)';
     setTimeout(() => {
       document.getElementById('authError').style.display = 'none';
       document.getElementById('authInput').style.borderColor = '';
-    }, 2500);
+    }, 3000);
   }
 });
 document.getElementById('authInput').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('authBtn').click(); });
@@ -914,7 +938,6 @@ function initSupabase() {
       supaClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       loadRatings();
     }
-  } catch(e) { console.warn('Supabase non disponible'); }
 }
 
 // ══════════════════════
@@ -1410,7 +1433,7 @@ function renderPress() {
       <td><strong>${escH(p.title)}</strong></td>
       <td><span style="color:var(--text3);font-size:.78rem">${p.date||'—'}</span></td>
       <td>${p.image?`<span class="badge badge-green"><i class="fas fa-check"></i> Oui</span>`:`<span class="badge badge-gray">Non</span>`}</td>
-      <td>${p.link?`<a href="${escH(p.link)}" target="_blank" style="color:var(--blue);font-size:.78rem"><i class="fas fa-link"></i></a>`:'—'}</td>
+      <td>${p.link?`<a href="${escH(p.link)}" target="_blank" rel="noopener noreferrer" style="color:var(--blue);font-size:.78rem"><i class="fas fa-link"></i></a>`:'—'}</td>
       <td>
         <button class="btn btn-outline btn-xs" onclick="editPress('${p.id}')"><i class="fas fa-pen"></i></button>
         <button class="btn btn-danger btn-xs" onclick="deletePressById('${p.id}')"><i class="fas fa-trash"></i></button>

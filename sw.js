@@ -1,11 +1,13 @@
 // ============================================================
-// SERVICE WORKER — ProjetBI.org  v3
-// Corrige : "clone() on already-used Response"
-//           CSP / Cloudflare Analytics passthrough
+// SERVICE WORKER — ProjetBI.org  v4
+// Compatible sous-dossier GitHub Pages (ex: /projetbi-test/)
 // ============================================================
 
-const STATIC_CACHE = 'projetbi-static-v3';
-const DATA_CACHE   = 'projetbi-data-v3';
+const STATIC_CACHE = 'projetbi-static-v4';
+const DATA_CACHE   = 'projetbi-data-v4';
+
+// Base du SW — fonctionne en racine ou sous-dossier
+const BASE = self.registration.scope;
 
 // Domaines à laisser passer sans interception
 const PASSTHROUGH_DOMAINS = [
@@ -14,7 +16,7 @@ const PASSTHROUGH_DOMAINS = [
   'cdn.jsdelivr.net',
   'fonts.googleapis.com',
   'fonts.gstatic.com',
-  'cloudflareinsights.com',   // ← Cloudflare Analytics
+  'cloudflareinsights.com',
   'fbcdn.net',
   'facebook.com',
   'scontent.',
@@ -22,12 +24,27 @@ const PASSTHROUGH_DOMAINS = [
   'picsum.photos',
 ];
 
+// Chemins relatifs à la base du SW
 const STATIC_ASSETS = [
-  '/', '/index.html', '/actualites.html', '/style.css',
-  '/app.js', '/utils.js', '/render.js', '/manifest.json', '/favicon.png',
+  BASE,
+  BASE + 'index.html',
+  BASE + 'actualites.html',
+  BASE + 'style.css',
+  BASE + 'app.js',
+  BASE + 'utils.js',
+  BASE + 'render.js',
+  BASE + 'manifest.json',
+  BASE + 'favicon.png',
 ];
 
-const DATA_ASSETS = ['/promises.json', '/news.json', '/press.json'];
+const DATA_ASSETS = [
+  BASE + 'promises.json',
+  BASE + 'news.json',
+  BASE + 'press.json',
+];
+
+// Pages admin — jamais en cache (chemin complet)
+const NO_CACHE_PAGES = ['admin.html', 'kit-communication.html', 'update_press_simple.html'];
 
 const OFFLINE_HTML = `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
 <title>ProjetBI — Hors-ligne</title>
@@ -86,8 +103,8 @@ self.addEventListener('fetch', event => {
   if (shouldPassthrough(url)) return;
 
   // Pages admin — jamais en cache
-  if (['/admin.html', '/kit-communication.html', '/update_press_simple.html']
-      .includes(url.pathname)) return;
+  // Pages admin — jamais en cache
+  if (NO_CACHE_PAGES.some(p => url.href.endsWith(p))) return;
 
   // ── JSON : Network First, cache fallback
   if (url.pathname.endsWith('.json')) {

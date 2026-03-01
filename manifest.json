@@ -22,14 +22,14 @@
       "name": "Dashboard",
       "short_name": "Stats",
       "description": "Voir les statistiques des engagements",
-      "url": "./#statistiques",
+      "url": "./#dashboard",
       "icons": [{ "src": "./favicon.png", "sizes": "192x192" }]
     },
     {
       "name": "Engagements",
       "short_name": "Engagements",
       "description": "Consulter tous les engagements",
-      "url": "./#promises",
+      "url": "./#engagements",
       "icons": [{ "src": "./favicon.png", "sizes": "192x192" }]
     },
     {

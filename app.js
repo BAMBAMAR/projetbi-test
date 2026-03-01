@@ -360,43 +360,9 @@ function initNavigation() {
     }
 
     // 2. NAVIGATION FONCTIONNELLE
-    // Inclure aussi le bouton CTA (nav-cta-btn) dans la navigation
-    const allNavLinks = document.querySelectorAll('.modern-link, .nav-cta-btn');
-
-    allNavLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            const href = link.getAttribute('href');
-            if (!href) return;
-
-            // Lien vers racine (Accueil) — scroll vers le haut, URL propre
-            if (href === './' || href === '/' || href === '') {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                history.pushState(null, '', './');
-                if (modernMenu && modernMenu.classList.contains('active')) {
-                    modernMenu.classList.remove('active');
-                    modernHamburger && modernHamburger.classList.remove('active');
-                }
-                return;
-            }
-
-            // Lien ancre #section — scroll + mise à jour URL
-            if (href.startsWith('#')) {
-                e.preventDefault();
-                const target = document.getElementById(href.substring(1));
-                if (target) {
-                    const offset = 80;
-                    window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
-                    history.pushState(null, '', href);
-                }
-                if (modernMenu && modernMenu.classList.contains('active')) {
-                    modernMenu.classList.remove('active');
-                    modernHamburger && modernHamburger.classList.remove('active');
-                }
-                return;
-            }
-
-            // Lien externe (actualites.html, PDF…) — comportement natif, fermer le menu
+    // Navigation native (comme le pied de page) — juste fermer le menu mobile au clic
+    document.querySelectorAll('.modern-link, .nav-cta-btn').forEach(link => {
+        link.addEventListener('click', () => {
             if (modernMenu && modernMenu.classList.contains('active')) {
                 modernMenu.classList.remove('active');
                 modernHamburger && modernHamburger.classList.remove('active');
@@ -2613,7 +2579,7 @@ function goToCarouselSlide(index) {
 }
 
 function goToPromiseSection(promiseId) {
-    const promisesSection = document.getElementById('promises');
+    const promisesSection = document.getElementById('engagements');
     if (promisesSection) {
         const offset = CONFIG.scrollOffset;
         const targetPosition = promisesSection.offsetTop - offset;

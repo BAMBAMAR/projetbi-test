@@ -360,31 +360,46 @@ function initNavigation() {
     }
 
     // 2. NAVIGATION FONCTIONNELLE
-    modernLinks.forEach(link => {
+    // Inclure aussi le bouton CTA (nav-cta-btn) dans la navigation
+    const allNavLinks = document.querySelectorAll('.modern-link, .nav-cta-btn');
+
+    allNavLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             const href = link.getAttribute('href');
-            if (!href || !href.startsWith('#')) return;
-            
-            e.preventDefault();
-            
-            const targetId = href.substring(1);
-            const target = document.getElementById(targetId);
+            if (!href) return;
 
-            if (target) {
-                // Scroll smooth vers la section
-                const offset = 80;
-                const targetPosition = target.offsetTop - offset;
-
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-
-                // Fermer le menu mobile si ouvert
+            // Lien vers racine (Accueil) — scroll vers le haut, URL propre
+            if (href === './' || href === '/' || href === '') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                history.pushState(null, '', './');
                 if (modernMenu && modernMenu.classList.contains('active')) {
                     modernMenu.classList.remove('active');
-                    modernHamburger.classList.remove('active');
+                    modernHamburger && modernHamburger.classList.remove('active');
                 }
+                return;
+            }
+
+            // Lien ancre #section — scroll + mise à jour URL
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                const target = document.getElementById(href.substring(1));
+                if (target) {
+                    const offset = 80;
+                    window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
+                    history.pushState(null, '', href);
+                }
+                if (modernMenu && modernMenu.classList.contains('active')) {
+                    modernMenu.classList.remove('active');
+                    modernHamburger && modernHamburger.classList.remove('active');
+                }
+                return;
+            }
+
+            // Lien externe (actualites.html, PDF…) — comportement natif, fermer le menu
+            if (modernMenu && modernMenu.classList.contains('active')) {
+                modernMenu.classList.remove('active');
+                modernHamburger && modernHamburger.classList.remove('active');
             }
         });
     });

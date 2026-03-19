@@ -1,7 +1,7 @@
 {
   "start_date": "2024-04-02",
   "end_date": "2029-04-02",
-  "last_updated": "2026-02-05",
+  "last_updated": "2026-03-19",
   "promises": [
     {
       "id": "promise_1",
@@ -37,6 +37,14 @@
         {
           "date": "2024-06-04",
           "text": "Recommandation forte des Assises de la Justice pour la création d'une Cour Constitutionnelle."
+        },
+        {
+          "date": "2025-12-31",
+          "text": "Le Président annonce lors de son discours à la Nation la transmission à l'Assemblée nationale, au premier trimestre 2026, du projet de texte relatif à la Cour Constitutionnelle."
+        },
+        {
+          "date": "2026-03-19",
+          "text": "Les comités ad hoc issus des Assises et des concertations ont achevé leurs travaux. Les textes sont en cours de finalisation pour transmission imminente au Parlement."
         }
       ]
     },
@@ -55,6 +63,10 @@
         {
           "date": "2024-07-05",
           "text": "Remise du rapport des Assises au Président, préconisant l'ouverture du CSM à des personnalités extérieures et le départ de l'Exécutif."
+        },
+        {
+          "date": "2025-12-31",
+          "text": "Annonce présidentielle : le projet de texte sur le CSM sera transmis à l'Assemblée nationale au premier trimestre 2026. Les concertations nationales sur le système politique ont achevé leurs travaux préparatoires."
         }
       ]
     },
@@ -175,7 +187,12 @@
       "resultat": "Processus électoral indépendant",
       "delai": "2025-12-31",
       "status": "encours",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2025-12-31",
+          "text": "Le Président annonce lors de son discours à la Nation la transmission à l'Assemblée nationale du projet de texte sur la CENI au premier trimestre 2026, accompagné d'un nouveau Code électoral."
+        }
+      ]
     },
     {
       "id": "promise_16",
@@ -426,6 +443,10 @@
         {
           "date": "2025-10-23",
           "text": "Adoption imminente : En janvier 2026, le Chef de l'État a exigé l'adoption de la version révisée de la loi avant la fin du mois."
+        },
+        {
+          "date": "2026-02-01",
+          "text": "Un projet de loi pour mieux encadrer la gestion des terres a été transmis à l'Assemblée nationale. Le texte prévoit que l'État titre les terres en son nom avant de les octroyer sous forme de bail, afin de lutter contre la spéculation et les attributions opaques. Plusieurs lotissements ont été suspendus dans les régions de Dakar, Thiès et Saint-Louis dans ce cadre."
         }
       ]
     },
@@ -604,6 +625,10 @@
         {
           "date": "2024-06-14",
           "text": "Allocation budgétaire spéciale de 53,4 milliards FCFA pour la réduction du coût de la vie et le soutien à la santé."
+        },
+        {
+          "date": "2025-12-31",
+          "text": "Bilan 2025 : 34 postes de santé ouverts ou réhabilités et 76 ambulances médicalisées déployées. Un investissement de 91 milliards FCFA annoncé pour 2026, dont l'achèvement de l'Hôpital oncologique de Diamniadio."
         }
       ]
     },
@@ -658,11 +683,15 @@
       "engagement": "Hôpitaux universitaires interrégionaux",
       "resultat": "Fin évacuations",
       "delai": "2029-04-02",
-      "status": "non-lance",
+      "status": "encours",
       "mises_a_jour": [
         {
           "date": "2024-06-25",
           "text": "Visite du Chef de l'État à l'Hôpital Le Dantec (chantier) et instructions pour l'accélération de la reconstruction."
+        },
+        {
+          "date": "2026-03-01",
+          "text": "Visite présidentielle du chantier du Centre National d'Oncologie de Diamniadio. Le Président a supervisé l'avancement des travaux et rappelé l'exigence de respect des délais."
         }
       ]
     },
@@ -745,6 +774,10 @@
         {
           "date": "2025-12-31",
           "text": "Enveloppe de 29 milliards FCFA dédiée à l'accélération de l'éradication des abris en 2026."
+        },
+        {
+          "date": "2025-12-31",
+          "text": "Bilan 2025 : plus de 2 400 salles de classe livrées dans le cadre du programme de remplacement des abris provisoires et de la construction de nouvelles infrastructures scolaires."
         }
       ]
     },
@@ -872,7 +905,12 @@
       "resultat": "100% couverture",
       "delai": "2030-12-31",
       "status": "encours",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2025-12-31",
+          "text": "Annonce présidentielle : 367 localités supplémentaires seront raccordées au réseau électrique en 2026, bénéficiant à plus de 1,2 million de personnes."
+        }
+      ]
     },
     {
       "id": "promise_76",
@@ -892,12 +930,20 @@
       "status": "encours",
       "mises_a_jour": [
         {
-          "date": "2025-08-06",
-          "text": "Lancement officiel du Gazoduc de 85 KM reliant le Hub de GTA à la Centrale électrique de Gandon (250 MW)."
-        },
-        {
           "date": "2024-06-11",
           "text": "First Oil du champ Sangomar, permettant à terme l'utilisation du gaz associé pour les centrales Senelec."
+        },
+        {
+          "date": "2025-04-15",
+          "text": "Première exportation de GNL du projet Grand Tortue Ahmeyim (GTA, partagé avec la Mauritanie) : 163 259 m³ chargés, marquant l'entrée officielle du Sénégal sur le marché international du gaz naturel liquéfié."
+        },
+        {
+          "date": "2025-08-06",
+          "text": "Lancement officiel du Gazoduc de 85 km reliant le Hub de GTA à la Centrale électrique de Gandon (250 MW), ouvrant la voie à l'alimentation des centrales Senelec au gaz domestique."
+        },
+        {
+          "date": "2025-12-31",
+          "text": "Bilan annuel 2025 : GTA a livré 18,5 cargaisons de GNL au total sur l'année, atteignant progressivement sa capacité nominale de 2,7 Mtpa. Le projet monte en puissance conformément aux prévisions."
         }
       ]
     },
@@ -907,7 +953,7 @@
       "engagement": "Renégociation contrats pétroliers",
       "resultat": "Revenus optimisés",
       "delai": "2024-04-02",
-      "status": "encours",
+      "status": "realise",
       "mises_a_jour": [
         {
           "date": "2024-05-20",
@@ -920,6 +966,14 @@
         {
           "date": "2024-08-19",
           "text": "Installation officielle par le Premier Ministre de la Commission de réexamen des contrats stratégiques (pétroliers, miniers, fiscaux)."
+        },
+        {
+          "date": "2025-08-01",
+          "text": "Sangomar bat ses propres records : les prévisions de production annuelle ont été révisées à la hausse, passant de 30,53 millions à 34,5 millions de barils pour 2025, grâce à la robustesse des réservoirs et la qualité des opérations. L'État a engrangé 500 milliards FCFA sur la Phase 1, avec 6 000 emplois créés."
+        },
+        {
+          "date": "2025-10-01",
+          "text": "Record d'octobre 2025 : Sangomar a exporté 3 cargaisons (2,92 M barils), et GTA a réalisé sa première exportation de condensat (0,71 M barils) en plus de 3 cargaisons de GNL, confirmant la position du Sénégal comme acteur gazier et pétrolier majeur en Afrique de l'Ouest."
         }
       ]
     },
@@ -1069,11 +1123,15 @@
       "engagement": "Centre spatial / Nanosatellites",
       "resultat": "Surveillance technologique",
       "delai": "2026-04-02",
-      "status": "non-lance",
+      "status": "realise",
       "mises_a_jour": [
         {
           "date": "2024-08-16",
           "text": "Lancement réussi du premier satellite sénégalais GAINDESAT-1 depuis la Californie, marquant l'entrée du Sénégal dans l'ère spatiale."
+        },
+        {
+          "date": "2025-06-01",
+          "text": "GAINDESAT-1A est pleinement opérationnel. Le satellite assure la surveillance du territoire national, du domaine maritime et contribue à la gestion des ressources naturelles. Le Sénégal figure parmi les rares pays africains disposant d'une capacité spatiale souveraine."
         }
       ]
     },
@@ -1148,6 +1206,18 @@
         {
           "date": "2024-04-05",
           "text": "Fusion effective dans le Gouvernement Sonko 1."
+        },
+        {
+          "date": "2025-10-31",
+          "text": "J-365 JOJ Dakar 2026 : Dévoilement de la mascotte officielle 'Ayo' au Grand Théâtre National de Dakar. Le Sénégal deviendra le premier pays africain à accueillir une manifestation olympique lors des 4es Jeux Olympiques de la Jeunesse (31 oct. - 13 nov. 2026)."
+        },
+        {
+          "date": "2025-12-05",
+          "text": "Tirage au sort Coupe du Monde 2026 : le Sénégal est versé dans le Groupe I aux côtés de la France, de la Norvège et d'un barragiste (Irak, Bolivie ou Suriname). Le match France-Sénégal est prévu le 16 juin 2026 à New York, dans un écho aux retrouvailles de 2002."
+        },
+        {
+          "date": "2026-03-05",
+          "text": "Le Président Faye visite les chantiers des JOJ Dakar 2026. Les travaux progressent de façon notable. Le Chef de l'État a martelé qu'aucun relâchement ne sera toléré pour respecter les délais de livraison, fixés initialement à mars 2026. Les quatre sites de Diamniadio sont déclarés prêts."
         }
       ]
     },
@@ -1273,7 +1343,16 @@
       "resultat": "Constitution sacrée avec procédures rigides amendement",
       "delai": "2025-12-31",
       "status": "encours",
-      "mises_a_jour": []
+      "mises_a_jour": [
+        {
+          "date": "2025-07-01",
+          "text": "Lancement des concertations nationales sur le système politique sénégalais (CNSP), associant partis politiques, société civile et experts constitutionnels, dans la perspective de la révision constitutionnelle."
+        },
+        {
+          "date": "2025-12-31",
+          "text": "Discours présidentiel à la Nation : annonce de la transmission imminente au Parlement des textes sur la réforme constitutionnelle, le CSM, la Cour Constitutionnelle et la CENI, au cours du premier trimestre 2026. Les concertations ont achevé leurs travaux préparatoires."
+        }
+      ]
     },
     {
       "id": "promise_110",

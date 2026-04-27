@@ -23,8 +23,8 @@
             if (sessionStorage.getItem('admin_auth') === ADMIN_HASH) return;
 
             // Protection anti-brute force
-            const attempts = parseInt(sessionStorage.getItem('auth_attempts') || '0');
-            const lockUntil = parseInt(sessionStorage.getItem('auth_lock_until') || '0');
+            const attempts = parseInt(localStorage.getItem('auth_attempts') || '0');
+            const lockUntil = parseInt(localStorage.getItem('auth_lock_until') || '0');
             if (Date.now() < lockUntil) {
                 const wait = Math.ceil((lockUntil - Date.now()) / 1000);
                 document.body.innerHTML = `<h1 style="font-family:sans-serif;text-align:center;margin-top:20vh;color:#C0392B">⛔ Trop de tentatives. Réessayez dans ${wait}s.</h1>`;
@@ -42,16 +42,16 @@
 
             const hash = await sha256(pwd);
             if (hash === ADMIN_HASH) {
-                sessionStorage.removeItem('auth_attempts');
-                sessionStorage.removeItem('auth_lock_until');
+                localStorage.removeItem('auth_attempts'); sessionStorage.removeItem('auth_attempts');
+                localStorage.removeItem('auth_lock_until'); sessionStorage.removeItem('auth_lock_until');
                 sessionStorage.setItem('admin_auth', ADMIN_HASH);
                 document.documentElement.style.display = '';
             } else {
                 const newAttempts = attempts + 1;
-                sessionStorage.setItem('auth_attempts', newAttempts);
+                localStorage.setItem('auth_attempts', newAttempts);
                 if (newAttempts >= 5) {
                     const lock = Math.min(30000 * Math.pow(2, newAttempts - 5), 300000);
-                    sessionStorage.setItem('auth_lock_until', Date.now() + lock);
+                    localStorage.setItem('auth_lock_until', Date.now() + lock);
                 }
                 document.body.innerHTML = '<h1 style="font-family:sans-serif;text-align:center;margin-top:20vh;color:#C0392B">⛔ Accès refusé</h1>';
             }
@@ -60,7 +60,7 @@
         checkAccess();
     })();
     </script>
-    <title>Mise à jour Presse & Actualités - Projet Sénégal</title>
+    <title>Mise à jour Presse & Actualités — Gardiens du Projet PASTEF</title>
     <style>
         * {
             box-sizing: border-box;
@@ -552,8 +552,8 @@
 <body>
     <div class="container">
         <header>
-            <h1>📰 Gestionnaire Presse & Actualités</h1>
-            <p class="subtitle">Projet Sénégal - Suivi des engagements</p>
+            <h1>🛡️ Gestionnaire Presse & Actualités — ProjetBI</h1>
+            <p class="subtitle">Gardiens du Projet PASTEF — Mise à jour quotidienne du contenu</p>
             <div class="current-date">Date du jour : <strong id="currentDate"></strong></div>
         </header>
         
@@ -573,7 +573,7 @@
             <!-- Onglet Revue de Presse -->
             <div id="press-tab" class="tab-content active">
                 <section class="files-section">
-                    <h3>📁 Votre bibliothèque presse</h3>
+                    <h3>📁 Bibliothèque de la Revue de Presse</h3>
                     <div class="files-grid" id="filesList">
                         <!-- Les fichiers seront listés ici -->
                     </div>
@@ -582,7 +582,7 @@
                         <input type="file" id="pressUpload" accept=".jpg,.jpeg,.png" multiple onchange="handlePressUpload(event)">
                         <label>
                             <i class="fas fa-cloud-upload-alt"></i>
-                            <span>Glissez-déposez ou cliquez pour ajouter des journaux</span>
+                            <span>Glissez-déposez ou cliquez pour ajouter les journaux du jour</span>
                             <small>Formats acceptés: JPG, PNG</small>
                         </label>
                     </div>

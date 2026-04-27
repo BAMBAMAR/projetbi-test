@@ -186,5 +186,15 @@ self.addEventListener('push', event => {
 
 self.addEventListener('notificationclick', event => {
   event.notification.close();
-  event.waitUntil(clients.openWindow(event.notification.data?.url || '/'));
+  // FIX: Valider l'URL — bloquer les schémas dangereux
+  const rawUrl = event.notification.data?.url || '/';
+  let safeNotifUrl = '/';
+  try {
+    const parsed = new URL(rawUrl, self.registration.scope);
+    // N'autoriser que les URLs du même origine
+    if (parsed.origin === new URL(self.registration.scope).origin) {
+      safeNotifUrl = parsed.href;
+    }
+  } catch {}
+  event.waitUntil(clients.openWindow(safeNotifUrl));
 });

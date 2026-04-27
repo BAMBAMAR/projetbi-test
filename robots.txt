@@ -1,41 +1,23 @@
-# robots.txt — ProjetBI.org
-# Dernière mise à jour : 2026-04-25
+# robots.txt pour ProjetBI.org
+# Suivi transparent des promesses électorales
 
+# Autoriser tous les robots de recherche
 User-agent: *
 Allow: /
-
-# Pages d'administration — ne pas indexer
-Disallow: /admin.html
-Disallow: /admin/
-Disallow: /kit-communication.html
+# Bloquer l'indexation de la page d'administration
 Disallow: /update_press_simple.html
+Disallow: /kit-communication.html
+Disallow: /admin.html
 
-# Fichiers techniques
-Disallow: /sw.js
-Disallow: /manifest.json
-Disallow: /tokens.css
-
-# Autoriser explicitement les assets utiles au crawl
-Allow: /*.css$
-Allow: /*.js$
-Allow: /*.png$
-Allow: /*.jpg$
-Allow: /*.svg$
-Allow: /*.webp$
-
-# Indiquer le sitemap aux moteurs
+# Sitemap XML (très important pour le SEO)
 Sitemap: https://projetbi.org/sitemap.xml
 
-# Bots SEO agressifs — limiter la fréquence
+# Délai d'exploration pour certains robots (optionnel)
 User-agent: AhrefsBot
 Crawl-delay: 10
 
 User-agent: SemrushBot
 Crawl-delay: 10
 
-# Bots de scraping connus à bloquer
 User-agent: MJ12bot
-Disallow: /
-
-User-agent: DotBot
-Disallow: /
+Crawl-delay: 10

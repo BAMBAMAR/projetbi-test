@@ -1,10 +1,26 @@
 {
-  "last_updated": "27/02/2026",
+  "last_updated": "2026-04-24T10:24:38.095Z",
   "press": [
+    {
+      "id": "12",
+      "title": "lerepublicain",
+      "date": "24/04/2026",
+      "image": "revuedepresse/observateur.jpg",
+      "logo": "images/logos/lerepublicain.png",
+      "link": "#"
+    },
+    {
+      "id": "11",
+      "title": "tribunesport",
+      "date": "24/04/2026",
+      "image": "revuedepresse/tribunesport.jpg",
+      "logo": "images/logos/tribunesport.png",
+      "link": "#"
+    },
     {
       "id": "1",
       "title": "Lesoleil",
-      "date": "27/02/2026",
+      "date": "24/04/2026",
       "image": "revuedepresse/lesoleil.jpg",
       "logo": "images/logos/lesoleil.png",
       "link": "http://www.lesoleil.sn/"
@@ -12,7 +28,7 @@
     {
       "id": "2",
       "title": "Sudquotidien",
-      "date": "27/02/2026",
+      "date": "24/04/2026",
       "image": "revuedepresse/sudquotidien.jpg",
       "logo": "images/logos/sudquotidien.png",
       "link": "http://www.sudonline.sn/"
@@ -20,7 +36,7 @@
     {
       "id": "3",
       "title": "Liberation",
-      "date": "27/02/2026",
+      "date": "24/04/2026",
       "image": "revuedepresse/liberation.jpg",
       "logo": "images/logos/liberation.png",
       "link": "http://www.liberation.sn/"
@@ -28,7 +44,7 @@
     {
       "id": "4",
       "title": "Observateur",
-      "date": "27/02/2026",
+      "date": "24/04/2026",
       "image": "revuedepresse/observateur.jpg",
       "logo": "images/logos/observateur.png",
       "link": "http://www.observateur.sn/"
@@ -36,7 +52,7 @@
     {
       "id": "5",
       "title": "Lequotidien",
-      "date": "27/02/2026",
+      "date": "24/04/2026",
       "image": "revuedepresse/lequotidien.jpg",
       "logo": "images/logos/lequotidien.png",
       "link": "http://www.lequotidien.sn/"
@@ -44,23 +60,23 @@
     {
       "id": "6",
       "title": "Rewmisport",
-      "date": "27/02/2026",
+      "date": "24/04/2026",
       "image": "revuedepresse/rewmisport.jpg",
       "logo": "images/logos/rewmisport.png",
       "link": "#"
     },
     {
       "id": "7",
-      "title": "Soloquotidien",
-      "date": "27/02/2026",
-      "image": "revuedepresse/soloquotidien.jpg",
-      "logo": "images/logos/soloquotidien.png",
+      "title": "las",
+      "date": "24/04/2026",
+      "image": "revuedepresse/las.jpg",
+      "logo": "images/logos/las,png",
       "link": "#"
     },
     {
       "id": "8",
       "title": "Yooryoor",
-      "date": "27/02/2026",
+      "date": "24/04/2026",
       "image": "revuedepresse/yooryoor.jpg",
       "logo": "images/logos/yooryoor.png",
       "link": "#"
@@ -68,7 +84,7 @@
     {
       "id": "9",
       "title": "Record",
-      "date": "27/02/2026",
+      "date": "24/04/2026",
       "image": "revuedepresse/record.jpg",
       "logo": "images/logos/record.png",
       "link": "#"
@@ -76,7 +92,7 @@
     {
       "id": "10",
       "title": "Enquete",
-      "date": "27/02/2026",
+      "date": "24/04/2026",
       "image": "revuedepresse/enquete.jpg",
       "logo": "images/logos/enquete.png",
       "link": "#"

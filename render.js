@@ -2,6 +2,18 @@
 // RENDER.JS - Fonctions de rendu
 // ==========================================
 
+// ── Sécurité : échappement XSS ──
+function escH(str) {
+    if (!str) return '';
+    const d = document.createElement('div');
+    d.appendChild(document.createTextNode(String(str)));
+    return d.innerHTML;
+}
+function escId(str) {
+    if (!str) return '';
+    return String(str).replace(/[^a-zA-Z0-9_\-]/g, '');
+}
+
 function renderStats() {
     const promises = CONFIG.promises;
     const total = promises.length;
@@ -19,7 +31,6 @@ function renderFilters() {
     const domainFilter = document.getElementById('sectorFilter');
     if (!domainFilter) return;
     
-    // Nettoyer les options existantes (sauf la première)
     while (domainFilter.options.length > 1) {
         domainFilter.remove(1);
     }
@@ -61,22 +72,29 @@ function createPromiseCard(promise) {
     
     const progress = promise.status === 'realise' ? 100 :
         promise.status === 'encours' ? 50 : 10;
+
+    // FIX: All data fields escaped before DOM insertion
+    const safeId       = escId(promise.id);
+    const safeDomaine  = escH(promise.domaine);
+    const safeTitle    = escH(promise.engagement);
+    const safeResultat = escH(promise.resultat);
+    const safeDelai    = escH(promise.delai);
     
     return `
-        <div class="promise-card" data-id="${promise.id}">
-            <span class="domain-badge">${promise.domaine}</span>
-            <h3 class="promise-title">${promise.engagement}</h3>
+        <div class="promise-card" data-id="${safeId}">
+            <span class="domain-badge">${safeDomaine}</span>
+            <h3 class="promise-title">${safeTitle}</h3>
             
             <div class="result-box">
                 <i class="fas fa-bullseye"></i>
-                <strong>Résultat attendu :</strong> ${promise.resultat}
+                <strong>Résultat attendu :</strong> ${safeResultat}
             </div>
             
             <div class="promise-meta">
                 <div class="status-badge ${statusClass}">${statusText}</div>
                 <div class="delay-badge">
                     <i class="fas fa-clock"></i>
-                    ${promise.delai}
+                    ${safeDelai}
                 </div>
             </div>
             
@@ -91,7 +109,7 @@ function createPromiseCard(promise) {
             </div>
             
             ${promise.mises_a_jour && promise.mises_a_jour.length > 0 ? `
-                <button class="details-btn" onclick="toggleDetails('${promise.id}')">
+                <button class="details-btn" onclick="toggleDetails('${safeId}')">
                     <i class="fas fa-history"></i>
                     Voir les mises à jour (${promise.mises_a_jour.length})
                 </button>

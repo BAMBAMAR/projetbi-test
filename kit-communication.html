@@ -21,8 +21,8 @@
             if (sessionStorage.getItem('admin_auth') === ADMIN_HASH) return;
 
             // Protection anti-brute force
-            const attempts = parseInt(sessionStorage.getItem('auth_attempts') || '0');
-            const lockUntil = parseInt(sessionStorage.getItem('auth_lock_until') || '0');
+            const attempts = parseInt(localStorage.getItem('auth_attempts') || '0');
+            const lockUntil = parseInt(localStorage.getItem('auth_lock_until') || '0');
             if (Date.now() < lockUntil) {
                 const wait = Math.ceil((lockUntil - Date.now()) / 1000);
                 document.body.innerHTML = `<h1 style="font-family:sans-serif;text-align:center;margin-top:20vh;color:#C0392B">⛔ Trop de tentatives. Réessayez dans ${wait}s.</h1>`;
@@ -37,16 +37,16 @@
             }
             const hash = await sha256(pwd);
             if (hash === ADMIN_HASH) {
-                sessionStorage.removeItem('auth_attempts');
-                sessionStorage.removeItem('auth_lock_until');
+                localStorage.removeItem('auth_attempts'); sessionStorage.removeItem('auth_attempts');
+                localStorage.removeItem('auth_lock_until'); sessionStorage.removeItem('auth_lock_until');
                 sessionStorage.setItem('admin_auth', ADMIN_HASH);
                 document.documentElement.style.display = '';
             } else {
                 const newAttempts = attempts + 1;
-                sessionStorage.setItem('auth_attempts', newAttempts);
+                localStorage.setItem('auth_attempts', newAttempts);
                 if (newAttempts >= 5) {
                     const lock = Math.min(30000 * Math.pow(2, newAttempts - 5), 300000);
-                    sessionStorage.setItem('auth_lock_until', Date.now() + lock);
+                    localStorage.setItem('auth_lock_until', Date.now() + lock);
                 }
                 document.body.innerHTML = '<h1 style="font-family:sans-serif;text-align:center;margin-top:20vh;color:#C0392B">⛔ Accès refusé</h1>';
             }
@@ -55,7 +55,7 @@
         checkAccess();
     })();
     </script>
-    <title>Kit de Communication — ProjetBI</title>
+    <title>Kit de Communication — Gardiens du Projet PASTEF | ProjetBI</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
     <style>
@@ -342,7 +342,7 @@
 
     <!-- ═══ SECTION 1 : CONTRÔLES ═══ -->
     <div class="controls-card">
-        <div class="section-title" style="margin-bottom:1rem"><i class="fas fa-sliders" style="color:var(--vert)"></i> Personnaliser l'infographie</div>
+        <div class="section-title" style="margin-bottom:1rem"><i class="fas fa-sliders" style="color:var(--vert)"></i> Paramètres de l'infographie</div>
         <div class="controls-grid">
             <div>
                 <label>Total engagements</label>
@@ -396,7 +396,7 @@
 
     <!-- ═══ SECTION 2 : PREVIEW ═══ -->
     <div class="preview-section">
-        <div class="section-title"><i class="fas fa-eye" style="color:var(--vert)"></i> Aperçu</div>
+        <div class="section-title"><i class="fas fa-eye" style="color:var(--vert)"></i> Aperçu de l'infographie</div>
         <p class="section-sub">Cliquez sur "Télécharger" pour sauvegarder l'image en haute qualité</p>
 
         <div class="preview-wrapper">
@@ -417,7 +417,7 @@
     </div>
 
     <!-- ═══ SECTION 3 : TEXTES RÉSEAUX SOCIAUX ═══ -->
-    <h2 class="section-title" style="margin-bottom:.4rem"><i class="fas fa-share-nodes" style="color:var(--vert)"></i> Textes prêts à copier</h2>
+    <h2 class="section-title" style="margin-bottom:.4rem"><i class="fas fa-share-nodes" style="color:var(--vert)"></i> Textes de partage — Projet PASTEF</h2>
     <p class="section-sub">Adaptés à chaque réseau social — cliquez pour copier</p>
 
     <div class="social-guide">
@@ -565,7 +565,7 @@ function drawFooter(ctx) {
     ctx.fillStyle = 'rgba(255,255,255,0.7)';
     ctx.font = '24px Arial';
     ctx.textAlign = 'center';
-    ctx.fillText('🌐 projetbi.org  |  Plateforme citoyenne indépendante  |  Sénégal 2024–2029', 540, 1035);
+    ctx.fillText('🌐 projetbi.org  |  Gardiens du Projet PASTEF  |  Jub · Jubal · Jubanti', 540, 1035);
     ctx.textAlign = 'left';
 }
 
@@ -716,10 +716,10 @@ function drawRetard(ctx, s, taux) {
     roundRect(ctx, 54, 790, 972, 120, 16, 'rgba(201,168,76,0.2)');
     ctx.fillStyle = '#C9A84C';
     ctx.font = 'bold 32px Arial';
-    ctx.fillText('👉 Suivez l\'évolution en temps réel sur projetbi.org', 540, 845);
+    ctx.fillText('👉 Soutenez le Projet et suivez chaque engagement sur projetbi.org', 540, 845);
     ctx.font = '26px Arial';
     ctx.fillStyle = 'rgba(255,255,255,0.7)';
-    ctx.fillText('Plateforme citoyenne indépendante de suivi des engagements présidentiels', 540, 888);
+    ctx.fillText('Sympathisants du Projet PASTEF — Gardiens des engagements de notre Président', 540, 888);
     ctx.textAlign = 'left';
     drawFooter(ctx);
 }
@@ -768,18 +768,18 @@ function updateSocialTexts() {
     const s = getStats();
     const taux = Math.round((s.realise / s.total) * 100);
 
-    const fbT = `📊 ${s.periode}\n\n✅ ${s.realise} engagements réalisés\n🔄 ${s.encours} en cours\n⚠️ ${s.retard} en retard\n⏳ ${s.nonLance} non lancés\n\n📈 Taux de réalisation : ${taux}% sur ${s.total} engagements\n\nSuivez en temps réel l'avancement des promesses du Président Bassirou Diomaye Faye sur ProjetBI, la plateforme citoyenne indépendante. Votre voix compte !\n\n👉 https://projetbi.org\n\n#Sénégal #PASTEF #DiomayeFaye #Transparence #ProjetBI`;
+    const fbT = `📊 ${s.periode}\n\n✅ ${s.realise} engagements réalisés\n🔄 ${s.encours} en cours\n⚠️ ${s.retard} en retard\n⏳ ${s.nonLance} non lancés\n\n📈 Taux de réalisation : ${taux}% sur ${s.total} engagements du Projet PASTEF\n\nNous sommes les gardiens du Projet PASTEF. Chaque engagement du Président Bassirou Diomaye Faye et du PM Ousmane Sonko est une promesse faite au peuple — nous veillons à ce qu'elle soit tenue. Jub, Jubal, Jubanti !\n\n👉 https://projetbi.org\n\n#Sénégal #PASTEF #DiomayeFaye #OusmaneSonko #JubJubalJubanti #ProjetBI`;
 
-    const twT = `📊 ${s.periode} — Bilan PASTEF\n\n✅ ${s.realise} réalisés | 🔄 ${s.encours} en cours | ⚠️ ${s.retard} en retard\n\n📈 Taux : ${taux}% sur ${s.total} engagements\n\n👉 https://projetbi.org\n\n#Sénégal #PASTEF #DiomayeFaye #ProjetBI`;
+    const twT = `🛡️ ${s.periode} — Bilan Projet PASTEF\n\n✅ ${s.realise} réalisés | 🔄 ${s.encours} en cours | ⚠️ ${s.retard} en retard\n\n📈 ${taux}% sur ${s.total} engagements\n\nGardiens du Projet — nous suivons chaque acte.\n👉 https://projetbi.org\n\n#Sénégal #PASTEF #DiomayeFaye #JubJubalJubanti #ProjetBI`;
 
-    const waT = `*📊 PROJETBI — ${s.periode}*\n\n✅ Réalisés : ${s.realise}\n🔄 En cours : ${s.encours}\n⚠️ En retard : ${s.retard}\n⏳ Non lancés : ${s.nonLance}\n\n📈 *Taux de réalisation : ${taux}%*\n\nSuivez en direct les engagements présidentiels :\n🌐 https://projetbi.org\n\n_Plateforme citoyenne indépendante_`;
+    const waT = `🛡️ *GARDIENS DU PROJET PASTEF — ${s.periode}*\n\n✅ Réalisés : ${s.realise}\n🔄 En cours : ${s.encours}\n⚠️ En retard : ${s.retard}\n⏳ Non lancés : ${s.nonLance}\n\n📈 *Taux de réalisation : ${taux}% sur ${s.total} engagements*\n\nNous, sympathisants du Projet PASTEF, suivons chaque engagement du Président Diomaye et du PM Sonko.\n\n🌐 Suivez en direct : https://projetbi.org\n\n_Jub · Jubal · Jubanti — Sénégal Souverain, Juste & Prospère_`;
 
-    const liT = `${s.periode} : Bilan des engagements présidentiels sénégalais\n\nEn tant que plateforme citoyenne indépendante, ProjetBI publie son suivi mensuel des 300 engagements du programme PASTEF.\n\n📊 Résultats :\n• Réalisés : ${s.realise} (${taux}%)\n• En cours : ${s.encours}\n• En retard : ${s.retard}\n• Non lancés : ${s.nonLance}\n\nLa transparence démocratique passe par le suivi citoyen. Contribuez à évaluer les services publics sur projetbi.org\n\n#Gouvernance #Sénégal #Démocratie #Transparence #PASTEF #DiomayeFaye`;
+    const liT = `${s.periode} : Bilan des engagements du Projet PASTEF\n\nEn tant que sympathisants et gardiens du Projet PASTEF, nous publions notre suivi mensuel des 300 engagements du Président Bassirou Diomaye Faye et du Premier Ministre Ousmane Sonko.\n\n📊 État d'avancement :\n• Réalisés : ${s.realise} (${taux}%)\n• En cours : ${s.encours}\n• En retard : ${s.retard}\n• Non lancés : ${s.nonLance}\n\nNotre conviction : la souveraineté, la justice et la prospérité ne s'offrent pas — elles se construisent engagement par engagement. Nous veillons. Jub, Jubal, Jubanti.\n\n🌐 https://projetbi.org\n\n#Sénégal #PASTEF #DiomayeFaye #OusmaneSonko #JubJubalJubanti #ProjetBI #Gouvernance #Souveraineté`;
 
-    document.getElementById('fbText').innerHTML = fbT.replace(/\n/g, '<br>');
-    document.getElementById('twText').innerHTML = twT.replace(/\n/g, '<br>');
-    document.getElementById('waText').innerHTML = waT.replace(/\n/g, '<br>');
-    document.getElementById('liText').innerHTML = liT.replace(/\n/g, '<br>');
+    document.getElementById('fbText').textContent = fbT;
+    document.getElementById('twText').textContent = twT;
+    document.getElementById('waText').textContent = waT;
+    document.getElementById('liText').textContent = liT;
 }
 
 // ══════════════════════════════

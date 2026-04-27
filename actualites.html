@@ -3,384 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="description" content="Toutes les actualités du Projet Sénégal — Suivi des engagements présidentiels PASTEF 2024-2029">
+    <!-- Sécurité : CSP inline (renforce les headers HTTP _headers) -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' cdnjs.cloudflare.com;
+        style-src 'self' 'unsafe-inline' fonts.googleapis.com cdnjs.cloudflare.com;
+        font-src 'self' fonts.gstatic.com cdnjs.cloudflare.com;
+        img-src 'self' data: https: blob:;
+        connect-src 'self' https://jwsdxttjjbfnoufiidkd.supabase.co;
+        object-src 'none';
+        base-uri 'self';
+    ">
+    <meta name="description" content="Actualités du Projet PASTEF suivies par les gardiens des engagements. Chaque article témoigne de l'avancée du programme du Président Bassirou Diomaye Faye et du Premier Ministre Ousmane Sonko vers un Sénégal Souverain, Juste & Prospère.">
     <meta name="theme-color" content="#2D5F3F">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://projetbi.org/actualites.html">
-    <meta property="og:title" content="Actualités | PROJETBI — Sénégal 2024-2029">
-    <meta property="og:image" content="https://projetbi.org/sonko.jpg">
-    <title>Actualités | PROJETBI — Sénégal 2024-2029</title>
+    <meta property="og:title" content="Actualités du Projet PASTEF | ProjetBI — Gardiens des Engagements">
+    <!-- FIX: og:image corrigé (og-image.jpg au lieu de sonko.jpg) -->
+    <meta property="og:image" content="https://projetbi.org/og-image.jpg">
+    <title>Actualités du Projet PASTEF | ProjetBI — Gardiens des Engagements</title>
     <link rel="icon" href="https://projetbi.org/favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 
     <style>
-   /* ═══════════════════════════════════════════════════════════════════
-   tokens.css — SEULE SOURCE DE VÉRITÉ pour les couleurs, espacements,
-   typographie et animations de ProjetBI.
-   
-   À charger EN PREMIER dans chaque page, AVANT tout autre CSS.
-   
-   Remplace :
-   - Les :root de style.css (lignes 1–70)
-   - Les :root inline de actualites.html
-   - Les :root de admin.html (lignes 19–41)
-   - Les variables de corrections.css
-   ═══════════════════════════════════════════════════════════════════ */
-
-:root {
-    /* ───────────────────────────────────────────────
-       PALETTE DE MARQUE — Couleurs PASTEF officielles
-       ─────────────────────────────────────────────── */
-    
-    /* Vert PASTEF (couleur principale) — échelle de 9 tons */
-    --brand-green-50:  #eef6f1;
-    --brand-green-100: #d6e8dc;
-    --brand-green-200: #a8cdb5;
-    --brand-green-300: #6aad84;
-    --brand-green-400: #4a9469;
-    --brand-green-500: #2D5F3F;  /* ⭐ Vert PASTEF officiel */
-    --brand-green-600: #25533A;
-    --brand-green-700: #1F4530;
-    --brand-green-800: #1A3D28;
-    --brand-green-900: #0F2818;
-    
-    /* Rouge drapeau — pour accents patriotiques */
-    --brand-red-500:   #B23A3A;
-    --brand-red-600:   #8B2C2C;
-    --brand-red-400:   #C85050;
-    
-    /* Or — pour mise en valeur */
-    --brand-gold-500:  #C9A84C;
-    --brand-gold-600:  #A18836;
-    --brand-gold-400:  #D9BC6A;
-    
-    /* ───────────────────────────────────────────────
-       ALIAS DE COMPATIBILITÉ (pendant la migration)
-       À retirer une fois le CSS refactoré
-       ─────────────────────────────────────────────── */
-    --primary:         var(--brand-green-500);
-    --primary-color:   var(--brand-green-500);
-    --primary-light:   var(--brand-green-300);
-    --primary-dark:    var(--brand-green-700);
-    --secondary:       var(--brand-red-500);
-    --accent:          var(--brand-gold-500);
-    --accent-color:    var(--brand-red-500);
-    --pastef-green:    var(--brand-green-500);
-    --pastef-red:      var(--brand-red-500);
-    
-    /* ───────────────────────────────────────────────
-       COULEURS SÉMANTIQUES (statuts)
-       ─────────────────────────────────────────────── */
-    --status-success-bg:     #e6f5e9;
-    --status-success-fg:     #2e7d32;
-    --status-warning-bg:     #fff4e5;
-    --status-warning-fg:     #d97706;
-    --status-danger-bg:      #fde8e8;
-    --status-danger-fg:      #c62828;
-    --status-info-bg:        #e0f0fb;
-    --status-info-fg:        #0277bd;
-    --status-pending-bg:     #f3f4f6;
-    --status-pending-fg:     #6b7280;
-    
-    /* Alias */
-    --success: var(--status-success-fg);
-    --warning: var(--status-warning-fg);
-    --danger:  var(--status-danger-fg);
-    --info:    var(--status-info-fg);
-    
-    /* ───────────────────────────────────────────────
-       FONDS & SURFACES
-       ─────────────────────────────────────────────── */
-    --surface-page:       #fafbfc;   /* fond de la page */
-    --surface-card:       #ffffff;   /* cartes sur fond clair */
-    --surface-elevated:   #ffffff;   /* modales, dropdowns */
-    --surface-muted:      #f3f4f6;   /* zones atténuées */
-    --surface-overlay:    rgba(13, 27, 20, 0.5);  /* fond modale */
-    
-    /* Alias */
-    --bg-main:    var(--surface-page);
-    --bg-card:    var(--surface-card);
-    --bg-light:   var(--surface-muted);
-    --bg-overlay: var(--surface-overlay);
-    
-    /* ───────────────────────────────────────────────
-       TEXTE
-       ─────────────────────────────────────────────── */
-    --text-primary:   #0D1B14;   /* titres, texte principal */
-    --text-secondary: #4a6055;   /* texte courant */
-    --text-muted:     #8a9e93;   /* texte secondaire, métadonnées */
-    --text-disabled:  #bcc9c2;   /* texte désactivé */
-    --text-on-brand:  #ffffff;   /* texte sur fond coloré brand */
-    
-    /* Alias */
-    --text-dark:      var(--text-primary);
-    --ink:            var(--text-primary);
-    --smoke:          var(--text-secondary);
-    --silver:         var(--text-muted);
-    
-    /* ───────────────────────────────────────────────
-       BORDURES
-       ─────────────────────────────────────────────── */
-    --border-subtle:  #edf0ee;
-    --border-default: #d6e1db;
-    --border-strong:  #a8bfb3;
-    --border-focus:   var(--brand-green-500);
-    
-    /* Alias */
-    --border:       var(--border-default);
-    --border-light: var(--border-subtle);
-    --border-color: var(--border-default);
-    --fog:          var(--border-subtle);
-    --mist:         var(--border-default);
-    
-    /* ───────────────────────────────────────────────
-       TYPOGRAPHIE
-       ─────────────────────────────────────────────── */
-    --font-display: 'Crimson Pro', Georgia, 'Times New Roman', serif;
-    --font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
-    
-    /* Échelle de tailles (modular scale 1.25) */
-    --text-xs:   0.75rem;    /* 12px — caption, labels */
-    --text-sm:   0.875rem;   /* 14px — corps secondaire */
-    --text-base: 1rem;       /* 16px — corps par défaut */
-    --text-lg:   1.125rem;   /* 18px — intro */
-    --text-xl:   1.25rem;    /* 20px — h5 */
-    --text-2xl:  1.5rem;     /* 24px — h4 */
-    --text-3xl:  1.875rem;   /* 30px — h3 */
-    --text-4xl:  2.25rem;    /* 36px — h2 */
-    --text-5xl:  3rem;       /* 48px — h1 */
-    --text-6xl:  3.75rem;    /* 60px — hero */
-    
-    /* Graisses */
-    --weight-regular:  400;
-    --weight-medium:   500;
-    --weight-semibold: 600;
-    --weight-bold:     700;
-    --weight-extrabold: 800;
-    
-    /* Interlignage */
-    --leading-tight:  1.2;
-    --leading-snug:   1.4;
-    --leading-normal: 1.5;
-    --leading-relaxed: 1.7;
-    
-    /* ───────────────────────────────────────────────
-       ESPACEMENT (échelle 4pt)
-       ─────────────────────────────────────────────── */
-    --space-0:   0;
-    --space-1:   0.25rem;   /* 4px */
-    --space-2:   0.5rem;    /* 8px */
-    --space-3:   0.75rem;   /* 12px */
-    --space-4:   1rem;      /* 16px */
-    --space-5:   1.25rem;   /* 20px */
-    --space-6:   1.5rem;    /* 24px */
-    --space-8:   2rem;      /* 32px */
-    --space-10:  2.5rem;    /* 40px */
-    --space-12:  3rem;      /* 48px */
-    --space-16:  4rem;      /* 64px */
-    --space-20:  5rem;      /* 80px */
-    --space-24:  6rem;      /* 96px */
-    
-    /* Alias */
-    --spacing-xs:  var(--space-1);
-    --spacing-sm:  var(--space-2);
-    --spacing-md:  var(--space-4);
-    --spacing-lg:  var(--space-6);
-    --spacing-xl:  var(--space-8);
-    --spacing-2xl: var(--space-12);
-    
-    /* ───────────────────────────────────────────────
-       RAYONS DE BORDURE
-       ─────────────────────────────────────────────── */
-    --radius-none: 0;
-    --radius-sm:   6px;
-    --radius-md:   12px;
-    --radius-lg:   16px;
-    --radius-xl:   24px;
-    --radius-2xl:  32px;
-    --radius-full: 9999px;
-    
-    /* Alias */
-    --radius: var(--radius-md);
-    
-    /* ───────────────────────────────────────────────
-       OMBRES
-       ─────────────────────────────────────────────── */
-    --shadow-xs: 0 1px 2px rgba(13, 27, 20, 0.04);
-    --shadow-sm: 0 2px 4px rgba(13, 27, 20, 0.05);
-    --shadow-md: 0 4px 12px rgba(13, 27, 20, 0.08);
-    --shadow-lg: 0 10px 30px rgba(13, 27, 20, 0.12);
-    --shadow-xl: 0 20px 60px rgba(13, 27, 20, 0.15);
-    --shadow-2xl: 0 25px 80px rgba(13, 27, 20, 0.25);
-    
-    /* Alias (rétro-compat) */
-    --shadow: var(--shadow-md);
-    
-    /* ───────────────────────────────────────────────
-       TRANSITIONS & ANIMATIONS
-       ─────────────────────────────────────────────── */
-    --duration-instant: 75ms;
-    --duration-fast:    150ms;
-    --duration-normal:  250ms;
-    --duration-slow:    400ms;
-    
-    --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
-    --easing-in:      cubic-bezier(0.4, 0, 1, 1);
-    --easing-out:     cubic-bezier(0, 0, 0.2, 1);
-    --easing-bounce:  cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    
-    /* Alias */
-    --transition:      all var(--duration-normal) var(--easing-default);
-    --transition-fast: all var(--duration-fast) var(--easing-out);
-    
-    /* ───────────────────────────────────────────────
-       Z-INDEX (échelle sémantique)
-       ─────────────────────────────────────────────── */
-    --z-base:        0;
-    --z-raised:      10;
-    --z-dropdown:    100;
-    --z-sticky:      200;
-    --z-fixed:       300;
-    --z-modal-backdrop: 400;
-    --z-modal:       500;
-    --z-popover:     600;
-    --z-tooltip:     700;
-    --z-notification: 800;
-    --z-max:         9999;
-    
-    /* ───────────────────────────────────────────────
-       LAYOUT
-       ─────────────────────────────────────────────── */
-    --container-max: 1440px;
-    --container-padding: var(--space-6);
-    --navbar-height: 92px;
-    --navbar-height-mobile: 56px;
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   THÈME SOMBRE — pour l'admin
-   Utilisation : ajouter class="theme-dark" sur <body>
-   ═══════════════════════════════════════════════════════════════════ */
-
-.theme-dark {
-    --surface-page:       #0C0F0A;
-    --surface-card:       #131810;
-    --surface-elevated:   #1A2118;
-    --surface-muted:      #212C20;
-    
-    --text-primary:       #E8F0E5;
-    --text-secondary:     #9DB89A;
-    --text-muted:         #5C7A58;
-    
-    --border-subtle:      #2A3828;
-    --border-default:     #354832;
-    
-    /* Accents plus vifs sur fond sombre */
-    --brand-green-accent: #4ADE80;
-    --brand-green-accent-hover: #22C55E;
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   ACCESSIBILITÉ — Mouvements réduits
-   Respecte la préférence système de l'utilisateur
-   ═══════════════════════════════════════════════════════════════════ */
-
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
+    :root {
+        --green:#2D5F3F; --green-deep:#1A3D28; --green-mid:#3E7F55;
+        --green-light:#6aad84; --green-mist:#eef6f1;
+        --red:#B23A3A; --gold:#C9A84C;
+        --ink:#0D1B14; --smoke:#4a6055; --silver:#8a9e93;
+        --fog:#d6e8dc; --mist:#f0f7f3; --off-white:#fafcfb;
     }
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   BASE GLOBALE (reset minimal + défauts)
-   ═══════════════════════════════════════════════════════════════════ */
-
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
-html {
-    font-size: 16px;
-    scroll-behavior: smooth;
-    scroll-padding-top: calc(var(--navbar-height) + var(--space-4));
-    -webkit-text-size-adjust: 100%;
-}
-
-body {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: var(--text-base);
-    line-height: var(--leading-normal);
-    color: var(--text-primary);
-    background: var(--surface-page);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
-    line-height: var(--leading-tight);
-    color: var(--text-primary);
-    margin: 0 0 var(--space-4) 0;
-}
-
-h1 { font-size: var(--text-5xl); font-weight: var(--weight-extrabold); }
-h2 { font-size: var(--text-4xl); font-weight: var(--weight-bold); }
-h3 { font-size: var(--text-3xl); font-weight: var(--weight-bold); }
-h4 { font-size: var(--text-2xl); font-weight: var(--weight-semibold); }
-h5 { font-size: var(--text-xl); font-weight: var(--weight-semibold); }
-h6 { font-size: var(--text-lg); font-weight: var(--weight-semibold); }
-
-@media (max-width: 768px) {
-    h1 { font-size: var(--text-4xl); }
-    h2 { font-size: var(--text-3xl); }
-    h3 { font-size: var(--text-2xl); }
-    
-    html { scroll-padding-top: calc(var(--navbar-height-mobile) + var(--space-4)); }
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   CLASSES UTILITAIRES (les seules `!important` tolérées)
-   ═══════════════════════════════════════════════════════════════════ */
-
-.visually-hidden,
-.sr-only {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    padding: 0 !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    clip: rect(0, 0, 0, 0) !important;
-    white-space: nowrap !important;
-    border: 0 !important;
-}
-
-.hidden {
-    display: none !important;
-}
-
-.skip-link {
-    position: absolute;
-    top: -100px;
-    left: 0;
-    padding: var(--space-3) var(--space-4);
-    background: var(--brand-green-500);
-    color: white;
-    text-decoration: none;
-    z-index: var(--z-max);
-    border-radius: 0 0 var(--radius-md) 0;
-    font-weight: var(--weight-semibold);
-}
-.skip-link:focus {
-    top: 0;
-}
     html,body { overflow-x:hidden; }
     *,*::before,*::after { box-sizing:border-box; }
     body {
@@ -641,7 +298,7 @@ h6 { font-size: var(--text-lg); font-weight: var(--weight-semibold); }
                     <img src="https://projetbi.org/favicon.png" alt="PROJETBI" class="nav-logo-img" onerror="this.style.display='none'">
                     <div class="nav-logo-block">
                         <span class="nav-logo-text">PROJETBI</span>
-                        <span class="nav-logo-sub">Sénégal 2024–2029</span>
+                        <span class="nav-logo-sub">Jub Jubal Jubanti</span>
                     </div>
                 </a>
                 <div class="nav-kpi-under-logo">
@@ -659,7 +316,7 @@ h6 { font-size: var(--text-lg); font-weight: var(--weight-semibold); }
                 </div>
             </div>
             <div class="nav-row-center">
-                <span class="nav-tagline"><i class="fas fa-rss"></i> Toutes les actualités — Engagements présidentiels PASTEF</span>
+                <span class="nav-tagline"><i class="fas fa-shield-alt"></i> Gardiens du Projet PASTEF — Jub · Jubal · Jubanti</span>
             </div>
             <button class="hamburger" id="modernHamburger" aria-label="Menu" aria-expanded="false">
                 <span></span><span></span><span></span>
@@ -671,7 +328,7 @@ h6 { font-size: var(--text-lg); font-weight: var(--weight-semibold); }
             <ul class="nav-links" id="navLinks">
                 <li><a href="./" class="modern-link">🏠 Accueil</a></li>
                 <li><a href="./#dashboard" class="modern-link">📊 Dashboard</a></li>
-                <li><a href="./#promesse-du-jour" class="modern-link">🗓️ Promesse du Jour</a></li>
+                <li><a href="./#promesse-du-jour" class="modern-link">🗓️ Engagement du Jour</a></li>
                 <li><a href="./#engagements" class="modern-link">📋 Engagements</a></li>
                 <li><a href="./#actualites" class="modern-link">📰 Actualités</a></li>
                 <li><a href="actualites.html" class="modern-link active">🔗 Toutes les Actus</a></li>
@@ -702,7 +359,7 @@ h6 { font-size: var(--text-lg); font-weight: var(--weight-semibold); }
     <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.25rem;">
         <li><a href="./" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">🏠 Accueil</a></li>
         <li><a href="./#dashboard" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📊 Dashboard</a></li>
-        <li><a href="./#promesse-du-jour" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">🗓️ Promesse du Jour</a></li>
+        <li><a href="./#promesse-du-jour" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">🗓️ Engagement du Jour</a></li>
         <li><a href="./#engagements" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📋 Engagements</a></li>
         <li><a href="./#actualites" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📰 Actualités</a></li>
         <li><a href="actualites.html" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#2D5F3F;font-weight:700;text-decoration:none;border-bottom:1px solid #eee;background:#eef6f1;">🔗 Toutes les Actus</a></li>
@@ -719,8 +376,8 @@ h6 { font-size: var(--text-lg); font-weight: var(--weight-semibold); }
             <span><i class="fas fa-chevron-right" style="font-size:.6rem"></i></span>
             <span style="color:rgba(255,255,255,.7)">Actualités</span>
         </div>
-        <h1>Toutes les <span>Actualités</span></h1>
-        <p>Suivez les dernières informations sur les engagements présidentiels et la gouvernance au Sénégal.</p>
+        <h1>Les Actualités du <span>Projet PASTEF</span></h1>
+        <p>Gardiens du Projet, nous documentons chaque avancée, chaque réalisation et chaque défi. Parce que le peuple sénégalais mérite de savoir — <em>Jub, Jubal, Jubanti.</em></p>
     </div>
 </div>
 
@@ -729,7 +386,7 @@ h6 { font-size: var(--text-lg); font-weight: var(--weight-semibold); }
     <div class="filter-card">
         <div class="search-box">
             <i class="fas fa-search"></i>
-            <input type="text" id="newsSearch" placeholder="Rechercher dans les actualités…">
+            <input type="text" id="newsSearch" placeholder="Rechercher dans les actualités du Projet…">
         </div>
         <div class="cat-pills" id="catPills">
             <button class="pill active" data-cat="all">Tout</button>
@@ -749,13 +406,13 @@ h6 { font-size: var(--text-lg); font-weight: var(--weight-semibold); }
         <div class="spinner" style="margin:3rem auto;"></div>
     </div>
     <div>
-        <div class="actu-section-label">Toutes les actualités</div>
+        <div class="actu-section-label">Toutes les actualités du Projet PASTEF</div>
         <div class="actu-section-title" id="newsCount">Chargement…</div>
         <div class="news-grid" id="allNewsGrid">
             <div class="no-results"><div class="spinner"></div></div>
         </div>
         <button class="load-more hidden" id="loadMoreBtn">
-            <i class="fas fa-plus"></i> Charger plus d'articles
+            <i class="fas fa-plus"></i> Voir plus d'actualités du Projet
             <span id="loadMoreCount" style="font-size:.8rem;opacity:.7"></span>
         </button>
     </div>
@@ -768,13 +425,13 @@ h6 { font-size: var(--text-lg); font-weight: var(--weight-semibold); }
             <div class="footer-brand-row">
                 <div class="footer-brand-info">
                     <h3 class="footer-brand-name"><i class="fas fa-flag"></i> PROJETBI</h3>
-                    <p class="footer-brand-desc">Suivi citoyen des engagements présidentiels · Sénégal 2024–2029</p>
+                    <p class="footer-brand-desc">Gardiens du Projet PASTEF · Sympathisants engagés · Sénégal Souverain 2024–2029</p>
                 </div>
                 <div class="footer-contact">
                     <h4 class="footer-contact-title"><i class="fas fa-envelope-open-text"></i> Contact</h4>
                     <ul class="footer-contact-list">
-                        <li><a href="mailto:pastefprojetbi@gmail.com" class="footer-contact-link"><i class="fas fa-envelope"></i> pastefprojetbi@gmail.com</a></li>
-                        <li><a href="tel:+221769455253" class="footer-contact-link"><i class="fas fa-phone"></i> +221 76 945 52 53</a></li>
+                        <li><a href="/cdn-cgi/l/email-protection#7f0f1e0c0b1a190f0d10151a0b1d163f18121e1613511c1012" class="footer-contact-link"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="3343524047565543415c595647515a73545e525a5f1d505c5e">[email&#160;protected]</span></a></li>
+                        <li><a href="tel:+221708717942" class="footer-contact-link"><i class="fas fa-phone"></i> +221 70 871 79 42</a></li>
                         <li class="footer-contact-link footer-contact-static"><i class="fas fa-map-marker-alt"></i> Dakar, Sénégal</li>
                     </ul>
                 </div>
@@ -791,7 +448,7 @@ h6 { font-size: var(--text-lg); font-weight: var(--weight-semibold); }
             <span class="footer-sep">·</span>
             <a href="./#dashboard" class="footer-nav-link"><i class="fas fa-chart-bar"></i> Dashboard</a>
             <span class="footer-sep">·</span>
-            <a href="./#promesse-du-jour" class="footer-nav-link"><i class="fas fa-newspaper"></i> Promesse du Jour</a>
+            <a href="./#promesse-du-jour" class="footer-nav-link"><i class="fas fa-newspaper"></i> Engagement du Jour</a>
             <span class="footer-sep">·</span>
             <a href="./#engagements" class="footer-nav-link"><i class="fas fa-list"></i> Engagements</a>
             <span class="footer-sep">·</span>
@@ -805,8 +462,8 @@ h6 { font-size: var(--text-lg); font-weight: var(--weight-semibold); }
         </nav>
         <div class="footer-divider"></div>
         <div class="footer-bottom-compact">
-            <span class="footer-copy">© 2026 PROJETBI · Plateforme citoyenne indépendante · Réf : <strong>02 AVRIL 2024</strong></span>
-            <span class="footer-disclaimer">Site non affilié à un parti politique. Données publiques.</span>
+            <span class="footer-copy">© 2026 PROJETBI · Gardiens du Projet PASTEF · Depuis le <strong>02 AVRIL 2024</strong></span>
+            <span class="footer-disclaimer">Site de sympathisants du Projet PASTEF. Données publiques et vérifiables.</span>
         </div>
     </div>
 </footer>
@@ -815,7 +472,21 @@ h6 { font-size: var(--text-lg); font-weight: var(--weight-semibold); }
     <i class="fas fa-arrow-up"></i>
 </button>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── Sécurité : échappement XSS global ──
+function escH(str) {
+    if (!str) return '';
+    const d = document.createElement('div');
+    d.appendChild(document.createTextNode(String(str)));
+    return d.innerHTML;
+}
+function safeUrl(url) {
+    if (!url || typeof url !== 'string') return '#';
+    const t = url.trim().toLowerCase();
+    if (t.startsWith('javascript:') || t.startsWith('data:') || t.startsWith('vbscript:')) return '#';
+    return url.trim();
+}
+
 // ── Progress bar + scroll ──
 window.addEventListener('scroll', () => {
     const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
@@ -882,6 +553,54 @@ const iconMap = {
 };
 function getIcon(img) { return iconMap[img] || 'fa-newspaper'; }
 function getCat(cat)  { return categoryMap[cat] || cat || 'Général'; }
+
+// Map catégorie → icône FontAwesome de fallback
+const catIconMap = {
+    // Catégories principales (clés françaises)
+    'Général':'fa-newspaper', 'general':'fa-newspaper', 'autres':'fa-newspaper', 'Autres':'fa-newspaper',
+    'Politique':'fa-landmark', 'Institutions':'fa-landmark', 'Gouvernance':'fa-landmark', 'gouvernance':'fa-landmark',
+    'Éducation':'fa-graduation-cap', 'education':'fa-graduation-cap', 'Enseignement Supérieur':'fa-university', 'Formation Pro':'fa-tools',
+    'Santé':'fa-heartbeat', 'sante':'fa-heartbeat',
+    'Économie':'fa-chart-line', 'economie':'fa-chart-line', 'Commerce':'fa-shopping-cart', 'Finances':'fa-coins', 'Monnaie':'fa-money-bill-wave',
+    'Infrastructures':'fa-road', 'infrastructures':'fa-road', 'Habitat':'fa-home', 'Urbanisme':'fa-city',
+    'Transparence':'fa-eye', 'Lutte Corruption':'fa-search-dollar', 'Administration':'fa-file-alt',
+    'Agriculture':'fa-seedling', 'Agro-industrie':'fa-industry', 'Élevage':'fa-horse', 'Pêche':'fa-fish',
+    'Énergie':'fa-bolt', 'energie':'fa-bolt', 'Hydrocarbures':'fa-oil-can',
+    'Environnement':'fa-leaf', 'environnement':'fa-leaf', 'Hydraulique':'fa-water',
+    'Emploi':'fa-briefcase', 'emploi':'fa-briefcase', 'Secteur Informel':'fa-store', 'Industrie':'fa-industry',
+    'Sport':'fa-running', 'Jeunesse & Sports':'fa-running',
+    'Culture':'fa-theater-masks',
+    'Sécurité':'fa-shield-alt', 'securite':'fa-shield-alt', 'Défense':'fa-shield-alt',
+    'Justice':'fa-balance-scale', 'justice':'fa-balance-scale', 'Justice & Droit':'fa-balance-scale',
+    'Numérique':'fa-laptop', 'numerique':'fa-laptop',
+    'Transport':'fa-bus', 'transport':'fa-bus',
+    'Logement':'fa-home', 'logement':'fa-home',
+    'Affaires Sociales':'fa-hand-holding-heart', 'social':'fa-hand-holding-heart',
+    'Relations Internationales':'fa-globe', 'international':'fa-globe', 'Intégration Régionale':'fa-globe-africa',
+    'Développement Local':'fa-map-marker-alt', 'Communiqué':'fa-bullhorn'
+};
+
+/**
+ * Appelée par onerror sur une <img> cassée.
+ * Remplace l'image par un bloc icône stylé selon la catégorie de l'article.
+ * @param {HTMLImageElement} el  - l'élément img qui a planté
+ * @param {string} catLabel     - le label de catégorie (ex: "Santé")
+ * @param {boolean} isFeatured  - true si c'est l'article à la une (hauteur plus grande)
+ */
+function fallbackImg(el, catLabel, isFeatured) {
+    el.onerror = null; // éviter les boucles
+    const icon    = catIconMap[catLabel] || 'fa-newspaper';
+    const height  = isFeatured ? '280px' : '180px';
+    const parent  = el.parentElement;
+    parent.innerHTML = `
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;
+                    height:${height};width:100%;
+                    background:linear-gradient(135deg,#1A3D28,#2D5F3F);
+                    border-radius:inherit;gap:.6rem">
+            <i class="fas ${icon}" style="font-size:2.4rem;color:rgba(255,255,255,.45)"></i>
+            <span style="font-size:.72rem;color:rgba(255,255,255,.35);letter-spacing:.05em;text-transform:uppercase">${catLabel}</span>
+        </div>`;
+}
 
 // Map promise_id → domaine, chargée en parallèle avec news.json
 const _promiseDomaines = new Map();
@@ -1054,14 +773,14 @@ function openArticleById(key) {
             <span style="color:#999;font-size:.78rem;margin-left:auto">${esc(news.date)}</span>
         </div>
         <h2 style="font-size:1.4rem;font-weight:800;color:#1A3D28;margin-bottom:1rem;line-height:1.35;padding-right:2.5rem">${esc(news.title)}</h2>
-        ${news.image_url ? `<img src="${esc(news.image_url)}" alt="${esc(news.title)}" style="width:100%;max-height:260px;object-fit:cover;border-radius:10px;margin-bottom:1rem" onerror="this.style.display='none'">` : ''}
+        ${news.image_url ? `<div style="width:100%;border-radius:10px;overflow:hidden;margin-bottom:1rem"><img src="${esc(news.image_url)}" alt="${esc(news.title)}" style="width:100%;max-height:260px;object-fit:cover;display:block" onerror="fallbackImg(this,'${esc(getDomaine(news))}',true)"></div>` : ''}
         <div style="display:flex;gap:1rem;font-size:.8rem;color:#8a9e93;margin-bottom:1.2rem;flex-wrap:wrap">
             <span><i class="fas fa-newspaper" style="color:#2D5F3F;margin-right:.3rem"></i>${esc(news.source)}</span>
             ${news.read_time ? `<span><i class="fas fa-clock" style="color:#2D5F3F;margin-right:.3rem"></i>${esc(news.read_time)}</span>` : ''}
         </div>
         <div style="line-height:1.8;color:#333;font-size:.95rem">${fullText.split('\n').filter(l=>l.trim()).map(l=>`<p style="margin-bottom:.85rem">${esc(l)}</p>`).join('')}</div>
         ${link ? `<div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid #e5ede6">
-            <a href="${esc(link)}" target="_blank" rel="noopener noreferrer" style="color:#2D5F3F;font-weight:700;font-size:.88rem;display:inline-flex;align-items:center;gap:.4rem">
+            <a href="${safeUrl(esc(link))}" target="_blank" rel="noopener noreferrer" style="color:#2D5F3F;font-weight:700;font-size:.88rem;display:inline-flex;align-items:center;gap:.4rem">
                 <i class="fas fa-external-link-alt"></i> Lire l'article original
             </a>
         </div>` : ''}`;
@@ -1089,7 +808,7 @@ function renderFeatured() {
         <div class="featured-article" style="cursor:pointer" onclick="openArticleById('featured')">
             <div class="featured-img">
                 ${f.image_url
-                    ? `<img src="${f.image_url}" alt="${f.title}"><div class="featured-img-overlay"></div>`
+                    ? `<img src="${f.image_url}" alt="${f.title}" onerror="fallbackImg(this,'${getDomaine(f)}',true)"><div class="featured-img-overlay"></div>`
                     : `<i class="fas ${icon} featured-icon"></i>`}
                 <div class="feat-badge">À la une</div>
             </div>
@@ -1125,17 +844,17 @@ function renderGrid() {
         return `
         <article class="news-item" onclick="openArticleById('${key}')">
             <div class="news-item-img">
-                ${n.image_url ? `<img src="${n.image_url}" alt="${n.title}" loading="lazy">` : `<i class="fas ${icon}"></i>`}
+                ${n.image_url ? `<img src="${safeUrl(n.image_url)}" alt="${escH(n.title)}" loading="lazy" onerror="fallbackImg(this,'${escH(getDomaine(n))}',false)">` : `<i class="fas ${icon}"></i>`}
             </div>
             <div class="news-item-body">
                 <div class="news-item-head">
-                    <span class="news-item-cat">${getDomaine(n)}</span>
-                    <span class="news-item-date">${n.date}</span>
+                    <span class="news-item-cat">${escH(getDomaine(n))}</span>
+                    <span class="news-item-date">${escH(n.date)}</span>
                 </div>
-                <h3 class="news-item-title">${n.title}</h3>
-                <p class="news-item-excerpt">${(n.excerpt||'').substring(0,160)}…</p>
+                <h3 class="news-item-title">${escH(n.title)}</h3>
+                <p class="news-item-excerpt">${escH((n.excerpt||'').substring(0,160))}…</p>
                 <div class="news-item-foot">
-                    <span><i class="fas fa-newspaper"></i>${n.source||''}</span>
+                    <span><i class="fas fa-newspaper"></i>${escH(n.source||'')}</span>
                     <button class="news-read" onclick="event.stopPropagation();openArticleById('${key}')"><i class="fas fa-arrow-right"></i> Lire</button>
                 </div>
             </div>

@@ -21,6 +21,55 @@ function escapeAndTruncate(str, maxLength = 80) {
     return escapeHTML(truncated);
 }
 
+// ==========================================
+// FALLBACK IMAGE — Icône catégorie (images Facebook expirées)
+// ==========================================
+const _NEWS_CAT_ICONS_GLOBAL = {
+    'Général':'fa-newspaper','general':'fa-newspaper','autres':'fa-newspaper','Autres':'fa-newspaper',
+    'Politique':'fa-landmark','Institutions':'fa-landmark','Gouvernance':'fa-landmark','gouvernance':'fa-landmark',
+    'Éducation':'fa-graduation-cap','education':'fa-graduation-cap','Enseignement Supérieur':'fa-university','Formation Pro':'fa-tools',
+    'Santé':'fa-heartbeat','sante':'fa-heartbeat',
+    'Économie':'fa-chart-line','economie':'fa-chart-line','Commerce':'fa-shopping-cart','Finances':'fa-coins','Monnaie':'fa-money-bill-wave',
+    'Infrastructures':'fa-road','infrastructures':'fa-road','Habitat':'fa-home','Urbanisme':'fa-city',
+    'Transparence':'fa-eye','Lutte Corruption':'fa-search-dollar','Administration':'fa-file-alt',
+    'Agriculture':'fa-seedling','Agro-industrie':'fa-industry','Élevage':'fa-horse','Pêche':'fa-fish',
+    'Énergie':'fa-bolt','energie':'fa-bolt','Hydrocarbures':'fa-oil-can',
+    'Environnement':'fa-leaf','environnement':'fa-leaf','Hydraulique':'fa-water',
+    'Emploi':'fa-briefcase','emploi':'fa-briefcase','Secteur Informel':'fa-store','Industrie':'fa-industry',
+    'Sport':'fa-running','Jeunesse & Sports':'fa-running','Culture':'fa-theater-masks',
+    'Sécurité':'fa-shield-alt','securite':'fa-shield-alt','Défense':'fa-shield-alt',
+    'Justice':'fa-balance-scale','justice':'fa-balance-scale','Justice & Droit':'fa-balance-scale',
+    'Numérique':'fa-laptop','numerique':'fa-laptop','Transport':'fa-bus','transport':'fa-bus',
+    'Logement':'fa-home','logement':'fa-home','Affaires Sociales':'fa-hand-holding-heart','social':'fa-hand-holding-heart',
+    'Relations Internationales':'fa-globe','international':'fa-globe','Intégration Régionale':'fa-globe-africa',
+    'Développement Local':'fa-map-marker-alt','Communiqué':'fa-bullhorn'
+};
+
+/**
+ * Appelé par onerror sur une <img> cassée (URL Facebook expirée, etc.)
+ * Remplace l'image par un bloc icône stylé selon la catégorie.
+ * @param {HTMLImageElement} el - l'élément img qui a planté
+ * @param {string} cat         - catégorie de l'article
+ * @param {string} height      - hauteur CSS du bloc de remplacement
+ * @param {string} radius      - border-radius CSS
+ */
+function newsFallbackImg(el, cat, height, radius) {
+    el.onerror = null;
+    const icon  = _NEWS_CAT_ICONS_GLOBAL[cat] || 'fa-newspaper';
+    const label = String(cat || 'Actualité');
+    const h     = height  || '200px';
+    const r     = radius  || '12px 12px 0 0';
+    const parent = el.parentElement;
+    if (!parent) return;
+    parent.innerHTML =
+        '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;' +
+        'height:' + h + ';width:100%;background:linear-gradient(135deg,#1A3D28,#2D5F3F);' +
+        'border-radius:' + r + ';gap:.5rem">' +
+        '<i class="fas ' + icon + '" style="font-size:2.4rem;color:rgba(255,255,255,.45)"></i>' +
+        '<span style="font-size:.7rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.05em">' +
+        label + '</span></div>';
+}
+
 // Mode démo - activé si Supabase échoue
 let DEMO_MODE = false;
 // AJOUTER AVEC LES AUTRES VARIABLES GLOBALES
@@ -2008,9 +2057,35 @@ function renderNews(news) {
     const grid = document.getElementById('newsGrid');
     if (!grid) return;
     
-    // Tri par date (plus récentes en premier) et limitation à 6 actualités
+    // Map catégorie → icône FA pour les images manquantes/cassées
+    const NEWS_CAT_ICONS = {
+        'Général':'fa-newspaper', 'general':'fa-newspaper',
+        'Éducation':'fa-graduation-cap', 'education':'fa-graduation-cap',
+        'Santé':'fa-heartbeat', 'sante':'fa-heartbeat',
+        'Économie':'fa-chart-line', 'economie':'fa-chart-line',
+        'Infrastructures':'fa-road', 'infrastructures':'fa-road',
+        'Gouvernance':'fa-landmark', 'gouvernance':'fa-landmark',
+        'Transparence':'fa-eye', 'transparence':'fa-eye',
+        'Agriculture':'fa-seedling', 'agriculture':'fa-seedling',
+        'Énergie':'fa-bolt', 'energie':'fa-bolt',
+        'Environnement':'fa-leaf', 'environnement':'fa-leaf',
+        'Emploi':'fa-briefcase', 'emploi':'fa-briefcase',
+        'Jeunesse & Sports':'fa-running', 'jeunesse':'fa-running',
+        'Culture':'fa-theater-masks', 'culture':'fa-theater-masks',
+        'Sécurité':'fa-shield-alt', 'securite':'fa-shield-alt',
+        'Justice':'fa-balance-scale', 'justice':'fa-balance-scale',
+        'Numérique':'fa-laptop', 'numerique':'fa-laptop',
+        'Transport':'fa-bus', 'transport':'fa-bus',
+        'Logement':'fa-home', 'logement':'fa-home',
+        'Affaires Sociales':'fa-hand-holding-heart', 'social':'fa-hand-holding-heart',
+        'Relations Internationales':'fa-globe', 'international':'fa-globe',
+        'Hydrocarbures':'fa-oil-can', 'Finances':'fa-coins',
+        'Pêche':'fa-fish', 'Défense':'fa-shield-alt'
+    };
+
+    // Tri par date (plus récentes en premier) et limitation à 8 actualités
     const parseDate = (d) => { const p = d.split('/'); return new Date(p[2], p[1] - 1, p[0]); };
-    const sortedNews = [...news].sort((a, b) => parseDate(b.date) - parseDate(a.date)).slice(0, 6);
+    const sortedNews = [...news].sort((a, b) => parseDate(b.date) - parseDate(a.date)).slice(0, 8);
     
     grid.innerHTML = sortedNews.map(item => {
         const wordLimit = 55;
@@ -2020,14 +2095,20 @@ function renderNews(news) {
         const categoryBadge = item.is_promise_update && item.category
             ? '<span style="display:inline-block;background:#F0F4F1;color:#2D5F3F;border:1px solid #C5DBC0;padding:.15rem .6rem;border-radius:20px;font-size:.68rem;font-weight:600;margin-bottom:.4rem">' + escapeHTML(item.category) + '</span>'
             : '';
+        
+        // Icône de fallback selon la catégorie de l'article
+        const catKey = item.category || 'general';
+        const fallbackIcon = NEWS_CAT_ICONS[catKey] || 'fa-newspaper';
+        const catLabel = escapeHTML(item.category || 'Général');
+        const fallbackHtml = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:200px;width:100%;background:linear-gradient(135deg,#1A3D28,#2D5F3F);border-radius:12px 12px 0 0;gap:.5rem"><i class="fas ${fallbackIcon}" style="font-size:2.4rem;color:rgba(255,255,255,.45)"></i><span style="font-size:.7rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.05em">${catLabel}</span></div>`;
 
         return `
         <article class="news-card" style="cursor:pointer">
             <div class="news-image">
                 ${item.image_url ? 
-                    `<img src="${item.image_url}" alt="${escapeHTML(item.title)}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px 12px 0 0;"
-                         onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:200px;background:linear-gradient(135deg,#1A3D28,#2D5F3F);border-radius:12px 12px 0 0\'><i class=\'fas fa-newspaper\' style=\'font-size:2.5rem;color:rgba(255,255,255,.3)\'></i></div>';">` :
-                    `<i class="fas fa-${item.image === 'school' ? 'school' : item.image === 'budget' ? 'coins' : 'flag'} fa-3x"></i>`
+                    `<img src="${escapeHTML(item.image_url)}" alt="${escapeHTML(item.title)}" style="width:100%;height:200px;object-fit:cover;border-radius:12px 12px 0 0;"
+                         onerror="newsFallbackImg(this,'${escapeHTML(catKey)}','200px','12px 12px 0 0')">` :
+                    fallbackHtml
                 }
             </div>
             <div class="news-content">
@@ -3897,9 +3978,9 @@ function openNewsModal(newsId, event) {
             (news.author ? '<span><i class="fas fa-user"></i> ' + escapeHTML(news.author) + '</span>' : '') +
             (news.read_time ? '<span><i class="fas fa-clock"></i> ' + escapeHTML(news.read_time) + '</span>' : '') +
             '</div>' +
-            (news.image_url ? '<img src="' + escapeHTML(news.image_url) + '" alt="' + escapeHTML(news.title) + '" ' +
-            'style="width:100%;max-height:280px;object-fit:cover;border-radius:8px;margin-bottom:1.1rem" ' +
-            'onerror="this.style.display=\'none\'">' : '') +
+            (news.image_url ? '<div style="border-radius:8px;overflow:hidden;margin-bottom:1.1rem"><img src="' + escapeHTML(news.image_url) + '" alt="' + escapeHTML(news.title) + '" ' +
+            'style="width:100%;max-height:280px;object-fit:cover;display:block" ' +
+            'onerror="newsFallbackImg(this,\'' + escapeHTML(news.category || 'Général') + '\',\'220px\',\'0\')"></div>' : '') +
             '<div class="article-content">' + paragraphs + '</div>' +
             (news.link && news.link.indexOf('projetbi.org/#promise_') === -1 ?
             '<div style="margin-top:1rem;padding-top:.9rem;border-top:1px solid #eee">' +

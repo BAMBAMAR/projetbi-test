@@ -5,379 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-Robots-Tag" content="noindex, nofollow">
 <title>Admin — ProjetBI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
 
 <style>
 /* ═══════════════════════════════════════════════════
    VARIABLES & RESET
 ═══════════════════════════════════════════════════ */
-/* ═══════════════════════════════════════════════════════════════════
-   tokens.css — SEULE SOURCE DE VÉRITÉ pour les couleurs, espacements,
-   typographie et animations de ProjetBI.
-   
-   À charger EN PREMIER dans chaque page, AVANT tout autre CSS.
-   
-   Remplace :
-   - Les :root de style.css (lignes 1–70)
-   - Les :root inline de actualites.html
-   - Les :root de admin.html (lignes 19–41)
-   - Les variables de corrections.css
-   ═══════════════════════════════════════════════════════════════════ */
-
 :root {
-    /* ───────────────────────────────────────────────
-       PALETTE DE MARQUE — Couleurs PASTEF officielles
-       ─────────────────────────────────────────────── */
-    
-    /* Vert PASTEF (couleur principale) — échelle de 9 tons */
-    --brand-green-50:  #eef6f1;
-    --brand-green-100: #d6e8dc;
-    --brand-green-200: #a8cdb5;
-    --brand-green-300: #6aad84;
-    --brand-green-400: #4a9469;
-    --brand-green-500: #2D5F3F;  /* ⭐ Vert PASTEF officiel */
-    --brand-green-600: #25533A;
-    --brand-green-700: #1F4530;
-    --brand-green-800: #1A3D28;
-    --brand-green-900: #0F2818;
-    
-    /* Rouge drapeau — pour accents patriotiques */
-    --brand-red-500:   #B23A3A;
-    --brand-red-600:   #8B2C2C;
-    --brand-red-400:   #C85050;
-    
-    /* Or — pour mise en valeur */
-    --brand-gold-500:  #C9A84C;
-    --brand-gold-600:  #A18836;
-    --brand-gold-400:  #D9BC6A;
-    
-    /* ───────────────────────────────────────────────
-       ALIAS DE COMPATIBILITÉ (pendant la migration)
-       À retirer une fois le CSS refactoré
-       ─────────────────────────────────────────────── */
-    --primary:         var(--brand-green-500);
-    --primary-color:   var(--brand-green-500);
-    --primary-light:   var(--brand-green-300);
-    --primary-dark:    var(--brand-green-700);
-    --secondary:       var(--brand-red-500);
-    --accent:          var(--brand-gold-500);
-    --accent-color:    var(--brand-red-500);
-    --pastef-green:    var(--brand-green-500);
-    --pastef-red:      var(--brand-red-500);
-    
-    /* ───────────────────────────────────────────────
-       COULEURS SÉMANTIQUES (statuts)
-       ─────────────────────────────────────────────── */
-    --status-success-bg:     #e6f5e9;
-    --status-success-fg:     #2e7d32;
-    --status-warning-bg:     #fff4e5;
-    --status-warning-fg:     #d97706;
-    --status-danger-bg:      #fde8e8;
-    --status-danger-fg:      #c62828;
-    --status-info-bg:        #e0f0fb;
-    --status-info-fg:        #0277bd;
-    --status-pending-bg:     #f3f4f6;
-    --status-pending-fg:     #6b7280;
-    
-    /* Alias */
-    --success: var(--status-success-fg);
-    --warning: var(--status-warning-fg);
-    --danger:  var(--status-danger-fg);
-    --info:    var(--status-info-fg);
-    
-    /* ───────────────────────────────────────────────
-       FONDS & SURFACES
-       ─────────────────────────────────────────────── */
-    --surface-page:       #fafbfc;   /* fond de la page */
-    --surface-card:       #ffffff;   /* cartes sur fond clair */
-    --surface-elevated:   #ffffff;   /* modales, dropdowns */
-    --surface-muted:      #f3f4f6;   /* zones atténuées */
-    --surface-overlay:    rgba(13, 27, 20, 0.5);  /* fond modale */
-    
-    /* Alias */
-    --bg-main:    var(--surface-page);
-    --bg-card:    var(--surface-card);
-    --bg-light:   var(--surface-muted);
-    --bg-overlay: var(--surface-overlay);
-    
-    /* ───────────────────────────────────────────────
-       TEXTE
-       ─────────────────────────────────────────────── */
-    --text-primary:   #0D1B14;   /* titres, texte principal */
-    --text-secondary: #4a6055;   /* texte courant */
-    --text-muted:     #8a9e93;   /* texte secondaire, métadonnées */
-    --text-disabled:  #bcc9c2;   /* texte désactivé */
-    --text-on-brand:  #ffffff;   /* texte sur fond coloré brand */
-    
-    /* Alias */
-    --text-dark:      var(--text-primary);
-    --ink:            var(--text-primary);
-    --smoke:          var(--text-secondary);
-    --silver:         var(--text-muted);
-    
-    /* ───────────────────────────────────────────────
-       BORDURES
-       ─────────────────────────────────────────────── */
-    --border-subtle:  #edf0ee;
-    --border-default: #d6e1db;
-    --border-strong:  #a8bfb3;
-    --border-focus:   var(--brand-green-500);
-    
-    /* Alias */
-    --border:       var(--border-default);
-    --border-light: var(--border-subtle);
-    --border-color: var(--border-default);
-    --fog:          var(--border-subtle);
-    --mist:         var(--border-default);
-    
-    /* ───────────────────────────────────────────────
-       TYPOGRAPHIE
-       ─────────────────────────────────────────────── */
-    --font-display: 'Crimson Pro', Georgia, 'Times New Roman', serif;
-    --font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
-    
-    /* Échelle de tailles (modular scale 1.25) */
-    --text-xs:   0.75rem;    /* 12px — caption, labels */
-    --text-sm:   0.875rem;   /* 14px — corps secondaire */
-    --text-base: 1rem;       /* 16px — corps par défaut */
-    --text-lg:   1.125rem;   /* 18px — intro */
-    --text-xl:   1.25rem;    /* 20px — h5 */
-    --text-2xl:  1.5rem;     /* 24px — h4 */
-    --text-3xl:  1.875rem;   /* 30px — h3 */
-    --text-4xl:  2.25rem;    /* 36px — h2 */
-    --text-5xl:  3rem;       /* 48px — h1 */
-    --text-6xl:  3.75rem;    /* 60px — hero */
-    
-    /* Graisses */
-    --weight-regular:  400;
-    --weight-medium:   500;
-    --weight-semibold: 600;
-    --weight-bold:     700;
-    --weight-extrabold: 800;
-    
-    /* Interlignage */
-    --leading-tight:  1.2;
-    --leading-snug:   1.4;
-    --leading-normal: 1.5;
-    --leading-relaxed: 1.7;
-    
-    /* ───────────────────────────────────────────────
-       ESPACEMENT (échelle 4pt)
-       ─────────────────────────────────────────────── */
-    --space-0:   0;
-    --space-1:   0.25rem;   /* 4px */
-    --space-2:   0.5rem;    /* 8px */
-    --space-3:   0.75rem;   /* 12px */
-    --space-4:   1rem;      /* 16px */
-    --space-5:   1.25rem;   /* 20px */
-    --space-6:   1.5rem;    /* 24px */
-    --space-8:   2rem;      /* 32px */
-    --space-10:  2.5rem;    /* 40px */
-    --space-12:  3rem;      /* 48px */
-    --space-16:  4rem;      /* 64px */
-    --space-20:  5rem;      /* 80px */
-    --space-24:  6rem;      /* 96px */
-    
-    /* Alias */
-    --spacing-xs:  var(--space-1);
-    --spacing-sm:  var(--space-2);
-    --spacing-md:  var(--space-4);
-    --spacing-lg:  var(--space-6);
-    --spacing-xl:  var(--space-8);
-    --spacing-2xl: var(--space-12);
-    
-    /* ───────────────────────────────────────────────
-       RAYONS DE BORDURE
-       ─────────────────────────────────────────────── */
-    --radius-none: 0;
-    --radius-sm:   6px;
-    --radius-md:   12px;
-    --radius-lg:   16px;
-    --radius-xl:   24px;
-    --radius-2xl:  32px;
-    --radius-full: 9999px;
-    
-    /* Alias */
-    --radius: var(--radius-md);
-    
-    /* ───────────────────────────────────────────────
-       OMBRES
-       ─────────────────────────────────────────────── */
-    --shadow-xs: 0 1px 2px rgba(13, 27, 20, 0.04);
-    --shadow-sm: 0 2px 4px rgba(13, 27, 20, 0.05);
-    --shadow-md: 0 4px 12px rgba(13, 27, 20, 0.08);
-    --shadow-lg: 0 10px 30px rgba(13, 27, 20, 0.12);
-    --shadow-xl: 0 20px 60px rgba(13, 27, 20, 0.15);
-    --shadow-2xl: 0 25px 80px rgba(13, 27, 20, 0.25);
-    
-    /* Alias (rétro-compat) */
-    --shadow: var(--shadow-md);
-    
-    /* ───────────────────────────────────────────────
-       TRANSITIONS & ANIMATIONS
-       ─────────────────────────────────────────────── */
-    --duration-instant: 75ms;
-    --duration-fast:    150ms;
-    --duration-normal:  250ms;
-    --duration-slow:    400ms;
-    
-    --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
-    --easing-in:      cubic-bezier(0.4, 0, 1, 1);
-    --easing-out:     cubic-bezier(0, 0, 0.2, 1);
-    --easing-bounce:  cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    
-    /* Alias */
-    --transition:      all var(--duration-normal) var(--easing-default);
-    --transition-fast: all var(--duration-fast) var(--easing-out);
-    
-    /* ───────────────────────────────────────────────
-       Z-INDEX (échelle sémantique)
-       ─────────────────────────────────────────────── */
-    --z-base:        0;
-    --z-raised:      10;
-    --z-dropdown:    100;
-    --z-sticky:      200;
-    --z-fixed:       300;
-    --z-modal-backdrop: 400;
-    --z-modal:       500;
-    --z-popover:     600;
-    --z-tooltip:     700;
-    --z-notification: 800;
-    --z-max:         9999;
-    
-    /* ───────────────────────────────────────────────
-       LAYOUT
-       ─────────────────────────────────────────────── */
-    --container-max: 1440px;
-    --container-padding: var(--space-6);
-    --navbar-height: 92px;
-    --navbar-height-mobile: 56px;
+  --bg:       #0C0F0A;
+  --bg2:      #131810;
+  --bg3:      #1A2118;
+  --bg4:      #212C20;
+  --border:   #2A3828;
+  --border2:  #354832;
+  --green:    #4ADE80;
+  --green-d:  #22C55E;
+  --green-dd: #16A34A;
+  --green-bg: rgba(74,222,128,.07);
+  --gold:     #F59E0B;
+  --gold-bg:  rgba(245,158,11,.08);
+  --red:      #F87171;
+  --red-bg:   rgba(248,113,113,.08);
+  --blue:     #60A5FA;
+  --blue-bg:  rgba(96,165,250,.08);
+  --text:     #E8F0E5;
+  --text2:    #9DB89A;
+  --text3:    #5C7A58;
+  --radius:   10px;
+  --shadow:   0 4px 24px rgba(0,0,0,.4);
 }
-
-/* ═══════════════════════════════════════════════════════════════════
-   THÈME SOMBRE — pour l'admin
-   Utilisation : ajouter class="theme-dark" sur <body>
-   ═══════════════════════════════════════════════════════════════════ */
-
-.theme-dark {
-    --surface-page:       #0C0F0A;
-    --surface-card:       #131810;
-    --surface-elevated:   #1A2118;
-    --surface-muted:      #212C20;
-    
-    --text-primary:       #E8F0E5;
-    --text-secondary:     #9DB89A;
-    --text-muted:         #5C7A58;
-    
-    --border-subtle:      #2A3828;
-    --border-default:     #354832;
-    
-    /* Accents plus vifs sur fond sombre */
-    --brand-green-accent: #4ADE80;
-    --brand-green-accent-hover: #22C55E;
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   ACCESSIBILITÉ — Mouvements réduits
-   Respecte la préférence système de l'utilisateur
-   ═══════════════════════════════════════════════════════════════════ */
-
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   BASE GLOBALE (reset minimal + défauts)
-   ═══════════════════════════════════════════════════════════════════ */
-
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
-html {
-    font-size: 16px;
-    scroll-behavior: smooth;
-    scroll-padding-top: calc(var(--navbar-height) + var(--space-4));
-    -webkit-text-size-adjust: 100%;
-}
-
-body {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: var(--text-base);
-    line-height: var(--leading-normal);
-    color: var(--text-primary);
-    background: var(--surface-page);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
-    line-height: var(--leading-tight);
-    color: var(--text-primary);
-    margin: 0 0 var(--space-4) 0;
-}
-
-h1 { font-size: var(--text-5xl); font-weight: var(--weight-extrabold); }
-h2 { font-size: var(--text-4xl); font-weight: var(--weight-bold); }
-h3 { font-size: var(--text-3xl); font-weight: var(--weight-bold); }
-h4 { font-size: var(--text-2xl); font-weight: var(--weight-semibold); }
-h5 { font-size: var(--text-xl); font-weight: var(--weight-semibold); }
-h6 { font-size: var(--text-lg); font-weight: var(--weight-semibold); }
-
-@media (max-width: 768px) {
-    h1 { font-size: var(--text-4xl); }
-    h2 { font-size: var(--text-3xl); }
-    h3 { font-size: var(--text-2xl); }
-    
-    html { scroll-padding-top: calc(var(--navbar-height-mobile) + var(--space-4)); }
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   CLASSES UTILITAIRES (les seules `!important` tolérées)
-   ═══════════════════════════════════════════════════════════════════ */
-
-.visually-hidden,
-.sr-only {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    padding: 0 !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    clip: rect(0, 0, 0, 0) !important;
-    white-space: nowrap !important;
-    border: 0 !important;
-}
-
-.hidden {
-    display: none !important;
-}
-
-.skip-link {
-    position: absolute;
-    top: -100px;
-    left: 0;
-    padding: var(--space-3) var(--space-4);
-    background: var(--brand-green-500);
-    color: white;
-    text-decoration: none;
-    z-index: var(--z-max);
-    border-radius: 0 0 var(--radius-md) 0;
-    font-weight: var(--weight-semibold);
-}
-.skip-link:focus {
-    top: 0;
-}*{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;overflow:hidden}
 body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--text);display:flex;height:100vh}
 
@@ -711,13 +373,22 @@ textarea.form-control{resize:vertical;min-height:90px}
 <body>
 
 <!-- ═══════ AUTH SCREEN ═══════ -->
+<!-- AUTH GUARD: page is hidden at HTML level until JS auth passes -->
+<script>
+  // Block DOM before any rendering - prevents devtools DOM inspection before auth
+  if (sessionStorage.getItem('admin_auth') !== '03eb6856c640072257980d6125e3082905e07a23b3a50f2efe5256bc9898a380') {
+    document.documentElement.style.visibility = 'hidden';
+  }
+</script>
 <div class="auth-screen" id="authScreen">
   <div class="auth-card">
     <div class="auth-logo"><i class="fas fa-shield-halved"></i></div>
     <h1 class="auth-title">ProjetBI Admin</h1>
     <p class="auth-sub">Accès restreint — Panneau d'administration</p>
-    <input type="password" class="auth-input" id="authInput" autocomplete="off" spellcheck="false" placeholder="••••••••••••" maxlength="50">
-    <button class="auth-btn" id="authBtn"><i class="fas fa-key"></i> Entrer</button>
+    <form id="authForm" onsubmit="event.preventDefault(); document.getElementById('authBtn').click();" autocomplete="off">
+      <input type="password" class="auth-input" id="authInput" autocomplete="current-password" spellcheck="false" placeholder="••••••••••••" maxlength="50">
+      <button type="submit" class="auth-btn" id="authBtn"><i class="fas fa-key"></i> Entrer</button>
+    </form>
     <p class="auth-error" id="authError">Mot de passe incorrect</p>
   </div>
 </div>
@@ -827,7 +498,9 @@ textarea.form-control{resize:vertical;min-height:90px}
       <div class="filter-bar">
         <div class="search-box"><i class="fas fa-search"></i><input type="text" id="newsSearch" placeholder="Rechercher une actualité…" oninput="filterNews()"></div>
         <button class="btn btn-primary btn-sm" onclick="openNewsModal()"><i class="fas fa-plus"></i> Nouvelle actualité</button>
+        <button class="btn btn-outline btn-sm" onclick="generateAndShowNewsJSON()"><i class="fas fa-code"></i> Générer JSON</button>
         <button class="btn btn-gold btn-sm" onclick="downloadJSON('news')"><i class="fas fa-download"></i> Télécharger JSON</button>
+        <button class="btn btn-sm" style="background:var(--blue-bg);color:var(--blue);border:1px solid rgba(96,165,250,.3)" onclick="copyNewsJSON()"><i class="fas fa-copy"></i> Copier JSON</button>
       </div>
       <div class="card">
         <div class="card-head"><span class="card-title"><i class="fas fa-newspaper" style="color:var(--green)"></i> Actualités <span id="newsCount" style="color:var(--text3);font-size:.78rem;font-weight:400"></span></span></div>
@@ -838,13 +511,24 @@ textarea.form-control{resize:vertical;min-height:90px}
           </table>
         </div>
       </div>
+      <div class="card" id="newsJsonCard" style="display:none;margin-top:1rem">
+        <div class="card-head">
+          <span class="card-title"><i class="fas fa-file-code" style="color:var(--blue)"></i> Sortie JSON Actualités <span id="newsJsonCounter" style="color:var(--text3);font-size:.78rem;font-weight:400"></span></span>
+          <button class="btn btn-outline btn-xs" onclick="document.getElementById('newsJsonCard').style.display='none'"><i class="fas fa-times"></i> Fermer</button>
+        </div>
+        <div style="padding:0">
+          <textarea id="newsJsonOutput" readonly style="width:100%;height:340px;font-family:'JetBrains Mono',monospace;font-size:.75rem;line-height:1.5;padding:1rem;border:none;resize:vertical;background:#0C0F0A;color:#d4d4d4;outline:none"></textarea>
+        </div>
+      </div>
     </div>
 
     <!-- ══════════════════════ PRESSE ══════════════════════ -->
     <div class="page" id="page-press">
       <div class="filter-bar">
         <button class="btn btn-primary btn-sm" onclick="openPressModal()"><i class="fas fa-plus"></i> Nouvelle une</button>
+        <button class="btn btn-outline btn-sm" onclick="generateAndShowPressJSON()"><i class="fas fa-code"></i> Générer JSON</button>
         <button class="btn btn-gold btn-sm" onclick="downloadJSON('press')"><i class="fas fa-download"></i> Télécharger JSON</button>
+        <button class="btn btn-sm" style="background:var(--blue-bg);color:var(--blue);border:1px solid rgba(96,165,250,.3)" onclick="copyPressJSON()"><i class="fas fa-copy"></i> Copier JSON</button>
       </div>
       <div class="card">
         <div class="card-head"><span class="card-title"><i class="fas fa-print" style="color:var(--green)"></i> Revue de Presse <span id="pressCount" style="color:var(--text3);font-size:.78rem;font-weight:400"></span></span></div>
@@ -853,6 +537,15 @@ textarea.form-control{resize:vertical;min-height:90px}
             <thead><tr><th>ID</th><th>Journal</th><th>Date</th><th>Image</th><th>Lien</th><th>Actions</th></tr></thead>
             <tbody id="pressBody"></tbody>
           </table>
+        </div>
+      </div>
+      <div class="card" id="pressJsonCard" style="display:none;margin-top:1rem">
+        <div class="card-head">
+          <span class="card-title"><i class="fas fa-file-code" style="color:var(--blue)"></i> Sortie JSON Presse <span id="pressJsonCounter" style="color:var(--text3);font-size:.78rem;font-weight:400"></span></span>
+          <button class="btn btn-outline btn-xs" onclick="document.getElementById('pressJsonCard').style.display='none'"><i class="fas fa-times"></i> Fermer</button>
+        </div>
+        <div style="padding:0">
+          <textarea id="pressJsonOutput" readonly style="width:100%;height:340px;font-family:'JetBrains Mono',monospace;font-size:.75rem;line-height:1.5;padding:1rem;border:none;resize:vertical;background:#0C0F0A;color:#d4d4d4;outline:none"></textarea>
         </div>
       </div>
     </div>
@@ -966,17 +659,17 @@ textarea.form-control{resize:vertical;min-height:90px}
         <div class="card-body">
           <div class="form-row cols-3" style="margin-bottom:.75rem">
             <div class="form-group"><label>Total engagements</label><input type="number" class="form-control" id="kctTotal" value="300"></div>
-            <div class="form-group"><label>✅ Réalisés</label><input type="number" class="form-control" id="kctRealise" value="38"></div>
-            <div class="form-group"><label>🔄 En cours</label><input type="number" class="form-control" id="kctEncours" value="87"></div>
+            <div class="form-group"><label>✅ Réalisés</label><input type="number" class="form-control" id="kctRealise" value="19"></div>
+            <div class="form-group"><label>🔄 En cours</label><input type="number" class="form-control" id="kctEncours" value="174"></div>
           </div>
           <div class="form-row cols-3" style="margin-bottom:.75rem">
-            <div class="form-group"><label>⏳ Non lancés</label><input type="number" class="form-control" id="kctNonLance" value="141"></div>
-            <div class="form-group"><label>⚠️ En retard</label><input type="number" class="form-control" id="kctRetard" value="34"></div>
+            <div class="form-group"><label>⏳ Non lancés</label><input type="number" class="form-control" id="kctNonLance" value="107"></div>
+            <div class="form-group"><label>⚠️ En retard</label><input type="number" class="form-control" id="kctRetard" value="0"></div>
             <div class="form-group"><label>⭐ Note (/5)</label><input type="number" class="form-control" id="kctNote" value="3.4" step="0.1" min="0" max="5"></div>
           </div>
           <div class="form-row cols-2">
-            <div class="form-group"><label>Période / Titre</label><input type="text" class="form-control" id="kctPeriode" value="Bilan — Février 2026"></div>
-            <div class="form-group"><label>Sous-titre</label><input type="text" class="form-control" id="kctSous" value="2 ans après l'élection"></div>
+            <div class="form-group"><label>Période / Titre</label><input type="text" class="form-control" id="kctPeriode" value="Bilan — Mars 2026"></div>
+            <div class="form-group"><label>Sous-titre</label><input type="text" class="form-control" id="kctSous" value="1 an et 11 mois après l'élection"></div>
           </div>
           <!-- Template selector -->
           <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.5rem">
@@ -1115,8 +808,51 @@ textarea.form-control{resize:vertical;min-height:90px}
       <div class="form-row cols-2" style="margin-top:.75rem">
         <div class="form-group"><label>Catégorie</label>
           <select class="form-control" id="newsCategory">
-            <option>Politique</option><option>Économie</option><option>Santé</option>
-            <option>Éducation</option><option>Infrastructure</option><option>Social</option><option>Autre</option>
+            <optgroup label="🏛️ Gouvernance & État">
+              <option>Politique</option>
+              <option>Gouvernance</option>
+              <option>Justice & Droit</option>
+              <option>Diplomatie & Relations internationales</option>
+              <option>Sécurité & Défense</option>
+            </optgroup>
+            <optgroup label="💰 Économie & Développement">
+              <option>Économie</option>
+              <option>Agriculture & Pêche</option>
+              <option>Pétrole & Gaz</option>
+              <option>Industrie & Commerce</option>
+              <option>Emploi & Formation</option>
+              <option>Tourisme</option>
+              <option>Numérique & Innovation</option>
+            </optgroup>
+            <optgroup label="🏗️ Infrastructures & Territoire">
+              <option>Infrastructure</option>
+              <option>Urbanisme & Logement</option>
+              <option>Transport & Mobilité</option>
+              <option>Énergie & Eau</option>
+              <option>Environnement & Écologie</option>
+            </optgroup>
+            <optgroup label="🤝 Social & Citoyenneté">
+              <option>Santé</option>
+              <option>Éducation</option>
+              <option>Social</option>
+              <option>Culture & Patrimoine</option>
+              <option>Sport & Jeunesse</option>
+              <option>Femmes & Genre</option>
+              <option>Diaspora</option>
+              <option>Religion & Confréries</option>
+            </optgroup>
+            <optgroup label="📋 Suivi du Projet PASTEF">
+              <option>Engagement réalisé</option>
+              <option>Engagement en cours</option>
+              <option>Engagement en retard</option>
+              <option>Bilan mensuel</option>
+            </optgroup>
+            <optgroup label="📰 Presse & Médias">
+              <option>Revue de presse</option>
+              <option>Déclaration officielle</option>
+              <option>Communiqué</option>
+            </optgroup>
+            <option>Autre</option>
           </select>
         </div>
         <div class="form-group"><label>Auteur</label><input type="text" class="form-control" id="newsAuthor"></div>
@@ -1190,15 +926,18 @@ async function sha256(msg) {
 
 async function checkAuth() {
   if (sessionStorage.getItem('admin_auth') === ADMIN_HASH) {
+    document.documentElement.style.visibility = '';
     document.getElementById('authScreen').style.display = 'none';
     init();
     return;
   }
+  // Show auth screen only (not the rest of the DOM)
+  document.documentElement.style.visibility = '';
 }
 
 // Protection anti-brute force : verrouillage temporaire après 5 tentatives
-let authAttempts = parseInt(sessionStorage.getItem('auth_attempts') || '0');
-let authLockUntil = parseInt(sessionStorage.getItem('auth_lock_until') || '0');
+let authAttempts = parseInt(localStorage.getItem('auth_attempts') || '0');
+let authLockUntil = parseInt(localStorage.getItem('auth_lock_until') || '0');
 
 document.getElementById('authBtn').addEventListener('click', async () => {
   const now = Date.now();
@@ -1214,16 +953,19 @@ document.getElementById('authBtn').addEventListener('click', async () => {
   if (hash === ADMIN_HASH) {
     sessionStorage.removeItem('auth_attempts');
     sessionStorage.removeItem('auth_lock_until');
+    localStorage.removeItem('auth_attempts');
+    localStorage.removeItem('auth_lock_until');
     sessionStorage.setItem('admin_auth', ADMIN_HASH);
+    document.documentElement.style.visibility = '';
     document.getElementById('authScreen').style.display = 'none';
     init();
   } else {
     authAttempts++;
-    sessionStorage.setItem('auth_attempts', authAttempts);
+    localStorage.setItem('auth_attempts', authAttempts);
     if (authAttempts >= 5) {
       const lockDuration = Math.min(30000 * Math.pow(2, authAttempts - 5), 300000); // max 5min
       authLockUntil = now + lockDuration;
-      sessionStorage.setItem('auth_lock_until', authLockUntil);
+      localStorage.setItem('auth_lock_until', authLockUntil);
       document.getElementById('authError').textContent = `Compte verrouillé. Réessayez dans ${Math.ceil(lockDuration/1000)}s.`;
     } else {
       document.getElementById('authError').textContent = 'Mot de passe incorrect.';
@@ -1237,7 +979,7 @@ document.getElementById('authBtn').addEventListener('click', async () => {
     }, 3000);
   }
 });
-document.getElementById('authInput').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('authBtn').click(); });
+// Soumission via form (Enter géré nativement par le <form>)
 
 function logout() {
   sessionStorage.removeItem('admin_auth');
@@ -1250,6 +992,7 @@ function logout() {
 async function init() {
   await loadData();
   initSupabase();
+  kitSyncFromDB(); // Synchroniser les stats du kit avec les données chargées
   renderDashboard();
   renderPromises();
   renderNews();
@@ -1279,6 +1022,9 @@ function initSupabase() {
       supaClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       loadRatings();
     }
+  } catch(e) {
+    supaClient = null;
+  }
 }
 
 // ══════════════════════
@@ -1317,12 +1063,8 @@ function toggleSidebar() {
 // ══════════════════════
 function renderDashboard() {
   const p = DB.promises;
-  const realise = p.filter(x=>x.status==='realise').length;
-  const encours = p.filter(x=>x.status==='encours').length;
-  const nonLance = p.filter(x=>x.status==='non-lance').length;
-  const retard = p.filter(x=>x.status==='retard').length;
-  const taux = Math.round((realise/p.length)*100);
-  const withUpdates = p.filter(x=>x.mises_a_jour&&x.mises_a_jour.length>0).length;
+  const s = computeStats();
+  const { realise, encours, nonLance, retard, taux, withUpdates } = s;
 
   document.getElementById('badge-retard').textContent = retard || 0;
 
@@ -1349,7 +1091,13 @@ function renderDashboard() {
   ).join('');
 
   // Retard list
-  const retards = p.filter(x=>x.status==='retard').slice(0,5);
+  const retards = p.filter(x => {
+    const statusRaw = (x.status || '').toLowerCase();
+    const status = statusRaw.includes('realise') || statusRaw.includes('réalisé') ? 'realise'
+                 : statusRaw.includes('cours') || statusRaw.includes('encours') ? 'encours' : 'non-lance';
+    const dl = calcDeadline(parseDelayToDays(x.delai || ''));
+    return computeIsLate(status, dl);
+  }).slice(0, 5);
   document.getElementById('retardList').innerHTML = retards.length
     ? retards.map(x=>`<div style="padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.82rem;display:flex;justify-content:space-between;align-items:center">
         <span style="color:var(--text)">${x.engagement.substring(0,65)}…</span>
@@ -1431,8 +1179,8 @@ function renderPromiseTable() {
       <td><span style="color:var(--text3);font-size:.78rem">${p.delai||'—'}</span></td>
       <td><span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text3)">${(p.mises_a_jour||[]).length}</span></td>
       <td>
-        <button class="btn btn-outline btn-xs" onclick="editPromise('${p.id}')"><i class="fas fa-pen"></i></button>
-        <button class="btn btn-danger btn-xs" onclick="deletePromise('${p.id}')"><i class="fas fa-trash"></i></button>
+        <button class="btn btn-outline btn-xs" onclick="editPromise('${escId(p.id)}')"><i class="fas fa-pen"></i></button>
+        <button class="btn btn-danger btn-xs" onclick="deletePromise('${escId(p.id)}')"><i class="fas fa-trash"></i></button>
       </td>
     </tr>
   `).join('');
@@ -1668,8 +1416,8 @@ function renderNews() {
       <td><span style="color:var(--text3);font-size:.78rem">${n.date||'—'}</span></td>
       <td><span class="badge badge-blue">${n.category||'—'}</span></td>
       <td>
-        <button class="btn btn-outline btn-xs" onclick="editNews('${n.id}')"><i class="fas fa-pen"></i></button>
-        <button class="btn btn-danger btn-xs" onclick="deleteNewsById('${n.id}')"><i class="fas fa-trash"></i></button>
+        <button class="btn btn-outline btn-xs" onclick="editNews('${escId(n.id)}')"><i class="fas fa-pen"></i></button>
+        <button class="btn btn-danger btn-xs" onclick="deleteNewsById('${escId(n.id)}')"><i class="fas fa-trash"></i></button>
       </td>
     </tr>
   `).join('');
@@ -1687,8 +1435,8 @@ function filterNews() {
       <td><span style="color:var(--text3);font-size:.78rem">${n.date||'—'}</span></td>
       <td><span class="badge badge-blue">${n.category||'—'}</span></td>
       <td>
-        <button class="btn btn-outline btn-xs" onclick="editNews('${n.id}')"><i class="fas fa-pen"></i></button>
-        <button class="btn btn-danger btn-xs" onclick="deleteNewsById('${n.id}')"><i class="fas fa-trash"></i></button>
+        <button class="btn btn-outline btn-xs" onclick="editNews('${escId(n.id)}')"><i class="fas fa-pen"></i></button>
+        <button class="btn btn-danger btn-xs" onclick="deleteNewsById('${escId(n.id)}')"><i class="fas fa-trash"></i></button>
       </td>
     </tr>
   `).join('');
@@ -1774,10 +1522,10 @@ function renderPress() {
       <td><strong>${escH(p.title)}</strong></td>
       <td><span style="color:var(--text3);font-size:.78rem">${p.date||'—'}</span></td>
       <td>${p.image?`<span class="badge badge-green"><i class="fas fa-check"></i> Oui</span>`:`<span class="badge badge-gray">Non</span>`}</td>
-      <td>${p.link?`<a href="${escH(p.link)}" target="_blank" rel="noopener noreferrer" style="color:var(--blue);font-size:.78rem"><i class="fas fa-link"></i></a>`:'—'}</td>
+      <td>${p.link?`<a href="${safeUrl(escH(p.link))}" target="_blank" rel="noopener noreferrer" style="color:var(--blue);font-size:.78rem"><i class="fas fa-link"></i></a>`:'—'}</td>
       <td>
-        <button class="btn btn-outline btn-xs" onclick="editPress('${p.id}')"><i class="fas fa-pen"></i></button>
-        <button class="btn btn-danger btn-xs" onclick="deletePressById('${p.id}')"><i class="fas fa-trash"></i></button>
+        <button class="btn btn-outline btn-xs" onclick="editPress('${escId(p.id)}')"><i class="fas fa-pen"></i></button>
+        <button class="btn btn-danger btn-xs" onclick="deletePressById('${escId(p.id)}')"><i class="fas fa-trash"></i></button>
       </td>
     </tr>
   `).join('');
@@ -1993,6 +1741,20 @@ function escH(str) {
   return d.innerHTML;
 }
 
+// Sanitize IDs for use in onclick="fn('${id}')" — strip anything non-alphanumeric/underscore/hyphen
+function escId(str) {
+  if(!str) return '';
+  return String(str).replace(/[^a-zA-Z0-9_\-]/g, '');
+}
+
+// Sanitize URLs — only allow http/https, block javascript: data: etc.
+function safeUrl(url) {
+  if (!url || typeof url !== 'string') return '#';
+  const trimmed = url.trim().toLowerCase();
+  if (trimmed.startsWith('javascript:') || trimmed.startsWith('data:') || trimmed.startsWith('vbscript:')) return '#';
+  return url;
+}
+
 function toast(msg, type='success') {
   const c = document.getElementById('toast-container');
   const t = document.createElement('div');
@@ -2201,18 +1963,186 @@ function kitCopyText(id) {
 }
 
 // Sync stats du tableau de bord vers le kit
+// ══════════════════════
+// LOGIQUE DYNAMIQUE — identique à app.js
+// ══════════════════════
+
+const START_DATE = new Date('2024-04-02');
+const END_DATE   = new Date('2029-04-02');
+
+function parseDelayToDays(delayText) {
+  if (!delayText || delayText.trim() === '') return 365;
+  const lower = delayText.toLowerCase().trim();
+  if (lower.includes('2030') || lower.includes('2029') || lower.includes('mandat') || lower.includes('quinquennat')) return 1825;
+  if (lower.includes('immédiat') || lower.includes('immediat') || lower.includes('dès')) return 0;
+  let totalDays = 0;
+  const dateMatch = delayText.match(/\d{4}-\d{2}-\d{2}/);
+  if (dateMatch) {
+    const diff = new Date(dateMatch[0]).getTime() - START_DATE.getTime();
+    return Math.min(Math.max(0, Math.ceil(diff / 86400000)), 1825);
+  }
+  const yearsMatch = lower.match(/(\d+)\s*an[s]?/i);
+  if (yearsMatch) totalDays += parseInt(yearsMatch[1]) * 365;
+  const monthsMatch = lower.match(/(\d+)\s*mois/i);
+  if (monthsMatch) totalDays += parseInt(monthsMatch[1]) * 30;
+  const daysMatch = lower.match(/(\d+)\s*jour[s]?/i);
+  if (daysMatch) totalDays += parseInt(daysMatch[1]);
+  if (totalDays === 0) {
+    const num = parseInt(delayText.replace(/[^0-9]/g, ''), 10);
+    if (!isNaN(num) && num > 0) totalDays = num;
+    else totalDays = 365;
+  }
+  return Math.min(totalDays, 1825);
+}
+
+function calcDeadline(delayDays) {
+  const d = new Date(START_DATE);
+  d.setDate(d.getDate() + delayDays);
+  return d > END_DATE ? new Date(END_DATE) : d;
+}
+
+function computeIsLate(status, deadline) {
+  if (status === 'realise') return false;
+  if (!deadline || isNaN(deadline.getTime())) return false;
+  return new Date() > deadline;
+}
+
+/** Calcule les vraies stats dynamiques (comme app.js) */
+function computeStats() {
+  const now = new Date();
+  const raw = DB.promises;
+  let realise = 0, encours = 0, nonLance = 0, retard = 0, withUpdates = 0;
+  let totalRetardDays = 0;
+
+  raw.forEach(p => {
+    const statusRaw = (p.status || '').toLowerCase();
+    let status = 'non-lance';
+    if (statusRaw.includes('realise') || statusRaw.includes('réalisé')) status = 'realise';
+    else if (statusRaw.includes('cours') || statusRaw.includes('encours'))  status = 'encours';
+    else if (statusRaw.includes('retard')) status = 'retard';
+
+    const delayDays = parseDelayToDays(p.delai || '');
+    const deadline  = calcDeadline(delayDays);
+    const isLate    = computeIsLate(status, deadline);
+
+    if (isLate) {
+      retard++;
+      totalRetardDays += Math.round((now - deadline) / 86400000);
+    } else if (status === 'realise') realise++;
+    else if (status === 'encours')   encours++;
+    else                             nonLance++;
+
+    if ((p.mises_a_jour || []).length > 0) withUpdates++;
+  });
+
+  const total   = raw.length;
+  const taux    = total > 0 ? Math.round((realise / total) * 100) : 0;
+  const avgRetard = retard > 0 ? Math.round(totalRetardDays / retard) : 0;
+
+  // Période dynamique
+  const months_fr = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  const today = new Date();
+  const periode = `Bilan — ${months_fr[today.getMonth()]} ${today.getFullYear()}`;
+
+  const elapsed = Math.floor((today - START_DATE) / (1000 * 60 * 60 * 24 * 30));
+  const years   = Math.floor(elapsed / 12);
+  const months  = elapsed % 12;
+  let sous = '';
+  if (years > 0) sous = `${years} an${years > 1 ? 's' : ''}${months > 0 ? ` et ${months} mois` : ''} après l'élection`;
+  else sous = `${elapsed} mois après l'élection`;
+
+  return { total, realise, encours, nonLance, retard, taux, withUpdates, avgRetard, periode, sous };
+}
+
 function kitSyncFromDB() {
-  const p = DB.promises;
-  if (!p || !p.length) return;
-  const r = p.filter(x=>x.status==='realise').length;
-  const e = p.filter(x=>x.status==='encours').length;
-  const n = p.filter(x=>x.status==='non-lance').length;
-  const rt = p.filter(x=>x.status==='retard').length;
-  if(document.getElementById('kctTotal'))    document.getElementById('kctTotal').value    = p.length;
-  if(document.getElementById('kctRealise'))  document.getElementById('kctRealise').value  = r;
-  if(document.getElementById('kctEncours'))  document.getElementById('kctEncours').value  = e;
-  if(document.getElementById('kctNonLance')) document.getElementById('kctNonLance').value = n;
-  if(document.getElementById('kctRetard'))   document.getElementById('kctRetard').value   = rt;
+  const s = computeStats();
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
+  set('kctTotal',    s.total);
+  set('kctRealise',  s.realise);
+  set('kctEncours',  s.encours);
+  set('kctNonLance', s.nonLance);
+  set('kctRetard',   s.retard);
+  set('kctPeriode',  s.periode);
+  set('kctSous',     s.sous);
+}
+
+// ══════════════════════
+// GÉNÉRER / COPIER JSON — ACTUALITÉS & PRESSE
+// ══════════════════════
+function generateAndShowNewsJSON() {
+  const data = { last_updated: new Date().toISOString(), news: DB.news };
+  const json = JSON.stringify(data, null, 2);
+  const card = document.getElementById('newsJsonCard');
+  const output = document.getElementById('newsJsonOutput');
+  const counter = document.getElementById('newsJsonCounter');
+  output.value = json;
+  counter.textContent = `— ${DB.news.length} actualité(s)`;
+  card.style.display = 'block';
+  card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  toast('JSON Actualités généré ✅', 'success');
+}
+
+async function copyNewsJSON() {
+  const data = { last_updated: new Date().toISOString(), news: DB.news };
+  const json = JSON.stringify(data, null, 2);
+  try {
+    await navigator.clipboard.writeText(json);
+    toast('JSON Actualités copié dans le presse-papier ✅', 'success');
+  } catch (err) {
+    const ta = document.createElement('textarea');
+    ta.value = json;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    toast('JSON Actualités copié ✅', 'success');
+  }
+}
+
+function generateAndShowPressJSON() {
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const yyyy = today.getFullYear();
+  const todayStr = `${dd}/${mm}/${yyyy}`;
+
+  // Mettre à jour la date de chaque entrée presse avec la date du jour
+  const pressAvecDate = DB.press.map(p => ({ ...p, date: todayStr }));
+
+  const data = { last_updated: new Date().toISOString(), press: pressAvecDate };
+  const json = JSON.stringify(data, null, 2);
+  const card = document.getElementById('pressJsonCard');
+  const output = document.getElementById('pressJsonOutput');
+  const counter = document.getElementById('pressJsonCounter');
+  output.value = json;
+  counter.textContent = `— ${DB.press.length} journal/journaux — date: ${todayStr}`;
+  card.style.display = 'block';
+  card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  toast(`JSON Presse généré ✅ (date: ${todayStr})`, 'success');
+}
+
+async function copyPressJSON() {
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const yyyy = today.getFullYear();
+  const todayStr = `${dd}/${mm}/${yyyy}`;
+
+  const pressAvecDate = DB.press.map(p => ({ ...p, date: todayStr }));
+  const data = { last_updated: new Date().toISOString(), press: pressAvecDate };
+  const json = JSON.stringify(data, null, 2);
+  try {
+    await navigator.clipboard.writeText(json);
+    toast(`JSON Presse copié ✅ (date: ${todayStr})`, 'success');
+  } catch (err) {
+    const ta = document.createElement('textarea');
+    ta.value = json;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    toast(`JSON Presse copié ✅ (date: ${todayStr})`, 'success');
+  }
 }
 
 // ══════════════════════

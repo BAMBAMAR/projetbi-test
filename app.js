@@ -673,7 +673,7 @@ async function loadPromisesData() {
 // Fonction séparée pour charger la presse
 async function loadPressData() {
     try {
-        const pressResponse = await fetch('press.json?v=' + Date.now());
+        const pressResponse = await fetch('press.json', { cache: 'no-store' });
         
         if (!pressResponse.ok) {
             CONFIG.press = getDefaultPressData();
@@ -707,7 +707,7 @@ async function loadPressData() {
 // Fonction séparée pour charger les actualités
 async function loadNewsData() {
     try {
-        const newsResponse = await fetch('news.json?v=' + Date.now());
+        const newsResponse = await fetch('news.json', { cache: 'no-store' });
         
         if (!newsResponse.ok) {
             CONFIG.news = [

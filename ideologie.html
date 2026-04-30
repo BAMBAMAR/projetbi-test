@@ -454,6 +454,182 @@
       transition: opacity .2s;
     }
     .toc-dot:hover .toc-label { opacity: 1; }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE MOBILE — optimisation complète
+       ═══════════════════════════════════════════ */
+
+    /* ── Sections : padding réduit ── */
+    @media (max-width: 768px) {
+      html { scroll-padding-top: 70px; }
+      section { padding: 48px 1.1rem; }
+      .section-header { margin-bottom: 2rem; }
+      .section-title { font-size: 1.55rem; }
+
+      /* ── HERO : empilement texte puis livre ── */
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 90px 1.2rem 48px;
+        gap: 2rem;
+        min-height: auto;
+      }
+      .hero h1 { font-size: clamp(1.9rem, 7vw, 2.6rem); }
+      .hero-sub { font-size: .95rem; }
+      .hero-quote { font-size: 1rem; padding: .85rem 1rem; }
+      .hero-cta { flex-direction: column; gap: .75rem; }
+      .btn-gold, .btn-outline {
+        width: 100%; justify-content: center;
+        padding: .85rem 1.2rem; font-size: .9rem;
+      }
+      /* Livre : centré, taille réduite */
+      .hero-book { justify-content: center; }
+      .book-card { width: 180px; height: 260px; padding: 1.5rem 1rem; }
+      .book-title { font-size: 2.2rem; }
+      .hero-badge { font-size: .72rem; }
+
+      /* ── STATS ── */
+      .stats-section { padding: 36px 1.1rem; }
+      .stats-grid { grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+      .stat-num { font-size: 2.5rem; }
+      .stat-label { font-size: .78rem; }
+
+      /* ── PIEUVRE DIAGRAM : colonne unique ── */
+      .pieuvre-diagram {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+      .pieuvre-center {
+        width: 140px; height: 140px;
+        margin: 0 auto;
+        font-size: .9rem;
+      }
+      .pieuvre-center .icon { font-size: 1.6rem; }
+      .pieuvre-center h3 { font-size: .85rem; }
+      /* Tentacules droits : revenir au style gauche */
+      .tentacle.right {
+        border-left: 4px solid var(--r);
+        border-right: none;
+        text-align: left;
+        flex-direction: row;
+      }
+      .tentacle.right:hover { transform: translateX(-4px); }
+      .tentacle-icon { width: 36px; height: 36px; min-width: 36px; font-size: .95rem; }
+      .tentacle h4 { font-size: .82rem; }
+      .tentacle p { font-size: .74rem; }
+
+      /* ── COMPARAISON ── */
+      .compare-section { padding: 48px 1.1rem; }
+      .compare-grid { gap: 1rem; }
+      .compare-row {
+        grid-template-columns: 1fr;
+        border-radius: 12px;
+      }
+      .compare-bad { order: 0; border-left: none; border-top: 4px solid var(--r); }
+      .compare-good { border-right: none; border-bottom: 4px solid var(--g); }
+      .compare-topic {
+        padding: 1rem;
+        flex-direction: row;
+        justify-content: center;
+        gap: .75rem;
+      }
+      .compare-topic i { font-size: 1.2rem; }
+      .compare-bad h4, .compare-good h4 { font-size: .9rem; }
+      .compare-bad p, .compare-good p { font-size: .82rem; }
+      .compare-bad, .compare-good { padding: 1rem 1.1rem; }
+
+      /* ── PILIERS ── */
+      .pillars-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .pillar-header { padding: 1.4rem 1.2rem .8rem; }
+      .pillar-header h3 { font-size: 1.1rem; }
+      .pillar-body { padding: 1.1rem; }
+      .pillar-body p { font-size: .85rem; margin-bottom: .75rem; }
+      .pillar-actions li { font-size: .82rem; }
+
+      /* ── SCHÉMA ÉCONOMIQUE : vertical ── */
+      .schema-flow { flex-direction: column; border-radius: 14px; }
+      .schema-step {
+        min-width: auto;
+        padding: 1.4rem 1.2rem;
+        border-bottom: 1px solid rgba(45,95,63,0.1);
+      }
+      .schema-step:last-child { border-bottom: none; }
+      .schema-step:not(:last-child)::after {
+        content: '↓';
+        right: auto;
+        left: 50%;
+        top: auto;
+        bottom: -14px;
+        transform: translateX(-50%);
+        font-size: 1.2rem;
+      }
+      .schema-step i { font-size: 1.6rem; }
+      .schema-step h4 { font-size: .88rem; }
+      .schema-step p { font-size: .76rem; }
+
+      /* ── JUB JUBAL JUBANTI ── */
+      .jubanti-section { padding: 48px 1.1rem; }
+      .jubanti-trio {
+        flex-direction: column;
+        gap: .75rem;
+        align-items: stretch;
+      }
+      .jubanti-item {
+        min-width: auto;
+        padding: 1.5rem 1.2rem;
+      }
+      .jubanti-item:nth-child(2) {
+        border-radius: 16px;
+        margin-top: 0;
+      }
+      .jubanti-word { font-size: 1.7rem; }
+      .jubanti-def { font-size: .85rem; }
+
+      /* ── TIMELINE ── */
+      .timeline::before { left: 20px; }
+      .timeline-item {
+        grid-template-columns: auto 1fr;
+        gap: 1rem;
+        margin-bottom: 1.75rem;
+      }
+      .timeline-item:nth-child(odd) .timeline-content { grid-column: 2; text-align: left; order: 0; }
+      .timeline-item:nth-child(even) .timeline-content { grid-column: 2; }
+      .timeline-dot { width: 40px; height: 40px; font-size: .8rem; }
+      .timeline-content { padding: 1rem 1.1rem; }
+      .timeline-content h4 { font-size: .95rem; }
+      .timeline-content p { font-size: .78rem; }
+
+      /* ── QUOTES ── */
+      .quotes-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .quote-card { padding: 1.4rem 1.2rem; }
+      .quote-icon { font-size: 1.8rem; }
+      .quote-text { font-size: .95rem; }
+
+      /* ── ENGAGEMENTS ── */
+      .eng-grid { grid-template-columns: 1fr; gap: .85rem; }
+      .eng-body h4 { font-size: .92rem; }
+      .eng-body p { font-size: .82rem; }
+
+      /* ── FILTRES ENGAGEMENTS ── */
+      .eng-filters-wrap {
+        display: flex; flex-wrap: wrap; gap: .5rem;
+        justify-content: flex-start;
+        overflow-x: auto; padding-bottom: .5rem;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .eng-filter { font-size: .76rem; padding: .4rem .85rem; }
+
+      /* ── FOOTER texte ── */
+      .footer-brand-row { flex-direction: column; gap: 1.25rem; }
+    }
+
+    /* ── Très petits écrans (≤ 380px) ── */
+    @media (max-width: 380px) {
+      section { padding: 36px .85rem; }
+      .hero { padding: 80px .85rem 36px; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 1.65rem; }
+    }
   </style>
 </head>
 <body>
@@ -488,15 +664,15 @@
         <div class="nav-row-inner">
             <ul class="nav-links" id="navLinks">
                 <li><a href="index.html#accueil" class="modern-link">🏠 Accueil</a></li>
+                <li><a href="ideologie.html" class="modern-link active">🧠 Idéologie Pastef</a></li>
                 <li><a href="index.html#dashboard" class="modern-link">📊 Tableau de Bord du Projet</a></li>
                 <li><a href="index.html#promesse-du-jour" class="modern-link">🗓️ Engagement du Jour</a></li>
                 <li><a href="index.html#engagements" class="modern-link">📋 Engagements</a></li>
                 <li><a href="index.html#actualites" class="modern-link">📰 Actualités</a></li>
                 <li><a href="actualites.html" class="modern-link">🔗 Toutes les Actus</a></li>
                 <li><a href="index.html#revue-de-presse" class="modern-link">🗞️ Revue de Presse</a></li>
-                <li><a href="ideologie.html" class="modern-link active">🧠 Idéologie Pastef</a></li>
             </ul>
-            <a href="index.html#evaluation" class="nav-cta-btn">⭐ Évaluer un service public</a>
+            <a href="index.html#evaluation" class="nav-cta-btn">⭐ Évaluer un service</a>
         </div>
     </div>
 </nav>
@@ -505,14 +681,14 @@
 <div id="modernMenu" class="mobile-menu-overlay">
     <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.25rem;">
         <li><a href="index.html#accueil" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">🏠 Accueil</a></li>
-        <li><a href="index.html#dashboard" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📊 Tableau de Bord du Projet</a></li>
+                <li><a href="ideologie.html" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#2D5F3F;font-weight:700;text-decoration:none;border-bottom:1px solid #eee;">🧠 Idéologie Pastef</a></li>
+      <li><a href="index.html#dashboard" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📊 Tableau de Bord du Projet</a></li>
         <li><a href="index.html#promesse-du-jour" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">🗓️ Engagement du Jour</a></li>
         <li><a href="index.html#engagements" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📋 Engagements</a></li>
         <li><a href="index.html#actualites" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">📰 Actualités</a></li>
         <li><a href="actualites.html" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">🔗 Toutes les Actus</a></li>
         <li><a href="index.html#revue-de-presse" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#0D1B14;font-weight:600;text-decoration:none;border-bottom:1px solid #eee;">🗞️ Revue de Presse</a></li>
-        <li><a href="ideologie.html" class="modern-link" style="display:block;padding:.85rem 1rem;border-radius:10px;color:#2D5F3F;font-weight:700;text-decoration:none;border-bottom:1px solid #eee;">🧠 Idéologie Pastef</a></li>
-        <li><a href="index.html#evaluation" class="modern-link" style="display:flex;padding:.85rem 1rem;border-radius:100px;background:#2D5F3F;color:white;font-weight:700;text-decoration:none;justify-content:center;margin-top:.75rem;">⭐ Évaluer un service public</a></li>
+        <li><a href="index.html#evaluation" class="modern-link" style="display:flex;padding:.85rem 1rem;border-radius:100px;background:#2D5F3F;color:white;font-weight:700;text-decoration:none;justify-content:center;margin-top:.75rem;">⭐ Évaluer un service</a></li>
     </ul>
 </div>
 
@@ -1496,8 +1672,11 @@
         <div class="footer-divider"></div>
         <nav class="footer-nav">
             <a href="index.html#accueil" class="footer-nav-link"><i class="fas fa-home"></i> Accueil</a>
+          <span class="footer-sep">·</span>
+            <a href="ideologie.html" class="footer-nav-link" style="color:#C9A84C;font-weight:700;"><i class="fas fa-brain"></i> Idéologie Pastef</a>
+        </nav>
             <span class="footer-sep">·</span>
-            <a href="index.html#dashboard" class="footer-nav-link"><i class="fas fa-chart-bar"></i> Dashboard</a>
+            <a href="index.html#dashboard" class="footer-nav-link"><i class="fas fa-chart-bar"></i> Tableau de Bord du Projet</a>
             <span class="footer-sep">·</span>
             <a href="index.html#promesse-du-jour" class="footer-nav-link"><i class="fas fa-newspaper"></i> Engagement du Jour</a>
             <span class="footer-sep">·</span>
@@ -1512,10 +1691,7 @@
             <a href="index.html#evaluation" class="footer-nav-link"><i class="fas fa-star"></i> Évaluer les Services</a>
             <span class="footer-sep">·</span>
             <a href="Livre-Programme-Bassirou-Diomaye-Faye.pdf" class="footer-nav-link" download><i class="fas fa-file-pdf"></i> Programme PASTEF (PDF)</a>
-            <span class="footer-sep">·</span>
-            <a href="ideologie.html" class="footer-nav-link" style="color:#C9A84C;font-weight:700;"><i class="fas fa-brain"></i> Idéologie Pastef</a>
-        </nav>
-        <div class="footer-divider"></div>
+                    <div class="footer-divider"></div>
         <div class="footer-bottom-compact">
             <span class="footer-copy">© 2026 PROJETBI · Gardiens du Projet PASTEF · Depuis le <strong>02 AVRIL 2024</strong></span>
             <span class="footer-disclaimer">Site de sympathisants du Projet PASTEF. Données publiques et vérifiables.</span>

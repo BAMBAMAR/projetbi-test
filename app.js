@@ -2083,10 +2083,18 @@ function renderNews(news) {
         'Pêche':'fa-fish', 'Défense':'fa-shield-alt'
     };
 
-    // Tri par date (plus récentes en premier) et limitation à 8 actualités
-    const parseDate = (d) => { const p = d.split('/'); return new Date(p[2], p[1] - 1, p[0]); };
-    const sortedNews = [...news].sort((a, b) => parseDate(b.date) - parseDate(a.date)).slice(0, 8);
-    
+// Tri par date décroissante (created_at prioritaire, puis date), puis on prend les 8 premiers
+function parseNewsDate(item) {
+    if (item.created_at) return new Date(item.created_at).getTime();
+    const d = item.date || '';
+    // Accepte DD/MM/YYYY ou YYYY-MM-DD
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(d)) {
+        const [dd, mm, yyyy] = d.split('/');
+        return new Date(`${yyyy}-${mm}-${dd}`).getTime();
+    }
+    return new Date(d).getTime() || 0;
+}
+const sortedNews = [...news].sort((a, b) => parseNewsDate(b) - parseNewsDate(a)).slice(0, 8);
     grid.innerHTML = sortedNews.map(item => {
         const wordLimit = 55;
         const fullText = item.excerpt || '';

@@ -8,8 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
 
 <style>
@@ -372,8 +371,6 @@ textarea.form-control{resize:vertical;min-height:90px}
 </head>
 <body>
 
-<!-- ═══════ AUTH SCREEN ═══════ -->
-<!-- AUTH GUARD: page is hidden at HTML level until JS auth passes -->
 <script>
   // Block DOM before any rendering - prevents devtools DOM inspection before auth
   if (sessionStorage.getItem('admin_auth') !== '03eb6856c640072257980d6125e3082905e07a23b3a50f2efe5256bc9898a380') {
@@ -393,7 +390,6 @@ textarea.form-control{resize:vertical;min-height:90px}
   </div>
 </div>
 
-<!-- ═══════ SIDEBAR ═══════ -->
 <nav class="sidebar" id="sidebar">
   <div class="sidebar-logo">
     <div class="logo-icon"><i class="fas fa-leaf"></i></div>
@@ -425,7 +421,6 @@ textarea.form-control{resize:vertical;min-height:90px}
   </div>
 </nav>
 
-<!-- ═══════ MAIN ═══════ -->
 <div class="main">
   <div class="topbar">
     <button class="topbar-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
@@ -438,7 +433,6 @@ textarea.form-control{resize:vertical;min-height:90px}
 
   <div class="content" id="mainContent">
 
-    <!-- ══════════════════════ DASHBOARD ══════════════════════ -->
     <div class="page active" id="page-dashboard">
       <div class="kpi-row" id="kpiRow"></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
@@ -457,7 +451,6 @@ textarea.form-control{resize:vertical;min-height:90px}
       </div>
     </div>
 
-    <!-- ══════════════════════ ENGAGEMENTS ══════════════════════ -->
     <div class="page" id="page-promises">
       <div class="filter-bar">
         <div class="search-box"><i class="fas fa-search"></i><input type="text" id="promiseSearch" placeholder="Rechercher un engagement…" oninput="filterPromises()"></div>
@@ -493,7 +486,6 @@ textarea.form-control{resize:vertical;min-height:90px}
       </div>
     </div>
 
-    <!-- ══════════════════════ ACTUALITÉS ══════════════════════ -->
     <div class="page" id="page-news">
       <div class="filter-bar">
         <div class="search-box"><i class="fas fa-search"></i><input type="text" id="newsSearch" placeholder="Rechercher une actualité…" oninput="filterNews()"></div>
@@ -522,7 +514,6 @@ textarea.form-control{resize:vertical;min-height:90px}
       </div>
     </div>
 
-    <!-- ══════════════════════ PRESSE ══════════════════════ -->
     <div class="page" id="page-press">
       <div class="filter-bar">
         <button class="btn btn-primary btn-sm" onclick="openPressModal()"><i class="fas fa-plus"></i> Nouvelle une</button>
@@ -550,7 +541,6 @@ textarea.form-control{resize:vertical;min-height:90px}
       </div>
     </div>
 
-    <!-- ══════════════════════ NOTATIONS ══════════════════════ -->
     <div class="page" id="page-ratings">
       <div class="kpi-row" id="ratingsKpi"></div>
       <div class="card">
@@ -564,7 +554,6 @@ textarea.form-control{resize:vertical;min-height:90px}
       </div>
     </div>
 
-    <!-- ══════════════════════ EXPORT ══════════════════════ -->
     <div class="page" id="page-export">
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem">
         <div class="card">
@@ -613,7 +602,6 @@ textarea.form-control{resize:vertical;min-height:90px}
       </div>
     </div>
 
-    <!-- ══════════════════════ SEO ══════════════════════ -->
     <div class="page" id="page-seo">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
         <div class="card">
@@ -647,10 +635,8 @@ textarea.form-control{resize:vertical;min-height:90px}
       </div>
     </div>
 
-    <!-- ══════════════════════ KIT COMMUNICATION ══════════════════════ -->
     <div class="page" id="page-kit">
 
-      <!-- Contrôles -->
       <div class="card" style="margin-bottom:1rem">
         <div class="card-head">
           <span class="card-title"><i class="fas fa-sliders" style="color:var(--green)"></i> Personnaliser l'infographie</span>
@@ -671,7 +657,6 @@ textarea.form-control{resize:vertical;min-height:90px}
             <div class="form-group"><label>Période / Titre</label><input type="text" class="form-control" id="kctPeriode" value="Bilan — Mars 2026"></div>
             <div class="form-group"><label>Sous-titre</label><input type="text" class="form-control" id="kctSous" value="1 an et 11 mois après l'élection"></div>
           </div>
-          <!-- Template selector -->
           <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.5rem">
             <button class="btn btn-primary btn-sm" id="kbtn-bilan" onclick="kitSelectTemplate('bilan')"><i class="fas fa-chart-bar"></i> Bilan Global</button>
             <button class="btn btn-outline btn-sm" id="kbtn-taux" onclick="kitSelectTemplate('taux')"><i class="fas fa-percent"></i> Taux Réalisation</button>
@@ -683,7 +668,6 @@ textarea.form-control{resize:vertical;min-height:90px}
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start">
 
-        <!-- Prévisualisation canvas -->
         <div class="card">
           <div class="card-head"><span class="card-title"><i class="fas fa-eye" style="color:var(--blue)"></i> Aperçu</span></div>
           <div class="card-body" style="background:var(--bg3);display:flex;flex-direction:column;align-items:center;gap:1rem;padding:1.2rem">
@@ -695,7 +679,6 @@ textarea.form-control{resize:vertical;min-height:90px}
           </div>
         </div>
 
-        <!-- Textes sociaux -->
         <div style="display:flex;flex-direction:column;gap:.75rem">
           <div class="card">
             <div class="card-head" style="padding:.7rem 1rem">
@@ -730,13 +713,7 @@ textarea.form-control{resize:vertical;min-height:90px}
       </div>
     </div>
 
-  </div><!-- /content -->
-</div><!-- /main -->
-
-<!-- ══════════════════════ MODALS ══════════════════════ -->
-
-<!-- Modal Engagement -->
-<div class="modal-overlay" id="promiseModal">
+  </div></div><div class="modal-overlay" id="promiseModal">
   <div class="modal" style="max-width:720px">
     <div class="modal-head">
       <span class="modal-title" id="promiseModalTitle">Modifier l'engagement</span>
@@ -791,7 +768,6 @@ textarea.form-control{resize:vertical;min-height:90px}
   </div>
 </div>
 
-<!-- Modal Actualité -->
 <div class="modal-overlay" id="newsModal">
   <div class="modal">
     <div class="modal-head">
@@ -872,7 +848,6 @@ textarea.form-control{resize:vertical;min-height:90px}
   </div>
 </div>
 
-<!-- Modal Presse -->
 <div class="modal-overlay" id="pressModal">
   <div class="modal">
     <div class="modal-head">
@@ -899,9 +874,6 @@ textarea.form-control{resize:vertical;min-height:90px}
 
 <div id="toast-container"></div>
 
-<!-- ═══════════════════════════════════════════════════
-     JAVASCRIPT
-═══════════════════════════════════════════════════ -->
 <script>
 // ══════════════════════
 // CONFIG & STATE
@@ -979,7 +951,6 @@ document.getElementById('authBtn').addEventListener('click', async () => {
     }, 3000);
   }
 });
-// Soumission via form (Enter géré nativement par le <form>)
 
 function logout() {
   sessionStorage.removeItem('admin_auth');
@@ -992,7 +963,7 @@ function logout() {
 async function init() {
   await loadData();
   initSupabase();
-  kitSyncFromDB(); // Synchroniser les stats du kit avec les données chargées
+  kitSyncFromDB();
   renderDashboard();
   renderPromises();
   renderNews();
@@ -1045,11 +1016,9 @@ document.querySelectorAll('.nav-item[data-page]').forEach(item => {
     item.classList.add('active');
     document.getElementById('page-'+page).classList.add('active');
     document.getElementById('pageTitle').textContent = pageTitles[page] || page;
-    // Kit Communication : sync stats + rendu canvas
     if (page === 'kit') {
       setTimeout(() => { kitSyncFromDB(); kitRenderAll(); }, 50);
     }
-    // Notations : rechargement depuis Supabase
     if (page === 'ratings') loadRatings();
   });
 });
@@ -1077,7 +1046,6 @@ function renderDashboard() {
     <div class="kpi-card blue"><div class="kpi-label">Avec MàJ</div><div class="kpi-value" style="color:var(--blue)">${withUpdates}</div><div class="kpi-sub">Engagements documentés</div><i class="fas fa-history kpi-icon" style="color:var(--blue)"></i></div>
   `;
 
-  // Domain chart
   const domains = {};
   p.forEach(x => domains[x.domaine] = (domains[x.domaine]||0)+1);
   const sorted = Object.entries(domains).sort((a,b)=>b[1]-a[1]).slice(0,8);
@@ -1090,7 +1058,6 @@ function renderDashboard() {
      </div>`
   ).join('');
 
-  // Retard list
   const retards = p.filter(x => {
     const statusRaw = (x.status || '').toLowerCase();
     const status = statusRaw.includes('realise') || statusRaw.includes('réalisé') ? 'realise'
@@ -1105,7 +1072,6 @@ function renderDashboard() {
       </div>`).join('')
     : '<p style="color:var(--text3);font-size:.83rem;text-align:center;padding:1rem">Aucun retard 🎉</p>';
 
-  // Activity
   const allUpdates = [];
   p.forEach(pr => {
     (pr.mises_a_jour||[]).forEach(u => allUpdates.push({...u, promise: pr.engagement}));
@@ -1137,7 +1103,6 @@ function initDomainFilter() {
   const domains = [...new Set(DB.promises.map(p=>p.domaine))].sort();
   const sel = document.getElementById('promiseDomain');
   domains.forEach(d => { const o=document.createElement('option'); o.value=d; o.textContent=d; sel.appendChild(o); });
-  // Also for modal
   const editSel = document.getElementById('editDomain');
   domains.forEach(d => { const o=document.createElement('option'); o.value=d; o.textContent=d; editSel.appendChild(o); });
 }
@@ -1200,7 +1165,7 @@ function goPage(n) { currentPage=n; renderPromiseTable(); }
 function editPromise(id) {
   const p = DB.promises.find(x=>x.id===id);
   if (!p) return;
-  window._newUpdates = []; // reset tracking des nouvelles MàJ
+  window._newUpdates = [];
   document.getElementById('promiseModalTitle').textContent = 'Modifier l\'engagement';
   document.getElementById('editId').value = id;
   document.getElementById('editIdDisplay').value = id;
@@ -1214,7 +1179,7 @@ function editPromise(id) {
 }
 
 function openPromiseModal() {
-  window._newUpdates = []; // reset tracking
+  window._newUpdates = [];
   document.getElementById('promiseModalTitle').textContent = 'Nouvel engagement';
   document.getElementById('editId').value = '';
   document.getElementById('editIdDisplay').value = 'Auto-généré';
@@ -1231,7 +1196,7 @@ function renderUpdatesList(updates) {
   document.getElementById('updatesCount').textContent = `(${updates.length})`;
   document.getElementById('updatesList').innerHTML = updates.map((u,i) => `
     <div class="update-item">
-      <div class="update-date">${u.date||'—'}</div>
+      <div class="update-date">${formatDateFR(u.date)||u.date||'—'}</div>
       <div class="update-text">${escH(u.description||u.source||'')}</div>
       <button class="del-btn" onclick="removeUpdate(${i})" title="Supprimer"><i class="fas fa-times"></i></button>
     </div>
@@ -1246,7 +1211,6 @@ function removeUpdate(i) {
   renderUpdatesList(window._tempUpdates);
 }
 
-// ── Helpers pour la conversion MàJ → Actualité ──
 const DOMAIN_ICONS_MAP = {
   'Santé':'🏥','Agriculture':'🌾','Justice':'⚖️','Industrie':'🏭',
   'Éducation':'📚','Finances':'💰','Enseignement Supérieur':'🎓',
@@ -1282,12 +1246,7 @@ function nextNewsId() {
   return String(max + 1);
 }
 
-/**
- * Crée une actualité dans DB.news à partir d'une mise à jour de promesse.
- * Retourne true si créée, false si déjà existante (évite les doublons).
- */
 function createNewsFromUpdate(promise, update) {
-  // Clé de déduplication : promise_id + date + 50 premiers caractères du texte
   const dedupeKey = `${promise.id}|${update.date}|${(update.description||update.text||'').substring(0,50)}`;
   const alreadyExists = DB.news.some(n => n._dedupeKey === dedupeKey);
   if (alreadyExists) return false;
@@ -1317,7 +1276,6 @@ function createNewsFromUpdate(promise, update) {
     _dedupeKey:       dedupeKey,
   };
 
-  // Insérer en tête de liste
   DB.news.unshift(article);
   return true;
 }
@@ -1331,7 +1289,6 @@ function saveUpdate() {
   const update = { date, source, description: desc };
   window._tempUpdates.push(update);
 
-  // ── Marquer la mise à jour comme "nouvelle" pour la créer en actualité lors du savePromise
   if (!window._newUpdates) window._newUpdates = [];
   window._newUpdates.push(update);
 
@@ -1369,10 +1326,8 @@ function savePromise() {
     DB.promises.push(promise);
   }
 
-  // ── Conversion automatique des nouvelles MàJ en actualités
   let newsCreated = 0;
   if (promise && window._newUpdates && window._newUpdates.length > 0) {
-    // Mettre à jour le statut de la promesse dans l'objet utilisé pour la création
     const promiseForNews = { ...promise, status: data.status, engagement: data.engagement, domaine: data.domaine };
     for (const upd of window._newUpdates) {
       if (createNewsFromUpdate(promiseForNews, upd)) newsCreated++;
@@ -1464,7 +1419,10 @@ function editNews(id) {
   document.getElementById('newsLink').value=n.link||'';
   document.getElementById('newsAuthor').value=n.author||'';
   document.getElementById('newsCategory').value=n.category||'Autre';
-  document.getElementById('newsDate').value=n.date||'';
+  
+  // ---> MODIFICATION IMPORTANTE : Convertir la date du format JJ/MM/AAAA vers AAAA-MM-JJ pour l'input
+  document.getElementById('newsDate').value=(function(d){ if(!d)return''; const p=d.split('/'); return p.length===3 ? `${p[2]}-${p[1]}-${p[0]}` : d; })(n.date);
+  
   document.getElementById('newsDeleteBtn').style.display='flex';
   openModal('newsModal');
 }
@@ -1474,7 +1432,10 @@ function saveNews() {
   const data = {
     title: document.getElementById('newsTitle').value,
     source: document.getElementById('newsSource').value,
-    date: document.getElementById('newsDate').value,
+    
+    // ---> MODIFICATION IMPORTANTE : Convertir la date de l'input AAAA-MM-JJ vers le format JJ/MM/AAAA
+    date: (function(d){ if(!d)return''; const p=d.split('-'); return p.length===3 ? `${p[2]}/${p[1]}/${p[0]}` : d; })(document.getElementById('newsDate').value),
+    
     category: document.getElementById('newsCategory').value,
     author: document.getElementById('newsAuthor').value,
     excerpt: document.getElementById('newsExcerpt').value,
@@ -1490,7 +1451,7 @@ function saveNews() {
     if (idx>-1) DB.news[idx]={...DB.news[idx],...data};
     toast('Actualité mise à jour ✅','success');
   } else {
-    const newId = String(DB.news.length+1);
+    const newId = nextNewsId();
     DB.news.unshift({id:newId,...data});
     toast('Actualité ajoutée ✅','success');
   }
@@ -1963,10 +1924,6 @@ function kitCopyText(id) {
 }
 
 // Sync stats du tableau de bord vers le kit
-// ══════════════════════
-// LOGIQUE DYNAMIQUE — identique à app.js
-// ══════════════════════
-
 const START_DATE = new Date('2024-04-02');
 const END_DATE   = new Date('2029-04-02');
 
@@ -2007,7 +1964,6 @@ function computeIsLate(status, deadline) {
   return new Date() > deadline;
 }
 
-/** Calcule les vraies stats dynamiques (comme app.js) */
 function computeStats() {
   const now = new Date();
   const raw = DB.promises;
@@ -2039,7 +1995,6 @@ function computeStats() {
   const taux    = total > 0 ? Math.round((realise / total) * 100) : 0;
   const avgRetard = retard > 0 ? Math.round(totalRetardDays / retard) : 0;
 
-  // Période dynamique
   const months_fr = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
   const today = new Date();
   const periode = `Bilan — ${months_fr[today.getMonth()]} ${today.getFullYear()}`;
@@ -2106,7 +2061,6 @@ function generateAndShowPressJSON() {
   const yyyy = today.getFullYear();
   const todayStr = `${dd}/${mm}/${yyyy}`;
 
-  // Mettre à jour la date de chaque entrée presse avec la date du jour
   const pressAvecDate = DB.press.map(p => ({ ...p, date: todayStr }));
 
   const data = { last_updated: new Date().toISOString(), press: pressAvecDate };

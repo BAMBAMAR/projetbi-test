@@ -1339,7 +1339,7 @@ if (filterBtn && filterSec) {
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         // Chemin relatif au dossier courant — fonctionne en sous-dossier (ex: /projetbi-test/)
-const swPath = new URL('sw.js?v=2', document.baseURI).href;
+const swPath = new URL('sw.js?v=3', document.baseURI).href;
         const swScope = new URL('./', document.baseURI).href;
         navigator.serviceWorker.register(swPath, { scope: swScope })
             .catch(() => {}); // Silencieux si SW non disponible

@@ -3,8 +3,8 @@
 // Compatible sous-dossier GitHub Pages (ex: /projetbi-test/)
 // ============================================================
 
-const STATIC_CACHE = 'projetbi-static-v4';
-const DATA_CACHE   = 'projetbi-data-v4';
+const STATIC_CACHE = 'projetbi-static-v5';
+const DATA_CACHE   = 'projetbi-data-v5';
 
 // Base du SW — fonctionne en racine ou sous-dossier
 const BASE = self.registration.scope;
@@ -105,6 +105,21 @@ self.addEventListener('fetch', event => {
   // Pages admin — jamais en cache
   // Pages admin — jamais en cache
   if (NO_CACHE_PAGES.some(p => url.href.endsWith(p))) return;
+
+  // ── app.js : Network First (doit toujours être à jour pour voir les nouveaux articles)
+  if (url.pathname.endsWith('app.js')) {
+    event.respondWith(
+      fetch(req).then(res => {
+        if (isCacheable(res)) {
+          caches.open(STATIC_CACHE).then(c => c.put(req, res.clone()));
+        }
+        return res;
+      }).catch(async () => {
+        return (await caches.match(req)) || new Response('', { status: 503 });
+      })
+    );
+    return;
+  }
 
   // ── JSON : Network First, cache fallback
   if (url.pathname.endsWith('.json')) {

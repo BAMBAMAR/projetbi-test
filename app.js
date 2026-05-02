@@ -368,7 +368,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 4. Rendre les données
     renderAll();
     if (typeof renderNews === 'function') {
-        renderNews();
+        await renderNews();
     }
     if (typeof renderNewspapers === 'function') {
         renderNewspapers();
@@ -559,14 +559,10 @@ async function loadData() {
         
         // Rendre tout
         renderAll();
-        if (typeof renderNews === 'function') {
-            renderNews(CONFIG.news);
-        }
         if (typeof renderNewspapers === 'function') {
             renderNewspapers();
         }
-        
-        
+
     } catch (error) {
         console.error(error);
         showNotification('Erreur de chargement des données', 'error');
@@ -673,7 +669,7 @@ async function loadPromisesData() {
 // Fonction séparée pour charger la presse
 async function loadPressData() {
     try {
-        const pressResponse = await fetch('press.json?v=' + Date.now());
+        const pressResponse = await fetch('press.json');
         
         if (!pressResponse.ok) {
             CONFIG.press = getDefaultPressData();
@@ -707,7 +703,7 @@ async function loadPressData() {
 // Fonction séparée pour charger les actualités
 async function loadNewsData() {
     try {
-        const newsResponse = await fetch('news.json?v=' + Date.now());
+        const newsResponse = await fetch('news.json');
         
         if (!newsResponse.ok) {
             CONFIG.news = [
@@ -2181,10 +2177,15 @@ async function renderNews() {
         const data = await res.json();
         news = data.news || [];
     } catch(e) {
-        if (grid) grid.innerHTML = '<p style="color:#888;grid-column:1/-1;text-align:center">Impossible de charger les actualités.</p>';
+        console.error('[renderNews] fetch error:', e);
+        if (featured) featured.innerHTML = '<p style="color:#888;text-align:center;padding:2rem">Impossible de charger les actualités.</p>';
+        if (grid)     grid.innerHTML = '';
         return;
     }
-    if (!news.length) return;
+    if (!news.length) {
+        if (featured) featured.innerHTML = '<p style="color:#888;text-align:center;padding:2rem">Aucune actualité disponible.</p>';
+        return;
+    }
 
     // ── Article à la une (position 0 = le plus récent) ──
     if (featured) {

@@ -146,7 +146,107 @@ un Sénégal Souverain, Juste & Prospère de PASTEF;Chaque promesse faite au peu
         position: fixed; top: 80px; right: 1.5rem;
         z-index: 10000; display: flex; flex-direction: column; gap: .75rem;
     }
-    </style>
+    
+    /* ── SECTION ACTUALITÉS INDEX — calqué sur actualites.html ── */
+    .idx-featured {
+        display:grid;grid-template-columns:1fr 400px;
+        border-radius:20px;overflow:hidden;
+        background:white;border:1px solid #d6e8dc;
+        box-shadow:0 4px 24px rgba(13,27,20,.08);
+        margin-bottom:2rem;cursor:pointer;transition:box-shadow .3s;
+    }
+    .idx-featured:hover { box-shadow:0 16px 48px rgba(13,27,20,.14); }
+    .idx-featured-img {
+        min-height:320px;background:#1A3D28;
+        display:flex;align-items:center;justify-content:center;
+        overflow:hidden;position:relative;
+    }
+    .idx-featured-img img {
+        position:absolute;inset:0;width:100%;height:100%;
+        object-fit:cover;opacity:.85;transition:transform .5s;
+    }
+    .idx-featured:hover .idx-featured-img img { transform:scale(1.04); }
+    .idx-feat-overlay {
+        position:absolute;inset:0;
+        background:linear-gradient(135deg,rgba(13,27,20,.5),transparent);
+    }
+    .idx-feat-badge {
+        position:absolute;top:1.1rem;left:1.1rem;z-index:2;
+        background:#B23A3A;color:white;font-size:.62rem;font-weight:700;
+        letter-spacing:.1em;text-transform:uppercase;
+        padding:.28rem .75rem;border-radius:100px;
+        display:inline-flex;align-items:center;gap:.35rem;
+    }
+    .idx-feat-badge::before {
+        content:'';width:5px;height:5px;border-radius:50%;
+        background:rgba(255,255,255,.8);animation:idxBlink 1.5s infinite;
+    }
+    @keyframes idxBlink{0%,100%{opacity:1}50%{opacity:0}}
+    .idx-featured-body { padding:1.75rem;display:flex;flex-direction:column;gap:.6rem; }
+    .idx-feat-cat { font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#2D5F3F; }
+    .idx-feat-title { font-size:clamp(1.1rem,2vw,1.5rem);font-weight:800;line-height:1.3;color:#0D1B14; }
+    .idx-feat-excerpt { font-size:.88rem;color:#4a6055;line-height:1.7;flex:1; }
+    .idx-feat-meta { display:flex;gap:.9rem;font-size:.76rem;color:#8a9e93;flex-wrap:wrap;margin-top:auto; }
+    .idx-feat-meta i { color:#3E7F55;margin-right:.2rem; }
+    .idx-feat-btn {
+        display:inline-flex;align-items:center;gap:.45rem;
+        background:#2D5F3F;color:white;
+        padding:.65rem 1.3rem;border-radius:100px;
+        font-weight:700;font-size:.82rem;
+        border:none;cursor:pointer;align-self:flex-start;
+        box-shadow:0 4px 14px rgba(45,95,63,.3);transition:all .22s;
+    }
+    .idx-feat-btn:hover { background:#1A3D28;transform:translateY(-1px); }
+    #newsGrid.idx-grid {
+        display:grid;
+        grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+        gap:1.1rem;
+    }
+    .idx-news-item {
+        background:white;border:1px solid #d6e8dc;border-radius:14px;
+        overflow:hidden;display:flex;flex-direction:column;
+        transition:all .22s;cursor:pointer;
+    }
+    .idx-news-item:hover { box-shadow:0 10px 36px rgba(13,27,20,.1);transform:translateY(-3px); }
+    .idx-news-img {
+        aspect-ratio:16/9;background:#f0f7f3;overflow:hidden;
+        display:flex;align-items:center;justify-content:center;
+        color:#3E7F55;font-size:2rem;
+    }
+    .idx-news-img img { width:100%;height:100%;object-fit:cover;transition:transform .4s; }
+    .idx-news-item:hover .idx-news-img img { transform:scale(1.06); }
+    .idx-news-body { padding:1rem;display:flex;flex-direction:column;gap:.4rem;flex:1; }
+    .idx-news-head { display:flex;align-items:center;justify-content:space-between;gap:.4rem; }
+    .idx-news-cat {
+        font-size:.62rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+        color:#2D5F3F;background:#eef6f1;padding:.15rem .5rem;border-radius:4px;flex-shrink:0;
+    }
+    .idx-news-date { font-size:.72rem;color:#8a9e93; }
+    .idx-news-title { font-weight:700;font-size:.9rem;line-height:1.4;color:#0D1B14; }
+    .idx-news-excerpt {
+        font-size:.8rem;color:#4a6055;line-height:1.55;
+        display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+    }
+    .idx-news-foot {
+        display:flex;align-items:center;justify-content:space-between;
+        padding-top:.65rem;margin-top:auto;border-top:1px solid #d6e8dc;
+        font-size:.74rem;color:#8a9e93;
+    }
+    .idx-news-foot i { margin-right:.2rem; }
+    .idx-news-read {
+        display:inline-flex;align-items:center;gap:.25rem;
+        color:#2D5F3F;font-weight:700;font-size:.74rem;
+        background:none;border:none;cursor:pointer;padding:0;transition:gap .2s;
+    }
+    .idx-news-read:hover { gap:.45rem; }
+    @media(max-width:900px){
+        .idx-featured { grid-template-columns:1fr; }
+        .idx-featured-img { min-height:200px; }
+    }
+    @media(max-width:600px){
+        #newsGrid.idx-grid { grid-template-columns:1fr; }
+    }
+</style>
     <!-- ══ PWA Manifest ══ -->
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -647,15 +747,15 @@ un Sénégal Souverain, Juste & Prospère de PASTEF;Chaque promesse faite au peu
                 <i class="fas fa-rss"></i> Toutes les actualités <i class="fas fa-arrow-right"></i>
             </a>
         </div>
-        <!-- ID = newsGrid (exact ID app.js uses) -->
-        <div id="newsGrid" class="news-grid">
-            <div class="loading-state" style="grid-column:1/-1">
+        <!-- Article à la une -->
+        <div id="newsFeatured">
+            <div class="loading-state">
                 <div class="spinner"></div>
                 <p>Chargement des actualités…</p>
             </div>
         </div>
-
-        <!-- Modal actualité — créé dynamiquement par app.js (openNewsModal) -->
+        <!-- Grille des 7 suivants -->
+        <div id="newsGrid" class="idx-grid"></div>
     </div>
 </section>
 
@@ -1339,7 +1439,7 @@ if (filterBtn && filterSec) {
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         // Chemin relatif au dossier courant — fonctionne en sous-dossier (ex: /projetbi-test/)
-const swPath = new URL('sw.js?v=3', document.baseURI).href;
+const swPath = new URL('sw.js?v=2', document.baseURI).href;
         const swScope = new URL('./', document.baseURI).href;
         navigator.serviceWorker.register(swPath, { scope: swScope })
             .catch(() => {}); // Silencieux si SW non disponible

@@ -368,7 +368,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 4. Rendre les données
     renderAll();
     if (typeof renderNews === 'function') {
-        renderNews(CONFIG.news);
+        renderNews();
     }
     if (typeof renderNewspapers === 'function') {
         renderNewspapers();
@@ -2053,100 +2053,201 @@ async function saveVoteToSupabase(promiseId, rating, comment = '') {
 // ==========================================
 // RENDER NEWS
 // ==========================================
-async function renderNews(news) {
-    const grid = document.getElementById('newsGrid');
-    if (!grid) return;
+// ==========================================
+// RENDER NEWS — calqué sur actualites.html
+// fetch direct + featured + grille + modal
+// ==========================================
 
-    // Toujours recharger news.json directement (comme actualites.html)
-    // pour garantir les données fraîches indépendamment du cache SW
-    try {
-        const res = await fetch('news.json');
-        const data = await res.json();
-        news = data.news || news || [];
-    } catch(e) {
-        news = news || [];
+const _newsIconMap = {
+    'Général':'fa-newspaper','general':'fa-newspaper','Autres':'fa-newspaper','autres':'fa-newspaper',
+    'Politique':'fa-landmark','Gouvernance':'fa-landmark','gouvernance':'fa-landmark','Institutions':'fa-landmark',
+    'Éducation':'fa-graduation-cap','education':'fa-graduation-cap',
+    'Santé':'fa-heartbeat','sante':'fa-heartbeat',
+    'Économie':'fa-chart-line','economie':'fa-chart-line','Finances':'fa-coins','Commerce':'fa-shopping-cart',
+    'Infrastructures':'fa-road','infrastructures':'fa-road','Habitat':'fa-home',
+    'Transparence':'fa-eye','Administration':'fa-file-alt',
+    'Agriculture':'fa-seedling','Pêche':'fa-fish','Élevage':'fa-horse','Agro-industrie':'fa-industry',
+    'Énergie':'fa-bolt','energie':'fa-bolt','Hydrocarbures':'fa-oil-can',
+    'Environnement':'fa-leaf','environnement':'fa-leaf','Hydraulique':'fa-water',
+    'Emploi':'fa-briefcase','emploi':'fa-briefcase','Industrie':'fa-industry',
+    'Jeunesse & Sports':'fa-running','Sport':'fa-running',
+    'Culture':'fa-theater-masks',
+    'Sécurité':'fa-shield-alt','securite':'fa-shield-alt','Défense':'fa-shield-alt',
+    'Justice':'fa-balance-scale','justice':'fa-balance-scale',
+    'Numérique':'fa-laptop','numerique':'fa-laptop',
+    'Transport':'fa-bus','transport':'fa-bus',
+    'Logement':'fa-home','logement':'fa-home',
+    'Affaires Sociales':'fa-hand-holding-heart','social':'fa-hand-holding-heart',
+    'Relations Internationales':'fa-globe','international':'fa-globe',
+    'Communiqué':'fa-bullhorn','Développement Local':'fa-map-marker-alt'
+};
+
+function _newsEsc(str) {
+    if (!str) return '';
+    const d = document.createElement('div');
+    d.appendChild(document.createTextNode(String(str)));
+    return d.innerHTML;
+}
+function _newsSafeUrl(url) {
+    if (!url || typeof url !== 'string') return '#';
+    const t = url.trim().toLowerCase();
+    if (t.startsWith('javascript:') || t.startsWith('data:') || t.startsWith('vbscript:')) return '#';
+    return url.trim();
+}
+function _newsGetIcon(cat) { return _newsIconMap[cat] || 'fa-newspaper'; }
+function _newsFallbackImg(el, catLabel, isFeatured) {
+    el.onerror = null;
+    const icon   = _newsIconMap[catLabel] || 'fa-newspaper';
+    const height = isFeatured ? '280px' : '180px';
+    el.parentElement.innerHTML = `
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;
+                    height:${height};width:100%;
+                    background:linear-gradient(135deg,#1A3D28,#2D5F3F);
+                    border-radius:inherit;gap:.6rem">
+            <i class="fas ${icon}" style="font-size:2.4rem;color:rgba(255,255,255,.45)"></i>
+            <span style="font-size:.72rem;color:rgba(255,255,255,.35);letter-spacing:.05em;text-transform:uppercase">${catLabel}</span>
+        </div>`;
+}
+window._newsFallbackImg = _newsFallbackImg;
+
+const _indexArticleStore = new Map();
+
+function _ensureIndexModal() {
+    let modal = document.getElementById('indexActuModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'indexActuModal';
+        modal.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:99999;align-items:center;justify-content:center;padding:1rem;overflow-y:auto;';
+        modal.innerHTML = `
+            <div style="background:white;border-radius:16px;max-width:760px;width:100%;max-height:90vh;overflow-y:auto;position:relative;padding:2rem;animation:slideIn .3s ease;">
+                <button id="indexActuModalCloseBtn" style="position:absolute;top:1rem;right:1rem;width:40px;height:40px;border-radius:50%;background:#2D5F3F;color:white;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;z-index:2;box-shadow:0 2px 8px rgba(0,0,0,.3);transition:all .2s;" title="Fermer">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div id="indexActuModalBody"></div>
+            </div>`;
+        modal.addEventListener('click', e => { if (e.target === modal) _closeIndexModal(); });
+        document.body.appendChild(modal);
+        document.getElementById('indexActuModalCloseBtn').addEventListener('click', _closeIndexModal);
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') _closeIndexModal(); });
     }
-
-    // Map catégorie → icône FA pour les images manquantes/cassées
-    const NEWS_CAT_ICONS = {
-        'Général':'fa-newspaper', 'general':'fa-newspaper',
-        'Éducation':'fa-graduation-cap', 'education':'fa-graduation-cap',
-        'Santé':'fa-heartbeat', 'sante':'fa-heartbeat',
-        'Économie':'fa-chart-line', 'economie':'fa-chart-line',
-        'Infrastructures':'fa-road', 'infrastructures':'fa-road',
-        'Gouvernance':'fa-landmark', 'gouvernance':'fa-landmark',
-        'Transparence':'fa-eye', 'transparence':'fa-eye',
-        'Agriculture':'fa-seedling', 'agriculture':'fa-seedling',
-        'Énergie':'fa-bolt', 'energie':'fa-bolt',
-        'Environnement':'fa-leaf', 'environnement':'fa-leaf',
-        'Emploi':'fa-briefcase', 'emploi':'fa-briefcase',
-        'Jeunesse & Sports':'fa-running', 'jeunesse':'fa-running',
-        'Culture':'fa-theater-masks', 'culture':'fa-theater-masks',
-        'Sécurité':'fa-shield-alt', 'securite':'fa-shield-alt',
-        'Justice':'fa-balance-scale', 'justice':'fa-balance-scale',
-        'Numérique':'fa-laptop', 'numerique':'fa-laptop',
-        'Transport':'fa-bus', 'transport':'fa-bus',
-        'Logement':'fa-home', 'logement':'fa-home',
-        'Affaires Sociales':'fa-hand-holding-heart', 'social':'fa-hand-holding-heart',
-        'Relations Internationales':'fa-globe', 'international':'fa-globe',
-        'Hydrocarbures':'fa-oil-can', 'Finances':'fa-coins',
-        'Pêche':'fa-fish', 'Défense':'fa-shield-alt'
-    };
-
-// Les données viennent de fetch('news.json') — même ordre que actualites.html
-const sortedNews = [...news].slice(0, 8);
-    grid.innerHTML = sortedNews.map(item => {
-        const wordLimit = 55;
-        const fullText = item.excerpt || '';
-        const words = fullText.split(/\s+/);
-        const displayText = words.length > wordLimit ? words.slice(0, wordLimit).join(' ') + '...' : fullText;
-        const categoryBadge = item.is_promise_update && item.category
-            ? '<span style="display:inline-block;background:#F0F4F1;color:#2D5F3F;border:1px solid #C5DBC0;padding:.15rem .6rem;border-radius:20px;font-size:.68rem;font-weight:600;margin-bottom:.4rem">' + escapeHTML(item.category) + '</span>'
-            : '';
-        
-        // Icône de fallback selon la catégorie de l'article
-        const catKey = item.category || 'general';
-        const fallbackIcon = NEWS_CAT_ICONS[catKey] || 'fa-newspaper';
-        const catLabel = escapeHTML(item.category || 'Général');
-        const fallbackHtml = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:200px;width:100%;background:linear-gradient(135deg,#1A3D28,#2D5F3F);border-radius:12px 12px 0 0;gap:.5rem"><i class="fas ${fallbackIcon}" style="font-size:2.4rem;color:rgba(255,255,255,.45)"></i><span style="font-size:.7rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.05em">${catLabel}</span></div>`;
-
-        return `
-        <article class="news-card" style="cursor:pointer">
-            <div class="news-image">
-                ${item.image_url ? 
-                    `<img src="${escapeHTML(item.image_url)}" alt="${escapeHTML(item.title)}" style="width:100%;height:200px;object-fit:cover;border-radius:12px 12px 0 0;"
-                         onerror="newsFallbackImg(this,'${escapeHTML(catKey)}','200px','12px 12px 0 0')">` :
-                    fallbackHtml
-                }
-            </div>
-            <div class="news-content">
-                ${categoryBadge}
-                <h3>${escapeHTML(item.title)}</h3>
-                <p>${displayText}</p>
-                <a href="#" class="news-read-more" onclick="openNewsModal('${item.id || ''}', event); return false;">
-                    Lire la suite <i class="fas fa-arrow-right"></i>
-                </a>
-                <div class="news-footer">
-                    <span><i class="fas fa-calendar"></i> ${item.date}</span>
-                    <span><i class="fas fa-newspaper"></i> ${escapeHTML(item.source || "")}</span>
-                </div>
-                <div class="news-share">
-                    <button class="social-btn-small fb" onclick="shareNews('${item.id || ''}', 'facebook')" title="Partager sur Facebook">
-                        <i class="fab fa-facebook-f"></i>
-                    </button>
-                    <button class="social-btn-small tw" onclick="shareNews('${item.id || ''}', 'twitter')" title="Partager sur X">
-                        <i class="fab fa-x-twitter"></i>
-                    </button>
-                    <button class="social-btn-small wa" onclick="shareNews('${item.id || ''}', 'whatsapp')" title="Partager sur WhatsApp">
-                        <i class="fab fa-whatsapp"></i>
-                    </button>
-                </div>
-            </div>
-        </article>
-    `;
-    }).join('');
+    return modal;
 }
 
+function _closeIndexModal() {
+    const m = document.getElementById('indexActuModal');
+    if (m) m.style.display = 'none';
+    document.body.style.overflow = '';
+}
+
+function _openIndexArticle(key) {
+    const n = _indexArticleStore.get(key);
+    if (!n) return;
+    const modal = _ensureIndexModal();
+    const body  = document.getElementById('indexActuModalBody');
+    const cat   = n.category || 'Général';
+    const fullText = n.content || n.excerpt || '';
+    const link  = (n.link && !n.link.startsWith('<iframe') && n.link !== '#') ? n.link : null;
+    body.innerHTML = `
+        <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-bottom:1rem;">
+            <span style="background:#eef6f1;color:#2D5F3F;border:1px solid #c5dbc0;padding:.2rem .75rem;border-radius:20px;font-size:.78rem;font-weight:700">${_newsEsc(cat)}</span>
+            <span style="color:#999;font-size:.78rem;margin-left:auto">${_newsEsc(n.date)}</span>
+        </div>
+        <h2 style="font-size:1.4rem;font-weight:800;color:#1A3D28;margin-bottom:1rem;line-height:1.35;padding-right:2.5rem">${_newsEsc(n.title)}</h2>
+        ${n.image_url ? `<div style="width:100%;border-radius:10px;overflow:hidden;margin-bottom:1rem"><img src="${_newsEsc(n.image_url)}" alt="${_newsEsc(n.title)}" style="width:100%;max-height:260px;object-fit:cover;display:block" onerror="_newsFallbackImg(this,'${_newsEsc(cat)}',true)"></div>` : ''}
+        <div style="display:flex;gap:1rem;font-size:.8rem;color:#8a9e93;margin-bottom:1.2rem;flex-wrap:wrap">
+            <span><i class="fas fa-newspaper" style="color:#2D5F3F;margin-right:.3rem"></i>${_newsEsc(n.source)}</span>
+            ${n.read_time ? `<span><i class="fas fa-clock" style="color:#2D5F3F;margin-right:.3rem"></i>${_newsEsc(n.read_time)}</span>` : ''}
+        </div>
+        <div style="line-height:1.8;color:#333;font-size:.95rem">${fullText.split('\n').filter(l=>l.trim()).map(l=>`<p style="margin-bottom:.85rem">${_newsEsc(l)}</p>`).join('')}</div>
+        ${link ? `<div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid #e5ede6">
+            <a href="${_newsSafeUrl(link)}" target="_blank" rel="noopener noreferrer" style="color:#2D5F3F;font-weight:700;font-size:.88rem;display:inline-flex;align-items:center;gap:.4rem">
+                <i class="fas fa-external-link-alt"></i> Lire l'article original
+            </a>
+        </div>` : ''}`;
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+window._openIndexArticle = _openIndexArticle;
+
+async function renderNews() {
+    const featured = document.getElementById('newsFeatured');
+    const grid     = document.getElementById('newsGrid');
+    if (!featured && !grid) return;
+
+    // Chargement — même fetch direct que actualites.html, sans cache-busting
+    let news = [];
+    try {
+        const res  = await fetch('news.json');
+        const data = await res.json();
+        news = data.news || [];
+    } catch(e) {
+        if (grid) grid.innerHTML = '<p style="color:#888;grid-column:1/-1;text-align:center">Impossible de charger les actualités.</p>';
+        return;
+    }
+    if (!news.length) return;
+
+    // ── Article à la une (position 0 = le plus récent) ──
+    if (featured) {
+        const f   = news[0];
+        const cat = f.category || 'Général';
+        const icon = _newsGetIcon(cat);
+        _indexArticleStore.set('featured', f);
+        featured.innerHTML = `
+        <div class="idx-featured" onclick="_openIndexArticle('featured')">
+            <div class="idx-featured-img">
+                ${f.image_url
+                    ? `<img src="${_newsEsc(f.image_url)}" alt="${_newsEsc(f.title)}" onerror="_newsFallbackImg(this,'${_newsEsc(cat)}',true)"><div class="idx-feat-overlay"></div>`
+                    : `<i class="fas ${icon}" style="font-size:3.5rem;color:rgba(255,255,255,.3);position:relative;z-index:1"></i>`}
+                <div class="idx-feat-badge">À la une</div>
+            </div>
+            <div class="idx-featured-body">
+                <div class="idx-feat-cat">${_newsEsc(cat)}</div>
+                <h3 class="idx-feat-title">${_newsEsc(f.title)}</h3>
+                <p class="idx-feat-excerpt">${_newsEsc((f.excerpt||'').substring(0,240))}${(f.excerpt||'').length>240?'…':''}</p>
+                <div class="idx-feat-meta">
+                    <span><i class="fas fa-calendar"></i> ${_newsEsc(f.date)}</span>
+                    <span><i class="fas fa-newspaper"></i> ${_newsEsc(f.source||'')}</span>
+                </div>
+                <button class="idx-feat-btn" onclick="event.stopPropagation();_openIndexArticle('featured')">
+                    <i class="fas fa-book-open"></i> Lire l'article
+                </button>
+            </div>
+        </div>`;
+    }
+
+    // ── Grille des 7 suivants (positions 1–7) ──
+    if (grid) {
+        const items = news.slice(1, 8);
+        grid.innerHTML = items.map((n, i) => {
+            const cat  = n.category || 'Général';
+            const icon = _newsGetIcon(cat);
+            const key  = 'art_' + i;
+            _indexArticleStore.set(key, n);
+            return `
+            <article class="idx-news-item" onclick="_openIndexArticle('${key}')">
+                <div class="idx-news-img">
+                    ${n.image_url
+                        ? `<img src="${_newsSafeUrl(n.image_url)}" alt="${_newsEsc(n.title)}" loading="lazy" onerror="_newsFallbackImg(this,'${_newsEsc(cat)}',false)">`
+                        : `<i class="fas ${icon}"></i>`}
+                </div>
+                <div class="idx-news-body">
+                    <div class="idx-news-head">
+                        <span class="idx-news-cat">${_newsEsc(cat)}</span>
+                        <span class="idx-news-date">${_newsEsc(n.date)}</span>
+                    </div>
+                    <h4 class="idx-news-title">${_newsEsc(n.title)}</h4>
+                    <p class="idx-news-excerpt">${_newsEsc((n.excerpt||'').substring(0,140))}…</p>
+                    <div class="idx-news-foot">
+                        <span><i class="fas fa-newspaper"></i> ${_newsEsc(n.source||'')}</span>
+                        <button class="idx-news-read" onclick="event.stopPropagation();_openIndexArticle('${key}')">
+                            Lire <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </article>`;
+        }).join('');
+    }
+}
 // ==========================================
 // RENDER NEWSPAPERS
 // ==========================================

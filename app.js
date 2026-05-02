@@ -673,7 +673,7 @@ async function loadPromisesData() {
 // Fonction séparée pour charger la presse
 async function loadPressData() {
     try {
-        const pressResponse = await fetch('press.json', { cache: 'no-store' });
+        const pressResponse = await fetch('press.json?v=' + Date.now());
         
         if (!pressResponse.ok) {
             CONFIG.press = getDefaultPressData();
@@ -707,7 +707,7 @@ async function loadPressData() {
 // Fonction séparée pour charger les actualités
 async function loadNewsData() {
     try {
-        const newsResponse = await fetch('news.json', { cache: 'no-store' });
+        const newsResponse = await fetch('news.json?v=' + Date.now());
         
         if (!newsResponse.ok) {
             CONFIG.news = [
@@ -2053,10 +2053,20 @@ async function saveVoteToSupabase(promiseId, rating, comment = '') {
 // ==========================================
 // RENDER NEWS
 // ==========================================
-function renderNews(news) {
+async function renderNews(news) {
     const grid = document.getElementById('newsGrid');
     if (!grid) return;
-    
+
+    // Toujours recharger news.json directement (comme actualites.html)
+    // pour garantir les données fraîches indépendamment du cache SW
+    try {
+        const res = await fetch('news.json');
+        const data = await res.json();
+        news = data.news || news || [];
+    } catch(e) {
+        news = news || [];
+    }
+
     // Map catégorie → icône FA pour les images manquantes/cassées
     const NEWS_CAT_ICONS = {
         'Général':'fa-newspaper', 'general':'fa-newspaper',
@@ -2083,18 +2093,8 @@ function renderNews(news) {
         'Pêche':'fa-fish', 'Défense':'fa-shield-alt'
     };
 
-// Tri par date décroissante (created_at prioritaire, puis date), puis on prend les 8 premiers
-function parseNewsDate(item) {
-    if (item.created_at) return new Date(item.created_at).getTime();
-    const d = item.date || '';
-    // Accepte DD/MM/YYYY ou YYYY-MM-DD
-    if (/^\d{2}\/\d{2}\/\d{4}$/.test(d)) {
-        const [dd, mm, yyyy] = d.split('/');
-        return new Date(`${yyyy}-${mm}-${dd}`).getTime();
-    }
-    return new Date(d).getTime() || 0;
-}
-const sortedNews = [...news].sort((a, b) => parseNewsDate(b) - parseNewsDate(a)).slice(0, 8);
+// Les données viennent de fetch('news.json') — même ordre que actualites.html
+const sortedNews = [...news].slice(0, 8);
     grid.innerHTML = sortedNews.map(item => {
         const wordLimit = 55;
         const fullText = item.excerpt || '';

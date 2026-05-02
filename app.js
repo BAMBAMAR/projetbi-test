@@ -367,11 +367,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 4. Rendre les données
     renderAll();
-    console.log('[DOMContentLoaded] renderNews disponible:', typeof renderNews);
-    if (typeof renderNews === 'function') {
-        await renderNews();
-        console.log('[DOMContentLoaded] renderNews terminée');
-    }
+    console.log('[DOMContentLoaded] renderNews source:', renderNews.toString().substring(0, 120));
+    await renderNews();
+    console.log('[DOMContentLoaded] renderNews terminée');
     if (typeof renderNewspapers === 'function') {
         renderNewspapers();
     }

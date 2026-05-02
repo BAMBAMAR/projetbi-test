@@ -367,9 +367,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 4. Rendre les données
     renderAll();
-    console.log('[DOMContentLoaded] renderNews source:', renderNews.toString().substring(0, 120));
-    await renderNews();
-    console.log('[DOMContentLoaded] renderNews terminée');
+    await renderNewsIndex();
     if (typeof renderNewspapers === 'function') {
         renderNewspapers();
     }
@@ -2165,7 +2163,7 @@ function _openIndexArticle(key) {
 }
 window._openIndexArticle = _openIndexArticle;
 
-async function renderNews() {
+async function renderNewsIndex() {
     console.log('[renderNews] ▶ appelée');
     const featured = document.getElementById('newsFeatured');
     const grid     = document.getElementById('newsGrid');

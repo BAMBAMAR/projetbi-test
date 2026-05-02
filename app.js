@@ -367,8 +367,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 4. Rendre les données
     renderAll();
+    console.log('[DOMContentLoaded] renderNews disponible:', typeof renderNews);
     if (typeof renderNews === 'function') {
         await renderNews();
+        console.log('[DOMContentLoaded] renderNews terminée');
     }
     if (typeof renderNewspapers === 'function') {
         renderNewspapers();
@@ -2166,23 +2168,31 @@ function _openIndexArticle(key) {
 window._openIndexArticle = _openIndexArticle;
 
 async function renderNews() {
+    console.log('[renderNews] ▶ appelée');
     const featured = document.getElementById('newsFeatured');
     const grid     = document.getElementById('newsGrid');
-    if (!featured && !grid) return;
+    console.log('[renderNews] newsFeatured:', featured, '| newsGrid:', grid);
+    if (!featured && !grid) {
+        console.warn('[renderNews] ⚠ aucun conteneur trouvé — abandon');
+        return;
+    }
 
-    // Chargement — même fetch direct que actualites.html, sans cache-busting
     let news = [];
     try {
+        console.log('[renderNews] fetch news.json…');
         const res  = await fetch('news.json');
+        console.log('[renderNews] réponse HTTP:', res.status, res.ok);
         const data = await res.json();
         news = data.news || [];
+        console.log('[renderNews] articles reçus:', news.length, '| 1er:', news[0]?.title);
     } catch(e) {
-        console.error('[renderNews] fetch error:', e);
+        console.error('[renderNews] ✗ fetch/parse error:', e);
         if (featured) featured.innerHTML = '<p style="color:#888;text-align:center;padding:2rem">Impossible de charger les actualités.</p>';
         if (grid)     grid.innerHTML = '';
         return;
     }
     if (!news.length) {
+        console.warn('[renderNews] tableau vide');
         if (featured) featured.innerHTML = '<p style="color:#888;text-align:center;padding:2rem">Aucune actualité disponible.</p>';
         return;
     }

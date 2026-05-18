@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr" dir="ltr">
 <head>
   <meta charset="UTF-8">
@@ -41,9 +41,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="ProjetBI">
-  <link rel="manifest" href="/manifest.json">
-  <link rel="icon" href="/favicon.png" type="image/png" sizes="192x192">
-  <link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./favicon.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="./favicon.png">
 
   <!-- ══ SÉCURITÉ (renforce les en-têtes HTTP de _headers) ════════════════ -->
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
@@ -56,9 +56,11 @@
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="dns-prefetch" href="https://jwsdxttjjbfnoufiidkd.supabase.co">
 
-  <!-- Polices – display=swap pour éviter le FOIT -->
-  <link rel="preload" as="style"
-    href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap">
+  <!--
+    Polices – chargement non-bloquant (media="print" → onload swap vers "all")
+    NOTE : on ne met PAS de <link rel="preload"> sur les CSS tiers car cela génère
+    l'avertissement "preloaded but not used" quand le media initial est "print".
+  -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
     media="print" onload="this.media='all'">
@@ -67,21 +69,20 @@
       href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap">
   </noscript>
 
-  <!-- FontAwesome 6 – chargement différé -->
-  <link rel="preload" as="style"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- FontAwesome 6 – chargement non-bloquant -->
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     media="print" onload="this.media='all'"
     crossorigin="anonymous" referrerpolicy="no-referrer">
   <noscript>
     <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      crossorigin="anonymous">
   </noscript>
 
-  <!-- CSS applicatif unique (remplace style.css + corrections.css + design-system.css) -->
-  <link rel="preload" as="style" href="/style.css">
-  <link rel="stylesheet" href="/style.css">
+  <!-- CSS applicatif – preload OK car servi en même origin, media="all" immédiat -->
+  <link rel="preload" as="style" href="./style.css">
+  <link rel="stylesheet" href="./style.css">
 
   <!-- ══ JSON-LD – Données structurées ════════════════════════════════════ -->
   <script type="application/ld+json">
@@ -165,8 +166,8 @@
     <nav class="navbar" role="navigation" aria-label="Navigation principale">
       <div class="navbar-inner">
 
-        <a href="/" class="navbar-brand" aria-label="ProjetBI – Accueil">
-          <img src="/favicon.png" alt="Logo ProjetBI" width="40" height="40" loading="eager">
+        <a href="./" class="navbar-brand" aria-label="ProjetBI – Accueil">
+          <img src="./favicon.png" alt="Logo ProjetBI" width="40" height="40" loading="eager">
           <span>ProjetBI</span>
         </a>
 
@@ -194,12 +195,12 @@
             </a>
           </li>
           <li role="none">
-            <a href="/actualites.html" class="nav-link" role="menuitem">
+            <a href="./actualites.html" class="nav-link" role="menuitem">
               <i class="fas fa-rss" aria-hidden="true"></i> Toutes les actus
             </a>
           </li>
           <li role="none">
-            <a href="/Livre-Programme-Bassirou-Diomaye-Faye.pdf"
+            <a href="./Livre-Programme-Bassirou-Diomaye-Faye.pdf"
                class="nav-cta-btn" role="menuitem"
                target="_blank" rel="noopener noreferrer"
                aria-label="Télécharger le programme présidentiel (PDF, nouvelle fenêtre)">
@@ -434,67 +435,67 @@
           <div class="carousel-track" id="pressCarousel" role="region" aria-label="Unes de la presse">
             <div class="carousel-slide">
               <a href="#" aria-label="Le Soleil">
-                <img src="/revuedepresse/lesoleil.jpg" alt="Le Soleil" loading="lazy" decoding="async">
+                <img src="./revuedepresse/lesoleil.jpg" alt="Le Soleil" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="carousel-slide">
               <a href="#" aria-label="L'Observateur">
-                <img src="/revuedepresse/observateur.jpg" alt="L'Observateur" loading="lazy" decoding="async">
+                <img src="./revuedepresse/observateur.jpg" alt="L'Observateur" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="carousel-slide">
               <a href="#" aria-label="Enquête">
-                <img src="/revuedepresse/enquete.jpg" alt="Enquête" loading="lazy" decoding="async">
+                <img src="./revuedepresse/enquete.jpg" alt="Enquête" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="carousel-slide">
               <a href="#" aria-label="Libération">
-                <img src="/revuedepresse/liberation.jpg" alt="Libération" loading="lazy" decoding="async">
+                <img src="./revuedepresse/liberation.jpg" alt="Libération" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="carousel-slide">
               <a href="#" aria-label="Le Quotidien">
-                <img src="/revuedepresse/lequotidien.jpg" alt="Le Quotidien" loading="lazy" decoding="async">
+                <img src="./revuedepresse/lequotidien.jpg" alt="Le Quotidien" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="carousel-slide">
               <a href="#" aria-label="Sud Quotidien">
-                <img src="/revuedepresse/sudquotidien.jpg" alt="Sud Quotidien" loading="lazy" decoding="async">
+                <img src="./revuedepresse/sudquotidien.jpg" alt="Sud Quotidien" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="carousel-slide">
               <a href="#" aria-label="Yoor Yoor">
-                <img src="/revuedepresse/yooryoor.jpg" alt="Yoor Yoor" loading="lazy" decoding="async">
+                <img src="./revuedepresse/yooryoor.jpg" alt="Yoor Yoor" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="carousel-slide">
               <a href="#" aria-label="Le Républicain">
-                <img src="/revuedepresse/lerepublicain.jpg" alt="Le Républicain" loading="lazy" decoding="async">
+                <img src="./revuedepresse/lerepublicain.jpg" alt="Le Républicain" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="carousel-slide">
               <a href="#" aria-label="Record">
-                <img src="/revuedepresse/record.jpg" alt="Record" loading="lazy" decoding="async">
+                <img src="./revuedepresse/record.jpg" alt="Record" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="carousel-slide">
               <a href="#" aria-label="Rewmi Sport">
-                <img src="/revuedepresse/rewmisport.jpg" alt="Rewmi Sport" loading="lazy" decoding="async">
+                <img src="./revuedepresse/rewmisport.jpg" alt="Rewmi Sport" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="carousel-slide">
               <a href="#" aria-label="Tribune Sport">
-                <img src="/revuedepresse/tribunesport.jpg" alt="Tribune Sport" loading="lazy" decoding="async">
+                <img src="./revuedepresse/tribunesport.jpg" alt="Tribune Sport" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="carousel-slide">
               <a href="#" aria-label="Solo Quotidien">
-                <img src="/revuedepresse/soloquotidien.jpg" alt="Solo Quotidien" loading="lazy" decoding="async">
+                <img src="./revuedepresse/soloquotidien.jpg" alt="Solo Quotidien" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="carousel-slide">
               <a href="#" aria-label="LAS">
-                <img src="/revuedepresse/las.jpg" alt="LAS" loading="lazy" decoding="async">
+                <img src="./revuedepresse/las.jpg" alt="LAS" loading="lazy" decoding="async">
               </a>
             </div>
           </div>
@@ -536,7 +537,7 @@
         </div>
 
         <div style="text-align:center;margin-top:var(--space-10)">
-          <a href="/actualites.html" class="btn btn-outline btn-lg">
+          <a href="./actualites.html" class="btn btn-outline btn-lg">
             <i class="fas fa-arrow-right" aria-hidden="true"></i>
             Toutes les actualités
           </a>
@@ -610,7 +611,7 @@
             <li><a href="#engagements" class="footer-link">Engagements</a></li>
             <li><a href="#actualites" class="footer-link">Actualités</a></li>
             <li><a href="#presse" class="footer-link">Revue de presse</a></li>
-            <li><a href="/actualites.html" class="footer-link">Toutes les actualités</a></li>
+            <li><a href="./actualites.html" class="footer-link">Toutes les actualités</a></li>
           </ul>
         </nav>
 
@@ -618,13 +619,13 @@
           <h3 class="footer-heading">Ressources</h3>
           <ul class="footer-links">
             <li>
-              <a href="/Livre-Programme-Bassirou-Diomaye-Faye.pdf"
+              <a href="./Livre-Programme-Bassirou-Diomaye-Faye.pdf"
                  class="footer-link" target="_blank" rel="noopener noreferrer">
                 📄 Programme présidentiel (PDF)
               </a>
             </li>
-            <li><a href="/sitemap.xml" class="footer-link">Sitemap</a></li>
-            <li><a href="/robots.txt" class="footer-link">Robots.txt</a></li>
+            <li><a href="./sitemap.xml" class="footer-link">Sitemap</a></li>
+            <li><a href="./robots.txt" class="footer-link">Robots.txt</a></li>
           </ul>
         </nav>
 
@@ -683,11 +684,16 @@
           defer crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <!-- Application principale (defer = chargé après le HTML) -->
-  <script src="/app.js" defer></script>
+  <script src="./app.js" defer></script>
 
-  <!-- Cloudflare Web Analytics -->
+  <!--
+    Cloudflare Web Analytics – À activer UNIQUEMENT sur projetbi.org (hébergé sur Cloudflare).
+    Sur GitHub Pages (bambamar.github.io), cette balise génère une erreur CORS → la laisser commentée.
+    Pour l'activer : remplacer VOTRE_TOKEN par votre token Cloudflare Analytics.
+
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
           data-cf-beacon='{"token": "VOTRE_TOKEN_CF_ANALYTICS"}'></script>
+  -->
 
   <!-- Année dynamique dans le footer -->
   <script>
@@ -696,3 +702,4 @@
 
 </body>
 </html>
+

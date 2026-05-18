@@ -1,10 +1,10 @@
-{
+﻿{
   "name": "ProjetBI – Gardiens des Engagements Présidentiels",
   "short_name": "ProjetBI",
   "description": "Plateforme citoyenne indépendante pour suivre en temps réel les engagements du Président Bassirou Diomaye Faye et du Premier Ministre Ousmane Sonko.",
-  "start_url": "/",
-  "scope": "/",
-  "id": "/",
+  "start_url": "./",
+  "scope": "./",
+  "id": "./",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "background_color": "#ffffff",
@@ -16,19 +16,19 @@
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "/favicon.png",
+      "src": "./favicon.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/favicon.png",
+      "src": "./favicon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/favicon.png",
+      "src": "./favicon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
@@ -36,7 +36,7 @@
   ],
   "screenshots": [
     {
-      "src": "/og-image.jpg",
+      "src": "./og-image.jpg",
       "sizes": "1200x630",
       "type": "image/jpeg",
       "label": "Tableau de bord ProjetBI – Suivi des engagements présidentiels",
@@ -48,22 +48,22 @@
       "name": "Tableau de bord",
       "short_name": "Dashboard",
       "description": "Voir les statistiques des engagements",
-      "url": "/#dashboard",
-      "icons": [{ "src": "/favicon.png", "sizes": "192x192" }]
+      "url": "./#dashboard",
+      "icons": [{ "src": "./favicon.png", "sizes": "192x192" }]
     },
     {
       "name": "Tous les engagements",
       "short_name": "Engagements",
       "description": "Consulter tous les engagements présidentiels",
-      "url": "/#engagements",
-      "icons": [{ "src": "/favicon.png", "sizes": "192x192" }]
+      "url": "./#engagements",
+      "icons": [{ "src": "./favicon.png", "sizes": "192x192" }]
     },
     {
       "name": "Actualités",
       "short_name": "Actualités",
       "description": "Lire les dernières actualités",
-      "url": "/actualites.html",
-      "icons": [{ "src": "/favicon.png", "sizes": "192x192" }]
+      "url": "./actualites.html",
+      "icons": [{ "src": "./favicon.png", "sizes": "192x192" }]
     }
   ],
   "related_applications": [],
@@ -72,3 +72,4 @@
     "preferred_width": 480
   }
 }
+

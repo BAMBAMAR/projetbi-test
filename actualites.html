@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr" dir="ltr">
 <head>
   <meta charset="UTF-8">
@@ -30,8 +30,8 @@
   <!-- PWA -->
   <meta name="theme-color" content="#2D5F3F" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1A3D28" media="(prefers-color-scheme: dark)">
-  <link rel="manifest" href="/manifest.json">
-  <link rel="icon" href="/favicon.png" type="image/png" sizes="192x192">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./favicon.png" type="image/png" sizes="192x192">
   <link rel="canonical" href="https://projetbi.org/actualites.html">
 
   <!-- Sécurité -->
@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-  <!-- Polices -->
+  <!-- Polices – non-bloquant -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
     media="print" onload="this.media='all'">
@@ -53,18 +53,20 @@
       href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap">
   </noscript>
 
-  <!-- FontAwesome -->
+  <!-- FontAwesome 6 – non-bloquant -->
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     media="print" onload="this.media='all'"
     crossorigin="anonymous" referrerpolicy="no-referrer">
   <noscript>
     <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      crossorigin="anonymous">
   </noscript>
 
-  <!-- CSS unique -->
-  <link rel="stylesheet" href="/style.css">
+  <!-- CSS applicatif -->
+  <link rel="preload" as="style" href="./style.css">
+  <link rel="stylesheet" href="./style.css">
 
   <!-- JSON-LD Breadcrumb -->
   <script type="application/ld+json">
@@ -97,8 +99,8 @@
   <header>
     <nav class="navbar" role="navigation" aria-label="Navigation principale">
       <div class="navbar-inner">
-        <a href="/" class="navbar-brand" aria-label="ProjetBI – Accueil">
-          <img src="/favicon.png" alt="Logo ProjetBI" width="40" height="40" loading="eager">
+        <a href="./" class="navbar-brand" aria-label="ProjetBI – Accueil">
+          <img src="./favicon.png" alt="Logo ProjetBI" width="40" height="40" loading="eager">
           <span>ProjetBI</span>
         </a>
 
@@ -107,11 +109,11 @@
         </button>
 
         <ul class="nav-menu" id="nav-menu-actualites" role="menubar">
-          <li role="none"><a href="/" class="nav-link" role="menuitem"><i class="fas fa-home" aria-hidden="true"></i> Accueil</a></li>
-          <li role="none"><a href="/#dashboard" class="nav-link" role="menuitem"><i class="fas fa-chart-pie" aria-hidden="true"></i> Dashboard</a></li>
-          <li role="none"><a href="/#engagements" class="nav-link" role="menuitem"><i class="fas fa-clipboard-list" aria-hidden="true"></i> Engagements</a></li>
+          <li role="none"><a href="./" class="nav-link" role="menuitem"><i class="fas fa-home" aria-hidden="true"></i> Accueil</a></li>
+          <li role="none"><a href="./#dashboard" class="nav-link" role="menuitem"><i class="fas fa-chart-pie" aria-hidden="true"></i> Dashboard</a></li>
+          <li role="none"><a href="./#engagements" class="nav-link" role="menuitem"><i class="fas fa-clipboard-list" aria-hidden="true"></i> Engagements</a></li>
           <li role="none">
-            <a href="/actualites.html" class="nav-link active" role="menuitem" aria-current="page">
+            <a href="./actualites.html" class="nav-link active" role="menuitem" aria-current="page">
               <i class="fas fa-newspaper" aria-hidden="true"></i> Actualités
             </a>
           </li>
@@ -124,7 +126,7 @@
   <nav aria-label="Fil d'Ariane" style="background:var(--color-bg-3);padding:.75rem 0;margin-top:70px">
     <div class="container">
       <ol style="display:flex;gap:.5rem;align-items:center;font-size:.875rem;color:var(--color-fg-2);list-style:none">
-        <li><a href="/" style="color:var(--color-brand-500);text-decoration:none">Accueil</a></li>
+        <li><a href="./" style="color:var(--color-brand-500);text-decoration:none">Accueil</a></li>
         <li aria-hidden="true" style="color:var(--color-fg-3)"><i class="fas fa-chevron-right" style="font-size:.75rem"></i></li>
         <li aria-current="page" style="color:var(--color-fg-1);font-weight:500">Actualités</li>
       </ol>
@@ -215,7 +217,7 @@
       <div class="footer-bottom" style="border:none;padding:0">
         <p class="footer-copy">
           &copy; 2024–<span id="currentYear"></span> ProjetBI.
-          <a href="/" class="footer-link">Retour à l'accueil</a>
+          <a href="./" class="footer-link">Retour à l'accueil</a>
         </p>
         <p class="footer-copy">Sénégal 🇸🇳</p>
       </div>
@@ -225,9 +227,12 @@
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"
           defer crossorigin="anonymous"></script>
-  <script src="/app.js" defer></script>
+  <script src="./app.js" defer></script>
+  <!--
+    Cloudflare Analytics – À activer sur projetbi.org uniquement (CORS bloqué sur GitHub Pages).
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
           data-cf-beacon='{"token": "VOTRE_TOKEN_CF_ANALYTICS"}'></script>
+  -->
   <script>
     document.getElementById('currentYear').textContent = new Date().getFullYear();
 
@@ -262,3 +267,4 @@
   </script>
 </body>
 </html>
+

@@ -621,11 +621,19 @@
             <li>
               <a href="./Livre-Programme-Bassirou-Diomaye-Faye.pdf"
                  class="footer-link" target="_blank" rel="noopener noreferrer">
-                📄 Programme présidentiel (PDF)
+                📄 Programme présidentiel
               </a>
             </li>
-            <li><a href="./sitemap.xml" class="footer-link">Sitemap</a></li>
-            <li><a href="./robots.txt" class="footer-link">Robots.txt</a></li>
+            <li>
+              <a href="./actualites.html" class="footer-link">
+                📰 Toutes les actualités
+              </a>
+            </li>
+            <li>
+              <a href="https://projetbi.org" class="footer-link" target="_blank" rel="noopener noreferrer">
+                🌐 Site officiel
+              </a>
+            </li>
           </ul>
         </nav>
 
@@ -677,25 +685,45 @@
     #backToTop:hover { transform: translateY(-2px); box-shadow: var(--shadow-3); }
   </style>
 
-  <!-- ══ SCRIPTS ═══════════════════════════════════════════════════════════ -->
+  <!-- ══ SCRIPTS – Stack complet (même ordre que le projet original) ═══════ -->
 
-  <!-- Supabase (chargé en différé) -->
+  <!-- 1. Supabase SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"
           defer crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <!-- Application principale (defer = chargé après le HTML) -->
+  <!-- 2. Utilitaires de base -->
+  <script src="./utils.js" defer></script>
+
+  <!-- 3. Moteur de rendu -->
+  <script src="./render.js" defer></script>
+
+  <!-- 4. Application principale (toutes les fonctionnalités originales) -->
   <script src="./app.js" defer></script>
 
+  <!-- 5. Filtres KPI -->
+  <script src="./app.kpi-filters.js" defer></script>
+
+  <!-- 6. Protection contre les votes multiples -->
+  <script src="./app.vote-guard.js" defer></script>
+
+  <!-- 7. Patch performance (chargement parallèle JSON, scroll RAF, etc.) -->
+  <script src="./app.perf.js" defer></script>
+
+  <!-- 8. Patch sécurité & accessibilité (XSS, focus trap, ARIA) -->
+  <script src="./app.harden.js" defer></script>
+
+  <!-- 9. Améliorations V2 (regex fix U+2028/U+2029, backToTop, SW banner) -->
+  <script src="./app.v2.js" defer></script>
+
   <!--
-    Cloudflare Web Analytics – À activer UNIQUEMENT sur projetbi.org (hébergé sur Cloudflare).
-    Sur GitHub Pages (bambamar.github.io), cette balise génère une erreur CORS → la laisser commentée.
-    Pour l'activer : remplacer VOTRE_TOKEN par votre token Cloudflare Analytics.
+    Cloudflare Web Analytics – Activer sur projetbi.org uniquement.
+    Sur GitHub Pages, génère une erreur CORS → laisser commenté.
 
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
           data-cf-beacon='{"token": "VOTRE_TOKEN_CF_ANALYTICS"}'></script>
   -->
 
-  <!-- Année dynamique dans le footer -->
+  <!-- Année footer (inline car rapide, pas de dépendance) -->
   <script>
     document.getElementById('currentYear').textContent = new Date().getFullYear();
   </script>

@@ -410,6 +410,9 @@ textarea.form-control{resize:vertical;min-height:90px}
   <div class="nav-group-label">Communauté</div>
   <div class="nav-item" data-page="ratings"><i class="fas fa-star"></i><span>Notations</span></div>
 
+  <div class="nav-group-label">Automatisation</div>
+  <div class="nav-item" data-page="drafts"><i class="fas fa-inbox"></i><span>Brouillons</span><span class="nav-badge" id="badge-drafts" style="display:none">0</span></div>
+
   <div class="nav-group-label">Outils</div>
   <div class="nav-item" data-page="kit"><i class="fas fa-palette"></i><span>Kit Communication</span></div>
   <div class="nav-item" data-page="ideologie"><i class="fas fa-brain"></i><span>Posters Idéologie</span></div>
@@ -835,6 +838,102 @@ textarea.form-control{resize:vertical;min-height:90px}
       </div>
     </div>
 
+    <!-- ══════════════════════════════════════════ -->
+    <!-- PAGE BROUILLONS                           -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="page" id="page-drafts">
+
+      <div class="filter-bar">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="draftSearch" placeholder="Rechercher dans les brouillons…" oninput="filterDrafts()">
+        </div>
+        <select class="filter-select" id="draftTypeFilter" onchange="filterDrafts()">
+          <option value="">Tous types</option>
+          <option value="promise_update">🔄 Mises à jour promesses</option>
+          <option value="news">📰 Actualités</option>
+        </select>
+        <select class="filter-select" id="draftConfFilter" onchange="filterDrafts()">
+          <option value="">Toutes confiances</option>
+          <option value="high">Haute (&gt;80%)</option>
+          <option value="medium">Moyenne (60–80%)</option>
+        </select>
+        <button class="btn btn-outline btn-sm" onclick="loadDrafts()">
+          <i class="fas fa-sync"></i> Actualiser
+        </button>
+        <button class="btn btn-primary btn-sm" onclick="validateAllHigh()">
+          <i class="fas fa-check-double"></i> Valider confiance &gt;85%
+        </button>
+      </div>
+
+      <div class="kpi-row" id="draftsKpi"></div>
+
+      <div class="card">
+        <div class="card-head" style="flex-wrap:wrap;gap:.5rem">
+          <span class="card-title">
+            <i class="fas fa-robot" style="color:var(--gold)"></i>
+            Brouillons automatiques
+            <span id="draftsCount" style="color:var(--text3);font-size:.78rem;font-weight:400"></span>
+          </span>
+          <span style="font-size:.72rem;color:var(--text3);margin-left:auto">
+            <i class="fas fa-clock"></i> Collecte quotidienne — 7h Dakar · GitHub Actions
+          </span>
+        </div>
+        <div id="draftsList"></div>
+      </div>
+
+      <!-- Modale d'édition d'un brouillon -->
+      <div class="modal-overlay" id="draftEditModal">
+        <div class="modal" style="max-width:640px">
+          <div class="modal-head">
+            <span class="modal-title">Modifier le brouillon</span>
+            <button class="modal-close" onclick="closeModal('draftEditModal')"><i class="fas fa-times"></i></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="draftEditId">
+            <div class="form-group" style="margin-bottom:.9rem">
+              <label>Titre</label>
+              <input type="text" class="form-control" id="draftEditTitle">
+            </div>
+            <div class="form-group" style="margin-bottom:.9rem">
+              <label>Description</label>
+              <textarea class="form-control" id="draftEditDesc" rows="3"></textarea>
+            </div>
+            <div class="form-row cols-2">
+              <div class="form-group">
+                <label>Type</label>
+                <select class="form-control" id="draftEditType">
+                  <option value="promise_update">Mise à jour promesse</option>
+                  <option value="news">Actualité</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Promesse liée</label>
+                <select class="form-control" id="draftEditPromise">
+                  <option value="">— Aucune —</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row cols-2" style="margin-top:.5rem">
+              <div class="form-group">
+                <label>Source</label>
+                <input type="text" class="form-control" id="draftEditSource">
+              </div>
+              <div class="form-group">
+                <label>Date</label>
+                <input type="date" class="form-control" id="draftEditDate">
+              </div>
+            </div>
+          </div>
+          <div class="modal-foot">
+            <button class="btn btn-outline" onclick="closeModal('draftEditModal')">Annuler</button>
+            <button class="btn btn-primary" onclick="saveDraftEdit()"><i class="fas fa-save"></i> Enregistrer</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
   </div></div><div class="modal-overlay" id="promiseModal">
   <div class="modal" style="max-width:720px">
     <div class="modal-head">
@@ -1091,6 +1190,7 @@ async function init() {
   renderNews();
   renderPress();
   renderSEO();
+  await loadDrafts();
 }
 
 async function loadData() {
@@ -1126,6 +1226,7 @@ function initSupabase() {
 const pageTitles = {
   dashboard: 'Tableau de bord', promises: 'Engagements', news: 'Actualités',
   press: 'Revue de Presse', ratings: 'Notations citoyennes',
+  drafts: 'Brouillons automatiques',
   kit: 'Kit de Communication', ideologie: 'Posters Idéologie PASTEF',
   export: 'Export & Import', seo: 'SEO & Sitemap'
 };
@@ -1145,6 +1246,7 @@ document.querySelectorAll('.nav-item[data-page]').forEach(item => {
       setTimeout(() => { ideoSelectTemplate(ideoActiveTemplate); }, 50);
     }
     if (page === 'ratings') loadRatings();
+    if (page === 'drafts') renderDrafts();
   });
 });
 
@@ -2266,6 +2368,286 @@ async function copyPressJSON() {
     document.body.removeChild(ta);
     toast(`JSON Presse copié ✅ (date: ${todayStr})`, 'success');
   }
+}
+
+// ══════════════════════════════════════════
+// BROUILLONS AUTOMATIQUES
+// ══════════════════════════════════════════
+let _draftsAll = [];
+let _draftsFiltered = [];
+
+async function loadDrafts() {
+  try {
+    const res = await fetch('drafts.json?v=' + Date.now());
+    if (!res.ok) throw new Error('drafts.json introuvable');
+    const data = await res.json();
+    _draftsAll = (data.drafts || []).filter(d => d.status === 'pending');
+    updateDraftsBadge();
+    renderDrafts();
+  } catch (e) {
+    _draftsAll = [];
+    updateDraftsBadge();
+  }
+}
+
+function updateDraftsBadge() {
+  const n = _draftsAll.filter(d => d.status === 'pending').length;
+  const badge = document.getElementById('badge-drafts');
+  if (!badge) return;
+  if (n > 0) {
+    badge.textContent = n;
+    badge.style.display = '';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function filterDrafts() {
+  const q    = (document.getElementById('draftSearch')?.value || '').toLowerCase();
+  const type = document.getElementById('draftTypeFilter')?.value || '';
+  const conf = document.getElementById('draftConfFilter')?.value || '';
+
+  _draftsFiltered = _draftsAll.filter(d => {
+    if (type && d.type !== type) return false;
+    if (conf === 'high'   && (d.confidence || 0) <= 0.8) return false;
+    if (conf === 'medium' && ((d.confidence || 0) > 0.8 || (d.confidence || 0) < 0.6)) return false;
+    if (q && !(
+      (d.title || '').toLowerCase().includes(q) ||
+      (d.description || '').toLowerCase().includes(q) ||
+      (d.source || '').toLowerCase().includes(q)
+    )) return false;
+    return true;
+  });
+  renderDraftsList(_draftsFiltered);
+}
+
+function renderDrafts() {
+  _draftsFiltered = [..._draftsAll];
+  const pending   = _draftsAll.length;
+  const highConf  = _draftsAll.filter(d => (d.confidence || 0) >= 0.85).length;
+  const puMaj     = _draftsAll.filter(d => d.type === 'promise_update').length;
+
+  document.getElementById('draftsCount').textContent = `— ${pending} en attente`;
+
+  document.getElementById('draftsKpi').innerHTML = `
+    <div class="kpi-card gold">
+      <div class="kpi-label">En attente</div>
+      <div class="kpi-value" style="color:var(--gold)">${pending}</div>
+      <div class="kpi-sub">Brouillons à valider</div>
+      <i class="fas fa-inbox kpi-icon" style="color:var(--gold)"></i>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Haute confiance</div>
+      <div class="kpi-value" style="color:var(--green)">${highConf}</div>
+      <div class="kpi-sub">Score &gt; 85% — validables</div>
+      <i class="fas fa-check-circle kpi-icon" style="color:var(--green)"></i>
+    </div>
+    <div class="kpi-card blue">
+      <div class="kpi-label">MàJ promesses</div>
+      <div class="kpi-value" style="color:var(--blue)">${puMaj}</div>
+      <div class="kpi-sub">Liées à une promesse</div>
+      <i class="fas fa-link kpi-icon" style="color:var(--blue)"></i>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Actualités</div>
+      <div class="kpi-value">${pending - puMaj}</div>
+      <div class="kpi-sub">Non liées à une promesse</div>
+      <i class="fas fa-newspaper kpi-icon"></i>
+    </div>
+  `;
+
+  renderDraftsList(_draftsFiltered);
+}
+
+function renderDraftsList(list) {
+  const el = document.getElementById('draftsList');
+  if (!el) return;
+
+  if (!list.length) {
+    el.innerHTML = `
+      <div style="padding:3rem;text-align:center;color:var(--text3)">
+        <i class="fas fa-inbox" style="font-size:2.5rem;opacity:.3;display:block;margin-bottom:1rem"></i>
+        Aucun brouillon en attente.<br>
+        <span style="font-size:.8rem">La collecte automatique tourne chaque matin à 7h Dakar.</span>
+      </div>`;
+    return;
+  }
+
+  el.innerHTML = list.map(d => {
+    const conf    = Math.round((d.confidence || 0) * 100);
+    const confCls = conf >= 85 ? 'badge-green' : conf >= 70 ? 'badge-gold' : 'badge-gray';
+    const typeLbl = d.type === 'promise_update' ? '🔄 MàJ promesse' : '📰 Actualité';
+    const typeCls = d.type === 'promise_update' ? 'badge-blue' : 'badge-gray';
+
+    // Promesse liée
+    let promiseInfo = '';
+    if (d.promise_id) {
+      const p = DB.promises.find(x => x.id === d.promise_id);
+      if (p) {
+        promiseInfo = `
+          <div style="margin-top:.6rem;padding:.45rem .75rem;background:var(--blue-bg);border:1px solid rgba(96,165,250,.2);border-radius:6px;font-size:.76rem;color:var(--blue)">
+            <i class="fas fa-link"></i> Liée à :
+            <strong style="color:var(--text)">${escH(p.engagement.substring(0, 70))}…</strong>
+            <span class="badge badge-gray" style="margin-left:.4rem">${escH(p.domaine)}</span>
+          </div>`;
+      }
+    }
+
+    // Date formatée
+    let dateFmt = d.date || '';
+    if (dateFmt && dateFmt.includes('-')) {
+      const [y, m, dd2] = dateFmt.split('-');
+      dateFmt = `${dd2}/${m}/${y}`;
+    }
+
+    return `
+      <div style="padding:1rem 1.2rem;border-bottom:1px solid var(--border)" id="draft-${escId(d.id)}">
+        <div style="display:flex;align-items:flex-start;gap:.75rem;flex-wrap:wrap">
+          <div style="display:flex;flex-direction:column;gap:.3rem;min-width:0;flex:1">
+            <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.3rem">
+              <span class="badge ${typeCls}">${typeLbl}</span>
+              <span class="badge ${confCls}"><i class="fas fa-brain"></i> ${conf}%</span>
+              ${d.domain ? `<span class="badge badge-gray">${escH(d.domain)}</span>` : ''}
+              ${dateFmt ? `<span style="font-size:.72rem;color:var(--text3);font-family:'JetBrains Mono',monospace">${dateFmt}</span>` : ''}
+            </div>
+            <div style="font-weight:600;color:var(--text);font-size:.88rem;margin-bottom:.25rem">
+              ${escH(d.title || '—')}
+            </div>
+            <div style="font-size:.8rem;color:var(--text2);line-height:1.55">
+              ${escH(d.description || '')}
+            </div>
+            <div style="font-size:.72rem;color:var(--text3);margin-top:.3rem">
+              <i class="fas fa-globe"></i> ${escH(d.source || '—')}
+              ${d.source_url ? `&nbsp;·&nbsp;<a href="${escH(d.source_url)}" target="_blank" rel="noopener noreferrer" style="color:var(--blue)"><i class="fas fa-external-link-alt"></i> Voir l'article</a>` : ''}
+            </div>
+            ${promiseInfo}
+          </div>
+          <div style="display:flex;flex-direction:column;gap:.4rem;flex-shrink:0;min-width:100px">
+            <button class="btn btn-primary btn-xs" onclick="validateDraft('${escId(d.id)}')">
+              <i class="fas fa-check"></i> Valider
+            </button>
+            <button class="btn btn-outline btn-xs" onclick="openDraftEdit('${escId(d.id)}')">
+              <i class="fas fa-pen"></i> Modifier
+            </button>
+            <button class="btn btn-danger btn-xs" onclick="rejectDraft('${escId(d.id)}')">
+              <i class="fas fa-times"></i> Rejeter
+            </button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function validateDraft(id) {
+  const d = _draftsAll.find(x => x.id === id);
+  if (!d) return;
+
+  if (d.type === 'promise_update' && d.promise_id) {
+    const p = DB.promises.find(x => x.id === d.promise_id);
+    if (p) {
+      p.mises_a_jour = p.mises_a_jour || [];
+      p.mises_a_jour.unshift({
+        date:        d.date || new Date().toISOString().split('T')[0],
+        description: d.description || d.title,
+        source:      d.source_url || d.source || 'ProjetBI collecte auto',
+      });
+      toast(`✅ Mise à jour ajoutée à : « ${p.engagement.substring(0, 50)}… »`, 'success');
+    } else {
+      _convertDraftToNews(d);
+    }
+  } else {
+    _convertDraftToNews(d);
+  }
+
+  _removeDraft(id);
+  renderDashboard();
+}
+
+function _convertDraftToNews(d) {
+  const newId = String(Math.max(0, ...DB.news.map(n => parseInt(n.id) || 0)) + 1);
+  let dateFr  = d.date || '';
+  if (dateFr && dateFr.includes('-')) {
+    const [y, m, dd] = dateFr.split('-');
+    dateFr = `${dd}/${m}/${y}`;
+  }
+  DB.news.unshift({
+    id:         newId,
+    title:      d.title || '',
+    excerpt:    d.description || '',
+    content:    d.description || '',
+    date:       dateFr,
+    source:     d.source || 'ProjetBI',
+    link:       d.source_url || '',
+    category:   d.domain || 'Politique',
+    author:     'Collecte automatique ProjetBI',
+    image:      '',
+    image_url:  '',
+    created_at: new Date().toISOString(),
+  });
+  renderNews();
+  toast('📰 Actualité ajoutée depuis le brouillon ✅', 'success');
+}
+
+function rejectDraft(id) {
+  _removeDraft(id);
+  toast('Brouillon rejeté', 'info');
+}
+
+function _removeDraft(id) {
+  _draftsAll = _draftsAll.filter(x => x.id !== id);
+  _draftsFiltered = _draftsFiltered.filter(x => x.id !== id);
+  updateDraftsBadge();
+  document.getElementById('draftsCount').textContent = `— ${_draftsAll.length} en attente`;
+  const card = document.getElementById('draft-' + id);
+  if (card) card.remove();
+  // Rafraîchir KPIs
+  renderDrafts();
+}
+
+function validateAllHigh() {
+  const high = _draftsAll.filter(d => (d.confidence || 0) >= 0.85);
+  if (!high.length) { toast('Aucun brouillon à haute confiance', 'info'); return; }
+  high.forEach(d => validateDraft(d.id));
+  toast(`✅ ${high.length} brouillon(s) validé(s) automatiquement`, 'success');
+}
+
+function openDraftEdit(id) {
+  const d = _draftsAll.find(x => x.id === id);
+  if (!d) return;
+  document.getElementById('draftEditId').value    = id;
+  document.getElementById('draftEditTitle').value = d.title || '';
+  document.getElementById('draftEditDesc').value  = d.description || '';
+  document.getElementById('draftEditType').value  = d.type || 'news';
+  document.getElementById('draftEditSource').value= d.source || '';
+  document.getElementById('draftEditDate').value  = d.date || '';
+
+  // Peupler le sélecteur de promesses
+  const sel = document.getElementById('draftEditPromise');
+  sel.innerHTML = '<option value="">— Aucune —</option>';
+  DB.promises.forEach(p => {
+    const o = document.createElement('option');
+    o.value       = p.id;
+    o.textContent = `[${p.domaine}] ${p.engagement.substring(0, 60)}…`;
+    if (p.id === d.promise_id) o.selected = true;
+    sel.appendChild(o);
+  });
+
+  openModal('draftEditModal');
+}
+
+function saveDraftEdit() {
+  const id = document.getElementById('draftEditId').value;
+  const d  = _draftsAll.find(x => x.id === id);
+  if (!d) return;
+  d.title       = document.getElementById('draftEditTitle').value;
+  d.description = document.getElementById('draftEditDesc').value;
+  d.type        = document.getElementById('draftEditType').value;
+  d.promise_id  = document.getElementById('draftEditPromise').value || null;
+  d.source      = document.getElementById('draftEditSource').value;
+  d.date        = document.getElementById('draftEditDate').value;
+  closeModal('draftEditModal');
+  renderDrafts();
+  toast('Brouillon modifié ✅', 'success');
 }
 
 // ══════════════════════

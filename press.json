@@ -1,100 +1,100 @@
 {
-  "last_updated": "2026-05-12T07:50:35.348Z",
+  "last_updated": "2026-05-15T07:38:48.972Z",
   "press": [
     {
       "id": "12",
       "title": "lerepublicain",
-      "date": "12/05/2026",
-      "image": "revuedepresse/lerepublicain.jpg",
-      "logo": "image/logos/lerepublicain.png",
+      "date": "15/05/2026",
+      "image": "revuedepresse/observateur.jpg",
+      "logo": "images/logos/lerepublicain.png",
       "link": "#"
     },
     {
       "id": "11",
       "title": "tribunesport",
-      "date": "12/05/2026",
+      "date": "15/05/2026",
       "image": "revuedepresse/tribunesport.jpg",
-      "logo": "image/logos/tribunesport.png",
+      "logo": "images/logos/tribunesport.png",
       "link": "#"
     },
     {
       "id": "1",
       "title": "Lesoleil",
-      "date": "12/05/2026",
+      "date": "15/05/2026",
       "image": "revuedepresse/lesoleil.jpg",
-      "logo": "image/logos/lesoleil.png",
+      "logo": "images/logos/lesoleil.png",
       "link": "http://www.lesoleil.sn/"
     },
     {
       "id": "2",
       "title": "Sudquotidien",
-      "date": "12/05/2026",
+      "date": "15/05/2026",
       "image": "revuedepresse/sudquotidien.jpg",
-      "logo": "image/logos/sudquotidien.png",
+      "logo": "images/logos/sudquotidien.png",
       "link": "http://www.sudonline.sn/"
     },
     {
       "id": "3",
       "title": "Liberation",
-      "date": "12/05/2026",
+      "date": "15/05/2026",
       "image": "revuedepresse/liberation.jpg",
-      "logo": "image/logos/liberation.png",
+      "logo": "images/logos/liberation.png",
       "link": "http://www.liberation.sn/"
     },
     {
       "id": "4",
       "title": "Observateur",
-      "date": "12/05/2026",
+      "date": "15/05/2026",
       "image": "revuedepresse/observateur.jpg",
-      "logo": "image/logos/observateur.png",
+      "logo": "images/logos/observateur.png",
       "link": "http://www.observateur.sn/"
     },
     {
       "id": "5",
       "title": "Lequotidien",
-      "date": "12/05/2026",
+      "date": "15/05/2026",
       "image": "revuedepresse/lequotidien.jpg",
-      "logo": "image/logos/lequotidien.png",
+      "logo": "images/logos/lequotidien.png",
       "link": "http://www.lequotidien.sn/"
     },
     {
       "id": "6",
       "title": "Rewmisport",
-      "date": "12/05/2026",
+      "date": "15/05/2026",
       "image": "revuedepresse/rewmisport.jpg",
-      "logo": "image/logos/rewmisport.png",
+      "logo": "images/logos/rewmisport.png",
       "link": "#"
     },
     {
       "id": "7",
       "title": "las",
-      "date": "12/05/2026",
+      "date": "15/05/2026",
       "image": "revuedepresse/las.jpg",
-      "logo": "image/logos/las,png",
+      "logo": "images/logos/las,png",
       "link": "#"
     },
     {
       "id": "8",
       "title": "Yooryoor",
-      "date": "12/05/2026",
+      "date": "15/05/2026",
       "image": "revuedepresse/yooryoor.jpg",
-      "logo": "image/logos/yooryoor.png",
+      "logo": "images/logos/yooryoor.png",
       "link": "#"
     },
     {
       "id": "9",
       "title": "Record",
-      "date": "12/05/2026",
+      "date": "15/05/2026",
       "image": "revuedepresse/record.jpg",
-      "logo": "image/logos/record.png",
+      "logo": "images/logos/record.png",
       "link": "#"
     },
     {
       "id": "10",
       "title": "Enquete",
-      "date": "12/05/2026",
+      "date": "15/05/2026",
       "image": "revuedepresse/enquete.jpg",
-      "logo": "image/logos/enquete.png",
+      "logo": "images/logos/enquete.png",
       "link": "#"
     }
   ]

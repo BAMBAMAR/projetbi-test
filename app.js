@@ -72,7 +72,6 @@ function newsFallbackImg(el, cat, height, radius) {
 
 // Mode démo - activé si Supabase échoue
 let DEMO_MODE = false;
-// AJOUTER AVEC LES AUTRES VARIABLES GLOBALES
 
 // Vérifier la connexion Supabase
 async function checkSupabaseConnection() {
@@ -97,10 +96,6 @@ async function checkSupabaseConnection() {
     }
 }
 
-// Appelez cette fonction après l'initialisation
-setTimeout(checkSupabaseConnection, 1000);
-// ==========================================
-// APP.JS - VERSION CORRIGÉE POUR LES DÉLAIS
 // ==========================================
 // Configuration Supabase (clé anon publique — RLS activé côté serveur)
 const SUPABASE_URL = 'https://jwsdxttjjbfnoufiidkd.supabase.co';
@@ -111,10 +106,9 @@ let supabaseClient = null;
 try {
     if (typeof supabase !== 'undefined' && supabase.createClient) {
         supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    } else {
     }
 } catch (error) {
-    console.error(error);
+    console.error('[Supabase] Initialisation échouée :', error);
     supabaseClient = null;
 }
 
@@ -150,7 +144,6 @@ const CONFIG = {
     isDragging: false,
     currentRatingPromiseId: null,
     currentRatingValue: 0,
-    // AJOUTEZ CETTE LIGNE À LA FIN :
     filteredPromises: []
 };
 // Variables pour le visualiseur photo
@@ -358,7 +351,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     initDateDisplay();
     initPhotoViewer();
 
-    // 2. Charger les données
+    // 2. Vérifier Supabase puis charger les données
+    await checkSupabaseConnection();
     await loadData();
     
     // 3. IMPORTANT: Initialiser filteredPromises après chargement
@@ -637,7 +631,7 @@ async function loadPromisesData() {
                 engagement: p.engagement || p.titre || 'Engagement non spécifié',
                 domain: domain,
                 status: status,
-                delai: delayDays.toString(),
+                delai: delayDays,
                 delai_texte: delayText,
                 resultat: p.resultat || p.objectif || 'Résultats non spécifiés',
                 updates: updates,
@@ -659,8 +653,9 @@ async function loadPromisesData() {
         });
         
     } catch (error) {
-        console.error(error);
+        console.error('[loadData] Erreur chargement promises.json :', error);
         CONFIG.promises = generateTestPromises();
+        showNotification('⚠️ Données de test — fichier promises.json introuvable', 'warning');
     }
 }
 
@@ -2297,85 +2292,85 @@ const DEFAULT_PRESS = [
     {
       "id": "12",
       "title": "lerepublicain",
-      "image": "revuedepresse/lerepublicain.jpg",
-      "logo": "image/logos/lerepublicain.png",
+      "image": "revuedepresse/observateur.jpg",
+      "logo": "images/logos/lerepublicain.png",
       "link": "#"
     },
     {
       "id": "11",
       "title": "tribunesport",
       "image": "revuedepresse/tribunesport.jpg",
-      "logo": "image/logos/tribunesport.png",
+      "logo": "images/logos/tribunesport.png",
       "link": "#"
     },
     {
       "id": "1",
       "title": "Lesoleil",
       "image": "revuedepresse/lesoleil.jpg",
-      "logo": "image/logos/lesoleil.png",
+      "logo": "images/logos/lesoleil.png",
       "link": "http://www.lesoleil.sn/"
     },
     {
       "id": "2",
       "title": "Sudquotidien",
       "image": "revuedepresse/sudquotidien.jpg",
-      "logo": "image/logos/sudquotidien.png",
+      "logo": "images/logos/sudquotidien.png",
       "link": "http://www.sudonline.sn/"
     },
     {
       "id": "3",
       "title": "Liberation",
       "image": "revuedepresse/liberation.jpg",
-      "logo": "image/logos/liberation.png",
+      "logo": "images/logos/liberation.png",
       "link": "http://www.liberation.sn/"
     },
     {
       "id": "4",
       "title": "Observateur",
       "image": "revuedepresse/observateur.jpg",
-      "logo": "image/logos/observateur.png",
+      "logo": "images/logos/observateur.png",
       "link": "http://www.observateur.sn/"
     },
     {
       "id": "5",
       "title": "Lequotidien",
       "image": "revuedepresse/lequotidien.jpg",
-      "logo": "image/logos/lequotidien.png",
+      "logo": "images/logos/lequotidien.png",
       "link": "http://www.lequotidien.sn/"
     },
     {
       "id": "6",
       "title": "Rewmisport",
       "image": "revuedepresse/rewmisport.jpg",
-      "logo": "image/logos/rewmisport.png",
+      "logo": "images/logos/rewmisport.png",
       "link": "#"
     },
     {
       "id": "7",
       "title": "las",
       "image": "revuedepresse/las.jpg",
-      "logo": "image/logos/las,png",
+      "logo": "images/logos/las,png",
       "link": "#"
     },
     {
       "id": "8",
       "title": "Yooryoor",
       "image": "revuedepresse/yooryoor.jpg",
-      "logo": "image/logos/yooryoor.png",
+      "logo": "images/logos/yooryoor.png",
       "link": "#"
     },
     {
       "id": "9",
       "title": "Record",
       "image": "revuedepresse/record.jpg",
-      "logo": "image/logos/record.png",
+      "logo": "images/logos/record.png",
       "link": "#"
     },
     {
       "id": "10",
       "title": "Enquete",
       "image": "revuedepresse/enquete.jpg",
-      "logo": "image/logos/enquete.png",
+      "logo": "images/logos/enquete.png",
       "link": "#"
     }
 ];
@@ -2549,7 +2544,7 @@ function renderPressCarousel() {
     carousel.innerHTML = `
         <div class="carousel-item active">
             <div class="carousel-image-container">
-                <img src="${imageUrl}" alt="${currentPaper.title}" 
+                <img src="${escapeAttr(imageUrl)}" alt="${escapeAttr(currentPaper.title)}"
                      onerror="this.onerror=null; this.src='https://picsum.photos/700/933?random=${CONFIG.currentIndex}'"
                      id="pressImage"
                      style="transform: scale(${CONFIG.zoomScale})">
@@ -3844,7 +3839,7 @@ ${derniereUpdate.substring(0, 180)}${derniereUpdate.length > 180 ? '...' : ''}
 Suivez tous les engagements présidentiels sur:
 ${url}
 
-#Pastef#Sonko #Transparence #Redevabilité #Gouvernance
+#Pastef #Sonko #Transparence #Redevabilité #Gouvernance
 #${domaine.replace(/\s+/g, '')} #${status.replace(/\s+/g, '')}`;
     
     let shareText = '';

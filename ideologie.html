@@ -224,8 +224,13 @@
     .compare-grid { display: grid; gap: 1.5rem; }
     .compare-row {
       display: grid; grid-template-columns: 1fr auto 1fr;
-      align-items: stretch; gap: 0; border-radius: 16px; overflow: hidden;
+      align-items: stretch; gap: 0; border-radius: 16px; overflow: visible;
       box-shadow: var(--shadow);
+      position: relative;
+    }
+    /* Inner wrapper clips visually but not children that overflow (panel) */
+    .compare-row-inner-clip {
+      display: contents;
     }
     .compare-topic {
       background: linear-gradient(135deg, var(--g-dark), var(--g));
@@ -237,11 +242,11 @@
     .compare-topic span { font-weight: 700; font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; }
     .compare-bad {
       background: #fff; padding: 1.5rem; border-left: 4px solid var(--r);
-      flex: 1;
+      flex: 1; border-radius: 16px 0 0 16px;
     }
     .compare-good {
       background: #fff; padding: 1.5rem; border-right: 4px solid var(--g);
-      flex: 1;
+      flex: 1; border-radius: 0 16px 16px 0;
     }
     .compare-bad .label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--r); margin-bottom: .5rem; display: flex; align-items: center; gap: .3rem; }
     .compare-good .label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--g); margin-bottom: .5rem; display: flex; align-items: center; gap: .3rem; }
@@ -250,8 +255,9 @@
     .compare-bad { order: -1; }
     @media (max-width: 768px) {
       .compare-row { grid-template-columns: 1fr; }
-      .compare-bad { order: 0; border-left: none; border-top: 4px solid var(--r); }
-      .compare-good { border-right: none; border-bottom: 4px solid var(--g); }
+      .compare-bad { order: 0; border-left: none; border-top: 4px solid var(--r); border-radius: 12px 12px 0 0; }
+      .compare-good { border-right: none; border-bottom: 4px solid var(--g); border-radius: 0 0 12px 12px; }
+      .compare-topic { border-radius: 0; }
     }
 
     /* ═══════════════ PILIERS ═══════════════ */
@@ -630,6 +636,108 @@
       .stats-grid { grid-template-columns: 1fr; }
       .hero h1 { font-size: 1.65rem; }
     }
+
+    /* ═══════════════════════════════════════════
+       SYSTÈME DE PARTAGE
+       ═══════════════════════════════════════════ */
+    .share-bar {
+      display: flex; align-items: center; gap: .35rem;
+      padding: .6rem 1rem .7rem;
+      border-top: 1px solid rgba(0,0,0,.07);
+      background: rgba(45,95,63,.03);
+      flex-wrap: wrap;
+    }
+    .share-bar-label {
+      font-size: .67rem; font-weight: 700; color: #bbb;
+      text-transform: uppercase; letter-spacing: .08em;
+      margin-right: .15rem; white-space: nowrap;
+    }
+    .share-btn {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: none; cursor: pointer; font-size: .75rem;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: transform .18s, opacity .18s; text-decoration: none; flex-shrink: 0;
+    }
+    .share-btn:hover { transform: scale(1.18); }
+    .share-btn:active { transform: scale(.93); }
+    .share-btn.tw  { background:#000;    color:#fff; }
+    .share-btn.fb  { background:#1877F2; color:#fff; }
+    .share-btn.wa  { background:#25D366; color:#fff; }
+    .share-btn.tg  { background:#0088cc; color:#fff; }
+    .share-btn.cp  { background:#eee;    color:#555; }
+    .share-btn.cp.copied { background: var(--g); color:#fff; }
+
+    /* Sur les cartes sombres */
+    .timeline-content .share-bar {
+      background: rgba(255,255,255,.05);
+      border-top-color: rgba(255,255,255,.1);
+    }
+    .timeline-content .share-bar .share-bar-label { color: rgba(255,255,255,.35); }
+    .timeline-content .share-btn.cp { background: rgba(255,255,255,.15); color: rgba(255,255,255,.6); }
+
+    /* Bouton flottant sur compare-row — au-dessus du conteneur */
+    .compare-share-wrap {
+      position: absolute;
+      top: -14px; right: 16px;
+      z-index: 30;
+    }
+    .compare-share-btn {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: #fff; border: 1.5px solid rgba(45,95,63,.28);
+      color: var(--g); font-size: .7rem; font-weight: 700;
+      padding: .28rem .8rem; border-radius: 50px; cursor: pointer;
+      transition: all .2s; box-shadow: 0 2px 8px rgba(0,0,0,.1);
+      white-space: nowrap;
+    }
+    .compare-share-btn:hover { background: var(--g); color: #fff; border-color: var(--g); }
+
+    /* Bouton partage dans les section-headers */
+    .section-share-btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(45,95,63,.07); border: 1.5px solid rgba(45,95,63,.2);
+      color: var(--g); font-size: .78rem; font-weight: 600;
+      padding: .45rem 1.1rem; border-radius: 50px;
+      cursor: pointer; transition: all .2s; margin-top: .75rem;
+    }
+    .section-share-btn:hover { background: var(--g); color: #fff; border-color: var(--g); }
+
+    /* Panel dropdown */
+    .share-panel {
+      position: absolute; bottom: calc(100% + 6px); right: 0;
+      background: #fff; border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.18);
+      padding: .6rem .75rem;
+      display: none; flex-direction: column; gap: .35rem;
+      min-width: 172px; z-index: 200;
+      border: 1px solid rgba(0,0,0,.07);
+    }
+    .share-panel.open { display: flex; }
+    .share-panel-item {
+      display: flex; align-items: center; gap: .6rem;
+      padding: .45rem .5rem; border-radius: 8px;
+      font-size: .8rem; font-weight: 600; color: #333;
+      cursor: pointer; transition: background .14s;
+      border: none; background: transparent; text-align: left; width: 100%;
+    }
+    .share-panel-item:hover { background: #f5f5f5; }
+    .share-panel-item .sp-icon {
+      width: 26px; height: 26px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem; color: #fff; flex-shrink: 0;
+    }
+
+    /* Toast */
+    #shareToast {
+      position: fixed; bottom: 1.5rem; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--ink); color: #fff; padding: .65rem 1.4rem;
+      border-radius: 50px; font-size: .82rem; font-weight: 600;
+      box-shadow: 0 8px 32px rgba(0,0,0,.28);
+      z-index: 99999; transition: transform .3s cubic-bezier(.34,1.56,.64,1), opacity .3s;
+      opacity: 0; pointer-events: none;
+      display: flex; align-items: center; gap: .5rem; white-space: nowrap;
+    }
+    #shareToast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
   </style>
 </head>
 <body>
@@ -1795,6 +1903,260 @@
             this.style.cursor = 'default';
         }, { once: true });
     }
+})();
+</script>
+
+<!-- ════════════ MOTEUR DE PARTAGE ════════════ -->
+<script>
+(function() {
+  const PAGE_URL = 'https://projetbi.org/ideologie.html';
+
+  /* ── Toast ── */
+  const toastEl = document.createElement('div');
+  toastEl.id = 'shareToast';
+  toastEl.innerHTML = '<i class="fas fa-check-circle" style="color:#C9A84C"></i> <span id="stMsg">Lien copié !</span>';
+  document.body.appendChild(toastEl);
+
+  let _toastTimer;
+  function showToast(msg, duration) {
+    clearTimeout(_toastTimer);
+    document.getElementById('stMsg').textContent = msg;
+    toastEl.classList.add('show');
+    _toastTimer = setTimeout(() => toastEl.classList.remove('show'), duration || 3000);
+  }
+
+  /* ── Copie dans le presse-papier ── */
+  function copyText(txt) {
+    return navigator.clipboard.writeText(txt).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = txt; ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+    });
+  }
+
+  /* ── Cœur du partage ── */
+  function doShare(platform, text, url) {
+    url = url || PAGE_URL;
+    const e = encodeURIComponent;
+    const fullText = (text ? text + '\n' : '') + url;
+
+    if (platform === 'copy') {
+      copyText(fullText).then(() => showToast('✅ Lien + texte copiés !'));
+      return;
+    }
+
+    if (platform === 'facebook') {
+      /* Facebook bloque le pré-remplissage texte depuis 2018.
+         On copie le texte automatiquement pour que l'utilisateur puisse le coller. */
+      copyText(fullText).then(() => {
+        showToast('📋 Texte copié ! Collez-le dans votre post Facebook.', 5000);
+      });
+      setTimeout(() => {
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${e(url)}`, '_blank', 'width=620,height=460,noopener');
+      }, 400);
+      return;
+    }
+
+    const map = {
+      twitter:  `https://twitter.com/intent/tweet?text=${e((text||'').slice(0,240))}&url=${e(url)}&via=ProjetBI`,
+      whatsapp: `https://wa.me/?text=${e(fullText)}`,
+      telegram: `https://t.me/share/url?url=${e(url)}&text=${e((text||'').slice(0,200))}`,
+    };
+    if (map[platform]) window.open(map[platform], '_blank', 'width=620,height=460,noopener');
+  }
+
+  /* ── Panel FIXED positionné via getBoundingClientRect ── */
+  let activePanel = null;
+
+  // Le panel singleton flottant
+  const PANEL = document.createElement('div');
+  PANEL.id = 'sharePanelGlobal';
+  PANEL.style.cssText = `
+    position:fixed; z-index:99990;
+    background:#fff; border-radius:14px;
+    box-shadow:0 12px 40px rgba(0,0,0,.22);
+    padding:.65rem .8rem;
+    display:none; flex-direction:column; gap:.3rem;
+    min-width:188px;
+    border:1px solid rgba(0,0,0,.08);
+    animation: panelIn .18s cubic-bezier(.34,1.56,.64,1);
+  `;
+  // Animation CSS inline
+  const animStyle = document.createElement('style');
+  animStyle.textContent = `
+    @keyframes panelIn { from { opacity:0; transform:scale(.92) translateY(6px); } to { opacity:1; transform:scale(1) translateY(0); } }
+    #sharePanelGlobal .spi { display:flex;align-items:center;gap:.6rem;padding:.45rem .55rem;border-radius:9px;font-size:.82rem;font-weight:600;color:#222;cursor:pointer;transition:background .13s;border:none;background:transparent;text-align:left;width:100%; }
+    #sharePanelGlobal .spi:hover { background:#f4f4f4; }
+    #sharePanelGlobal .spico { width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.76rem;color:#fff;flex-shrink:0; }
+    #sharePanelGlobal .fb-note { font-size:.68rem;color:#888;padding:.1rem .55rem .4rem;line-height:1.4;border-top:1px solid #eee;margin-top:.15rem; }
+  `;
+  document.head.appendChild(animStyle);
+  document.body.appendChild(PANEL);
+
+  function buildPanel(text, url) {
+    PANEL.innerHTML = `
+      <button class="spi" data-p="twitter"><span class="spico" style="background:#000"><i class="fab fa-x-twitter"></i></span> X (Twitter)</button>
+      <button class="spi" data-p="facebook"><span class="spico" style="background:#1877F2"><i class="fab fa-facebook-f"></i></span> Facebook <span style="font-size:.68rem;color:#aaa;margin-left:auto">+ copie</span></button>
+      <button class="spi" data-p="whatsapp"><span class="spico" style="background:#25D366"><i class="fab fa-whatsapp"></i></span> WhatsApp</button>
+      <button class="spi" data-p="telegram"><span class="spico" style="background:#0088cc"><i class="fab fa-telegram-plane"></i></span> Telegram</button>
+      <button class="spi" data-p="copy"><span class="spico" style="background:#6b7280"><i class="fas fa-link"></i></span> Copier texte + lien</button>
+      <div class="fb-note"><i class="fab fa-facebook-f"></i> Facebook : le texte sera copié dans votre presse-papier pour coller dans votre post.</div>
+    `;
+    PANEL.querySelectorAll('[data-p]').forEach(b => {
+      b.addEventListener('click', ev => {
+        ev.stopPropagation();
+        doShare(b.dataset.p, text, url);
+        closePanel();
+      });
+    });
+  }
+
+  function openPanel(triggerBtn, text, url) {
+    buildPanel(text, url);
+    const rect = triggerBtn.getBoundingClientRect();
+    PANEL.style.display = 'flex';
+
+    // Positionner en dessous par défaut
+    let top  = rect.bottom + 8;
+    let left = rect.left;
+
+    // Ajuster si ça dépasse à droite
+    const panelW = 200;
+    if (left + panelW > window.innerWidth - 12) {
+      left = window.innerWidth - panelW - 12;
+    }
+
+    // Flip vers le haut si pas assez de place en bas
+    const panelH = 230;
+    if (top + panelH > window.innerHeight - 12) {
+      top = rect.top - panelH - 8;
+      if (top < 8) top = 8;
+    }
+
+    PANEL.style.top  = top  + 'px';
+    PANEL.style.left = left + 'px';
+    activePanel = triggerBtn;
+  }
+
+  function closePanel() {
+    PANEL.style.display = 'none';
+    activePanel = null;
+  }
+
+  document.addEventListener('click', e => {
+    if (!PANEL.contains(e.target) && e.target !== activePanel) closePanel();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+  window.addEventListener('scroll', closePanel, { passive: true });
+
+  /* ── Attacher le panel à un bouton ── */
+  function attachPanel(btn, text, url) {
+    btn.addEventListener('click', ev => {
+      ev.stopPropagation();
+      if (PANEL.style.display !== 'none' && activePanel === btn) { closePanel(); return; }
+      openPanel(btn, text, url || PAGE_URL);
+    });
+  }
+
+  /* ── Share-bar inline (sur les cartes) ── */
+  function makeBar(text, url) {
+    const bar = document.createElement('div');
+    bar.className = 'share-bar';
+    bar.innerHTML = `
+      <span class="share-bar-label">Partager</span>
+      <button class="share-btn tw" title="X / Twitter"><i class="fab fa-x-twitter"></i></button>
+      <button class="share-btn fb" title="Facebook (texte copié automatiquement)"><i class="fab fa-facebook-f"></i></button>
+      <button class="share-btn wa" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+      <button class="share-btn tg" title="Telegram"><i class="fab fa-telegram-plane"></i></button>
+      <button class="share-btn cp" title="Copier texte + lien"><i class="fas fa-link"></i></button>`;
+    const platforms = ['twitter','facebook','whatsapp','telegram','copy'];
+    bar.querySelectorAll('.share-btn').forEach((btn, i) => {
+      btn.addEventListener('click', ev => {
+        ev.stopPropagation();
+        if (platforms[i] === 'copy') {
+          btn.classList.add('copied'); btn.innerHTML = '<i class="fas fa-check"></i>';
+          setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '<i class="fas fa-link"></i>'; }, 2200);
+        }
+        doShare(platforms[i], text, url);
+      });
+    });
+    return bar;
+  }
+
+  function clean(el) { return el ? el.textContent.replace(/\s+/g,' ').trim().slice(0,220) : ''; }
+
+  /* ── CITATIONS ── */
+  document.querySelectorAll('.quote-card').forEach(card => {
+    const txt = clean(card.querySelector('.quote-text'));
+    const ch  = clean(card.querySelector('.quote-chapter'));
+    card.appendChild(makeBar(`"${txt}" (${ch}) — Idéologie PASTEF | ProjetBI`));
+  });
+
+  /* ── ENGAGEMENTS ── */
+  document.querySelectorAll('.eng-card').forEach(card => {
+    const title  = clean(card.querySelector('h4'));
+    const domain = clean(card.querySelector('.eng-domain'));
+    const ref    = clean(card.querySelector('.eng-ref'));
+    card.querySelector('.eng-body').appendChild(makeBar(`📌 ${domain} — ${title} | ${ref} | ProjetBI PASTEF`));
+  });
+
+  /* ── PILIERS ── */
+  document.querySelectorAll('.pillar-card').forEach(card => {
+    const title = clean(card.querySelector('h3'));
+    const sub   = clean(card.querySelector('.pillar-sub'));
+    const acts  = Array.from(card.querySelectorAll('.pillar-actions li')).slice(0,3).map(li=>'✓ '+li.textContent.trim()).join(' | ');
+    card.appendChild(makeBar(`🏛️ Pilier PASTEF — ${title} (${sub})\n${acts}\n#JubJubalJubanti | ProjetBI`));
+  });
+
+  /* ── TIMELINE ── */
+  document.querySelectorAll('.timeline-content').forEach(el => {
+    const year  = clean(el.querySelector('.timeline-year'));
+    const title = clean(el.querySelector('h4'));
+    const desc  = clean(el.querySelector('p'));
+    el.appendChild(makeBar(`🕐 ${year} — ${title}: ${desc.slice(0,140)} | Histoire PASTEF | ProjetBI`));
+  });
+
+  /* ── COMPARE-ROW : bouton flottant ── */
+  document.querySelectorAll('.compare-row').forEach(row => {
+    const topic = clean(row.querySelector('.compare-topic span'));
+    const bad   = clean(row.querySelector('.compare-bad h4'));
+    const good  = clean(row.querySelector('.compare-good h4'));
+    const txt   = `⚖️ ${topic} — Système: "${bad}" vs Vision PASTEF: "${good}" | #Solutions #PASTEF | ProjetBI`;
+    const wrap  = document.createElement('div');
+    wrap.className = 'compare-share-wrap';
+    const btn = document.createElement('button');
+    btn.className = 'compare-share-btn';
+    btn.innerHTML = '<i class="fas fa-share-alt"></i> Partager';
+    attachPanel(btn, txt);
+    wrap.appendChild(btn);
+    row.appendChild(wrap);
+  });
+
+  /* ── SECTION-HEADERS ── */
+  const sectionDefs = [
+    { id: 'systeme',     label: '🕸️ Diagnostic du Système PASTEF — La pieuvre tentaculaire à plusieurs têtes décryptée dans Solutions | ProjetBI' },
+    { id: 'comparaison', label: '⚖️ Système vs Vision PASTEF — Secteur par secteur, ce que dénonce Sonko et ce qu\'il propose | ProjetBI' },
+    { id: 'schema',      label: '🏭 Le Modèle Économique PASTEF — Agriculture → Industrialisation → Commerce équitable → Sénégal Prospère | ProjetBI' },
+    { id: 'piliers',     label: '🏛️ Les 5 Piliers de la Vision PASTEF — Souveraineté, Justice, Industrialisation, Contrat social, Confiance | ProjetBI' },
+    { id: 'jubanti',     label: '⚡ Jub · Jubal · Jubanti — La philosophie de PASTEF. Être juste, Rendre juste, Faire que justice soit | ProjetBI' },
+    { id: 'timeline',    label: '🕐 Histoire de PASTEF — De l\'anonymat (2014) à la victoire historique de 2024 | ProjetBI' },
+    { id: 'citations',   label: '💬 Citations clés du livre « Solutions » — La parole d\'Ousmane Sonko sur le Sénégal | ProjetBI' },
+    { id: 'engagements', label: '📋 Les Engagements Concrets de Sonko — Domaine par domaine, les mesures précises du programme PASTEF | ProjetBI' },
+  ];
+
+  sectionDefs.forEach(({ id, label }) => {
+    const section = document.getElementById(id);
+    if (!section) return;
+    const header  = section.querySelector('.section-header');
+    if (!header)  return;
+    const btn = document.createElement('button');
+    btn.className = 'section-share-btn';
+    btn.innerHTML = '<i class="fas fa-share-alt"></i> Partager cette section';
+    attachPanel(btn, label, PAGE_URL + '#' + id);
+    header.appendChild(btn);
+  });
+
 })();
 </script>
 </body>

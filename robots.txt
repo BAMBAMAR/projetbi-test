@@ -1,55 +1,41 @@
-# robots.txt – ProjetBI.org V2
-# Dernière mise à jour : 2026-05-18
+# robots.txt — ProjetBI.org
+# Dernière mise à jour : 2026-04-25
 
-# ── Crawlers généraux ────────────────────────────────────────────────────────
 User-agent: *
 Allow: /
 
-# Pages d'administration – ne pas indexer ni suivre
+# Pages d'administration — ne pas indexer
 Disallow: /admin.html
 Disallow: /admin/
 Disallow: /kit-communication.html
 Disallow: /update_press_simple.html
 
-# Fichiers techniques – pas utiles au crawl
+# Fichiers techniques
 Disallow: /sw.js
-Disallow: /test-data.js
-Disallow: /app.vote-guard.js
+Disallow: /manifest.json
+Disallow: /tokens.css
 
-# Autoriser explicitement les assets utiles au rendu
+# Autoriser explicitement les assets utiles au crawl
 Allow: /*.css$
 Allow: /*.js$
 Allow: /*.png$
 Allow: /*.jpg$
-Allow: /*.webp$
 Allow: /*.svg$
-Allow: /manifest.json
+Allow: /*.webp$
 
-# ── Sitemaps ─────────────────────────────────────────────────────────────────
+# Indiquer le sitemap aux moteurs
 Sitemap: https://projetbi.org/sitemap.xml
 
-# ── Bots SEO – limiter la fréquence de crawl ─────────────────────────────────
+# Bots SEO agressifs — limiter la fréquence
 User-agent: AhrefsBot
 Crawl-delay: 10
 
 User-agent: SemrushBot
 Crawl-delay: 10
 
-User-agent: MajesticBot
-Crawl-delay: 10
-
-# ── Scrapers connus – bloquer totalement ─────────────────────────────────────
+# Bots de scraping connus à bloquer
 User-agent: MJ12bot
 Disallow: /
 
 User-agent: DotBot
 Disallow: /
-
-User-agent: SiteCheck-sitecrawl
-Disallow: /
-
-User-agent: BLEXBot
-Disallow: /
-
-User-agent: ia_archiver
-Allow: /

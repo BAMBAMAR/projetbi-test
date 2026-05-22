@@ -412,6 +412,7 @@ textarea.form-control{resize:vertical;min-height:90px}
 
   <div class="nav-group-label">Outils</div>
   <div class="nav-item" data-page="kit"><i class="fas fa-palette"></i><span>Kit Communication</span></div>
+  <div class="nav-item" data-page="ideologie"><i class="fas fa-brain"></i><span>Posters Idéologie</span></div>
   <div class="nav-item" data-page="export"><i class="fas fa-download"></i><span>Export & Import</span></div>
   <div class="nav-item" data-page="seo"><i class="fas fa-magnifying-glass-chart"></i><span>SEO & Sitemap</span></div>
 
@@ -550,6 +551,127 @@ textarea.form-control{resize:vertical;min-height:90px}
             <thead><tr><th>Service</th><th>Catégorie</th><th>Note</th><th>Accessibilité</th><th>Accueil</th><th>Efficacité</th><th>Transparence</th><th>Commentaire</th><th>Date</th></tr></thead>
             <tbody id="ratingsBody"><tr><td colspan="9" style="text-align:center;color:var(--text3);padding:2rem"><i class="fas fa-spinner fa-spin"></i> Chargement…</td></tr></tbody>
           </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="page-ideologie">
+      <!-- Sélecteur de type de poster -->
+      <div class="card" style="margin-bottom:1rem">
+        <div class="card-head">
+          <span class="card-title"><i class="fas fa-brain" style="color:var(--gold)"></i> Générateur de Posters — Idéologie PASTEF</span>
+          <button class="btn btn-primary btn-sm" onclick="ideoRenderAll()"><i class="fas fa-sync"></i> Générer</button>
+        </div>
+        <div class="card-body">
+          <!-- Sélecteur de template -->
+          <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.1rem">
+            <button class="btn btn-primary btn-sm" id="ibtn-citation" onclick="ideoSelectTemplate('citation')"><i class="fas fa-quote-left"></i> Citation</button>
+            <button class="btn btn-outline btn-sm" id="ibtn-pilier" onclick="ideoSelectTemplate('pilier')"><i class="fas fa-layer-group"></i> Pilier</button>
+            <button class="btn btn-outline btn-sm" id="ibtn-comparaison" onclick="ideoSelectTemplate('comparaison')"><i class="fas fa-balance-scale"></i> Comparaison</button>
+            <button class="btn btn-outline btn-sm" id="ibtn-jubanti" onclick="ideoSelectTemplate('jubanti')"><i class="fas fa-star-and-crescent"></i> Jub·Jubal·Jubanti</button>
+            <button class="btn btn-outline btn-sm" id="ibtn-stat" onclick="ideoSelectTemplate('stat')"><i class="fas fa-chart-bar"></i> Stat du livre</button>
+          </div>
+
+          <!-- Formulaire dynamique -->
+          <div id="ideoFormCitation">
+            <div class="form-row cols-2">
+              <div class="form-group"><label>Citation (texte)</label><textarea class="form-control" id="ictText" rows="3">Les SOLUTIONS sont bien en nous. Mais il faut s'y atteler dès maintenant, nous avons déjà perdu trop de temps.</textarea></div>
+              <div class="form-group"><label>Source / Chapitre</label><input type="text" class="form-control" id="ictSource" value="Ousmane Sonko — Solutions, avant-propos"></div>
+            </div>
+          </div>
+
+          <div id="ideoFormPilier" style="display:none">
+            <div class="form-row cols-3">
+              <div class="form-group"><label>Numéro (01–05)</label><input type="text" class="form-control" id="iplNum" value="01"></div>
+              <div class="form-group"><label>Titre du Pilier</label><input type="text" class="form-control" id="iplTitle" value="Souveraineté Nationale Réelle"></div>
+              <div class="form-group"><label>Sous-titre</label><input type="text" class="form-control" id="iplSub" value="Décolonisation économique et politique"></div>
+            </div>
+            <div class="form-row cols-2">
+              <div class="form-group"><label>Action 1</label><input type="text" class="form-control" id="ipl1" value="Renégocier les contrats miniers inégaux"></div>
+              <div class="form-group"><label>Action 2</label><input type="text" class="form-control" id="ipl2" value="Refuser les APE asymétriques"></div>
+              <div class="form-group"><label>Action 3</label><input type="text" class="form-control" id="ipl3" value="Politique étrangère indépendante"></div>
+              <div class="form-group"><label>Action 4</label><input type="text" class="form-control" id="ipl4" value="Contrôle des secteurs stratégiques"></div>
+            </div>
+          </div>
+
+          <div id="ideoFormComparaison" style="display:none">
+            <div class="form-row cols-3">
+              <div class="form-group"><label>Thème / Secteur</label><input type="text" class="form-control" id="icmpTopic" value="Agriculture"></div>
+              <div class="form-group"><label>❌ Titre Système actuel</label><input type="text" class="form-control" id="icmpBadTitle" value="Agriculture marginalisée"></div>
+              <div class="form-group"><label>✅ Titre Vision PASTEF</label><input type="text" class="form-control" id="icmpGoodTitle" value="Fer de lance industriel"></div>
+            </div>
+            <div class="form-row cols-2">
+              <div class="form-group"><label>Description Système</label><textarea class="form-control" id="icmpBadDesc" rows="2">PSE ultra-libéral, ouverture aux multinationales, flou autour de la vision agricole nationale.</textarea></div>
+              <div class="form-group"><label>Description Vision</label><textarea class="form-control" id="icmpGoodDesc" rows="2">L'agriculture comme moteur de l'industrialisation. Filières fortes, souveraineté alimentaire.</textarea></div>
+            </div>
+          </div>
+
+          <div id="ideoFormJubanti" style="display:none">
+            <div class="form-row cols-3">
+              <div class="form-group"><label>JUB — définition</label><input type="text" class="form-control" id="ijub1" value="Être juste"></div>
+              <div class="form-group"><label>JUBAL — définition</label><input type="text" class="form-control" id="ijub2" value="Rendre juste"></div>
+              <div class="form-group"><label>JUBANTI — définition</label><input type="text" class="form-control" id="ijub3" value="Faire que justice soit"></div>
+            </div>
+          </div>
+
+          <div id="ideoFormStat" style="display:none">
+            <div class="form-row cols-3">
+              <div class="form-group"><label>Chiffre principal</label><input type="text" class="form-control" id="istatNum" value="232"></div>
+              <div class="form-group"><label>Label principal</label><input type="text" class="form-control" id="istatLabel" value="Pages d'analyse et de propositions"></div>
+              <div class="form-group"><label>Titre de la stat</label><input type="text" class="form-control" id="istatTitle" value="Le livre Solutions en chiffres"></div>
+            </div>
+            <div class="form-row cols-3">
+              <div class="form-group"><label>Stat 2 chiffre</label><input type="text" class="form-control" id="istat2n" value="2014"></div>
+              <div class="form-group"><label>Stat 2 label</label><input type="text" class="form-control" id="istat2l" value="Création de PASTEF"></div>
+              <div class="form-group"><label>Stat 3 chiffre</label><input type="text" class="form-control" id="istat3n" value="58+"></div>
+            </div>
+            <div class="form-group"><label>Stat 3 label</label><input type="text" class="form-control" id="istat3l" value="Années de système à briser"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aperçu + Textes sociaux -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start">
+        <div class="card">
+          <div class="card-head"><span class="card-title"><i class="fas fa-eye" style="color:var(--blue)"></i> Aperçu (1080×1080)</span></div>
+          <div class="card-body" style="background:var(--bg3);display:flex;flex-direction:column;align-items:center;gap:1rem;padding:1.2rem">
+            <canvas id="ideoCanvas" width="1080" height="1080" style="width:100%;max-width:440px;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,.5)"></canvas>
+            <div style="display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center">
+              <button class="btn btn-primary btn-sm" onclick="ideoDownload()"><i class="fas fa-download"></i> Télécharger PNG</button>
+              <button class="btn btn-outline btn-sm" onclick="ideoCopyClipboard()"><i class="fas fa-copy"></i> Copier</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:.75rem">
+          <div class="card">
+            <div class="card-head" style="padding:.7rem 1rem">
+              <span class="card-title" style="font-size:.82rem"><i class="fab fa-x-twitter"></i> Twitter / X</span>
+              <button class="btn btn-outline btn-xs" onclick="ideoCopyText('itwText')"><i class="fas fa-copy"></i> Copier</button>
+            </div>
+            <div class="card-body" style="padding:.75rem 1rem;font-size:.78rem;color:var(--text2);line-height:1.6;max-height:110px;overflow-y:auto;white-space:pre-line" id="itwText"></div>
+          </div>
+          <div class="card">
+            <div class="card-head" style="padding:.7rem 1rem">
+              <span class="card-title" style="font-size:.82rem"><i class="fab fa-facebook" style="color:#1877F2"></i> Facebook</span>
+              <button class="btn btn-outline btn-xs" onclick="ideoCopyText('ifbText')"><i class="fas fa-copy"></i> Copier</button>
+            </div>
+            <div class="card-body" style="padding:.75rem 1rem;font-size:.78rem;color:var(--text2);line-height:1.6;max-height:130px;overflow-y:auto;white-space:pre-line" id="ifbText"></div>
+          </div>
+          <div class="card">
+            <div class="card-head" style="padding:.7rem 1rem">
+              <span class="card-title" style="font-size:.82rem"><i class="fab fa-whatsapp" style="color:#25D366"></i> WhatsApp</span>
+              <button class="btn btn-outline btn-xs" onclick="ideoCopyText('iwaText')"><i class="fas fa-copy"></i> Copier</button>
+            </div>
+            <div class="card-body" style="padding:.75rem 1rem;font-size:.78rem;color:var(--text2);line-height:1.6;max-height:110px;overflow-y:auto;white-space:pre-line" id="iwaText"></div>
+          </div>
+          <div class="card">
+            <div class="card-head" style="padding:.7rem 1rem">
+              <span class="card-title" style="font-size:.82rem"><i class="fab fa-telegram" style="color:#0088cc"></i> Telegram</span>
+              <button class="btn btn-outline btn-xs" onclick="ideoCopyText('itgText')"><i class="fas fa-copy"></i> Copier</button>
+            </div>
+            <div class="card-body" style="padding:.75rem 1rem;font-size:.78rem;color:var(--text2);line-height:1.6;max-height:110px;overflow-y:auto;white-space:pre-line" id="itgText"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1004,7 +1126,7 @@ function initSupabase() {
 const pageTitles = {
   dashboard: 'Tableau de bord', promises: 'Engagements', news: 'Actualités',
   press: 'Revue de Presse', ratings: 'Notations citoyennes',
-  kit: 'Kit de Communication',
+  kit: 'Kit de Communication', ideologie: 'Posters Idéologie PASTEF',
   export: 'Export & Import', seo: 'SEO & Sitemap'
 };
 
@@ -1018,6 +1140,9 @@ document.querySelectorAll('.nav-item[data-page]').forEach(item => {
     document.getElementById('pageTitle').textContent = pageTitles[page] || page;
     if (page === 'kit') {
       setTimeout(() => { kitSyncFromDB(); kitRenderAll(); }, 50);
+    }
+    if (page === 'ideologie') {
+      setTimeout(() => { ideoSelectTemplate(ideoActiveTemplate); }, 50);
     }
     if (page === 'ratings') loadRatings();
   });
@@ -1196,7 +1321,7 @@ function renderUpdatesList(updates) {
   document.getElementById('updatesCount').textContent = `(${updates.length})`;
   document.getElementById('updatesList').innerHTML = updates.map((u,i) => `
     <div class="update-item">
-      <div class="update-date">${formatDateFR(u.date)||u.date||'—'}</div>
+      <div class="update-date">${u.date||'—'}</div>
       <div class="update-text">${escH(u.description||u.source||'')}</div>
       <button class="del-btn" onclick="removeUpdate(${i})" title="Supprimer"><i class="fas fa-times"></i></button>
     </div>
@@ -1321,7 +1446,8 @@ function savePromise() {
       promise = DB.promises[idx];
     }
   } else {
-    const newId = 'promise_' + (DB.promises.length + 1);
+    const maxId = DB.promises.reduce((m, p) => Math.max(m, parseInt(String(p.id).replace(/\D/g,'')) || 0), 0);
+    const newId = 'promise_' + (maxId + 1);
     promise = { id: newId, ...data };
     DB.promises.push(promise);
   }
@@ -1349,12 +1475,15 @@ function savePromise() {
 }
 
 function deletePromise(id) {
-  if (!confirm('Supprimer cet engagement ?')) return;
-  DB.promises = DB.promises.filter(p=>p.id!==id);
-  filteredPromises = filteredPromises.filter(p=>p.id!==id);
-  renderPromiseTable();
-  renderDashboard();
-  toast('Engagement supprimé','info');
+  const p = DB.promises.find(x => x.id === id);
+  const label = p ? p.engagement.substring(0, 55) + '…' : id;
+  confirmDelete(`Supprimer : « ${label} » ?`, () => {
+    DB.promises = DB.promises.filter(p => p.id !== id);
+    filteredPromises = filteredPromises.filter(p => p.id !== id);
+    renderPromiseTable();
+    renderDashboard();
+    toast('Engagement supprimé', 'info');
+  });
 }
 
 // ══════════════════════
@@ -1380,9 +1509,11 @@ function renderNews() {
 
 function filterNews() {
   const q = document.getElementById('newsSearch').value.toLowerCase();
-  document.getElementById('newsBody').innerHTML = DB.news.filter(n=>
-    n.title.toLowerCase().includes(q)||((n.source||'').toLowerCase().includes(q))
-  ).map(n => `
+  const filtered = DB.news.filter(n =>
+    n.title.toLowerCase().includes(q) || ((n.source||'').toLowerCase().includes(q))
+  );
+  document.getElementById('newsCount').textContent = `— ${filtered.length} articles`;
+  document.getElementById('newsBody').innerHTML = filtered.map(n => `
     <tr>
       <td><code style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text3)">${n.id}</code></td>
       <td style="max-width:260px"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px">${escH(n.title)}</div></td>
@@ -1451,7 +1582,7 @@ function saveNews() {
     if (idx>-1) DB.news[idx]={...DB.news[idx],...data};
     toast('Actualité mise à jour ✅','success');
   } else {
-    const newId = nextNewsId();
+    const newId = String(Math.max(0, ...DB.news.map(n => parseInt(n.id) || 0)) + 1);
     DB.news.unshift({id:newId,...data});
     toast('Actualité ajoutée ✅','success');
   }
@@ -1465,10 +1596,13 @@ function deleteNews() {
   closeModal('newsModal');
 }
 function deleteNewsById(id) {
-  if (!confirm('Supprimer cette actualité ?')) return;
-  DB.news = DB.news.filter(n=>n.id!==id);
-  renderNews();
-  toast('Actualité supprimée','info');
+  const n = DB.news.find(x => x.id === id);
+  const label = n ? (n.title||'').substring(0, 55) + '…' : id;
+  confirmDelete(`Supprimer : « ${label} » ?`, () => {
+    DB.news = DB.news.filter(n => n.id !== id);
+    renderNews();
+    toast('Actualité supprimée', 'info');
+  });
 }
 
 // ══════════════════════
@@ -1495,7 +1629,10 @@ function renderPress() {
 function openPressModal() {
   document.getElementById('pressModalTitle').textContent='Nouvelle une';
   document.getElementById('pressEditId').value='';
-  ['pressTitle','pressDate','pressImage','pressLogo','pressLink'].forEach(id=>document.getElementById(id).value='');
+  ['pressTitle','pressImage','pressLogo','pressLink'].forEach(id=>document.getElementById(id).value='');
+  const today = new Date();
+  document.getElementById('pressDate').value =
+    `${String(today.getDate()).padStart(2,'0')}/${String(today.getMonth()+1).padStart(2,'0')}/${today.getFullYear()}`;
   document.getElementById('pressDeleteBtn').style.display='none';
   openModal('pressModal');
 }
@@ -1543,10 +1680,13 @@ function deletePress() {
   closeModal('pressModal');
 }
 function deletePressById(id) {
-  if (!confirm('Supprimer cette une ?')) return;
-  DB.press = DB.press.filter(p=>p.id!==id);
-  renderPress();
-  toast('Une supprimée','info');
+  const p = DB.press.find(x => x.id === id);
+  const label = p ? p.title : id;
+  confirmDelete(`Supprimer la une « ${label} » ?`, () => {
+    DB.press = DB.press.filter(p => p.id !== id);
+    renderPress();
+    toast('Une supprimée', 'info');
+  });
 }
 
 // ══════════════════════
@@ -1647,9 +1787,13 @@ function generateSitemap() {
   const pages = [
     { url: 'https://projetbi.org/', priority: '1.0', freq: 'daily' },
     { url: 'https://projetbi.org/actualites.html', priority: '0.8', freq: 'daily' },
-    ...DB.news.slice(0,10).map(n=>({ url: `https://projetbi.org/#actualites`, priority: '0.6', freq: 'weekly' })),
+    { url: 'https://projetbi.org/ideologie.html', priority: '0.7', freq: 'weekly' },
+    { url: 'https://projetbi.org/kit-communication.html', priority: '0.6', freq: 'weekly' },
   ];
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...new Set(pages.map(p=>p.url))].map((url,i)=>`  <url>\n    <loc>${url}</loc>\n    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>\n    <changefreq>${pages[i]?.freq||'weekly'}</changefreq>\n    <priority>${pages[i]?.priority||'0.5'}</priority>\n  </url>`).join('\n')}\n</urlset>`;
+  const seen = new Map();
+  pages.forEach(p => { if (!seen.has(p.url)) seen.set(p.url, p); });
+  const lastmod = new Date().toISOString().split('T')[0];
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[...seen.values()].map(p=>`  <url>\n    <loc>${p.url}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${p.freq}</changefreq>\n    <priority>${p.priority}</priority>\n  </url>`).join('\n')}\n</urlset>`;
   const el = document.getElementById('sitemapPreview');
   el.textContent = xml;
   el.style.display='block';
@@ -1689,17 +1833,24 @@ document.querySelectorAll('.modal-overlay').forEach(m => {
   m.addEventListener('click', e => { if(e.target===m) m.classList.remove('open'); });
 });
 document.addEventListener('keydown', e => {
-  if(e.key==='Escape') document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'));
+  if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    const open = document.querySelector('.modal-overlay.open');
+    if (!open) return;
+    e.preventDefault();
+    if (open.id === 'promiseModal') savePromise();
+    else if (open.id === 'newsModal') saveNews();
+    else if (open.id === 'pressModal') savePress();
+  }
 });
 
 // ══════════════════════
 // UTILS
 // ══════════════════════
+const _ESC_MAP = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
 function escH(str) {
-  if(!str) return '';
-  const d=document.createElement('div');
-  d.appendChild(document.createTextNode(String(str)));
-  return d.innerHTML;
+  if (!str) return '';
+  return String(str).replace(/[&<>"']/g, c => _ESC_MAP[c]);
 }
 
 // Sanitize IDs for use in onclick="fn('${id}')" — strip anything non-alphanumeric/underscore/hyphen
@@ -1714,6 +1865,24 @@ function safeUrl(url) {
   const trimmed = url.trim().toLowerCase();
   if (trimmed.startsWith('javascript:') || trimmed.startsWith('data:') || trimmed.startsWith('vbscript:')) return '#';
   return url;
+}
+
+function confirmDelete(msg, onConfirm) {
+  document.querySelectorAll('.toast-confirm').forEach(t => t.remove());
+  const id = '_cdel_' + Date.now();
+  window[id] = onConfirm;
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'toast error toast-confirm';
+  t.style.cssText = 'min-width:320px;align-items:center;gap:.5rem';
+  t.innerHTML = `<i class="fas fa-exclamation-triangle" style="color:var(--red)"></i>
+    <span style="flex:1;font-size:.82rem">${escH(msg)}</span>
+    <button onclick="window['${id}']();delete window['${id}'];this.closest('.toast-confirm').remove()"
+      style="background:var(--red);color:#fff;border:none;border-radius:6px;padding:.22rem .7rem;font-size:.76rem;cursor:pointer;font-family:inherit;font-weight:700;white-space:nowrap">Supprimer</button>
+    <button onclick="delete window['${id}'];this.closest('.toast-confirm').remove()"
+      style="background:transparent;border:1px solid var(--border2);color:var(--text2);border-radius:6px;padding:.22rem .65rem;font-size:.76rem;cursor:pointer;font-family:inherit;white-space:nowrap">Annuler</button>`;
+  c.appendChild(t);
+  setTimeout(() => { t.remove(); delete window[id]; }, 9000);
 }
 
 function toast(msg, type='success') {
@@ -2110,7 +2279,297 @@ document.addEventListener('input', e => {
     clearTimeout(window._kitDebounce);
     window._kitDebounce = setTimeout(kitRenderAll, 280);
   }
+  // Idéologie poster aussi
+  if (e.target && e.target.id && (e.target.id.startsWith('ict') || e.target.id.startsWith('ipl') || e.target.id.startsWith('icmp') || e.target.id.startsWith('ijub') || e.target.id.startsWith('istat'))) {
+    clearTimeout(window._ideoDebounce);
+    window._ideoDebounce = setTimeout(ideoRenderAll, 300);
+  }
 });
+
+// ══════════════════════════════════════════
+// GÉNÉRATEUR POSTERS IDÉOLOGIE
+// ══════════════════════════════════════════
+let ideoActiveTemplate = 'citation';
+
+function ideoSelectTemplate(name) {
+  ideoActiveTemplate = name;
+  ['citation','pilier','comparaison','jubanti','stat'].forEach(t => {
+    const b = document.getElementById('ibtn-'+t);
+    const f = document.getElementById('ideoForm'+t.charAt(0).toUpperCase()+t.slice(1));
+    if (b) b.className = t === name ? 'btn btn-primary btn-sm' : 'btn btn-outline btn-sm';
+    if (f) f.style.display = t === name ? '' : 'none';
+  });
+  ideoRenderAll();
+}
+
+function ideoVal(id) { const el=document.getElementById(id); return el ? el.value.trim() : ''; }
+
+/* ── Helpers canvas ── */
+function ideoBg(ctx, c1, c2) {
+  const g = ctx.createLinearGradient(0,0,0,1080);
+  g.addColorStop(0,c1); g.addColorStop(1,c2);
+  ctx.fillStyle=g; ctx.fillRect(0,0,1080,1080);
+}
+function ideoRR(ctx,x,y,w,h,r,fill) {
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
+  ctx.closePath(); if(fill){ctx.fillStyle=fill;ctx.fill();}
+}
+function ideoLogoHeader(ctx) {
+  ideoRR(ctx,54,54,200,52,10,'rgba(255,255,255,.13)');
+  ctx.fillStyle='white'; ctx.font='bold 24px Arial'; ctx.textAlign='left';
+  ctx.fillText('PROJETBI · Idéologie PASTEF',74,87);
+}
+function ideoFooter(ctx) {
+  ideoRR(ctx,0,988,1080,92,0,'rgba(0,0,0,.30)');
+  ctx.fillStyle='rgba(255,255,255,.6)'; ctx.font='21px Arial'; ctx.textAlign='center';
+  ctx.fillText('projetbi.org/ideologie.html  |  #JubJubalJubanti  |  #Solutions #PASTEF',540,1038);
+  ctx.textAlign='left';
+}
+/* Wrap text helper */
+function ideoWrapText(ctx, text, x, y, maxW, lineH) {
+  const words = text.split(' ');
+  let line = '';
+  let lines = [];
+  words.forEach(w => {
+    const test = line ? line+' '+w : w;
+    if (ctx.measureText(test).width > maxW && line) { lines.push(line); line = w; }
+    else { line = test; }
+  });
+  lines.push(line);
+  lines.forEach((l,i) => ctx.fillText(l, x, y + i*lineH));
+  return lines.length;
+}
+
+function ideoDrawCanvas() {
+  const canvas = document.getElementById('ideoCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width=1080; canvas.height=1080;
+
+  if (ideoActiveTemplate === 'citation') {
+    ideoBg(ctx,'#1F4530','#2D5F3F');
+    // Texture subtile
+    ctx.fillStyle='rgba(201,168,76,.05)';
+    ctx.beginPath(); ctx.arc(980,100,320,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(100,1000,200,0,Math.PI*2); ctx.fill();
+    ideoLogoHeader(ctx);
+    // Grande guillemet décorative
+    ctx.fillStyle='rgba(201,168,76,.18)'; ctx.font='bold 400px Arial'; ctx.textAlign='left';
+    ctx.fillText('"',30,480);
+    // Texte citation
+    const cite = ideoVal('ictText') || 'Les SOLUTIONS sont bien en nous.';
+    const src  = ideoVal('ictSource') || 'Ousmane Sonko — Solutions';
+    ideoRR(ctx,80,260,920,490,20,'rgba(255,255,255,.07)');
+    ctx.fillStyle='#fff'; ctx.font='italic bold 46px Georgia'; ctx.textAlign='center';
+    const lh = 68;
+    const lines = [];
+    const words = cite.split(' '); let line='';
+    words.forEach(w => { const t=line?line+' '+w:w; if(ctx.measureText(t).width>820&&line){lines.push(line);line=w;}else{line=t;} }); lines.push(line);
+    const startY = 260 + (490 - lines.length*lh)/2 + 46;
+    lines.forEach((l,i) => ctx.fillText(l,540,startY+i*lh));
+    // Source
+    ideoRR(ctx,340,790,400,6,3,'#C9A84C');
+    ctx.fillStyle='#C9A84C'; ctx.font='bold 28px Arial'; ctx.fillText(src,540,840);
+    ctx.textAlign='left';
+    ideoFooter(ctx);
+
+  } else if (ideoActiveTemplate === 'pilier') {
+    ideoBg(ctx,'#0D3020','#1A4A30');
+    ideoLogoHeader(ctx);
+    const num   = ideoVal('iplNum')   || '01';
+    const title = ideoVal('iplTitle') || 'Souveraineté Nationale';
+    const sub   = ideoVal('iplSub')   || 'Décolonisation économique';
+    const acts  = [ideoVal('ipl1'),ideoVal('ipl2'),ideoVal('ipl3'),ideoVal('ipl4')].filter(Boolean);
+    // Grand numéro fond
+    ctx.fillStyle='rgba(255,255,255,.04)'; ctx.font='bold 700px Arial'; ctx.textAlign='center';
+    ctx.fillText(num,540,820);
+    // Badge numéro
+    ideoRR(ctx,430,148,220,68,34,'rgba(201,168,76,.25)');
+    ctx.fillStyle='#C9A84C'; ctx.font='bold 32px Arial'; ctx.textAlign='center';
+    ctx.fillText('PILIER '+num,540,192);
+    // Titre
+    ctx.fillStyle='#fff'; ctx.font='bold 72px Georgia'; ctx.textAlign='center';
+    ideoWrapText(ctx, title, 540, 310, 900, 82);
+    // Sous-titre
+    ctx.fillStyle='rgba(255,255,255,.65)'; ctx.font='34px Arial'; ctx.textAlign='center';
+    ctx.fillText(sub,540,440);
+    // Séparateur
+    ideoRR(ctx,390,480,300,4,2,'#C9A84C');
+    // Actions
+    const startA = 530;
+    acts.forEach((a,i) => {
+      ideoRR(ctx,80,startA+i*98,920,82,14,'rgba(255,255,255,.07)');
+      ctx.fillStyle='#C9A84C'; ctx.font='bold 30px Arial'; ctx.textAlign='left';
+      ctx.fillText('✓',108,startA+i*98+52);
+      ctx.fillStyle='white'; ctx.font='30px Arial';
+      ctx.fillText(a.slice(0,72),155,startA+i*98+52);
+    });
+    ctx.textAlign='left';
+    ideoFooter(ctx);
+
+  } else if (ideoActiveTemplate === 'comparaison') {
+    ideoBg(ctx,'#111','#1a1a1a');
+    ideoLogoHeader(ctx);
+    const topic    = ideoVal('icmpTopic')    || 'Agriculture';
+    const badTitle = ideoVal('icmpBadTitle') || 'Le Système';
+    const goodTitle= ideoVal('icmpGoodTitle')|| 'Vision PASTEF';
+    const badDesc  = ideoVal('icmpBadDesc')  || '';
+    const goodDesc = ideoVal('icmpGoodDesc') || '';
+    // Thème central
+    ideoRR(ctx,340,140,400,80,40,'rgba(201,168,76,.2)');
+    ctx.fillStyle='#C9A84C'; ctx.font='bold 36px Arial'; ctx.textAlign='center';
+    ctx.fillText('⚖️  '+topic,540,190);
+    // Panneau gauche — système
+    ideoRR(ctx,44,260,476,660,20,'rgba(178,58,58,.15)');
+    ctx.strokeStyle='#B23A3A'; ctx.lineWidth=3; ideoRR(ctx,44,260,476,660,20); ctx.stroke();
+    ctx.fillStyle='#ff7777'; ctx.font='bold 28px Arial'; ctx.textAlign='center';
+    ctx.fillText('✕  LE SYSTÈME',282,320);
+    ctx.fillStyle='white'; ctx.font='bold 38px Georgia';
+    ideoWrapText(ctx, badTitle,  282, 390, 420, 52);
+    ctx.fillStyle='rgba(255,255,255,.65)'; ctx.font='26px Arial';
+    ideoWrapText(ctx, badDesc,   282, 510, 430, 40);
+    // Panneau droit — PASTEF
+    ideoRR(ctx,560,260,476,660,20,'rgba(45,95,63,.25)');
+    ctx.strokeStyle='#2D5F3F'; ctx.lineWidth=3; ideoRR(ctx,560,260,476,660,20); ctx.stroke();
+    ctx.fillStyle='#6fcf7e'; ctx.font='bold 28px Arial'; ctx.textAlign='center';
+    ctx.fillText('✓  VISION PASTEF',798,320);
+    ctx.fillStyle='white'; ctx.font='bold 38px Georgia';
+    ideoWrapText(ctx, goodTitle, 798, 390, 420, 52);
+    ctx.fillStyle='rgba(255,255,255,.65)'; ctx.font='26px Arial';
+    ideoWrapText(ctx, goodDesc,  798, 510, 430, 40);
+    // VS central
+    ideoRR(ctx,490,540,100,100,50,'#C9A84C');
+    ctx.fillStyle='#0d1b14'; ctx.font='bold 44px Arial'; ctx.textAlign='center';
+    ctx.fillText('VS',540,602);
+    ctx.textAlign='left';
+    ideoFooter(ctx);
+
+  } else if (ideoActiveTemplate === 'jubanti') {
+    ideoBg(ctx,'#1A3828','#2D5F3F');
+    ideoLogoHeader(ctx);
+    ctx.fillStyle='rgba(201,168,76,.06)'; ctx.beginPath(); ctx.arc(540,580,460,0,Math.PI*2); ctx.fill();
+    // Titre
+    ctx.fillStyle='rgba(255,255,255,.55)'; ctx.font='28px Arial'; ctx.textAlign='center';
+    ctx.fillText('VALEURS FONDAMENTALES DE PASTEF',540,170);
+    const words = ['JUB','JUBAL','JUBANTI'];
+    const defs  = [ideoVal('ijub1')||'Être juste', ideoVal('ijub2')||'Rendre juste', ideoVal('ijub3')||'Faire que justice soit'];
+    const colors= ['rgba(255,255,255,.12)','rgba(201,168,76,.3)','rgba(255,255,255,.12)'];
+    const textColors=['#fff','#C9A84C','#fff'];
+    words.forEach((w,i) => {
+      const x = 54+i*336, bW=310, bH=530, bY=220;
+      ideoRR(ctx,x,bY,bW,bH,20,colors[i]);
+      ctx.fillStyle=textColors[i]; ctx.font='bold 84px Arial'; ctx.textAlign='center';
+      ctx.fillText(w,x+bW/2,bY+120);
+      ctx.fillStyle='rgba(255,255,255,.9)'; ctx.font='30px Georgia';
+      ideoWrapText(ctx,defs[i],x+bW/2,bY+200,270,44);
+    });
+    ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='italic 30px Georgia'; ctx.textAlign='center';
+    ctx.fillText('Ces trois mots wolof résument la philosophie d\'action de PASTEF.',540,840);
+    ctx.textAlign='left';
+    ideoFooter(ctx);
+
+  } else if (ideoActiveTemplate === 'stat') {
+    ideoBg(ctx,'#1F3060','#2D4A9F');
+    ideoLogoHeader(ctx);
+    ctx.fillStyle='rgba(201,168,76,.06)'; ctx.beginPath(); ctx.arc(900,200,380,0,Math.PI*2); ctx.fill();
+    const bigN  = ideoVal('istatNum')   || '232';
+    const bigL  = ideoVal('istatLabel') || 'Pages d\'analyse';
+    const title = ideoVal('istatTitle') || 'Le livre Solutions en chiffres';
+    const n2    = ideoVal('istat2n')    || '2014';
+    const l2    = ideoVal('istat2l')    || 'Création PASTEF';
+    const n3    = ideoVal('istat3n')    || '58+';
+    const l3    = ideoVal('istat3l')    || 'Années de système';
+    // Titre
+    ctx.fillStyle='#C9A84C'; ctx.font='bold 44px Arial'; ctx.textAlign='center';
+    ctx.fillText(title,540,190);
+    // Grand chiffre
+    ideoRR(ctx,174,240,732,330,24,'rgba(255,255,255,.1)');
+    ctx.fillStyle='#C9A84C'; ctx.font='bold 240px Arial'; ctx.textAlign='center';
+    ctx.fillText(bigN,540,490);
+    ctx.fillStyle='white'; ctx.font='40px Arial'; ctx.fillText(bigL,540,560);
+    // 2 stats secondaires
+    ideoRR(ctx,54,620,476,270,20,'rgba(255,255,255,.08)');
+    ctx.fillStyle='#fff'; ctx.font='bold 110px Arial'; ctx.fillText(n2,292,740);
+    ctx.fillStyle='rgba(255,255,255,.7)'; ctx.font='32px Arial'; ctx.fillText(l2,292,800);
+    ideoRR(ctx,550,620,476,270,20,'rgba(255,255,255,.08)');
+    ctx.fillStyle='#fff'; ctx.font='bold 110px Arial'; ctx.fillText(n3,788,740);
+    ctx.fillStyle='rgba(255,255,255,.7)'; ctx.font='32px Arial'; ctx.fillText(l3,788,800);
+    ctx.textAlign='left';
+    ideoFooter(ctx);
+  }
+}
+
+function ideoUpdateTexts() {
+  const tpl = ideoActiveTemplate;
+  let tw='', fb='', wa='', tg='';
+  const url = 'https://projetbi.org/ideologie.html';
+
+  if (tpl==='citation') {
+    const cite = ideoVal('ictText').slice(0,180);
+    const src  = ideoVal('ictSource');
+    tw = `💬 "${cite}"\n— ${src}\n\n#Solutions #PASTEF #JubJubalJubanti\n👉 ${url}`;
+    fb = `💬 Citation extraite du livre « Solutions » d'Ousmane Sonko\n\n"${cite}"\n— ${src}\n\nDécouvrez l'idéologie PASTEF complète :\n👉 ${url}\n\n#Sénégal #PASTEF #Solutions #ProjetBI`;
+    wa = `*💬 Citation — Solutions, O. Sonko*\n\n"${cite}"\n— ${src}\n\n👉 ${url}`;
+    tg = tw;
+  } else if (tpl==='pilier') {
+    const title = ideoVal('iplTitle'); const num=ideoVal('iplNum');
+    tw = `🏛️ Pilier ${num} PASTEF : ${title}\n#Solutions #PASTEF #JubJubalJubanti\n👉 ${url}`;
+    fb = `🏛️ Les 5 Piliers de la Vision PASTEF\n\nPilier ${num} : *${title}*\n${[ideoVal('ipl1'),ideoVal('ipl2'),ideoVal('ipl3'),ideoVal('ipl4')].filter(Boolean).map(a=>'✓ '+a).join('\n')}\n\nRetrouvez tous les piliers :\n👉 ${url}\n\n#Sénégal #PASTEF #Solutions`;
+    wa = `*🏛️ Pilier ${num} PASTEF — ${title}*\n${[ideoVal('ipl1'),ideoVal('ipl2')].filter(Boolean).map(a=>'✓ '+a).join('\n')}\n\n👉 ${url}`;
+    tg = tw;
+  } else if (tpl==='comparaison') {
+    const topic=ideoVal('icmpTopic'); const bad=ideoVal('icmpBadTitle'); const good=ideoVal('icmpGoodTitle');
+    tw = `⚖️ ${topic} — Système: "${bad}" vs Vision PASTEF: "${good}"\n#Solutions #PASTEF\n👉 ${url}`;
+    fb = `⚖️ Comparaison : ${topic}\n\n❌ Le Système actuel : ${bad}\n✅ La Vision PASTEF : ${good}\n\nTout le diagnostic sur :\n👉 ${url}\n\n#Sénégal #PASTEF #Solutions #ProjetBI`;
+    wa = `*⚖️ ${topic}*\n❌ Système : ${bad}\n✅ PASTEF : ${good}\n\n👉 ${url}`;
+    tg = tw;
+  } else if (tpl==='jubanti') {
+    tw = `⚡ Jub · Jubal · Jubanti\n${ideoVal('ijub1')} · ${ideoVal('ijub2')} · ${ideoVal('ijub3')}\nLa philosophie fondamentale de PASTEF\n👉 ${url}`;
+    fb = `⚡ *Jub · Jubal · Jubanti* — Les valeurs fondamentales de PASTEF\n\n🔹 JUB : ${ideoVal('ijub1')}\n🔹 JUBAL : ${ideoVal('ijub2')}\n🔹 JUBANTI : ${ideoVal('ijub3')}\n\nCes trois mots wolof résument la philosophie d'action du mouvement.\n👉 ${url}\n\n#PASTEF #JubJubalJubanti #Sénégal`;
+    wa = `*⚡ Jub · Jubal · Jubanti*\n🔹 JUB : ${ideoVal('ijub1')}\n🔹 JUBAL : ${ideoVal('ijub2')}\n🔹 JUBANTI : ${ideoVal('ijub3')}\n\n👉 ${url}`;
+    tg = tw;
+  } else if (tpl==='stat') {
+    const bigN=ideoVal('istatNum'); const bigL=ideoVal('istatLabel'); const t=ideoVal('istatTitle');
+    tw = `📊 ${t}\n${bigN} ${bigL}\n#Solutions #PASTEF #ProjetBI\n👉 ${url}`;
+    fb = `📊 ${t}\n\n• ${bigN} : ${bigL}\n• ${ideoVal('istat2n')} : ${ideoVal('istat2l')}\n• ${ideoVal('istat3n')} : ${ideoVal('istat3l')}\n\n👉 ${url}\n\n#Sénégal #PASTEF #Solutions`;
+    wa = `*📊 ${t}*\n${bigN} ${bigL}\n${ideoVal('istat2n')} — ${ideoVal('istat2l')}\n\n👉 ${url}`;
+    tg = tw;
+  }
+  const set = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+  set('itwText',tw); set('ifbText',fb); set('iwaText',wa); set('itgText',tg);
+}
+
+function ideoRenderAll() { ideoDrawCanvas(); ideoUpdateTexts(); }
+
+function ideoDownload() {
+  const canvas = document.getElementById('ideoCanvas');
+  if (!canvas) return;
+  const a = document.createElement('a');
+  a.download = `projetbi-ideologie-${ideoActiveTemplate}-${Date.now()}.png`;
+  a.href = canvas.toDataURL('image/png',1.0);
+  a.click();
+  toast('Poster téléchargé ✅','success');
+}
+
+async function ideoCopyClipboard() {
+  try {
+    const canvas = document.getElementById('ideoCanvas');
+    canvas.toBlob(async blob => {
+      await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
+      toast('Image copiée ✅','success');
+    });
+  } catch { toast('Utilisez Télécharger à la place','info'); }
+}
+
+function ideoCopyText(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent).then(()=>toast('Texte copié ✅','success'));
+}
 </script>
 </body>
 </html>

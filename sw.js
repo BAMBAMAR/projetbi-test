@@ -1,23 +1,16 @@
-/**
- * ProjetBI V2 – Service Worker
- * Stratégie :
- *   • Statique  → Cache First + revalidation silencieuse (stale-while-revalidate)
- *   • JSON data → Network First, cache fallback
- *   • Admin     → toujours réseau, jamais cache
- *   • Externe   → passthrough (Supabase, CDN, fonts…)
- *
- * Versioning : incrémenter CACHE_VERSION à chaque déploiement
- */
+// ============================================================
+// SERVICE WORKER — ProjetBI.org  v4
+// Compatible sous-dossier GitHub Pages (ex: /projetbi-test/)
+// ============================================================
 
-'use strict';
+const STATIC_CACHE = 'projetbi-static-v4';
+const DATA_CACHE   = 'projetbi-data-v4';
 
-const CACHE_VERSION  = 'v5';
-const STATIC_CACHE   = `projetbi-static-${CACHE_VERSION}`;
-const DATA_CACHE     = `projetbi-data-${CACHE_VERSION}`;
-const BASE           = self.registration.scope;
+// Base du SW — fonctionne en racine ou sous-dossier
+const BASE = self.registration.scope;
 
-// Domaines toujours servis depuis le réseau (pas de cache local)
-const PASSTHROUGH_ORIGINS = [
+// Domaines à laisser passer sans interception
+const PASSTHROUGH_DOMAINS = [
   'supabase.co',
   'cdnjs.cloudflare.com',
   'cdn.jsdelivr.net',
@@ -28,294 +21,180 @@ const PASSTHROUGH_ORIGINS = [
   'facebook.com',
   'scontent.',
   'z-p3-scontent.',
+  'picsum.photos',
 ];
 
-// Assets statiques à pré-cacher à l'installation
+// Chemins relatifs à la base du SW
 const STATIC_ASSETS = [
   BASE,
-  `${BASE}index.html`,
-  `${BASE}actualites.html`,
-  `${BASE}style.css`,
-  `${BASE}app.js`,
-  `${BASE}utils.js`,
-  `${BASE}render.js`,
-  `${BASE}manifest.json`,
-  `${BASE}favicon.png`,
+  BASE + 'index.html',
+  BASE + 'actualites.html',
+  BASE + 'style.css',
+  BASE + 'app.js',
+  BASE + 'utils.js',
+  BASE + 'render.js',
+  BASE + 'manifest.json',
+  BASE + 'favicon.png',
 ];
 
-// JSON data – mis en cache avec stratégie Network First
 const DATA_ASSETS = [
-  `${BASE}promises.json`,
-  `${BASE}news.json`,
-  `${BASE}press.json`,
+  BASE + 'promises.json',
+  BASE + 'news.json',
+  BASE + 'press.json',
 ];
 
-// Pages never cachées (admin)
-const NO_CACHE_PATHS = [
-  'admin.html',
-  'kit-communication.html',
-  'update_press_simple.html',
-];
+// Pages admin — jamais en cache (chemin complet)
+const NO_CACHE_PAGES = ['admin.html', 'kit-communication.html', 'update_press_simple.html'];
 
-// Page offline de secours (HTML inline pour éviter une dépendance externe)
-const OFFLINE_HTML = `<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ProjetBI – Hors-ligne</title>
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:system-ui,-apple-system,sans-serif;display:flex;align-items:center;
-         justify-content:center;min-height:100dvh;background:#0F1612;color:#F0F7F2;
-         text-align:center;padding:2rem}
-    .card{max-width:420px;background:#1C2920;border-radius:16px;padding:3rem 2rem;
-          border:1px solid #2C3E32}
-    h1{font-size:2rem;color:#4ADE80;margin-bottom:1rem}
-    p{color:#B0C8B8;margin-bottom:1.5rem;line-height:1.7}
-    a{display:inline-block;color:#4ADE80;border:2px solid #4ADE80;padding:.6rem 1.6rem;
-      border-radius:9999px;text-decoration:none;font-weight:600;transition:.15s}
-    a:hover{background:#4ADE80;color:#0F1612}
-    .icon{font-size:3rem;margin-bottom:1.5rem}
-  </style>
-</head>
-<body>
-  <div class="card">
-    <div class="icon">📡</div>
-    <h1>Hors-ligne</h1>
-    <p>Vous n'êtes pas connecté à Internet.<br>Les données affichées peuvent dater de votre dernière visite.</p>
-    <a href="/">Réessayer</a>
-  </div>
-</body>
-</html>`;
+const OFFLINE_HTML = `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
+<title>ProjetBI — Hors-ligne</title>
+<style>body{font-family:Arial,sans-serif;display:flex;align-items:center;justify-content:center;
+min-height:100vh;margin:0;background:#0C0F0A;color:#E8F0E5;text-align:center;padding:2rem}
+h1{color:#4ADE80}p{color:#9DB89A;margin-bottom:1.5rem}
+a{color:#4ADE80;border:1px solid #4ADE80;padding:.5rem 1.2rem;border-radius:8px;text-decoration:none}
+</style></head><body><div>
+<h1>Hors-ligne</h1><p>Vous n'êtes pas connecté à Internet.</p>
+<a href="/">Réessayer</a></div></body></html>`;
 
-// ─── Helpers ────────────────────────────────────────────────────────────────
-
-function isPassthrough(url) {
-  return PASSTHROUGH_ORIGINS.some(o => url.hostname.includes(o));
-}
-
-function isNoCachePage(url) {
-  return NO_CACHE_PATHS.some(p => url.pathname.endsWith(p));
-}
-
-function isDataRequest(url) {
-  return url.pathname.endsWith('.json');
-}
-
-function isCacheable(response) {
-  return (
-    response &&
-    response.status === 200 &&
-    response.type !== 'error' &&
-    response.type !== 'opaqueredirect'
-  );
-}
-
-async function precache(cacheName, urls) {
-  const cache = await caches.open(cacheName);
-  return Promise.allSettled(
-    urls.map(url =>
-      cache.add(url).catch(err =>
-        console.warn(`[SW] Précache échoué pour ${url}:`, err.message)
-      )
-    )
-  );
-}
-
-// ─── Installation ────────────────────────────────────────────────────────────
-
+// ── INSTALLATION
 self.addEventListener('install', event => {
   event.waitUntil(
     Promise.allSettled([
-      precache(STATIC_CACHE, STATIC_ASSETS),
-      precache(DATA_CACHE, DATA_ASSETS),
-    ]).then(() => {
-      console.log(`[SW] ${CACHE_VERSION} installé`);
-      return self.skipWaiting();
-    })
+      caches.open(STATIC_CACHE).then(c =>
+        Promise.allSettled(STATIC_ASSETS.map(u => c.add(u).catch(() => {})))),
+      caches.open(DATA_CACHE).then(c =>
+        Promise.allSettled(DATA_ASSETS.map(u => c.add(u).catch(() => {})))),
+    ]).then(() => self.skipWaiting())
   );
 });
 
-// ─── Activation (nettoyage des anciens caches) ───────────────────────────────
-
+// ── ACTIVATION
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
-      .then(keys =>
-        Promise.all(
-          keys
-            .filter(k => k !== STATIC_CACHE && k !== DATA_CACHE)
-            .map(k => {
-              console.log(`[SW] Suppression ancien cache: ${k}`);
-              return caches.delete(k);
-            })
-        )
-      )
-      .then(() => {
-        console.log(`[SW] ${CACHE_VERSION} actif`);
-        return self.clients.claim();
-      })
+      .then(keys => Promise.all(
+        keys.filter(k => k !== STATIC_CACHE && k !== DATA_CACHE).map(k => caches.delete(k))
+      ))
+      .then(() => self.clients.claim())
   );
 });
 
-// ─── Fetch ───────────────────────────────────────────────────────────────────
+function shouldPassthrough(url) {
+  return PASSTHROUGH_DOMAINS.some(d => url.hostname.includes(d));
+}
 
+// Réponse cacheable : HTTP 200 uniquement, jamais opaque ni error
+function isCacheable(r) {
+  return r &&
+    r.status === 200 &&
+    r.type !== 'error' &&
+    r.type !== 'opaqueredirect';
+}
+
+// ── FETCH
 self.addEventListener('fetch', event => {
   const req = event.request;
-
-  // Ignorer les méthodes non-GET
   if (req.method !== 'GET') return;
 
   let url;
-  try { url = new URL(req.url); }
-  catch { return; }
+  try { url = new URL(req.url); } catch { return; }
 
-  // Ignorer les domaines externes
-  if (isPassthrough(url)) return;
+  // Laisser passer domaines externes
+  if (shouldPassthrough(url)) return;
 
-  // Pages admin – toujours réseau
-  if (isNoCachePage(url)) return;
+  // Pages admin — jamais en cache
+  // Pages admin — jamais en cache
+  if (NO_CACHE_PAGES.some(p => url.href.endsWith(p))) return;
 
-  // JSON → Network First
-  if (isDataRequest(url)) {
-    event.respondWith(networkFirstJSON(req));
+  // ── JSON : Network First, cache fallback
+  if (url.pathname.endsWith('.json')) {
+    event.respondWith(
+      fetch(req).then(res => {
+        if (isCacheable(res)) {
+          // CLONER avant de retourner — corps consommé une seule fois
+          const toCache = res.clone();
+          caches.open(DATA_CACHE).then(c => c.put(req, toCache));
+        }
+        return res;                  // retourne l'original intact
+      }).catch(async () => {
+        const cached = await caches.match(req);
+        return cached || new Response('{"error":"offline"}', {
+          status: 503,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      })
+    );
     return;
   }
 
-  // Statique → Cache First + revalidation silencieuse
-  event.respondWith(cacheFirstStatic(req, url));
+  // ── Statique : Cache First + revalidation silencieuse (stale-while-revalidate)
+  event.respondWith((async () => {
+    const cached = await caches.match(req);
+
+    if (cached) {
+      // Revalidation en arrière-plan — fetch indépendant, ne touche pas `cached`
+      fetch(req).then(fresh => {
+        if (isCacheable(fresh)) {
+          // `fresh` n'est jamais lu par le client ici, clone non nécessaire
+          // mais on clone pour être sûr que le put() n'interfère pas
+          caches.open(STATIC_CACHE).then(c => c.put(req, fresh.clone()));
+        }
+      }).catch(() => { /* réseau indisponible, silencieux */ });
+
+      return cached;   // réponse immédiate depuis le cache
+    }
+
+    // Rien en cache — aller chercher sur le réseau
+    try {
+      const res = await fetch(req);
+      if (isCacheable(res)) {
+        // Cloner AVANT tout accès au corps
+        const toCache = res.clone();
+        caches.open(STATIC_CACHE).then(c => c.put(req, toCache));
+      }
+      return res;
+    } catch {
+      // Hors-ligne
+      const accept = req.headers.get('accept') || '';
+      if (accept.includes('text/html')) {
+        return (await caches.match('/index.html')) ||
+          new Response(OFFLINE_HTML, {
+            status: 200,
+            headers: { 'Content-Type': 'text/html;charset=utf-8' }
+          });
+      }
+      return new Response('', { status: 408, statusText: 'Network timeout' });
+    }
+  })());
 });
 
-/**
- * Network First pour les JSON (données fraîches en priorité)
- */
-async function networkFirstJSON(req) {
-  try {
-    const res = await fetch(req);
-    if (isCacheable(res)) {
-      const toCache = res.clone();
-      caches.open(DATA_CACHE).then(c => c.put(req, toCache));
-    }
-    return res;
-  } catch {
-    const cached = await caches.match(req);
-    if (cached) return cached;
-    return new Response('{"error":"offline","cached":false}', {
-      status: 503,
-      headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    });
-  }
-}
-
-/**
- * Cache First + revalidation en arrière-plan pour les assets statiques
- */
-async function cacheFirstStatic(req, url) {
-  const cached = await caches.match(req);
-
-  if (cached) {
-    // Revalidation silencieuse en arrière-plan
-    fetch(req)
-      .then(fresh => {
-        if (isCacheable(fresh)) {
-          caches.open(STATIC_CACHE).then(c => c.put(req, fresh));
-        }
-      })
-      .catch(() => { /* réseau indisponible, on reste sur le cache */ });
-
-    return cached;
-  }
-
-  // Rien en cache → réseau
-  try {
-    const res = await fetch(req);
-    if (isCacheable(res)) {
-      const toCache = res.clone();
-      caches.open(STATIC_CACHE).then(c => c.put(req, toCache));
-    }
-    return res;
-  } catch {
-    // Hors-ligne : page de secours pour HTML, 408 pour le reste
-    const accept = req.headers.get('accept') || '';
-    if (accept.includes('text/html')) {
-      const cachedHome = await caches.match(`${BASE}index.html`);
-      return cachedHome || new Response(OFFLINE_HTML, {
-        status: 200,
-        headers: { 'Content-Type': 'text/html; charset=utf-8' },
-      });
-    }
-    return new Response('', { status: 408, statusText: 'Network timeout' });
-  }
-}
-
-// ─── Push Notifications ───────────────────────────────────────────────────────
-
+// ── PUSH NOTIFICATIONS
 self.addEventListener('push', event => {
   if (!event.data) return;
-
-  let data;
-  try { data = event.data.json(); }
-  catch { return; } // données malformées, on ignore
-
-  event.waitUntil(
-    self.registration.showNotification(data.title || 'ProjetBI', {
-      body:    data.body    || 'Nouvelle mise à jour disponible',
-      icon:    data.icon    || '/favicon.png',
-      badge:   '/favicon.png',
-      tag:     data.tag     || 'projetbi-notification',
-      renotify: false,
-      data:    { url: data.url || '/' },
-      actions: [
-        { action: 'open',    title: 'Voir' },
-        { action: 'dismiss', title: 'Ignorer' },
-      ],
-    })
-  );
+  try {
+    const d = event.data.json();
+    event.waitUntil(
+      self.registration.showNotification(d.title || 'ProjetBI', {
+        body: d.body || 'Nouvelle mise à jour',
+        icon: '/favicon.png',
+        data: { url: d.url || '/' },
+        actions: [{ action: 'open', title: 'Voir' }]
+      })
+    );
+  } catch { /* données push malformées */ }
 });
 
 self.addEventListener('notificationclick', event => {
   event.notification.close();
-
-  if (event.action === 'dismiss') return;
-
-  // Valider l'URL avant d'ouvrir (prévenir les open redirects)
+  // FIX: Valider l'URL — bloquer les schémas dangereux
   const rawUrl = event.notification.data?.url || '/';
-  let safeUrl = BASE;
-
+  let safeNotifUrl = '/';
   try {
-    const parsed = new URL(rawUrl, BASE);
-    const scope   = new URL(BASE);
-    if (parsed.origin === scope.origin) {
-      safeUrl = parsed.href;
+    const parsed = new URL(rawUrl, self.registration.scope);
+    // N'autoriser que les URLs du même origine
+    if (parsed.origin === new URL(self.registration.scope).origin) {
+      safeNotifUrl = parsed.href;
     }
-  } catch { /* URL invalide, on utilise BASE */ }
-
-  event.waitUntil(
-    clients.matchAll({ type: 'window', includeUncontrolled: true })
-      .then(clientList => {
-        // Si une fenêtre existe déjà, la focaliser
-        for (const client of clientList) {
-          if (client.url === safeUrl && 'focus' in client) {
-            return client.focus();
-          }
-        }
-        // Sinon ouvrir une nouvelle fenêtre
-        if (clients.openWindow) {
-          return clients.openWindow(safeUrl);
-        }
-      })
-  );
-});
-
-// ─── Message handler (skip waiting on demand) ─────────────────────────────────
-
-self.addEventListener('message', event => {
-  if (event.data?.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-
-  if (event.data?.type === 'GET_VERSION') {
-    event.source?.postMessage({ type: 'VERSION', version: CACHE_VERSION });
-  }
+  } catch {}
+  event.waitUntil(clients.openWindow(safeNotifUrl));
 });

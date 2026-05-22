@@ -351,10 +351,35 @@ def fetch_facebook_posts() -> list:
 # ─────────────────────────────────────────────
 # ANALYSE — Claude API
 # ─────────────────────────────────────────────
+def analyse_sans_claude(articles: list) -> list:
+    """Fallback : convertit les articles bruts en brouillons sans appel API."""
+    drafts = []
+    today  = datetime.now().strftime("%Y-%m-%d")
+    for a in articles[:30]:
+        title = a.get("title", "").strip()
+        if not title or len(title) < 15:
+            continue
+        drafts.append({
+            "type":        "news",
+            "promise_id":  None,
+            "title":       title,
+            "description": a.get("summary", title)[:400] or title,
+            "source":      a.get("source", ""),
+            "source_url":  a.get("link", ""),
+            "date":        today,
+            "domain":      "Politique",
+            "confidence":  0.60,
+            "keywords":    [],
+        })
+    print(f"  Fallback (sans Claude) → {len(drafts)} brouillons")
+    return drafts
+
+
 def analyse_with_claude(articles: list, promises: list) -> list:
     if not ANTHROPIC_API_KEY:
-        print("  Claude API → skipped (ANTHROPIC_API_KEY non configuré)")
-        return []
+        print("  Claude API → skipped (ANTHROPIC_API_KEY non configure)")
+        print("  Utilisation du mode fallback sans analyse IA...")
+        return analyse_sans_claude(articles)
     if not articles:
         return []
 

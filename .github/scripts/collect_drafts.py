@@ -47,6 +47,7 @@ FB_PAGE_ID        = "gouvernementsn"
 
 DRAFTS_PATH   = "drafts.json"
 PROMISES_PATH = "promises.json"
+SOURCES_PATH  = "sources.json"
 MAX_DRAFTS    = 200   # limite stockage
 MAX_AGE_DAYS  = 3     # ignorer articles plus vieux
 
@@ -54,46 +55,23 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; ProjetBI-Bot/1.0; +https://projetbi.org)"
 }
 
-# Requêtes Google News (fr, Sénégal)
-GOOGLE_NEWS_QUERIES = [
-    "Diomaye Faye",
-    "Sonko primature sénégal",
-    "gouvernement sénégal conseil ministres",
-    "PASTEF promesse engagement réalisation",
-    "présidence sénégal discours",
-    "assemblée nationale sénégal vote loi",
-    "sénégal infrastructure route école santé énergie",
-    "sénégal emploi jeunesse programme",
-]
-
 GOOGLE_NEWS_BASE = (
     "https://news.google.com/rss/search?q={query}"
     "&hl=fr&gl=SN&ceid=SN:fr"
 )
 
-# Pages officielles à scraper
-OFFICIAL_PAGES = [
-    {
-        "name": "Présidence",
-        "url": "https://www.presidence.sn/fr/actualites",
-        "type": "presidence",
-    },
-    {
-        "name": "Primature",
-        "url": "https://primature.sn/actualites",
-        "type": "primature",
-    },
-    {
-        "name": "Primature — Conseil des ministres",
-        "url": "https://primature.sn/conseil-des-ministres",
-        "type": "primature",
-    },
-    {
-        "name": "Assemblée Nationale",
-        "url": "https://www.assemblee.sn/fr/actualites",
-        "type": "assemblee",
-    },
-]
+def load_sources() -> dict:
+    """Charge sources.json. Retourne les sources par défaut si absent."""
+    try:
+        with open(SOURCES_PATH, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        rss      = [s for s in data.get("rss", [])      if s.get("active", True)]
+        websites = [s for s in data.get("websites", []) if s.get("active", True)]
+        print(f"  sources.json charge : {len(rss)} RSS, {len(websites)} sites")
+        return {"rss": rss, "websites": websites}
+    except Exception:
+        print("  sources.json absent — sources par defaut utilisees")
+        return {"rss": [], "websites": []}
 
 
 # ─────────────────────────────────────────────
@@ -157,10 +135,14 @@ def load_promises() -> list:
 # ─────────────────────────────────────────────
 # COLLECTE — Google News RSS
 # ─────────────────────────────────────────────
-def fetch_google_news() -> list:
+def fetch_google_news(rss_sources: list = None) -> list:
     articles = []
-    for query in GOOGLE_NEWS_QUERIES:
-        url = GOOGLE_NEWS_BASE.format(query=quote(query))
+    feeds = rss_sources or []
+    for src in feeds:
+        url = src.get("url", "")
+        if not url:
+            continue
+        name = src.get("name", url)
         try:
             feed = feedparser.parse(url, request_headers=HEADERS)
             for entry in feed.entries[:8]:
@@ -170,7 +152,7 @@ def fetch_google_news() -> list:
                 title   = clean_html(entry.get("title", ""))
                 summary = clean_html(entry.get("summary", ""))[:600]
                 link    = entry.get("link", "")
-                source  = entry.get("source", {}).get("title", "Google News")
+                source  = entry.get("source", {}).get("title", name)
                 if title:
                     articles.append({
                         "title":   title,
@@ -178,11 +160,11 @@ def fetch_google_news() -> list:
                         "link":    link,
                         "source":  source,
                         "date":    pub,
-                        "origin":  "google_news",
+                        "origin":  "rss",
                     })
         except Exception as e:
-            print(f"  [Google News] Erreur pour '{query}': {e}")
-    print(f"  Google News → {len(articles)} articles")
+            print(f"  [RSS] Erreur pour '{name}': {e}")
+    print(f"  RSS → {len(articles)} articles")
     return articles
 
 
@@ -296,17 +278,61 @@ def scrape_assemblee(url: str, source_name: str) -> list:
     return result[:10]
 
 
-def scrape_official_pages() -> list:
+def scrape_official_pages(websites: list = None) -> list:
     all_articles = []
-    for page in OFFICIAL_PAGES:
-        t = page["type"]
+    pages = websites or []
+    for page in pages:
+        t = page.get("type", "generic")
+        u = page.get("url", "")
+        n = page.get("name", u)
+        if not u:
+            continue
         if t == "presidence":
-            all_articles += scrape_presidence(page["url"], page["name"])
+            all_articles += scrape_presidence(u, n)
         elif t == "primature":
-            all_articles += scrape_primature(page["url"], page["name"])
+            all_articles += scrape_primature(u, n)
         elif t == "assemblee":
-            all_articles += scrape_assemblee(page["url"], page["name"])
+            all_articles += scrape_assemblee(u, n)
+        else:
+            # Type générique : extrait tous les liens avec un texte suffisant
+            all_articles += scrape_generic(u, n)
     return all_articles
+
+
+def scrape_generic(url: str, source_name: str) -> list:
+    """Scraping générique : récupère tous les liens textuels d'une page."""
+    articles = []
+    try:
+        resp = requests.get(url, headers=HEADERS, timeout=10)
+        soup = BeautifulSoup(resp.text, "html.parser")
+        for a in soup.find_all("a", href=True):
+            href  = a["href"]
+            title = a.get_text(strip=True)
+            if len(title) < 20:
+                continue
+            full_url = urljoin(url, href)
+            # Ignorer les liens de navigation / footer
+            if any(x in href for x in ["#", "javascript:", "mailto:", "tel:"]):
+                continue
+            articles.append({
+                "title":   title,
+                "summary": "",
+                "link":    full_url,
+                "source":  source_name,
+                "date":    "",
+                "origin":  "scraping",
+            })
+        # Dédupliquer
+        seen, result = set(), []
+        for a in articles:
+            if a["link"] not in seen:
+                seen.add(a["link"])
+                result.append(a)
+        print(f"  {source_name} (générique) → {len(result[:10])} articles")
+        return result[:10]
+    except Exception as e:
+        print(f"  [Scraping générique {source_name}] Erreur: {e}")
+        return []
 
 
 # ─────────────────────────────────────────────
@@ -459,10 +485,12 @@ Réponds UNIQUEMENT avec un JSON valide, sans texte avant ni après :
         return drafts
     except json.JSONDecodeError as e:
         print(f"  [Claude] JSON invalide : {e}")
-        return []
+        print("  Bascule vers le mode fallback...")
+        return analyse_sans_claude(articles)
     except Exception as e:
         print(f"  [Claude] Erreur : {e}")
-        return []
+        print("  Bascule vers le mode fallback...")
+        return analyse_sans_claude(articles)
 
 
 # ─────────────────────────────────────────────
@@ -474,15 +502,16 @@ def main():
     print(f"{'='*55}")
 
     promises = load_promises()
-    print(f"  Promesses chargées : {len(promises)}")
+    print(f"  Promesses chargees : {len(promises)}")
 
+    sources  = load_sources()
     existing = load_existing_drafts()
     existing_keys = {d.get("_dedup_key") for d in existing.get("drafts", [])}
 
     # ── Collecte ──
     print("\n[1/3] Collecte des sources…")
-    articles  = fetch_google_news()
-    articles += scrape_official_pages()
+    articles  = fetch_google_news(sources["rss"])
+    articles += scrape_official_pages(sources["websites"])
     articles += fetch_facebook_posts()
     print(f"  Total brut : {len(articles)} articles")
 

@@ -412,6 +412,7 @@ textarea.form-control{resize:vertical;min-height:90px}
 
   <div class="nav-group-label">Automatisation</div>
   <div class="nav-item" data-page="drafts"><i class="fas fa-inbox"></i><span>Brouillons</span><span class="nav-badge" id="badge-drafts" style="display:none">0</span></div>
+  <div class="nav-item" data-page="sources"><i class="fas fa-rss"></i><span>Sources</span></div>
 
   <div class="nav-group-label">Outils</div>
   <div class="nav-item" data-page="kit"><i class="fas fa-palette"></i><span>Kit Communication</span></div>
@@ -839,6 +840,85 @@ textarea.form-control{resize:vertical;min-height:90px}
     </div>
 
     <!-- ══════════════════════════════════════════ -->
+    <!-- PAGE SOURCES                              -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="page" id="page-sources">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+
+        <!-- RSS -->
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title"><i class="fas fa-rss" style="color:var(--gold)"></i> Flux RSS</span>
+            <button class="btn btn-primary btn-sm" onclick="openSourceModal('rss')"><i class="fas fa-plus"></i> Ajouter</button>
+          </div>
+          <div id="rssSourcesList" style="padding:0"></div>
+          <div style="padding:.75rem 1.2rem;border-top:1px solid var(--border)">
+            <button class="btn btn-gold btn-sm" onclick="saveSources()"><i class="fas fa-download"></i> Télécharger sources.json</button>
+          </div>
+        </div>
+
+        <!-- Sites web -->
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title"><i class="fas fa-globe" style="color:var(--blue)"></i> Sites web à scraper</span>
+            <button class="btn btn-primary btn-sm" onclick="openSourceModal('website')"><i class="fas fa-plus"></i> Ajouter</button>
+          </div>
+          <div id="webSourcesList" style="padding:0"></div>
+        </div>
+
+      </div>
+
+      <div class="card">
+        <div class="card-body" style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+          <i class="fas fa-info-circle" style="color:var(--blue);font-size:1.2rem"></i>
+          <div style="flex:1;font-size:.83rem;color:var(--text2);line-height:1.6">
+            Après modification des sources, téléchargez <code style="background:var(--bg);padding:.1rem .4rem;border-radius:4px;color:var(--green)">sources.json</code>
+            et uploadez-le sur GitHub à la racine du repo. Le prochain run automatique utilisera vos nouvelles sources.
+          </div>
+          <button class="btn btn-primary" onclick="saveSources()">
+            <i class="fas fa-download"></i> Télécharger sources.json
+          </button>
+        </div>
+      </div>
+
+      <!-- Modale ajout source -->
+      <div class="modal-overlay" id="sourceModal">
+        <div class="modal" style="max-width:520px">
+          <div class="modal-head">
+            <span class="modal-title" id="sourceModalTitle">Ajouter une source</span>
+            <button class="modal-close" onclick="closeModal('sourceModal')"><i class="fas fa-times"></i></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="sourceType">
+            <div class="form-group" style="margin-bottom:.9rem">
+              <label>Nom affiché</label>
+              <input type="text" class="form-control" id="sourceName" placeholder="ex: Le Soleil, RFM, Gouvernement...">
+            </div>
+            <div class="form-group" style="margin-bottom:.9rem">
+              <label>URL <span style="color:var(--text3);font-weight:400;font-size:.75rem">(flux RSS ou page web)</span></label>
+              <input type="url" class="form-control" id="sourceUrl" placeholder="https://...">
+            </div>
+            <div class="form-group" id="sourceTypeGroup" style="margin-bottom:.9rem;display:none">
+              <label>Type de scraping</label>
+              <select class="form-control" id="sourceWebType">
+                <option value="generic">Générique (auto)</option>
+                <option value="presidence">Style Présidence.sn</option>
+                <option value="primature">Style Primature.sn</option>
+                <option value="assemblee">Style Assemblée.sn</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-foot">
+            <button class="btn btn-outline" onclick="closeModal('sourceModal')">Annuler</button>
+            <button class="btn btn-primary" onclick="addSource()"><i class="fas fa-plus"></i> Ajouter</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
     <!-- PAGE BROUILLONS                           -->
     <!-- ══════════════════════════════════════════ -->
     <div class="page" id="page-drafts">
@@ -1191,6 +1271,7 @@ async function init() {
   renderPress();
   renderSEO();
   await loadDrafts();
+  await loadSources();
 }
 
 async function loadData() {
@@ -1226,7 +1307,7 @@ function initSupabase() {
 const pageTitles = {
   dashboard: 'Tableau de bord', promises: 'Engagements', news: 'Actualités',
   press: 'Revue de Presse', ratings: 'Notations citoyennes',
-  drafts: 'Brouillons automatiques',
+  drafts: 'Brouillons automatiques', sources: 'Gestion des Sources',
   kit: 'Kit de Communication', ideologie: 'Posters Idéologie PASTEF',
   export: 'Export & Import', seo: 'SEO & Sitemap'
 };
@@ -1246,7 +1327,8 @@ document.querySelectorAll('.nav-item[data-page]').forEach(item => {
       setTimeout(() => { ideoSelectTemplate(ideoActiveTemplate); }, 50);
     }
     if (page === 'ratings') loadRatings();
-    if (page === 'drafts') renderDrafts();
+    if (page === 'drafts')  renderDrafts();
+    if (page === 'sources') renderSources();
   });
 });
 
@@ -2371,6 +2453,101 @@ async function copyPressJSON() {
 }
 
 // ══════════════════════════════════════════
+// SOURCES
+// ══════════════════════════════════════════
+let _sources = { rss: [], websites: [] };
+
+async function loadSources() {
+  try {
+    const res = await fetch('sources.json?v=' + Date.now());
+    if (!res.ok) throw new Error();
+    _sources = await res.json();
+  } catch {
+    _sources = { rss: [], websites: [] };
+  }
+  renderSources();
+}
+
+function renderSources() {
+  renderSourceList('rssSourcesList',  _sources.rss,      'rss');
+  renderSourceList('webSourcesList',  _sources.websites, 'website');
+}
+
+function renderSourceList(containerId, list, type) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  if (!list.length) {
+    el.innerHTML = `<p style="padding:1rem;color:var(--text3);font-size:.82rem;text-align:center">Aucune source configurée</p>`;
+    return;
+  }
+  el.innerHTML = list.map((s, i) => `
+    <div style="display:flex;align-items:center;gap:.75rem;padding:.65rem 1.2rem;border-bottom:1px solid var(--border)">
+      <label style="position:relative;cursor:pointer;flex-shrink:0">
+        <input type="checkbox" ${s.active ? 'checked' : ''} onchange="toggleSource('${type}',${i},this.checked)"
+          style="width:16px;height:16px;accent-color:var(--green);cursor:pointer">
+      </label>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:.83rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escH(s.name)}</div>
+        <div style="font-size:.7rem;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escH(s.url)}</div>
+      </div>
+      ${s.builtin ? `<span class="badge badge-gray" style="font-size:.65rem">défaut</span>` : ''}
+      ${!s.builtin ? `<button class="btn btn-danger btn-xs" onclick="removeSource('${type}',${i})"><i class="fas fa-trash"></i></button>` : ''}
+    </div>`).join('');
+}
+
+function toggleSource(type, idx, active) {
+  const arr = type === 'rss' ? _sources.rss : _sources.websites;
+  if (arr[idx]) arr[idx].active = active;
+  toast(`Source ${active ? 'activée' : 'désactivée'} — téléchargez sources.json pour appliquer`, 'info');
+}
+
+function removeSource(type, idx) {
+  const arr = type === 'rss' ? _sources.rss : _sources.websites;
+  arr.splice(idx, 1);
+  renderSources();
+  toast('Source supprimée — téléchargez sources.json pour appliquer', 'info');
+}
+
+function openSourceModal(type) {
+  document.getElementById('sourceType').value = type;
+  document.getElementById('sourceModalTitle').textContent =
+    type === 'rss' ? 'Ajouter un flux RSS' : 'Ajouter un site web';
+  document.getElementById('sourceName').value = '';
+  document.getElementById('sourceUrl').value  = '';
+  document.getElementById('sourceTypeGroup').style.display = type === 'website' ? '' : 'none';
+  openModal('sourceModal');
+}
+
+function addSource() {
+  const type = document.getElementById('sourceType').value;
+  const name = document.getElementById('sourceName').value.trim();
+  const url  = document.getElementById('sourceUrl').value.trim();
+  if (!name || !url) { toast('Nom et URL requis', 'error'); return; }
+
+  const id = (type === 'rss' ? 'rss_' : 'web_') + Date.now();
+  if (type === 'rss') {
+    _sources.rss.push({ id, name, url, active: true, builtin: false });
+  } else {
+    const webType = document.getElementById('sourceWebType').value;
+    _sources.websites.push({ id, name, url, type: webType, active: true, builtin: false });
+  }
+  _sources.last_updated = new Date().toISOString();
+  closeModal('sourceModal');
+  renderSources();
+  toast(`Source "${name}" ajoutée — téléchargez sources.json pour appliquer`, 'success');
+}
+
+function saveSources() {
+  _sources.last_updated = new Date().toISOString();
+  const blob = new Blob([JSON.stringify(_sources, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'sources.json';
+  a.click();
+  toast('sources.json téléchargé — uploadez-le sur GitHub à la racine du repo ✅', 'success');
+}
+
+// ══════════════════════════════════════════
 // BROUILLONS AUTOMATIQUES
 // ══════════════════════════════════════════
 let _draftsAll = [];
@@ -2538,6 +2715,8 @@ function renderDraftsList(list) {
   }).join('');
 }
 
+let _pendingPublish = { promises: false, news: false };
+
 function validateDraft(id) {
   const d = _draftsAll.find(x => x.id === id);
   if (!d) return;
@@ -2551,16 +2730,57 @@ function validateDraft(id) {
         description: d.description || d.title,
         source:      d.source_url || d.source || 'ProjetBI collecte auto',
       });
+      _pendingPublish.promises = true;
       toast(`✅ Mise à jour ajoutée à : « ${p.engagement.substring(0, 50)}… »`, 'success');
     } else {
       _convertDraftToNews(d);
+      _pendingPublish.news = true;
     }
   } else {
     _convertDraftToNews(d);
+    _pendingPublish.news = true;
   }
 
   _removeDraft(id);
   renderDashboard();
+  _showPublishBanner();
+}
+
+function _showPublishBanner() {
+  let banner = document.getElementById('publishBanner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = 'publishBanner';
+    banner.style.cssText = `
+      position:fixed;bottom:0;left:0;right:0;z-index:8000;
+      background:var(--bg2);border-top:2px solid var(--green);
+      padding:.85rem 1.5rem;display:flex;align-items:center;gap:1rem;
+      box-shadow:0 -4px 20px rgba(0,0,0,.4);flex-wrap:wrap;
+    `;
+    document.body.appendChild(banner);
+  }
+  const parts = [];
+  if (_pendingPublish.promises) parts.push('promises.json');
+  if (_pendingPublish.news)     parts.push('news.json');
+  banner.innerHTML = `
+    <i class="fas fa-circle-check" style="color:var(--green);font-size:1.2rem"></i>
+    <span style="flex:1;font-size:.85rem;color:var(--text)">
+      <strong>${parts.join(' et ')} modifié(s)</strong> en mémoire —
+      téléchargez et uploadez sur GitHub pour publier sur le site.
+    </span>
+    ${_pendingPublish.promises ? `<button class="btn btn-primary btn-sm" onclick="downloadJSON('promises');_pendingPublish.promises=false;_updateBanner()"><i class="fas fa-download"></i> promises.json</button>` : ''}
+    ${_pendingPublish.news     ? `<button class="btn btn-primary btn-sm" onclick="downloadJSON('news');_pendingPublish.news=false;_updateBanner()"><i class="fas fa-download"></i> news.json</button>` : ''}
+    <button class="btn btn-outline btn-sm" onclick="document.getElementById('publishBanner').remove()"><i class="fas fa-times"></i></button>
+  `;
+}
+
+function _updateBanner() {
+  if (!_pendingPublish.promises && !_pendingPublish.news) {
+    const b = document.getElementById('publishBanner');
+    if (b) b.remove();
+  } else {
+    _showPublishBanner();
+  }
 }
 
 function _convertDraftToNews(d) {

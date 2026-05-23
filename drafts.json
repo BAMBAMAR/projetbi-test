@@ -1,4 +1,155 @@
 {
-  "last_updated": "2026-05-22T23:39:52.510397+00:00",
-  "drafts": []
+  "last_updated": "2026-05-23T00:18:27.777126+00:00",
+  "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Macron, FMI et bailleurs du Golfe mobilisés pour le financement de Dakar",
+      "description": "Plusieurs partenaires financiers internationaux, dont la France, le FMI et des bailleurs du Golfe, sont décrits comme étant « au chevet » du Sénégal selon SenePlus. Cette mobilisation s'inscrit dans le contexte des défis économiques et financiers du pays. Elle est potentiellement liée aux engagements du gouvernement en matière de financement public et de gestion de la dette.",
+      "source": "SenePlus",
+      "source_url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPeUhZWFZrWWo1SF9wMGlRTjZsZl9YZ01tTF9QeWVCYk95NV9GN2FyaEF3eVhIRVk3QmtsT2RrdVFPYzBuQ3NLOEozR3JNbzZ6WDlfT3pIVlo3RW9UNUdHQlZzaGFtWl9vUFE4XzBjMDNHaGpCeTZMdzJneFNQcHpIRTdoVmZHTm5DMzZCN0hjUXBtY210V3c?oc=5",
+      "date": "2026-05-20",
+      "domain": "Économie",
+      "confidence": 0.65,
+      "keywords": [
+        "FMI",
+        "financement",
+        "dette",
+        "bailleurs",
+        "Macron",
+        "Dakar"
+      ],
+      "id": "draft_20260523001827_6",
+      "_dedup_key": "fb8d0ba80a582e9b",
+      "status": "pending",
+      "created_at": "2026-05-23T00:18:27.777111+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil interministériel sur les Infrastructures",
+      "description": "Un conseil interministériel dédié aux infrastructures a été tenu sous l'égide de la Primature. Cette réunion témoigne d'une action gouvernementale dans le domaine des infrastructures, susceptible d'avoir des liens avec les engagements relatifs au développement économique et industriel. Les détails des décisions prises n'ont pas été précisés dans les informations disponibles.",
+      "source": "Primature",
+      "source_url": "https://primature.sn/publications/actualites/conseil-interministeriel-sur-les-infrastructures",
+      "date": "2026-05-23",
+      "domain": "Industrie",
+      "confidence": 0.65,
+      "keywords": [
+        "conseil interministériel",
+        "infrastructures",
+        "gouvernement"
+      ],
+      "id": "draft_20260523001827_5",
+      "_dedup_key": "b4b571524a8cfb89",
+      "status": "pending",
+      "created_at": "2026-05-23T00:18:27.777104+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Jubbanti AN 2 : bilan entre réformes, rationalisation et relance",
+      "description": "La Primature a publié un document intitulé « Jubbanti AN 2 » faisant état des réformes, de la rationalisation et de la relance menées au cours de la deuxième année du gouvernement. Ce bilan couvre potentiellement plusieurs promesses présidentielles en cours d'exécution. Il constitue une source importante pour le suivi de l'ensemble des engagements du programme gouvernemental.",
+      "source": "Primature",
+      "source_url": "https://primature.sn/publications/actualites/jubbanti-2-entre-reformes-rationalisation-et-relance",
+      "date": "2026-05-23",
+      "domain": "Gouvernance",
+      "confidence": 0.8,
+      "keywords": [
+        "Jubbanti",
+        "réformes",
+        "bilan",
+        "rationalisation",
+        "relance",
+        "gouvernement"
+      ],
+      "id": "draft_20260523001827_4",
+      "_dedup_key": "810b1d41e13532d4",
+      "status": "pending",
+      "created_at": "2026-05-23T00:18:27.777098+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 20 mai 2026",
+      "description": "Le gouvernement sénégalais a tenu un Conseil des ministres le 20 mai 2026. Ce conseil constitue un acte régulier de l'action gouvernementale pouvant couvrir plusieurs domaines de politique publique liés aux engagements présidentiels. Le compte-rendu officiel est disponible sur le site du gouvernement.",
+      "source": "Gouvernement du Sénégal",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-20-mai-2026",
+      "date": "2026-05-20",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "Conseil des ministres",
+        "gouvernement",
+        "action gouvernementale"
+      ],
+      "id": "draft_20260523001827_3",
+      "_dedup_key": "4765c1c011c5db8b",
+      "status": "pending",
+      "created_at": "2026-05-23T00:18:27.777092+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_16",
+      "title": "Modification de la loi électorale adoptée par l'Assemblée nationale",
+      "description": "L'Assemblée nationale du Sénégal a adopté une modification de la loi électorale, suscitant une controverse selon plusieurs sources. Cette réforme est susceptible d'avoir un lien avec les engagements relatifs à la gouvernance électorale, notamment l'inscription automatique sur les listes électorales. Les détails précis de la modification n'ont pas été entièrement précisés dans les résumés disponibles.",
+      "source": "Saharamedias FR",
+      "source_url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPdE1oaC1ndVVrSVhGYkxWMnRVemZQR3VZYU1fd3pGaXhUMmsxVlFTSUViRHJfMVdoSWdXME5yMG9JaUVYT0pmRXZBMEpYelVveVFjNTh1NXRSdV9oVk0xWllkb2FyZFRKUVBQQlB0YUlXU3ZJYnBCWTI2WG11Mm0wc1ByWDZaejNDOS1rYXNIVWNuU0dfb3g1dC1uQWlTSS01anlEaGNwU1IzOHJ5MU1seVY3WmRKYkpFNFhUM2xiRVVNMkE?oc=5",
+      "date": "2026-05-20",
+      "domain": "Gouvernance",
+      "confidence": 0.65,
+      "keywords": [
+        "loi électorale",
+        "Assemblée nationale",
+        "réforme",
+        "controverse"
+      ],
+      "id": "draft_20260523001827_2",
+      "_dedup_key": "bc8c65ef42b894ca",
+      "status": "pending",
+      "created_at": "2026-05-23T00:18:27.777088+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Dialogue national : Diomaye Faye consulte d'anciens Premiers ministres",
+      "description": "Le président Bassirou Diomaye Faye a ouvert une série de concertations dans le cadre d'un dialogue national, en recevant notamment d'anciens Premiers ministres dont Sidiki Kaba et Mamadou Lamine. Ces consultations portent sur les défis économiques et sécuritaires du pays. Amadou Ba a également été reçu en audience au Palais.",
+      "source": "APS - Agence de Presse Sénégalaise",
+      "source_url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPUVUyZE44em1sa1lMdDVEcEFxbVZjN0lBcjZBSVc3Z2ZuRWRzVTFVTnBUb3YyeXdENUFzdk44TG5kZ2xCTUc3TmhJbGpQdzd0OEV6SlhGN19oS0o1RlV1empWV0R3X3pKdmdEVm5GWHZ3ZkVDekl1Mm9xTVFwWTQyVmpFTFF3U1U1aEFlVy00c3ZjM0lVdXJTbTctMkZUejVFcGtRcEpKVEY3bko2Wk85elZn?oc=5",
+      "date": "2026-05-22",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "dialogue national",
+        "anciens Premiers ministres",
+        "concertations",
+        "Diomaye Faye"
+      ],
+      "id": "draft_20260523001827_1",
+      "_dedup_key": "c7effa9dfb557990",
+      "status": "pending",
+      "created_at": "2026-05-23T00:18:27.777079+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Diomaye Faye met fin aux fonctions de Sonko à la Primature",
+      "description": "Le président Bassirou Diomaye Faye a mis fin aux fonctions du Premier ministre Ousmane Sonko le 22 mai 2026. Cet événement relance le débat sur la promesse de suppression du poste de Premier ministre et son remplacement par un Vice-Président. La réaction de Sonko après son limogeage a également été rapportée par plusieurs médias.",
+      "source": "APAnews - Agence de Presse Africaine",
+      "source_url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOcUZXcGUzS3lLRlFYLXdzSUttQXNlWEhvSGFHTTBib3REa0liVko2VDdtUTI3Qi1zLUZ2ZmdEdEg0dkJNelNvV0hJaWtlS0tCNGVXQ2c2Y2ZLeGF4RkVJVmJZVUFlNU9xc2VIUko2Z3pGZmlXMFhLY3J3S3FlNW9GTWtibkxqV2c?oc=5",
+      "date": "2026-05-22",
+      "domain": "Institutions",
+      "confidence": 0.9,
+      "keywords": [
+        "Premier ministre",
+        "Sonko",
+        "limogeage",
+        "Primature",
+        "Diomaye Faye"
+      ],
+      "id": "draft_20260523001827_0",
+      "_dedup_key": "c9130c2b9017787c",
+      "status": "pending",
+      "created_at": "2026-05-23T00:18:27.777066+00:00"
+    }
+  ]
 }

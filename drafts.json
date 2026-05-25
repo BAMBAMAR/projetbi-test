@@ -1,6 +1,95 @@
 {
-  "last_updated": "2026-05-24T08:15:10.169741+00:00",
+  "last_updated": "2026-05-25T09:45:18.089720+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil interministériel sur la préparation de la Tabaski",
+      "description": "Un conseil interministériel a été consacré à la préparation de la fête de la Tabaski, impliquant notamment les secteurs de l'élevage, de la sécurité alimentaire et de la logistique. Cette réunion peut avoir des implications pour les engagements relatifs à l'élevage, notamment la traçabilité du bétail et l'agence de sécurité sanitaire des aliments. Les décisions prises sont consultables sur le site de la Primature.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-interministeriel-sur-la-preparation-de-la-tabaski",
+      "date": "2026-05-25",
+      "domain": "Élevage",
+      "confidence": 0.62,
+      "keywords": [
+        "Tabaski",
+        "élevage",
+        "bétail",
+        "sécurité alimentaire",
+        "conseil interministériel"
+      ],
+      "id": "draft_20260525094518_5",
+      "_dedup_key": "1b00b4857672a0b3",
+      "status": "pending",
+      "created_at": "2026-05-25T09:45:18.089704+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Jubbanti AN 2 : bilan de deux ans de réformes et de relance",
+      "description": "La Primature a publié un document intitulé « Jubbanti AN 2 » faisant état des réformes, de la rationalisation et de la relance économique menées durant les deux premières années du gouvernement. Ce bilan gouvernemental est directement pertinent pour le suivi de l'ensemble des engagements programmatiques. Il constitue une source primaire à analyser pour mettre à jour le statut de plusieurs promesses.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/jubbanti-2-entre-reformes-rationalisation-et-relance",
+      "date": "2026-05-25",
+      "domain": "Gouvernance",
+      "confidence": 0.85,
+      "keywords": [
+        "Jubbanti",
+        "bilan",
+        "réformes",
+        "relance",
+        "deux ans",
+        "programme"
+      ],
+      "id": "draft_20260525094518_4",
+      "_dedup_key": "90d72d360b3aa0f5",
+      "status": "pending",
+      "created_at": "2026-05-25T09:45:18.089698+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Fin de mission d'Ousmane Sonko à la Primature après 24 mois",
+      "description": "Ousmane Sonko a quitté la Primature le 23 mai 2026 après deux ans de fonctions en tant que Premier ministre, sur décision du président Bassirou Diomaye Faye. Cette éviction intervient dans un contexte de tensions rapportées entre les deux têtes de l'exécutif. Le parti PASTEF a salué le « travail remarquable » accompli par Sonko durant son mandat.",
+      "source": "Africa24 TV",
+      "source_url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPa3pzTW1USkxKbFNXbm5QSTc3YU1INkdDaDU0S3ExZ0dxblAyS0FnaUdoUHN1dGx3QnFWVldVZ01EczY0MmgxdGR3OFhrX2RoeTctTmRFOHNlQ1lmenpCSklpYmxiU1BFbmwxczNvdURxRFNsZFk1QjRfR2phX3lqb3lUVmtYWkF0ZkFqemVfVzFwbTYyY20w?oc=5",
+      "date": "2026-05-23",
+      "domain": "Institutions",
+      "confidence": 0.7,
+      "keywords": [
+        "Sonko",
+        "Primature",
+        "Premier ministre",
+        "Diomaye",
+        "gouvernement"
+      ],
+      "id": "draft_20260525094518_1",
+      "_dedup_key": "4969c61a268b19c9",
+      "status": "pending",
+      "created_at": "2026-05-25T09:45:18.089685+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Limogeage de Sonko : fin du poste de Premier ministre en vue ?",
+      "description": "Le président Bassirou Diomaye Faye a mis fin aux fonctions du Premier ministre Ousmane Sonko le 23 mai 2026, après 24 mois à la tête de la Primature. Cette décision relance le débat sur la suppression du poste de Premier ministre, l'une des promesses institutionnelles phares du programme présidentiel. La question d'une éventuelle reconfiguration institutionnelle vers un poste de Vice-Président est désormais posée.",
+      "source": "Jeune Afrique",
+      "source_url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxOTVd4cThkX1d0OGpxaWlZZ2Uyc1JVdFN3LXI3V05mdjdqSG5sLTRiNFlWaWJZQ1lETkVVQmh3VDFmaEMwc2l6YXd3YW5sTHByeFNXMHZubTcxLTBITU9TMHhNN3d2TW1UR18tdTFGa0ttRGZzc05mcjlqSjk4ZmhacTlzTzB6bTlrNEk3blRSMEl2R3pxWGdJSHgzcEVENGlZOHNDYWJwQkxlMzFoeHBPRnFhdkcyMElPOHlPU0Q4VzJMNW9sWXN4OHJUSFo3UQ?oc=5",
+      "date": "2026-05-23",
+      "domain": "Institutions",
+      "confidence": 0.82,
+      "keywords": [
+        "Premier ministre",
+        "limogeage",
+        "Sonko",
+        "Primature",
+        "réforme institutionnelle"
+      ],
+      "id": "draft_20260525094518_0",
+      "_dedup_key": "b3cd4d247f33be33",
+      "status": "pending",
+      "created_at": "2026-05-25T09:45:18.089663+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

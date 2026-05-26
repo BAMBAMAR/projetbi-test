@@ -1,6 +1,96 @@
 {
-  "last_updated": "2026-05-25T09:45:18.089720+00:00",
+  "last_updated": "2026-05-26T09:32:25.126412+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Jubbanti AN 2 : bilan de deux ans de gouvernement entre réformes et relance",
+      "description": "La primature a publié un document de bilan intitulé « Jubbanti AN 2 » faisant état des réformes, de la rationalisation et des actions de relance menées au cours des deux premières années du gouvernement. Ce document constitue une source potentielle de suivi de l'avancement de plusieurs engagements présidentiels. Il intervient dans un contexte de changement à la tête de la primature.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/jubbanti-2-entre-reformes-rationalisation-et-relance",
+      "date": "2026-05-26",
+      "domain": "Gouvernance",
+      "confidence": 0.75,
+      "keywords": [
+        "Jubbanti",
+        "bilan",
+        "réformes",
+        "relance",
+        "rationalisation",
+        "deux ans",
+        "gouvernement"
+      ],
+      "id": "draft_20260526093225_4",
+      "_dedup_key": "31b2073fe13c28fb",
+      "status": "pending",
+      "created_at": "2026-05-26T09:32:25.126391+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil interministériel sur les infrastructures tenu à la primature",
+      "description": "La primature a organisé un conseil interministériel dédié aux infrastructures. Cette réunion de coordination gouvernementale s'inscrit dans le suivi des chantiers sectoriels sous la direction du Premier ministre. Les détails des décisions prises lors de ce conseil n'ont pas été publiés dans le résumé disponible.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-interministeriel-sur-les-infrastructures",
+      "date": "2026-05-26",
+      "domain": "Infrastructures",
+      "confidence": 0.65,
+      "keywords": [
+        "conseil interministériel",
+        "infrastructures",
+        "primature",
+        "gouvernement"
+      ],
+      "id": "draft_20260526093225_2",
+      "_dedup_key": "7982ede45e5db0ab",
+      "status": "pending",
+      "created_at": "2026-05-26T09:32:25.126382+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Le poste de Premier ministre maintenu malgré la promesse de le supprimer",
+      "description": "La nomination d'Ahmadou Al Aminou Lo au poste de Premier ministre confirme le maintien de cette fonction, contrairement à l'engagement de campagne de Bassirou Diomaye Faye de supprimer le poste de Premier ministre au profit d'un Vice-Président. Cette reconfiguration institutionnelle intervient après 24 mois de gouvernement sous Ousmane Sonko. Aucune réforme constitutionnelle en ce sens n'a été engagée à ce jour.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-05-25",
+      "domain": "Institutions",
+      "confidence": 0.8,
+      "keywords": [
+        "Premier ministre",
+        "Vice-Président",
+        "réforme constitutionnelle",
+        "Al Aminou Lo",
+        "promesse"
+      ],
+      "id": "draft_20260526093225_1",
+      "_dedup_key": "1aae97e56f768145",
+      "status": "pending",
+      "created_at": "2026-05-26T09:32:25.126375+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Limogeage de Sonko : Ahmadou Al Aminou Lo nommé Premier ministre",
+      "description": "Le président Bassirou Diomaye Faye a limogé Ousmane Sonko de la primature après 24 mois de fonctions. Ahmadou Al Aminou Lo, décrit comme un technicien, lui succède au poste de Premier ministre. La coalition Diomaye Président a affiché son soutien total à cette nomination.",
+      "source": "France 24 / DAKARACTU.COM / Afriquinfos",
+      "source_url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPSk1sU1VJTXRya3FUMjBfSGhYQTdKR3hRUEYwZF9Bb0NTN0NOdnc4VS1xUmp5OTRjdWdlY2VKZW5MMWR0azYza3c3WHBrZlZtN29qVExoMW1mTEFVQU42SktPN2dRaS1MR08wSnd6VVRhSnd1anpsdDBRSjFFSlZvNEtFZ3VxLW4zRHEtaTZRQ1Vlb3ozaGdPVEZpLXBwWURBdlNyQ0RWd05aZGVtbVZMbHlPMkxxQlE1?oc=5",
+      "date": "2026-05-23",
+      "domain": "Institutions",
+      "confidence": 0.85,
+      "keywords": [
+        "Premier ministre",
+        "Sonko",
+        "Al Aminou Lo",
+        "limogeage",
+        "primature",
+        "nomination"
+      ],
+      "id": "draft_20260526093225_0",
+      "_dedup_key": "0eb4b9f4213b6328",
+      "status": "pending",
+      "created_at": "2026-05-26T09:32:25.126357+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

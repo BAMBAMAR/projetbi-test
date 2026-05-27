@@ -1,6 +1,95 @@
 {
-  "last_updated": "2026-05-26T09:32:25.126412+00:00",
+  "last_updated": "2026-05-27T08:58:14.024519+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Jubbanti AN 2 : bilan des réformes et relance économique après deux ans",
+      "description": "La Primature a publié un document intitulé « Jubbanti AN 2 » faisant état des réformes, de la rationalisation et de la relance engagées par le gouvernement au cours de ses deux premières années. Ce bilan officiel couvre plusieurs domaines d'action gouvernementale et constitue un document de référence pour le suivi des engagements. Son contenu détaillé permettrait d'évaluer l'avancement de nombreuses promesses présidentielles.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/jubbanti-2-entre-reformes-rationalisation-et-relance",
+      "date": "2026-05-27",
+      "domain": "Gouvernance",
+      "confidence": 0.8,
+      "keywords": [
+        "Jubbanti",
+        "bilan",
+        "réformes",
+        "relance",
+        "deux ans",
+        "gouvernement"
+      ],
+      "id": "draft_20260527085814_3",
+      "_dedup_key": "1949d1797443c0ab",
+      "status": "pending",
+      "created_at": "2026-05-27T08:58:14.024494+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Ousmane Sonko élu président de l'Assemblée nationale",
+      "description": "Après son départ de la Primature, Ousmane Sonko a été élu président de l'Assemblée nationale du Sénégal. Cette transition de l'exécutif vers le législatif constitue une reconfiguration notable de l'architecture du pouvoir. Le Président Diomaye Faye aurait saisi le Conseil constitutionnel avant ce vote, selon certaines sources, bien que la Présidence ait démenti cette information.",
+      "source": "BBC",
+      "source_url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE1tdE16ZHdXa3hGTnBOcUd5STl0TzFHcmQ2ckVqbXNLeGF6MTMwMnQxMmlDcTh3enlZSWFGdHdOM0FFX2UxVGRzVTdQbjZPZ3ozWC1rbkwzWDd6NXVfWHfSAWNBVV95cUxQd25xam4yZXEwUmZDT3FJNW9Yd3BsMkd6emZqb3N0eFkySFVrcFI2YmhTRVlpXzJpbUF3d2x0YndjXy1SOVRvV0c4cW92bGc3NmdwZ0tuMnRyNWR1TUlSbHRJRlE?oc=5",
+      "date": "2026-05-26",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "Assemblée nationale",
+        "Sonko",
+        "président",
+        "législatif",
+        "Conseil constitutionnel"
+      ],
+      "id": "draft_20260527085814_2",
+      "_dedup_key": "ba4f6f92a3759cfd",
+      "status": "pending",
+      "created_at": "2026-05-27T08:58:14.024487+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Nomination d'Ahmadou Al Aminou Lô comme nouveau Premier Ministre",
+      "description": "Ahmadou Al Aminou Lô a été officiellement nommé Premier Ministre du Sénégal en remplacement d'Ousmane Sonko, selon une annonce publiée sur le site de la Primature. Ce technocrate prend la tête du gouvernement dans un contexte de rupture politique entre le Président Diomaye Faye et son ancien Premier Ministre. Cette nomination marque une reconfiguration majeure de l'exécutif sénégalais.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-05-27",
+      "domain": "Institutions",
+      "confidence": 0.9,
+      "keywords": [
+        "Premier Ministre",
+        "nomination",
+        "Ahmadou Al Aminou Lô",
+        "gouvernement",
+        "Primature"
+      ],
+      "id": "draft_20260527085814_1",
+      "_dedup_key": "68c41832feee11b0",
+      "status": "pending",
+      "created_at": "2026-05-27T08:58:14.024478+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Sonko limogé de la Primature : le poste de Premier Ministre maintenu",
+      "description": "Ousmane Sonko a été démis de ses fonctions de Premier Ministre après 24 mois, et Ahmadou Al Aminou Lô a été nommé pour lui succéder à la tête de la Primature. Cette évolution confirme que le poste de Premier Ministre n'a pas été supprimé, contrairement à l'engagement de le remplacer par un Vice-Président. La promesse de transformer l'architecture institutionnelle en instaurant un poste de Vice-Président n'est pas encore mise en œuvre.",
+      "source": "Africa24 TV",
+      "source_url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPa3pzTW1USkxKbFNXbm5QSTc3YU1INkdDaDU0S3ExZ0dxblAyS0FnaUdoUHN1dGx3QnFWVldVZ01EczY0MmgxdGR3OFhrX2RoeTctTmRFOHNlQ1lmenpCSklpYmxiU1BFbmwxczNvdURxRFNsZFk1QjRfR2phX3lqb3lUVmtYWkF0ZkFqemVfVzFwbTYyY20w?oc=5",
+      "date": "2026-05-23",
+      "domain": "Institutions",
+      "confidence": 0.85,
+      "keywords": [
+        "Premier Ministre",
+        "Primature",
+        "Sonko",
+        "Vice-Président",
+        "réforme institutionnelle"
+      ],
+      "id": "draft_20260527085814_0",
+      "_dedup_key": "f0795061b640fdaa",
+      "status": "pending",
+      "created_at": "2026-05-27T08:58:14.024460+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

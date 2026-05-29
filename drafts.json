@@ -1,6 +1,91 @@
 {
-  "last_updated": "2026-05-28T09:41:57.419101+00:00",
+  "last_updated": "2026-05-29T09:31:04.197214+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 6 mai 2026",
+      "description": "Le Conseil des ministres du 6 mai 2026 a été tenu par le gouvernement sénégalais. Ce type de réunion périodique est susceptible de contenir des mesures liées aux engagements programmatiques dans divers secteurs. L'analyse du compte rendu officiel permettrait de préciser les promesses impactées.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-06-mai-2026",
+      "date": "2026-05-06",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "conseil des ministres",
+        "gouvernement",
+        "mai 2026"
+      ],
+      "id": "draft_20260529093104_5",
+      "_dedup_key": "c653664fc347c371",
+      "status": "pending",
+      "created_at": "2026-05-29T09:31:04.197195+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil interministériel sur les Infrastructures tenu par la Primature",
+      "description": "Un conseil interministériel dédié aux infrastructures a été organisé par la Primature. Cette réunion de coordination intersectorielle traduit une démarche gouvernementale de suivi des chantiers d'infrastructures. Les détails des décisions prises pourraient être liés à plusieurs engagements programmatiques en matière d'équipements publics.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-interministeriel-sur-les-infrastructures",
+      "date": "2026-05-25",
+      "domain": "Infrastructures",
+      "confidence": 0.65,
+      "keywords": [
+        "conseil interministériel",
+        "infrastructures",
+        "Primature"
+      ],
+      "id": "draft_20260529093104_3",
+      "_dedup_key": "65d61612a885c97c",
+      "status": "pending",
+      "created_at": "2026-05-29T09:31:04.197188+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Bilan Jubbanti AN 2 : réformes, rationalisation et relance selon la Primature",
+      "description": "La Primature a publié un document intitulé « Jubbanti AN 2 : entre réformes, rationalisation et relance », présentant le bilan de deux ans d'action gouvernementale. Ce document constitue une source potentielle de suivi des engagements programmatiques du gouvernement dans plusieurs domaines. Son contenu détaillé pourrait permettre d'actualiser le statut de plusieurs promesses suivies.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/jubbanti-2-entre-reformes-rationalisation-et-relance",
+      "date": "2026-05-25",
+      "domain": "Gouvernance",
+      "confidence": 0.8,
+      "keywords": [
+        "Jubbanti",
+        "bilan",
+        "réformes",
+        "rationalisation",
+        "relance",
+        "gouvernement"
+      ],
+      "id": "draft_20260529093104_2",
+      "_dedup_key": "76a1950620a593c3",
+      "status": "pending",
+      "created_at": "2026-05-29T09:31:04.197182+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Crise politique au sommet de l'État : Sonko quitte la Primature pour l'Assemblée nationale",
+      "description": "Ousmane Sonko a été révoqué de son poste de Premier Ministre et se retrouve propulsé à la tête de l'Assemblée nationale, selon plusieurs médias internationaux. Cette recomposition au sommet de l'exécutif intervient dans un contexte de divergences profondes entre le Président Bassirou Diomaye Faye et son ancien Premier Ministre. Un nouveau gouvernement est en cours de formation avec Ahmadou Al Aminou Lô à la Primature.",
+      "source": "BBC",
+      "source_url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE1tdE16ZHdXa3hGTnBOcUd5STl0TzFHcmQ2ckVqbXNLeGF6MTMwMnQxMmlDcTh3enlZSWFGdHdOM0FFX2UxVGRzVTdQbjZPZ3ozWC1rbkwzWDd6NXVfWHfSAWNBVV95cUxQd25xam4yZXEwUmZDT3FJNW9Yd3BsMkd6emZqb3N0eFkySFVrcFI2YmhTRVlpXzJpbUF3d2x0YndjXy1SOVRvV0c4cW92bGc3NmdwZ0tuMnRyNWR1TUlSbHRJRlE",
+      "date": "2026-05-26",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "Sonko",
+        "Primature",
+        "Assemblée nationale",
+        "crise politique",
+        "gouvernement"
+      ],
+      "id": "draft_20260529093104_1",
+      "_dedup_key": "8a5949341ca0e4e7",
+      "status": "pending",
+      "created_at": "2026-05-29T09:31:04.197166+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

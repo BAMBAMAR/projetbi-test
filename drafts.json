@@ -1,6 +1,73 @@
 {
-  "last_updated": "2026-05-29T09:31:04.197214+00:00",
+  "last_updated": "2026-05-30T08:14:05.014769+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Jubbanti An 2 : bilan gouvernemental entre réformes, rationalisation et relance",
+      "description": "La Primature a publié un document de bilan intitulé « Jubbanti AN 2 » faisant état des réformes engagées, de la rationalisation de l'action publique et des efforts de relance économique. Ce document constitue un état d'avancement officiel des actions gouvernementales après deux ans de mandat. Il est susceptible de contenir des informations de suivi sur plusieurs promesses présidentielles.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/jubbanti-2-entre-reformes-rationalisation-et-relance",
+      "date": "2026-05-30",
+      "domain": "Gouvernance",
+      "confidence": 0.8,
+      "keywords": [
+        "Jubbanti",
+        "bilan",
+        "réformes",
+        "rationalisation",
+        "relance",
+        "gouvernement"
+      ],
+      "id": "draft_20260530081405_3",
+      "_dedup_key": "01afa525ecb0e20a",
+      "status": "pending",
+      "created_at": "2026-05-30T08:14:05.014742+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Sonko nommé à la tête de l'Assemblée nationale après son départ de la Primature",
+      "description": "Ousmane Sonko, après avoir été démis de ses fonctions de Premier Ministre, a été propulsé à la tête de l'Assemblée nationale selon plusieurs médias. Cette évolution institutionnelle marque une recomposition majeure de l'architecture du pouvoir exécutif et législatif au Sénégal. Le contexte politique est marqué par des divergences décrites comme irréconciliables entre Sonko et le Président Faye.",
+      "source": "BBC",
+      "source_url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE1tdE16ZHdXa3hGTnBOcUd5STl0TzFHcmQ2ckVqbXNLeGF6MTMwMnQxMmlDcTh3enlZSWFGdHdOM0FFX2UxVGRzVTdQbjZPZ3ozWC1rbkwzWDd6NXVfWHfSAWNBVV95cUxQd25xam4yZXEwUmZDT3FJNW9Yd3BsMkd6emZqb3N0eFkySFVrcFI2YmhTRVlpXzJpbUF3d2x0YndjXy1SOVRvV0c4cW92bGc3NmdwZ0tuMnRyNWR1TUlSbHRJRlE",
+      "date": "2026-05-26",
+      "domain": "Institutions",
+      "confidence": 0.8,
+      "keywords": [
+        "Sonko",
+        "Assemblée nationale",
+        "Primature",
+        "recomposition politique",
+        "Diomaye Faye"
+      ],
+      "id": "draft_20260530081405_2",
+      "_dedup_key": "8905c0e704c04a39",
+      "status": "pending",
+      "created_at": "2026-05-30T08:14:05.014736+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Sonko quitte la Primature : le poste de Premier Ministre maintenu sous un nouveau titulaire",
+      "description": "Ousmane Sonko a officiellement transmis les rênes de la Primature à Ahmadou Al Aminou Lô lors d'une cérémonie de passation de service. Cette nomination confirme que le poste de Premier Ministre est maintenu, en contradiction avec la promesse de le supprimer au profit d'un Vice-Président. Aucune réforme constitutionnelle en ce sens n'a été engagée à ce jour.",
+      "source": "Leral.net",
+      "source_url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOVGp5ZWJJRzRaN1FTbEo2TEIxYnRja21tMlNSZXBSdlB1ME1pdFNIRWNfbXA3cWtSQzRZTV84NDVvYXp5ZVZ3aDFPV0hMVTJiWndFRm55Sm9UN0dlUkVKa2d5N1NEaTJQb2dGUi15MDdDSDZrTk5CWGxPbk0teVpBeGF4WVNoM0E2c2E5YkY2R21tOTFxV2JFVDY5bUdSam9aVjVEV1U1V0NtVFUybWRhclZxUloxZw",
+      "date": "2026-05-29",
+      "domain": "Institutions",
+      "confidence": 0.9,
+      "keywords": [
+        "Premier Ministre",
+        "Primature",
+        "Sonko",
+        "Ahmadou Al Aminou Lô",
+        "passation de service"
+      ],
+      "id": "draft_20260530081405_0",
+      "_dedup_key": "e186829631909053",
+      "status": "pending",
+      "created_at": "2026-05-30T08:14:05.014716+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

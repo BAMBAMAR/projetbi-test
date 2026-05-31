@@ -1,6 +1,95 @@
 {
-  "last_updated": "2026-05-30T08:14:05.014769+00:00",
+  "last_updated": "2026-05-31T08:33:08.257468+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Bilan « Jubbanti AN 2 » : réformes, rationalisation et relance",
+      "description": "La Primature a publié un bilan intitulé « Jubbanti AN 2 » portant sur les réformes, la rationalisation et la relance économique après deux ans de gouvernance. Ce document constitue un état des lieux officiel des actions entreprises par le gouvernement depuis son installation. Il représente une source d'information structurée pour le suivi de plusieurs promesses présidentielles dans divers domaines.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/jubbanti-2-entre-reformes-rationalisation-et-relance",
+      "date": "2026-05-31",
+      "domain": "Gouvernance",
+      "confidence": 0.85,
+      "keywords": [
+        "Jubbanti",
+        "bilan",
+        "réformes",
+        "rationalisation",
+        "relance",
+        "deux ans"
+      ],
+      "id": "draft_20260531083308_5",
+      "_dedup_key": "3d961efd932c5bb3",
+      "status": "pending",
+      "created_at": "2026-05-31T08:33:08.257445+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Nouveau gouvernement sénégalais : recomposition politique entre Pastef et Diomaye Faye",
+      "description": "La formation d'un nouveau gouvernement au Sénégal suscite des interrogations sur l'équilibre des relations entre le parti Pastef et le président Bassirou Diomaye Faye. Cette recomposition gouvernementale fait suite au départ d'Ousmane Sonko de la Primature. Elle constitue un événement institutionnel majeur susceptible d'affecter la mise en œuvre des engagements présidentiels.",
+      "source": "RFI",
+      "source_url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxPRk5iaExodTgwYThPMXEtUUtUYmtqbVZiMXZVY1hvZmEwSXFyeE90YnZlaXJoNHJiYzNnRTBxZm9YUjNxWXFBZWMzY0pkS1FXTXJjZTI2X0w3TnZwZ1d6Vy1IUlhVc2dWQ2ZWYkN2Y0ttMFpTR0pwc3dzeEdRMHdoOG0yblZIUC1Fa0xsVHNmcjRPVTNOMG02ZW5NZVphVEFRbVJHZVB1cU9aQ2FYNk92aWlOeGFTbG1rdENkc0JVYy1hemlodmw0MW13eHZqekhHWHVXdEZlZEJERE1OU0NTNDZGUGJ6VmMyaEl3WmtR",
+      "date": "2026-05-31",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "gouvernement",
+        "Pastef",
+        "Diomaye Faye",
+        "recomposition",
+        "Primature"
+      ],
+      "id": "draft_20260531083308_2",
+      "_dedup_key": "e32dcb58e08f5913",
+      "status": "pending",
+      "created_at": "2026-05-31T08:33:08.257433+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Ahmadou Al Aminou Mohamed Lô nommé nouveau Premier Ministre du Sénégal",
+      "description": "La Primature a officiellement annoncé la nomination d'Ahmadou Al Aminou Mohamed Lô au poste de Premier Ministre du Sénégal. Cette nomination confirme le maintien de l'institution de la Primature, en opposition à l'engagement de la supprimer et de la remplacer par un poste de Vice-Président. Aucune annonce relative à la création d'un poste de Vice-Président n'a été faite à ce stade.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-05-31",
+      "domain": "Institutions",
+      "confidence": 0.95,
+      "keywords": [
+        "Premier Ministre",
+        "nomination",
+        "Primature",
+        "Ahmadou Al Aminou Lô",
+        "institutions"
+      ],
+      "id": "draft_20260531083308_1",
+      "_dedup_key": "f94b463fc695faae",
+      "status": "pending",
+      "created_at": "2026-05-31T08:33:08.257424+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Passation de service à la Primature : Sonko cède sa place à Ahmadou Al Aminou Lô",
+      "description": "Une passation de service a eu lieu à la Primature entre Ousmane Sonko et Ahmadou Al Aminou Lô, nommé nouveau Premier Ministre du Sénégal. Cet événement intervient dans un contexte de recomposition gouvernementale sous la présidence de Bassirou Diomaye Faye. Le maintien du poste de Premier Ministre contraste avec la promesse de le supprimer au profit d'un Vice-Président.",
+      "source": "La Vie Senegalaise",
+      "source_url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQcmhLcEtEOGd2ckxzdC1EV3hUZHlOOElPVllmdHVKWDNkSjZ5Z2FTNGJzQnk4ZFRzNzRFMkZqbS0wZ1dZNjZMS1lUZ3pWNzh5bWJXXy00Zl9MQ19hLURBWFdGUjFkMU5XMDk4UnBRSkwtMkNhaGdoZFVZYlFWSGtGZE5mcXJsYlRFYmlVZUE0MWJiT19ENnpKdTdjaW5uQUVjbmF3RGUzYw",
+      "date": "2026-05-30",
+      "domain": "Institutions",
+      "confidence": 0.92,
+      "keywords": [
+        "Premier Ministre",
+        "Primature",
+        "passation de service",
+        "Sonko",
+        "Ahmadou Al Aminou Lô"
+      ],
+      "id": "draft_20260531083308_0",
+      "_dedup_key": "522c0df6e59fce9c",
+      "status": "pending",
+      "created_at": "2026-05-31T08:33:08.257409+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

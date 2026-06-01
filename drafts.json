@@ -1,6 +1,95 @@
 {
-  "last_updated": "2026-05-31T08:33:08.257468+00:00",
+  "last_updated": "2026-06-01T11:04:56.534183+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye en visite de travail en Gambie : renforcement de la coopération bilatérale",
+      "description": "Le Président Bassirou Diomaye Faye s'est rendu en Gambie pour une visite de travail officielle, au cours de laquelle Dakar et Banjul ont renforcé leur coopération face aux défis régionaux et internationaux. Cette visite s'inscrit dans la dynamique de repositionnement diplomatique sous-régional du Sénégal. Le Président Faye a par ailleurs proposé la candidature du général Birame Diop à la présidence de la Commission de la CEDEAO.",
+      "source": "DAKARACTU.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxNeE8wX2xtSFFOWUc2azJRbXRDbHAtUENuRGpEMm9rTnpOZDE5WXVPbkx2aTktU3hwVEFnb2tvSDhYbGlxMTF6d0F0Tl80UmdWejBZTXk1TGo1bnVnVXhKSk5fb0lTYVh0Mmt6RmU4dENBaXlzUk4wRUs0UHY3cUF6M0xYSV9Kd1lWVzJmaWlDeWNoeEFVWEY3LU9vRXNYQlE1aWdUWDk3eFRNaGNsbmFrNl8zVWp4SnAwdi15eElmdkJEQmo5eElFbmF0Yw",
+      "date": "2026-05-30",
+      "domain": "Diplomatie",
+      "confidence": 0.7,
+      "keywords": [
+        "Diomaye Faye",
+        "Gambie",
+        "coopération",
+        "CEDEAO",
+        "Birame Diop",
+        "diplomatie"
+      ],
+      "id": "draft_20260601110456_7",
+      "_dedup_key": "19d01e36cea40324",
+      "status": "pending",
+      "created_at": "2026-06-01T11:04:56.534160+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Maintien du poste de Premier Ministre : Lô succède à Sonko",
+      "description": "La nomination d'Ahmadou Al Aminou Lô au poste de Premier Ministre confirme que le poste n'a pas été supprimé à ce stade, contrairement à l'engagement de campagne visant à le remplacer par un Vice-Président. La passation de service entre Sonko et Lô s'est tenue à la Primature fin mai 2026. Aucune réforme constitutionnelle en ce sens n'a été annoncée à ce jour.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-06-01",
+      "domain": "Institutions",
+      "confidence": 0.72,
+      "keywords": [
+        "Premier Ministre",
+        "Vice-Président",
+        "réforme constitutionnelle",
+        "Lô",
+        "Sonko"
+      ],
+      "id": "draft_20260601110456_2",
+      "_dedup_key": "cc421a434e759ebc",
+      "status": "pending",
+      "created_at": "2026-06-01T11:04:56.534136+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Ahmadou Al Aminou Lô nommé nouveau Premier Ministre du Sénégal",
+      "description": "Ahmadou Al Aminou Mohamed Lô a été officiellement nommé nouveau Premier Ministre du Sénégal, selon une annonce publiée sur le site de la Primature. Cette nomination fait suite au départ d'Ousmane Sonko de la tête du gouvernement. La composition de son équipe gouvernementale est attendue prochainement.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-06-01",
+      "domain": "Institutions",
+      "confidence": 0.8,
+      "keywords": [
+        "Premier Ministre",
+        "nomination",
+        "Ahmadou Al Aminou Lô",
+        "gouvernement",
+        "Primature"
+      ],
+      "id": "draft_20260601110456_1",
+      "_dedup_key": "e4484d6a9b0ab4ad",
+      "status": "pending",
+      "created_at": "2026-06-01T11:04:56.534129+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Passation de service entre Sonko et Ahmadou Al Aminou Lô à la Primature",
+      "description": "Une passation de service a eu lieu à la Primature entre l'ancien Premier Ministre Ousmane Sonko et son successeur Ahmadou Al Aminou Lô. Ce changement à la tête du gouvernement intervient dans un contexte de tensions entre le Président Diomaye Faye et Ousmane Sonko. La composition du nouveau gouvernement Lô est attendue et sera déterminante pour la suite de l'action gouvernementale.",
+      "source": "La Vie Senegalaise",
+      "source_url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQcmhLcEtEOGd2ckxzdC1EV3hUZHlOOElPVllmdHVKWDNkSjZ5Z2FTNGJzQnk4ZFRzNzRFMkZqbS0wZ1dZNjZMS1lUZ3pWNzh5bWJXXy00Zl9MQ19hLURBWFdGUjFkMU5XMDk4UnBRSkwtMkNhaGdoZFVZYlFWSGtGZE5mcXJsYlRFYmlVZUE0MWJiT19ENnpKdTdjaW5uQUVjbmF3RGUzYw",
+      "date": "2026-05-30",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "Premier Ministre",
+        "Sonko",
+        "Ahmadou Al Aminou Lô",
+        "passation de service",
+        "Primature"
+      ],
+      "id": "draft_20260601110456_0",
+      "_dedup_key": "3c715cf865f8f7b3",
+      "status": "pending",
+      "created_at": "2026-06-01T11:04:56.534113+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

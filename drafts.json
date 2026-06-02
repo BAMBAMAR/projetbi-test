@@ -1,6 +1,95 @@
 {
-  "last_updated": "2026-06-01T11:04:56.534183+00:00",
+  "last_updated": "2026-06-02T09:59:12.522522+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Jubbanti AN 2 : bilan de réformes et de relance économique",
+      "description": "La Primature a publié un document intitulé « Jubbanti AN 2 » portant sur les réformes, la rationalisation et la relance économique menées au cours de la deuxième année du gouvernement. Ce bilan couvre plusieurs domaines d'action gouvernementale et constitue un outil de suivi des engagements pris par l'exécutif. Il peut servir de référence pour évaluer l'avancement de plusieurs promesses présidentielles.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/jubbanti-2-entre-reformes-rationalisation-et-relance",
+      "date": "2026-06-02",
+      "domain": "Gouvernance",
+      "confidence": 0.72,
+      "keywords": [
+        "Jubbanti",
+        "réformes",
+        "bilan",
+        "relance",
+        "rationalisation",
+        "gouvernement"
+      ],
+      "id": "draft_20260602095912_3",
+      "_dedup_key": "7098652fe539ae03",
+      "status": "pending",
+      "created_at": "2026-06-02T09:59:12.522496+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Composition du nouveau gouvernement Lô publiée par la Primature",
+      "description": "La Primature a officiellement publié la composition du nouveau gouvernement dirigé par Ahmadou Al Aminou Lô. Ce gouvernement succède à celui d'Ousmane Sonko et marque une nouvelle orientation dans la gestion de l'exécutif sénégalais. La composition détaillée est disponible sur le site officiel de la Primature.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/composition-du-nouveau-gouvernement-3",
+      "date": "2026-06-02",
+      "domain": "Institutions",
+      "confidence": 0.7,
+      "keywords": [
+        "gouvernement",
+        "composition",
+        "Primature",
+        "Ahmadou Al Aminou Lô"
+      ],
+      "id": "draft_20260602095912_2",
+      "_dedup_key": "b6623b3d4f1e1937",
+      "status": "pending",
+      "created_at": "2026-06-02T09:59:12.522490+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Maintien du poste de Premier Ministre : Ahmadou Al Aminou Lô nommé à la Primature",
+      "description": "Le président Bassirou Diomaye Faye a nommé Ahmadou Al Aminou Lô au poste de Premier Ministre, confirmant le maintien de la Primature en tant qu'institution. Cette nomination intervient après la passation de service entre Ousmane Sonko et son successeur le 1er juin 2026. La promesse de supprimer le poste de Premier Ministre au profit d'un Vice-Président ne semble pas avoir été mise en œuvre à ce stade.",
+      "source": "Africa24 TV",
+      "source_url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNWlZNei05NFpvaDlLbnFQV0RWNmpCaUlvMWRSQTJHV0pWa0RZV0tGN1MtRDAxQlRKM2NrYTMxQWM3TlpPMUtVVEZJOXBYUzZGdktvTGpNSmRNSlFvRjZOMUx4RGduUk9aYWdGSElOSjNGZmFBaHJaQ08yRE9OTzhjMkdkTzRNT2d0WWFCQnBJQWg0QnVkWTZKdndQWUN1RHBOalJ6MkEtTDY2X0dPOUVmcTd5bjN6akdRd0x5MQ?oc=5",
+      "date": "2026-06-01",
+      "domain": "Institutions",
+      "confidence": 0.82,
+      "keywords": [
+        "Premier Ministre",
+        "Primature",
+        "Ahmadou Al Aminou Lô",
+        "Sonko",
+        "passation de service"
+      ],
+      "id": "draft_20260602095912_1",
+      "_dedup_key": "9dde9999eb8466ea",
+      "status": "pending",
+      "created_at": "2026-06-02T09:59:12.522484+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Nouveau gouvernement nommé sans le Pastef d'Ousmane Sonko",
+      "description": "Le président Bassirou Diomaye Faye a nommé un nouveau gouvernement dirigé par Ahmadou Al Aminou Lô, sans la participation du Pastef d'Ousmane Sonko. Cette nomination marque une rupture formelle entre les deux anciens alliés et un tournant institutionnel majeur pour le Sénégal. La passation de service à la Primature entre Ousmane Sonko et Ahmadou Al Aminou Lô a eu lieu le 1er juin 2026.",
+      "source": "RFI",
+      "source_url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxQY3VXMDJBYUVEV09XLU5BQXJwZ3JrN3BxUXpTaG1BVzN2QmJOUVMzMXB3VjFWbDV4MEptU1AwS0hremt1OWxxX2NYb20zQTJBZmJoV3Rnd2lhcU9mWnJpcHZDQll0VnNaSFgxZldCMEFaR3VnLXBuSmlSYlZuVC1ZbVBNLWtTM1I0RjZDUGFWYjY0eks5SDdEak13WmRMbGEydVIybEZVaHZIdkJpaFdoOHBXNUp2bTdQaHYwdHBnOXB3WG9kVGJPUHZRa0pNVEJhb1podGxaSTdGQQ?oc=5",
+      "date": "2026-06-01",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "gouvernement",
+        "Premier Ministre",
+        "Sonko",
+        "Diomaye",
+        "Pastef",
+        "Ahmadou Al Aminou Lô"
+      ],
+      "id": "draft_20260602095912_0",
+      "_dedup_key": "beb2baf4d09f4f55",
+      "status": "pending",
+      "created_at": "2026-06-02T09:59:12.522465+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

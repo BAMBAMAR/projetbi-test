@@ -1,6 +1,71 @@
 {
-  "last_updated": "2026-06-02T09:59:12.522522+00:00",
+  "last_updated": "2026-06-03T10:30:24.611708+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Composition du nouveau gouvernement Lô publiée",
+      "description": "La composition du nouveau gouvernement dirigé par Ahmadou Al Aminou Lô a été officiellement publiée par la Primature. Ce gouvernement marque une rupture avec la configuration précédente associant Diomaye Faye et Ousmane Sonko. La formation de ce cabinet constitue un tournant institutionnel majeur pour la suite du quinquennat.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/composition-du-nouveau-gouvernement-3",
+      "date": "2026-06-03",
+      "domain": "Gouvernance",
+      "confidence": 0.85,
+      "keywords": [
+        "gouvernement",
+        "composition",
+        "Lô",
+        "Primature",
+        "cabinet"
+      ],
+      "id": "draft_20260603103024_2",
+      "_dedup_key": "6bef07f62eab6796",
+      "status": "pending",
+      "created_at": "2026-06-03T10:30:24.611681+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Passation de service à la Primature : Sonko remet les rênes à Ahmadou Al Aminou Lô",
+      "description": "Ousmane Sonko a officiellement quitté la Primature et transmis ses fonctions à Ahmadou Al Aminou Lô, nommé nouveau Premier Ministre. Sonko a révélé que le président Faye lui avait signifié que sa présence à la tête du gouvernement était devenue difficile. Le nouveau gouvernement est formé sans la participation directe du Pastef de Sonko.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-06-01",
+      "domain": "Gouvernance",
+      "confidence": 0.85,
+      "keywords": [
+        "Sonko",
+        "Primature",
+        "passation de service",
+        "Ahmadou Al Aminou Lô",
+        "gouvernement"
+      ],
+      "id": "draft_20260603103024_1",
+      "_dedup_key": "25742a50dd7b7348",
+      "status": "pending",
+      "created_at": "2026-06-03T10:30:24.611674+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Nomination d'un nouveau Premier Ministre : le poste maintenu",
+      "description": "Ahmadou Al Aminou Lô a été nommé nouveau Premier Ministre du Sénégal après le départ d'Ousmane Sonko de la Primature. La passation de service a eu lieu le 1er juin 2026. Cette nomination confirme que la promesse de supprimer le poste de Premier Ministre et d'instaurer un Vice-Président n'a pas été mise en œuvre.",
+      "source": "Africa24 TV",
+      "source_url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNWlZNei05NFpvaDlLbnFQV0RWNmpCaUlvMWRSQTJHV0pWa0RZV0tGN1MtRDAxQlRKM2NrYTMxQWM3TlpPMUtVVEZJOXBYUzZGdktvTGpNSmRNSlFvRjZOMUx4RGduUk9aYWdGSElOSjNGZmFBaHJaQ08yRE9OTzhjMkdkTzRNT2d0WWFCQnBJQWg0QnVkWTZKdndQWUN1RHBOalJ6MkEtTDY2X0dPOUVmcTd5bjN6akdRd0x5MQ",
+      "date": "2026-06-01",
+      "domain": "Institutions",
+      "confidence": 0.9,
+      "keywords": [
+        "Premier Ministre",
+        "Ahmadou Al Aminou Lô",
+        "Primature",
+        "nomination"
+      ],
+      "id": "draft_20260603103024_0",
+      "_dedup_key": "d3d743f45a2480bf",
+      "status": "pending",
+      "created_at": "2026-06-03T10:30:24.611657+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

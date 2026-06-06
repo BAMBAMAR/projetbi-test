@@ -1,6 +1,160 @@
 {
-  "last_updated": "2026-06-05T09:02:11.774548+00:00",
+  "last_updated": "2026-06-06T08:22:46.297885+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil interministériel sur les infrastructures tenu sous le nouveau gouvernement",
+      "description": "Un conseil interministériel dédié aux infrastructures a été organisé par la Primature, témoignant d'une volonté de continuité dans la gestion des chantiers d'infrastructures malgré le changement de gouvernement. Ce conseil s'inscrit dans le cadre des orientations de développement du pays.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-interministeriel-sur-les-infrastructures",
+      "date": "2026-06-05",
+      "domain": "Industrie",
+      "confidence": 0.62,
+      "keywords": [
+        "infrastructures",
+        "conseil interministériel",
+        "Primature",
+        "développement",
+        "chantiers"
+      ],
+      "id": "draft_20260606082246_7",
+      "_dedup_key": "2c5afe0f56048bef",
+      "status": "pending",
+      "created_at": "2026-06-06T08:22:46.297856+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye annonce des consultations nationales dans le cadre d'un dialogue national",
+      "description": "Le président Bassirou Diomaye Faye a annoncé des consultations imminentes avec toutes les forces vives de la nation dans le cadre d'un dialogue national. Cette initiative intervient dans un contexte de tensions politiques post-rupture avec l'ex-Premier ministre Ousmane Sonko.",
+      "source": "pressafrik.com",
+      "source_url": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxNVTNDRGdxcEdkSnFvREZVcG9jcEVqUVJpWkdzd1VabkllbW5CZ1VhUFVpOEJCV3pLeGtZNlBjcGZlbmxiVW51LUVEV1lhTU1ZMHRGZjdUamx4Q0phU19rQ1YtR3E3bkxMYUFscEs5Z1RrS3EtODNxa1JERnZxcVNLR0lmS0ltVmFIMjZWeWpMYy10VmQxcFNNS2I1aG9sd0pvMFpyT1BFUHdxYmFxc0h6WG5uemdmMGszaU5OclNJckx0QlRpdko2YTRmaDA2eEZZelFaeTVzUkQyQTk1cWVSSTJtMlFHRGFUb0FORExrZw",
+      "date": "2026-06-05",
+      "domain": "Gouvernance",
+      "confidence": 0.65,
+      "keywords": [
+        "dialogue national",
+        "consultations",
+        "forces vives",
+        "Diomaye Faye",
+        "concertation"
+      ],
+      "id": "draft_20260606082246_6",
+      "_dedup_key": "1c927b7d6b245adf",
+      "status": "pending",
+      "created_at": "2026-06-06T08:22:46.297845+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Le FMI annonce une mission à Dakar dans le contexte du départ de Sonko",
+      "description": "Le Fonds Monétaire International a annoncé une mission à Dakar dans la foulée du départ d'Ousmane Sonko de la Primature, dans un contexte de préoccupations sur la dette du Sénégal. Cette mission interviendra pour évaluer la situation des finances publiques sénégalaises sous le nouveau gouvernement.",
+      "source": "Senenews",
+      "source_url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQSEt5RXkwNDAzcVpQV3ZuRUxEN1dEMFNLeW1vUXVoemYtOVFoME83UXBLVjllUW9lNkZGS3lVRnczX1hWYkhrTjVSX1NKMDM4TEVtR0lZcnVMQmdmY09GNWkwNzYyU0ttU2RMOG1KVWtUaDhEUTZmT2xXbk5jZzRDclBFTWpmM0twQWx2Q3h2MzJuZDhNLV9rZWRUTWJ3LTlyZHZyYmREN2pzQ3ZVTTN5RGg2bEl0SW5hUmE5N25BMnltYmw5bXctRnBwb3RiOHlISXhYTUdPVExUeGlUbzRn",
+      "date": "2026-06-04",
+      "domain": "Finances",
+      "confidence": 0.65,
+      "keywords": [
+        "FMI",
+        "dette",
+        "finances publiques",
+        "mission",
+        "Dakar"
+      ],
+      "id": "draft_20260606082246_5",
+      "_dedup_key": "c4fb34772327847b",
+      "status": "pending",
+      "created_at": "2026-06-06T08:22:46.297840+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 5 juin 2026 : orientations du nouveau gouvernement",
+      "description": "Le communiqué du Conseil des ministres du 5 juin 2026 a été publié par l'APS, détaillant les décisions et orientations arrêtées lors de cette première réunion du nouveau gouvernement. Ce conseil marque la mise en route officielle de la nouvelle équipe gouvernementale sous la direction du Premier ministre Ahmadou Al Aminou Lo.",
+      "source": "APS - Agence de Presse Sénégalaise",
+      "source_url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOSV9LWkgzTVNmTFFnSW5nVUdHM1l5cnN1Q0NkdjdHVW9xZDliODZxQnpKekdvX0E3dzdBQ290SXFnb0c3VE83VlZxM2ZXZzNXUHllY3RONEdEVk1wRXVWREpyV2VpZFVXTVY3b1NwSmNzLVYtV0NJTUlRWUJZc3BHS1pSUU0",
+      "date": "2026-06-05",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "conseil des ministres",
+        "communiqué",
+        "gouvernement",
+        "orientations",
+        "APS"
+      ],
+      "id": "draft_20260606082246_4",
+      "_dedup_key": "a89a5d37240784aa",
+      "status": "pending",
+      "created_at": "2026-06-06T08:22:46.297831+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Le poste de Premier ministre maintenu malgré l'engagement de le supprimer",
+      "description": "La nomination d'Ahmadou Al Aminou Mohamed Lo comme nouveau Premier ministre confirme que le poste de Premier ministre n'a pas été supprimé, contrairement à l'engagement présidentiel de le remplacer par un poste de Vice-Président. La composition du nouveau gouvernement publiée par la Primature le 5 juin 2026 atteste du maintien de cette institution.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/composition-du-nouveau-gouvernement-3",
+      "date": "2026-06-05",
+      "domain": "Institutions",
+      "confidence": 0.85,
+      "keywords": [
+        "Premier ministre",
+        "Vice-Président",
+        "suppression",
+        "gouvernement",
+        "réforme institutionnelle"
+      ],
+      "id": "draft_20260606082246_2",
+      "_dedup_key": "27fdaf6416bdd9bd",
+      "status": "pending",
+      "created_at": "2026-06-06T08:22:46.297822+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Nomination d'Ahmadou Al Aminou Mohamed Lo comme nouveau Premier ministre du Sénégal",
+      "description": "Ahmadou Al Aminou Mohamed Lo a été nommé nouveau Premier ministre du Sénégal, succédant à Ousmane Sonko à la tête de la Primature. Cette nomination intervient dans un contexte de tensions au sein du parti au pouvoir entre le président Diomaye Faye et son ancien Premier ministre.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-06-05",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "Premier ministre",
+        "nomination",
+        "Ahmadou Al Aminou Lo",
+        "Primature",
+        "gouvernement"
+      ],
+      "id": "draft_20260606082246_1",
+      "_dedup_key": "b9bf47d84c15d8e8",
+      "status": "pending",
+      "created_at": "2026-06-06T08:22:46.297814+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Nouveau gouvernement : premier Conseil des ministres sous la direction d'Ahmadou Al Aminou Lo",
+      "description": "Le nouveau gouvernement sénégalais a tenu son premier Conseil des ministres le vendredi 5 juin 2026, sous la direction du nouveau Premier ministre Ahmadou Al Aminou Mohamed Lo. Le chef de l'État Bassirou Diomaye Faye a fixé les orientations et le cap du nouveau gouvernement lors de cette séance inaugurale.",
+      "source": "RADIO TELEVISION SENEGALAISE",
+      "source_url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxNTnRwNWNUT0NDR3prUlZ5ZW1hTWtBU2g4d3pUT2FqTVBLOEt2TjEwOUZVQzNDMl9xeGlNVTBmZmF2djdGLXhjR1Rsa3A1WVpJeUJ4U2s5N09NVnVibVdzS1pkZXpsXzd4X2p2LW44MmM3MkhKV1FKZzJCSl9uc0FUR1FrWVdncVR6cHo5S1k4LUZZRnlmXzdGYXlXZ3BvYkM1bkRVUFM4eGtrclJPOG9TWXVFSUZDb3ltNUVvX3p6NldRa3NtTlM2TkpGRDY5OTBpOHFrb3p5UVg",
+      "date": "2026-06-05",
+      "domain": "Gouvernance",
+      "confidence": 0.75,
+      "keywords": [
+        "conseil des ministres",
+        "nouveau gouvernement",
+        "Premier ministre",
+        "Ahmadou Al Aminou Lo",
+        "Diomaye Faye"
+      ],
+      "id": "draft_20260606082246_0",
+      "_dedup_key": "8b4eb5bbb4464ccd",
+      "status": "pending",
+      "created_at": "2026-06-06T08:22:46.297802+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

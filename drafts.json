@@ -1,6 +1,28 @@
 {
-  "last_updated": "2026-06-06T08:22:46.297885+00:00",
+  "last_updated": "2026-06-07T08:42:55.195404+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Premier Conseil des ministres du nouveau gouvernement tenu le 5 juin 2026",
+      "description": "Le nouveau gouvernement a tenu son premier Conseil des ministres le vendredi 5 juin 2026, présidé par le chef de l'État Bassirou Diomaye Faye. Le Président a fixé les orientations et les priorités du nouveau gouvernement en exigeant des résultats rapides. Le communiqué officiel a été publié par l'APS et la Primature.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-05-juin-2026",
+      "date": "2026-06-05",
+      "domain": "Gouvernance",
+      "confidence": 0.75,
+      "keywords": [
+        "Conseil des ministres",
+        "nouveau gouvernement",
+        "Diomaye Faye",
+        "orientations",
+        "résultats"
+      ],
+      "id": "draft_20260607084255_2",
+      "_dedup_key": "2a3dc41132ef1d07",
+      "status": "pending",
+      "created_at": "2026-06-07T08:42:55.195355+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

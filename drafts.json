@@ -1,6 +1,72 @@
 {
-  "last_updated": "2026-06-07T08:42:55.195404+00:00",
+  "last_updated": "2026-06-08T10:13:30.742809+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 5 juin 2026 : communiqué officiel de la Primature",
+      "description": "La Primature a publié le communiqué officiel du Conseil des ministres du 5 juin 2026, premier conseil du nouveau gouvernement. Ce document détaille les décisions et orientations arrêtées lors de cette réunion présidée par le chef de l'État. Il constitue un document de référence pour le suivi de l'action gouvernementale.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-05-juin-2026",
+      "date": "2026-06-05",
+      "domain": "Gouvernance",
+      "confidence": 0.75,
+      "keywords": [
+        "conseil des ministres",
+        "communiqué",
+        "Primature",
+        "gouvernement",
+        "orientations"
+      ],
+      "id": "draft_20260608101330_2",
+      "_dedup_key": "12ee7243012a07d2",
+      "status": "pending",
+      "created_at": "2026-06-08T10:13:30.742777+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Nomination d'un nouveau Premier ministre malgré l'engagement de suppression du poste",
+      "description": "Ahmadou Al Aminou Mohamed Lo a été nommé Premier ministre du Sénégal, comme l'indique la publication officielle de la Primature. Cette nomination intervient alors que la promesse de campagne du président Faye prévoyait la suppression du poste de Premier ministre et son remplacement par un Vice-Président. La composition du nouveau gouvernement a été officiellement publiée par la Primature.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-06-05",
+      "domain": "Institutions",
+      "confidence": 0.9,
+      "keywords": [
+        "Premier ministre",
+        "nomination",
+        "gouvernement",
+        "Primature",
+        "Vice-Président"
+      ],
+      "id": "draft_20260608101330_1",
+      "_dedup_key": "e70e3d04371aefeb",
+      "status": "pending",
+      "created_at": "2026-06-08T10:13:30.742771+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Premier Conseil des ministres du nouveau gouvernement Ahmadou Al Aminou Lo",
+      "description": "Le nouveau gouvernement sénégalais dirigé par le Premier ministre Ahmadou Al Aminou Mohamed Lo a tenu son premier Conseil des ministres le vendredi 5 juin 2026. Le président Bassirou Diomaye Faye a défini les priorités gouvernementales dans le cadre de l'Agenda national de Transformation. Le chef de l'État a exigé des résultats rapides de son nouveau gouvernement.",
+      "source": "APS - Agence de Presse Sénégalaise",
+      "source_url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOSV9LWkgzTVNmTFFnSW5nVUdHM1l5cnN1Q0NkdjdHVW9xZDliODZxQnpKekdvX0E3dzdBQ290SXFnb0c3VE83VlZxM2ZXZzNXUHllY3RONEdEVk1wRXVWREpyV2VpZFVXTVY3b1NwSmNzLVYtV0NJTUlRWUJZc3BHS1pSUU0",
+      "date": "2026-06-05",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "conseil des ministres",
+        "nouveau gouvernement",
+        "Premier ministre",
+        "Diomaye Faye",
+        "agenda transformation"
+      ],
+      "id": "draft_20260608101330_0",
+      "_dedup_key": "d3e10ac87e0e2301",
+      "status": "pending",
+      "created_at": "2026-06-08T10:13:30.742755+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

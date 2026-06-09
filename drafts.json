@@ -1,6 +1,48 @@
 {
-  "last_updated": "2026-06-08T10:13:30.742809+00:00",
+  "last_updated": "2026-06-09T08:56:32.651720+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Composition du nouveau gouvernement sénégalais publiée par la Primature",
+      "description": "La Primature a publié la composition officielle du nouveau gouvernement sénégalais. Ce remaniement intervient dans un contexte de tensions politiques entre le président Diomaye Faye et son ancien Premier ministre Ousmane Sonko. La nouvelle équipe gouvernementale est appelée à mettre en œuvre l'Agenda national de Transformation.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/composition-du-nouveau-gouvernement-3",
+      "date": "2026-06-05",
+      "domain": "Gouvernance",
+      "confidence": 0.72,
+      "keywords": [
+        "gouvernement",
+        "composition",
+        "remaniement",
+        "Primature"
+      ],
+      "id": "draft_20260609085632_2",
+      "_dedup_key": "917bd5556722d622",
+      "status": "pending",
+      "created_at": "2026-06-09T08:56:32.651681+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Premier Conseil des ministres du nouveau gouvernement – 5 juin 2026",
+      "description": "Le nouveau gouvernement dirigé par le Premier ministre Ahmadou Al Aminou Mohamed Lo a tenu son premier Conseil des ministres le 5 juin 2026. Le président Bassirou Diomaye Faye y a défini les priorités gouvernementales dans le cadre de l'Agenda national de Transformation. Ce conseil marque la reprise formelle des travaux exécutifs après la composition du nouveau gouvernement.",
+      "source": "APS - Agence de Presse Sénégalaise",
+      "source_url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOSV9LWkgzTVNmTFFnSW5nVUdHM1l5cnN1Q0NkdjdHVW9xZDliODZxQnpKekdvX0E3dzdBQ290SXFnb0c3VE83VlZxM2ZXZzNXUHllY3RONEdEVk1wRXVWREpyV2VpZFVXTVY3b1NwSmNzLVYtV0NJTUlRWUJZc3BHS1pSUU0",
+      "date": "2026-06-05",
+      "domain": "Gouvernance",
+      "confidence": 0.75,
+      "keywords": [
+        "conseil des ministres",
+        "nouveau gouvernement",
+        "Agenda national de Transformation",
+        "Diomaye Faye"
+      ],
+      "id": "draft_20260609085632_0",
+      "_dedup_key": "d6bd818a6d886ee4",
+      "status": "pending",
+      "created_at": "2026-06-09T08:56:32.651662+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

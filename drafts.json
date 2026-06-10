@@ -1,6 +1,92 @@
 {
-  "last_updated": "2026-06-09T08:56:32.651720+00:00",
+  "last_updated": "2026-06-10T09:37:59.641172+00:00",
   "drafts": [
+    {
+      "type": "promise_update",
+      "promise_id": "promise_35",
+      "title": "Le Khalife des Kounta interpelle Diomaye Faye sur un litige foncier à Ndiassane",
+      "description": "Le Khalife des Kounta a interpellé le Président Bassirou Diomaye Faye sur un vaste litige foncier impliquant la localité de Ndiassane. Cet épisode illustre les tensions persistantes autour de la question foncière au Sénégal, dans un contexte où une réforme foncière et des baux ruraux avait été promise. La résolution de ce type de différend dépendra en partie de l'avancement de la réforme foncière engagée.",
+      "source": "Leral.net",
+      "source_url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPX2UxU0VsV1lmLXdnUUcwbkc4RGtoX3VVbGpOZm12UDNmMnRaeC1lcFZ1djZFUXlWanQyY1VSbGo4d3dLRzVXNzBrZFNkRjdsTEMzTENLOHZoZzJNNGlhVTlZOWYwUVdCTkpFUEI2ekF2Z0ZabTVBY3Y0ZXk2ckE4S1BOTWJhMnZQOTdRZlJ5Q2I5cW9GNnhnOHVyYnhPRm1rckhPOVFCck8xdlZPM1NTYVQwdUdZcXBSbUE",
+      "date": "2026-06-09",
+      "domain": "Agriculture",
+      "confidence": 0.65,
+      "keywords": [
+        "foncier",
+        "litige",
+        "réforme foncière",
+        "Ndiassane",
+        "Kounta",
+        "Diomaye"
+      ],
+      "id": "draft_20260610093759_6",
+      "_dedup_key": "e98379d6a0d9ddba",
+      "status": "pending",
+      "created_at": "2026-06-10T09:37:59.641137+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 5 juin 2026 : décisions gouvernementales",
+      "description": "Le Conseil des ministres du 5 juin 2026 s'est tenu sous la présidence du Chef de l'État, donnant lieu à des délibérations et décisions gouvernementales publiées par la Primature. Ce conseil constitue un cadre régulier de pilotage des politiques publiques et de suivi des réformes en cours. Le compte-rendu officiel est disponible sur le site de la Primature.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-05-juin-2026",
+      "date": "2026-06-05",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "Conseil des ministres",
+        "gouvernement",
+        "politiques publiques",
+        "décisions"
+      ],
+      "id": "draft_20260610093759_3",
+      "_dedup_key": "682096a75af6abc4",
+      "status": "pending",
+      "created_at": "2026-06-10T09:37:59.641125+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Composition du nouveau gouvernement sénégalais",
+      "description": "Un nouveau gouvernement a été formé au Sénégal, dont la composition a été publiée par la Primature. Cette recomposition gouvernementale intervient après la nomination d'un nouveau Premier Ministre. Les détails sur les portefeuilles ministériels et les priorités du nouveau cabinet sont disponibles sur le site de la Primature.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/composition-du-nouveau-gouvernement-3",
+      "date": "2026-06-10",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "gouvernement",
+        "composition",
+        "ministres",
+        "Primature"
+      ],
+      "id": "draft_20260610093759_2",
+      "_dedup_key": "04f15e20b5cc73ee",
+      "status": "pending",
+      "created_at": "2026-06-10T09:37:59.641118+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Maintien du poste de Premier Ministre : la promesse de suppression non tenue",
+      "description": "La nomination d'un nouveau Premier Ministre, Ahmadou Al Aminou Mohamed Lo, confirme que le poste n'a pas été supprimé comme promis lors de la campagne présidentielle. L'engagement de remplacer ce poste par celui de Vice-Président ne semble pas avoir été mis en œuvre à ce jour. Cette situation soulève des questions sur le calendrier de la réforme institutionnelle promise.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-06-10",
+      "domain": "Institutions",
+      "confidence": 0.9,
+      "keywords": [
+        "Premier Ministre",
+        "Vice-Président",
+        "réforme institutionnelle",
+        "promesse"
+      ],
+      "id": "draft_20260610093759_1",
+      "_dedup_key": "fefdb9e3eb8f076f",
+      "status": "pending",
+      "created_at": "2026-06-10T09:37:59.641101+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

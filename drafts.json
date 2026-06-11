@@ -1,6 +1,48 @@
 {
-  "last_updated": "2026-06-10T09:37:59.641172+00:00",
+  "last_updated": "2026-06-11T10:01:05.199855+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 5 juin 2026",
+      "description": "Le gouvernement sénégalais a tenu un Conseil des ministres le 5 juin 2026, dont le compte rendu a été publié par la Primature. Ce conseil constitue un acte régulier de gouvernance et peut avoir abordé des sujets liés aux engagements présidentiels en cours. Le détail des délibérations est accessible sur le site officiel de la Primature.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-05-juin-2026",
+      "date": "2026-06-05",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "conseil des ministres",
+        "gouvernance",
+        "délibérations",
+        "Primature"
+      ],
+      "id": "draft_20260611100105_3",
+      "_dedup_key": "1e610bf535663641",
+      "status": "pending",
+      "created_at": "2026-06-11T10:01:05.199818+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Nomination d'Ahmadou Al Aminou Mohamed Lo au poste de Premier Ministre",
+      "description": "La Primature a annoncé la nomination d'Ahmadou Al Aminou Mohamed Lo en tant que nouveau Premier Ministre du Sénégal. Cette nomination intervient dans un contexte de recomposition gouvernementale et de tensions au sein de la coalition au pouvoir. Une passation de service au Secrétariat général du Gouvernement a également eu lieu.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-06-11",
+      "domain": "Institutions",
+      "confidence": 0.85,
+      "keywords": [
+        "Premier Ministre",
+        "nomination",
+        "gouvernement",
+        "Primature"
+      ],
+      "id": "draft_20260611100105_0",
+      "_dedup_key": "276c1013ab72daa5",
+      "status": "pending",
+      "created_at": "2026-06-11T10:01:05.199797+00:00"
+    },
     {
       "type": "promise_update",
       "promise_id": "promise_35",

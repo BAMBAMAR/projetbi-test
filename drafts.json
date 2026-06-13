@@ -1,6 +1,72 @@
 {
-  "last_updated": "2026-06-12T09:53:52.188502+00:00",
+  "last_updated": "2026-06-13T08:44:31.801339+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil interministériel sur les infrastructures tenu par le gouvernement",
+      "description": "Un conseil interministériel dédié aux infrastructures a été organisé sous l'égide du Premier ministre. Ce type de réunion de coordination sectorielle traduit une action gouvernementale concrète dans le domaine des infrastructures publiques. Les décisions issues de ce conseil pourraient avoir des implications sur plusieurs engagements liés à l'hydraulique, à l'industrie et à l'aménagement du territoire.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-interministeriel-sur-les-infrastructures",
+      "date": "2026-06-13",
+      "domain": "Infrastructures",
+      "confidence": 0.65,
+      "keywords": [
+        "conseil interministériel",
+        "infrastructures",
+        "gouvernement",
+        "aménagement",
+        "coordination"
+      ],
+      "id": "draft_20260613084431_4",
+      "_dedup_key": "3651e27baadf24f5",
+      "status": "pending",
+      "created_at": "2026-06-13T08:44:31.801293+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Maintien du poste de Premier ministre malgré la promesse de suppression",
+      "description": "La nomination d'Ahmadou Al Aminou LO comme nouveau Premier ministre du Sénégal confirme que le poste de Premier ministre est toujours en vigueur. Cela contraste avec l'engagement présidentiel de supprimer ce poste et d'instaurer un Vice-Président à la place. La composition d'un nouveau gouvernement autour de ce Premier ministre souligne que cette réforme institutionnelle n'a pas encore été mise en œuvre.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/composition-du-nouveau-gouvernement-3",
+      "date": "2026-06-13",
+      "domain": "Institutions",
+      "confidence": 0.9,
+      "keywords": [
+        "Premier ministre",
+        "Vice-Président",
+        "réforme institutionnelle",
+        "gouvernement",
+        "suppression"
+      ],
+      "id": "draft_20260613084431_2",
+      "_dedup_key": "b05e1013ae13b71d",
+      "status": "pending",
+      "created_at": "2026-06-13T08:44:31.801285+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Tensions entre Diomaye Faye et le FMI sur les finances publiques",
+      "description": "Le président Bassirou Diomaye Faye serait confronté à un nouveau désaccord avec le Fonds Monétaire International selon SeneNews. Cette situation intervient dans un contexte de gestion des finances publiques et de réformes économiques engagées par le gouvernement. Les détails précis du différend ne sont pas spécifiés dans le résumé disponible.",
+      "source": "SeneNews",
+      "source_url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPUzZwd3JiSVBpSDlxUUZ2WTl2VS10aE9JMjlhSVpuak1kRDI3MDBCWGR5Z1lTdUdaLWhaTjIyMnZxNkoyWDg3aXF0ZFZPMG03UU4yaWIxUldYbGhVckJEbXBZOHFmcm5ZUW5obWRZdDBQWU5QdlZCdHJKVjhJSmVfSTNabXVXRFdqZVZwbGRwN0lMMHE3Q3RfRjBLcTNlMkgtbGZEVjlGeXc4MnJWemt1M0pKOG15NXNNSWZkc1IyMTk",
+      "date": "2026-06-11",
+      "domain": "Économie / Finances publiques",
+      "confidence": 0.7,
+      "keywords": [
+        "FMI",
+        "finances publiques",
+        "Diomaye Faye",
+        "désaccord",
+        "réformes économiques"
+      ],
+      "id": "draft_20260613084431_0",
+      "_dedup_key": "3e8b18a3b7d21b36",
+      "status": "pending",
+      "created_at": "2026-06-13T08:44:31.801266+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

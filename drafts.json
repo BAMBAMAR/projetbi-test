@@ -1,6 +1,89 @@
 {
-  "last_updated": "2026-06-13T08:44:31.801339+00:00",
+  "last_updated": "2026-06-14T09:00:04.521232+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Bilan de deux ans d'Ousmane Sonko à la Primature : 11 visites et 50 accords",
+      "description": "À l'occasion du départ d'Ousmane Sonko de la Primature, un bilan de ses deux années à ce poste a été établi, faisant état de 11 visites officielles et de 50 accords signés. Ce bilan constitue un élément de référence pour évaluer l'action gouvernementale sur la période écoulée. Il intervient dans un contexte de rupture annoncée entre Sonko et le président Diomaye Faye.",
+      "source": "SeneNews",
+      "source_url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxNOEU4bHlMS2gyM1UxeFYxUlpWMjN2M3pDQ0N6bHVBTV8zOTNaT1NqRmRlcVgtTjFUU1NySC1SZ3VUaFBDcFVXeHpaVVhnZnpHeldkSDNRVks0bzFwVF91WTUwTkozcEhpQmtydkVqeEJQV1E4SkxZeWtsbmFWZzZ6QUU1TzVsSFJuN3J3TjVILXBCSWFobnF1ZENHTktQRzdkVW96elZSWFRkRFRXME5HOVR6VVlWYjBVVlkxbGt0aUs3R0FZOEdUUVN6UWlOMWNEUFVtdGRsX09SY254VFZFLVgyZFo",
+      "date": "2026-06-12",
+      "domain": "Gouvernance",
+      "confidence": 0.75,
+      "keywords": [
+        "Sonko",
+        "Primature",
+        "bilan",
+        "accords",
+        "deux ans"
+      ],
+      "id": "draft_20260614090004_5",
+      "_dedup_key": "b236507f93c47080",
+      "status": "pending",
+      "created_at": "2026-06-14T09:00:04.521194+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 5 juin 2026 : délibérations gouvernementales",
+      "description": "Le conseil des ministres s'est réuni le 5 juin 2026 sous la présidence du chef de l'État. Les délibérations portent sur les orientations gouvernementales en cours. Ce conseil intervient dans un contexte de transition à la Primature.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-05-juin-2026",
+      "date": "2026-06-05",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "conseil des ministres",
+        "gouvernement",
+        "délibérations"
+      ],
+      "id": "draft_20260614090004_4",
+      "_dedup_key": "ee6501502ad6f437",
+      "status": "pending",
+      "created_at": "2026-06-14T09:00:04.521183+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Proposition de révision constitutionnelle transmise au président Diomaye Faye",
+      "description": "Une proposition de révision constitutionnelle a été transmise au président Bassirou Diomaye Faye par l'Assemblée nationale. Cette démarche intervient dans un contexte de démission de deux vice-présidents de l'Assemblée nationale. Le contenu précis de la proposition n'est pas encore détaillé publiquement.",
+      "source": "Senego.com",
+      "source_url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxNZk5PeGRpcFFoeUlMUWFHcC02SEZ6dnEybUdvQ3lSX04tTGFMa2dNVWR2bTdVcjVEdVE2bkh4Rkk0blpqbWVTcVJkWllaZWNRNUJYZ0hnVzVYbVdicmNFaWRJZjBBQUgxU0FyclJqc2wyT3VlZmdYeVRYNklZRjRkUk5hTF9LMXFyV0cyU1BhZDV6VGpNYVhSZUxscVozRjJUWUcyekkxSFNhdWRXU3hCVldmcExPS1dxSU5mek0tWjBpa01STm50ZzNQT2ZDSExJNmx0RnpBZFRKSWFjdXFzMU9RWExyY2I4NUhBOWFB",
+      "date": "2026-06-13",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "révision constitutionnelle",
+        "Assemblée nationale",
+        "Diomaye Faye"
+      ],
+      "id": "draft_20260614090004_2",
+      "_dedup_key": "d159e232e582d898",
+      "status": "pending",
+      "created_at": "2026-06-14T09:00:04.521173+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Nouveau Premier ministre : Ahmadou Al Aminou Lo nommé à la Primature",
+      "description": "Ahmadou Al Aminou Mohamed Lo a été nommé nouveau Premier ministre du Sénégal, en remplacement d'Ousmane Sonko. Une passation de service a eu lieu au Secrétariat général du Gouvernement, et la composition du nouveau gouvernement a été publiée. Ce changement intervient dans un contexte de recomposition politique majeure.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-06-14",
+      "domain": "Institutions",
+      "confidence": 0.9,
+      "keywords": [
+        "Premier ministre",
+        "nomination",
+        "gouvernement",
+        "Ahmadou Al Aminou Lo"
+      ],
+      "id": "draft_20260614090004_0",
+      "_dedup_key": "934fc05493a1a753",
+      "status": "pending",
+      "created_at": "2026-06-14T09:00:04.521149+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

@@ -1,6 +1,74 @@
 {
-  "last_updated": "2026-06-14T09:00:04.521232+00:00",
+  "last_updated": "2026-06-15T11:41:29.823767+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil présidentiel sénégalo-gambien : succès salué par Diomaye et Barrow",
+      "description": "Les Présidents Bassirou Diomaye Faye et Adama Barrow ont salué le succès du Conseil présidentiel sénégalo-gambien. Cette instance bilatérale vise à renforcer la coopération entre les deux pays voisins sur des enjeux communs. La rencontre s'inscrit dans le cadre de la diplomatie régionale active du gouvernement sénégalais.",
+      "source": "APS - Agence de Presse Sénégalaise",
+      "source_url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOMmI5TU5JMWx2dHRiN3pvTFF1MVc1ZThITU9pY01YVUFqT2pkQU43Nm5fUVZlOGNnYm41VmdyeGZXY0JrUU14cXUtRWp5akdyQjg3aV9WUm8wUXdFV2dZaGVDMnlydUhTNHphbGlKVXZBdG5Gcno1U1I5bFhQS0g3cEV1ZEozdlFzMlRicHZyVFlyN1N0M3RrUW9pdFdhRVVvNUZDWGFzenFXbnFSdXZZU093",
+      "date": "2026-06-12",
+      "domain": "Diplomatie",
+      "confidence": 0.65,
+      "keywords": [
+        "Sénégal",
+        "Gambie",
+        "Diomaye Faye",
+        "Barrow",
+        "conseil présidentiel",
+        "coopération"
+      ],
+      "id": "draft_20260615114129_7",
+      "_dedup_key": "4d9f72b3138bd260",
+      "status": "pending",
+      "created_at": "2026-06-15T11:41:29.823735+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Nouveau problème entre le Sénégal et le FMI sous Diomaye Faye",
+      "description": "Le Président Bassirou Diomaye Faye ferait face à un nouveau différend avec le Fonds Monétaire International. Cette tension intervient dans un contexte de gestion des finances publiques et d'exécution des engagements économiques du gouvernement. Les détails précis de ce désaccord ne sont pas disponibles dans le résumé fourni.",
+      "source": "SeneNews",
+      "source_url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPUzZwd3JiSVBpSDlxUUZ2WTl2VS10aE9JMjlhSVpuak1kRDI3MDBCWGR5Z1lTdUdaLWhaTjIyMnZxNkoyWDg3aXF0ZFZPMG03UU4yaWIxUldYbGhVckJEbXBZOHFmcm5ZUW5obWRZdDBQWU5QdlZCdHJKVjhJSmVfSTNabXVXRFdqZVZwbGRwN0lMMHE3Q3RfRjBLcTNlMkgtbGZEVjlGeXc4MnJWemt1M0pKOG15NXNNSWZkc1IyMTk",
+      "date": "2026-06-11",
+      "domain": "Finances",
+      "confidence": 0.65,
+      "keywords": [
+        "FMI",
+        "Diomaye Faye",
+        "finances publiques",
+        "dette",
+        "accord"
+      ],
+      "id": "draft_20260615114129_6",
+      "_dedup_key": "148304bc4c2a7920",
+      "status": "pending",
+      "created_at": "2026-06-15T11:41:29.823720+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Nomination d'Ahmadou Al Aminou Lo comme nouveau Premier Ministre",
+      "description": "Ahmadou Al Aminou Mohamed Lo a été nommé nouveau Premier Ministre du Sénégal, suite au départ d'Ousmane Sonko. Une passation de service a eu lieu au Secrétariat général du Gouvernement et un nouveau gouvernement a été composé. Ce changement intervient dans un contexte de rupture politique entre Sonko et le Président Diomaye Faye.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-06-15",
+      "domain": "Institutions",
+      "confidence": 0.85,
+      "keywords": [
+        "Premier Ministre",
+        "nomination",
+        "gouvernement",
+        "Ahmadou Al Aminou Lo",
+        "Sonko",
+        "Diomaye"
+      ],
+      "id": "draft_20260615114129_0",
+      "_dedup_key": "31e2907d426a1c0d",
+      "status": "pending",
+      "created_at": "2026-06-15T11:41:29.823685+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

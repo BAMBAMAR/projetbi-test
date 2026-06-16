@@ -1,6 +1,118 @@
 {
-  "last_updated": "2026-06-15T11:41:29.823767+00:00",
+  "last_updated": "2026-06-16T10:50:56.603173+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Bilan diplomatique de deux ans d'Ousmane Sonko à la Primature : 11 visites et 50 accords",
+      "description": "SeneNews publie un bilan des deux années d'Ousmane Sonko à la tête du gouvernement, faisant état de 11 visites officielles et de 50 accords signés. Ce bilan couvre la période d'exercice de Sonko en tant que Premier ministre avant sa destitution. Il constitue un élément de référence pour évaluer l'action gouvernementale sur la période mars 2024 – juin 2026.",
+      "source": "SeneNews",
+      "source_url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxNOEU4bHlMS2gyM1UxeFYxUlpWMjN2M3pDQ0N6bHVBTV8zOTNaT1NqRmRlcVgtTjFUU1NySC1SZ3VUaFBDcFVXeHpaVVhnZnpHeldkSDNRVks0bzFwVF91WTUwTkozcEhpQmtydkVqeEJQV1E0SkxZeWtsbmFWZzZ6QUU1TzVsSFJuN3J3TjVILXBCSWFobnF1ZENHTktQRzdkVW96elZSWFRkRFRXME5HOVR6VVlWYjBVVlkxbGt0aUs3R0FZOEdUUVN6UWlOMWNEUFVtdGRsX09SY254VFZFLVgyZFo?oc=5",
+      "date": "2026-06-12",
+      "domain": "Gouvernance / Diplomatie",
+      "confidence": 0.72,
+      "keywords": [
+        "Sonko",
+        "Primature",
+        "bilan",
+        "accords",
+        "diplomatie",
+        "deux ans"
+      ],
+      "id": "draft_20260616105056_7",
+      "_dedup_key": "745e6878763b4190",
+      "status": "pending",
+      "created_at": "2026-06-16T10:50:56.603142+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "\"Jubbanti AN 2\" : bilan de deux ans de gouvernement entre réformes et relance",
+      "description": "La Primature publie un document intitulé \"Jubbanti AN 2\" dressant un bilan de deux années de gouvernement, articulé autour des réformes, de la rationalisation et de la relance économique. Ce document de bilan officiel constitue une source privilégiée pour évaluer l'état d'avancement des engagements présidentiels après deux ans d'exercice du pouvoir. Il est susceptible de couvrir plusieurs domaines de promesses suivies par ProjetBI.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/jubbanti-2-entre-reformes-rationalisation-et-relance",
+      "date": "2026-06-16",
+      "domain": "Gouvernance / Bilan",
+      "confidence": 0.85,
+      "keywords": [
+        "Jubbanti",
+        "bilan",
+        "réformes",
+        "relance",
+        "deux ans",
+        "gouvernement"
+      ],
+      "id": "draft_20260616105056_6",
+      "_dedup_key": "f0b4863af72e3491",
+      "status": "pending",
+      "created_at": "2026-06-16T10:50:56.603128+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 20 mai 2026 : décisions et orientations",
+      "description": "La Primature publie le compte rendu du Conseil des ministres du 20 mai 2026, document officiel retraçant les décisions du gouvernement. Ce compte rendu peut contenir des éléments de suivi de réformes sectorielles engagées par le pouvoir exécutif. Il constitue une source primaire pour le suivi des engagements présidentiels.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-20-mai-2026",
+      "date": "2026-06-16",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "Conseil des ministres",
+        "décisions",
+        "gouvernement",
+        "mai 2026",
+        "réformes"
+      ],
+      "id": "draft_20260616105056_4",
+      "_dedup_key": "4a518fcd8ba8404d",
+      "status": "pending",
+      "created_at": "2026-06-16T10:50:56.603119+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Composition du nouveau gouvernement après la rupture Sonko-Faye",
+      "description": "La Primature publie la composition du nouveau gouvernement formé suite à la nomination d'Ahmadou Al Aminou Lo comme Premier ministre. Cette recomposition gouvernementale fait suite à la crise politique entre Ousmane Sonko et le président Bassirou Diomaye Faye. La nouvelle équipe gouvernementale sera chargée de poursuivre la mise en œuvre du programme de réformes présidentielles.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/composition-du-nouveau-gouvernement-3",
+      "date": "2026-06-16",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "gouvernement",
+        "composition",
+        "remaniement",
+        "ministres",
+        "Primature"
+      ],
+      "id": "draft_20260616105056_2",
+      "_dedup_key": "1c8dae536a54efa8",
+      "status": "pending",
+      "created_at": "2026-06-16T10:50:56.603109+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Blocages entre le Sénégal et le FMI : analyse des scénarios de sortie de crise",
+      "description": "Jeune Afrique publie une analyse en cinq questions sur les tensions entre le Sénégal et le FMI, mettant en lumière les blocages actuels dans les négociations. Cet article intervient dans un contexte de contraintes budgétaires fortes qui conditionnent la mise en œuvre des réformes économiques et sociales du gouvernement. Les scénarios de sortie de crise évoqués ont des implications directes sur la capacité de financement des engagements présidentiels.",
+      "source": "Jeune Afrique",
+      "source_url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxQcHgyZTMyQnF0QVlLcXBESUItS2llbFNNWHkxV1Q0WFBGSU9zVmdVYm5vb1I4ZWNnZTJCUTZqcHp5M2FOYzYwN0FMU3VfTE40c0FjMFIzdVhkMmdXNWk2UTJmY0hEeVptdkdSd25aRlpLTGhidUVXRTBYNkRydEN1V3Bsa3NidjJCV1NTT2NSdnEzNk9jdmlhNEtwUFNWWTZRNERBMWtwV25ROXJjbzdjX0ZlQkFSMmVYVWhKTTBfcXJUSlRFajdVZ1FvdkpkSVlTSjFUN181YXBMSkt4Wi10cQ?oc=5",
+      "date": "2026-06-16",
+      "domain": "Économie / Finances publiques",
+      "confidence": 0.72,
+      "keywords": [
+        "FMI",
+        "budget",
+        "dette",
+        "réformes",
+        "financement"
+      ],
+      "id": "draft_20260616105056_0",
+      "_dedup_key": "efa10489a5621855",
+      "status": "pending",
+      "created_at": "2026-06-16T10:50:56.603091+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

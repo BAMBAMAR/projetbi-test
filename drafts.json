@@ -1,6 +1,71 @@
 {
-  "last_updated": "2026-06-17T10:23:17.948775+00:00",
+  "last_updated": "2026-06-18T10:02:29.080777+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Parlement sénégalais : renforcement des capacités pour le suivi-évaluation des lois",
+      "description": "Le Parlement sénégalais s'est engagé dans une démarche de renforcement des capacités liée au suivi et à l'évaluation des lois. Cette initiative vise à améliorer le contrôle de l'action gouvernementale par les parlementaires. Elle s'inscrit dans un effort plus large de modernisation du fonctionnement institutionnel.",
+      "source": "APS — Agence de Presse Sénégalaise",
+      "source_url": "https://aps.sn/suivi-evaluation-des-lois-le-parlement-senegalais-mise-sur-le-renforcement-des-capacites/?utm_source=rss&utm_medium=rss&utm_campaign=suivi-evaluation-des-lois-le-parlement-senegalais-mise-sur-le-renforcement-des-capacites",
+      "date": "2026-06-16",
+      "domain": "Institutions",
+      "confidence": 0.65,
+      "keywords": [
+        "Parlement",
+        "suivi-évaluation",
+        "lois",
+        "capacités",
+        "contrôle"
+      ],
+      "id": "draft_20260618100229_5",
+      "_dedup_key": "aa6b4fbd6203fa30",
+      "status": "pending",
+      "created_at": "2026-06-18T10:02:29.080737+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Nomination d'un nouveau Premier Ministre : Al Aminou LO",
+      "description": "Ahmadou Al Aminou Mohamed LO a été nommé nouveau Premier Ministre du Sénégal, selon une publication de la Primature. Cette information confirme le maintien du poste de Premier Ministre, en contradiction avec la promesse de le supprimer au profit d'un poste de Vice-Président. Le Premier Ministre a par ailleurs été impliqué dans le suivi des Jeux Olympiques de la Jeunesse (JOJ) Dakar 2026.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-06-18",
+      "domain": "Institutions",
+      "confidence": 0.85,
+      "keywords": [
+        "Premier Ministre",
+        "Al Aminou LO",
+        "nomination",
+        "institutions",
+        "Vice-Président"
+      ],
+      "id": "draft_20260618100229_3",
+      "_dedup_key": "f8a4f0a0aeab1131",
+      "status": "pending",
+      "created_at": "2026-06-18T10:02:29.080726+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 17 juin 2026",
+      "description": "Le gouvernement sénégalais a tenu un conseil des ministres le 17 juin 2026. Les décisions et orientations issues de cette réunion sont publiées par la Primature. Ce conseil constitue un cadre de suivi de l'action gouvernementale.",
+      "source": "Gouvernement du Sénégal / Primature",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-17-juin-2026",
+      "date": "2026-06-17",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "conseil des ministres",
+        "gouvernement",
+        "Primature",
+        "juin 2026"
+      ],
+      "id": "draft_20260618100229_0",
+      "_dedup_key": "a3baccc1af9c7e5b",
+      "status": "pending",
+      "created_at": "2026-06-18T10:02:29.080702+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

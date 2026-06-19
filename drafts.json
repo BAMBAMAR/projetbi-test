@@ -1,6 +1,113 @@
 {
-  "last_updated": "2026-06-18T10:02:29.080777+00:00",
+  "last_updated": "2026-06-19T10:09:38.830902+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Le Parlement sénégalais renforce ses capacités en suivi-évaluation des lois",
+      "description": "Le Parlement sénégalais a entrepris un effort de renforcement des capacités en matière de suivi et d'évaluation des lois. Cette initiative vise à améliorer le contrôle parlementaire de l'application effective des textes législatifs adoptés. Elle s'inscrit dans une démarche de consolidation des institutions démocratiques du pays.",
+      "source": "APS — Agence de Presse Sénégalaise",
+      "source_url": "https://aps.sn/suivi-evaluation-des-lois-le-parlement-senegalais-mise-sur-le-renforcement-des-capacites/",
+      "date": "2026-06-16",
+      "domain": "Institutions",
+      "confidence": 0.65,
+      "keywords": [
+        "Parlement",
+        "suivi-évaluation",
+        "lois",
+        "renforcement capacités",
+        "contrôle parlementaire"
+      ],
+      "id": "draft_20260619100938_4",
+      "_dedup_key": "16243cdbf7797e08",
+      "status": "pending",
+      "created_at": "2026-06-19T10:09:38.830867+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Décret présidentiel : plusieurs nominations effectuées par Diomaye Faye",
+      "description": "Le président Bassirou Diomaye Faye a procédé à plusieurs nominations par décret. Ces nominations concernent différents postes au sein de l'appareil d'État sénégalais. Les détails des postes pourvus sont disponibles dans le communiqué officiel relayé par SeneNews.",
+      "source": "SeneNews",
+      "source_url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQblN2UXlNSGoybDBTbUVZNlliUllEczAyMi1QWXYyZG9OZGNkcW5zUHNMdGUzYjhwSVVyWmJlYUVRQVVNSlVOZ1plNzh0V1BDMUlEQm5jWXN4MFdXUVRBZ0J2N3NrTjhVSjhvcC12Y1lmaEhfc1RKSEJCX3ZuM0JKcmlwTVpWNDFfTTAtYi1hRG1HTFRvamJwcWJ1Z3FLZkgtZDhHWkl6RmhuT0JCY01UZUlPb0F2ZG9CR1N1eFlR?oc=5",
+      "date": "2026-06-17",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "décret",
+        "nominations",
+        "Diomaye Faye",
+        "gouvernement"
+      ],
+      "id": "draft_20260619100938_3",
+      "_dedup_key": "d06481fc9490d561",
+      "status": "pending",
+      "created_at": "2026-06-19T10:09:38.830859+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Un nouveau Premier Ministre nommé malgré la promesse de suppression du poste",
+      "description": "La Primature a annoncé la nomination d'Ahmadou Al Aminou LO au poste de Premier Ministre du Sénégal, confirmant le maintien de cette fonction. Cette nomination intervient alors que le programme présidentiel prévoyait la suppression du poste de Premier Ministre au profit d'un Vice-Président. Plusieurs actualités de la Primature font référence aux activités de ce nouveau chef du gouvernement.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-06-19",
+      "domain": "Institutions",
+      "confidence": 0.85,
+      "keywords": [
+        "Premier Ministre",
+        "Al Aminou LO",
+        "nomination",
+        "Primature",
+        "suppression poste"
+      ],
+      "id": "draft_20260619100938_2",
+      "_dedup_key": "dc3f46b30af11fb3",
+      "status": "pending",
+      "created_at": "2026-06-19T10:09:38.830852+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 17 juin 2026",
+      "description": "Le gouvernement sénégalais a tenu son conseil des ministres le 17 juin 2026. Ce conseil a abordé plusieurs sujets relevant de l'action gouvernementale en cours. Le compte rendu officiel a été publié sur le site de la Primature.",
+      "source": "Gouvernement du Sénégal",
+      "source_url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPZ3VDaHBRczlMY0RfYjNsaGZmV2FxbEo3MWRnM2tRSGY0SGdick40Ti1BWWUzQmkzZEEtVUdpLTJNYVA0OUllMENqOEFIZDFibDFEWVFEVGYwQl9kLU1QbUxIZ3FPQ0twSTlnVFpiT0JNSnVEQ0p2dWlQTjZMT0l5VzNfcVpUUzZhNkNTMGZfMA?oc=5",
+      "date": "2026-06-17",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "conseil des ministres",
+        "gouvernement",
+        "Sénégal",
+        "juin 2026"
+      ],
+      "id": "draft_20260619100938_1",
+      "_dedup_key": "47b9ecd157dd20db",
+      "status": "pending",
+      "created_at": "2026-06-19T10:09:38.830847+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_40",
+      "title": "Diomaye Faye exige une meilleure régulation de la pêche industrielle",
+      "description": "Le président Bassirou Diomaye Faye a exprimé sa volonté de mieux réguler le secteur de la pêche industrielle au Sénégal. Cette sortie s'inscrit dans la continuité des engagements pris sur la protection des eaux territoriales et la préservation des ressources halieutiques. Les modalités concrètes de cette régulation renforcée restent à préciser.",
+      "source": "SANSLIMITESN.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNYTdfY2FrcXk4R0tqN1FaT0tJbkFLNkUyUUtkZnZCcGVBRTVYeUpGcmdFUkZVQmVpb0tod1FweVBmaWlDYTlxY2prQ2Jxb05DR3JZTC1LWGd4VnpwMFNYYmZQNlFZaEt6Wl9DOTFCMzdnMWVDeHpWT3ZidGQ1MnlwU2lDY3ZvVFllNHdHMkNaWHRyRVg1UktMRF9jSlBicjRlR2JVVlBiYmVyZ2Vpa1NlSGZGQUZDVDNOTkg5ZWZB?oc=5",
+      "date": "2026-06-18",
+      "domain": "Pêche",
+      "confidence": 0.78,
+      "keywords": [
+        "pêche industrielle",
+        "régulation",
+        "Diomaye Faye",
+        "ressources halieutiques"
+      ],
+      "id": "draft_20260619100938_0",
+      "_dedup_key": "ba1ab2e45d3753a6",
+      "status": "pending",
+      "created_at": "2026-06-19T10:09:38.830834+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

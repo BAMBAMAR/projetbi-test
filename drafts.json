@@ -1,6 +1,94 @@
 {
-  "last_updated": "2026-06-19T10:09:38.830902+00:00",
+  "last_updated": "2026-06-20T08:39:01.359350+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Lancement des travaux de la nouvelle gare de Sébikotane par le Président Diomaye Faye",
+      "description": "Le Président Bassirou Diomaye Faye a procédé le 20 juin 2026 au lancement officiel des travaux de construction de la nouvelle gare de Sébikotane. Ce projet d'infrastructure s'inscrit dans la politique de développement du réseau de transport et de désenclavement du territoire national. Il témoigne de la poursuite des investissements publics dans les infrastructures de transport.",
+      "source": "pressafrik.com",
+      "source_url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxOTkI0NFdhVkYzbl9peE1rOG9XekktU255b3pNZEJpbzhPZ3BOdVBuRGliSk1BOHZBWHRwc2pucTJ1ZHdKenZ0X3FVZzlIUmphQWotc0ppRGZqd1JkX0ctY1dWRWJzMy1EUUtXWmF0djhSbG5mZlhvLUFXRjJlRjY5QnMxLWplZThJMGw0d3lMV3pFdFoxbWNLWFhlSkdCRGFaUG1UdjhSZm5NYVFUZS1aR3BfYTFJTV95d0FPemw1QVBZVEUyN0pWd0hySlVpVUh4M085b1ZOaUNERlpjTkdQMDk0QWViQQ?oc=5",
+      "date": "2026-06-19",
+      "domain": "Industrie",
+      "confidence": 0.65,
+      "keywords": [
+        "gare",
+        "Sébikotane",
+        "travaux",
+        "infrastructures",
+        "transport",
+        "Diomaye Faye"
+      ],
+      "id": "draft_20260620083901_5",
+      "_dedup_key": "eeac2ebb5947232b",
+      "status": "pending",
+      "created_at": "2026-06-20T08:39:01.359313+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Suivi-évaluation des lois : le Parlement sénégalais renforce ses capacités",
+      "description": "Le Parlement sénégalais a engagé un processus de renforcement des capacités en matière de suivi et d'évaluation des lois. Cette initiative vise à améliorer le contrôle parlementaire de l'application de la législation en vigueur. Elle s'inscrit dans une démarche de modernisation du travail législatif.",
+      "source": "APS — Agence de Presse Sénégalaise",
+      "source_url": "https://aps.sn/suivi-evaluation-des-lois-le-parlement-senegalais-mise-sur-le-renforcement-des-capacites/",
+      "date": "2026-06-16",
+      "domain": "Institutions",
+      "confidence": 0.65,
+      "keywords": [
+        "Parlement",
+        "suivi-évaluation",
+        "lois",
+        "renforcement des capacités",
+        "législatif"
+      ],
+      "id": "draft_20260620083901_3",
+      "_dedup_key": "8ad751160aea8c33",
+      "status": "pending",
+      "created_at": "2026-06-20T08:39:01.359299+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Un Premier ministre en exercice malgré la promesse de suppression du poste",
+      "description": "La Primature a publié plusieurs actualités faisant état de l'activité d'Ahmadou Al Aminou LO en tant que Premier ministre du Sénégal, nommé après une passation de service. La promesse de campagne de Bassirou Diomaye Faye prévoyait la suppression du poste de Premier ministre au profit d'un Vice-Président. La persistance du poste de Premier ministre indique que cette réforme institutionnelle n'a pas encore été mise en œuvre.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-06-20",
+      "domain": "Institutions",
+      "confidence": 0.85,
+      "keywords": [
+        "Premier ministre",
+        "Al Aminou LO",
+        "Primature",
+        "suppression",
+        "Vice-Président"
+      ],
+      "id": "draft_20260620083901_2",
+      "_dedup_key": "7e72db6988d4208a",
+      "status": "pending",
+      "created_at": "2026-06-20T08:39:01.359268+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Relance économique : nouvelles instructions de Diomaye Faye pour le secteur privé",
+      "description": "Le Président Bassirou Diomaye Faye a donné de nouvelles instructions en matière de relance économique en faveur du secteur privé. Ces orientations s'inscrivent dans le cadre de la politique économique du gouvernement. Les détails des mesures annoncées concernent le renforcement du partenariat public-privé.",
+      "source": "Seneweb",
+      "source_url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxNQlZ1RVlLbUFxanJtVmV1bVU5RFRpWnRvY0JFelVwcnljT0YxX2N5dE0wWGpuckJTZjVpeXRkOHBrZTltdkVnc0lxa3hVNjZub1hxbDZxYzFkUzhJQjFFcHQ5em5IZFJoVjVkR3BzSHk5VmVQYnAtWGJvMkVseHMydndsMVFEdXJYVzVvM296MXdRaTc5aXFGUEZzdWZIZFBGWlEwUGswcV9qQTdUT3J2aXczQmhMNE45VG5SUEtPQWF1YUtDSkxkUUdLdW9ieXNwdHk1ckhVUlZFYTVIOUdLa093?oc=5",
+      "date": "2026-06-17",
+      "domain": "Économie",
+      "confidence": 0.7,
+      "keywords": [
+        "relance économique",
+        "secteur privé",
+        "Diomaye Faye",
+        "instructions"
+      ],
+      "id": "draft_20260620083901_1",
+      "_dedup_key": "86ef6c47715d6e7d",
+      "status": "pending",
+      "created_at": "2026-06-20T08:39:01.359252+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

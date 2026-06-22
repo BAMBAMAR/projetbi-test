@@ -1,6 +1,72 @@
 {
-  "last_updated": "2026-06-21T09:34:27.474838+00:00",
+  "last_updated": "2026-06-22T11:30:22.515025+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Dakar donne des gages à la communauté internationale avant les JOJ 2026",
+      "description": "Le Sénégal multiplie les signaux positifs à destination de la communauté internationale en amont des Jeux Olympiques de la Jeunesse (JOJ) prévus à Dakar en 2026. Le Premier ministre Al Aminou LO a également fait le point sur l'état d'avancement des diligences liées à l'organisation des JOJ. Ces actions s'inscrivent dans le cadre de la préparation de cet événement sportif international majeur.",
+      "source": "SenePlus / Primature — Actualités",
+      "source_url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNRXAyNlpBYVBPbl93SXlKY09pSms2cDlYSjNxanZPdWZNWVRYOWo5NjJrc0dnLXJTYU5YcWZsWldMT1NDdTZEY20zMnZ6TlJKei1vSDB4Vloza3FXeWZteU1pbFF6YkRwT3lmN3ItVUEwVWdzc1I1ZnpPZXU4MlZLN1I4bzVqMy1ZczRRZW50LWFabzZqT1JCYkp6OXladw",
+      "date": "2026-06-21",
+      "domain": "Sport / Relations internationales",
+      "confidence": 0.65,
+      "keywords": [
+        "JOJ",
+        "Dakar 2026",
+        "Jeux Olympiques Jeunesse",
+        "communauté internationale",
+        "Al Aminou LO"
+      ],
+      "id": "draft_20260622113022_6",
+      "_dedup_key": "d6fdce180c8a59b4",
+      "status": "pending",
+      "created_at": "2026-06-22T11:30:22.514975+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye en visite officielle en Allemagne : coopération, énergie et technologie",
+      "description": "Le président Bassirou Diomaye Faye a entamé une visite officielle de 48 heures en Allemagne axée sur la coopération économique, l'énergie et la technologie. Cette visite s'inscrit dans le cadre du renforcement des partenariats stratégiques du Sénégal avec des pays développés. Des discussions ont porté notamment sur les secteurs énergétique et technologique.",
+      "source": "Xalima / pressafrik.com",
+      "source_url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNNktNTlhfaDZpc0FMOENVOHYwYnBLSmFMb3J6UmZZQUtJaTk4LUlZZmRaR0RqSk1XUWhjWHd1alE5bFhQYlFjTE5SLXVhVURWNFpOb1FJNGZiVDYxa1drLWl0TEVrWmRQdld2djY2c2VvaDFkbkIxdjBNblVaNHV6Z1pJV2lBeFdndVk3NHJqdFhyV3l2TUk0bmZ0enoxMV9nNW93Rk14eTB5eW02czFYLWtOSTk",
+      "date": "2026-06-21",
+      "domain": "Diplomatie / Énergie / Technologie",
+      "confidence": 0.7,
+      "keywords": [
+        "Allemagne",
+        "coopération",
+        "énergie",
+        "technologie",
+        "diplomatie"
+      ],
+      "id": "draft_20260622113022_1",
+      "_dedup_key": "e307a15b39fc0a76",
+      "status": "pending",
+      "created_at": "2026-06-22T11:30:22.514957+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Visite du président Faye sur le nouveau tronçon du TER de Dakar",
+      "description": "Le président Bassirou Diomaye Faye a effectué une visite sur le nouveau tronçon du Train Express Régional (TER) de Dakar. Cette visite revêt une dimension politique notable selon RFI. Le président a également annoncé une ambition d'extension du TER vers Tambacounda.",
+      "source": "RFI / Senego.com",
+      "source_url": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxQWlJGR2tuWDExdFdISXJ1WmFFUjg0R3hvUGxvZUxveE9UbF91dlZKVzJqZnFPa05TSjlDakJYZ3BuMmxIb2xYYkJKM3JVX21EdEItb2k0QWtUU3RXSXZBVGdPa0xOVHd5eU1yVmZPRFNmMko3VW8xX1FhSEYtbVdKdXV3OTdEQ25xNnhFdVZhY3o5SmZMUjRmb3VabGxBMmZ6SGczQTk2UnpydlNZbXRkZ1MwanJqVzRBNWNWUHVua09TSFB5eFZISzQ0N1M4X2lCdFpMOS16S2lmeGh2UTNzVVoySkV5MVQyaWJYSkh6amFiNk1pX2phci00aWVQbUk",
+      "date": "2026-06-21",
+      "domain": "Infrastructures / Transport",
+      "confidence": 0.7,
+      "keywords": [
+        "TER",
+        "Dakar",
+        "Tambacounda",
+        "transport ferroviaire",
+        "infrastructures"
+      ],
+      "id": "draft_20260622113022_0",
+      "_dedup_key": "da1012001b5546a6",
+      "status": "pending",
+      "created_at": "2026-06-22T11:30:22.514938+00:00"
+    },
     {
       "type": "promise_update",
       "promise_id": "promise_50",

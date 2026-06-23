@@ -1,6 +1,136 @@
 {
-  "last_updated": "2026-06-22T11:30:22.515025+00:00",
+  "last_updated": "2026-06-23T08:55:42.986584+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye à Berlin pour renforcer le partenariat sénégalo-allemand",
+      "description": "Le président Bassirou Diomaye Faye a effectué une visite officielle en Allemagne afin de renforcer les relations bilatérales sénégalo-allemandes. Il a notamment vanté les atouts économiques du Sénégal auprès d'investisseurs allemands. Cette visite s'inscrit dans une stratégie d'attraction des investissements directs étrangers.",
+      "source": "APS - Agence de Presse Sénégalaise",
+      "source_url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOR0pacTVydEtia3Mxd0hNSzhtTTV4VkUyRVhrR0JlQVUyVUgxYXdUNGIta29STUZRWEhkT2h2cFA4MjE3Wi1zVTV4MnBodW9qNWh0NUhiRnZZT1RQT2d3UTRFcldkY1g4VkNFSE9JdG5Ud0stMVROc0ozOEMyNkZQWjNwdlNOR3hwUWZzUVNpNkhEbVR1MzJxd1AtdTdiN1gycXdB?oc=5",
+      "date": "2026-06-22",
+      "domain": "Économie",
+      "confidence": 0.7,
+      "keywords": [
+        "Allemagne",
+        "investissements",
+        "partenariat",
+        "diplomatie économique",
+        "Diomaye Faye"
+      ],
+      "id": "draft_20260623085542_8",
+      "_dedup_key": "253ef5a066fe31a9",
+      "status": "pending",
+      "created_at": "2026-06-23T08:55:42.986555+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Sonko avertit Diomaye sur la révision constitutionnelle : le poste de Premier Ministre en jeu",
+      "description": "Selon SANSLIMITESN, Ousmane Sonko aurait adressé un avertissement au président Diomaye Faye concernant la révision de la Constitution. Cet article intervient dans le contexte de la promesse de suppression du poste de Premier Ministre et d'instauration d'un Vice-Président, une réforme constitutionnelle majeure. La tension entre les deux figures de Pastef autour de ce sujet constitutionnel est notable, d'autant que la Primature est toujours active avec un nouveau Premier Ministre nommé.",
+      "source": "SANSLIMITESN.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQS2Jydm5tbTlMU0l1ZnV1R0lpcVdpZW9DU1U0d004QUNNU280UWpwaUVjUjhaaVgzeGZIUmtMY1Mxd3htSEtPb21nOWVYdWpIaG92ckZjWm1tbFdFOWhPRXE4MFdYUmQ0cjUyeDQ2eGFvVnZnRzBTNGYzaUM4eDU4c0xPMDVIblM5dW5RN25MUXNtZENjSHJWbg?oc=5",
+      "date": "2026-06-22",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "révision constitution",
+        "Premier Ministre",
+        "Vice-Président",
+        "Sonko",
+        "Diomaye"
+      ],
+      "id": "draft_20260623085542_4",
+      "_dedup_key": "7c913ad2d321d505",
+      "status": "pending",
+      "created_at": "2026-06-23T08:55:42.986535+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_56",
+      "title": "Partenariat avec Siemens Healthineers pour les hôpitaux universitaires interrégionaux",
+      "description": "Le président Diomaye Faye a rencontré Siemens Healthineers à Berlin dans l'objectif déclaré de mieux équiper les hôpitaux sénégalais. Cette démarche peut être reliée à l'engagement de création d'hôpitaux universitaires interrégionaux aux standards modernes. Aucun accord formel n'a encore été annoncé à ce stade.",
+      "source": "pressafrik.com",
+      "source_url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxPRlZET2ltOGVtNUxUWC0wa2x5S1JwdVJxeUlWd3VHSEs3N2EyV2ZyVThpN01iM2VPZ0RXUVFJVHRjOXQ1aWxyUGdmMzNpOHBkeHhfR2Q5X1BFTzNacEdQOXRRT0QwcEJlV3BEX2ZmOUZ5al9wVGpfZUp6akxOQjJuZ2dTUWV6cXdrR3hBRm5JTTN6b2lZNWJnNF9NMll3bTBqc1I0dVRnelBXcmQ4U1dBeEZrVWJSV0l2OUJqeHVqREM3VkFZZktSanEtUGNyZDd3WV9uUFJPWkVlVno2MmtKb0k4Yw?oc=5",
+      "date": "2026-06-22",
+      "domain": "Santé",
+      "confidence": 0.62,
+      "keywords": [
+        "hôpitaux universitaires",
+        "équipements médicaux",
+        "Siemens",
+        "partenariat"
+      ],
+      "id": "draft_20260623085542_3",
+      "_dedup_key": "502f27c89e1a6c8d",
+      "status": "pending",
+      "created_at": "2026-06-23T08:55:42.986528+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye rencontre Siemens Healthineers pour équiper les hôpitaux sénégalais",
+      "description": "En marge de sa visite officielle en Allemagne, le président Bassirou Diomaye Faye a accordé une audience à Siemens Healthineers, entreprise spécialisée en équipements médicaux. L'objectif affiché est de renforcer l'équipement des hôpitaux sénégalais. Cette démarche s'inscrit dans la politique de modernisation du système de santé.",
+      "source": "pressafrik.com",
+      "source_url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxPRlZET2ltOGVtNUxUWC0wa2x5S1JwdVJxeUlWd3VHSEs3N2EyV2ZyVThpN01iM2VPZ0RXUVFJVHRjOXQ1aWxyUGdmMzNpOHBkeHhfR2Q5X1BFTzNacEdQOXRRT0QwcEJlV3BEX2ZmOUZ5al9wVGpfZUp6akxOQjJuZ2dTUWV6cXdrR3hBRm5JTTN6b2lZNWJnNF9NMll3bTBqc1I0dVRnelBXcmQ4U1dBeEZrVWJSV0l2OUJqeHVqREM3VkFZZktSanEtUGNyZDd3WV9uUFJPWkVlVno2MmtKb0k4Yw?oc=5",
+      "date": "2026-06-22",
+      "domain": "Santé",
+      "confidence": 0.72,
+      "keywords": [
+        "hôpitaux",
+        "Siemens Healthineers",
+        "équipements médicaux",
+        "Allemagne",
+        "santé"
+      ],
+      "id": "draft_20260623085542_2",
+      "_dedup_key": "e002e14b3fc3a027",
+      "status": "pending",
+      "created_at": "2026-06-23T08:55:42.986521+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Visite de Diomaye Faye sur le nouveau tronçon du TER de Dakar",
+      "description": "Le président Bassirou Diomaye Faye a effectué une visite sur le nouveau tronçon du Train Express Régional (TER) de Dakar. Cette visite s'inscrit dans le cadre du suivi des grands projets d'infrastructure de transport urbain. RFI qualifie cette visite de « très politique » dans un contexte de bilan gouvernemental.",
+      "source": "RFI",
+      "source_url": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxQWlJGR2tuWDExdFdISXJ1WmFFUjg0R3hvUGxvZUxveE9UbF91dlZKVzJqZnFPa05TSjlDakJYZ3BuMmxIb2xYYkJKM3JVX21EdEItb2k0QWtUU3RXSXZBVGdPa0xOVHd5eU1yVmZPRFNmMko3VW8xX1FhSEYtbVdKdXV3OTdEQ25xNnhFdVZhY3o5SmZMUjRmb3VabGxBMmZ6SGczQTk2UnpydlNZbXRkZ1MwanJqVzRBNWNWUHVua09TSFB5eFZISzQ0N1M4X2lCdFpMOS16S2lmeGh2UTNzVVoySkV5MVQyaWJYSkh6amFiNk1pX2phci00aWVQbUk?oc=5",
+      "date": "2026-06-21",
+      "domain": "Infrastructures",
+      "confidence": 0.7,
+      "keywords": [
+        "TER",
+        "Dakar",
+        "transport",
+        "infrastructure",
+        "Diomaye Faye"
+      ],
+      "id": "draft_20260623085542_1",
+      "_dedup_key": "806e40aeafbcfa7b",
+      "status": "pending",
+      "created_at": "2026-06-23T08:55:42.986512+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Mission du FMI sur la dette du Sénégal",
+      "description": "Une mission du FMI a rendu ses conclusions sur la situation de la dette publique sénégalaise. Ce rapport s'inscrit dans le contexte du suivi macroéconomique du pays et de la gestion des finances publiques. Les détails de la mission concernent la trajectoire budgétaire et les engagements de consolidation fiscale.",
+      "source": "Jeune Afrique",
+      "source_url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQb2xrU0Y5NWtSVnlLU0xKVENpQ2JwTm9yaXNFcXFHS3BVZVhUTVB6T09ocmtvUlZYd0wzUFRjT1laNTZvWXVoWDRTRTg0QWptLXBsRmZNNE40WVJfNFZyUHRwVWlIOGQ1cFZlWDgwd1h6TEVWOHNzTDhmaGN0T1EtNmVmeWQ1a3NtVXMwVUt6WERtWnoySXZPUFFXdlVwYkVpd243NURIR0k5RFktQk9pT0hLZHB0Q3dN?oc=5",
+      "date": "2026-06-22",
+      "domain": "Finances",
+      "confidence": 0.7,
+      "keywords": [
+        "FMI",
+        "dette",
+        "finances publiques",
+        "Sénégal"
+      ],
+      "id": "draft_20260623085542_0",
+      "_dedup_key": "ff90822b56b4e061",
+      "status": "pending",
+      "created_at": "2026-06-23T08:55:42.986495+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

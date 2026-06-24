@@ -1,6 +1,51 @@
 {
-  "last_updated": "2026-06-23T08:55:42.986584+00:00",
+  "last_updated": "2026-06-24T08:50:46.680610+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Sénégal – Allemagne : partenariat stratégique et accords économiques signés à Berlin",
+      "description": "Le président Bassirou Diomaye Faye a effectué une visite de travail en Allemagne au cours de laquelle des accords ont été signés avec le chancelier Friedrich Merz. La visite était centrée sur la coopération économique et la diversification du partenariat entre Dakar et Berlin. Le président a mis en avant les opportunités d'investissement au Sénégal auprès des acteurs allemands.",
+      "source": "DAKARACTU.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxNTmFUeXBPakg1X25FTlhrUlRadk9hbUVmUWhRdnQ2cjJVejFNX09UWFRNX0Frc2ZrUER6el9LMXNjWTloOE8yMXBvNE9HZFhBckxJT0huZ3JNS0E0THV0QnBndWdfZUF6RVB4MWs5RDVEcTlQQ2FvZ2FIYWZPMmppNUxJTDU0dkFJb0o2cnRVSEFHckJTblVrU2dxWGEtSDZuZEVuOHVmQTN3OGRzMTgwazlPaURwVUlFR212ZFZfZXBLWmx6Q3NRQm1OU3NrQWJFOWFuZC11UVQ1NUVVSFN6MTdtcG1XdHk4",
+      "date": "2026-06-23",
+      "domain": "Économie",
+      "confidence": 0.7,
+      "keywords": [
+        "Allemagne",
+        "partenariat",
+        "accords",
+        "investissement",
+        "diplomatie économique",
+        "Berlin"
+      ],
+      "id": "draft_20260624085046_5",
+      "_dedup_key": "ddd1996c7f021cf7",
+      "status": "pending",
+      "created_at": "2026-06-24T08:50:46.680568+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Nouveau gouvernement formé : PASTEF boycotte mais des membres entrent au cabinet",
+      "description": "Un nouveau gouvernement a été constitué au Sénégal dans un contexte politique tendu. Selon Senego, le parti PASTEF observe un boycott officiel mais certains de ses membres et alliés intègrent néanmoins le gouvernement. Cette situation reflète les tensions politiques actuelles autour de la recomposition de l'exécutif.",
+      "source": "Senego.com",
+      "source_url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxPSHJzNmZBZFNiTUhCbS1lNEQ2dTAzOXV6bkhNVGJIeWlKNHlfY0h6WENock5BZ0FKVWEzc3E2ekY1Z19RV2Z5SVlkb1ZzYjQ2aENiNUNVLV8wcUVSdTNNNGwwWlUtTW9jT3ZmVEx0WFVYU2NkcTM0bThvOTNWc1YzejJLR0VReGJBQXAzZkpZR2Y2ZUVMT0dhZHNxR1UxU19wRXZYQm15dkxRTVZvSXdsS1Z4WDE1U0o1RHN3QVliVjV5bllaRk5z",
+      "date": "2026-06-23",
+      "domain": "Institutions",
+      "confidence": 0.7,
+      "keywords": [
+        "gouvernement",
+        "PASTEF",
+        "composition",
+        "boycott",
+        "cabinet"
+      ],
+      "id": "draft_20260624085046_1",
+      "_dedup_key": "f0e78ec99635610f",
+      "status": "pending",
+      "created_at": "2026-06-24T08:50:46.680543+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

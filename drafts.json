@@ -1,6 +1,134 @@
 {
-  "last_updated": "2026-06-24T08:50:46.680610+00:00",
+  "last_updated": "2026-06-25T08:49:04.610023+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 05 juin 2026 tenu à la Primature",
+      "description": "Un Conseil des ministres s'est tenu le 5 juin 2026, selon la Primature. Comme pour les autres conseils, les délibérations précises ne sont pas détaillées dans le résumé disponible. Ces séances peuvent inclure des arbitrages liés aux réformes institutionnelles, économiques ou sociales promises lors de la campagne présidentielle.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-05-juin-2026",
+      "date": "2026-06-25",
+      "domain": "Gouvernance",
+      "confidence": 0.65,
+      "keywords": [
+        "conseil des ministres",
+        "gouvernement",
+        "Primature",
+        "décisions"
+      ],
+      "id": "draft_20260625084904_6",
+      "_dedup_key": "d27e3a12aa987db8",
+      "status": "pending",
+      "created_at": "2026-06-25T08:49:04.609979+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 17 juin 2026 tenu à la Primature",
+      "description": "Un Conseil des ministres s'est tenu le 17 juin 2026, selon la publication officielle de la Primature. Les détails des décisions prises lors de ce conseil ne sont pas disponibles dans le résumé fourni. Ce type de réunion constitue un cadre institutionnel dans lequel peuvent être examinées et validées des mesures liées aux promesses présidentielles.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-17-juin-2026",
+      "date": "2026-06-25",
+      "domain": "Gouvernance",
+      "confidence": 0.65,
+      "keywords": [
+        "conseil des ministres",
+        "gouvernement",
+        "Primature",
+        "décisions"
+      ],
+      "id": "draft_20260625084904_5",
+      "_dedup_key": "3aad17bb34ed55a4",
+      "status": "pending",
+      "created_at": "2026-06-25T08:49:04.609973+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye signe neuf accords stratégiques lors de sa visite officielle en Allemagne",
+      "description": "Le président Bassirou Diomaye Faye a conclu neuf accords stratégiques lors de sa visite officielle en Allemagne, selon SenePlus et RFI. La visite était principalement axée sur les questions économiques, avec notamment un plaidoyer pour un soutien accru au Sahel. Ces accords pourraient avoir des implications sur les engagements présidentiels en matière de développement économique et industriel.",
+      "source": "SenePlus",
+      "source_url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPdmhFZGdRYTNTNnlVRm5rejVEQ1dZakdjY1dlX2dJOGI3MVdxTlVQYi1sbGNkRWxOX0U3Z0ZtSWJmdExLazJKTDRaWUhVWE5DQkVTdlNNRlJTZDdGa1Bmd2NNczg4X2F6QjRGUW9GcWl6cnZkaDhpZGFxZ2NhQ0l3a3pRbEVGZ25rY1JHZUt3RG1QUURvRHVQdg",
+      "date": "2026-06-24",
+      "domain": "Économie",
+      "confidence": 0.7,
+      "keywords": [
+        "Allemagne",
+        "accords",
+        "diplomatie économique",
+        "Sahel",
+        "partenariat"
+      ],
+      "id": "draft_20260625084904_4",
+      "_dedup_key": "b10f7bec7c03a420",
+      "status": "pending",
+      "created_at": "2026-06-25T08:49:04.609968+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_3",
+      "title": "Ousmane Sonko oppose sa résistance à la réforme constitutionnelle de Diomaye Faye",
+      "description": "Selon SeneNews, Ousmane Sonko aurait fermé la porte au président Bassirou Diomaye Faye concernant la réforme constitutionnelle envisagée. Cette opposition interne au camp présidentiel constitue un obstacle potentiel à la mise en œuvre des engagements institutionnels du président, notamment la transformation du Conseil Constitutionnel en Cour Constitutionnelle. La situation illustre les tensions politiques autour du calendrier réformateur.",
+      "source": "SeneNews",
+      "source_url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQU2YwYm1IRTlFWHhIMXJsRmo1T01KcVo2MlI4MWNabHlrZWQyQ1k4OVMxaG9ZNm5SZ1lVdFJVS0ZBRnBSenZneGRxeFlMMlVKTWkwTUNQMUc1V1NMZldZSGRHQkZINVFmODRoNUtQbGQ4SDBOMUhWMUQwc0NrbHRDMGFfalVsZXFIMGczaWtXN3MtcXBUUkJPbjhSbXNjSDAyOEEzVzRodG5YMzJMZ2s1ZUlxank2QkR3ZHN3U2xPWU9fanIwSmY1ZC1XZFBxU1E",
+      "date": "2026-06-25",
+      "domain": "Institutions",
+      "confidence": 0.72,
+      "keywords": [
+        "réforme constitutionnelle",
+        "Sonko",
+        "Diomaye",
+        "blocage",
+        "institutions"
+      ],
+      "id": "draft_20260625084904_3",
+      "_dedup_key": "c0d2951c16913985",
+      "status": "pending",
+      "created_at": "2026-06-25T08:49:04.609960+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_3",
+      "title": "Serigne Ndiaye défend les réformes institutionnelles de la coalition Diomaye Président",
+      "description": "Le représentant de la coalition Diomaye Président, Serigne Ndiaye, a pris la parole pour défendre les réformes institutionnelles en cours et rappeler que toute transformation majeure nécessite l'accord du chef de l'État. Cette déclaration intervient dans un contexte de débat sur le calendrier et la portée des réformes constitutionnelles promises. Elle suggère que des réformes institutionnelles, potentiellement incluant la transformation du Conseil Constitutionnel, sont en discussion mais non encore concrétisées.",
+      "source": "DAKARACTU.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxNN0tJTlU0UDNjU0t0c0pYVnBDRjI3aHJ0VzZqMXd3Zjg0c1hXY0p0UzhxQjN1cWJuV1RrYnFNN1p0VWpiMC12Vk1TZTd0cEc2anlndEdiaVhTM2x1UHc3Ujl0NnB3YlhIY1NiSTZEY0o2cGsxVE1QckRMWF9mTmlxa2xWbjB0dU1qSzRTMlJ1eHQwc1FFWGlMQnVCSXJMWEtmNmgyYjRTdFJicnE2blFmTUhIOG52emJRRXNuMnNmQ0s2V1dkVFpqaVV6UkIxZTlQSC1QYnJxT1o2TWlDSUlORVZnWTlqRDVfYmpZSw",
+      "date": "2026-06-23",
+      "domain": "Institutions",
+      "confidence": 0.7,
+      "keywords": [
+        "réformes institutionnelles",
+        "coalition",
+        "Diomaye Président",
+        "constitution"
+      ],
+      "id": "draft_20260625084904_2",
+      "_dedup_key": "1f0fa5d1d45ae9f1",
+      "status": "pending",
+      "created_at": "2026-06-25T08:49:04.609951+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Un nouveau Premier Ministre nommé au Sénégal : Ahmadou Al Aminou LO",
+      "description": "Ahmadou Al Aminou Mohamed LO a été nommé nouveau Premier Ministre du Sénégal, comme en attestent plusieurs publications officielles de la Primature. Cette nomination intervient alors que la promesse de campagne du président Faye prévoyait la suppression du poste de Premier Ministre au profit d'un Vice-Président. La persistance de ce poste constitue un indicateur de non-réalisation de cet engagement institutionnel.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-06-25",
+      "domain": "Institutions",
+      "confidence": 0.95,
+      "keywords": [
+        "Premier Ministre",
+        "nomination",
+        "Al Aminou LO",
+        "réforme institutionnelle"
+      ],
+      "id": "draft_20260625084904_0",
+      "_dedup_key": "b26497ae92400675",
+      "status": "pending",
+      "created_at": "2026-06-25T08:49:04.609931+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

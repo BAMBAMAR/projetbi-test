@@ -1,6 +1,94 @@
 {
-  "last_updated": "2026-06-25T08:49:04.610023+00:00",
+  "last_updated": "2026-06-26T08:47:09.286477+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 05 juin 2026",
+      "description": "Un Conseil des ministres s'est tenu le 5 juin 2026, dont le compte rendu est disponible sur le site de la Primature. Cette réunion gouvernementale constitue un point de suivi régulier de l'action de l'exécutif sénégalais.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-05-juin-2026",
+      "date": "2026-06-05",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "Conseil des ministres",
+        "gouvernement",
+        "Primature",
+        "juin 2026"
+      ],
+      "id": "draft_20260626084709_5",
+      "_dedup_key": "92d566ae412b7b2a",
+      "status": "pending",
+      "created_at": "2026-06-26T08:47:09.286434+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye signe neuf accords stratégiques lors de sa visite en Allemagne",
+      "description": "Le président Bassirou Diomaye Faye a conclu neuf accords stratégiques lors de sa visite de travail en Allemagne, en présence du chancelier Friedrich Merz. Cette visite vise à consolider le partenariat germano-sénégalais et à plaider pour un soutien accru au Sahel. Ces accords s'inscrivent dans la diplomatie économique du gouvernement sénégalais.",
+      "source": "SenePlus",
+      "source_url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPdmhFZGdRYTNTNnlVRm5rejVEQ1dZakdjY1dlX2dJOGI3MVdxTlVQYi1sbGNkRWxOX0U3Z0ZtSWJmdExLazJKTDRaWUhVWE5DQkVTdlNNRlJTZDdGa1Bmd2NNczg4X2F6QjRGUW9GcWl6cnZkaDhpZGFxZ2NhQ0l3a3pRbEVGZ25rY1JHZUt3RG1QUURvRHVQdg?oc=5",
+      "date": "2026-06-24",
+      "domain": "Diplomatie / Économie",
+      "confidence": 0.7,
+      "keywords": [
+        "Allemagne",
+        "accords",
+        "partenariat",
+        "Diomaye Faye",
+        "Merz",
+        "Sahel"
+      ],
+      "id": "draft_20260626084709_3",
+      "_dedup_key": "8220c271b55be498",
+      "status": "pending",
+      "created_at": "2026-06-26T08:47:09.286427+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_3",
+      "title": "Sonko s'oppose à la réforme constitutionnelle portée par Diomaye Faye",
+      "description": "Ousmane Sonko aurait fermé la porte au président Bassirou Diomaye Faye concernant la réforme constitutionnelle en cours. Cette opposition interne au camp présidentiel constitue un frein notable au processus de révision constitutionnelle, qui inclut notamment la création d'une Cour Constitutionnelle. La situation politique complexifie l'avancement des réformes institutionnelles promises.",
+      "source": "SeneNews",
+      "source_url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQU2YwYm1IRTlFWHhIMXJsRmo1T01KcVo2MlI4MWNabHlrZWQyQ1k4OVMxaG9ZNm5SZ1lVdFJVS0ZBRnBSenZneGRxeFlMMlVKTWkwTUNQMUc1V1NMZldZSGRHQkZINVFmODRoNUtQbGQ4SDBOMUhWMUQwc0NrbHRDMGFfalVsZXFIMGczaWtXN3MtcXBUUkJPbjhSbXNjSDAyOEEzVzRodG5YMzJMZ2s1ZUlxank2QkR3ZHN3U2xPWU9fanIwSmY1ZC1XZFBxU1E?oc=5",
+      "date": "2026-06-25",
+      "domain": "Institutions",
+      "confidence": 0.82,
+      "keywords": [
+        "réforme constitutionnelle",
+        "Sonko",
+        "Diomaye Faye",
+        "opposition",
+        "révision"
+      ],
+      "id": "draft_20260626084709_2",
+      "_dedup_key": "f77433aa879c7f6a",
+      "status": "pending",
+      "created_at": "2026-06-26T08:47:09.286419+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_3",
+      "title": "Révision constitutionnelle : tensions autour de la création de la Cour Constitutionnelle",
+      "description": "Un amendement proposé par Amadou Ba viendrait modifier le projet initial du président Diomaye Faye concernant la transformation du Conseil Constitutionnel en Cour Constitutionnelle. Des divergences apparaissent sur le contenu de la réforme constitutionnelle en cours. Le processus de révision semble rencontrer des obstacles parlementaires et politiques.",
+      "source": "Senego.com",
+      "source_url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxOamN2UUZnZE5hR052TlQ4VEYyenJUX1B2SlVfZVdmN2lMZHFEa1dCenIxZVJNQXl2b3lpTk1KSEhYaHlpcGRDamY2c1RTYnY3Y3BqdDhPamZ4c2xVYW1SM3BzTnNzOUJaTkw2TDY1dUdPLThpZ08zR0ZiNU52SkRSNXg2bnZkQlBURElCNTBMV0xTandkTDl0akd1RGNLbFZDLVphTHc4MEVscVZKRXhLRzg4VXBYZXExUExXZEJwTmlBSHRycGVB?oc=5",
+      "date": "2026-06-25",
+      "domain": "Institutions",
+      "confidence": 0.88,
+      "keywords": [
+        "Cour constitutionnelle",
+        "révision constitutionnelle",
+        "Amadou Ba",
+        "Diomaye Faye",
+        "amendement"
+      ],
+      "id": "draft_20260626084709_0",
+      "_dedup_key": "e02cf4362b1a545c",
+      "status": "pending",
+      "created_at": "2026-06-26T08:47:09.286395+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

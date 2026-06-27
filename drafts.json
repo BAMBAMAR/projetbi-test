@@ -1,6 +1,72 @@
 {
-  "last_updated": "2026-06-26T08:47:09.286477+00:00",
+  "last_updated": "2026-06-27T08:24:26.801457+00:00",
   "drafts": [
+    {
+      "type": "promise_update",
+      "promise_id": "promise_3",
+      "title": "Réforme constitutionnelle bloquée, incluant la Cour Constitutionnelle",
+      "description": "Les tensions rapportées entre le président Diomaye Faye et la majorité parlementaire sur la réforme constitutionnelle impactent l'ensemble des réformes institutionnelles envisagées, dont la transformation du Conseil Constitutionnel en Cour Constitutionnelle. Le blocage politique entre l'exécutif et le parlement freine l'adoption d'un nouveau texte constitutionnel. Aucune avancée législative concrète n'est signalée sur ce point.",
+      "source": "SeneNews",
+      "source_url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQU2YwYm1IRTlFWHhIMXJsRmo1T01KcVo2MlI4MWNabHlrZWQyQ1k4OVMxaG9ZNm5SZ1lVdFJVS0ZBRnBSenZneGRxeFlMMlVKTWkwTUNQMUc1V1NMZldZSGRHQkZINVFmODRoNUtQbGQ0SDBOMUhWMUQwc0NrbHRDMGFfalVsZXFIMGczaWtXN3MtcXBUUkJPbjhSbXNjSDAyOEEzVzRodG5YMzJMZ2s1ZUlxank2QkR3ZHN3U2xPWU9fanIwSmY1ZC1XZFBxU1E",
+      "date": "2026-06-25",
+      "domain": "Institutions",
+      "confidence": 0.65,
+      "keywords": [
+        "réforme constitutionnelle",
+        "Cour Constitutionnelle",
+        "blocage",
+        "parlement",
+        "institutions"
+      ],
+      "id": "draft_20260627082426_2",
+      "_dedup_key": "0699b027a4a8b3b5",
+      "status": "pending",
+      "created_at": "2026-06-27T08:24:26.801392+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_2",
+      "title": "Réforme constitutionnelle : tensions entre Diomaye et la majorité parlementaire",
+      "description": "Un clash est rapporté entre le président Bassirou Diomaye Faye et la majorité parlementaire autour du projet de réforme constitutionnelle, notamment sur la question du statut de chef de parti. Ousmane Sonko, chef de file de la majorité parlementaire, aurait fermé la porte aux propositions du président. Ces tensions bloquent l'avancement des réformes institutionnelles promises, dont la révocabilité du Président.",
+      "source": "Senego.com",
+      "source_url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQRHh6NXZPMlJwWjR2ZlIxLVczeTIwcWFBWG8zUUc1d0tRVmJBMzNoRHNsT1pOeHBKYXN0R0JGTEg5aFhzdGxieTA4VzZlZTVFTmFsdWxEcnBKUjNseExHRGRBYmlrTlhENTJIRHdzWkdJSE9LU0EyTXBLdERkODc1ZnRHaWU0UmktcmZPQmhMSFlmamVnM3lPeG1uOFBKNHZaLU5odkxpRVlEcWlaR3MzZkFDSDI3UUMxcHJCTjJFNGMtRDZCVVRtVnZhWm80emlLc0tF",
+      "date": "2026-06-25",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "réforme constitutionnelle",
+        "Diomaye",
+        "Sonko",
+        "majorité parlementaire",
+        "responsabilité politique"
+      ],
+      "id": "draft_20260627082426_1",
+      "_dedup_key": "a2130a10feaad2fd",
+      "status": "pending",
+      "created_at": "2026-06-27T08:24:26.801384+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Un Premier Ministre toujours en fonction malgré la promesse de suppression du poste",
+      "description": "La primature sénégalaise annonce la nomination d'Ahmadou Al Aminou Mohamed LO comme nouveau Premier Ministre du Sénégal. Cette nomination confirme le maintien du poste de Premier Ministre, en contradiction directe avec la promesse de campagne visant à supprimer ce poste au profit d'un Vice-Président. Un nouveau gouvernement a également été composé sous sa direction.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-06-27",
+      "domain": "Institutions",
+      "confidence": 0.92,
+      "keywords": [
+        "Premier Ministre",
+        "nomination",
+        "Al Aminou LO",
+        "gouvernement",
+        "institutions"
+      ],
+      "id": "draft_20260627082426_0",
+      "_dedup_key": "08828f34319abb43",
+      "status": "pending",
+      "created_at": "2026-06-27T08:24:26.801366+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

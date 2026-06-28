@@ -1,6 +1,72 @@
 {
-  "last_updated": "2026-06-27T08:24:26.801457+00:00",
+  "last_updated": "2026-06-28T08:38:44.506505+00:00",
   "drafts": [
+    {
+      "type": "promise_update",
+      "promise_id": "promise_3",
+      "title": "Révision constitutionnelle : les raisons du revirement de Diomaye Faye selon Daouda Mine",
+      "description": "Daouda Mine analyse les facteurs expliquant le revirement du président Diomaye Faye concernant la révision constitutionnelle. Cet article apporte un éclairage sur les dynamiques politiques qui influencent l'avancement de la réforme institutionnelle, dont la création d'une Cour constitutionnelle. Des tensions internes semblent peser sur le calendrier et la forme de la réforme.",
+      "source": "Seneweb",
+      "source_url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxOSG5BdVFuQUJfWU0ya2ZxdGo3RlkxYUhvN0FxaXdJRVQ5WEgxYm02Zm9OV2JLdmlqQ3VLUWc1R1I1bzdYOTNVX1NMcjBTOG82Sm5WQUpQLUl0QUJPaERkWUtral9GLXg2SmVuM3pwNXpjSklDZVB4WjVxWTBoTGdyZHRuSEJmZGZiWjNLTi05SUpDc3EySVdDa3BQTXhkWnotYUpBOTZnb252cnUwVjBTaWlmNUdINVVwWUZUUXZkTEFCTjB4eFJ1MVRpRXJiY0NMMjIzOWRseV9WdnI1bjdzazFUZ2RrSTg",
+      "date": "2026-06-25",
+      "domain": "Institutions",
+      "confidence": 0.78,
+      "keywords": [
+        "révision constitutionnelle",
+        "revirement",
+        "Diomaye Faye",
+        "réforme",
+        "institutions"
+      ],
+      "id": "draft_20260628083844_2",
+      "_dedup_key": "a5d8ca4e94036acf",
+      "status": "pending",
+      "created_at": "2026-06-28T08:38:44.506460+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_3",
+      "title": "Réforme constitutionnelle : Sonko s'oppose à la démarche de Diomaye Faye",
+      "description": "Ousmane Sonko aurait fermé la porte au président Bassirou Diomaye Faye sur la réforme constitutionnelle en cours. Cette opposition interne au camp au pouvoir intervient dans le contexte du projet de transformation du Conseil Constitutionnel et de révision plus large des institutions. La situation illustre des tensions politiques autour de la conduite de la réforme constitutionnelle.",
+      "source": "SeneNews",
+      "source_url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQU2YwYm1IRTlFWHhIMXJsRmo1T01KcVo2MlI4MWNabHlrZWQyQ1k4OVMxaG9ZNm5SZ1lVdFJVS0ZBRnBSenZneGRxeFlMMlVKTWkwTUNQMUc1V1NMZldZSGRHQkZINVFmODRoNUtQbGQ4SDBOMUhWMUQwc0NrbHRDMGFfalVsZXFIMGczaWtXN3MtcXBUUkJPbjhSbXNjSDAyOEEzVzRodG5YMzJMZ2s1ZUlxank2QkR3ZHN3U2xPWU9fanIwSmY1ZC1XZFBxU1E",
+      "date": "2026-06-25",
+      "domain": "Institutions",
+      "confidence": 0.8,
+      "keywords": [
+        "réforme constitutionnelle",
+        "Sonko",
+        "Diomaye Faye",
+        "révision",
+        "institutions"
+      ],
+      "id": "draft_20260628083844_1",
+      "_dedup_key": "9739cba537cf2002",
+      "status": "pending",
+      "created_at": "2026-06-28T08:38:44.506450+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_3",
+      "title": "Amendement d'Amadou Ba sur la Cour constitutionnelle",
+      "description": "Un amendement introduit par Amadou Ba modifie le projet initial de Diomaye Faye concernant la transformation du Conseil Constitutionnel en Cour Constitutionnelle. Cet amendement suscite des tensions autour de la réforme constitutionnelle en cours. L'article révèle des divergences sur la forme finale que devrait prendre cette réforme institutionnelle.",
+      "source": "Senego.com",
+      "source_url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxOamN2UUZnZE5hR052TlQ4VEYyenJUX1B2SlVfZVdmN2lMZHFEa1dCenIxZVJNQXl2b3lpTk1KSEhYaHlpcGRDamY2c1RTYnY3Y3BqdDhPamZ4c2xVYW1SM3BzTnNzOUJaTkw2TDY1dUdPLThpZ08zR0ZiNU52SkRSNXg2bnZkQlBURElCNTBMV0xTandkTDl0akd1RGNLbFZDLVphTHc4MEVscVZKRXhLRzg4VXBYZXExUExXZEJwTmlBSHRycGVB",
+      "date": "2026-06-25",
+      "domain": "Institutions",
+      "confidence": 0.88,
+      "keywords": [
+        "Cour constitutionnelle",
+        "amendement",
+        "Amadou Ba",
+        "réforme",
+        "Diomaye Faye"
+      ],
+      "id": "draft_20260628083844_0",
+      "_dedup_key": "2cfd4746af200978",
+      "status": "pending",
+      "created_at": "2026-06-28T08:38:44.506431+00:00"
+    },
     {
       "type": "promise_update",
       "promise_id": "promise_3",

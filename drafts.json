@@ -1,6 +1,92 @@
 {
-  "last_updated": "2026-06-28T08:38:44.506505+00:00",
+  "last_updated": "2026-06-29T10:17:38.555983+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Nouveau gouvernement composé sous la direction du Premier Ministre Al Aminou Lo",
+      "description": "La Primature a publié la composition du nouveau gouvernement formé sous la direction du Premier Ministre Ahmadou Al Aminou Lo. Une passation de service a également eu lieu au Secrétariat général du Gouvernement. Ce remaniement intervient dans un contexte de recomposition politique après le départ d'Ousmane Sonko de la Primature.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/composition-du-nouveau-gouvernement-3",
+      "date": "2026-06-29",
+      "domain": "Gouvernance",
+      "confidence": 0.75,
+      "keywords": [
+        "nouveau gouvernement",
+        "composition",
+        "Al Aminou Lo",
+        "Primature",
+        "remaniement"
+      ],
+      "id": "draft_20260629101738_3",
+      "_dedup_key": "2e6e27d6dec54a5d",
+      "status": "pending",
+      "created_at": "2026-06-29T10:17:38.555934+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Un nouveau Premier Ministre nommé : la promesse de suppression du poste toujours en attente",
+      "description": "Ahmadou Al Aminou Mohamed LO a été nommé nouveau Premier Ministre du Sénégal, comme en attestent plusieurs publications de la Primature. Cette nomination confirme le maintien du poste de Premier Ministre, en contradiction avec l'engagement de campagne visant à supprimer cette fonction au profit d'un Vice-Président. La réforme institutionnelle correspondante n'a pas encore été mise en œuvre.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-06-29",
+      "domain": "Institutions",
+      "confidence": 0.9,
+      "keywords": [
+        "Premier Ministre",
+        "Al Aminou Lo",
+        "nomination",
+        "Primature",
+        "réforme institutionnelle"
+      ],
+      "id": "draft_20260629101738_2",
+      "_dedup_key": "910b5f4e9561874c",
+      "status": "pending",
+      "created_at": "2026-06-29T10:17:38.555928+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Aminata Touré évoque un référendum pour défendre les prérogatives du Président",
+      "description": "L'ancienne Première ministre Aminata Touré a évoqué l'option d'un référendum pour préserver les prérogatives du Président de la République dans le cadre des débats autour de la réforme constitutionnelle. Elle accuse des députés de vouloir réduire les pouvoirs du chef de l'État. Cette position illustre les tensions entre l'exécutif et l'Assemblée nationale sur la révision de la Constitution.",
+      "source": "Leral.net",
+      "source_url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxORW5IR3FpcWp6aE0tQnBEY1lIcXJjc0RKbXFPUGdfUFdaUDZ2d1p3d2pSV1M1aDNWZnZOdTlNeXlidFdWLU5WWk51TFNPSUdfSlJJTGNPcmc1TThBSDVZWFl3MjRsUGxUbDlkNkVveXhDODRsSFlXcUJSR3NUczF4TWhTNTNLQkVwa1hsWjBzZ2pnM0dIX2FwbHVFOGJrM3YyUHhrUURZUGhTdTU3QlFVX1hscUNrOXVlb05xWDBfdFZMaUlSZHk2Rkd4WHdWNE12blpjZU1ObEVzMGctbTlLbA",
+      "date": "2026-06-28",
+      "domain": "Institutions",
+      "confidence": 0.7,
+      "keywords": [
+        "référendum",
+        "réforme constitutionnelle",
+        "prérogatives présidentielles",
+        "Aminata Touré"
+      ],
+      "id": "draft_20260629101738_1",
+      "_dedup_key": "55b275ce71fed363",
+      "status": "pending",
+      "created_at": "2026-06-29T10:17:38.555920+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Réforme constitutionnelle : le Conseil national du Laïcat interpelle le Président Faye",
+      "description": "Le Conseil national du Laïcat du Sénégal a adressé une lettre ouverte au Président Bassirou Diomaye Faye au sujet de la réforme constitutionnelle en cours. Cette interpellation intervient dans un contexte de débat sur les prérogatives présidentielles et les équilibres institutionnels. La société civile catholique exprime ainsi ses préoccupations sur les orientations de la révision constitutionnelle.",
+      "source": "pressafrik.com",
+      "source_url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxNWXNaeGVNU2JJbUVsclhuemJOcHIwdERSOERsbHRXWjl5OEEwUGhOd21VczBhcU9ubFM4RXVGMjNOZ2xqMDRLUlMwYUc5aXZFUl8zU1RfWHloMDBTUVhMOGtxMllsQzFiaHdtUWRCbDMySHVVUlVIZG1tLVd6V0JySDlhQmVuWGtMMURMeWdTOWxXV1M3WVZGYU9vanN4U0xaam5GSTVub2MzWF9OSEdVc2xJRmZqbVpsVHl6Q09tRWJlVGRLSl9NWGIwQ21zSnV4XzRkbFlKOVNicHdQSHdBcUJXdHRnREM3azNqR0NR",
+      "date": "2026-06-28",
+      "domain": "Institutions",
+      "confidence": 0.72,
+      "keywords": [
+        "réforme constitutionnelle",
+        "Laïcat",
+        "Diomaye Faye",
+        "lettre ouverte"
+      ],
+      "id": "draft_20260629101738_0",
+      "_dedup_key": "5edd7ea5c2b2fbd6",
+      "status": "pending",
+      "created_at": "2026-06-29T10:17:38.555903+00:00"
+    },
     {
       "type": "promise_update",
       "promise_id": "promise_3",

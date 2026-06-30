@@ -1,6 +1,92 @@
 {
-  "last_updated": "2026-06-29T10:17:38.555983+00:00",
+  "last_updated": "2026-06-30T08:52:52.000100+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 17 juin 2026 : point sur l'activité gouvernementale",
+      "description": "Le gouvernement sénégalais a tenu son Conseil des ministres le 17 juin 2026, selon la Primature. Un conseil interministériel sur les infrastructures a également été organisé dans la même période. Ces réunions témoignent de la continuité de l'action gouvernementale sous le nouveau Premier Ministre.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-17-juin-2026",
+      "date": "2026-06-30",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "Conseil des ministres",
+        "gouvernement",
+        "infrastructures",
+        "conseil interministériel"
+      ],
+      "id": "draft_20260630085251_4",
+      "_dedup_key": "fcc411af57912aad",
+      "status": "pending",
+      "created_at": "2026-06-30T08:52:52.000061+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_3",
+      "title": "Référendum constitutionnel envisagé : transformation du Conseil Constitutionnel en Cour Constitutionnelle potentiellement incluse",
+      "description": "Le projet de réforme constitutionnelle du PASTEF, qui sera soumis à référendum, porte sur plusieurs institutions dont potentiellement le Conseil Constitutionnel. Le Conseil national du Laïcat appelle à la concertation et au consensus avant toute révision constitutionnelle. La BBC et France 24 confirment que le processus référendaire est officiellement enclenché.",
+      "source": "DAKARACTU.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxOZnZidk0tc3VRcG1GRFVPQ3Yzb2JCWEJSUXNWUjBlcVI4M1UwXzNHRjM0RTM2c21aX2NEZmhiOW1Ka19xc2dETkNITThONndtTzM3VVhKMlVqTl9QT3Y5YlJwbzl3TFdwY29iMTZ3Rm1wTHVNZVFqYlB2TU5ZVEV6QzY3ZzBRMHNUaGdlaktDTkhwSGg2UkQxNm5CM3lnRlF3Q0wxdVFoVmd4MVZjdy1TSTJ2RXM4Q2xRRGNMVFFEUlRlZlJvSWU5LWFEdzhzUTY5cEVzNW9tUG50VFBYSUFmVDhCOS0",
+      "date": "2026-06-29",
+      "domain": "Institutions",
+      "confidence": 0.62,
+      "keywords": [
+        "Conseil Constitutionnel",
+        "Cour Constitutionnelle",
+        "réforme constitutionnelle",
+        "référendum"
+      ],
+      "id": "draft_20260630085251_2",
+      "_dedup_key": "6d240a66ef2cf56a",
+      "status": "pending",
+      "created_at": "2026-06-30T08:52:52.000052+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_2",
+      "title": "Réforme constitutionnelle soumise à référendum : la responsabilité politique du Président en débat",
+      "description": "Le projet de réforme constitutionnelle porté par le PASTEF et le Président Diomaye Faye sera soumis à référendum. Plusieurs médias rapportent que ce projet inclut des dispositions relatives à la déclaration de patrimoine et potentiellement à la révocabilité du Président. Des tensions entre Diomaye et Sonko sur les modalités d'adoption de cette réforme ont été signalées.",
+      "source": "BBC",
+      "source_url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE1DTFRac1dzU1RzeWxseG16dzJ1OFpsSC0zVV95NFdWeEFDVjJGMU1nYl9rNlE5RWh5OG4wUW1oZ1YzM2V3QTFHdm5KZ0J5Qzl1U3o1SnFTVzRsOWNzVEHSAWNBVV95cUxQTGlJd1Q0QUVpNU5HR05iWWlIc2VwNHdyU21oQnN4VjJqMlR5VWFvZlUtREtGb09DZ0lZYjRPdjZOb0ZLbWotMlVRVVozNUs3cjlhbzhkMG5tbmtqTnVPRVp3Vm8",
+      "date": "2026-06-29",
+      "domain": "Institutions",
+      "confidence": 0.65,
+      "keywords": [
+        "réforme constitutionnelle",
+        "référendum",
+        "responsabilité",
+        "Président",
+        "PASTEF"
+      ],
+      "id": "draft_20260630085251_1",
+      "_dedup_key": "6b1e9cc9ac4fa5fb",
+      "status": "pending",
+      "created_at": "2026-06-30T08:52:52.000042+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Réforme constitutionnelle : le poste de Premier Ministre toujours en place malgré la promesse de suppression",
+      "description": "Le site de la Primature confirme l'existence et l'activité d'un Premier Ministre (Ahmadou Al Aminou LO), nommé récemment, ce qui contraste avec la promesse de suppression du poste. Un projet de réforme constitutionnelle porté par le PASTEF est en cours et sera soumis à référendum, ce qui pourrait inclure cette réforme institutionnelle.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
+      "date": "2026-06-30",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "Premier Ministre",
+        "réforme constitutionnelle",
+        "Vice-Président",
+        "PASTEF",
+        "référendum"
+      ],
+      "id": "draft_20260630085251_0",
+      "_dedup_key": "7fe306c1512fdede",
+      "status": "pending",
+      "created_at": "2026-06-30T08:52:52.000024+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

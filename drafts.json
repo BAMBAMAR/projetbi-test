@@ -1,6 +1,72 @@
 {
-  "last_updated": "2026-06-30T08:52:52.000100+00:00",
+  "last_updated": "2026-07-01T09:26:04.968983+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Réunion interministérielle sur la campagne agricole 2026/2027",
+      "description": "Une réunion interministérielle a été tenue pour faire le point sur le déroulement de la campagne de production agricole 2026/2027. Cette concertation gouvernementale vise à coordonner les actions des différents ministères impliqués dans le secteur agricole pour la saison en cours.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/reunion-interministerielle-sur-le-deroulement-de-la-campagne-de-production",
+      "date": "2026-07-01",
+      "domain": "Agriculture",
+      "confidence": 0.7,
+      "keywords": [
+        "agriculture",
+        "campagne agricole",
+        "réunion interministérielle",
+        "production",
+        "2026-2027"
+      ],
+      "id": "draft_20260701092604_3",
+      "_dedup_key": "178e93d15be7620c",
+      "status": "pending",
+      "created_at": "2026-07-01T09:26:04.968939+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_8",
+      "title": "Diomaye Faye réaffirme l'indépendance de la justice et appelle les magistrats à ne répondre qu'à la loi",
+      "description": "Le président Bassirou Diomaye Faye a appelé les nouveaux magistrats à servir « la loi et leur conscience », réaffirmant l'importance de l'indépendance de la magistrature vis-à-vis de tout pouvoir politique. Il a également préconisé une formation continue et innovante des magistrats en adéquation avec les évolutions du droit. Ces déclarations s'inscrivent dans le cadre des engagements pris en faveur de l'indépendance du parquet vis-à-vis du ministre de la Justice.",
+      "source": "RTS / Leral.net / APS / pressafrik.com",
+      "source_url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxOeWJuWFFtWDFQTzRNSjlQOVhXbjBqSDBYOUFUQnhxTWhDa0ZoWUtSaTd0TllpeWF6N0hheGV1OWhISXNfeWJJV2NTalk4MUE4eXNfUkFRWWFCSHBuN1c5clpFZmFEWDNwb0dkYUVheDVuV3Bzbng0X29uTlZORDZCTk1qb0ZqbzlUQm95Sm10Nm5fTmRyYWVjaGNQZ3lLVlFELWNCOVhjX3RsR1VsdUUtZXV3d0o0OHo3NkxnLXN4cldyZTRLNTBWcnpkdUdTRXp5VjdwY05vOHE?oc=5",
+      "date": "2026-06-30",
+      "domain": "Justice",
+      "confidence": 0.8,
+      "keywords": [
+        "indépendance justice",
+        "magistrats",
+        "parquet",
+        "Diomaye Faye",
+        "intégrité"
+      ],
+      "id": "draft_20260701092604_2",
+      "_dedup_key": "cfa4b25b98eceb2e",
+      "status": "pending",
+      "created_at": "2026-07-01T09:26:04.968846+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Projet de réforme constitutionnelle soumis à référendum",
+      "description": "Un projet de révision constitutionnelle est au cœur d'un débat politique majeur entre Ousmane Sonko et le président Bassirou Diomaye Faye. Sonko accuse Diomaye de « tripatouillage » et exige une promulgation sans référendum, tandis que France 24 rapporte que le projet sera finalement soumis à référendum. Le Conseil national du Laïcat appelle à privilégier le consensus et la concertation.",
+      "source": "SenePlus / RFI / Jeune Afrique / France 24",
+      "source_url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNT2YxRTFJYUJCdmdUcWRvbHZVUzZ1dU5MdkFOa3dYcDNGdlROc3prclVpdVYwTERsTEVSckVEMHJaT2Q5NVZ6Zk5aUkJiUnJobmhCdWI5WXNMakk0R0xWRXVDOVRCejFLZDkySzVxMDQydVEyY3otTmpTWUpZM3d4eTlmU2hBT3ZTOEFFWHlpcVd3cUVPdDVJYXBpNTNpbUZEbkIxb0NwdUhLODAyaUotcXhR?oc=5",
+      "date": "2026-06-29",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "réforme constitutionnelle",
+        "référendum",
+        "Sonko",
+        "Diomaye",
+        "Constitution"
+      ],
+      "id": "draft_20260701092604_0",
+      "_dedup_key": "2f856f443db7297a",
+      "status": "pending",
+      "created_at": "2026-07-01T09:26:04.968824+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

@@ -1,6 +1,116 @@
 {
-  "last_updated": "2026-07-01T09:26:04.968983+00:00",
+  "last_updated": "2026-07-02T08:39:47.936009+00:00",
   "drafts": [
+    {
+      "type": "promise_update",
+      "promise_id": "promise_35",
+      "title": "Concertation nationale sur la réforme foncière et la gouvernance territoriale",
+      "description": "Des acteurs de la décentralisation se sont réunis à Thiès, à l'initiative de la Plateforme nationale de dialogue sur la gouvernance foncière (PNGF), pour engager une réflexion sur les enjeux de l'Acte IV, la réforme foncière et les instruments de gouvernance territoriale. L'événement a été organisé en partenariat avec la GIZ et la Coalition internationale pour l'accès à la terre (ILC). Ces travaux s'inscrivent dans le processus de mise en œuvre de la réforme foncière promise par le gouvernement.",
+      "source": "APS — Agence de Presse Sénégalaise",
+      "source_url": "https://aps.sn/decentralisation-les-acteurs-territoriaux-plaident-pour-une-gouvernance-fonciere-adaptee-aux-poles-territoires/",
+      "date": "2026-07-01",
+      "domain": "Agriculture",
+      "confidence": 0.72,
+      "keywords": [
+        "réforme foncière",
+        "décentralisation",
+        "gouvernance territoriale",
+        "Acte IV",
+        "pôles-territoires"
+      ],
+      "id": "draft_20260702083947_4",
+      "_dedup_key": "ab5524ade00ba4da",
+      "status": "pending",
+      "created_at": "2026-07-02T08:39:47.935966+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_31",
+      "title": "Limogeage de la directrice de la DER/FJ : changement à la tête de la structure",
+      "description": "Le Président Bassirou Diomaye Faye a officiellement relevé Aïda Mbodji de ses fonctions à la tête de la Délégation générale à l'Entrepreneuriat Rapide des Femmes et des Jeunes (DER/FJ). Ce changement intervient dans un contexte de réorganisation des structures d'appui à l'entrepreneuriat. La DER/FJ est l'une des entités concernées par la promesse de fusion avec l'ADEPME pour créer la Maison de l'Entrepreneur.",
+      "source": "SeneNews",
+      "source_url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOb3VkcVBWV09PWWJOYmJnUE5XMlBJZUZQXzFQRlRKMzBJRWplcFhDQ0FTamt2Y281Z3JGQjNEN1RFdkFDWkh2anhaOF9iNVVQbF9GcGFNSkp6R0tIaE51Nno1Q0F4NjNPUFZfOUJxUEZ2VGpoMXdhdU9XT1R5U3FZTHotVHJXMC1hb0hOaHRpVExjalF5MjBBTkhkcURWMVpqYnNia3Jzd0JUUElnbWJTNGZYaVhSZ0pGWnpBMmxsekcwSlNEdDFxVA",
+      "date": "2026-07-02",
+      "domain": "Entrepreneuriat",
+      "confidence": 0.65,
+      "keywords": [
+        "DER/FJ",
+        "Aïda Mbodji",
+        "limogeage",
+        "entrepreneuriat",
+        "Diomaye Faye"
+      ],
+      "id": "draft_20260702083947_3",
+      "_dedup_key": "633664578c84adca",
+      "status": "pending",
+      "created_at": "2026-07-02T08:39:47.935960+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_29",
+      "title": "Création d'une direction générale des financements et de la dette publique",
+      "description": "Le Président Bassirou Diomaye Faye a annoncé la création d'une direction générale des financements et de la dette, destinée à assurer une gestion exhaustive et préventive de l'endettement de l'État. Cette structure vise à renforcer le suivi et le pilotage stratégique de la dette publique sénégalaise. Cette initiative s'inscrit dans la volonté du gouvernement de mieux encadrer les finances publiques.",
+      "source": "APS - Agence de Presse Sénégalaise",
+      "source_url": "https://news.google.com/rss/articles/CBMihAJBVV95cUxOLXprODE4cG10X2FZWEd1MGRnSmFVODFJNkdDYWVVVk9tRFhGRFA3dVRNN0lkYUI4aUtHcmdWR09HLWlBd0x0UDlfbXh2SzQwOW04bFh0SVZ1MzM2YVB3Mm80QjdERlJ3c3hxN1Y1dGJWZzI2ZzlXRGNFdUlSMDBhbURwcS1leTdmdDRVVEs1dDFMOGgySWxWTVB2bFdKYnJrNHFUTEE1dVFkUV9HclpqQXFsYTVOQWJ6aHZ6aFNzWGVFUXdMWHA4OXJXUjdFRDdjbDFwLWx6b0hKWk1Rc1B4Sm5LZWF3M2lDemhtSGppS2NXaE56VFNMMDBiMXVRQ0V6enlWVw",
+      "date": "2026-07-02",
+      "domain": "Finances",
+      "confidence": 0.75,
+      "keywords": [
+        "dette publique",
+        "direction générale",
+        "financements",
+        "endettement",
+        "finances publiques"
+      ],
+      "id": "draft_20260702083947_2",
+      "_dedup_key": "d7f590f89f2b43bb",
+      "status": "pending",
+      "created_at": "2026-07-02T08:39:47.935951+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye procède à plusieurs limogeages de hauts responsables",
+      "description": "Le Président Bassirou Diomaye Faye a relevé de leurs fonctions plusieurs hauts responsables, dont Aïssatou Mbodj, Alioune Gueye, Toussaint Manga et Ngagne Demba Touré. Parmi les décisions figure le limogeage de Ngagne Demba Touré de la SOMISEN, remplacé par Mamady Touré. Ces nominations et révocations s'inscrivent dans une série de remaniements au sein des structures étatiques.",
+      "source": "Xalima",
+      "source_url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPNHlNZUhPX1dMSndES1MzZWNNWU5SSFZsTFhld0IzdUtnZTFTbXg3Z21hbUxkY3AwSnQ1V0hDeGFTSmE1SWZHdTdMaGkwTnh3TWNwaG5zcXpvNUlNcUxqUVdrTzl5S3FWSFJCbkp2SjB1bUlCMUFsNURINEhZUkY0czNLZEFISEQyZWdoUFp4MkxOcWR6YnVqZDJ2dERoU1FtR3NvcTFxSWtFaXdXRWh0QzcyakxabjNKRVFJcE5JemFQUnk2ZVMydVMzY0p3NEQz",
+      "date": "2026-07-02",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "limogeage",
+        "nominations",
+        "Diomaye Faye",
+        "SOMISEN",
+        "remaniement"
+      ],
+      "id": "draft_20260702083947_1",
+      "_dedup_key": "87f994f395cf37bb",
+      "status": "pending",
+      "created_at": "2026-07-02T08:39:47.935940+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Réforme constitutionnelle : tension entre Sonko et Diomaye sur la révision",
+      "description": "Une réforme constitutionnelle est au cœur d'un bras de fer entre le Premier ministre Ousmane Sonko et le Président Bassirou Diomaye Faye. Sonko accuse Diomaye de 'tripatouillage' et exige la promulgation sans référendum. Ce débat relance les questions autour des réformes institutionnelles promises, notamment la suppression du poste de Premier ministre et l'instauration d'un Vice-Président.",
+      "source": "RFI",
+      "source_url": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxOX2hBQUlCMUtpbGY5UWdLRWk1bmdFRWJuTUNaNnkzTVdNdU1hLURlMll3LUZtVXdGM3FBalB5VkwwMEt6YUdybWxyOGo3aEthbVA0YlVyWUNCOG5MOXRoWTRYTEpXN1pudUo1eGRTejZvZmpWek5SaERFU2p1NXZ6N0VMR3I2V0VMblQxaHFUSmNxRUdPdk1RTnI0MmlNNjNiSkNIbUFpRm9sNms1TTR1WUMyVU51WWtoOHAxU0p1UTdPVG1hVmZfYjNWRFdIb3Bya2oyLVVvQWdvXzA1SWhKbXlwVzdwaEJ6Q096ZDBHNA",
+      "date": "2026-07-01",
+      "domain": "Institutions",
+      "confidence": 0.82,
+      "keywords": [
+        "réforme constitutionnelle",
+        "Sonko",
+        "Diomaye",
+        "référendum",
+        "institutions"
+      ],
+      "id": "draft_20260702083947_0",
+      "_dedup_key": "05e2a692d5cb88f5",
+      "status": "pending",
+      "created_at": "2026-07-02T08:39:47.935923+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

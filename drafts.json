@@ -1,6 +1,157 @@
 {
-  "last_updated": "2026-07-02T08:39:47.936009+00:00",
+  "last_updated": "2026-07-03T08:46:02.613225+00:00",
   "drafts": [
+    {
+      "type": "promise_update",
+      "promise_id": "promise_47",
+      "title": "Acte IV de la décentralisation : territorialisation des agropoles confirmée",
+      "description": "Dans le cadre de l'Acte IV de la décentralisation, le Président Diomaye Faye a évoqué la territorialisation des politiques publiques, ce qui inclut le déploiement des agropoles à l'échelle des pôles-territoires. Cette orientation confirme la mise en œuvre progressive de la promesse de territorialisation des agropoles. Des acteurs locaux et institutionnels ont été associés à la réflexion lors d'ateliers à Thiès.",
+      "source": "Senego.com",
+      "source_url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxOREw2MzVCYVNmNmMzOGhLdGpTWHc2ODUyU1JTZXd0M1FIZDhReEF1OXBKNFZsTWYzZkttR3cyN2VZeF9SdVMtcTlPVFhhTlRaVkNfV1EzNG95ZHN4dy1jRktyMDZaNVF1dy1tS2VFaGJzTG1hdG4yT2l3Q0ZDdWxPYjhtd3RVTkI1Tl9FX3MySlJFYkNrUjRHSDJDZDdEb2g2UFdRbUxzWnlCbThiMFltVFlsS0VzZHNTRGlDTmNhZXFiTWpHSnVMSHQyZlJVTXM?oc=5",
+      "date": "2026-07-02",
+      "domain": "Agro-industrie",
+      "confidence": 0.62,
+      "keywords": [
+        "agropoles",
+        "territorialisation",
+        "décentralisation",
+        "pôles-territoires",
+        "Acte IV"
+      ],
+      "id": "draft_20260703084602_7",
+      "_dedup_key": "d6d115c431fc07ab",
+      "status": "pending",
+      "created_at": "2026-07-03T08:46:02.613181+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 1er juillet 2026",
+      "description": "Le gouvernement sénégalais a tenu un Conseil des ministres le 1er juillet 2026. Le compte rendu officiel a été publié par la Primature et par le site du gouvernement. Les délibérations portent sur diverses mesures d'ordre gouvernemental.",
+      "source": "Gouvernement du Sénégal",
+      "source_url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNUF80Q1BOQW9zVWVoQV9aMXN4NHNSeE5NMDBLUFJ4bFFKb1drR3lHaldvelFUZm9zYTVTUmFjQTZBdUVBN2ZwdV9FMHJRR3h4b05aUUJFYVFDem5PYnhRTnZ0V1dTb3VTdGlvU0lHVWxUSHNDOVdUTHVaVEplVUtsN1ZjMFVOT2lhV05rdXB2dzdKQTJLR0tUMmF5OHl5RzVLQ2dR?oc=5",
+      "date": "2026-07-01",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "conseil des ministres",
+        "gouvernement",
+        "Sénégal",
+        "primature"
+      ],
+      "id": "draft_20260703084602_5",
+      "_dedup_key": "a1906b74ba923839",
+      "status": "pending",
+      "created_at": "2026-07-03T08:46:02.613162+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_35",
+      "title": "Gouvernance foncière : plaidoyer pour une réforme adaptée aux pôles-territoires",
+      "description": "Des acteurs de la décentralisation réunis à Thiès ont engagé une réflexion sur les enjeux de la réforme foncière dans le cadre de l'Acte IV. La Plateforme nationale de dialogue sur la gouvernance foncière (PNGF), en partenariat avec la GIZ et l'ILC, a plaidé pour des instruments de gouvernance foncière adaptés aux pôles-territoires. Cette initiative s'inscrit dans le cadre de la promesse de réforme foncière et des baux ruraux.",
+      "source": "APS — Agence de Presse Sénégalaise",
+      "source_url": "https://aps.sn/decentralisation-les-acteurs-territoriaux-plaident-pour-une-gouvernance-fonciere-adaptee-aux-poles-territoires/",
+      "date": "2026-07-01",
+      "domain": "Agriculture",
+      "confidence": 0.78,
+      "keywords": [
+        "réforme foncière",
+        "gouvernance foncière",
+        "décentralisation",
+        "pôles-territoires",
+        "baux ruraux"
+      ],
+      "id": "draft_20260703084602_4",
+      "_dedup_key": "5d6e04f268d829b7",
+      "status": "pending",
+      "created_at": "2026-07-03T08:46:02.613134+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_30",
+      "title": "Décentralisation : territorialisation des politiques publiques accélérée par Diomaye Faye",
+      "description": "Le Président Bassirou Diomaye Faye a annoncé une accélération de la territorialisation des politiques publiques dans le cadre de l'Acte IV de la décentralisation. Cette démarche vise à renforcer les prérogatives et les ressources des collectivités territoriales. Elle s'articule avec la promesse de transfert d'une part de la TVA aux communes.",
+      "source": "SANSLIMITESN.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPNS1XVFowdWt4OWozOXZoZTVsdEYya2FIdzdLMzd6NGhKZDNyeEpzcXVWVGMxdExyYmh6RWRvRWtuNjdNMEVzdDU4cG5pNXNaR3VvcTE2Qy1ZSWN5dTJhc0hzbGpEWXpLWDFrQ2x1YWFXRXo0WUY0V3VvX1VOWXBGQzFNRVhtcVRtd1VyS3NLTzk4V2FQT3hIa0puVGhyZU5ybkRFR2pEN3oxOWo1ekxrT2xiNE9XUmZ6TGl3STVBNl9JREVCSnZPaVZhanNMZw?oc=5",
+      "date": "2026-07-02",
+      "domain": "Finances Locales",
+      "confidence": 0.75,
+      "keywords": [
+        "décentralisation",
+        "territorialisation",
+        "politiques publiques",
+        "collectivités territoriales"
+      ],
+      "id": "draft_20260703084602_3",
+      "_dedup_key": "f067e0b9487f5272",
+      "status": "pending",
+      "created_at": "2026-07-03T08:46:02.613127+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_30",
+      "title": "Acte IV de la décentralisation : renforcement des capacités financières des collectivités territoriales",
+      "description": "Le Président Diomaye Faye a dévoilé quatre grandes orientations dans le cadre de l'Acte IV de la décentralisation, visant notamment à renforcer les capacités financières des communes. Cette initiative s'inscrit dans la promesse de transfert de 15% de la TVA aux collectivités territoriales. Le chef de l'État a annoncé une accélération de la territorialisation des politiques publiques.",
+      "source": "Xalima",
+      "source_url": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxNbGZQX00tSmlnMHdjTDRLdkhhcTF5UjdpYkRRUlhpVmdGTXNWQUktT3NXclBIUDk3ZmYxRTRLazFGVDBUQXFYV1pzbVgyRlhEaXo2QmZSMGpFeDJXQm1uYVpDWHJtdFoyQVBvNGJmTnRsa19DbTQydUJ2LXRSMk90NWdldXJBbGRuTE5GSWJQLXhJVG5LS2s1UkE2NUxXM1pxbjFWTGlRZDRTYTAwZkJJejJ4MFFUdmh3c3FkbzRtVV9kYlFhM0J6WFpJeVNlV21yeXRFWnBsa3VKYXVldlV2eXZFTFVlZDg1V1NFV2ZhOA?oc=5",
+      "date": "2026-07-02",
+      "domain": "Finances Locales",
+      "confidence": 0.8,
+      "keywords": [
+        "décentralisation",
+        "Acte IV",
+        "collectivités territoriales",
+        "capacités financières",
+        "communes"
+      ],
+      "id": "draft_20260703084602_2",
+      "_dedup_key": "03b157e0afa43245",
+      "status": "pending",
+      "created_at": "2026-07-03T08:46:02.613119+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Référendum constitutionnel : Diomaye Faye intensifie la pression",
+      "description": "Le Président Bassirou Diomaye Faye aurait intensifié la pression en vue d'un référendum constitutionnel. Ce processus est directement lié aux engagements de réforme institutionnelle, notamment la suppression du poste de Premier Ministre et l'instauration d'un poste de Vice-Président. Des tensions politiques persistent autour de ce projet de réforme.",
+      "source": "Seneweb",
+      "source_url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPT2UwT21Ec2VFSkNsVnZHd00zcnd1VlBXN0lRc01TUkRZeTF6SThtU2xsdlVoUjU1LTNibDNCOEVTNmd2eGRtVWYwdUR3djRNckN1VTVZdFVidlU5NU1MdURWLTNsTWN0bUUtZS1WUzZGcEpvWDM2cUpFa2RSdDZfNXR5cVJnQkt4T1c3dUczVHZ5UWhreXBaMDd2N3h0MUZVVjBOdVJCbHdYSTZjd2MxSw?oc=5",
+      "date": "2026-07-02",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "référendum",
+        "réforme constitutionnelle",
+        "Diomaye Faye",
+        "pression politique"
+      ],
+      "id": "draft_20260703084602_1",
+      "_dedup_key": "4976650624e80cd6",
+      "status": "pending",
+      "created_at": "2026-07-03T08:46:02.613109+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Réforme constitutionnelle : débat autour de la suppression du poste de Premier Ministre",
+      "description": "Un débat public s'est engagé au Sénégal autour d'une réforme constitutionnelle impliquant potentiellement le poste de Premier Ministre. Cette question suscite des tensions politiques notables, notamment entre le Président Diomaye Faye et Ousmane Sonko. La promesse de suppression du poste de Premier Ministre au profit d'un Vice-Président reste au cœur des discussions institutionnelles.",
+      "source": "RFI",
+      "source_url": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxOX2hBQUlCMUtpbGY5UWdLRWk1bmdFRWJuTUNaNnkzTVdNdU1hLURlMll3LUZtVXdGM3FBalB5VkwwMEt6YUdybWxyOGo3aEthbVA4YlVyWUNCOG5MOXRoWTRYTEpXN1pudUo1eGRTejZvZmpWek5SaERFU2p1NXZ6N0VMR3I2V0VMblQxaHFUSmNxRUdPdk1RTnI0MmlNNjNiSkNIbUFpRm9sNms1TTR1WUMyVU51WWtoOHAxU0p1UTdPVG1hVmZfYjNWRFdIb3Bya2oyLVVvQWdvXzA1SWhKbXlwVzdwaEJ6Q096ZDBHNA?oc=5",
+      "date": "2026-07-01",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "réforme constitutionnelle",
+        "Premier Ministre",
+        "Diomaye Faye",
+        "Sonko",
+        "référendum"
+      ],
+      "id": "draft_20260703084602_0",
+      "_dedup_key": "88e9ef1d7ca21041",
+      "status": "pending",
+      "created_at": "2026-07-03T08:46:02.613090+00:00"
+    },
     {
       "type": "promise_update",
       "promise_id": "promise_35",

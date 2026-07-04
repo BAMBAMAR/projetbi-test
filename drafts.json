@@ -1,6 +1,136 @@
 {
-  "last_updated": "2026-07-03T08:46:02.613225+00:00",
+  "last_updated": "2026-07-04T08:19:24.658070+00:00",
   "drafts": [
+    {
+      "type": "promise_update",
+      "promise_id": "promise_36",
+      "title": "Réunion interministérielle sur la campagne de production agricole 2026/2027",
+      "description": "Une réunion interministérielle a été organisée à la Primature pour examiner le déroulement de la campagne de production agricole 2026/2027. Cette initiative témoigne d'une attention gouvernementale soutenue au secteur agricole, en lien avec les engagements budgétaires et programmatiques pris envers l'agriculture. Les résultats et arbitrages issus de cette réunion n'ont pas encore été rendus publics.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/reunion-interministerielle-sur-le-deroulement-de-la-campagne-de-production",
+      "date": "2026-07-04",
+      "domain": "Agriculture",
+      "confidence": 0.65,
+      "keywords": [
+        "agriculture",
+        "campagne agricole",
+        "2026-2027",
+        "interministériel",
+        "production"
+      ],
+      "id": "draft_20260704081924_5",
+      "_dedup_key": "66b7473c0b470ac2",
+      "status": "pending",
+      "created_at": "2026-07-04T08:19:24.658025+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil interministériel sur la prévention et la gestion des inondations",
+      "description": "Un conseil interministériel dédié à la prévention et à la gestion des inondations a été tenu à la Primature. Cette réunion traduit une mobilisation gouvernementale face aux risques saisonniers d'inondations au Sénégal. Les mesures envisagées et les ministères impliqués n'ont pas encore été détaillés publiquement.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-interministeriel-sur-la-prevention-et-la-gestion-des-inondations",
+      "date": "2026-07-04",
+      "domain": "Hydraulique / Gestion des risques",
+      "confidence": 0.7,
+      "keywords": [
+        "inondations",
+        "conseil interministériel",
+        "prévention",
+        "gestion des risques"
+      ],
+      "id": "draft_20260704081924_4",
+      "_dedup_key": "4ae3e69688d32e91",
+      "status": "pending",
+      "created_at": "2026-07-04T08:19:24.658020+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 1er juillet 2026",
+      "description": "Le Conseil des ministres s'est tenu le 1er juillet 2026 sous la présidence du chef de l'État. Les délibérations ont porté sur plusieurs dossiers gouvernementaux, dont le cadrage de la campagne agricole 2026/2027 et les préparatifs des examens scolaires. Le compte rendu officiel a été publié par le gouvernement du Sénégal.",
+      "source": "Gouvernement du Sénégal",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-1er-juillet-2026",
+      "date": "2026-07-01",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "Conseil des ministres",
+        "gouvernement",
+        "juillet 2026",
+        "délibérations"
+      ],
+      "id": "draft_20260704081924_3",
+      "_dedup_key": "8256c68d44e37f1e",
+      "status": "pending",
+      "created_at": "2026-07-04T08:19:24.658014+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_35",
+      "title": "Acteurs territoriaux plaident pour une gouvernance foncière dans le cadre de l'Acte IV",
+      "description": "Des acteurs de la décentralisation réunis à Thiès ont engagé une réflexion sur les enjeux fonciers liés à l'Acte IV de la décentralisation, en lien avec la réforme foncière et les pôles-territoires. La rencontre, organisée par la Plateforme nationale de dialogue sur la gouvernance foncière en partenariat avec la GIZ et l'ILC, a mis en lumière la nécessité d'adapter les instruments de gouvernance foncière. Ces travaux s'inscrivent dans la perspective de la promesse de réforme foncière et des baux ruraux.",
+      "source": "APS — Agence de Presse Sénégalaise",
+      "source_url": "https://aps.sn/decentralisation-les-acteurs-territoriaux-plaident-pour-une-gouvernance-fonciere-adaptee-aux-poles-territoires/",
+      "date": "2026-07-01",
+      "domain": "Agriculture",
+      "confidence": 0.7,
+      "keywords": [
+        "foncier",
+        "décentralisation",
+        "réforme foncière",
+        "pôles-territoires",
+        "gouvernance"
+      ],
+      "id": "draft_20260704081924_2",
+      "_dedup_key": "04a05c1224720eda",
+      "status": "pending",
+      "created_at": "2026-07-04T08:19:24.658009+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_30",
+      "title": "Révision du mécanisme d'indexation de la TVA pour les collectivités territoriales",
+      "description": "Le président Diomaye Faye a ouvert la voie à une révision du mécanisme d'indexation sur la TVA destiné aux collectivités territoriales, dans le cadre de l'Acte IV de la décentralisation. Cette démarche s'inscrit dans la promesse d'allouer 15 % de la TVA aux collectivités locales. Les modalités concrètes de cette révision restent à préciser.",
+      "source": "SenePlus",
+      "source_url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxObjFSMGxOc0taYU1WWm9pelpwUkZRQkNaaVp5NzBCSGhkMjRvNUJXR2dzamVxN045bzVBWk1jd04tTUVKQ0ZKTzZjSkxOSFB6U0lncGx2NUVzYXZESFVjcWdPTEhycHZBQ0RtcUdtWkJUMkxjMjE0S21vbkIzN0NpbTJycFNiS20ycGkyZkQ0OEZvZndoU0UwLTBZT0QtVlR5U1BsX2JjZlo0WWpHSE9aY3JEQklNa25T",
+      "date": "2026-07-02",
+      "domain": "Finances Locales",
+      "confidence": 0.8,
+      "keywords": [
+        "TVA",
+        "collectivités",
+        "indexation",
+        "décentralisation",
+        "finances locales"
+      ],
+      "id": "draft_20260704081924_1",
+      "_dedup_key": "a9a57a06220006ea",
+      "status": "pending",
+      "created_at": "2026-07-04T08:19:24.658001+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Lancement de l'Acte IV de la décentralisation par le président Faye",
+      "description": "Le président Bassirou Diomaye Faye a officiellement lancé l'Acte IV de la décentralisation, visant à faire des territoires les moteurs du développement national. Cette réforme accélère la territorialisation des politiques publiques et implique une réorganisation de la gouvernance locale. Plusieurs acteurs territoriaux ont participé à des concertations autour de cette initiative.",
+      "source": "RADIO TELEVISION SENEGALAISE",
+      "source_url": "https://news.google.com/rss/articles/CBMi8gFBVV95cUxQX0VMTXZMZU5SdkRyZkRiMlM5bEJZcnQyNjNzN0Yyd3lHYzA3a3ctTl9PTnloeG5ld3ZoTHZqQl9FQ0VIQzlTdVdxYXZnV25jNGlCUFMteGVWSTNTZlc1WmlZTGN6Q3RlUTBwZF9GOFdJWE9iQkp3ZHh6MXhpVmtPUGJ3SWpMZ3ltZWJua0gxMWxZa2Rya1Z3MWpRaDdMM2tGMlJ2NHd5dThaS3VmNHBKZ2ZlWDVueWRnbHNaSUswQnFhOGNaQVBHV1hmUlhnMktjb3JySzFSekwtaXlPYm1MMG53TUdBNzNPT09uNFRqUkVEZw",
+      "date": "2026-07-03",
+      "domain": "Gouvernance / Décentralisation",
+      "confidence": 0.75,
+      "keywords": [
+        "Acte IV",
+        "décentralisation",
+        "territoires",
+        "développement",
+        "politiques publiques"
+      ],
+      "id": "draft_20260704081924_0",
+      "_dedup_key": "9290d2c4642f224d",
+      "status": "pending",
+      "created_at": "2026-07-04T08:19:24.657983+00:00"
+    },
     {
       "type": "promise_update",
       "promise_id": "promise_47",

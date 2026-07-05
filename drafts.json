@@ -1,6 +1,89 @@
 {
-  "last_updated": "2026-07-04T08:19:24.658070+00:00",
+  "last_updated": "2026-07-05T08:37:48.881281+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Sénégal : annonce d'un référendum par le président Diomaye Faye",
+      "description": "Le président Bassirou Diomaye Faye a annoncé la tenue d'un référendum, suscitant des réactions de l'ancien Premier ministre Ousmane Sonko qui a exprimé des critiques à son égard. Cette annonce s'inscrit dans un contexte de recomposition politique marqué par la rupture entre les deux anciens alliés. Le référendum pourrait porter sur des réformes institutionnelles évoquées dans le programme présidentiel.",
+      "source": "Africtelegraph",
+      "source_url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNQ3J0eDBxMlBmR1Z5ajRsNVdteWZkby1nUjJNN2tyVFEzTmV3LW1uazRWSDZIUF8yMU9WZ1BwZko1Y1JsTFhpQUw4SkxfaHZVSS1TTGY1bEdwZmJGeUNudkJiWHhaZVkyVlY4SEI5aFUyWkx2WG92c1hzdjU4ZjB3Mm91RENrZGl6dTNrMU5LdVVETTlCS2t0cDZn?oc=5",
+      "date": "2026-07-05",
+      "domain": "Institutions",
+      "confidence": 0.62,
+      "keywords": [
+        "référendum",
+        "réforme institutionnelle",
+        "Diomaye Faye",
+        "Sonko"
+      ],
+      "id": "draft_20260705083748_6",
+      "_dedup_key": "aa1cf226135efc86",
+      "status": "pending",
+      "created_at": "2026-07-05T08:37:48.881231+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_35",
+      "title": "Dialogue sur la gouvernance foncière et la réforme de l'Acte IV",
+      "description": "Des acteurs de la décentralisation se sont réunis à Thiès, à l'initiative de la Plateforme nationale de dialogue sur la gouvernance foncière (PNGF), pour débattre des enjeux de l'Acte IV et de la réforme foncière. La rencontre, organisée en partenariat avec la GIZ et l'ILC, a porté sur les instruments de gouvernance foncière adaptés aux pôles-territoires. Ces travaux s'inscrivent dans le processus de réflexion autour de la réforme foncière promise.",
+      "source": "APS — Agence de Presse Sénégalaise",
+      "source_url": "https://aps.sn/decentralisation-les-acteurs-territoriaux-plaident-pour-une-gouvernance-fonciere-adaptee-aux-poles-territoires/?utm_source=rss&utm_medium=rss&utm_campaign=decentralisation-les-acteurs-territoriaux-plaident-pour-une-gouvernance-fonciere-adaptee-aux-poles-territoires",
+      "date": "2026-07-01",
+      "domain": "Agriculture",
+      "confidence": 0.68,
+      "keywords": [
+        "réforme foncière",
+        "décentralisation",
+        "Acte IV",
+        "gouvernance foncière",
+        "pôles-territoires"
+      ],
+      "id": "draft_20260705083748_4",
+      "_dedup_key": "544ade7528e06613",
+      "status": "pending",
+      "created_at": "2026-07-05T08:37:48.881220+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 1er juillet 2026 — Primature",
+      "description": "La Primature a publié le compte rendu du Conseil des ministres du 1er juillet 2026. Cette publication officielle détaille les décisions et orientations arrêtées lors de la réunion gouvernementale. Elle constitue une source de référence pour le suivi de l'action de l'exécutif.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-1er-juillet-2026",
+      "date": "2026-07-01",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "conseil des ministres",
+        "primature",
+        "gouvernement"
+      ],
+      "id": "draft_20260705083748_1",
+      "_dedup_key": "22725757c352c63b",
+      "status": "pending",
+      "created_at": "2026-07-05T08:37:48.881203+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 1er juillet 2026",
+      "description": "Le gouvernement sénégalais a tenu un Conseil des ministres le 1er juillet 2026. Les délibérations et décisions de ce conseil sont disponibles sur le site officiel du gouvernement. Ce type de réunion constitue un cadre de suivi de l'action gouvernementale.",
+      "source": "Gouvernement du Sénégal",
+      "source_url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPUThtNHYxZGR3M1diX21VTDBxVUpkUmhpRWZaT1M5STBnTERWbXI5dUpwQTlubVBabGFFT282dVR4cHpJODBOY0pxVFliSVZpUklNbEw2ZWwyYXhGbGZ2UTE5NmZjQ0g1NG1KNEZDNzF1S3Y4YklyRW1BYkVObWdSbWNNOVBQbnVkUXg4QVd6N3RzZ015?oc=5",
+      "date": "2026-07-02",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "conseil des ministres",
+        "gouvernement",
+        "délibérations"
+      ],
+      "id": "draft_20260705083748_0",
+      "_dedup_key": "1e342b0ddca2d3f2",
+      "status": "pending",
+      "created_at": "2026-07-05T08:37:48.881186+00:00"
+    },
     {
       "type": "promise_update",
       "promise_id": "promise_36",

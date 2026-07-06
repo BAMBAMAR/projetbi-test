@@ -1,6 +1,28 @@
 {
-  "last_updated": "2026-07-05T08:37:48.881281+00:00",
+  "last_updated": "2026-07-06T09:51:00.292918+00:00",
   "drafts": [
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Présence d'un Premier Ministre actif malgré la promesse de suppression du poste",
+      "description": "Les publications de la Primature font état d'un Premier Ministre Al Aminou LO en exercice, tenant des conseils interministériels et des réunions de coordination gouvernementale. Cette situation contraste avec l'engagement de campagne de Bassirou Diomaye Faye de supprimer le poste de Premier Ministre au profit d'un Vice-Président. Le poste demeure donc maintenu à la date du 6 juillet 2026.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/le-premier-ministre-ahmadou-al-aminou-lo-appelle-la-cohesion-et-la",
+      "date": "2026-07-06",
+      "domain": "Institutions",
+      "confidence": 0.85,
+      "keywords": [
+        "Premier Ministre",
+        "Al Aminou LO",
+        "suppression",
+        "Vice-Président",
+        "Primature"
+      ],
+      "id": "draft_20260706095100_0",
+      "_dedup_key": "55e0ac213656cdad",
+      "status": "pending",
+      "created_at": "2026-07-06T09:51:00.292855+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

@@ -1,6 +1,91 @@
 {
-  "last_updated": "2026-07-07T09:19:54.376241+00:00",
+  "last_updated": "2026-07-08T08:04:57.768639+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye reprend la main sur le secteur extractif sénégalais",
+      "description": "Selon Jeune Afrique, le président Bassirou Diomaye Faye engage une reprise en main du secteur extractif sénégalais, qui couvre les ressources minières, pétrolières et gazières. Cette démarche s'inscrit dans une volonté de souveraineté économique sur les ressources naturelles du pays. Elle peut être rapprochée des engagements présidentiels en matière d'indépendance économique et de renegociation des accords extractifs.",
+      "source": "Jeune Afrique",
+      "source_url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxOX0lGSGhReUxQR0tXSlR5TXNoVjdLXzh2NlZPeklqbEZNVFIyQ1ZYWXRENUlUYWpfdnBFei0tQnVDQjlrWUx2VlBPTWV2V3QtNkxUR1BzSlVzcmJ6c0pnbGxvZ184YnJiWFczcTdTeWlzWUVfV2RYWWtwSWJ5YUhMb1lRUEJfOHhBOTJGODJtUXQxNGcwczV6bXV4cmcyRGNFVlR6TENkM0t1NU9EcWRXZkxhMWxhNlJjMVhVRndOaHRJZjdDVVRZeERENzFWVXFLenFEa09aWQ",
+      "date": "2026-07-07",
+      "domain": "Économie",
+      "confidence": 0.7,
+      "keywords": [
+        "secteur extractif",
+        "ressources naturelles",
+        "souveraineté",
+        "pétrole",
+        "mines"
+      ],
+      "id": "draft_20260708080457_5",
+      "_dedup_key": "03f8a12c102429b3",
+      "status": "pending",
+      "created_at": "2026-07-08T08:04:57.768595+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Le Premier ministre Al Aminou LO toujours en fonction malgré la promesse de suppression du poste",
+      "description": "Le site de la Primature rapporte plusieurs activités récentes du Premier ministre Ahmadou Al Aminou LO, dont un appel à la cohésion et à la collégialité au sein du gouvernement. Le poste de Premier ministre demeure donc actif à la date du 8 juillet 2026. Cela contraste avec l'engagement de campagne de Bassirou Diomaye Faye de supprimer ce poste au profit d'un Vice-Président.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/le-premier-ministre-ahmadou-al-aminou-lo-appelle-la-cohesion-et-la",
+      "date": "2026-07-08",
+      "domain": "Institutions",
+      "confidence": 0.7,
+      "keywords": [
+        "Premier ministre",
+        "Al Aminou LO",
+        "Primature",
+        "gouvernement"
+      ],
+      "id": "draft_20260708080457_2",
+      "_dedup_key": "e30885ff6ae3c9f9",
+      "status": "pending",
+      "created_at": "2026-07-08T08:04:57.768587+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_3",
+      "title": "Révision constitutionnelle : possible transformation du Conseil constitutionnel en Cour constitutionnelle",
+      "description": "La saisine du Conseil constitutionnel par le président Faye dans le cadre de la révision constitutionnelle ouvre la voie à des réformes institutionnelles d'envergure. Parmi les engagements de campagne figurait la transformation du Conseil constitutionnel en Cour constitutionnelle. Le contenu précis de la révision soumise reste à confirmer par les textes officiels.",
+      "source": "RFI",
+      "source_url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPSk1TSmFhNFFDVFF1MXltS2c1eEl3NktzczNOaW5wUHJGemVjOXNyUUxsWnoycnoteVk3ODNGWWhKRE95RFBFdWptWnlQaGE1WHBTT2RYZTZkaWNGWmV2NWhNbGt2SjQ5TjBvQjRxRE5xd0hpMlRwMENPU3hJajJqUnI1ZlNzdTlJTVZXY0lJNGxiazNHU0dIeU05c0xEcHBsRF9OWmZsa2VEZERJYnYzM0NrY0ZHY2NWbm5LUjVlTVl5YzFTeVZ4X3F3V0ROY05LU1R4NjF6SmlBeGZsTlJnTE9MRWw",
+      "date": "2026-07-07",
+      "domain": "Institutions",
+      "confidence": 0.65,
+      "keywords": [
+        "révision constitutionnelle",
+        "Conseil constitutionnel",
+        "Cour constitutionnelle",
+        "réforme"
+      ],
+      "id": "draft_20260708080457_1",
+      "_dedup_key": "40764ee32d472345",
+      "status": "pending",
+      "created_at": "2026-07-08T08:04:57.768583+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Révision constitutionnelle : Diomaye saisit le Conseil constitutionnel",
+      "description": "Le président Bassirou Diomaye Faye a officiellement saisi le Conseil constitutionnel sur un projet de révision de la Constitution. Cette démarche intervient dans le cadre du processus de réforme institutionnelle engagé par le gouvernement. La révision pourrait concerner notamment la suppression du poste de Premier ministre et l'instauration d'un Vice-Président, conformément aux engagements de campagne.",
+      "source": "APS - Agence de Presse Sénégalaise",
+      "source_url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNamhOMnJaOVRIMjdKNmFTVlpQWVNXYkdGNUU3dkdiWG9xcXlpWnFBT1Z5RV9OeDlvZ3hFV1J2ZS0zeEpDcFpnUkFsejFKUUdMRVJEUnYwaFBzWVZvZUd6Wmw3MEx2Z0ZwYnZxTEgwLTNENG9ZRUs3czB4MjVmdXdkNFVBZUxyN2ZMUGxwTEdNLXEwc25jOUNyS1R2bm1tMUdKVVhCVmRSQVBLMk9zV3c",
+      "date": "2026-07-07",
+      "domain": "Institutions",
+      "confidence": 0.82,
+      "keywords": [
+        "révision constitutionnelle",
+        "Conseil constitutionnel",
+        "réforme institutionnelle",
+        "Diomaye"
+      ],
+      "id": "draft_20260708080457_0",
+      "_dedup_key": "fc7d629a64438c71",
+      "status": "pending",
+      "created_at": "2026-07-08T08:04:57.768568+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

@@ -1,6 +1,71 @@
 {
-  "last_updated": "2026-07-08T08:04:57.768639+00:00",
+  "last_updated": "2026-07-09T09:00:39.307466+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye reprend le contrôle du secteur extractif sénégalais",
+      "description": "Selon Jeune Afrique, le président Bassirou Diomaye Faye engage une série de mesures pour renforcer le contrôle de l'État sur le secteur extractif (mines, hydrocarbures). Cette démarche s'inscrit dans la politique de souveraineté économique portée par le gouvernement depuis 2024. Les modalités concrètes de cette reprise en main n'ont pas été précisées dans le résumé disponible.",
+      "source": "Jeune Afrique",
+      "source_url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxOX0lGSGhReUxQR0tXSlR5TXNoVjdLXzh2NlZPeklqbEZNVFIyQ1ZYWXRENUlUYWpfdnBFei0tQnVDQjlrWUx2VlBPTWV2V3QtNkxUR1BzSlVzcmJ6c0pnbGxvZ184YnJiWFczcTdTeWlzWUVfV2RYWWtwSWJ5YUhMb1lRUEJfOHhBOTJGODJtUXQxNGcwczV6bXV4cmcyRGNFVlR6TENkM0t1NU9EcWRXZkxhMWxhNlJjMVhVRndOaHRJZjdDVVRZeERENzFWVXFLenFEa09aWQ?oc=5",
+      "date": "2026-07-07",
+      "domain": "Économie",
+      "confidence": 0.7,
+      "keywords": [
+        "secteur extractif",
+        "hydrocarbures",
+        "mines",
+        "souveraineté économique",
+        "Diomaye Faye"
+      ],
+      "id": "draft_20260709090039_2",
+      "_dedup_key": "53066c48cbb2c448",
+      "status": "pending",
+      "created_at": "2026-07-09T09:00:39.307385+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_3",
+      "title": "Réforme constitutionnelle : possible transformation du Conseil constitutionnel",
+      "description": "La saisine du Conseil constitutionnel par le président Faye pour avis sur la réforme de la Constitution ouvre la voie à une refonte des institutions judiciaires suprêmes. La réforme constitutionnelle en cours pourrait inclure la transformation du Conseil constitutionnel en Cour constitutionnelle, conformément aux engagements du programme présidentiel. Le processus référendaire confirmé par l'entourage présidentiel devrait en préciser les contours.",
+      "source": "RFI",
+      "source_url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPSk1TSmFhNFFDVFF1MXltS2c1eEl3NktzczNOaW5wUHJGemVjOXNyUUxsWnoycnoteVk3ODNGWWhKRE95RFBFdWptWnlQaGE1WHBTT2RYZTZkaWNGWmV2NWhNbGt2SjQ5TjBvQjRxRE5xd0hpMlRwMENPU3hJajJqUnI1ZlNzdTlJTVZXY0lJNGxiazNHU0dIeU05c0xEcHBsRF9OWmZsa2VEZERJYnYzM0NrY0ZHY2NWbm5LUjVlTVl5YzFTeVZ4X3F3V0ROY05LU1R4NjF6SmlBeGZsTlJnTE9MRWw?oc=5",
+      "date": "2026-07-07",
+      "domain": "Institutions",
+      "confidence": 0.65,
+      "keywords": [
+        "Conseil constitutionnel",
+        "Cour constitutionnelle",
+        "réforme",
+        "Constitution"
+      ],
+      "id": "draft_20260709090039_1",
+      "_dedup_key": "8b642da09d62a2c8",
+      "status": "pending",
+      "created_at": "2026-07-09T09:00:39.307375+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Réforme constitutionnelle : Diomaye saisit le Conseil constitutionnel",
+      "description": "Le président Bassirou Diomaye Faye a saisi le Conseil constitutionnel au sujet d'une réforme de la Constitution. Cette démarche s'inscrit dans le cadre du processus de révision constitutionnelle annoncé, qui inclut notamment la suppression du poste de Premier ministre et l'instauration d'un Vice-Président. Un référendum a été confirmé par des proches du chef de l'État.",
+      "source": "RFI",
+      "source_url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPSk1TSmFhNFFDVFF1MXltS2c1eEl3NktzczNOaW5wUHJGemVjOXNyUUxsWnoycnoteVk3ODNGWWhKRE95RFBFdWptWnlQaGE1WHBTT2RYZTZkaWNGWmV2NWhNbGt2SjQ5TjBvQjRxRE5xd0hpMlRwMENPU3hJajJqUnI1ZlNzdTlJTVZXY0lJNGxiazNHU0dIeU05c0xEcHBsRF9OWmZsa2VEZERJYnYzM0NrY0ZHY2NWbm5LUjVlTVl5YzFTeVZ4X3F3V0ROY05LU1R4NjF6SmlBeGZsTlJnTE9MRWw?oc=5",
+      "date": "2026-07-07",
+      "domain": "Institutions",
+      "confidence": 0.88,
+      "keywords": [
+        "réforme constitutionnelle",
+        "Conseil constitutionnel",
+        "révision",
+        "référendum",
+        "Premier ministre"
+      ],
+      "id": "draft_20260709090039_0",
+      "_dedup_key": "f631d8f009900e39",
+      "status": "pending",
+      "created_at": "2026-07-09T09:00:39.307356+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

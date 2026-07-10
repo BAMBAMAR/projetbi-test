@@ -1,6 +1,92 @@
 {
-  "last_updated": "2026-07-09T09:00:39.307466+00:00",
+  "last_updated": "2026-07-10T08:57:27.105531+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye reprend la main sur le secteur extractif sénégalais",
+      "description": "Selon Jeune Afrique, le président Bassirou Diomaye Faye engage des mesures pour renforcer le contrôle de l'État sur le secteur extractif sénégalais. Cette démarche s'inscrit dans une volonté de souveraineté économique sur les ressources naturelles du pays. Les détails des mesures prises concernent la gouvernance du secteur pétrolier et minier.",
+      "source": "Jeune Afrique",
+      "source_url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxOX0lGSGhReUxQR0tXSlR5TXNoVjdLXzh2NlZPeklqbEZNVFIyQ1ZYWXRENUlUYWpfdnBFei0tQnVDQjlrWUx2VlBPTWV2V3QtNkxUR1BzSlVzcmJ6c0pnbGxvZ184YnJiWFczcTdTeWlzWUVfV2RYWWtwSWJ5YUhMb1lRUEJfOHhBOTJGODJtUXQxNGcwczV6bXV4cmcyRGNFVlR6TENkM0t1NU9EcWRXZkxhMWxhNlJjMVhVRndOaHRJZjdDVVRZeERENzFWVXFLenFEa09aWQ?oc=5",
+      "date": "2026-07-07",
+      "domain": "Économie",
+      "confidence": 0.7,
+      "keywords": [
+        "secteur extractif",
+        "ressources naturelles",
+        "souveraineté économique",
+        "pétrole",
+        "mines"
+      ],
+      "id": "draft_20260710085727_3",
+      "_dedup_key": "30e03d59b1fde69a",
+      "status": "pending",
+      "created_at": "2026-07-10T08:57:27.105476+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye reçoit le président de la BADEA pour le financement des infrastructures",
+      "description": "Le président Bassirou Diomaye Faye a reçu le président de la Banque Arabe pour le Développement Économique en Afrique (BADEA) dans le cadre de la Vision Sénégal 2050. Les discussions ont porté sur le financement des infrastructures nationales. Cette rencontre s'inscrit dans la mobilisation de partenaires financiers pour les grands projets de développement.",
+      "source": "DAKARACTU.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxQT3o5QTAtYXFvLVlVUEwzZTgxanJnLWI2U1RCVHFPWmpKcktFMGV4NnZIcUlnQU9jY2xXMGlRRE1mQkJmc3RlMzRQalllSFB1QTF5X081aXZvMElIYXJHSm9uZmFoWUFTcVhkeTRSakpsWko1RzVYdWpzOS1uUFBFcVg3U0Y5Vy1Oa0FEbndXdXVLN3JjQi1FcVdaakh0TFV6aHVxMmRlTklZU0tnbHN1cGNkV2h5T3RQVGg1Ukp6VVdPN2hGVDlvR2JvRE94MUp0V19hWXdWeDZXdmFENkxrM2ZhaFNqZw?oc=5",
+      "date": "2026-07-09",
+      "domain": "Économie",
+      "confidence": 0.7,
+      "keywords": [
+        "BADEA",
+        "infrastructures",
+        "Vision Sénégal 2050",
+        "financement",
+        "Diomaye Faye"
+      ],
+      "id": "draft_20260710085727_2",
+      "_dedup_key": "5af3152f4c31104d",
+      "status": "pending",
+      "created_at": "2026-07-10T08:57:27.105468+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_3",
+      "title": "Le Conseil constitutionnel annule la loi n°18/2026 sur la révision constitutionnelle",
+      "description": "Le Conseil constitutionnel sénégalais a rendu une décision annulant la loi n°18/2026 relative à la révision constitutionnelle, faisant suite au recours introduit par le président Diomaye Faye. Cette décision intervient dans un contexte de réforme des institutions judiciaires et constitutionnelles. La question de la transformation du Conseil constitutionnel en Cour constitutionnelle reste liée à ce processus de révision.",
+      "source": "Senego.com",
+      "source_url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxQN0dsUGJDQWFDVWYxa2FVajItX2dDTk1FMDYxbnBBU3ZpY2l6VlRKTkUteVN1YXBHOE9tbnM2a0cxY2c4QlVxLThQT1REaTdYUGxiOEk5cFVZUDhfNWVheHJ6TmpfMjJid2JjdUlQRFpSRUtrQVR5M0gzX0VicG9NN1BQMm93NmgzX1hBRU40WGx2THlRaFF6b2pJMHFNYTNwaFF6LTRyYlVLcU0tTTdzVk1iMTB2dURaUUpEc3VnNTd6a0R5T3hEZmVzYjk2bVp0Rl82RDd3?oc=5",
+      "date": "2026-07-09",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "Conseil constitutionnel",
+        "loi annulée",
+        "révision constitutionnelle",
+        "réforme judiciaire"
+      ],
+      "id": "draft_20260710085727_1",
+      "_dedup_key": "0a78dca84b4eeb15",
+      "status": "pending",
+      "created_at": "2026-07-10T08:57:27.105461+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Révision constitutionnelle : Diomaye Faye saisit le Conseil constitutionnel",
+      "description": "Le président Bassirou Diomaye Faye a saisi le Conseil constitutionnel sur un projet de réforme de la Constitution. Cette démarche s'inscrit dans le cadre de la révision constitutionnelle portant notamment sur des réformes institutionnelles. Le Conseil constitutionnel a par la suite annulé la loi n°18/2026, donnant raison au président Faye.",
+      "source": "RFI / Senego.com",
+      "source_url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPSk1TSmFhNFFDVFF1MXltS2c1eEl3NktzczNOaW5wUHJGemVjOXNyUUxsWnoycnoteVk3ODNGWWhKRE95RFBFdWptWnlQaGE1WHBTT2RYZTZkaWNGWmV2NWhNbGt2SjQ5TjBvQjRxRE5xd0hpMlRwMENPU3hJajJqUnI1ZlNzdTlJTVZXY0lJNGxiazNHU0dIeU05c0xEcHBsRF9OWmZsa2VEZERJYnYzM0NrY0ZHY2NWbm5LUjVlTVl5YzFTeVZ4X3F3V0ROY05LU1R4NjF6SmlBeGZsTlJnTE9MRWw?oc=5",
+      "date": "2026-07-09",
+      "domain": "Institutions",
+      "confidence": 0.82,
+      "keywords": [
+        "révision constitutionnelle",
+        "Conseil constitutionnel",
+        "réforme institutionnelle",
+        "Diomaye Faye"
+      ],
+      "id": "draft_20260710085727_0",
+      "_dedup_key": "c9cb98a4c2a1edec",
+      "status": "pending",
+      "created_at": "2026-07-10T08:57:27.105443+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,

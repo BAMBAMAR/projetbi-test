@@ -1,6 +1,94 @@
 {
-  "last_updated": "2026-07-10T08:57:27.105531+00:00",
+  "last_updated": "2026-07-11T07:30:03.012638+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Le Premier Ministre Al Aminou LO appelle l'Afrique à parler d'une seule voix sur l'Économie sociale et solidaire",
+      "description": "Le Premier Ministre Al Aminou LO a plaidé pour une position africaine unifiée sur l'Économie sociale et solidaire lors d'une prise de parole publique. Cette initiative s'inscrit dans une dynamique de positionnement du Sénégal sur les questions économiques à l'échelle continentale. Elle ne correspond pas directement à une promesse présidentielle identifiée dans la liste de suivi.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/le-premier-ministre-al-aminou-lo-appelle-lafrique-parler-dune-seule-voix",
+      "date": "2026-07-11",
+      "domain": "Économie",
+      "confidence": 0.65,
+      "keywords": [
+        "économie sociale et solidaire",
+        "Premier Ministre",
+        "Al Aminou LO",
+        "Afrique",
+        "coopération"
+      ],
+      "id": "draft_20260711073003_6",
+      "_dedup_key": "e5728990733d7c79",
+      "status": "pending",
+      "created_at": "2026-07-11T07:30:03.012583+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_2",
+      "title": "Révision constitutionnelle annulée : la responsabilité politique du Président compromise",
+      "description": "L'annulation de la révision constitutionnelle impacte également la promesse d'instaurer une responsabilité politique du Président (révocabilité), qui nécessitait une modification de la Constitution. Me Cheikh Ahmadou Ndiaye, avocat du président Diomaye Faye, a commenté publiquement cette annulation et ses implications. La voie constitutionnelle pour ces réformes devra être repensée.",
+      "source": "pressafrik.com",
+      "source_url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxNQXRQTVc0UXFSeEl1VjNXaHNjdjBCOElBOUtDM3JESUFQMGxzV2xORnBYdVJ6YUd5S1ZFcjJ0cFZ0TWNIcmttOXJLUThHeVBSZGFzTWxlU1N3UGVSc0FXLWpKNjJ4QXRwLTBjZEhzZDJWRS15eXFyNTVCTVlRZV9FcVNoNFJEZFFSMDdoVEp5UkRsdHFOS0dscEY5U19FR0RFak14Sm8zTWxBc1lXR0hvTjlnTU4yYVlrbXB5ZlV1SWNFMVNEaGxrcUJ1TnF0WE53dXB6QTA5eWY3dDZRc18taVNNRkczakFBdmdPUEhB",
+      "date": "2026-07-10",
+      "domain": "Institutions",
+      "confidence": 0.72,
+      "keywords": [
+        "révision constitutionnelle",
+        "annulation",
+        "responsabilité politique",
+        "révocabilité",
+        "Constitution"
+      ],
+      "id": "draft_20260711073003_2",
+      "_dedup_key": "e1fa73fc0d96639d",
+      "status": "pending",
+      "created_at": "2026-07-11T07:30:03.012567+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_3",
+      "title": "Annulation de la révision constitutionnelle : impact sur la transformation du Conseil Constitutionnel",
+      "description": "L'annulation de la révision constitutionnelle, commentée par Me Cheikh Ahmadou Ndiaye, affecte directement la promesse de transformer le Conseil Constitutionnel en Cour Constitutionnelle. Cette réforme faisait partie du projet de révision constitutionnelle soumis et annulé. L'avocat du président a apporté des précisions sur les suites juridiques et politiques de cette décision.",
+      "source": "pressafrik.com",
+      "source_url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxNQXRQTVc0UXFSeEl1VjNXaHNjdjBCOElBOUtDM3JESUFQMGxzV2xORnBYdVJ6YUd5S1ZFcjJ0cFZ0TWNIcmttOXJLUThHeVBSZGFzTWxlU1N3UGVSc0FXLWpKNjJ4QXRwLTBjZEhzZDJWRS15eXFyNTVCTVlRZV9FcVNoNFJEZFFSMDdoVEp5UkRsdHFOS0dscEY5U19FR0RFak14Sm8zTWxBc1lXR0hvTjlnTU4yYVlrbXB5ZlV1SWNFMVNEaGxrcUJ1TnF0WE53dXB6QTA5eWY3dDZRc18taVNNRkczakFBdmdPUEhB",
+      "date": "2026-07-10",
+      "domain": "Institutions",
+      "confidence": 0.8,
+      "keywords": [
+        "révision constitutionnelle",
+        "annulation",
+        "Conseil Constitutionnel",
+        "Cour Constitutionnelle",
+        "réforme"
+      ],
+      "id": "draft_20260711073003_1",
+      "_dedup_key": "54a00988713b721f",
+      "status": "pending",
+      "created_at": "2026-07-11T07:30:03.012557+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Annulation de la révision constitutionnelle : incertitude sur la suppression du poste de Premier Ministre",
+      "description": "L'avocat de Diomaye Faye, Me Cheikh Ahmadou Ndiaye, a apporté des précisions suite à l'annulation de la révision constitutionnelle par le Conseil Constitutionnel. Cette annulation remet en question l'avancement des réformes institutionnelles prévues, notamment la suppression du poste de Premier Ministre et l'instauration d'un Vice-Président. Le Premier Ministre Al Aminou LO est toujours en fonction, comme en témoignent plusieurs actualités récentes de la Primature.",
+      "source": "pressafrik.com",
+      "source_url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxNQXRQTVc0UXFSeEl1VjNXaHNjdjBCOElBOUtDM3JESUFQMGxzV2xORnBYdVJ6YUd5S1ZFcjJ0cFZ0TWNIcmttOXJLUThHeVBSZGFzTWxlU1N3UGVSc0FXLWpKNjJ4QXRwLTBjZEhzZDJWRS15eXFyNTVCTVlRZV9FcVNoNFJEZFFSMDdoVEp5UkRsdHFOS0dscEY5U19FR0RFak14Sm8zTWxBc1lXR0hvTjlnTU4yYVlrbXB5ZlV1SWNFMVNEaGxrcUJ1TnF0WE53dXB6QTA5eWY3dDZRc18taVNNRkczakFBdmdPUEhB",
+      "date": "2026-07-10",
+      "domain": "Institutions",
+      "confidence": 0.85,
+      "keywords": [
+        "révision constitutionnelle",
+        "annulation",
+        "Conseil Constitutionnel",
+        "Premier Ministre",
+        "réforme institutionnelle"
+      ],
+      "id": "draft_20260711073003_0",
+      "_dedup_key": "c8021d50a681797c",
+      "status": "pending",
+      "created_at": "2026-07-11T07:30:03.012539+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,
@@ -4283,90 +4371,6 @@
       "_dedup_key": "810b1d41e13532d4",
       "status": "pending",
       "created_at": "2026-05-23T00:18:27.777098+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Conseil des ministres du 20 mai 2026",
-      "description": "Le gouvernement sénégalais a tenu un Conseil des ministres le 20 mai 2026. Ce conseil constitue un acte régulier de l'action gouvernementale pouvant couvrir plusieurs domaines de politique publique liés aux engagements présidentiels. Le compte-rendu officiel est disponible sur le site du gouvernement.",
-      "source": "Gouvernement du Sénégal",
-      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-20-mai-2026",
-      "date": "2026-05-20",
-      "domain": "Gouvernance",
-      "confidence": 0.7,
-      "keywords": [
-        "Conseil des ministres",
-        "gouvernement",
-        "action gouvernementale"
-      ],
-      "id": "draft_20260523001827_3",
-      "_dedup_key": "4765c1c011c5db8b",
-      "status": "pending",
-      "created_at": "2026-05-23T00:18:27.777092+00:00"
-    },
-    {
-      "type": "promise_update",
-      "promise_id": "promise_16",
-      "title": "Modification de la loi électorale adoptée par l'Assemblée nationale",
-      "description": "L'Assemblée nationale du Sénégal a adopté une modification de la loi électorale, suscitant une controverse selon plusieurs sources. Cette réforme est susceptible d'avoir un lien avec les engagements relatifs à la gouvernance électorale, notamment l'inscription automatique sur les listes électorales. Les détails précis de la modification n'ont pas été entièrement précisés dans les résumés disponibles.",
-      "source": "Saharamedias FR",
-      "source_url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPdE1oaC1ndVVrSVhGYkxWMnRVemZQR3VZYU1fd3pGaXhUMmsxVlFTSUViRHJfMVdoSWdXME5yMG9JaUVYT0pmRXZBMEpYelVveVFjNTh1NXRSdV9oVk0xWllkb2FyZFRKUVBQQlB0YUlXU3ZJYnBCWTI2WG11Mm0wc1ByWDZaejNDOS1rYXNIVWNuU0dfb3g1dC1uQWlTSS01anlEaGNwU1IzOHJ5MU1seVY3WmRKYkpFNFhUM2xiRVVNMkE?oc=5",
-      "date": "2026-05-20",
-      "domain": "Gouvernance",
-      "confidence": 0.65,
-      "keywords": [
-        "loi électorale",
-        "Assemblée nationale",
-        "réforme",
-        "controverse"
-      ],
-      "id": "draft_20260523001827_2",
-      "_dedup_key": "bc8c65ef42b894ca",
-      "status": "pending",
-      "created_at": "2026-05-23T00:18:27.777088+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Dialogue national : Diomaye Faye consulte d'anciens Premiers ministres",
-      "description": "Le président Bassirou Diomaye Faye a ouvert une série de concertations dans le cadre d'un dialogue national, en recevant notamment d'anciens Premiers ministres dont Sidiki Kaba et Mamadou Lamine. Ces consultations portent sur les défis économiques et sécuritaires du pays. Amadou Ba a également été reçu en audience au Palais.",
-      "source": "APS - Agence de Presse Sénégalaise",
-      "source_url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPUVUyZE44em1sa1lMdDVEcEFxbVZjN0lBcjZBSVc3Z2ZuRWRzVTFVTnBUb3YyeXdENUFzdk44TG5kZ2xCTUc3TmhJbGpQdzd0OEV6SlhGN19oS0o1RlV1empWV0R3X3pKdmdEVm5GWHZ3ZkVDekl1Mm9xTVFwWTQyVmpFTFF3U1U1aEFlVy00c3ZjM0lVdXJTbTctMkZUejVFcGtRcEpKVEY3bko2Wk85elZn?oc=5",
-      "date": "2026-05-22",
-      "domain": "Gouvernance",
-      "confidence": 0.7,
-      "keywords": [
-        "dialogue national",
-        "anciens Premiers ministres",
-        "concertations",
-        "Diomaye Faye"
-      ],
-      "id": "draft_20260523001827_1",
-      "_dedup_key": "c7effa9dfb557990",
-      "status": "pending",
-      "created_at": "2026-05-23T00:18:27.777079+00:00"
-    },
-    {
-      "type": "promise_update",
-      "promise_id": "promise_1",
-      "title": "Diomaye Faye met fin aux fonctions de Sonko à la Primature",
-      "description": "Le président Bassirou Diomaye Faye a mis fin aux fonctions du Premier ministre Ousmane Sonko le 22 mai 2026. Cet événement relance le débat sur la promesse de suppression du poste de Premier ministre et son remplacement par un Vice-Président. La réaction de Sonko après son limogeage a également été rapportée par plusieurs médias.",
-      "source": "APAnews - Agence de Presse Africaine",
-      "source_url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOcUZXcGUzS3lLRlFYLXdzSUttQXNlWEhvSGFHTTBib3REa0liVko2VDdtUTI3Qi1zLUZ2ZmdEdEg0dkJNelNvV0hJaWtlS0tCNGVXQ2c2Y2ZLeGF4RkVJVmJZVUFlNU9xc2VIUko2Z3pGZmlXMFhLY3J3S3FlNW9GTWtibkxqV2c?oc=5",
-      "date": "2026-05-22",
-      "domain": "Institutions",
-      "confidence": 0.9,
-      "keywords": [
-        "Premier ministre",
-        "Sonko",
-        "limogeage",
-        "Primature",
-        "Diomaye Faye"
-      ],
-      "id": "draft_20260523001827_0",
-      "_dedup_key": "c9130c2b9017787c",
-      "status": "pending",
-      "created_at": "2026-05-23T00:18:27.777066+00:00"
     }
   ]
 }

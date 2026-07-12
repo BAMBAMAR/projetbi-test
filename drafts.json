@@ -1,6 +1,49 @@
 {
-  "last_updated": "2026-07-11T07:30:03.012638+00:00",
+  "last_updated": "2026-07-12T07:55:14.340877+00:00",
   "drafts": [
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Le Premier Ministre Al Aminou LO toujours en fonction malgré la promesse de suppression du poste",
+      "description": "Les actualités de la Primature font état d'une activité soutenue du Premier Ministre Al Aminou LO, notamment des audiences, conseils interministériels et conseils des ministres tenus entre juin et juillet 2026. L'engagement de supprimer le poste de Premier Ministre et d'instaurer un Vice-Président ne semble pas avoir été mis en œuvre à ce stade. La persistance de l'institution et de son titulaire contraste avec cette promesse de campagne.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/audience-du-premier-ministre-la-vice-presidente-du-gouvernement-espagnol",
+      "date": "2026-07-12",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "Premier Ministre",
+        "Al Aminou LO",
+        "Primature",
+        "suppression",
+        "Vice-Président"
+      ],
+      "id": "draft_20260712075514_1",
+      "_dedup_key": "5aca5b8180e707ae",
+      "status": "pending",
+      "created_at": "2026-07-12T07:55:14.340817+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Invalidation de la réforme constitutionnelle : victoire politique pour Diomaye Faye",
+      "description": "Le Conseil Constitutionnel sénégalais a invalidé une réforme constitutionnelle, ce qui est présenté comme une victoire politique pour le président Bassirou Diomaye Faye. Cet événement intervient dans un contexte de reconfiguration politique marqué par la rupture entre Faye et Sonko. Cette décision peut avoir des implications directes sur les réformes institutionnelles engagées par le gouvernement.",
+      "source": "France 24",
+      "source_url": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxQWklhaFE4SlRGYTFCOTM5WHlyNGQ5TDdmenhLZmNSa0h3S1MyRkVTTUNyT1ZSSnFSQWVQX3lFR3k2YWZIVW5rX3JrRHZkYThFRWliekxUeV9OX1YxQjRTMnNsQ0xBSWd3NVo2eWU5cjlYMUZRdU44SktnbVYySnJKVFIwV0NnWm8wRjgwSDhfTkFJSHNzTWFiNHVtY3FpNU90WGQ2UTNIaWx2a2M1YUhtTlZTRzRXampJOUNtLVphMm9wMjY2djVuVGpmR0V5QXNPOUpLMXJ6WENrNnc2M19WNTIxN21uMnFnMWNoQWxwa0s?oc=5",
+      "date": "2026-07-11",
+      "domain": "Institutions",
+      "confidence": 0.72,
+      "keywords": [
+        "réforme constitutionnelle",
+        "Conseil Constitutionnel",
+        "Diomaye Faye",
+        "invalidation"
+      ],
+      "id": "draft_20260712075514_0",
+      "_dedup_key": "d908d5231a57f488",
+      "status": "pending",
+      "created_at": "2026-07-12T07:55:14.340799+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,
@@ -4328,49 +4371,6 @@
       "_dedup_key": "fb8d0ba80a582e9b",
       "status": "pending",
       "created_at": "2026-05-23T00:18:27.777111+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Conseil interministériel sur les Infrastructures",
-      "description": "Un conseil interministériel dédié aux infrastructures a été tenu sous l'égide de la Primature. Cette réunion témoigne d'une action gouvernementale dans le domaine des infrastructures, susceptible d'avoir des liens avec les engagements relatifs au développement économique et industriel. Les détails des décisions prises n'ont pas été précisés dans les informations disponibles.",
-      "source": "Primature",
-      "source_url": "https://primature.sn/publications/actualites/conseil-interministeriel-sur-les-infrastructures",
-      "date": "2026-05-23",
-      "domain": "Industrie",
-      "confidence": 0.65,
-      "keywords": [
-        "conseil interministériel",
-        "infrastructures",
-        "gouvernement"
-      ],
-      "id": "draft_20260523001827_5",
-      "_dedup_key": "b4b571524a8cfb89",
-      "status": "pending",
-      "created_at": "2026-05-23T00:18:27.777104+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Jubbanti AN 2 : bilan entre réformes, rationalisation et relance",
-      "description": "La Primature a publié un document intitulé « Jubbanti AN 2 » faisant état des réformes, de la rationalisation et de la relance menées au cours de la deuxième année du gouvernement. Ce bilan couvre potentiellement plusieurs promesses présidentielles en cours d'exécution. Il constitue une source importante pour le suivi de l'ensemble des engagements du programme gouvernemental.",
-      "source": "Primature",
-      "source_url": "https://primature.sn/publications/actualites/jubbanti-2-entre-reformes-rationalisation-et-relance",
-      "date": "2026-05-23",
-      "domain": "Gouvernance",
-      "confidence": 0.8,
-      "keywords": [
-        "Jubbanti",
-        "réformes",
-        "bilan",
-        "rationalisation",
-        "relance",
-        "gouvernement"
-      ],
-      "id": "draft_20260523001827_4",
-      "_dedup_key": "810b1d41e13532d4",
-      "status": "pending",
-      "created_at": "2026-05-23T00:18:27.777098+00:00"
     }
   ]
 }

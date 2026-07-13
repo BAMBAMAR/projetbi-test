@@ -1,6 +1,71 @@
 {
-  "last_updated": "2026-07-12T07:55:14.340877+00:00",
+  "last_updated": "2026-07-13T08:42:38.935464+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Dépolitisation du secteur extractif par le Président Diomaye Faye",
+      "description": "Le Président Bassirou Diomaye Faye a pris des mesures visant à dépolitiser le secteur extractif sénégalais. Cette initiative concerne la gouvernance des ressources naturelles, un secteur stratégique pour l'économie nationale. Les modalités concrètes de cette dépolitisation ne sont pas précisées dans l'article.",
+      "source": "SenePlus",
+      "source_url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNWG1DM0dhbXdzSGlJS0xaZ1BpM01rTHR3bEZONUhVTWZjTFdRT3FFRFh6NzlWUmJJQXJqenQzLXBFQzNLUVVSSlFYWlhYRlBzTi1YWU0zUUJiaEhuSzVSa2pVanFRdzY1eG82NG9MRzltV1hmZjg0Nmt0czZmNnE4NEVCdURrZ2FFSmNxckFsYw?oc=5",
+      "date": "2026-07-12",
+      "domain": "Économie",
+      "confidence": 0.7,
+      "keywords": [
+        "secteur extractif",
+        "dépolitisation",
+        "ressources naturelles",
+        "Diomaye Faye",
+        "gouvernance"
+      ],
+      "id": "draft_20260713084238_2",
+      "_dedup_key": "910aeb67e2bd6eb1",
+      "status": "pending",
+      "created_at": "2026-07-13T08:42:38.935405+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_3",
+      "title": "Révision constitutionnelle : le Conseil Constitutionnel au cœur des tensions",
+      "description": "Dans le cadre du processus de révision constitutionnelle, le Conseil Constitutionnel ('sept Sages') est directement impliqué et mis en cause par Ousmane Sonko. Ce contexte est lié à la promesse de transformation du Conseil Constitutionnel en Cour Constitutionnelle. Les tensions entre les acteurs institutionnels illustrent les enjeux de cette réforme.",
+      "source": "DAKARACTU.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPODJwWjRxWlV4YWNaMlZyQUx1UlUzNW9aRjdKa181Yko5MTlpS0s0QUg1dTlHOTk4MW92R1ZHOUZ4VU9HN0lfRUMzeVJON1Z0MnAzQ3ZPelQzWHN2eWFkSmRZeUpES2NzUFpQM1RmdGpvOTA4UF9pcUxGdTc0TFpCdjF6YVhqLXNnOUs0cktnR2FUWEdJYWdaSXhGZmNFSEd0aWpOUnE5MnRaaTJzN0Y3NDZoSXE4ZlJaX3EtT0FjY1YySXd6VEh6WGtlcDduUE9JVEsxbDBTTQ?oc=5",
+      "date": "2026-07-12",
+      "domain": "Institutions",
+      "confidence": 0.65,
+      "keywords": [
+        "Conseil Constitutionnel",
+        "révision constitutionnelle",
+        "réforme institutionnelle",
+        "Sonko"
+      ],
+      "id": "draft_20260713084238_1",
+      "_dedup_key": "615b871cd463d3d5",
+      "status": "pending",
+      "created_at": "2026-07-13T08:42:38.935396+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Révision constitutionnelle : tensions autour du poste de Premier Ministre",
+      "description": "Une révision constitutionnelle est en cours de discussion au Sénégal, avec des désaccords notables entre Ousmane Sonko et le Président Diomaye Faye. Le Conseil Constitutionnel (les 'sept Sages') est également mis en cause dans ce processus. Cette actualité est directement liée à la promesse de suppression du poste de Premier Ministre et d'instauration d'un Vice-Président.",
+      "source": "DAKARACTU.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxPODJwWjRxWlV4YWNaMlZyQUx1UlUzNW9aRjdKa181Yko5MTlpS0s0QUg1dTlHOTk4MW92R1ZHOUZ4VU9HN0lfRUMzeVJON1Z0MnAzQ3ZPelQzWHN2eWFkSmRZeUpES2NzUFpQM1RmdGpvOTA4UF9pcUxGdTc0TFpCdjF6YVhqLXNnOUs0cktnR2FUWEdJYWdaSXhGZmNFSEd0aWpOUnE5MnRaaTJzN0Y3NDZoSXE4ZlJaX3EtT0FjY1YySXd6VEh6WGtlcDduUE9JVEsxbDBTTQ?oc=5",
+      "date": "2026-07-12",
+      "domain": "Institutions",
+      "confidence": 0.75,
+      "keywords": [
+        "révision constitutionnelle",
+        "Premier Ministre",
+        "Sonko",
+        "Diomaye",
+        "Conseil Constitutionnel"
+      ],
+      "id": "draft_20260713084238_0",
+      "_dedup_key": "17595e26e1c2a835",
+      "status": "pending",
+      "created_at": "2026-07-13T08:42:38.935377+00:00"
+    },
     {
       "type": "promise_update",
       "promise_id": "promise_1",
@@ -4302,75 +4367,6 @@
       "_dedup_key": "6d2e06f04b01a9fa",
       "status": "pending",
       "created_at": "2026-05-24T08:15:10.169700+00:00"
-    },
-    {
-      "type": "promise_update",
-      "promise_id": "promise_1",
-      "title": "Suppression du poste de Premier ministre : le limogeage de Sonko relance le débat",
-      "description": "Le limogeage d'Ousmane Sonko de la Primature par le président Diomaye Faye soulève la question de l'avenir du poste de Premier ministre, dont la suppression figure parmi les engagements programmatiques du président. Des médias évoquent une possible reconfiguration institutionnelle calculée du pouvoir. La nomination d'un successeur ou l'absence de nomination permettra de mesurer si cette promesse est en cours d'application.",
-      "source": "DAKARACTU.COM",
-      "source_url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxOMnpwVENIMXdHWE9rdGotRi1WMlZPcl9xamF2VmRFWFdfQlluMG03TDlvLTZxekZNbThDY2ZEeEVTR09TeDNVUWNseF9WWUVSU2w1Mm1mdWxjckF0Wm83UXZVU0tRRndCMDB4NEU1ZzVLeVVkdFBMNWN4eU42ZUQxc2NjUk0xU3dleGV0V3RiUkd6QjlqRHkyTF9ydTJyNVhLUDZVVzg0TFBxN0V3TS04SGg3WnpsRXJYQkN4R3FLUkVhSFU0dmtZRkY0UFA3UWYwYzNSNzNMLVY",
-      "date": "2026-05-23",
-      "domain": "Institutions",
-      "confidence": 0.72,
-      "keywords": [
-        "Premier ministre",
-        "suppression",
-        "Primature",
-        "reconfiguration",
-        "institutions",
-        "Vice-Président"
-      ],
-      "id": "draft_20260524081510_1",
-      "_dedup_key": "53fdd52a1cc654e8",
-      "status": "pending",
-      "created_at": "2026-05-24T08:15:10.169691+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Limogeage d'Ousmane Sonko : fin de la cohabitation à la Primature",
-      "description": "Le président Bassirou Diomaye Faye a limogé le Premier ministre Ousmane Sonko après plusieurs mois de tensions au sommet de l'exécutif. Sonko quitte la Primature après 24 mois de fonctions. Cette décision plonge le Sénégal dans une phase d'incertitude institutionnelle et relance le débat sur la recomposition du gouvernement.",
-      "source": "Le Monde.fr",
-      "source_url": "https://news.google.com/rss/articles/CBMijwJBVV95cUxNQkFqNk1EbkJZUDBhS1lqaFZBRDk1ZHdMUkQyR0JpRkZONjlZQWFkSm5zTU1GYWtfam1iOGJTamE2cmIzN1UzcUlVSTJyMEZnbUpCUGZDcE84azRIVUhPZDRmZHJfZjRUSDdDa1h6Ri1oQURFdktpeHNueFNLS0tkb1lKWVVCT24xajNVdS1lQTFwaHhoQ2hPWWNxb3pmQzJaQVVuSXoyeEJxYmdEcW9saEVfZ2FBR2xEX2txNjVDUi1kSGVkT2xWYVlwbnlnT05UWVdEQ1IxVUZXZDFWTXR2cnl0NEpPaTkyeWZ1S2tpZmZ5ZHZHMmVDNHJQZUJMU2dFX2xKWms5OTh5bWs2amFZ",
-      "date": "2026-05-23",
-      "domain": "Institutions",
-      "confidence": 0.75,
-      "keywords": [
-        "limogeage",
-        "Sonko",
-        "Primature",
-        "Premier ministre",
-        "Diomaye Faye",
-        "gouvernement"
-      ],
-      "id": "draft_20260524081510_0",
-      "_dedup_key": "131fb20ddf8bac12",
-      "status": "pending",
-      "created_at": "2026-05-24T08:15:10.169676+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Macron, FMI et bailleurs du Golfe mobilisés pour le financement de Dakar",
-      "description": "Plusieurs partenaires financiers internationaux, dont la France, le FMI et des bailleurs du Golfe, sont décrits comme étant « au chevet » du Sénégal selon SenePlus. Cette mobilisation s'inscrit dans le contexte des défis économiques et financiers du pays. Elle est potentiellement liée aux engagements du gouvernement en matière de financement public et de gestion de la dette.",
-      "source": "SenePlus",
-      "source_url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPeUhZWFZrWWo1SF9wMGlRTjZsZl9YZ01tTF9QeWVCYk95NV9GN2FyaEF3eVhIRVk3QmtsT2RrdVFPYzBuQ3NLOEozR3JNbzZ6WDlfT3pIVlo3RW9UNUdHQlZzaGFtWl9vUFE4XzBjMDNHaGpCeTZMdzJneFNQcHpIRTdoVmZHTm5DMzZCN0hjUXBtY210V3c?oc=5",
-      "date": "2026-05-20",
-      "domain": "Économie",
-      "confidence": 0.65,
-      "keywords": [
-        "FMI",
-        "financement",
-        "dette",
-        "bailleurs",
-        "Macron",
-        "Dakar"
-      ],
-      "id": "draft_20260523001827_6",
-      "_dedup_key": "fb8d0ba80a582e9b",
-      "status": "pending",
-      "created_at": "2026-05-23T00:18:27.777111+00:00"
     }
   ]
 }

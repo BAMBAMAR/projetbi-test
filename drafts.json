@@ -1,6 +1,50 @@
 {
-  "last_updated": "2026-07-13T08:42:38.935464+00:00",
+  "last_updated": "2026-07-14T07:43:57.322938+00:00",
   "drafts": [
+    {
+      "type": "promise_update",
+      "promise_id": "promise_3",
+      "title": "Nomination d'un nouveau président du Conseil constitutionnel",
+      "description": "Le président Bassirou Diomaye Faye a nommé Ousmane Diagne à la tête du Conseil constitutionnel, selon plusieurs sources concordantes. Cette nomination intervient dans un contexte de tension autour de la réforme constitutionnelle invalidée par cette même institution. La promesse de transformer le Conseil constitutionnel en Cour constitutionnelle reste en suspens, mais la nouvelle composition de l'institution constitue un signal sur la volonté de réforme institutionnelle.",
+      "source": "Senego.com",
+      "source_url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNeEptMkFQUTFTYlNwaV9nbTV0YXZtZ25lc1J5V2pCM0xYMXlmY0stVTU5Vkx0cnJxck5KelBhMlFSa3RiOC1FT3NHR1hWcnJYVWxfX2d1eFJnUmxrbldpUmYyME1EcGNTWUUtV2hEc1kyVUItRGRoLUZPd19Wd0M5d3J4THZwenBzRGJxQzhVcGVMd0lKUkJHNFdWWUZQbnZFZFc1My02Q3JQb3VXWUlBal9HRnR2dDhx",
+      "date": "2026-07-13",
+      "domain": "Institutions",
+      "confidence": 0.7,
+      "keywords": [
+        "Conseil constitutionnel",
+        "nomination",
+        "Ousmane Diagne",
+        "président",
+        "réforme institutionnelle"
+      ],
+      "id": "draft_20260714074357_1",
+      "_dedup_key": "210b4a322e09dd9e",
+      "status": "pending",
+      "created_at": "2026-07-14T07:43:57.322875+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_1",
+      "title": "Invalidation de la réforme constitutionnelle : la suppression du poste de Premier Ministre bloquée",
+      "description": "Le Conseil constitutionnel a invalidé la réforme constitutionnelle portée par le gouvernement, ce qui constitue un revers pour le projet de suppression du poste de Premier Ministre. France 24 qualifie cette invalidation de 'victoire politique pour Diomaye Faye', suggérant une tension interne au camp au pouvoir sur ce sujet. La promesse de remplacer le poste de Premier Ministre par un poste de Vice-Président se trouve ainsi temporairement bloquée dans son processus législatif.",
+      "source": "France 24",
+      "source_url": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxQWklhaFE4SlRGYTFCOTM5WHlyNGQ5TDdmenhLZmNSa0h3S1MyRkVTTUNyT1ZSSnFSQWVQX3lFR3k2YWZIVW5rX3JrRHZkYThFRWliekxUeV9OX1YxQjRTMnNsQ0xBSWd3NVo2eWU5cjlYMUZRdU44SktnbVYySnJKVFIwV0NnWm8wRjgwSDhfTkFJSHNzTWFiNHVtY3FpNU90WGQ2UTNIaWx2a2M1YUhtTlZTRzRXampJOUNtLVphMm9wMjY2djVuVGpmR0V5QXNPOUpLMXJ6WENrNnc2M19WNTIxN21uMnFnMWNoQWxwa0s",
+      "date": "2026-07-11",
+      "domain": "Institutions",
+      "confidence": 0.82,
+      "keywords": [
+        "réforme constitutionnelle",
+        "Conseil constitutionnel",
+        "invalidation",
+        "Premier Ministre",
+        "Vice-Président"
+      ],
+      "id": "draft_20260714074357_0",
+      "_dedup_key": "d4e989664e81ab31",
+      "status": "pending",
+      "created_at": "2026-07-14T07:43:57.322856+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,
@@ -4322,51 +4366,6 @@
       "_dedup_key": "d92fc4b4fe249a1d",
       "status": "pending",
       "created_at": "2026-05-24T08:15:10.169711+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Jubbanti AN 2 : bilan à mi-parcours entre réformes et relance économique",
-      "description": "La Primature a publié un document intitulé « Jubbanti AN 2 » présentant un bilan des deux années d'action gouvernementale, articulé autour des réformes institutionnelles, de la rationalisation des dépenses et de la relance économique. Ce document constitue une source directe d'évaluation des engagements programmatiques du gouvernement. Il est disponible sur le site officiel de la Primature.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/jubbanti-2-entre-reformes-rationalisation-et-relance",
-      "date": "2026-05-24",
-      "domain": "Gouvernance",
-      "confidence": 0.8,
-      "keywords": [
-        "Jubbanti",
-        "bilan",
-        "réformes",
-        "relance",
-        "rationalisation",
-        "gouvernement",
-        "AN 2"
-      ],
-      "id": "draft_20260524081510_3",
-      "_dedup_key": "06d20a2d7583ad39",
-      "status": "pending",
-      "created_at": "2026-05-24T08:15:10.169706+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Conseil des ministres du 20 mai 2026 : activité gouvernementale maintenue",
-      "description": "Le gouvernement sénégalais a tenu un Conseil des ministres le 20 mai 2026, confirmant la continuité de l'activité exécutive. Ce conseil intervient dans un contexte de tensions entre la Présidence et la Primature. Le compte-rendu officiel est publié sur le site du Gouvernement du Sénégal.",
-      "source": "Gouvernement du Sénégal",
-      "source_url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOMXhOU2tsQ1hYclNOYzQ0N2d1X0ZiQkVQWnJ0QUZibTlPeEQ2RlVFUE5TLTVMdVlfWkpDSUF5Y2E3eWhhOW9vVFY1SGRCZlZRRml4dmtqYmx1RGI3ZElxWGI5YkpIcUhuQ3JTV3AwQzBzS0M1SGE1UjJ6Xzl3a2Zkd2R4dXZ5MlZIYmVuMmJn",
-      "date": "2026-05-21",
-      "domain": "Gouvernance",
-      "confidence": 0.7,
-      "keywords": [
-        "Conseil des ministres",
-        "gouvernement",
-        "exécutif",
-        "activité gouvernementale"
-      ],
-      "id": "draft_20260524081510_2",
-      "_dedup_key": "6d2e06f04b01a9fa",
-      "status": "pending",
-      "created_at": "2026-05-24T08:15:10.169700+00:00"
     }
   ]
 }

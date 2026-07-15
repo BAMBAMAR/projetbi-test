@@ -1,6 +1,111 @@
 {
-  "last_updated": "2026-07-14T07:43:57.322938+00:00",
+  "last_updated": "2026-07-15T07:47:20.664398+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Point de situation sur les Jeux Olympiques de la Jeunesse (JOJ) Dakar 2026",
+      "description": "Le Premier Ministre Al Aminou LO a fait un point sur l'avancement des diligences liées à l'organisation des Jeux Olympiques de la Jeunesse Dakar 2026. Cet événement majeur mobilise des ressources publiques significatives et implique une coordination interministérielle soutenue. Aucun lien direct avec une promesse présidentielle spécifique n'est identifiable.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/le-premier-ministre-al-aminou-lo-fait-le-point-sur-la-situation-des",
+      "date": "2026-07-15",
+      "domain": "Gouvernance",
+      "confidence": 0.65,
+      "keywords": [
+        "JOJ",
+        "Jeux Olympiques Jeunesse",
+        "Dakar 2026",
+        "Premier Ministre"
+      ],
+      "id": "draft_20260715074720_7",
+      "_dedup_key": "083c722785cb3a70",
+      "status": "pending",
+      "created_at": "2026-07-15T07:47:20.664343+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Le Premier Ministre appelle l'Afrique à s'unir sur l'économie sociale et solidaire",
+      "description": "Le Premier Ministre Al Aminou LO a plaidé pour une position africaine commune sur les questions d'économie sociale et solidaire lors d'une prise de parole publique. Cette initiative s'inscrit dans une dynamique de positionnement du Sénégal sur les enjeux économiques continentaux. Elle peut être mise en lien avec les engagements relatifs au secteur informel et à l'entrepreneuriat.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/le-premier-ministre-al-aminou-lo-appelle-lafrique-parler-dune-seule-voix",
+      "date": "2026-07-15",
+      "domain": "Secteur Informel",
+      "confidence": 0.63,
+      "keywords": [
+        "économie sociale",
+        "solidaire",
+        "Afrique",
+        "Premier Ministre"
+      ],
+      "id": "draft_20260715074720_6",
+      "_dedup_key": "4de572638c04e466",
+      "status": "pending",
+      "created_at": "2026-07-15T07:47:20.664331+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Le Premier Ministre Al Aminou LO en audience avec la Vice-Présidente du gouvernement espagnol",
+      "description": "Le Premier Ministre Al Aminou LO a reçu en audience Yolanda Díaz, Vice-Présidente du gouvernement espagnol. Cette rencontre diplomatique témoigne de l'activité du Premier Ministre sur la scène internationale. Le contenu des échanges n'est pas précisé dans l'intitulé de l'article.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/audience-du-premier-ministre-la-vice-presidente-du-gouvernement-espagnol",
+      "date": "2026-07-15",
+      "domain": "Institutions",
+      "confidence": 0.6,
+      "keywords": [
+        "Premier Ministre",
+        "diplomatie",
+        "Espagne",
+        "audience"
+      ],
+      "id": "draft_20260715074720_5",
+      "_dedup_key": "cc2ac49bd1563303",
+      "status": "pending",
+      "created_at": "2026-07-15T07:47:20.664325+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_36",
+      "title": "Suivi de la campagne agricole 2026/2027 au niveau interministériel",
+      "description": "Une réunion interministérielle a été consacrée au suivi de la campagne de production agricole 2026/2027, signalant un engagement actif de l'exécutif dans le pilotage du secteur. Cet encadrement gouvernemental est cohérent avec la promesse d'augmenter substantiellement le budget alloué à l'agriculture. Aucune donnée chiffrée sur l'allocation budgétaire n'est mentionnée dans l'article.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/reunion-interministerielle-sur-le-deroulement-de-la-campagne-de-production",
+      "date": "2026-07-15",
+      "domain": "Agriculture",
+      "confidence": 0.62,
+      "keywords": [
+        "budget agricole",
+        "campagne",
+        "production agricole",
+        "interministériel"
+      ],
+      "id": "draft_20260715074720_4",
+      "_dedup_key": "7fc5d530d84b18bc",
+      "status": "pending",
+      "created_at": "2026-07-15T07:47:20.664319+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye fixe le cap d'une nouvelle ambition maritime",
+      "description": "Le Président Bassirou Diomaye Faye a défini les orientations stratégiques du Sénégal en matière d'économie bleue. Cette initiative s'inscrit dans une volonté de mieux valoriser les ressources maritimes nationales. Les détails programmatiques de cette ambition maritime restent à préciser.",
+      "source": "DAKARACTU.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOWlN3clluWng1dTNwTFFSQ3dvamI4THhMWFF1Q2s1TVhHQ0VTZ3I0WWtJc2ctbFBORXFicURYSVlyTzVVN3ZoamFCekRqcVZpNUpSWWpBNlFGRG5GLTJoeDN1eXRUeWZ3MjhIUjFlemtvTEFxeGhBc2puLTBrTUpfVFVUZUZFREhRbXdsbXB1dXVGeFZWV3VSMnhHalhmcVQtNnlGWk5aSGxjY0VZTUxEcllMTWVVMXZ1TXp5Q2VSeEhCY1Ba",
+      "date": "2026-07-13",
+      "domain": "Pêche",
+      "confidence": 0.7,
+      "keywords": [
+        "économie bleue",
+        "maritime",
+        "ressources",
+        "Diomaye Faye"
+      ],
+      "id": "draft_20260715074720_0",
+      "_dedup_key": "9bea7dce71d9fb77",
+      "status": "pending",
+      "created_at": "2026-07-15T07:47:20.664283+00:00"
+    },
     {
       "type": "promise_update",
       "promise_id": "promise_3",
@@ -4256,116 +4361,6 @@
       "_dedup_key": "90d72d360b3aa0f5",
       "status": "pending",
       "created_at": "2026-05-25T09:45:18.089698+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Fin de mission d'Ousmane Sonko à la Primature après 24 mois",
-      "description": "Ousmane Sonko a quitté la Primature le 23 mai 2026 après deux ans de fonctions en tant que Premier ministre, sur décision du président Bassirou Diomaye Faye. Cette éviction intervient dans un contexte de tensions rapportées entre les deux têtes de l'exécutif. Le parti PASTEF a salué le « travail remarquable » accompli par Sonko durant son mandat.",
-      "source": "Africa24 TV",
-      "source_url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPa3pzTW1USkxKbFNXbm5QSTc3YU1INkdDaDU0S3ExZ0dxblAyS0FnaUdoUHN1dGx3QnFWVldVZ01EczY0MmgxdGR3OFhrX2RoeTctTmRFOHNlQ1lmenpCSklpYmxiU1BFbmwxczNvdURxRFNsZFk1QjRfR2phX3lqb3lUVmtYWkF0ZkFqemVfVzFwbTYyY20w?oc=5",
-      "date": "2026-05-23",
-      "domain": "Institutions",
-      "confidence": 0.7,
-      "keywords": [
-        "Sonko",
-        "Primature",
-        "Premier ministre",
-        "Diomaye",
-        "gouvernement"
-      ],
-      "id": "draft_20260525094518_1",
-      "_dedup_key": "4969c61a268b19c9",
-      "status": "pending",
-      "created_at": "2026-05-25T09:45:18.089685+00:00"
-    },
-    {
-      "type": "promise_update",
-      "promise_id": "promise_1",
-      "title": "Limogeage de Sonko : fin du poste de Premier ministre en vue ?",
-      "description": "Le président Bassirou Diomaye Faye a mis fin aux fonctions du Premier ministre Ousmane Sonko le 23 mai 2026, après 24 mois à la tête de la Primature. Cette décision relance le débat sur la suppression du poste de Premier ministre, l'une des promesses institutionnelles phares du programme présidentiel. La question d'une éventuelle reconfiguration institutionnelle vers un poste de Vice-Président est désormais posée.",
-      "source": "Jeune Afrique",
-      "source_url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxOTVd4cThkX1d0OGpxaWlZZ2Uyc1JVdFN3LXI3V05mdjdqSG5sLTRiNFlWaWJZQ1lETkVVQmh3VDFmaEMwc2l6YXd3YW5sTHByeFNXMHZubTcxLTBITU9TMHhNN3d2TW1UR18tdTFGa0ttRGZzc05mcjlqSjk4ZmhacTlzTzB6bTlrNEk3blRSMEl2R3pxWGdJSHgzcEVENGlZOHNDYWJwQkxlMzFoeHBPRnFhdkcyMElPOHlPU0Q4VzJMNW9sWXN4OHJUSFo3UQ?oc=5",
-      "date": "2026-05-23",
-      "domain": "Institutions",
-      "confidence": 0.82,
-      "keywords": [
-        "Premier ministre",
-        "limogeage",
-        "Sonko",
-        "Primature",
-        "réforme institutionnelle"
-      ],
-      "id": "draft_20260525094518_0",
-      "_dedup_key": "b3cd4d247f33be33",
-      "status": "pending",
-      "created_at": "2026-05-25T09:45:18.089663+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Journée du dialogue : Diomaye Faye consulte d'anciens responsables politiques",
-      "description": "Le président Bassirou Diomaye Faye a reçu en consultation Amadou Kane et Abdoulaye Daouda Diallo dans le cadre d'une journée de dialogue. Ces consultations s'inscrivent dans un contexte post-limogeage de Sonko et pourraient être liées à une recomposition politique ou institutionnelle. L'ancien ministre de l'Intérieur Antoine Diome a également été reçu par le Président.",
-      "source": "Xalima",
-      "source_url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNTTAxWF9fWERNSzB2RkRJYkN3dTN3OTluQUdnUFJFVjlkQ3Z1YlljY284U2FUOTJGUEZtWEJMdjQ2WmFMMjd0Nlp3ZndDWUNPLU9CRGY4aHdtMUlWOGhWb3JBc3U4RWFqek9jLXkwUzNObGxEaDRmdEQyTlkyUmlDOUN4UGlEd3pLTHNqQ0FfSy1TRnhaaUxLRFROYjFzQlBvQkpoNEtxWjFuYzFnNjZpUVlPdw",
-      "date": "2026-05-22",
-      "domain": "Institutions",
-      "confidence": 0.68,
-      "keywords": [
-        "dialogue",
-        "consultations",
-        "Diomaye Faye",
-        "recomposition",
-        "institutions",
-        "politique"
-      ],
-      "id": "draft_20260524081510_6",
-      "_dedup_key": "836e8c3986623080",
-      "status": "pending",
-      "created_at": "2026-05-24T08:15:10.169724+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Conseil interministériel sur la préparation de la Tabaski : mesures pour l'élevage et l'approvisionnement",
-      "description": "Le gouvernement a organisé un Conseil interministériel spécifiquement dédié à la préparation de la Tabaski, impliquant potentiellement les secteurs de l'élevage, du commerce et de la sécurité alimentaire. Ce type de réunion peut concerner les engagements relatifs à la traçabilité du bétail et à la sécurité sanitaire des aliments. Les détails des décisions prises ne sont pas disponibles dans les articles collectés.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/conseil-interministeriel-sur-la-preparation-de-la-tabaski",
-      "date": "2026-05-24",
-      "domain": "Élevage",
-      "confidence": 0.63,
-      "keywords": [
-        "Tabaski",
-        "élevage",
-        "approvisionnement",
-        "Conseil interministériel",
-        "sécurité alimentaire"
-      ],
-      "id": "draft_20260524081510_5",
-      "_dedup_key": "4475e923daea4a8e",
-      "status": "pending",
-      "created_at": "2026-05-24T08:15:10.169717+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Conseil interministériel sur les infrastructures : réunion de coordination sectorielle",
-      "description": "Un Conseil interministériel dédié aux infrastructures a été tenu, indiquant une attention particulière du gouvernement à ce secteur stratégique. Ce type de réunion de coordination peut être le vecteur de décisions relatives à des engagements programmatiques liés aux travaux publics, à l'hydraulique ou aux agropoles. Aucun compte-rendu détaillé n'est disponible dans les articles collectés.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/conseil-interministeriel-sur-les-infrastructures",
-      "date": "2026-05-24",
-      "domain": "Infrastructures",
-      "confidence": 0.65,
-      "keywords": [
-        "Conseil interministériel",
-        "infrastructures",
-        "coordination",
-        "gouvernement"
-      ],
-      "id": "draft_20260524081510_4",
-      "_dedup_key": "d92fc4b4fe249a1d",
-      "status": "pending",
-      "created_at": "2026-05-24T08:15:10.169711+00:00"
     }
   ]
 }

@@ -1,6 +1,69 @@
 {
-  "last_updated": "2026-07-15T07:47:20.664398+00:00",
+  "last_updated": "2026-07-16T07:52:01.227332+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Audience du Premier ministre avec la Vice-Présidente du gouvernement espagnol",
+      "description": "Le Premier ministre Al Aminou LO a reçu en audience Madame Yolanda Díaz, Vice-Présidente du gouvernement espagnol. Cette rencontre diplomatique s'inscrit dans le cadre des relations bilatérales entre le Sénégal et l'Espagne. Les sujets abordés lors de cette audience ne sont pas précisés dans les informations disponibles.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/audience-du-premier-ministre-la-vice-presidente-du-gouvernement-espagnol",
+      "date": "2026-07-16",
+      "domain": "Diplomatie",
+      "confidence": 0.65,
+      "keywords": [
+        "diplomatie",
+        "Espagne",
+        "Premier ministre",
+        "coopération bilatérale"
+      ],
+      "id": "draft_20260716075201_7",
+      "_dedup_key": "fe1363519bb44d1c",
+      "status": "pending",
+      "created_at": "2026-07-16T07:52:01.227282+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Le Premier ministre appelle l'Afrique à parler d'une seule voix sur l'économie sociale et solidaire",
+      "description": "Le Premier ministre Al Aminou LO a pris la parole lors d'un forum ou événement dédié à l'économie sociale et solidaire, appelant à une position commune africaine sur ce sujet. Cette intervention s'inscrit dans une démarche d'intégration économique continentale et de promotion d'un modèle économique alternatif. Elle traduit un positionnement du gouvernement sénégalais en faveur d'une coopération économique intra-africaine renforcée.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/le-premier-ministre-al-aminou-lo-appelle-lafrique-parler-dune-seule-voix",
+      "date": "2026-07-16",
+      "domain": "Économie",
+      "confidence": 0.65,
+      "keywords": [
+        "économie sociale et solidaire",
+        "Afrique",
+        "Premier ministre",
+        "intégration"
+      ],
+      "id": "draft_20260716075201_6",
+      "_dedup_key": "bd55d3fd4931e180",
+      "status": "pending",
+      "created_at": "2026-07-16T07:52:01.227269+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_36",
+      "title": "Campagne agricole 2026/2027 : mobilisation gouvernementale interministérielle",
+      "description": "Une réunion interministérielle dédiée à la campagne de production agricole 2026/2027 a été organisée par la Primature. Cette mobilisation au plus haut niveau de l'exécutif illustre l'attention portée au secteur agricole, en lien avec l'engagement d'allouer 10 % du budget à l'agriculture. Le contenu précis des arbitrages budgétaires et opérationnels n'est pas encore disponible.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/reunion-interministerielle-sur-le-deroulement-de-la-campagne-de-production",
+      "date": "2026-07-16",
+      "domain": "Agriculture",
+      "confidence": 0.62,
+      "keywords": [
+        "budget agricole",
+        "campagne agricole",
+        "production",
+        "interministériel"
+      ],
+      "id": "draft_20260716075201_3",
+      "_dedup_key": "10c7dfe1b7827f82",
+      "status": "pending",
+      "created_at": "2026-07-16T07:52:01.227251+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,
@@ -4293,74 +4356,6 @@
       "_dedup_key": "1aae97e56f768145",
       "status": "pending",
       "created_at": "2026-05-26T09:32:25.126375+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Limogeage de Sonko : Ahmadou Al Aminou Lo nommé Premier ministre",
-      "description": "Le président Bassirou Diomaye Faye a limogé Ousmane Sonko de la primature après 24 mois de fonctions. Ahmadou Al Aminou Lo, décrit comme un technicien, lui succède au poste de Premier ministre. La coalition Diomaye Président a affiché son soutien total à cette nomination.",
-      "source": "France 24 / DAKARACTU.COM / Afriquinfos",
-      "source_url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPSk1sU1VJTXRya3FUMjBfSGhYQTdKR3hRUEYwZF9Bb0NTN0NOdnc4VS1xUmp5OTRjdWdlY2VKZW5MMWR0azYza3c3WHBrZlZtN29qVExoMW1mTEFVQU42SktPN2dRaS1MR08wSnd6VVRhSnd1anpsdDBRSjFFSlZvNEtFZ3VxLW4zRHEtaTZRQ1Vlb3ozaGdPVEZpLXBwWURBdlNyQ0RWd05aZGVtbVZMbHlPMkxxQlE1?oc=5",
-      "date": "2026-05-23",
-      "domain": "Institutions",
-      "confidence": 0.85,
-      "keywords": [
-        "Premier ministre",
-        "Sonko",
-        "Al Aminou Lo",
-        "limogeage",
-        "primature",
-        "nomination"
-      ],
-      "id": "draft_20260526093225_0",
-      "_dedup_key": "0eb4b9f4213b6328",
-      "status": "pending",
-      "created_at": "2026-05-26T09:32:25.126357+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Conseil interministériel sur la préparation de la Tabaski",
-      "description": "Un conseil interministériel a été consacré à la préparation de la fête de la Tabaski, impliquant notamment les secteurs de l'élevage, de la sécurité alimentaire et de la logistique. Cette réunion peut avoir des implications pour les engagements relatifs à l'élevage, notamment la traçabilité du bétail et l'agence de sécurité sanitaire des aliments. Les décisions prises sont consultables sur le site de la Primature.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/conseil-interministeriel-sur-la-preparation-de-la-tabaski",
-      "date": "2026-05-25",
-      "domain": "Élevage",
-      "confidence": 0.62,
-      "keywords": [
-        "Tabaski",
-        "élevage",
-        "bétail",
-        "sécurité alimentaire",
-        "conseil interministériel"
-      ],
-      "id": "draft_20260525094518_5",
-      "_dedup_key": "1b00b4857672a0b3",
-      "status": "pending",
-      "created_at": "2026-05-25T09:45:18.089704+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Jubbanti AN 2 : bilan de deux ans de réformes et de relance",
-      "description": "La Primature a publié un document intitulé « Jubbanti AN 2 » faisant état des réformes, de la rationalisation et de la relance économique menées durant les deux premières années du gouvernement. Ce bilan gouvernemental est directement pertinent pour le suivi de l'ensemble des engagements programmatiques. Il constitue une source primaire à analyser pour mettre à jour le statut de plusieurs promesses.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/jubbanti-2-entre-reformes-rationalisation-et-relance",
-      "date": "2026-05-25",
-      "domain": "Gouvernance",
-      "confidence": 0.85,
-      "keywords": [
-        "Jubbanti",
-        "bilan",
-        "réformes",
-        "relance",
-        "deux ans",
-        "programme"
-      ],
-      "id": "draft_20260525094518_4",
-      "_dedup_key": "90d72d360b3aa0f5",
-      "status": "pending",
-      "created_at": "2026-05-25T09:45:18.089698+00:00"
     }
   ]
 }

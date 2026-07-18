@@ -1,6 +1,120 @@
 {
-  "last_updated": "2026-07-17T07:49:57.304149+00:00",
+  "last_updated": "2026-07-18T07:24:20.305482+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Réunion technique sur la commercialisation du riz local",
+      "description": "La Primature a organisé une réunion technique consacrée à la commercialisation du riz local, dans le contexte de la campagne agricole 2026/2027. Cette initiative gouvernementale vise à structurer les circuits de distribution de la production rizicole nationale. Elle fait écho aux efforts de souveraineté alimentaire portés par l'exécutif.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/reunion-technique-sur-la-commercialisation-du-riz-local",
+      "date": "2026-07-16",
+      "domain": "Agriculture",
+      "confidence": 0.65,
+      "keywords": [
+        "riz local",
+        "commercialisation",
+        "campagne agricole",
+        "souveraineté alimentaire",
+        "primature"
+      ],
+      "id": "draft_20260718072420_4",
+      "_dedup_key": "76687ac4b1d07190",
+      "status": "pending",
+      "created_at": "2026-07-18T07:24:20.305422+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_47",
+      "title": "Construction d'une plateforme frigorifique de 11,5 milliards FCFA à Diamniadio",
+      "description": "La première pierre d'un entrepôt frigorifique d'une valeur de 11,5 milliards de francs CFA a été posée à la plateforme industrielle de Diamniadio, à 30 km de Dakar. Cet équipement, d'une capacité de 10 000 palettes, est destiné au stockage de produits agricoles, halieutiques, pharmaceutiques et de la grande distribution. Cette infrastructure s'inscrit dans la dynamique de territorialisation des agropoles et de développement agro-industriel.",
+      "source": "APS — Agence de Presse Sénégalaise",
+      "source_url": "https://aps.sn/un-entrepot-frigorifique-dune-valeur-de-115-milliards-de-francs-cfa-a-diamniadio/",
+      "date": "2026-07-16",
+      "domain": "Agro-industrie",
+      "confidence": 0.72,
+      "keywords": [
+        "plateforme frigorifique",
+        "Diamniadio",
+        "agropole",
+        "stockage",
+        "produits agricoles",
+        "halieutique",
+        "agro-industrie"
+      ],
+      "id": "draft_20260718072420_3",
+      "_dedup_key": "c094f9b487533e1e",
+      "status": "pending",
+      "created_at": "2026-07-18T07:24:20.305417+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Réforme et modernisation de la Cour des comptes sous le nouveau Premier président",
+      "description": "Abdoul Madjib Guèye, nouvellement installé comme Premier président de la Cour des comptes, a défini les priorités de son mandat : renforcement du suivi-évaluation, professionnalisation, gouvernance interne et transformation numérique de l'institution. Ces orientations visent à consolider le rôle de la juridiction financière dans le contrôle des deniers publics. Cette réforme institutionnelle s'inscrit dans le cadre des engagements du gouvernement en matière de bonne gouvernance financière.",
+      "source": "APS — Agence de Presse Sénégalaise",
+      "source_url": "https://aps.sn/cour-des-comptes-abdoul-madjib-gueye-fixe-le-cap-des-reformes-et-de-la-modernisation/",
+      "date": "2026-07-16",
+      "domain": "Gouvernance",
+      "confidence": 0.65,
+      "keywords": [
+        "Cour des comptes",
+        "réforme",
+        "modernisation",
+        "transformation numérique",
+        "gouvernance financière",
+        "contrôle"
+      ],
+      "id": "draft_20260718072420_2",
+      "_dedup_key": "90ea3a95f873e545",
+      "status": "pending",
+      "created_at": "2026-07-18T07:24:20.305412+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 16 juillet 2026 : 31 nominations et plusieurs limogeages",
+      "description": "Le président Diomaye Faye a procédé lors du Conseil des ministres du 16 juillet 2026 à 31 nominations et au limogeage de plusieurs directeurs généraux. Ce remaniement s'inscrit dans un mouvement plus large de purge interne au sein du camp présidentiel, relevé par plusieurs médias. Le communiqué officiel a été publié par l'APS et la Primature.",
+      "source": "Senego.com / APS / La Vie Senegalaise",
+      "source_url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxNT3loMGJOUkp4Nk5tbmZFV3l0UjJHZDZQbXAyN0VvN3RITDdQVDVFUUR5WFJldkJzUHhyUUZBSUVBVFF2U0stdGU2bkk1WGpaTkxMNmNYTHZUTVUxSGc3bDJqNnNaeVdhVmx4cmg5YkVrdDcwUEVJNVpXZlF1X3Nwekk5RXdYOG9rR3pETWhvSldPbjBNSjVOZDZVNVI0TDBxejNvakl5V2VKbHpxeFVnSmh0Rlp2Y29sb1FFbVhRX2ZBQ1AxdUxyQWZXSQ",
+      "date": "2026-07-16",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "conseil des ministres",
+        "nominations",
+        "limogeages",
+        "directeurs généraux",
+        "gouvernance"
+      ],
+      "id": "draft_20260718072420_1",
+      "_dedup_key": "f880cdb738ddce9c",
+      "status": "pending",
+      "created_at": "2026-07-18T07:24:20.305403+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye saisit le Conseil constitutionnel sur une possible dissolution de l'Assemblée",
+      "description": "Le président Bassirou Diomaye Faye a saisi le Conseil constitutionnel dans le cadre d'une réflexion sur une éventuelle dissolution de l'Assemblée nationale. Des sources évoquent un scénario de couplage des élections législatives et locales, possiblement en fin novembre. Cette démarche constitutionnelle intervient dans un contexte de recomposition politique du camp présidentiel.",
+      "source": "SeneNews / DAKARACTU.COM / Leral.net",
+      "source_url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOMTMwa2l1cTUxdUpTN0FRekRYVEFTaTdzaXBzVFBfRnNQUGpadzkycm5VTXZ0dnJCal9iSzZZX0d0TEVBRmtzc2h2U0ZUZGdHMDBnYlQycFVFa0ZJMjBMZEVsVkozQy1pN0U4eTNZOGFBdC1IR1JjOEJTRDBrbUtHSnI4VFJmVzNSWGMxZWcwbXQ4RUFSYUpVYjVZeV96NmNOZDZFMDByZXZDQ0ZpT2MySk8taVNwYmRlVEpQSVlIYW1TS1JrV2dWcF9yMlNWbEIyX1BCWk5B",
+      "date": "2026-07-17",
+      "domain": "Institutions",
+      "confidence": 0.72,
+      "keywords": [
+        "dissolution",
+        "Assemblée nationale",
+        "Conseil constitutionnel",
+        "élections législatives",
+        "élections locales",
+        "couplage"
+      ],
+      "id": "draft_20260718072420_0",
+      "_dedup_key": "c9a1234d23e3c192",
+      "status": "pending",
+      "created_at": "2026-07-18T07:24:20.305389+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,
@@ -4239,119 +4353,6 @@
       "_dedup_key": "65d61612a885c97c",
       "status": "pending",
       "created_at": "2026-05-29T09:31:04.197188+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Bilan Jubbanti AN 2 : réformes, rationalisation et relance selon la Primature",
-      "description": "La Primature a publié un document intitulé « Jubbanti AN 2 : entre réformes, rationalisation et relance », présentant le bilan de deux ans d'action gouvernementale. Ce document constitue une source potentielle de suivi des engagements programmatiques du gouvernement dans plusieurs domaines. Son contenu détaillé pourrait permettre d'actualiser le statut de plusieurs promesses suivies.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/jubbanti-2-entre-reformes-rationalisation-et-relance",
-      "date": "2026-05-25",
-      "domain": "Gouvernance",
-      "confidence": 0.8,
-      "keywords": [
-        "Jubbanti",
-        "bilan",
-        "réformes",
-        "rationalisation",
-        "relance",
-        "gouvernement"
-      ],
-      "id": "draft_20260529093104_2",
-      "_dedup_key": "76a1950620a593c3",
-      "status": "pending",
-      "created_at": "2026-05-29T09:31:04.197182+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Crise politique au sommet de l'État : Sonko quitte la Primature pour l'Assemblée nationale",
-      "description": "Ousmane Sonko a été révoqué de son poste de Premier Ministre et se retrouve propulsé à la tête de l'Assemblée nationale, selon plusieurs médias internationaux. Cette recomposition au sommet de l'exécutif intervient dans un contexte de divergences profondes entre le Président Bassirou Diomaye Faye et son ancien Premier Ministre. Un nouveau gouvernement est en cours de formation avec Ahmadou Al Aminou Lô à la Primature.",
-      "source": "BBC",
-      "source_url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE1tdE16ZHdXa3hGTnBOcUd5STl0TzFHcmQ2ckVqbXNLeGF6MTMwMnQxMmlDcTh3enlZSWFGdHdOM0FFX2UxVGRzVTdQbjZPZ3ozWC1rbkwzWDd6NXVfWHfSAWNBVV95cUxQd25xam4yZXEwUmZDT3FJNW9Yd3BsMkd6emZqb3N0eFkySFVrcFI2YmhTRVlpXzJpbUF3d2x0YndjXy1SOVRvV0c4cW92bGc3NmdwZ0tuMnRyNWR1TUlSbHRJRlE",
-      "date": "2026-05-26",
-      "domain": "Institutions",
-      "confidence": 0.75,
-      "keywords": [
-        "Sonko",
-        "Primature",
-        "Assemblée nationale",
-        "crise politique",
-        "gouvernement"
-      ],
-      "id": "draft_20260529093104_1",
-      "_dedup_key": "8a5949341ca0e4e7",
-      "status": "pending",
-      "created_at": "2026-05-29T09:31:04.197166+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Publication du bilan « Jubbanti AN 2 » : réformes, rationalisation et relance",
-      "description": "La Primature a publié un document intitulé « Jubbanti AN 2 » faisant le point sur deux ans de gouvernement, articulé autour des axes réformes, rationalisation et relance économique. Ce bilan constitue un document de référence potentiellement pertinent pour l'évaluation de l'avancement des promesses présidentielles dans plusieurs domaines. Son contenu détaillé permettrait d'actualiser le statut d'un grand nombre d'engagements suivis.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/jubbanti-2-entre-reformes-rationalisation-et-relance",
-      "date": "2026-05-28",
-      "domain": "Gouvernance",
-      "confidence": 0.85,
-      "keywords": [
-        "Jubbanti",
-        "bilan",
-        "réformes",
-        "rationalisation",
-        "relance",
-        "deux ans",
-        "gouvernement"
-      ],
-      "id": "draft_20260528094157_5",
-      "_dedup_key": "0a90128cc554fbd2",
-      "status": "pending",
-      "created_at": "2026-05-28T09:41:57.419084+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Dialogue national : Diomaye Faye consulte des personnalités politiques et de la société civile",
-      "description": "Le Président Bassirou Diomaye Faye a poursuivi ses consultations dans le cadre d'un dialogue national, recevant notamment Pathé Seck, Makhtar Cissé et Moustapha Niasse. Ces consultations interviennent dans un contexte de crise politique post-limogeage de Sonko et de reconfiguration gouvernementale. Le dialogue national pourrait avoir des implications sur le calendrier et les orientations des réformes institutionnelles promises.",
-      "source": "Leral.net",
-      "source_url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxPZnNTaFVvTkhEQjdYVXNBX0xnS3kyWDg1bDZFcUJzLS1zVlk3YmpvajRRS3lOS25pbDluSjFCY0MtNXVROTU3RVhPdG1LV3JZdVV6THJZWWVYY2NNWkd6dU5pbXlkVkItX0JZNUx1b2JhOUIyazNNUWFxSGJ5NU5mM1FNMUxsUG9meVpNaUt4Q1Y1c3FYY21CZW1oTXp6N0JvM1laY3VFaVhYbVFHcktuRzJGOEpCUTNWMGN2aTdnd3QwZl9fOXVKU2d2ZUVqNXlneUkwM0lYLVlrZw",
-      "date": "2026-05-26",
-      "domain": "Gouvernance",
-      "confidence": 0.65,
-      "keywords": [
-        "dialogue national",
-        "consultations",
-        "Diomaye Faye",
-        "Moustapha Niasse",
-        "réformes institutionnelles"
-      ],
-      "id": "draft_20260528094157_3",
-      "_dedup_key": "3d06dcbd0590d66d",
-      "status": "pending",
-      "created_at": "2026-05-28T09:41:57.419075+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Profil du nouveau Premier Ministre Ahmadou Al Aminou Lô : un technocrate à la Primature",
-      "description": "Ahmadou Al Aminou Lô, décrit comme un technocrate, a été choisi par le Président Diomaye Faye pour diriger le gouvernement après le limogeage d'Ousmane Sonko. Ce profil contraste avec celui de son prédécesseur et signale une orientation potentiellement différente dans la conduite des réformes programmatiques. La composition du nouveau gouvernement et ses priorités restent attendues pour évaluer l'impact sur le calendrier des promesses présidentielles.",
-      "source": "Financial Afrik",
-      "source_url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxQemhNMWlHeVdsVExIbVN1c0tIaHZBTkN4bFFTNlZVV0lwTVVFOEpIdDczOGctZjFQN1g1OWY1eFpDZ2tmS0lkakRUU0tjVExzY0d0M2g5N3VCZ2VaTTdmRDFxN2Fzay0yYTZNaDYyZ1lCZlZoUy1WYXRrdEltbkgzemRpbE5jQzJneWtfNGRuM2xMUDlubF9MRGg2ZXdsMEdqdkl5aUotU0dlU2VfUTNfVU4wVmI4VFZhQXk4czJ1TlhkYXFELS11UEw4SEpCWG14STJNM1k0SVFJSmYwMnQ5bA",
-      "date": "2026-05-26",
-      "domain": "Institutions",
-      "confidence": 0.7,
-      "keywords": [
-        "Ahmadou Al Aminou Lô",
-        "Premier Ministre",
-        "technocrate",
-        "gouvernement",
-        "réformes"
-      ],
-      "id": "draft_20260528094157_2",
-      "_dedup_key": "8061a422a6651060",
-      "status": "pending",
-      "created_at": "2026-05-28T09:41:57.419066+00:00"
     }
   ]
 }

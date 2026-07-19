@@ -1,6 +1,157 @@
 {
-  "last_updated": "2026-07-18T07:24:20.305482+00:00",
+  "last_updated": "2026-07-19T07:55:35.810254+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Réunion technique sur la commercialisation du riz local tenue à la Primature",
+      "description": "Une réunion technique dédiée à la commercialisation du riz local a été organisée à la Primature. Cette initiative gouvernementale s'inscrit dans la dynamique de soutien à la production rizicole nationale et à la valorisation des filières agricoles locales. Les détails des mesures envisagées restent à préciser selon le contenu intégral de la réunion.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/reunion-technique-sur-la-commercialisation-du-riz-local",
+      "date": "2026-07-19",
+      "domain": "Agriculture",
+      "confidence": 0.7,
+      "keywords": [
+        "riz local",
+        "commercialisation",
+        "agriculture",
+        "filières",
+        "Primature"
+      ],
+      "id": "draft_20260719075535_6",
+      "_dedup_key": "1108835d7d8b0fe6",
+      "status": "pending",
+      "created_at": "2026-07-19T07:55:35.810189+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Réforme et modernisation de la Cour des comptes sous la houlette d'Abdoul Madjib Guèye",
+      "description": "Abdoul Madjib Guèye a été officiellement installé comme Premier président de la Cour des comptes et a défini ses priorités : renforcement du suivi-évaluation, professionnalisation, bonne gouvernance interne et transformation numérique de l'institution. Ces orientations visent à consolider le rôle de la juridiction financière dans le contrôle des deniers publics. Cette nomination et ce programme s'inscrivent dans le contexte des réformes institutionnelles en cours.",
+      "source": "APS — Agence de Presse Sénégalaise",
+      "source_url": "https://aps.sn/cour-des-comptes-abdoul-madjib-gueye-fixe-le-cap-des-reformes-et-de-la-modernisation/",
+      "date": "2026-07-16",
+      "domain": "Gouvernance",
+      "confidence": 0.72,
+      "keywords": [
+        "Cour des comptes",
+        "réforme",
+        "modernisation",
+        "juridiction financière",
+        "transformation numérique"
+      ],
+      "id": "draft_20260719075535_5",
+      "_dedup_key": "759aaf2d62c71629",
+      "status": "pending",
+      "created_at": "2026-07-19T07:55:35.810184+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_34",
+      "title": "Plateforme frigorifique de Diamniadio : un investissement industriel structurant",
+      "description": "La construction d'une plateforme frigorifique de 10 000 palettes à Diamniadio représente un investissement de 11,5 milliards FCFA destiné à soutenir les filières agricoles, halieutiques et pharmaceutiques. Ce projet contribue à la structuration d'une chaîne de valeur industrielle sur le territoire national. Il peut être rattaché aux objectifs du Plan d'Accélération Industrielle (PAIS) promu par le gouvernement.",
+      "source": "APS — Agence de Presse Sénégalaise",
+      "source_url": "https://aps.sn/le-senegal-lance-la-construction-dune-plateforme-frigorifique-de-10-000-palettes-a-diamniadio/",
+      "date": "2026-07-16",
+      "domain": "Industrie",
+      "confidence": 0.68,
+      "keywords": [
+        "plateforme industrielle",
+        "Diamniadio",
+        "PAIS",
+        "industrie",
+        "investissement"
+      ],
+      "id": "draft_20260719075535_4",
+      "_dedup_key": "45e478a4ad6b11a5",
+      "status": "pending",
+      "created_at": "2026-07-19T07:55:35.810178+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_47",
+      "title": "Lancement d'un entrepôt frigorifique de 11,5 milliards FCFA à Diamniadio",
+      "description": "La première pierre d'un entrepôt frigorifique d'une capacité de 10 000 palettes et d'une valeur de 11,5 milliards de francs CFA a été posée à la plateforme industrielle de Diamniadio. Cette infrastructure est destinée au stockage de produits agricoles, halieutiques et pharmaceutiques. Elle s'inscrit dans la dynamique de développement des agropoles et de la territorialisation industrielle.",
+      "source": "APS — Agence de Presse Sénégalaise",
+      "source_url": "https://aps.sn/un-entrepot-frigorifique-dune-valeur-de-115-milliards-de-francs-cfa-a-diamniadio/",
+      "date": "2026-07-16",
+      "domain": "Agro-industrie",
+      "confidence": 0.75,
+      "keywords": [
+        "entrepôt frigorifique",
+        "Diamniadio",
+        "agropole",
+        "chaîne du froid",
+        "stockage agricole"
+      ],
+      "id": "draft_20260719075535_3",
+      "_dedup_key": "0322733be09ac346",
+      "status": "pending",
+      "created_at": "2026-07-19T07:55:35.810174+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 16 juillet 2026 : communiqué officiel",
+      "description": "Le Conseil des ministres s'est tenu le jeudi 16 juillet 2026 sous la présidence du chef de l'État. Le communiqué officiel a été publié par l'APS et la Primature. Les décisions et orientations issues de cette réunion gouvernementale restent à détailler selon le contenu intégral du communiqué.",
+      "source": "APS - Agence de Presse Sénégalaise",
+      "source_url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNamwtRVUxSUNoRFlDU3ZNVXdsTjkySzNELVR4bXRGNkdhZmJFdU5qTjhQejl0QmZvSm9FME43M2VfNHNrbkh5QjBCSlpNTE16OUROQUNFUlN5WHAzRzhMSjBMcVNiemxEaEtJWXJYN255YkJ4U3dwQVZyd0Zndlg3LTc0WDFsZw",
+      "date": "2026-07-16",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "Conseil des ministres",
+        "gouvernement",
+        "décisions",
+        "juillet 2026"
+      ],
+      "id": "draft_20260719075535_2",
+      "_dedup_key": "d303cf695cc9e676",
+      "status": "pending",
+      "created_at": "2026-07-19T07:55:35.810167+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_2",
+      "title": "Propositions de loi sur le patrimoine présidentiel : pression législative sur la responsabilité du chef de l'État",
+      "description": "Des propositions de loi déposées à l'Assemblée nationale visent notamment le patrimoine présidentiel, soulevant la question de la responsabilité et de la transparence du chef de l'État. Le président Diomaye Faye dispose de dix jours pour se prononcer sur ces textes. Ce développement s'inscrit dans le débat plus large sur la responsabilité politique du Président, engagements phare du programme de Diomaye Faye.",
+      "source": "DAKARACTU.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxPYTVXTk82VDh4cmFNc3YyNHlOenkwd2I5WVpabjVBWGNXYU1HLVZGSUJjb1JWUDcyZGFiQWhBRXRvTHZPV0lWc0k0YzJTT3FZTFZHVXk3aDk0VlFWX3J0bnl4c0xwanBEMkU0UHdMd3NScXBtTG9oYU4tNk16VFVpYWx4UHNVZjRKQm5VTEczUUxCVlRLb0tDSVB0cDNTOGpBbGdpLU1Zb1VzSEM0YWFVZjJaNGNWZW90c0EwMWw5Z1ZUN2hlc1BhUUZMRllVVkw0dDQtWnM3TjFqc2g1dkI0dWU2YVN4cXc",
+      "date": "2026-07-18",
+      "domain": "Institutions",
+      "confidence": 0.62,
+      "keywords": [
+        "patrimoine présidentiel",
+        "responsabilité politique",
+        "Assemblée nationale",
+        "transparence"
+      ],
+      "id": "draft_20260719075535_1",
+      "_dedup_key": "88a6ff83b32886fb",
+      "status": "pending",
+      "created_at": "2026-07-19T07:55:35.810158+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Deux propositions de loi sur les fonds politiques et le patrimoine présidentiel à l'Assemblée nationale",
+      "description": "L'Assemblée nationale a examiné deux propositions de loi portant sur les fonds politiques et le patrimoine présidentiel, relançant les tensions institutionnelles. Le président Bassirou Diomaye Faye dispose de dix jours pour se prononcer sur ces textes. Ces initiatives s'inscrivent dans un contexte de débat sur la transparence et la responsabilité des élus.",
+      "source": "DAKARACTU.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxPYTVXTk82VDh4cmFNc3YyNHlOenkwd2I5WVpabjVBWGNXYU1HLVZGSUJjb1JWUDcyZGFiQWhBRXRvTHZPV0lWc0k0YzJTT3FZTFZHVXk3aDk0VlFWX3J0bnl4c0xwanBEMkU0UHdMd3NScXBtTG9oYU4tNk16VFVpYWx4UHNVZjRKQm5VTEczUUxCVlRLb0tDSVB0cDNTOGpBbGdpLU1Zb1VzSEM0YWFVZjJaNGNWZW90c0EwMWw5Z1ZUN2hlc1BhUUZMRllVVkw0dDQtWnM3TjFqc2g1dkI0dWU2YVN4cXc",
+      "date": "2026-07-18",
+      "domain": "Institutions",
+      "confidence": 0.72,
+      "keywords": [
+        "fonds politiques",
+        "patrimoine présidentiel",
+        "Assemblée nationale",
+        "propositions de loi"
+      ],
+      "id": "draft_20260719075535_0",
+      "_dedup_key": "4f6d84bd5cb683db",
+      "status": "pending",
+      "created_at": "2026-07-19T07:55:35.810137+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,
@@ -4202,157 +4353,6 @@
       "_dedup_key": "e32dcb58e08f5913",
       "status": "pending",
       "created_at": "2026-05-31T08:33:08.257433+00:00"
-    },
-    {
-      "type": "promise_update",
-      "promise_id": "promise_1",
-      "title": "Ahmadou Al Aminou Mohamed Lô nommé nouveau Premier Ministre du Sénégal",
-      "description": "La Primature a officiellement annoncé la nomination d'Ahmadou Al Aminou Mohamed Lô au poste de Premier Ministre du Sénégal. Cette nomination confirme le maintien de l'institution de la Primature, en opposition à l'engagement de la supprimer et de la remplacer par un poste de Vice-Président. Aucune annonce relative à la création d'un poste de Vice-Président n'a été faite à ce stade.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
-      "date": "2026-05-31",
-      "domain": "Institutions",
-      "confidence": 0.95,
-      "keywords": [
-        "Premier Ministre",
-        "nomination",
-        "Primature",
-        "Ahmadou Al Aminou Lô",
-        "institutions"
-      ],
-      "id": "draft_20260531083308_1",
-      "_dedup_key": "f94b463fc695faae",
-      "status": "pending",
-      "created_at": "2026-05-31T08:33:08.257424+00:00"
-    },
-    {
-      "type": "promise_update",
-      "promise_id": "promise_1",
-      "title": "Passation de service à la Primature : Sonko cède sa place à Ahmadou Al Aminou Lô",
-      "description": "Une passation de service a eu lieu à la Primature entre Ousmane Sonko et Ahmadou Al Aminou Lô, nommé nouveau Premier Ministre du Sénégal. Cet événement intervient dans un contexte de recomposition gouvernementale sous la présidence de Bassirou Diomaye Faye. Le maintien du poste de Premier Ministre contraste avec la promesse de le supprimer au profit d'un Vice-Président.",
-      "source": "La Vie Senegalaise",
-      "source_url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQcmhLcEtEOGd2ckxzdC1EV3hUZHlOOElPVllmdHVKWDNkSjZ5Z2FTNGJzQnk4ZFRzNzRFMkZqbS0wZ1dZNjZMS1lUZ3pWNzh5bWJXXy00Zl9MQ19hLURBWFdGUjFkMU5XMDk4UnBRSkwtMkNhaGdoZFVZYlFWSGtGZE5mcXJsYlRFYmlVZUE0MWJiT19ENnpKdTdjaW5uQUVjbmF3RGUzYw",
-      "date": "2026-05-30",
-      "domain": "Institutions",
-      "confidence": 0.92,
-      "keywords": [
-        "Premier Ministre",
-        "Primature",
-        "passation de service",
-        "Sonko",
-        "Ahmadou Al Aminou Lô"
-      ],
-      "id": "draft_20260531083308_0",
-      "_dedup_key": "522c0df6e59fce9c",
-      "status": "pending",
-      "created_at": "2026-05-31T08:33:08.257409+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Jubbanti An 2 : bilan gouvernemental entre réformes, rationalisation et relance",
-      "description": "La Primature a publié un document de bilan intitulé « Jubbanti AN 2 » faisant état des réformes engagées, de la rationalisation de l'action publique et des efforts de relance économique. Ce document constitue un état d'avancement officiel des actions gouvernementales après deux ans de mandat. Il est susceptible de contenir des informations de suivi sur plusieurs promesses présidentielles.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/jubbanti-2-entre-reformes-rationalisation-et-relance",
-      "date": "2026-05-30",
-      "domain": "Gouvernance",
-      "confidence": 0.8,
-      "keywords": [
-        "Jubbanti",
-        "bilan",
-        "réformes",
-        "rationalisation",
-        "relance",
-        "gouvernement"
-      ],
-      "id": "draft_20260530081405_3",
-      "_dedup_key": "01afa525ecb0e20a",
-      "status": "pending",
-      "created_at": "2026-05-30T08:14:05.014742+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Sonko nommé à la tête de l'Assemblée nationale après son départ de la Primature",
-      "description": "Ousmane Sonko, après avoir été démis de ses fonctions de Premier Ministre, a été propulsé à la tête de l'Assemblée nationale selon plusieurs médias. Cette évolution institutionnelle marque une recomposition majeure de l'architecture du pouvoir exécutif et législatif au Sénégal. Le contexte politique est marqué par des divergences décrites comme irréconciliables entre Sonko et le Président Faye.",
-      "source": "BBC",
-      "source_url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE1tdE16ZHdXa3hGTnBOcUd5STl0TzFHcmQ2ckVqbXNLeGF6MTMwMnQxMmlDcTh3enlZSWFGdHdOM0FFX2UxVGRzVTdQbjZPZ3ozWC1rbkwzWDd6NXVfWHfSAWNBVV95cUxQd25xam4yZXEwUmZDT3FJNW9Yd3BsMkd6emZqb3N0eFkySFVrcFI2YmhTRVlpXzJpbUF3d2x0YndjXy1SOVRvV0c4cW92bGc3NmdwZ0tuMnRyNWR1TUlSbHRJRlE",
-      "date": "2026-05-26",
-      "domain": "Institutions",
-      "confidence": 0.8,
-      "keywords": [
-        "Sonko",
-        "Assemblée nationale",
-        "Primature",
-        "recomposition politique",
-        "Diomaye Faye"
-      ],
-      "id": "draft_20260530081405_2",
-      "_dedup_key": "8905c0e704c04a39",
-      "status": "pending",
-      "created_at": "2026-05-30T08:14:05.014736+00:00"
-    },
-    {
-      "type": "promise_update",
-      "promise_id": "promise_1",
-      "title": "Sonko quitte la Primature : le poste de Premier Ministre maintenu sous un nouveau titulaire",
-      "description": "Ousmane Sonko a officiellement transmis les rênes de la Primature à Ahmadou Al Aminou Lô lors d'une cérémonie de passation de service. Cette nomination confirme que le poste de Premier Ministre est maintenu, en contradiction avec la promesse de le supprimer au profit d'un Vice-Président. Aucune réforme constitutionnelle en ce sens n'a été engagée à ce jour.",
-      "source": "Leral.net",
-      "source_url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxOVGp5ZWJJRzRaN1FTbEo2TEIxYnRja21tMlNSZXBSdlB1ME1pdFNIRWNfbXA3cWtSQzRZTV84NDVvYXp5ZVZ3aDFPV0hMVTJiWndFRm55Sm9UN0dlUkVKa2d5N1NEaTJQb2dGUi15MDdDSDZrTk5CWGxPbk0teVpBeGF4WVNoM0E2c2E5YkY2R21tOTFxV2JFVDY5bUdSam9aVjVEV1U1V0NtVFUybWRhclZxUloxZw",
-      "date": "2026-05-29",
-      "domain": "Institutions",
-      "confidence": 0.9,
-      "keywords": [
-        "Premier Ministre",
-        "Primature",
-        "Sonko",
-        "Ahmadou Al Aminou Lô",
-        "passation de service"
-      ],
-      "id": "draft_20260530081405_0",
-      "_dedup_key": "e186829631909053",
-      "status": "pending",
-      "created_at": "2026-05-30T08:14:05.014716+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Conseil des ministres du 6 mai 2026",
-      "description": "Le Conseil des ministres du 6 mai 2026 a été tenu par le gouvernement sénégalais. Ce type de réunion périodique est susceptible de contenir des mesures liées aux engagements programmatiques dans divers secteurs. L'analyse du compte rendu officiel permettrait de préciser les promesses impactées.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-06-mai-2026",
-      "date": "2026-05-06",
-      "domain": "Gouvernance",
-      "confidence": 0.7,
-      "keywords": [
-        "conseil des ministres",
-        "gouvernement",
-        "mai 2026"
-      ],
-      "id": "draft_20260529093104_5",
-      "_dedup_key": "c653664fc347c371",
-      "status": "pending",
-      "created_at": "2026-05-29T09:31:04.197195+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Conseil interministériel sur les Infrastructures tenu par la Primature",
-      "description": "Un conseil interministériel dédié aux infrastructures a été organisé par la Primature. Cette réunion de coordination intersectorielle traduit une démarche gouvernementale de suivi des chantiers d'infrastructures. Les détails des décisions prises pourraient être liés à plusieurs engagements programmatiques en matière d'équipements publics.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/conseil-interministeriel-sur-les-infrastructures",
-      "date": "2026-05-25",
-      "domain": "Infrastructures",
-      "confidence": 0.65,
-      "keywords": [
-        "conseil interministériel",
-        "infrastructures",
-        "Primature"
-      ],
-      "id": "draft_20260529093104_3",
-      "_dedup_key": "65d61612a885c97c",
-      "status": "pending",
-      "created_at": "2026-05-29T09:31:04.197188+00:00"
     }
   ]
 }

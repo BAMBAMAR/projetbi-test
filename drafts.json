@@ -1,6 +1,138 @@
 {
-  "last_updated": "2026-07-20T08:35:08.766709+00:00",
+  "last_updated": "2026-07-21T08:04:47.386011+00:00",
   "drafts": [
+    {
+      "type": "promise_update",
+      "promise_id": "promise_50",
+      "title": "Le Premier ministre énonce ses orientations en matière de santé et d'engagement citoyen",
+      "description": "Le Premier ministre Ahmadou Al Aminou Lo a présenté les orientations du gouvernement en matière de santé et d'engagement citoyen. Ces orientations s'inscrivent dans le cadre de la politique nationale de santé, dont l'objectif central est l'instauration d'une Couverture Sanitaire Universelle (CSU). Les détails programmatiques de ces orientations sont disponibles sur le site officiel de la Primature.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/sante-et-engagement-citoyen-les-orientations-du-premier-ministre-ahmadou-al",
+      "date": "2026-07-21",
+      "domain": "Santé",
+      "confidence": 0.65,
+      "keywords": [
+        "santé",
+        "engagement citoyen",
+        "Premier ministre",
+        "couverture sanitaire",
+        "orientations"
+      ],
+      "id": "draft_20260721080447_8",
+      "_dedup_key": "d944e5cfecbc6d2d",
+      "status": "pending",
+      "created_at": "2026-07-21T08:04:47.385962+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_36",
+      "title": "Réunion interministérielle sur la campagne agricole 2026-2027",
+      "description": "Une réunion interministérielle dédiée au déroulement de la campagne de production agricole 2026/2027 a été organisée au niveau de la Primature. Cette initiative gouvernementale témoigne d'un suivi actif du secteur agricole par les plus hautes autorités de l'État. Elle s'inscrit dans le cadre des engagements du président Faye en faveur du renforcement de l'agriculture nationale, notamment l'objectif d'allouer 10% du budget à ce secteur.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/reunion-interministerielle-sur-le-deroulement-de-la-campagne-de-production",
+      "date": "2026-07-21",
+      "domain": "Agriculture",
+      "confidence": 0.65,
+      "keywords": [
+        "agriculture",
+        "campagne agricole",
+        "production",
+        "interministériel",
+        "2026-2027"
+      ],
+      "id": "draft_20260721080447_5",
+      "_dedup_key": "1ee4bf6a539276af",
+      "status": "pending",
+      "created_at": "2026-07-21T08:04:47.385948+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 16 juillet 2026",
+      "description": "Le gouvernement sénégalais a tenu un conseil des ministres le 16 juillet 2026 sous la direction du Premier ministre Ahmadou Al Aminou Lo. Les décisions et orientations issues de ce conseil sont susceptibles de concerner plusieurs engagements programmatiques du président Faye. Le compte-rendu détaillé est disponible sur le site de la Primature.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-16-juillet-2026-0",
+      "date": "2026-07-16",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "conseil des ministres",
+        "gouvernement",
+        "Primature",
+        "décisions",
+        "juillet 2026"
+      ],
+      "id": "draft_20260721080447_3",
+      "_dedup_key": "b12115ca55614fbc",
+      "status": "pending",
+      "created_at": "2026-07-21T08:04:47.385943+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_30",
+      "title": "Acte IV de la décentralisation : avancée vers le transfert de TVA aux collectivités",
+      "description": "L'Acte IV de la décentralisation, dont les décisions ont été saluées par les maires, pourrait inclure des mécanismes de transfert fiscal vers les collectivités locales, en lien avec l'engagement de reverser 15% de TVA aux collectivités. Les maires ont réaffirmé leur engagement dans ce processus de réforme territoriale. Les détails précis des mesures adoptées restent à confirmer à travers les textes officiels.",
+      "source": "DAKARACTU.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQdjJndjVDWWIzOGxGR1FmUGxIeW5SLTNDMUZ4Tk9sRU5VclZuQWExVkdONVpscENqUjJrVGp0S3ZPeHlEZmFwdjFFN1BPWVVZUTgxQWFzSUlEenA3WFVDQXg4bVg2UlhIVERER3FESDZIWmh2VnhvQ2dFZ0xyRDlFcjBxTlFfUmJrb3hFQWMzVHpnbm1EVDZQLXlkcHEwemxBZTZ0RTNlODRPbW9GRXpwdlR3SDhNdE9iN3A3S0twNzR6TnBEM0RuZzk5dnpCTy1UYVZQM2lmb2xISWtTenQxNkVHdw?oc=5",
+      "date": "2026-07-20",
+      "domain": "Finances Locales",
+      "confidence": 0.6,
+      "keywords": [
+        "décentralisation",
+        "TVA",
+        "collectivités",
+        "transfert fiscal",
+        "maires"
+      ],
+      "id": "draft_20260721080447_2",
+      "_dedup_key": "1064f0af25cb176a",
+      "status": "pending",
+      "created_at": "2026-07-21T08:04:47.385940+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Acte IV de la décentralisation : les maires saluent les décisions du président Faye",
+      "description": "Les maires sénégalais ont exprimé leur soutien aux décisions prises par le président Bassirou Diomaye Faye dans le cadre de l'Acte IV de la décentralisation. Ils ont réaffirmé leur engagement à mettre en œuvre les orientations présidentielles en matière de gouvernance territoriale. Cette étape marque une avancée dans le processus de transfert de compétences et de ressources vers les collectivités territoriales.",
+      "source": "DAKARACTU.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQdjJndjVDWWIzOGxGR1FmUGxIeW5SLTNDMUZ4Tk9sRU5VclZuQWExVkdONVpscENqUjJrVGp0S3ZPeHlEZmFwdjFFN1BPWVVZUTgxQWFzSUlEenA3WFVDQXg4bVg2UlhIVERER3FESDZIWmh2VnhvQ2dFZ0xyRDlFcjBxTlFfUmJrb3hFQWMzVHpnbm1EVDZQLXlkcHEwemxBZTZ0RTNlODRPbW9GRXpwdlR3SDhNdE9iN3A3S0twNzR6TnBEM0RuZzk5dnpCTy1UYVZQM2lmb2xISWtTenQxNkVHdw?oc=5",
+      "date": "2026-07-20",
+      "domain": "Gouvernance",
+      "confidence": 0.72,
+      "keywords": [
+        "décentralisation",
+        "Acte IV",
+        "maires",
+        "collectivités territoriales",
+        "gouvernance locale"
+      ],
+      "id": "draft_20260721080447_1",
+      "_dedup_key": "79ee1ead161e496e",
+      "status": "pending",
+      "created_at": "2026-07-21T08:04:47.385934+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye élu à la tête de la CEDEAO à Freetown",
+      "description": "Le président Bassirou Diomaye Faye a été élu à la présidence de la CEDEAO lors du sommet de Freetown en Sierra Leone. Il a appelé à l'unité ouest-africaine et au rapprochement de toute la famille régionale. Cette élection représente un double succès diplomatique pour le Sénégal, Birame Diop ayant également obtenu un poste de responsabilité au sein de l'organisation.",
+      "source": "Leral.net",
+      "source_url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQOUdDX1c5T05qbDhMdGZMN3JTdHJTaUF2c3htRUt2MVhqb2RZWVVaMllOTzJrVEhzaWQ1c2x3NUNTaTJGRGZYV29WaGFVdnBqc3phdEF0TG1sY2JHUUNXOVp2c2luUGNsZVpaVV8zNVA5N0JhbHQtOWhNVE96NkotbWZnRGl4Q2xsQ1hDYjlMQmdKYmt1elhpS1E2Zl9tOFBMbURzV3hTUQ?oc=5",
+      "date": "2026-07-20",
+      "domain": "Diplomatie",
+      "confidence": 0.7,
+      "keywords": [
+        "CEDEAO",
+        "Freetown",
+        "Diomaye Faye",
+        "présidence",
+        "unité ouest-africaine"
+      ],
+      "id": "draft_20260721080447_0",
+      "_dedup_key": "1e34e43cf6a1065c",
+      "status": "pending",
+      "created_at": "2026-07-21T08:04:47.385918+00:00"
+    },
     {
       "type": "promise_update",
       "promise_id": "promise_53",
@@ -4221,137 +4353,6 @@
       "_dedup_key": "c58cc9e0e0e679fb",
       "status": "pending",
       "created_at": "2026-06-04T09:40:23.339745+00:00"
-    },
-    {
-      "type": "promise_update",
-      "promise_id": "promise_1",
-      "title": "Nomination d'un nouveau Premier Ministre : Ahmadou Al Aminou Lô",
-      "description": "La Primature a officialisé la nomination d'Ahmadou Al Aminou Mohamed Lô comme nouveau Premier Ministre du Sénégal, en remplacement d'Ousmane Sonko. Cette nomination intervient dans un contexte de rupture entre le Président Bassirou Diomaye Faye et son ex-Premier Ministre. Le maintien du poste de Premier Ministre contraste avec la promesse de campagne de le supprimer au profit d'un Vice-Président.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
-      "date": "2026-06-01",
-      "domain": "Institutions",
-      "confidence": 0.9,
-      "keywords": [
-        "Premier Ministre",
-        "Lô",
-        "nomination",
-        "Primature",
-        "réforme institutionnelle"
-      ],
-      "id": "draft_20260604094023_0",
-      "_dedup_key": "c3ab9e939c14f05d",
-      "status": "pending",
-      "created_at": "2026-06-04T09:40:23.339729+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Composition du nouveau gouvernement Lô publiée",
-      "description": "La composition du nouveau gouvernement dirigé par Ahmadou Al Aminou Lô a été officiellement publiée par la Primature. Ce gouvernement marque une rupture avec la configuration précédente associant Diomaye Faye et Ousmane Sonko. La formation de ce cabinet constitue un tournant institutionnel majeur pour la suite du quinquennat.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/composition-du-nouveau-gouvernement-3",
-      "date": "2026-06-03",
-      "domain": "Gouvernance",
-      "confidence": 0.85,
-      "keywords": [
-        "gouvernement",
-        "composition",
-        "Lô",
-        "Primature",
-        "cabinet"
-      ],
-      "id": "draft_20260603103024_2",
-      "_dedup_key": "6bef07f62eab6796",
-      "status": "pending",
-      "created_at": "2026-06-03T10:30:24.611681+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Passation de service à la Primature : Sonko remet les rênes à Ahmadou Al Aminou Lô",
-      "description": "Ousmane Sonko a officiellement quitté la Primature et transmis ses fonctions à Ahmadou Al Aminou Lô, nommé nouveau Premier Ministre. Sonko a révélé que le président Faye lui avait signifié que sa présence à la tête du gouvernement était devenue difficile. Le nouveau gouvernement est formé sans la participation directe du Pastef de Sonko.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
-      "date": "2026-06-01",
-      "domain": "Gouvernance",
-      "confidence": 0.85,
-      "keywords": [
-        "Sonko",
-        "Primature",
-        "passation de service",
-        "Ahmadou Al Aminou Lô",
-        "gouvernement"
-      ],
-      "id": "draft_20260603103024_1",
-      "_dedup_key": "25742a50dd7b7348",
-      "status": "pending",
-      "created_at": "2026-06-03T10:30:24.611674+00:00"
-    },
-    {
-      "type": "promise_update",
-      "promise_id": "promise_1",
-      "title": "Nomination d'un nouveau Premier Ministre : le poste maintenu",
-      "description": "Ahmadou Al Aminou Lô a été nommé nouveau Premier Ministre du Sénégal après le départ d'Ousmane Sonko de la Primature. La passation de service a eu lieu le 1er juin 2026. Cette nomination confirme que la promesse de supprimer le poste de Premier Ministre et d'instaurer un Vice-Président n'a pas été mise en œuvre.",
-      "source": "Africa24 TV",
-      "source_url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNWlZNei05NFpvaDlLbnFQV0RWNmpCaUlvMWRSQTJHV0pWa0RZV0tGN1MtRDAxQlRKM2NrYTMxQWM3TlpPMUtVVEZJOXBYUzZGdktvTGpNSmRNSlFvRjZOMUx4RGduUk9aYWdGSElOSjNGZmFBaHJaQ08yRE9OTzhjMkdkTzRNT2d0WWFCQnBJQWg0QnVkWTZKdndQWUN1RHBOalJ6MkEtTDY2X0dPOUVmcTd5bjN6akdRd0x5MQ",
-      "date": "2026-06-01",
-      "domain": "Institutions",
-      "confidence": 0.9,
-      "keywords": [
-        "Premier Ministre",
-        "Ahmadou Al Aminou Lô",
-        "Primature",
-        "nomination"
-      ],
-      "id": "draft_20260603103024_0",
-      "_dedup_key": "d3d743f45a2480bf",
-      "status": "pending",
-      "created_at": "2026-06-03T10:30:24.611657+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Jubbanti AN 2 : bilan de réformes et de relance économique",
-      "description": "La Primature a publié un document intitulé « Jubbanti AN 2 » portant sur les réformes, la rationalisation et la relance économique menées au cours de la deuxième année du gouvernement. Ce bilan couvre plusieurs domaines d'action gouvernementale et constitue un outil de suivi des engagements pris par l'exécutif. Il peut servir de référence pour évaluer l'avancement de plusieurs promesses présidentielles.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/jubbanti-2-entre-reformes-rationalisation-et-relance",
-      "date": "2026-06-02",
-      "domain": "Gouvernance",
-      "confidence": 0.72,
-      "keywords": [
-        "Jubbanti",
-        "réformes",
-        "bilan",
-        "relance",
-        "rationalisation",
-        "gouvernement"
-      ],
-      "id": "draft_20260602095912_3",
-      "_dedup_key": "7098652fe539ae03",
-      "status": "pending",
-      "created_at": "2026-06-02T09:59:12.522496+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Composition du nouveau gouvernement Lô publiée par la Primature",
-      "description": "La Primature a officiellement publié la composition du nouveau gouvernement dirigé par Ahmadou Al Aminou Lô. Ce gouvernement succède à celui d'Ousmane Sonko et marque une nouvelle orientation dans la gestion de l'exécutif sénégalais. La composition détaillée est disponible sur le site officiel de la Primature.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/composition-du-nouveau-gouvernement-3",
-      "date": "2026-06-02",
-      "domain": "Institutions",
-      "confidence": 0.7,
-      "keywords": [
-        "gouvernement",
-        "composition",
-        "Primature",
-        "Ahmadou Al Aminou Lô"
-      ],
-      "id": "draft_20260602095912_2",
-      "_dedup_key": "b6623b3d4f1e1937",
-      "status": "pending",
-      "created_at": "2026-06-02T09:59:12.522490+00:00"
     }
   ]
 }

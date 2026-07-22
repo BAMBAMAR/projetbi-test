@@ -1,6 +1,71 @@
 {
-  "last_updated": "2026-07-21T08:04:47.386011+00:00",
+  "last_updated": "2026-07-22T08:05:37.090767+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Bassirou Diomaye Faye élu Président en exercice de la CEDEAO",
+      "description": "Le président sénégalais Bassirou Diomaye Faye a été élu Président en exercice de la Communauté Économique des États de l'Afrique de l'Ouest (CEDEAO). Cette élection positionne le Sénégal à la tête de l'organisation régionale pour une période déterminée. Cet événement constitue une actualité gouvernementale majeure sur le plan diplomatique et régional.",
+      "source": "RADIO TELEVISION SENEGALAISE",
+      "source_url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNc1dxNHpmUERDYVRHM2VWNE9MdkVHdnpieUs2TW81X1hzUWJDT0VNSXVJZmpPN0sxSjJqUy0zZkxLT2ZRdDlsZ3ZnNzFMVXZMRXo3VGNFcFpzN0tTUlRrS3J3X2xlWVFYQmhPcEtFaVh1ajFRMXRlVnFHU1V0b1loRElEZU5JcTJmVEV6SkJTVG85cEo4YXZ4LURGLUtYbE5jdUR2Zm5odE5ieFNuVGN4OXRzRF9kejlBV1E",
+      "date": "2026-07-19",
+      "domain": "Diplomatie",
+      "confidence": 0.7,
+      "keywords": [
+        "CEDEAO",
+        "Président en exercice",
+        "diplomatie",
+        "Afrique de l'Ouest"
+      ],
+      "id": "draft_20260722080537_2",
+      "_dedup_key": "07ba39fc4e6b24b2",
+      "status": "pending",
+      "created_at": "2026-07-22T08:05:37.090703+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye annonce un concours national de mathématiques, sciences et technologie",
+      "description": "Le président Bassirou Diomaye Faye a annoncé la création d'un concours national dans les domaines des mathématiques, des sciences et de la technologie. Cette initiative s'inscrit dans une volonté de promouvoir l'excellence scientifique et l'innovation au Sénégal. Elle constitue une action gouvernementale concrète en matière d'éducation et de formation.",
+      "source": "Senego.com",
+      "source_url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPRmVmZ2pvbjZMWnRDY19TYkJlYk1ZZEdGTThNU3J3S2wzTHpqU1hSQ2Npemp5SG1WN3pLeXRZMko5Mm95WGVzSkk4alBobmpNYlR2bzVVa2ZNMEdkZFJJcHd6OTlNeHdxMnRaOEpsTHlKUmMwMWxqOWZaNGwzMUdGX3JfZF9PRXpjWjRiNFRFVmdfYndNMjUtV01aWkE1b183dHFlV2o3a1h0TENCemlpXzRob2w",
+      "date": "2026-07-22",
+      "domain": "Éducation",
+      "confidence": 0.65,
+      "keywords": [
+        "concours national",
+        "mathématiques",
+        "sciences",
+        "technologie",
+        "innovation"
+      ],
+      "id": "draft_20260722080537_1",
+      "_dedup_key": "5751532f5370ccce",
+      "status": "pending",
+      "created_at": "2026-07-22T08:05:37.090695+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye appelle à un pacte national pour la souveraineté alimentaire",
+      "description": "Le président Bassirou Diomaye Faye a appelé à la constitution d'un pacte national fondé sur la science et l'innovation pour atteindre la souveraineté alimentaire. Il a affirmé que cet objectif ne sera plus un slogan mais une réalité d'ici 2050. Cette déclaration s'inscrit dans le cadre des orientations stratégiques du gouvernement en matière d'agriculture et de sécurité alimentaire.",
+      "source": "DAKARACTU.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPSUZuWXNSeVdNa0lTSngtMEE1ek9YaVhNblJpOEZOOFcxSkhmbHRXX25sV1RrV3AwZ3Z5ckJXV3UyeE5MWERpUkI5RHhIelRaM0FQd01PV2tNd0VCVTUyUWl6XzlnWWtndGZIRmtQT3ByaDRtYTZhWlhNOVNRMTV3X0R2UWMzc2d2NXJ5S1k4dWZhSHZBZlFGWUx3eDBnckNWdDNjc09ILU5UY1I0QzdzSHFGLTlkdV9aOExBRVBsRDczbFd0YnltQWdqdlh3SWptbzBQejd1c3ZhRGxnQWdvV1pGUS0",
+      "date": "2026-07-21",
+      "domain": "Agriculture",
+      "confidence": 0.7,
+      "keywords": [
+        "souveraineté alimentaire",
+        "pacte national",
+        "science",
+        "innovation",
+        "2050"
+      ],
+      "id": "draft_20260722080537_0",
+      "_dedup_key": "b1c1f9f64be8cf6e",
+      "status": "pending",
+      "created_at": "2026-07-22T08:05:37.090676+00:00"
+    },
     {
       "type": "promise_update",
       "promise_id": "promise_50",
@@ -4285,74 +4350,6 @@
       "_dedup_key": "72bc0ab3d769e10e",
       "status": "pending",
       "created_at": "2026-06-05T09:02:11.774479+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Composition du nouveau gouvernement publiée par la Primature",
-      "description": "La Primature a publié la composition officielle du nouveau gouvernement formé après le départ d'Ousmane Sonko. Ce remaniement fait suite à la rupture politique entre le président Bassirou Diomaye Faye et son ancien Premier Ministre, dont le parti Pastef aurait boycotté la formation gouvernementale.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/composition-du-nouveau-gouvernement-3",
-      "date": "2026-06-05",
-      "domain": "Institutions",
-      "confidence": 0.85,
-      "keywords": [
-        "gouvernement",
-        "composition",
-        "remaniement",
-        "Pastef",
-        "Faye"
-      ],
-      "id": "draft_20260605090211_1",
-      "_dedup_key": "5177968d063d2130",
-      "status": "pending",
-      "created_at": "2026-06-05T09:02:11.774464+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Bilan Jubbanti AN 2 : réformes, rationalisation et relance",
-      "description": "La Primature a publié un document intitulé « Jubbanti AN 2 » faisant état des réformes, de la rationalisation et des actions de relance menées par le gouvernement au cours de sa deuxième année. Ce bilan constitue un document de référence pour l'évaluation des engagements programmatiques du pouvoir en place.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/jubbanti-2-entre-reformes-rationalisation-et-relance",
-      "date": "2026-06-01",
-      "domain": "Gouvernance",
-      "confidence": 0.7,
-      "keywords": [
-        "Jubbanti",
-        "bilan",
-        "réformes",
-        "rationalisation",
-        "relance",
-        "gouvernement"
-      ],
-      "id": "draft_20260604094023_2",
-      "_dedup_key": "3c0a8535236c81a9",
-      "status": "pending",
-      "created_at": "2026-06-04T09:40:23.339752+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Formation d'un nouveau gouvernement sous la direction de Lô",
-      "description": "La Primature a publié la composition du nouveau gouvernement formé après le départ d'Ousmane Sonko. Une passation de service au Secrétariat général du Gouvernement a également eu lieu, marquant la transition entre les deux équipes gouvernementales. Ce remaniement fait suite à un clash entre le Président Faye et son ancien Premier Ministre Sonko.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/composition-du-nouveau-gouvernement-3",
-      "date": "2026-06-01",
-      "domain": "Gouvernance",
-      "confidence": 0.75,
-      "keywords": [
-        "gouvernement",
-        "remaniement",
-        "Lô",
-        "Sonko",
-        "Faye",
-        "Primature"
-      ],
-      "id": "draft_20260604094023_1",
-      "_dedup_key": "c58cc9e0e0e679fb",
-      "status": "pending",
-      "created_at": "2026-06-04T09:40:23.339745+00:00"
     }
   ]
 }

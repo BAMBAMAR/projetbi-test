@@ -1,6 +1,90 @@
 {
-  "last_updated": "2026-07-22T08:05:37.090767+00:00",
+  "last_updated": "2026-07-23T08:07:38.968636+00:00",
   "drafts": [
+    {
+      "type": "promise_update",
+      "promise_id": "promise_38",
+      "title": "Appel présidentiel à la recherche et à l'innovation agricole comme pilier de la souveraineté alimentaire",
+      "description": "Le président Diomaye Faye a mis en avant la nécessité d'un ancrage scientifique et innovant pour atteindre la souveraineté alimentaire du Sénégal. Cet appel rejoint directement l'engagement de créer un Fonds de Recherche et de Vulgarisation Agricole (FARVAR). Aucune annonce formelle de création du fonds n'est mentionnée à ce stade.",
+      "source": "DAKARACTU.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPSUZuWXNSeVdNa0lTSngtMEE1ek9YaVhNblJpOEZOOFcxSkhmbHRXX25sV1RrV3AwZ3Z5ckJXV3UyeE5MWERpUkI5RHhIelRaM0FQd01PV2tNd0VCVTUyUWl6XzlnWWtndGZIRmtQT3ByaDRtYTZhWlhNOVNRMTV3X0R2UWMzc2d2NXJ5S1k4dWZhSHZBZlFGWUx3eDBnckNWdDNjc09ILU5UY1I0QzdzSHFGLTlkdV9aOExBRVBsRDczbFd0YnltQWdqdlh3SWptbzBQejd1c3ZhRGxnQWdvV1pGUS0",
+      "date": "2026-07-21",
+      "domain": "Agriculture",
+      "confidence": 0.65,
+      "keywords": [
+        "FARVAR",
+        "recherche agricole",
+        "vulgarisation",
+        "innovation",
+        "souveraineté alimentaire"
+      ],
+      "id": "draft_20260723080738_6",
+      "_dedup_key": "54cac663502a6381",
+      "status": "pending",
+      "created_at": "2026-07-23T08:07:38.968568+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_50",
+      "title": "Conseil des ministres du 16 juillet 2026 : point sur les politiques de santé",
+      "description": "Le Conseil des ministres du 16 juillet 2026, dont le compte rendu est publié par la Primature, a abordé des questions relevant des politiques publiques en cours. Les délibérations de ce conseil sont susceptibles de contenir des avancées relatives à la Couverture Sanitaire Universelle et à d'autres engagements sectoriels. Le détail des décisions prises reste à consulter via le lien officiel.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-16-juillet-2026-0",
+      "date": "2026-07-16",
+      "domain": "Santé",
+      "confidence": 0.62,
+      "keywords": [
+        "Conseil des ministres",
+        "juillet 2026",
+        "politiques publiques"
+      ],
+      "id": "draft_20260723080738_2",
+      "_dedup_key": "5397bfa563436218",
+      "status": "pending",
+      "created_at": "2026-07-23T08:07:38.968546+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Le Premier ministre Al Aminou LO fixe des orientations en matière de santé et d'engagement citoyen",
+      "description": "Le Premier ministre Ahmadou Al Aminou LO a présenté les orientations gouvernementales en matière de santé et d'engagement citoyen. Cette communication officielle, relayée par la Primature, porte sur des axes stratégiques du secteur sanitaire. Elle s'inscrit dans la continuité des engagements de l'exécutif en matière de couverture sanitaire.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/sante-et-engagement-citoyen-les-orientations-du-premier-ministre-ahmadou-al",
+      "date": "2026-07-20",
+      "domain": "Santé",
+      "confidence": 0.72,
+      "keywords": [
+        "Premier ministre",
+        "santé",
+        "engagement citoyen",
+        "Al Aminou LO"
+      ],
+      "id": "draft_20260723080738_1",
+      "_dedup_key": "4624a36071d4e7f0",
+      "status": "pending",
+      "created_at": "2026-07-23T08:07:38.968540+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye reçoit le rapport 2025 du Médiateur et envisage des réformes institutionnelles",
+      "description": "Le président Bassirou Diomaye Faye a reçu le rapport annuel 2025 du Médiateur de la République. Cette réception ouvre la voie à des réformes institutionnelles dont le périmètre reste à préciser. L'événement s'inscrit dans le cadre plus large des chantiers de modernisation des institutions annoncés par le gouvernement.",
+      "source": "Xalima",
+      "source_url": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1Kb1R0STJEVU5WWktJUkpVWi10NTFmVjVxeFpLcjcxSFlQUm5tRFFOQ0NabV92TTd2ZGxCeXZIeDg0TTRmQ1NqeUMwazJIWmM",
+      "date": "2026-07-22",
+      "domain": "Institutions",
+      "confidence": 0.7,
+      "keywords": [
+        "Médiateur",
+        "réformes institutionnelles",
+        "Diomaye",
+        "rapport 2025"
+      ],
+      "id": "draft_20260723080738_0",
+      "_dedup_key": "6e0f8dea9fe4276e",
+      "status": "pending",
+      "created_at": "2026-07-23T08:07:38.968525+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,
@@ -4264,92 +4348,6 @@
       "_dedup_key": "b9bf47d84c15d8e8",
       "status": "pending",
       "created_at": "2026-06-06T08:22:46.297814+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Nouveau gouvernement : premier Conseil des ministres sous la direction d'Ahmadou Al Aminou Lo",
-      "description": "Le nouveau gouvernement sénégalais a tenu son premier Conseil des ministres le vendredi 5 juin 2026, sous la direction du nouveau Premier ministre Ahmadou Al Aminou Mohamed Lo. Le chef de l'État Bassirou Diomaye Faye a fixé les orientations et le cap du nouveau gouvernement lors de cette séance inaugurale.",
-      "source": "RADIO TELEVISION SENEGALAISE",
-      "source_url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxNTnRwNWNUT0NDR3prUlZ5ZW1hTWtBU2g4d3pUT2FqTVBLOEt2TjEwOUZVQzNDMl9xeGlNVTBmZmF2djdGLXhjR1Rsa3A1WVpJeUJ4U2s5N09NVnVibVdzS1pkZXpsXzd4X2p2LW44MmM3MkhKV1FKZzJCSl9uc0FUR1FrWVdncVR6cHo5S1k4LUZZRnlmXzdGYXlXZ3BvYkM1bkRVUFM4eGtrclJPOG9TWXVFSUZDb3ltNUVvX3p6NldRa3NtTlM2TkpGRDY5OTBpOHFrb3p5UVg",
-      "date": "2026-06-05",
-      "domain": "Gouvernance",
-      "confidence": 0.75,
-      "keywords": [
-        "conseil des ministres",
-        "nouveau gouvernement",
-        "Premier ministre",
-        "Ahmadou Al Aminou Lo",
-        "Diomaye Faye"
-      ],
-      "id": "draft_20260606082246_0",
-      "_dedup_key": "8b4eb5bbb4464ccd",
-      "status": "pending",
-      "created_at": "2026-06-06T08:22:46.297802+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Mission du FMI à Dakar après le départ de Sonko de la Primature",
-      "description": "Le Fonds Monétaire International a annoncé l'envoi d'une mission à Dakar dans le contexte post-Sonko pour évaluer la situation de la dette publique sénégalaise. Cette mission intervient à un moment charnière de recomposition de l'exécutif et pourrait avoir des implications sur la politique budgétaire et économique du nouveau gouvernement.",
-      "source": "Senenews",
-      "source_url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQSEt5RXkwNDAzcVpQV3ZuRUxEN1dEMFNLeW1vUXVoemYtOVFoME83UXBLVjllUW9lNkZGS3lVRnczX1hWYkhrTjVSX1NKMDM4TEVtR0lZcnVMQmdmY09GNWkwNzYyU0ttU2RMOG1KVWtUaDhEUTZmT2xXbk5jZzRDclBFTWpmM0twQWx2Q3h2MzJuZDhNLV9rZWRUTWJ3LTlyZHZyYmREN2pzQ3ZVTTN5RGg2bEl0SW5hUmE5N25BMnltYmw5bXctRnBwb3RiOHlISXhYTUdPVExUeGlUbzRn",
-      "date": "2026-06-04",
-      "domain": "Finances",
-      "confidence": 0.7,
-      "keywords": [
-        "FMI",
-        "dette",
-        "Primature",
-        "Sonko",
-        "mission",
-        "finances publiques"
-      ],
-      "id": "draft_20260605090211_6",
-      "_dedup_key": "65a4081b200eb1e2",
-      "status": "pending",
-      "created_at": "2026-06-05T09:02:11.774517+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Passation de service au Secrétariat général du Gouvernement",
-      "description": "Une cérémonie de passation de service a eu lieu au Secrétariat général du Gouvernement, dans le cadre de la transition consécutive au changement de gouvernement. Cet événement s'inscrit dans le processus de recomposition de l'exécutif sénégalais.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/passation-de-service-au-secretariat-general-du-gouvernement",
-      "date": "2026-06-05",
-      "domain": "Institutions",
-      "confidence": 0.7,
-      "keywords": [
-        "passation de service",
-        "Secrétariat général",
-        "gouvernement"
-      ],
-      "id": "draft_20260605090211_3",
-      "_dedup_key": "bc3d3204be8f68df",
-      "status": "pending",
-      "created_at": "2026-06-05T09:02:11.774503+00:00"
-    },
-    {
-      "type": "promise_update",
-      "promise_id": "promise_1",
-      "title": "Maintien du poste de Premier Ministre malgré la promesse de suppression",
-      "description": "La nomination d'un nouveau Premier Ministre, Ahmadou Al Aminou Mohamed Lo, confirme le maintien de ce poste au sein de l'exécutif sénégalais. La promesse de supprimer le poste de Premier Ministre et de le remplacer par un Vice-Président n'a pas encore été mise en œuvre, plus de deux ans après l'élection présidentielle.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
-      "date": "2026-06-05",
-      "domain": "Institutions",
-      "confidence": 0.75,
-      "keywords": [
-        "Premier Ministre",
-        "Vice-Président",
-        "réforme institutionnelle",
-        "promesse"
-      ],
-      "id": "draft_20260605090211_2",
-      "_dedup_key": "72bc0ab3d769e10e",
-      "status": "pending",
-      "created_at": "2026-06-05T09:02:11.774479+00:00"
     }
   ]
 }

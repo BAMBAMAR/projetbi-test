@@ -1,6 +1,73 @@
 {
-  "last_updated": "2026-07-23T08:07:38.968636+00:00",
+  "last_updated": "2026-07-24T08:04:04.204362+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye s'engage à exploiter les recommandations des rapports 2024-2025 de l'ONLPL",
+      "description": "Le président Bassirou Diomaye Faye a déclaré que les recommandations des rapports 2024-2025 de l'Observatoire National de la Laïcité et des Pratiques Linguistiques (ONLPL) feront l'objet d'une exploitation minutieuse. Cette déclaration témoigne d'une volonté présidentielle de donner suite aux travaux d'organes consultatifs de l'État. Elle s'inscrit dans une démarche de bonne gouvernance et de prise en compte des institutions de veille.",
+      "source": "APS - Agence de Presse Sénégalaise",
+      "source_url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQY3ZVOHJSZEM1N1ZmdTR6c3lfMlNDM1BPY2Z0T1VYeDFyQlRQaXlhZEVRbkVlejhNMGhLT25NNzFNTUdaTHdWaTBGZG03SE16b2ZoZ0FScXlTSUI1V2lmZVJDN1U3Nk82aDEzRUNFYWRSLTllcHVyV2hOOWlYLW1udjhyaEFQNWNhMFNrZ0U0ejYwVlhBX1VUVmZONnpTVFJmUllKQW9LVHZZUUZ0TXpuamx5QzFINDFlaTNaNmxfQ3c2Z0RUajlzdklDOWc3UQ",
+      "date": "2026-07-23",
+      "domain": "Gouvernance",
+      "confidence": 0.65,
+      "keywords": [
+        "ONLPL",
+        "recommandations",
+        "rapports",
+        "Diomaye Faye",
+        "gouvernance",
+        "laïcité"
+      ],
+      "id": "draft_20260724080404_6",
+      "_dedup_key": "b8b7b4af0e870352",
+      "status": "pending",
+      "created_at": "2026-07-24T08:04:04.204299+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_50",
+      "title": "Conseil des ministres du 1er juillet 2026 : actions gouvernementales en cours",
+      "description": "Le Conseil des ministres du 1er juillet 2026 a réuni le gouvernement autour de plusieurs dossiers prioritaires. Ce type de conseil constitue un vecteur régulier d'avancement des réformes engagées, notamment dans les domaines de la santé, de la justice et de la gouvernance. Le suivi du contenu de ce conseil permettrait d'identifier les promesses en cours de mise en œuvre.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-1er-juillet-2026",
+      "date": "2026-07-01",
+      "domain": "Gouvernance",
+      "confidence": 0.6,
+      "keywords": [
+        "conseil des ministres",
+        "gouvernement",
+        "réformes",
+        "juillet 2026",
+        "politiques publiques"
+      ],
+      "id": "draft_20260724080404_4",
+      "_dedup_key": "8f915b713e944a7a",
+      "status": "pending",
+      "created_at": "2026-07-24T08:04:04.204286+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Le Premier ministre Al Aminou LO fixe les orientations en matière de santé et d'engagement citoyen",
+      "description": "Le Premier ministre Ahmadou Al Aminou LO a présenté les orientations gouvernementales relatives à la santé et à l'engagement citoyen. Cette communication s'inscrit dans le cadre de la politique sanitaire du gouvernement. Les détails précis des mesures annoncées restent à confirmer via le contenu intégral de la publication de la Primature.",
+      "source": "Gouvernement du Sénégal / Primature",
+      "source_url": "https://primature.sn/publications/actualites/sante-et-engagement-citoyen-les-orientations-du-premier-ministre-ahmadou-al",
+      "date": "2026-07-20",
+      "domain": "Santé",
+      "confidence": 0.7,
+      "keywords": [
+        "santé",
+        "Premier ministre",
+        "Al Aminou LO",
+        "engagement citoyen",
+        "orientations"
+      ],
+      "id": "draft_20260724080404_0",
+      "_dedup_key": "d234552d115b6418",
+      "status": "pending",
+      "created_at": "2026-07-24T08:04:04.204258+00:00"
+    },
     {
       "type": "promise_update",
       "promise_id": "promise_38",
@@ -4282,72 +4349,6 @@
       "_dedup_key": "c4fb34772327847b",
       "status": "pending",
       "created_at": "2026-06-06T08:22:46.297840+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Conseil des ministres du 5 juin 2026 : orientations du nouveau gouvernement",
-      "description": "Le communiqué du Conseil des ministres du 5 juin 2026 a été publié par l'APS, détaillant les décisions et orientations arrêtées lors de cette première réunion du nouveau gouvernement. Ce conseil marque la mise en route officielle de la nouvelle équipe gouvernementale sous la direction du Premier ministre Ahmadou Al Aminou Lo.",
-      "source": "APS - Agence de Presse Sénégalaise",
-      "source_url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOSV9LWkgzTVNmTFFnSW5nVUdHM1l5cnN1Q0NkdjdHVW9xZDliODZxQnpKekdvX0E3dzdBQ290SXFnb0c3VE83VlZxM2ZXZzNXUHllY3RONEdEVk1wRXVWREpyV2VpZFVXTVY3b1NwSmNzLVYtV0NJTUlRWUJZc3BHS1pSUU0",
-      "date": "2026-06-05",
-      "domain": "Gouvernance",
-      "confidence": 0.7,
-      "keywords": [
-        "conseil des ministres",
-        "communiqué",
-        "gouvernement",
-        "orientations",
-        "APS"
-      ],
-      "id": "draft_20260606082246_4",
-      "_dedup_key": "a89a5d37240784aa",
-      "status": "pending",
-      "created_at": "2026-06-06T08:22:46.297831+00:00"
-    },
-    {
-      "type": "promise_update",
-      "promise_id": "promise_1",
-      "title": "Le poste de Premier ministre maintenu malgré l'engagement de le supprimer",
-      "description": "La nomination d'Ahmadou Al Aminou Mohamed Lo comme nouveau Premier ministre confirme que le poste de Premier ministre n'a pas été supprimé, contrairement à l'engagement présidentiel de le remplacer par un poste de Vice-Président. La composition du nouveau gouvernement publiée par la Primature le 5 juin 2026 atteste du maintien de cette institution.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/composition-du-nouveau-gouvernement-3",
-      "date": "2026-06-05",
-      "domain": "Institutions",
-      "confidence": 0.85,
-      "keywords": [
-        "Premier ministre",
-        "Vice-Président",
-        "suppression",
-        "gouvernement",
-        "réforme institutionnelle"
-      ],
-      "id": "draft_20260606082246_2",
-      "_dedup_key": "27fdaf6416bdd9bd",
-      "status": "pending",
-      "created_at": "2026-06-06T08:22:46.297822+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Nomination d'Ahmadou Al Aminou Mohamed Lo comme nouveau Premier ministre du Sénégal",
-      "description": "Ahmadou Al Aminou Mohamed Lo a été nommé nouveau Premier ministre du Sénégal, succédant à Ousmane Sonko à la tête de la Primature. Cette nomination intervient dans un contexte de tensions au sein du parti au pouvoir entre le président Diomaye Faye et son ancien Premier ministre.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
-      "date": "2026-06-05",
-      "domain": "Institutions",
-      "confidence": 0.75,
-      "keywords": [
-        "Premier ministre",
-        "nomination",
-        "Ahmadou Al Aminou Lo",
-        "Primature",
-        "gouvernement"
-      ],
-      "id": "draft_20260606082246_1",
-      "_dedup_key": "b9bf47d84c15d8e8",
-      "status": "pending",
-      "created_at": "2026-06-06T08:22:46.297814+00:00"
     }
   ]
 }

@@ -1,6 +1,72 @@
 {
-  "last_updated": "2026-07-24T08:04:04.204362+00:00",
+  "last_updated": "2026-07-25T07:48:09.797148+00:00",
   "drafts": [
+    {
+      "type": "promise_update",
+      "promise_id": "promise_50",
+      "title": "Le Premier ministre Al Aminou LO affiche ses orientations en matière de santé et d'engagement citoyen",
+      "description": "Le Premier ministre Ahmadou Al Aminou LO a présenté ses orientations stratégiques en matière de santé et d'engagement citoyen lors d'une communication officielle publiée par la Primature. Ces orientations s'inscrivent dans le cadre des engagements gouvernementaux relatifs à la Couverture Sanitaire Universelle et à la mobilisation des citoyens autour des enjeux de santé publique. Aucun détail sur les mesures concrètes n'est disponible dans le résumé.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/sante-et-engagement-citoyen-les-orientations-du-premier-ministre-ahmadou-al",
+      "date": "2026-07-25",
+      "domain": "Santé",
+      "confidence": 0.65,
+      "keywords": [
+        "santé",
+        "engagement citoyen",
+        "Premier ministre",
+        "Al Aminou LO",
+        "CSU"
+      ],
+      "id": "draft_20260725074809_7",
+      "_dedup_key": "672d17d0a3f85cac",
+      "status": "pending",
+      "created_at": "2026-07-25T07:48:09.797100+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_6",
+      "title": "Diomaye Faye appelle à renforcer la protection des droits des personnes privées de liberté",
+      "description": "Le président Bassirou Diomaye Faye a appelé publiquement à renforcer la protection des droits des personnes privées de liberté. Cette prise de position est cohérente avec les engagements programmatiques portant sur la réforme des conditions de détention et la limitation de la détention provisoire. Aucune mesure législative concrète n'a encore été annoncée à ce stade selon les sources disponibles.",
+      "source": "Xalima",
+      "source_url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQeDA3QW1Qc1FwLWd2Rjd4T19CNFNCOWpzQ2xYRVdudzY0LXNybXNKdXlsOFo2UEp4eWRrX2c3aDEwdGdmc2VMTGM3YTlzTFU3OW1sNHN6a2hLaW5LSGdXX281VFN6WGdxbEJSMmVZVjdmbkt3TklvWkNDZTVQeHhzaTM2QUVNbU42ejJPaWdpUTd1N3g3TWZqTVJ6SGpsWmpJelA4RUdIc3ZjYWhSek0xdjBHdEIzRTl5aEg5d2d4ZUNPNkZ2TXlCZGMzZEhQcFVOOHc?oc=5",
+      "date": "2026-07-24",
+      "domain": "Justice",
+      "confidence": 0.65,
+      "keywords": [
+        "détention",
+        "droits",
+        "liberté",
+        "personnes privées de liberté",
+        "Diomaye Faye"
+      ],
+      "id": "draft_20260725074809_1",
+      "_dedup_key": "ffd3fe8ce3f80c00",
+      "status": "pending",
+      "created_at": "2026-07-25T07:48:09.797073+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Diomaye Faye élu à la présidence de la CEDEAO",
+      "description": "Le président sénégalais Bassirou Diomaye Faye a été élu à la tête de la CEDEAO, une organisation regroupant désormais 12 États membres avec des échanges commerciaux intrarégionaux inférieurs à 15 %. Cette élection positionne le Sénégal à un rôle de leadership régional en Afrique de l'Ouest. Un Sénégalais, Birame Diop, a également été désigné nouveau président de la commission de la CEDEAO.",
+      "source": "Jeune Afrique / SeneNews / Senego.com",
+      "source_url": "https://news.google.com/rss/articles/CBMi4gFBVV95cUxNQVRiMlA4d2NYMzQ1MDN0NnFzc3FGdFRKOTFxenZTV01WNC0weUxJZ2UzV25Tbkd4MHpyRDBKVk81enFySFdydHdXNUlSX1BsNVlxREVtTW12bGc4c0tsWm96dFN2VGRaRm1RVjBiNzFXU1RMOEtkVDlFWEUxaWtRbS1weElWYlFHWkRKVzl6cERuOTBBNDdEQThoVXZVZUFpeWVKczJHSEZIRjRXOXBORjgzRThDMXN3MlRTQTJSRVhZeXlUcHpIaXJ2TmstbG1OY1MxMWczVEFCbFhSUU9uY0t3?oc=5",
+      "date": "2026-07-23",
+      "domain": "Diplomatie / Intégration régionale",
+      "confidence": 0.7,
+      "keywords": [
+        "CEDEAO",
+        "Diomaye Faye",
+        "présidence",
+        "intégration régionale",
+        "Birame Diop"
+      ],
+      "id": "draft_20260725074809_0",
+      "_dedup_key": "5758e8f2641ccd35",
+      "status": "pending",
+      "created_at": "2026-07-25T07:48:09.797055+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,
@@ -4283,72 +4349,6 @@
       "_dedup_key": "2a3dc41132ef1d07",
       "status": "pending",
       "created_at": "2026-06-07T08:42:55.195355+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Conseil interministériel sur les infrastructures tenu sous le nouveau gouvernement",
-      "description": "Un conseil interministériel dédié aux infrastructures a été organisé par la Primature, témoignant d'une volonté de continuité dans la gestion des chantiers d'infrastructures malgré le changement de gouvernement. Ce conseil s'inscrit dans le cadre des orientations de développement du pays.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/conseil-interministeriel-sur-les-infrastructures",
-      "date": "2026-06-05",
-      "domain": "Industrie",
-      "confidence": 0.62,
-      "keywords": [
-        "infrastructures",
-        "conseil interministériel",
-        "Primature",
-        "développement",
-        "chantiers"
-      ],
-      "id": "draft_20260606082246_7",
-      "_dedup_key": "2c5afe0f56048bef",
-      "status": "pending",
-      "created_at": "2026-06-06T08:22:46.297856+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Diomaye Faye annonce des consultations nationales dans le cadre d'un dialogue national",
-      "description": "Le président Bassirou Diomaye Faye a annoncé des consultations imminentes avec toutes les forces vives de la nation dans le cadre d'un dialogue national. Cette initiative intervient dans un contexte de tensions politiques post-rupture avec l'ex-Premier ministre Ousmane Sonko.",
-      "source": "pressafrik.com",
-      "source_url": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxNVTNDRGdxcEdkSnFvREZVcG9jcEVqUVJpWkdzd1VabkllbW5CZ1VhUFVpOEJCV3pLeGtZNlBjcGZlbmxiVW51LUVEV1lhTU1ZMHRGZjdUamx4Q0phU19rQ1YtR3E3bkxMYUFscEs5Z1RrS3EtODNxa1JERnZxcVNLR0lmS0ltVmFIMjZWeWpMYy10VmQxcFNNS2I1aG9sd0pvMFpyT1BFUHdxYmFxc0h6WG5uemdmMGszaU5OclNJckx0QlRpdko2YTRmaDA2eEZZelFaeTVzUkQyQTk1cWVSSTJtMlFHRGFUb0FORExrZw",
-      "date": "2026-06-05",
-      "domain": "Gouvernance",
-      "confidence": 0.65,
-      "keywords": [
-        "dialogue national",
-        "consultations",
-        "forces vives",
-        "Diomaye Faye",
-        "concertation"
-      ],
-      "id": "draft_20260606082246_6",
-      "_dedup_key": "1c927b7d6b245adf",
-      "status": "pending",
-      "created_at": "2026-06-06T08:22:46.297845+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Le FMI annonce une mission à Dakar dans le contexte du départ de Sonko",
-      "description": "Le Fonds Monétaire International a annoncé une mission à Dakar dans la foulée du départ d'Ousmane Sonko de la Primature, dans un contexte de préoccupations sur la dette du Sénégal. Cette mission interviendra pour évaluer la situation des finances publiques sénégalaises sous le nouveau gouvernement.",
-      "source": "Senenews",
-      "source_url": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQSEt5RXkwNDAzcVpQV3ZuRUxEN1dEMFNLeW1vUXVoemYtOVFoME83UXBLVjllUW9lNkZGS3lVRnczX1hWYkhrTjVSX1NKMDM4TEVtR0lZcnVMQmdmY09GNWkwNzYyU0ttU2RMOG1KVWtUaDhEUTZmT2xXbk5jZzRDclBFTWpmM0twQWx2Q3h2MzJuZDhNLV9rZWRUTWJ3LTlyZHZyYmREN2pzQ3ZVTTN5RGg2bEl0SW5hUmE5N25BMnltYmw5bXctRnBwb3RiOHlISXhYTUdPVExUeGlUbzRn",
-      "date": "2026-06-04",
-      "domain": "Finances",
-      "confidence": 0.65,
-      "keywords": [
-        "FMI",
-        "dette",
-        "finances publiques",
-        "mission",
-        "Dakar"
-      ],
-      "id": "draft_20260606082246_5",
-      "_dedup_key": "c4fb34772327847b",
-      "status": "pending",
-      "created_at": "2026-06-06T08:22:46.297840+00:00"
     }
   ]
 }

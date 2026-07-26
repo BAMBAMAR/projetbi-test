@@ -1,6 +1,72 @@
 {
-  "last_updated": "2026-07-25T07:48:09.797148+00:00",
+  "last_updated": "2026-07-26T08:04:11.465885+00:00",
   "drafts": [
+    {
+      "type": "promise_update",
+      "promise_id": "promise_50",
+      "title": "Orientations du Premier ministre sur la santé et l'engagement citoyen",
+      "description": "Le Premier ministre Ahmadou Al Aminou Lo a formulé des orientations relatives à la santé et à l'engagement citoyen, selon une publication officielle de la Primature. Ces orientations pourraient s'inscrire dans le cadre de la mise en œuvre de la Couverture Sanitaire Universelle (CSU) et des réformes du secteur de la santé. Le document officiel est disponible sur le site de la Primature.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/sante-et-engagement-citoyen-les-orientations-du-premier-ministre-ahmadou-al",
+      "date": "2026-07-26",
+      "domain": "Santé",
+      "confidence": 0.65,
+      "keywords": [
+        "santé",
+        "engagement citoyen",
+        "Premier ministre",
+        "Al Aminou Lo",
+        "CSU"
+      ],
+      "id": "draft_20260726080411_4",
+      "_dedup_key": "8d679df10370af82",
+      "status": "pending",
+      "created_at": "2026-07-26T08:04:11.465821+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Réception des infrastructures sportives JOJ Dakar 2026 par le président Faye",
+      "description": "Le président Bassirou Diomaye Faye a réceptionné les chantiers de la Piscine Olympique et du Stade Iba Mar Diop le 25 juillet 2026, dans le cadre des préparatifs des Jeux Olympiques de la Jeunesse (JOJ) Dakar 2026. Le chef de l'État a exprimé une « satisfaction totale » quant à l'avancement de ces infrastructures. Il s'agit d'une action gouvernementale concrète relevant de l'investissement public en infrastructures sportives.",
+      "source": "DAKARACTU.COM / wiwsport / SANSLIMITESN.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxQcVREeGdJYnV6VXlzbWpxQWpnTEVpSFAySWU1a3A2UXlUdWZOMlRjUzAtSnd6ZUt0MHhYLVowb1N5bXZGXzlXMXY2RkI0d3dFUGtETHk0TlhscWNYVjRaVGZkZlB2MUhHemdJaVNwcG1WeHozN041V2gxcEFqeXpHZTRUblpMQVNVTTRScjhnWE1VVXVHNlE3NkVkbllOai1MbVUzMzJFelJHV0FiRXVNRExITkE4VFRWaGpLWkU1UXo4TGlkZE1KWXN5bTlnREI0X0JLNEs3VQ?oc=5",
+      "date": "2026-07-25",
+      "domain": "Infrastructures / Sport",
+      "confidence": 0.7,
+      "keywords": [
+        "JOJ",
+        "Dakar 2026",
+        "Piscine Olympique",
+        "Stade Iba Mar Diop",
+        "infrastructures"
+      ],
+      "id": "draft_20260726080411_1",
+      "_dedup_key": "8d62f144b70328f5",
+      "status": "pending",
+      "created_at": "2026-07-26T08:04:11.465809+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Lancement du parti politique « Kiiraay » par le président Diomaye Faye",
+      "description": "Le président Bassirou Diomaye Faye a officiellement lancé son nouveau parti politique dénommé « Kiiraay : les patriotes républicains » le 25 juillet 2026. Cet acte marque une rupture avec son ancien parti, l'ex-Pastef d'Ousmane Sonko, et redistribue les cartes de l'espace politique sénégalais. L'événement constitue un fait politique majeur pour la gouvernance du pays.",
+      "source": "RFI / RTS / LeQuotidien.sn",
+      "source_url": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxNUFZmcVN6SWhtVENDSHpXUHA0djBKeTV3Z19yVFhQV1R2d2pKcWZQbmhTYk84NjlmZnlpZlNDcmgyOU00cTVzVnY2bmlxOWFxdngta0dzLUxZd01TbEZyMUhKSEthSFNMX2pzUTJvWlBESE16UmJNOVJfWWd6NVNzcGppTFpYemNNUjlxSFJFMjZOcXYzZzR0Y2RaM0ZUUlZJVklZM1RrdVpfNEFjTHJOcHdwOEZ4aWhiZml4M3RfcFppX0NzaGR0Y0U4UkRVOWx1Tjh5MnpzUlc2aTdtaHpKTGtsSDZOSnczb1VXcXI1QmY?oc=5",
+      "date": "2026-07-25",
+      "domain": "Politique / Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "Kiiraay",
+        "parti politique",
+        "Diomaye Faye",
+        "Sonko",
+        "rupture"
+      ],
+      "id": "draft_20260726080411_0",
+      "_dedup_key": "116bcd64812653d4",
+      "status": "pending",
+      "created_at": "2026-07-26T08:04:11.465789+00:00"
+    },
     {
       "type": "promise_update",
       "promise_id": "promise_50",
@@ -4283,72 +4349,6 @@
       "_dedup_key": "12ee7243012a07d2",
       "status": "pending",
       "created_at": "2026-06-08T10:13:30.742777+00:00"
-    },
-    {
-      "type": "promise_update",
-      "promise_id": "promise_1",
-      "title": "Nomination d'un nouveau Premier ministre malgré l'engagement de suppression du poste",
-      "description": "Ahmadou Al Aminou Mohamed Lo a été nommé Premier ministre du Sénégal, comme l'indique la publication officielle de la Primature. Cette nomination intervient alors que la promesse de campagne du président Faye prévoyait la suppression du poste de Premier ministre et son remplacement par un Vice-Président. La composition du nouveau gouvernement a été officiellement publiée par la Primature.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
-      "date": "2026-06-05",
-      "domain": "Institutions",
-      "confidence": 0.9,
-      "keywords": [
-        "Premier ministre",
-        "nomination",
-        "gouvernement",
-        "Primature",
-        "Vice-Président"
-      ],
-      "id": "draft_20260608101330_1",
-      "_dedup_key": "e70e3d04371aefeb",
-      "status": "pending",
-      "created_at": "2026-06-08T10:13:30.742771+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Premier Conseil des ministres du nouveau gouvernement Ahmadou Al Aminou Lo",
-      "description": "Le nouveau gouvernement sénégalais dirigé par le Premier ministre Ahmadou Al Aminou Mohamed Lo a tenu son premier Conseil des ministres le vendredi 5 juin 2026. Le président Bassirou Diomaye Faye a défini les priorités gouvernementales dans le cadre de l'Agenda national de Transformation. Le chef de l'État a exigé des résultats rapides de son nouveau gouvernement.",
-      "source": "APS - Agence de Presse Sénégalaise",
-      "source_url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOSV9LWkgzTVNmTFFnSW5nVUdHM1l5cnN1Q0NkdjdHVW9xZDliODZxQnpKekdvX0E3dzdBQ290SXFnb0c3VE83VlZxM2ZXZzNXUHllY3RONEdEVk1wRXVWREpyV2VpZFVXTVY3b1NwSmNzLVYtV0NJTUlRWUJZc3BHS1pSUU0",
-      "date": "2026-06-05",
-      "domain": "Institutions",
-      "confidence": 0.75,
-      "keywords": [
-        "conseil des ministres",
-        "nouveau gouvernement",
-        "Premier ministre",
-        "Diomaye Faye",
-        "agenda transformation"
-      ],
-      "id": "draft_20260608101330_0",
-      "_dedup_key": "d3e10ac87e0e2301",
-      "status": "pending",
-      "created_at": "2026-06-08T10:13:30.742755+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Premier Conseil des ministres du nouveau gouvernement tenu le 5 juin 2026",
-      "description": "Le nouveau gouvernement a tenu son premier Conseil des ministres le vendredi 5 juin 2026, présidé par le chef de l'État Bassirou Diomaye Faye. Le Président a fixé les orientations et les priorités du nouveau gouvernement en exigeant des résultats rapides. Le communiqué officiel a été publié par l'APS et la Primature.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-05-juin-2026",
-      "date": "2026-06-05",
-      "domain": "Gouvernance",
-      "confidence": 0.75,
-      "keywords": [
-        "Conseil des ministres",
-        "nouveau gouvernement",
-        "Diomaye Faye",
-        "orientations",
-        "résultats"
-      ],
-      "id": "draft_20260607084255_2",
-      "_dedup_key": "2a3dc41132ef1d07",
-      "status": "pending",
-      "created_at": "2026-06-07T08:42:55.195355+00:00"
     }
   ]
 }

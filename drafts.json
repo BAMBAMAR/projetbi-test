@@ -1,6 +1,73 @@
 {
-  "last_updated": "2026-07-28T08:12:03.906344+00:00",
+  "last_updated": "2026-07-29T08:15:06.883661+00:00",
   "drafts": [
+    {
+      "type": "promise_update",
+      "promise_id": "promise_50",
+      "title": "Conseil des ministres du 16 juillet 2026 : potentielles mesures santé et CSU",
+      "description": "Le Conseil des ministres du 16 juillet 2026 a été tenu sous la présidence du chef de l'État, constituant un cadre décisionnel pour l'avancement des réformes gouvernementales, notamment dans le domaine de la santé. Ce type de réunion est le principal vecteur d'adoption des mesures liées aux engagements présidentiels, dont la Couverture Sanitaire Universelle. Le contenu détaillé du communiqué n'est pas disponible dans l'extrait fourni.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-16-juillet-2026-0",
+      "date": "2026-07-16",
+      "domain": "Santé",
+      "confidence": 0.6,
+      "keywords": [
+        "Conseil des ministres",
+        "juillet 2026",
+        "réformes",
+        "santé",
+        "CSU"
+      ],
+      "id": "draft_20260729081506_2",
+      "_dedup_key": "f0afc4ac814bfd01",
+      "status": "pending",
+      "created_at": "2026-07-29T08:15:06.883602+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Santé et engagement citoyen : les orientations du Premier ministre Al Aminou Lo",
+      "description": "Le Premier ministre Ahmadou Al Aminou Lo a exprimé ses orientations en matière de santé et d'engagement citoyen dans une publication officielle de la Primature. Cette communication intervient dans le cadre de l'action gouvernementale en cours. Les détails précis des mesures annoncées ne sont pas disponibles dans l'extrait.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/sante-et-engagement-citoyen-les-orientations-du-premier-ministre-ahmadou-al",
+      "date": "2026-07-29",
+      "domain": "Santé",
+      "confidence": 0.65,
+      "keywords": [
+        "Premier ministre",
+        "santé",
+        "engagement citoyen",
+        "Al Aminou Lo",
+        "Primature"
+      ],
+      "id": "draft_20260729081506_1",
+      "_dedup_key": "531a86791c4a83eb",
+      "status": "pending",
+      "created_at": "2026-07-29T08:15:06.883596+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Le président Faye lance son nouveau parti politique « Kiiraay, La Patrie d'Abord »",
+      "description": "Le président Bassirou Diomaye Faye a officiellement lancé son nouveau parti politique dénommé « Kiiraay, La Patrie d'Abord » le 25 juillet 2026. Ce lancement confirme la rupture politique avec Ousmane Sonko et le Pastef. L'événement a été couvert par plusieurs médias nationaux et internationaux dont France 24 et la RTS.",
+      "source": "RADIO TELEVISION SENEGALAISE",
+      "source_url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPZlRVajBQdEV5QWRyN0I1eklTcnJLZUNDN0FxOVNhS3p0Zk9CQTRuR3JhYm9TamFzX0NCbXQ5YmFoSTEyc2JycnEwSmFqOEJFYmZXMXBQRFNLZTJFd0ttd2NObVB2SENLdUxWSFpVR2xSRDFBQWYwa1Q3c1l5aTlMc2ZvNmlXNHdFaVBRNXNDUTZpU0xxUHFkbXc4TkNobnJRbFg1OFQ2dHRndjJ2aU1vYWpfSVJjU1RZN09tOHVrMFNjdjA?oc=5",
+      "date": "2026-07-25",
+      "domain": "Politique",
+      "confidence": 0.7,
+      "keywords": [
+        "Kiiraay",
+        "nouveau parti",
+        "Diomaye Faye",
+        "rupture",
+        "Sonko",
+        "Pastef"
+      ],
+      "id": "draft_20260729081506_0",
+      "_dedup_key": "9298c6716a62bb0f",
+      "status": "pending",
+      "created_at": "2026-07-29T08:15:06.883580+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,
@@ -4175,73 +4242,6 @@
       "_dedup_key": "4d9f72b3138bd260",
       "status": "pending",
       "created_at": "2026-06-15T11:41:29.823735+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Nouveau problème entre le Sénégal et le FMI sous Diomaye Faye",
-      "description": "Le Président Bassirou Diomaye Faye ferait face à un nouveau différend avec le Fonds Monétaire International. Cette tension intervient dans un contexte de gestion des finances publiques et d'exécution des engagements économiques du gouvernement. Les détails précis de ce désaccord ne sont pas disponibles dans le résumé fourni.",
-      "source": "SeneNews",
-      "source_url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPUzZwd3JiSVBpSDlxUUZ2WTl2VS10aE9JMjlhSVpuak1kRDI3MDBCWGR5Z1lTdUdaLWhaTjIyMnZxNkoyWDg3aXF0ZFZPMG03UU4yaWIxUldYbGhVckJEbXBZOHFmcm5ZUW5obWRZdDBQWU5QdlZCdHJKVjhJSmVfSTNabXVXRFdqZVZwbGRwN0lMMHE3Q3RfRjBLcTNlMkgtbGZEVjlGeXc4MnJWemt1M0pKOG15NXNNSWZkc1IyMTk",
-      "date": "2026-06-11",
-      "domain": "Finances",
-      "confidence": 0.65,
-      "keywords": [
-        "FMI",
-        "Diomaye Faye",
-        "finances publiques",
-        "dette",
-        "accord"
-      ],
-      "id": "draft_20260615114129_6",
-      "_dedup_key": "148304bc4c2a7920",
-      "status": "pending",
-      "created_at": "2026-06-15T11:41:29.823720+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Nomination d'Ahmadou Al Aminou Lo comme nouveau Premier Ministre",
-      "description": "Ahmadou Al Aminou Mohamed Lo a été nommé nouveau Premier Ministre du Sénégal, suite au départ d'Ousmane Sonko. Une passation de service a eu lieu au Secrétariat général du Gouvernement et un nouveau gouvernement a été composé. Ce changement intervient dans un contexte de rupture politique entre Sonko et le Président Diomaye Faye.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
-      "date": "2026-06-15",
-      "domain": "Institutions",
-      "confidence": 0.85,
-      "keywords": [
-        "Premier Ministre",
-        "nomination",
-        "gouvernement",
-        "Ahmadou Al Aminou Lo",
-        "Sonko",
-        "Diomaye"
-      ],
-      "id": "draft_20260615114129_0",
-      "_dedup_key": "31e2907d426a1c0d",
-      "status": "pending",
-      "created_at": "2026-06-15T11:41:29.823685+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Bilan de deux ans d'Ousmane Sonko à la Primature : 11 visites et 50 accords",
-      "description": "À l'occasion du départ d'Ousmane Sonko de la Primature, un bilan de ses deux années à ce poste a été établi, faisant état de 11 visites officielles et de 50 accords signés. Ce bilan constitue un élément de référence pour évaluer l'action gouvernementale sur la période écoulée. Il intervient dans un contexte de rupture annoncée entre Sonko et le président Diomaye Faye.",
-      "source": "SeneNews",
-      "source_url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxNOEU4bHlMS2gyM1UxeFYxUlpWMjN2M3pDQ0N6bHVBTV8zOTNaT1NqRmRlcVgtTjFUU1NySC1SZ3VUaFBDcFVXeHpaVVhnZnpHeldkSDNRVks0bzFwVF91WTUwTkozcEhpQmtydkVqeEJQV1E4SkxZeWtsbmFWZzZ6QUU1TzVsSFJuN3J3TjVILXBCSWFobnF1ZENHTktQRzdkVW96elZSWFRkRFRXME5HOVR6VVlWYjBVVlkxbGt0aUs3R0FZOEdUUVN6UWlOMWNEUFVtdGRsX09SY254VFZFLVgyZFo",
-      "date": "2026-06-12",
-      "domain": "Gouvernance",
-      "confidence": 0.75,
-      "keywords": [
-        "Sonko",
-        "Primature",
-        "bilan",
-        "accords",
-        "deux ans"
-      ],
-      "id": "draft_20260614090004_5",
-      "_dedup_key": "b236507f93c47080",
-      "status": "pending",
-      "created_at": "2026-06-14T09:00:04.521194+00:00"
     }
   ]
 }

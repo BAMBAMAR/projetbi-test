@@ -1,6 +1,94 @@
 {
-  "last_updated": "2026-07-29T08:15:06.883661+00:00",
+  "last_updated": "2026-07-30T08:04:04.587496+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Projet de loi contre les caisses noires : le Pastef interpellé sur sa propre gestion",
+      "description": "Un projet de loi visant à lutter contre les caisses noires a été présenté, suscitant des interrogations sur la cohérence avec la gestion interne du Pastef. Ce texte s'inscrit dans la dynamique de lutte contre la corruption et pour la transparence financière portée par le gouvernement. L'initiative est cependant questionnée par des observateurs qui pointent des contradictions dans la gestion du parti au pouvoir.",
+      "source": "RFI",
+      "source_url": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxPSDZ0MGFKMkctOUVoNnlNOUp6bHRnWHVTSUcyYkxZN1NkUExteEh2ODE1MkpHS3VjUmVndWppNGdWV2xMTWdWOEFEZmx6bmxwanV0d3l5elA4ZHk5cWRCYU4td1RLLW9KNzJjR21Bd1dHeDJQTWZOeEVIOFFoRTI5TTNZbGdQWTVzbklidERqVnBna2RSNHl2TVl1cFhsa2xVRDlBNm0xNGhoekNBOHZZd0ZGOE1Ob1dsdHgtdURMenJ3OThNRU5GS0lYVVpVTVdEdjQ0WVVuZmFmaFVzYkhwb0JyT3ZJb2hvY29KQ0JySQ",
+      "date": "2026-07-29",
+      "domain": "Lutte Corruption",
+      "confidence": 0.68,
+      "keywords": [
+        "caisses noires",
+        "projet de loi",
+        "corruption",
+        "transparence",
+        "Pastef"
+      ],
+      "id": "draft_20260730080404_6",
+      "_dedup_key": "f1b23b0afc60dd8a",
+      "status": "pending",
+      "created_at": "2026-07-30T08:04:04.587439+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_36",
+      "title": "Les producteurs d'oignons de Ngomène interpellent le président sur leurs difficultés",
+      "description": "Des producteurs d'oignons de Ngomène ont alerté le président Bassirou Diomaye Faye sur la perte de leurs stocks et l'accumulation de leurs dettes faute de débouchés commerciaux. Cette situation met en lumière les difficultés persistantes dans le secteur agricole, malgré l'engagement de porter le budget agricole à 10 %. Les producteurs appellent à des mesures urgentes de la part du gouvernement.",
+      "source": "DAKARACTU.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxOZ0kzakM0SlNYSnpPZnJ1YXVBeVVwd3JUV3V1RzJINTVDSUhwbHVfNEdyZkprUnowVmdCdUZfMG40bmozY1B6UkU0N1hTWXA3R2k3VFlHc2JRRE0xX1BiRU1NanVEaFRtaDFsdktIUG8tbjhOWUctNjBTc0I4RTZldm92cjZBWWhkNnlzR1hGVVY3NV9VRVNyUHIzTFNkajUtZEJvVVBKd2ZkTTJ3aVJIcDFVaEo2X1hRWk9XZ3ZRdjFYSWFuR1pwdWxzbGtQZnV2RklDNmgtaG5NVWF3V2pDT3doMHJjcS1R",
+      "date": "2026-07-29",
+      "domain": "Agriculture",
+      "confidence": 0.65,
+      "keywords": [
+        "oignons",
+        "producteurs",
+        "Ngomène",
+        "agriculture",
+        "budget agricole",
+        "dettes"
+      ],
+      "id": "draft_20260730080404_5",
+      "_dedup_key": "20feeb080d0c2830",
+      "status": "pending",
+      "created_at": "2026-07-30T08:04:04.587433+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_50",
+      "title": "Le Premier ministre fixe des orientations sur la santé et l'engagement citoyen",
+      "description": "Le Premier ministre Ahmadou Al Aminou LO a exprimé des orientations relatives à la santé et à l'engagement citoyen. Cette initiative s'inscrit dans le cadre de l'objectif de Couverture Sanitaire Universelle (CSU) figurant parmi les engagements présidentiels. Les détails des mesures annoncées ont été publiés par la Primature.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/sante-et-engagement-citoyen-les-orientations-du-premier-ministre-ahmadou-al",
+      "date": "2026-07-30",
+      "domain": "Santé",
+      "confidence": 0.65,
+      "keywords": [
+        "santé",
+        "Premier ministre",
+        "engagement citoyen",
+        "CSU",
+        "couverture sanitaire"
+      ],
+      "id": "draft_20260730080404_3",
+      "_dedup_key": "fdd3f07fc43ae2c1",
+      "status": "pending",
+      "created_at": "2026-07-30T08:04:04.587419+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 29 juillet 2026",
+      "description": "Le gouvernement sénégalais a tenu un Conseil des ministres le 29 juillet 2026. Les délibérations et décisions issues de cette réunion ont été publiées par la Primature et le site officiel du gouvernement. Ce conseil constitue un cadre de suivi de l'action gouvernementale.",
+      "source": "Gouvernement du Sénégal / Primature",
+      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-29-juillet-2026",
+      "date": "2026-07-29",
+      "domain": "Gouvernance",
+      "confidence": 0.75,
+      "keywords": [
+        "conseil des ministres",
+        "gouvernement",
+        "Primature",
+        "juillet 2026"
+      ],
+      "id": "draft_20260730080404_0",
+      "_dedup_key": "f0a92fa1ef3e99c5",
+      "status": "pending",
+      "created_at": "2026-07-30T08:04:04.587398+00:00"
+    },
     {
       "type": "promise_update",
       "promise_id": "promise_50",
@@ -4153,95 +4241,6 @@
       "_dedup_key": "f0b4863af72e3491",
       "status": "pending",
       "created_at": "2026-06-16T10:50:56.603128+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Conseil des ministres du 20 mai 2026 : décisions et orientations",
-      "description": "La Primature publie le compte rendu du Conseil des ministres du 20 mai 2026, document officiel retraçant les décisions du gouvernement. Ce compte rendu peut contenir des éléments de suivi de réformes sectorielles engagées par le pouvoir exécutif. Il constitue une source primaire pour le suivi des engagements présidentiels.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-20-mai-2026",
-      "date": "2026-06-16",
-      "domain": "Gouvernance",
-      "confidence": 0.7,
-      "keywords": [
-        "Conseil des ministres",
-        "décisions",
-        "gouvernement",
-        "mai 2026",
-        "réformes"
-      ],
-      "id": "draft_20260616105056_4",
-      "_dedup_key": "4a518fcd8ba8404d",
-      "status": "pending",
-      "created_at": "2026-06-16T10:50:56.603119+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Composition du nouveau gouvernement après la rupture Sonko-Faye",
-      "description": "La Primature publie la composition du nouveau gouvernement formé suite à la nomination d'Ahmadou Al Aminou Lo comme Premier ministre. Cette recomposition gouvernementale fait suite à la crise politique entre Ousmane Sonko et le président Bassirou Diomaye Faye. La nouvelle équipe gouvernementale sera chargée de poursuivre la mise en œuvre du programme de réformes présidentielles.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/composition-du-nouveau-gouvernement-3",
-      "date": "2026-06-16",
-      "domain": "Institutions",
-      "confidence": 0.75,
-      "keywords": [
-        "gouvernement",
-        "composition",
-        "remaniement",
-        "ministres",
-        "Primature"
-      ],
-      "id": "draft_20260616105056_2",
-      "_dedup_key": "1c8dae536a54efa8",
-      "status": "pending",
-      "created_at": "2026-06-16T10:50:56.603109+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Blocages entre le Sénégal et le FMI : analyse des scénarios de sortie de crise",
-      "description": "Jeune Afrique publie une analyse en cinq questions sur les tensions entre le Sénégal et le FMI, mettant en lumière les blocages actuels dans les négociations. Cet article intervient dans un contexte de contraintes budgétaires fortes qui conditionnent la mise en œuvre des réformes économiques et sociales du gouvernement. Les scénarios de sortie de crise évoqués ont des implications directes sur la capacité de financement des engagements présidentiels.",
-      "source": "Jeune Afrique",
-      "source_url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxQcHgyZTMyQnF0QVlLcXBESUItS2llbFNNWHkxV1Q0WFBGSU9zVmdVYm5vb1I4ZWNnZTJCUTZqcHp5M2FOYzYwN0FMU3VfTE40c0FjMFIzdVhkMmdXNWk2UTJmY0hEeVptdkdSd25aRlpLTGhidUVXRTBYNkRydEN1V3Bsa3NidjJCV1NTT2NSdnEzNk9jdmlhNEtwUFNWWTZRNERBMWtwV25ROXJjbzdjX0ZlQkFSMmVYVWhKTTBfcXJUSlRFajdVZ1FvdkpkSVlTSjFUN181YXBMSkt4Wi10cQ?oc=5",
-      "date": "2026-06-16",
-      "domain": "Économie / Finances publiques",
-      "confidence": 0.72,
-      "keywords": [
-        "FMI",
-        "budget",
-        "dette",
-        "réformes",
-        "financement"
-      ],
-      "id": "draft_20260616105056_0",
-      "_dedup_key": "efa10489a5621855",
-      "status": "pending",
-      "created_at": "2026-06-16T10:50:56.603091+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Conseil présidentiel sénégalo-gambien : succès salué par Diomaye et Barrow",
-      "description": "Les Présidents Bassirou Diomaye Faye et Adama Barrow ont salué le succès du Conseil présidentiel sénégalo-gambien. Cette instance bilatérale vise à renforcer la coopération entre les deux pays voisins sur des enjeux communs. La rencontre s'inscrit dans le cadre de la diplomatie régionale active du gouvernement sénégalais.",
-      "source": "APS - Agence de Presse Sénégalaise",
-      "source_url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOMmI5TU5JMWx2dHRiN3pvTFF1MVc1ZThITU9pY01YVUFqT2pkQU43Nm5fUVZlOGNnYm41VmdyeGZXY0JrUU14cXUtRWp5akdyQjg3aV9WUm8wUXdFV2dZaGVDMnlydUhTNHphbGlKVXZBdG5Gcno1U1I5bFhQS0g3cEV1ZEozdlFzMlRicHZyVFlyN1N0M3RrUW9pdFdhRVVvNUZDWGFzenFXbnFSdXZZU093",
-      "date": "2026-06-12",
-      "domain": "Diplomatie",
-      "confidence": 0.65,
-      "keywords": [
-        "Sénégal",
-        "Gambie",
-        "Diomaye Faye",
-        "Barrow",
-        "conseil présidentiel",
-        "coopération"
-      ],
-      "id": "draft_20260615114129_7",
-      "_dedup_key": "4d9f72b3138bd260",
-      "status": "pending",
-      "created_at": "2026-06-15T11:41:29.823735+00:00"
     }
   ]
 }

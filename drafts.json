@@ -1,6 +1,71 @@
 {
-  "last_updated": "2026-07-30T08:04:04.587496+00:00",
+  "last_updated": "2026-07-31T08:29:08.106627+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Circulaire du Premier ministre sur les entités sous tutelle",
+      "description": "Le Premier ministre a émis une circulaire portant sur les entités placées sous la tutelle de l'État, précisant les règles de gouvernance et de contrôle applicables. Cette instruction administrative vise à encadrer le fonctionnement des structures para-publiques et agences gouvernementales. Africtelegraph rapporte cette initiative qui touche à la rationalisation de l'administration publique.",
+      "source": "Africtelegraph",
+      "source_url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQMGYxbldLOXNKc2E5aTRZMl9CREdfRnQxejlDbnUwQjRFLXBFT2xNNG1FTEhOY25YZnZhN05JSktNRFVNaU1pdk1kcm5lSnUycGhnekJCOUMyN0E2VU1vbGh2QldVbU9yVlh6R1p5b0c1ekZuTjk5OEJPZHJLUDBQdHVBQjdNempzY21sbTVJWm9hRTJDOEF2azVjc3hvN2p6MXc",
+      "date": "2026-07-30",
+      "domain": "Gouvernance",
+      "confidence": 0.65,
+      "keywords": [
+        "Premier ministre",
+        "circulaire",
+        "entités sous tutelle",
+        "gouvernance",
+        "administration publique"
+      ],
+      "id": "draft_20260731082908_3",
+      "_dedup_key": "a849852fed189310",
+      "status": "pending",
+      "created_at": "2026-07-31T08:29:08.106582+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Conseil des ministres du 29 juillet 2026 : décisions gouvernementales",
+      "description": "Le Conseil des ministres du 29 juillet 2026 s'est tenu sous la présidence du Chef de l'État, donnant lieu à plusieurs décisions gouvernementales. Le compte-rendu officiel publié par le Gouvernement du Sénégal détaille les mesures adoptées lors de cette session. Ce conseil constitue un moment clé de l'action exécutive hebdomadaire pouvant toucher plusieurs domaines de politique publique.",
+      "source": "Gouvernement du Sénégal",
+      "source_url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPRmtnOXo0MmNFVTJ6Z3hOU2NBZkt2MC1FNGlka0NkOXRVUi00RmJwUGJnM2JyZ2FZZ3VfRzdqMmhUVEwtVU0wRDVkWXRBcHBud0l3b1NVc3d3VC1VcmtaTGN4c0FIdWZzM2lvMDVhRjZzMDF5V0FjQm9TdlQ3Q0E5R1lvRTFVb01IR2hlT1hn",
+      "date": "2026-07-29",
+      "domain": "Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "conseil des ministres",
+        "gouvernement",
+        "décisions",
+        "politique publique"
+      ],
+      "id": "draft_20260731082908_2",
+      "_dedup_key": "59d019b2f5f3beef",
+      "status": "pending",
+      "created_at": "2026-07-31T08:29:08.106573+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_12",
+      "title": "Diomaye Faye demande des réformes pénitentiaires et l'instruction des affaires en appel",
+      "description": "Le Président Bassirou Diomaye Faye a formulé des demandes explicites relatives aux réformes pénitentiaires et à l'accélération de l'instruction des affaires en appel. Cette démarche s'inscrit dans le cadre des engagements pris en matière de modernisation du système carcéral et de réhabilitation des prisons aux normes. L'article de SANSLIMITESN.COM rapporte ces instructions présidentielles adressées au secteur judiciaire.",
+      "source": "SANSLIMITESN.COM",
+      "source_url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxQcVI0b01nT0RKZlVmN0xFUlFVZHpRc0ozeFZicmtHdTFHUDFHbXJaREQtWVNxRi1EdWNzQTNra1pWdFUzb0YyelIwdVo5SFE2QlB2V1pzXy1BRE5UczNzcDd1V1EtTk53SVF1NVRvTVgxUXlhbG1rdERaUGtiUzljNFl4Sm13bkJHSHFqVkdieXNzSXpHSThQQ19PT0ptaFJHVGphM0RuM2VRLVd0dWdmM0pKMWhYOERjWXZnSDdHNmdvbk9qZXBaNw",
+      "date": "2026-07-30",
+      "domain": "Justice",
+      "confidence": 0.78,
+      "keywords": [
+        "réformes pénitentiaires",
+        "instruction",
+        "appel",
+        "justice",
+        "Diomaye Faye"
+      ],
+      "id": "draft_20260731082908_0",
+      "_dedup_key": "d261a83652da918a",
+      "status": "pending",
+      "created_at": "2026-07-31T08:29:08.106552+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,
@@ -4174,73 +4239,6 @@
       "_dedup_key": "d91cc24ae3b70139",
       "status": "pending",
       "created_at": "2026-06-17T10:23:17.948715+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Composition d'un nouveau gouvernement au Sénégal",
-      "description": "Un nouveau gouvernement a été composé suite à la recomposition politique au sommet de l'État sénégalais. La Primature a publié la composition officielle de ce nouvel exécutif. Cette recomposition fait suite à la rupture politique entre le Président Faye et Ousmane Sonko.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/composition-du-nouveau-gouvernement-3",
-      "date": "2026-06-17",
-      "domain": "Institutions",
-      "confidence": 0.75,
-      "keywords": [
-        "gouvernement",
-        "composition",
-        "recomposition",
-        "exécutif"
-      ],
-      "id": "draft_20260617102317_2",
-      "_dedup_key": "adc3d3a75d276f8c",
-      "status": "pending",
-      "created_at": "2026-06-17T10:23:17.948692+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Bilan diplomatique de deux ans d'Ousmane Sonko à la Primature : 11 visites et 50 accords",
-      "description": "SeneNews publie un bilan des deux années d'Ousmane Sonko à la tête du gouvernement, faisant état de 11 visites officielles et de 50 accords signés. Ce bilan couvre la période d'exercice de Sonko en tant que Premier ministre avant sa destitution. Il constitue un élément de référence pour évaluer l'action gouvernementale sur la période mars 2024 – juin 2026.",
-      "source": "SeneNews",
-      "source_url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxNOEU4bHlMS2gyM1UxeFYxUlpWMjN2M3pDQ0N6bHVBTV8zOTNaT1NqRmRlcVgtTjFUU1NySC1SZ3VUaFBDcFVXeHpaVVhnZnpHeldkSDNRVks0bzFwVF91WTUwTkozcEhpQmtydkVqeEJQV1E0SkxZeWtsbmFWZzZ6QUU1TzVsSFJuN3J3TjVILXBCSWFobnF1ZENHTktQRzdkVW96elZSWFRkRFRXME5HOVR6VVlWYjBVVlkxbGt0aUs3R0FZOEdUUVN6UWlOMWNEUFVtdGRsX09SY254VFZFLVgyZFo?oc=5",
-      "date": "2026-06-12",
-      "domain": "Gouvernance / Diplomatie",
-      "confidence": 0.72,
-      "keywords": [
-        "Sonko",
-        "Primature",
-        "bilan",
-        "accords",
-        "diplomatie",
-        "deux ans"
-      ],
-      "id": "draft_20260616105056_7",
-      "_dedup_key": "745e6878763b4190",
-      "status": "pending",
-      "created_at": "2026-06-16T10:50:56.603142+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "\"Jubbanti AN 2\" : bilan de deux ans de gouvernement entre réformes et relance",
-      "description": "La Primature publie un document intitulé \"Jubbanti AN 2\" dressant un bilan de deux années de gouvernement, articulé autour des réformes, de la rationalisation et de la relance économique. Ce document de bilan officiel constitue une source privilégiée pour évaluer l'état d'avancement des engagements présidentiels après deux ans d'exercice du pouvoir. Il est susceptible de couvrir plusieurs domaines de promesses suivies par ProjetBI.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/jubbanti-2-entre-reformes-rationalisation-et-relance",
-      "date": "2026-06-16",
-      "domain": "Gouvernance / Bilan",
-      "confidence": 0.85,
-      "keywords": [
-        "Jubbanti",
-        "bilan",
-        "réformes",
-        "relance",
-        "deux ans",
-        "gouvernement"
-      ],
-      "id": "draft_20260616105056_6",
-      "_dedup_key": "f0b4863af72e3491",
-      "status": "pending",
-      "created_at": "2026-06-16T10:50:56.603128+00:00"
     }
   ]
 }

@@ -1,6 +1,92 @@
 {
-  "last_updated": "2026-07-31T08:29:08.106627+00:00",
+  "last_updated": "2026-08-01T07:59:25.442540+00:00",
   "drafts": [
+    {
+      "type": "promise_update",
+      "promise_id": "promise_18",
+      "title": "Projet de loi contre les caisses noires : avancée législative en matière de lutte contre la corruption",
+      "description": "Un projet de loi ciblant les caisses noires a été présenté par le gouvernement, selon RFI. Cette initiative législative s'inscrit dans la dynamique de renforcement des mécanismes de lutte contre la corruption, pouvant être rapprochée de la promesse de réforme de l'OFNAC et des engagements en matière de transparence financière.",
+      "source": "RFI",
+      "source_url": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxPSDZ0MGFKMkctOUVoNnlNOUp6bHRnWHVTSUcyYkxZN1NkUExteEh2ODE1MkpHS3VjUmVndWppNGdWV2xMTWdWOEFEZmx6bmxwanV0d3l5elA4ZHk5cWRCYU4td1RLLW9KNzJjR21Bd1dHeDJQTWZOeEVIOFFoRTI5TTNZbGdQWTVzbklidERqVnBna2RSNHl2TVl1cFhsa2xVRDlBNm0xNGhoekNBOHZZd0ZGOE1Ob1dsdHgtdURMenJ3OThNRU5GS0lYVVpVTVdEdjQ0WVVuZmFmaFVzYkhwb0JyT3ZJb2hvY29KQ0JySQ",
+      "date": "2026-07-29",
+      "domain": "Lutte Corruption",
+      "confidence": 0.65,
+      "keywords": [
+        "caisses noires",
+        "OFNAC",
+        "transparence",
+        "lutte corruption",
+        "projet de loi"
+      ],
+      "id": "draft_20260801075925_9",
+      "_dedup_key": "82fd501477386c76",
+      "status": "pending",
+      "created_at": "2026-08-01T07:59:25.442493+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_36",
+      "title": "Suivi de la campagne agricole 2026/2027 : le gouvernement se mobilise",
+      "description": "Une réunion interministérielle a été organisée pour suivre la campagne de production agricole 2026/2027. Cette mobilisation de l'exécutif peut être lue comme un indicateur de l'attention portée au secteur agricole, en lien avec l'engagement d'allouer 10 % du budget à l'agriculture.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/reunion-interministerielle-sur-le-deroulement-de-la-campagne-de-production",
+      "date": "2026-07-31",
+      "domain": "Agriculture",
+      "confidence": 0.62,
+      "keywords": [
+        "agriculture",
+        "budget agricole",
+        "campagne agricole",
+        "production"
+      ],
+      "id": "draft_20260801075925_6",
+      "_dedup_key": "5d9828f878f68ba5",
+      "status": "pending",
+      "created_at": "2026-08-01T07:59:25.442478+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_50",
+      "title": "Orientations du Premier ministre sur la santé : signal vers la Couverture Sanitaire Universelle",
+      "description": "Le Premier ministre a publié des orientations officielles portant sur la santé et l'engagement citoyen. Ces directives pourraient s'inscrire dans la mise en œuvre progressive de la promesse de Couverture Sanitaire Universelle (CSU), bien que le lien direct reste à confirmer à la lecture du document complet.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/sante-et-engagement-citoyen-les-orientations-du-premier-ministre-ahmadou-al",
+      "date": "2026-07-31",
+      "domain": "Santé",
+      "confidence": 0.6,
+      "keywords": [
+        "santé",
+        "CSU",
+        "couverture sanitaire",
+        "Premier ministre"
+      ],
+      "id": "draft_20260801075925_3",
+      "_dedup_key": "0edb11c94e1041c7",
+      "status": "pending",
+      "created_at": "2026-08-01T07:59:25.442470+00:00"
+    },
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Le Premier ministre mobilise le gouvernement sur la formation et l'employabilité",
+      "description": "Le Premier ministre Ahmadou Al Aminou LO a réuni le gouvernement autour des thématiques de la formation professionnelle, de l'employabilité et de la période de soudure. Cette initiative s'inscrit dans la politique de l'emploi et de la protection sociale portée par l'exécutif.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/formation-employabilite-soudure-le-premier-ministre-mobilise-le",
+      "date": "2026-07-31",
+      "domain": "Emploi / Social",
+      "confidence": 0.7,
+      "keywords": [
+        "formation",
+        "employabilité",
+        "soudure",
+        "Premier ministre",
+        "gouvernement"
+      ],
+      "id": "draft_20260801075925_1",
+      "_dedup_key": "835b03bba87b1807",
+      "status": "pending",
+      "created_at": "2026-08-01T07:59:25.442452+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,
@@ -4150,95 +4236,6 @@
       "_dedup_key": "a3baccc1af9c7e5b",
       "status": "pending",
       "created_at": "2026-06-18T10:02:29.080702+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Collectivités territoriales appelées à budgétiser la protection de l'enfance",
-      "description": "La ministre de la Famille, des solidarités et de l'action sociale a invité les collectivités territoriales à créer des lignes budgétaires dédiées à la protection des enfants. Cette déclaration a été faite à l'occasion de la Journée de l'enfant africain à Matam. Elle s'inscrit dans une dynamique nationale de protection des droits de l'enfant réaffirmée par le Président Faye.",
-      "source": "APS — Agence de Presse Sénégalaise",
-      "source_url": "https://aps.sn/les-collectivites-territoriales-invitees-a-creer-des-lignes-budgetaires-sensibles-a-la-protection-des-enfants/",
-      "date": "2026-06-16",
-      "domain": "Social",
-      "confidence": 0.65,
-      "keywords": [
-        "collectivités territoriales",
-        "protection enfance",
-        "budget",
-        "solidarité",
-        "droits de l'enfant"
-      ],
-      "id": "draft_20260617102317_8",
-      "_dedup_key": "751ca773cf019424",
-      "status": "pending",
-      "created_at": "2026-06-17T10:23:17.948741+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Réforme éducative : suppression du concours d'entrée en sixième",
-      "description": "Le directeur des Examens et Concours a annoncé la suppression du concours d'entrée en sixième, présentée comme une réforme visant à corriger les inégalités dans le système éducatif sénégalais. Cette mesure entend garantir une transition plus équitable entre l'école élémentaire et le cycle moyen. Le CFEE 2026 intègre par ailleurs des axes de digitalisation, sécurisation et inclusion.",
-      "source": "APS — Agence de Presse Sénégalaise",
-      "source_url": "https://aps.sn/la-suppression-du-concours-dentree-en-sixieme-vise-a-instaurer-un-systeme-educatif-plus-equitable-selon-un-officiel/",
-      "date": "2026-06-16",
-      "domain": "Éducation",
-      "confidence": 0.7,
-      "keywords": [
-        "éducation",
-        "réforme scolaire",
-        "sixième",
-        "équité",
-        "CFEE",
-        "digitalisation"
-      ],
-      "id": "draft_20260617102317_7",
-      "_dedup_key": "92f31619fdea3df7",
-      "status": "pending",
-      "created_at": "2026-06-17T10:23:17.948734+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Le Parlement sénégalais renforce ses capacités de suivi-évaluation des lois",
-      "description": "Le Parlement sénégalais a engagé une démarche de renforcement des capacités en matière de suivi-évaluation des lois, selon l'APS. Cette initiative vise à améliorer le contrôle parlementaire de l'application de la législation votée. Elle s'inscrit dans un contexte de consolidation des institutions démocratiques.",
-      "source": "APS — Agence de Presse Sénégalaise",
-      "source_url": "https://aps.sn/suivi-evaluation-des-lois-le-parlement-senegalais-mise-sur-le-renforcement-des-capacites/",
-      "date": "2026-06-16",
-      "domain": "Institutions",
-      "confidence": 0.68,
-      "keywords": [
-        "Parlement",
-        "suivi-évaluation",
-        "lois",
-        "contrôle parlementaire",
-        "capacités"
-      ],
-      "id": "draft_20260617102317_6",
-      "_dedup_key": "342e96b9c07f5e19",
-      "status": "pending",
-      "created_at": "2026-06-17T10:23:17.948722+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Sénégal-FMI : blocages et scénarios de sortie de crise",
-      "description": "Selon Jeune Afrique, des blocages persistent dans les négociations entre le Sénégal et le Fonds Monétaire International. L'article analyse cinq questions clés pour comprendre la nature des désaccords et les scénarios envisageables. Cette situation a des implications directes sur la politique budgétaire et économique du gouvernement.",
-      "source": "Jeune Afrique",
-      "source_url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxQcHgyZTMyQnF0QVlLcXBESUItS2llbFNNWHkxV1Q0WFBGSU9zVmdVYm5vb1I4ZWNnZTJCUTZqcHp5M2FOYzYwN0FMU3VfTE40c0FjMFIzdVhkMmdXNWk2UTJmY0hEeVptdkdSd25aRlpLTGhidUVXRTBYNkRydEN1V3Bsa3NidjJCV1NTT2NSdnEzNk9jdmlhNEtwUFNWWTZRNERBMWtwV25ROXJjbzdjX0ZlQkFSMmVYVWhKTTBfcXJUSlRFajdVZ1FvdkpkSVlTSjFUN181YXBMSkt4Wi10cQ",
-      "date": "2026-06-16",
-      "domain": "Économie",
-      "confidence": 0.72,
-      "keywords": [
-        "FMI",
-        "dette",
-        "finances publiques",
-        "négociations",
-        "crise économique"
-      ],
-      "id": "draft_20260617102317_5",
-      "_dedup_key": "d91cc24ae3b70139",
-      "status": "pending",
-      "created_at": "2026-06-17T10:23:17.948715+00:00"
     }
   ]
 }

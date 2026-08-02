@@ -1,6 +1,72 @@
 {
-  "last_updated": "2026-08-01T07:59:25.442540+00:00",
+  "last_updated": "2026-08-02T08:01:05.802497+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Réaccréditation de la Commission des droits de l'homme : Diomaye Faye choisit une procédure ouverte",
+      "description": "Le Président Bassirou Diomaye Faye a opté pour une procédure ouverte et transparente pour la réaccréditation de la Commission nationale des droits de l'homme du Sénégal. Cette démarche vise à renforcer la crédibilité et l'indépendance de l'institution auprès des instances internationales. Elle s'inscrit dans une logique de bonne gouvernance et de respect des droits fondamentaux.",
+      "source": "Senego.com",
+      "source_url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPdVhhUUtMY19JTGR0dDhFM1VkLWR2QkpoLW9QVV9NYXhQcFVLdFJydzNhdmRiME00Ynp4WVFlSzEzNkRYdWNQUXNOUUdNT1hsR0xHMllENE5JaWw0Mms3Q2F6R3MwSVFHLVJaeU9UaTlBVlBaUWRXeGc0Z2t3ZmxvYmlhYU0xNFExSXdiNmFIT19VQXU4dHRMaFRjTGxIRm5VVGx4d245N0ZtZHU2MXRfeGNzQWFEYzdobUJ4M3Q4eVA1U1dLVmNWdXN3",
+      "date": "2026-08-01",
+      "domain": "Droits de l'homme / Gouvernance",
+      "confidence": 0.7,
+      "keywords": [
+        "droits de l'homme",
+        "commission",
+        "réaccréditation",
+        "procédure ouverte",
+        "Diomaye Faye"
+      ],
+      "id": "draft_20260802080105_8",
+      "_dedup_key": "0a71265115fe3aef",
+      "status": "pending",
+      "created_at": "2026-08-02T08:01:05.802450+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_36",
+      "title": "Suivi gouvernemental de la campagne agricole 2026/2027 — budget et priorités",
+      "description": "La réunion interministérielle sur la campagne agricole 2026/2027 révèle un engagement de l'exécutif dans le pilotage du secteur, en lien avec la promesse d'allouer 10 % du budget national à l'agriculture. Les échanges portent sur les conditions de production et les mesures d'accompagnement des producteurs. Aucun chiffre budgétaire précis n'est encore publié dans les sources disponibles.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/reunion-interministerielle-sur-le-deroulement-de-la-campagne-de-production",
+      "date": "2026-08-02",
+      "domain": "Agriculture",
+      "confidence": 0.6,
+      "keywords": [
+        "budget agricole",
+        "campagne agricole",
+        "10%",
+        "agriculture",
+        "interministériel"
+      ],
+      "id": "draft_20260802080105_5",
+      "_dedup_key": "ffdd2931b8558785",
+      "status": "pending",
+      "created_at": "2026-08-02T08:01:05.802428+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_50",
+      "title": "Le Premier Ministre formule des orientations sur la santé en lien avec la CSU",
+      "description": "Le Premier Ministre a exprimé des orientations en matière de santé et d'engagement citoyen, pouvant s'inscrire dans la dynamique de mise en œuvre de la Couverture Sanitaire Universelle (CSU). Ces orientations concernent à la fois l'organisation des soins et la participation citoyenne au système de santé. Le document est publié officiellement par la Primature.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/sante-et-engagement-citoyen-les-orientations-du-premier-ministre-ahmadou-al",
+      "date": "2026-08-02",
+      "domain": "Santé",
+      "confidence": 0.62,
+      "keywords": [
+        "santé",
+        "CSU",
+        "couverture sanitaire universelle",
+        "Premier Ministre",
+        "engagement citoyen"
+      ],
+      "id": "draft_20260802080105_3",
+      "_dedup_key": "488921b9f89d12ee",
+      "status": "pending",
+      "created_at": "2026-08-02T08:01:05.802409+00:00"
+    },
     {
       "type": "promise_update",
       "promise_id": "promise_18",
@@ -4171,71 +4237,6 @@
       "_dedup_key": "ba1ab2e45d3753a6",
       "status": "pending",
       "created_at": "2026-06-19T10:09:38.830834+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Parlement sénégalais : renforcement des capacités pour le suivi-évaluation des lois",
-      "description": "Le Parlement sénégalais s'est engagé dans une démarche de renforcement des capacités liée au suivi et à l'évaluation des lois. Cette initiative vise à améliorer le contrôle de l'action gouvernementale par les parlementaires. Elle s'inscrit dans un effort plus large de modernisation du fonctionnement institutionnel.",
-      "source": "APS — Agence de Presse Sénégalaise",
-      "source_url": "https://aps.sn/suivi-evaluation-des-lois-le-parlement-senegalais-mise-sur-le-renforcement-des-capacites/?utm_source=rss&utm_medium=rss&utm_campaign=suivi-evaluation-des-lois-le-parlement-senegalais-mise-sur-le-renforcement-des-capacites",
-      "date": "2026-06-16",
-      "domain": "Institutions",
-      "confidence": 0.65,
-      "keywords": [
-        "Parlement",
-        "suivi-évaluation",
-        "lois",
-        "capacités",
-        "contrôle"
-      ],
-      "id": "draft_20260618100229_5",
-      "_dedup_key": "aa6b4fbd6203fa30",
-      "status": "pending",
-      "created_at": "2026-06-18T10:02:29.080737+00:00"
-    },
-    {
-      "type": "promise_update",
-      "promise_id": "promise_1",
-      "title": "Nomination d'un nouveau Premier Ministre : Al Aminou LO",
-      "description": "Ahmadou Al Aminou Mohamed LO a été nommé nouveau Premier Ministre du Sénégal, selon une publication de la Primature. Cette information confirme le maintien du poste de Premier Ministre, en contradiction avec la promesse de le supprimer au profit d'un poste de Vice-Président. Le Premier Ministre a par ailleurs été impliqué dans le suivi des Jeux Olympiques de la Jeunesse (JOJ) Dakar 2026.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
-      "date": "2026-06-18",
-      "domain": "Institutions",
-      "confidence": 0.85,
-      "keywords": [
-        "Premier Ministre",
-        "Al Aminou LO",
-        "nomination",
-        "institutions",
-        "Vice-Président"
-      ],
-      "id": "draft_20260618100229_3",
-      "_dedup_key": "f8a4f0a0aeab1131",
-      "status": "pending",
-      "created_at": "2026-06-18T10:02:29.080726+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Conseil des ministres du 17 juin 2026",
-      "description": "Le gouvernement sénégalais a tenu un conseil des ministres le 17 juin 2026. Les décisions et orientations issues de cette réunion sont publiées par la Primature. Ce conseil constitue un cadre de suivi de l'action gouvernementale.",
-      "source": "Gouvernement du Sénégal / Primature",
-      "source_url": "https://primature.sn/publications/actualites/conseil-des-ministres-du-17-juin-2026",
-      "date": "2026-06-17",
-      "domain": "Gouvernance",
-      "confidence": 0.7,
-      "keywords": [
-        "conseil des ministres",
-        "gouvernement",
-        "Primature",
-        "juin 2026"
-      ],
-      "id": "draft_20260618100229_0",
-      "_dedup_key": "a3baccc1af9c7e5b",
-      "status": "pending",
-      "created_at": "2026-06-18T10:02:29.080702+00:00"
     }
   ]
 }

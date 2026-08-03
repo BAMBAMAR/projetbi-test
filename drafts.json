@@ -1,6 +1,50 @@
 {
-  "last_updated": "2026-08-02T08:01:05.802497+00:00",
+  "last_updated": "2026-08-03T08:56:38.568474+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Formation et employabilité : le Premier ministre mobilise le gouvernement",
+      "description": "Le Premier ministre Ahmadou Al Aminou LO a mobilisé les membres du gouvernement autour des thématiques de la formation professionnelle, de l'employabilité et de la période de soudure. Cette initiative gouvernementale vise à coordonner les actions en faveur de l'insertion professionnelle des jeunes et à faire face aux difficultés alimentaires saisonnières. Les mesures concrètes décidées sont disponibles sur le site de la Primature.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/formation-employabilite-soudure-le-premier-ministre-mobilise-le",
+      "date": "2026-07-31",
+      "domain": "Entrepreneuriat",
+      "confidence": 0.65,
+      "keywords": [
+        "formation",
+        "employabilité",
+        "soudure",
+        "jeunesse",
+        "Premier ministre"
+      ],
+      "id": "draft_20260803085638_6",
+      "_dedup_key": "01cbf2586a37e31c",
+      "status": "pending",
+      "created_at": "2026-08-03T08:56:38.568417+00:00"
+    },
+    {
+      "type": "promise_update",
+      "promise_id": "promise_50",
+      "title": "Le Premier ministre fixe des orientations en matière de santé et d'engagement citoyen",
+      "description": "Le Premier ministre Ahmadou Al Aminou LO a formulé des orientations officielles portant sur la santé et l'engagement citoyen, publiées sur le site de la Primature. Ces orientations s'inscrivent dans le cadre des engagements du gouvernement en matière de couverture sanitaire et de politique de santé publique. Le contenu précis des mesures annoncées est disponible sur le portail officiel de la Primature.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/sante-et-engagement-citoyen-les-orientations-du-premier-ministre-ahmadou-al",
+      "date": "2026-07-31",
+      "domain": "Santé",
+      "confidence": 0.65,
+      "keywords": [
+        "santé",
+        "engagement citoyen",
+        "Premier ministre",
+        "orientations",
+        "CSU"
+      ],
+      "id": "draft_20260803085638_3",
+      "_dedup_key": "c0fff240e2276e66",
+      "status": "pending",
+      "created_at": "2026-08-03T08:56:38.568397+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,
@@ -4195,48 +4239,6 @@
       "_dedup_key": "dc3f46b30af11fb3",
       "status": "pending",
       "created_at": "2026-06-19T10:09:38.830852+00:00"
-    },
-    {
-      "type": "news",
-      "promise_id": null,
-      "title": "Conseil des ministres du 17 juin 2026",
-      "description": "Le gouvernement sénégalais a tenu son conseil des ministres le 17 juin 2026. Ce conseil a abordé plusieurs sujets relevant de l'action gouvernementale en cours. Le compte rendu officiel a été publié sur le site de la Primature.",
-      "source": "Gouvernement du Sénégal",
-      "source_url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPZ3VDaHBRczlMY0RfYjNsaGZmV2FxbEo3MWRnM2tRSGY0SGdick40Ti1BWWUzQmkzZEEtVUdpLTJNYVA0OUllMENqOEFIZDFibDFEWVFEVGYwQl9kLU1QbUxIZ3FPQ0twSTlnVFpiT0JNSnVEQ0p2dWlQTjZMT0l5VzNfcVpUUzZhNkNTMGZfMA?oc=5",
-      "date": "2026-06-17",
-      "domain": "Gouvernance",
-      "confidence": 0.7,
-      "keywords": [
-        "conseil des ministres",
-        "gouvernement",
-        "Sénégal",
-        "juin 2026"
-      ],
-      "id": "draft_20260619100938_1",
-      "_dedup_key": "47b9ecd157dd20db",
-      "status": "pending",
-      "created_at": "2026-06-19T10:09:38.830847+00:00"
-    },
-    {
-      "type": "promise_update",
-      "promise_id": "promise_40",
-      "title": "Diomaye Faye exige une meilleure régulation de la pêche industrielle",
-      "description": "Le président Bassirou Diomaye Faye a exprimé sa volonté de mieux réguler le secteur de la pêche industrielle au Sénégal. Cette sortie s'inscrit dans la continuité des engagements pris sur la protection des eaux territoriales et la préservation des ressources halieutiques. Les modalités concrètes de cette régulation renforcée restent à préciser.",
-      "source": "SANSLIMITESN.COM",
-      "source_url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNYTdfY2FrcXk4R0tqN1FaT0tJbkFLNkUyUUtkZnZCcGVBRTVYeUpGcmdFUkZVQmVpb0tod1FweVBmaWlDYTlxY2prQ2Jxb05DR3JZTC1LWGd4VnpwMFNYYmZQNlFZaEt6Wl9DOTFCMzdnMWVDeHpWT3ZidGQ1MnlwU2lDY3ZvVFllNHdHMkNaWHRyRVg1UktMRF9jSlBicjRlR2JVVlBiYmVyZ2Vpa1NlSGZGQUZDVDNOTkg5ZWZB?oc=5",
-      "date": "2026-06-18",
-      "domain": "Pêche",
-      "confidence": 0.78,
-      "keywords": [
-        "pêche industrielle",
-        "régulation",
-        "Diomaye Faye",
-        "ressources halieutiques"
-      ],
-      "id": "draft_20260619100938_0",
-      "_dedup_key": "ba1ab2e45d3753a6",
-      "status": "pending",
-      "created_at": "2026-06-19T10:09:38.830834+00:00"
     }
   ]
 }

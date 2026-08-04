@@ -1,6 +1,28 @@
 {
-  "last_updated": "2026-08-03T08:56:38.568474+00:00",
+  "last_updated": "2026-08-04T08:13:59.778749+00:00",
   "drafts": [
+    {
+      "type": "news",
+      "promise_id": null,
+      "title": "Formation, employabilité et soudure : le Premier Ministre mobilise le Gouvernement",
+      "description": "Le Premier Ministre Ahmadou Al Aminou Lo a réuni le gouvernement autour des thématiques de la formation professionnelle, de l'employabilité et de la période de soudure. Cette mobilisation traduit une volonté d'action coordonnée sur des enjeux socio-économiques immédiats. L'initiative s'inscrit dans le cadre des priorités gouvernementales pour la jeunesse et la sécurité alimentaire.",
+      "source": "Primature — Actualités",
+      "source_url": "https://primature.sn/publications/actualites/formation-employabilite-soudure-le-premier-ministre-mobilise-le",
+      "date": "2026-08-04",
+      "domain": "Emploi / Social",
+      "confidence": 0.7,
+      "keywords": [
+        "formation",
+        "employabilité",
+        "soudure",
+        "Premier Ministre",
+        "gouvernement"
+      ],
+      "id": "draft_20260804081359_0",
+      "_dedup_key": "6c713c0816a50470",
+      "status": "pending",
+      "created_at": "2026-08-04T08:13:59.778677+00:00"
+    },
     {
       "type": "news",
       "promise_id": null,
@@ -4217,28 +4239,6 @@
       "_dedup_key": "d06481fc9490d561",
       "status": "pending",
       "created_at": "2026-06-19T10:09:38.830859+00:00"
-    },
-    {
-      "type": "promise_update",
-      "promise_id": "promise_1",
-      "title": "Un nouveau Premier Ministre nommé malgré la promesse de suppression du poste",
-      "description": "La Primature a annoncé la nomination d'Ahmadou Al Aminou LO au poste de Premier Ministre du Sénégal, confirmant le maintien de cette fonction. Cette nomination intervient alors que le programme présidentiel prévoyait la suppression du poste de Premier Ministre au profit d'un Vice-Président. Plusieurs actualités de la Primature font référence aux activités de ce nouveau chef du gouvernement.",
-      "source": "Primature — Actualités",
-      "source_url": "https://primature.sn/publications/actualites/ahmadou-al-aminou-mohamed-lo-nouveau-premier-ministre-du-senegal",
-      "date": "2026-06-19",
-      "domain": "Institutions",
-      "confidence": 0.85,
-      "keywords": [
-        "Premier Ministre",
-        "Al Aminou LO",
-        "nomination",
-        "Primature",
-        "suppression poste"
-      ],
-      "id": "draft_20260619100938_2",
-      "_dedup_key": "dc3f46b30af11fb3",
-      "status": "pending",
-      "created_at": "2026-06-19T10:09:38.830852+00:00"
     }
   ]
 }
